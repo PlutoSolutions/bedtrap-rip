@@ -1,0 +1,78 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
+ *  net.minecraft.class_1268
+ *  net.minecraft.class_1297
+ *  net.minecraft.class_1299
+ *  net.minecraft.class_1429
+ *  net.minecraft.class_1657
+ */
+package minegame159.meteorclient.systems.modules.world;
+
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import java.util.ArrayList;
+import java.util.List;
+import meteordevelopment.orbit.EventHandler;
+import minegame159.meteorclient.events.world.TickEvent;
+import minegame159.meteorclient.settings.BoolSetting;
+import minegame159.meteorclient.settings.DoubleSetting;
+import minegame159.meteorclient.settings.EntityTypeListSetting;
+import minegame159.meteorclient.settings.EnumSetting;
+import minegame159.meteorclient.settings.Setting;
+import minegame159.meteorclient.settings.SettingGroup;
+import minegame159.meteorclient.systems.modules.Categories;
+import minegame159.meteorclient.systems.modules.Module;
+import minegame159.meteorclient.utils.Utils;
+import minegame159.meteorclient.utils.player.Rotations;
+import net.minecraft.class_1268;
+import net.minecraft.class_1297;
+import net.minecraft.class_1299;
+import net.minecraft.class_1429;
+import net.minecraft.class_1657;
+
+public class AutoBreed
+extends Module {
+    private final /* synthetic */ Setting<class_1268> hand;
+    private final /* synthetic */ SettingGroup sgGeneral;
+    private final /* synthetic */ Setting<Object2BooleanMap<class_1299<?>>> entities;
+    private final /* synthetic */ Setting<Double> range;
+    private final /* synthetic */ List<class_1297> animalsFed;
+    private final /* synthetic */ Setting<Boolean> ignoreBabies;
+
+    @Override
+    public void onActivate() {
+        AutoBreed llllllllIlIlIll;
+        llllllllIlIlIll.animalsFed.clear();
+    }
+
+    public AutoBreed() {
+        super(Categories.World, "auto-breed", "Automatically breeds specified animals.");
+        AutoBreed llllllllIlIlllI;
+        llllllllIlIlllI.sgGeneral = llllllllIlIlllI.settings.getDefaultGroup();
+        llllllllIlIlllI.entities = llllllllIlIlllI.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Entities to breed.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6139, class_1299.field_6067, class_1299.field_6085, class_1299.field_6143, class_1299.field_6115, class_1299.field_6093, class_1299.field_6132, class_1299.field_6055, class_1299.field_16281, class_1299.field_6081, class_1299.field_6140, class_1299.field_6074, class_1299.field_6113, class_1299.field_6146, class_1299.field_17943, class_1299.field_20346, class_1299.field_23214, class_1299.field_21973})).onlyAttackable().build());
+        llllllllIlIlllI.range = llllllllIlIlllI.sgGeneral.add(new DoubleSetting.Builder().name("range").description("How far away the animals can be to be bred.").min(0.0).defaultValue(4.5).build());
+        llllllllIlIlllI.hand = llllllllIlIlllI.sgGeneral.add(new EnumSetting.Builder().name("hand-for-breeding").description("The hand to use for breeding.").defaultValue(class_1268.field_5808).build());
+        llllllllIlIlllI.ignoreBabies = llllllllIlIlllI.sgGeneral.add(new BoolSetting.Builder().name("ignore-babies").description("Whether or not to ignore the baby variants of the specified entity.").defaultValue(true).build());
+        llllllllIlIlllI.animalsFed = new ArrayList<class_1297>();
+    }
+
+    @EventHandler
+    private void onTick(TickEvent.Pre llllllllIlIIIlI) {
+        AutoBreed llllllllIlIIIIl;
+        for (class_1297 llllllllIlIIlII : llllllllIlIIIIl.mc.field_1687.method_18112()) {
+            if (!(llllllllIlIIlII instanceof class_1429)) continue;
+            class_1429 llllllllIlIIlIl = (class_1429)llllllllIlIIlII;
+            if (!llllllllIlIIIIl.entities.get().getBoolean((Object)llllllllIlIIlIl.method_5864()) || llllllllIlIIlIl.method_6109() && !llllllllIlIIIIl.ignoreBabies.get().booleanValue() || llllllllIlIIIIl.animalsFed.contains((Object)llllllllIlIIlIl) || (double)llllllllIlIIIIl.mc.field_1724.method_5739((class_1297)llllllllIlIIlIl) > llllllllIlIIIIl.range.get() || !llllllllIlIIlIl.method_6481(llllllllIlIIIIl.hand.get() == class_1268.field_5808 ? llllllllIlIIIIl.mc.field_1724.method_6047() : llllllllIlIIIIl.mc.field_1724.method_6079())) continue;
+            Rotations.rotate(Rotations.getYaw(llllllllIlIIlII), Rotations.getPitch(llllllllIlIIlII), -100, () -> {
+                AutoBreed llllllllIIllIIl;
+                llllllllIIllIIl.mc.field_1761.method_2905((class_1657)llllllllIIllIIl.mc.field_1724, (class_1297)llllllllIlIIlIl, llllllllIIllIIl.hand.get());
+                llllllllIIllIIl.mc.field_1724.method_6104(llllllllIIllIIl.hand.get());
+                llllllllIIllIIl.animalsFed.add((class_1297)llllllllIlIIlIl);
+            });
+            return;
+        }
+    }
+}
+
