@@ -1,4 +1,4 @@
-# bedtrap-rip
+## bedtrap-rip
 * shit meteor paste 😞
 * cracked in 1 minute xD
 
