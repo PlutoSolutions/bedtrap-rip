@@ -16,17 +16,15 @@ import net.minecraft.class_2708;
 public class NoRotate
 extends Module {
     @EventHandler
-    private void onReceivePacket(PacketEvent.Receive lllllllllllllllllIIlllllllIllIll) {
-        if (lllllllllllllllllIIlllllllIllIll.packet instanceof class_2708) {
-            NoRotate lllllllllllllllllIIlllllllIllIlI;
-            ((PlayerPositionLookS2CPacketAccessor)lllllllllllllllllIIlllllllIllIll.packet).setPitch(lllllllllllllllllIIlllllllIllIlI.mc.field_1724.field_5965);
-            ((PlayerPositionLookS2CPacketAccessor)lllllllllllllllllIIlllllllIllIll.packet).setYaw(lllllllllllllllllIIlllllllIllIlI.mc.field_1724.field_6031);
+    private void onReceivePacket(PacketEvent.Receive receive) {
+        if (receive.packet instanceof class_2708) {
+            ((PlayerPositionLookS2CPacketAccessor)receive.packet).setPitch(this.mc.field_1724.field_5965);
+            ((PlayerPositionLookS2CPacketAccessor)receive.packet).setYaw(this.mc.field_1724.field_6031);
         }
     }
 
     public NoRotate() {
         super(Categories.Player, "no-rotate", "Attempts to block rotations sent from server to client.");
-        NoRotate lllllllllllllllllIIllllllllIIIII;
     }
 }
 

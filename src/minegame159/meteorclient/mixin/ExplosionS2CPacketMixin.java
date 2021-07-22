@@ -24,18 +24,18 @@ implements IExplosionS2CPacket {
     private float field_12182;
 
     @Override
-    public void setVelocityX(float velocity) {
-        this.field_12176 = velocity;
+    public void setVelocityX(float f) {
+        this.field_12176 = f;
     }
 
     @Override
-    public void setVelocityY(float velocity) {
-        this.field_12183 = velocity;
+    public void setVelocityY(float f) {
+        this.field_12183 = f;
     }
 
     @Override
-    public void setVelocityZ(float velocity) {
-        this.field_12182 = velocity;
+    public void setVelocityZ(float f) {
+        this.field_12182 = f;
     }
 }
 

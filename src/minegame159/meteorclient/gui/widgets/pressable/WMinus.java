@@ -7,17 +7,12 @@ import minegame159.meteorclient.gui.widgets.pressable.WPressable;
 
 public abstract class WMinus
 extends WPressable {
-    public WMinus() {
-        WMinus llIllIIIIIIIII;
-    }
-
     @Override
     protected void onCalculateSize() {
-        WMinus llIlIllllllIll;
-        double llIlIllllllIlI = llIlIllllllIll.pad();
-        double llIlIllllllIIl = llIlIllllllIll.theme.textHeight();
-        llIlIllllllIll.width = llIlIllllllIlI + llIlIllllllIIl + llIlIllllllIlI;
-        llIlIllllllIll.height = llIlIllllllIlI + llIlIllllllIIl + llIlIllllllIlI;
+        double d = this.pad();
+        double d2 = this.theme.textHeight();
+        this.width = d + d2 + d;
+        this.height = d + d2 + d;
     }
 }
 

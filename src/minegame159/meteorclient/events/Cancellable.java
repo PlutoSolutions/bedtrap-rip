@@ -7,22 +7,16 @@ import meteordevelopment.orbit.ICancellable;
 
 public class Cancellable
 implements ICancellable {
-    private /* synthetic */ boolean cancelled;
+    private boolean cancelled = false;
 
     @Override
-    public void setCancelled(boolean llIIIIlIIIIIIlI) {
-        llIIIIlIIIIIIll.cancelled = llIIIIlIIIIIIlI;
+    public void setCancelled(boolean bl) {
+        this.cancelled = bl;
     }
 
     @Override
     public boolean isCancelled() {
-        Cancellable llIIIIlIIIIIIII;
-        return llIIIIlIIIIIIII.cancelled;
-    }
-
-    public Cancellable() {
-        Cancellable llIIIIlIIIIlIII;
-        llIIIIlIIIIlIII.cancelled = false;
+        return this.cancelled;
     }
 }
 

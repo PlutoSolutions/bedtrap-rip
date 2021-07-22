@@ -10,145 +10,132 @@ import java.util.function.Predicate;
 
 public class UnorderedArrayList<T>
 extends AbstractList<T> {
-    private /* synthetic */ int size;
-    private static final /* synthetic */ int MAX_ARRAY_SIZE;
-    private static final /* synthetic */ Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
-    private static final /* synthetic */ int DEFAULT_CAPACITY;
-    private transient /* synthetic */ T[] items;
+    private int size;
+    private static final int MAX_ARRAY_SIZE;
+    private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+    private static final int DEFAULT_CAPACITY;
+    private transient T[] items = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
 
     @Override
     public int size() {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIIlllIll;
-        return lllllllllllllllllIIIlIIIIIlllIll.size;
+        return this.size;
     }
 
-    private void grow(int lllllllllllllllllIIIlIIIIIlIllll) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIIllIIII;
-        lllllllllllllllllIIIlIIIIIllIIII.items = Arrays.copyOf(lllllllllllllllllIIIlIIIIIllIIII.items, lllllllllllllllllIIIlIIIIIllIIII.newCapacity(lllllllllllllllllIIIlIIIIIlIllll));
+    private void grow(int n) {
+        this.items = Arrays.copyOf(this.items, this.newCapacity(n));
     }
 
     @Override
-    public int indexOf(Object lllllllllllllllllIIIlIIIIlllIIIl) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIlllIIII;
-        for (int lllllllllllllllllIIIlIIIIlllIIll = 0; lllllllllllllllllIIIlIIIIlllIIll < lllllllllllllllllIIIlIIIIlllIIII.size; ++lllllllllllllllllIIIlIIIIlllIIll) {
-            if (!Objects.equals(lllllllllllllllllIIIlIIIIlllIIII.items[lllllllllllllllllIIIlIIIIlllIIll], lllllllllllllllllIIIlIIIIlllIIIl)) continue;
-            return lllllllllllllllllIIIlIIIIlllIIll;
+    public int indexOf(Object object) {
+        for (int i = 0; i < this.size; ++i) {
+            if (!Objects.equals(this.items[i], object)) continue;
+            return i;
         }
         return -1;
-    }
-
-    public UnorderedArrayList() {
-        UnorderedArrayList lllllllllllllllllIIIlIIIlIIlIllI;
-        lllllllllllllllllIIIlIIIlIIlIllI.items = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
 
     @Override
     public void clear() {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIllllIII;
-        ++lllllllllllllllllIIIlIIIIllllIII.modCount;
-        for (int lllllllllllllllllIIIlIIIIllllIlI = 0; lllllllllllllllllIIIlIIIIllllIlI < lllllllllllllllllIIIlIIIIllllIII.size; ++lllllllllllllllllIIIlIIIIllllIlI) {
-            lllllllllllllllllIIIlIIIIllllIII.items[lllllllllllllllllIIIlIIIIllllIlI] = null;
+        ++this.modCount;
+        for (int i = 0; i < this.size; ++i) {
+            this.items[i] = null;
+            if (-4 < 0) continue;
+            return;
         }
-        lllllllllllllllllIIIlIIIIllllIII.size = 0;
+        this.size = 0;
     }
 
-    private int newCapacity(int lllllllllllllllllIIIlIIIIIlIlIIl) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIIlIIllI;
-        int lllllllllllllllllIIIlIIIIIlIlIII = lllllllllllllllllIIIlIIIIIlIIllI.items.length;
-        int lllllllllllllllllIIIlIIIIIlIIlll = lllllllllllllllllIIIlIIIIIlIlIII + (lllllllllllllllllIIIlIIIIIlIlIII >> 1);
-        if (lllllllllllllllllIIIlIIIIIlIIlll - lllllllllllllllllIIIlIIIIIlIlIIl <= 0) {
-            if (lllllllllllllllllIIIlIIIIIlIIllI.items == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
-                return Math.max(10, lllllllllllllllllIIIlIIIIIlIlIIl);
+    private int newCapacity(int n) {
+        int n2 = this.items.length;
+        int n3 = n2 + (n2 >> 1);
+        if (n3 - n <= 0) {
+            if (this.items == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
+                return Math.max(10, n);
             }
-            if (lllllllllllllllllIIIlIIIIIlIlIIl < 0) {
+            if (n < 0) {
                 throw new OutOfMemoryError();
             }
-            return lllllllllllllllllIIIlIIIIIlIlIIl;
+            return n;
         }
-        return lllllllllllllllllIIIlIIIIIlIIlll - 0x7FFFFFF7 <= 0 ? lllllllllllllllllIIIlIIIIIlIIlll : UnorderedArrayList.hugeCapacity(lllllllllllllllllIIIlIIIIIlIlIIl);
+        return n3 - 0x7FFFFFF7 <= 0 ? n3 : UnorderedArrayList.hugeCapacity(n);
     }
 
     @Override
-    public boolean removeIf(Predicate<? super T> lllllllllllllllllIIIlIIIIlIIIIlI) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIlIIIIll;
-        int lllllllllllllllllIIIlIIIIlIIIlIl = lllllllllllllllllIIIlIIIIlIIIIll.size;
-        int lllllllllllllllllIIIlIIIIlIIIlII = 0;
-        for (int lllllllllllllllllIIIlIIIIlIIlIII = 0; lllllllllllllllllIIIlIIIIlIIlIII < lllllllllllllllllIIIlIIIIlIIIIll.size; ++lllllllllllllllllIIIlIIIIlIIlIII) {
-            T lllllllllllllllllIIIlIIIIlIIlIIl = lllllllllllllllllIIIlIIIIlIIIIll.items[lllllllllllllllllIIIlIIIIlIIlIII];
-            if (lllllllllllllllllIIIlIIIIlIIIIlI.test(lllllllllllllllllIIIlIIIIlIIlIIl)) continue;
-            if (lllllllllllllllllIIIlIIIIlIIIlII < lllllllllllllllllIIIlIIIIlIIlIII) {
-                lllllllllllllllllIIIlIIIIlIIIIll.items[lllllllllllllllllIIIlIIIIlIIIlII] = lllllllllllllllllIIIlIIIIlIIlIIl;
+    public boolean removeIf(Predicate<? super T> predicate) {
+        int n = this.size;
+        int n2 = 0;
+        for (int i = 0; i < this.size; ++i) {
+            T t = this.items[i];
+            if (predicate.test(t)) continue;
+            if (n2 < i) {
+                this.items[n2] = t;
             }
-            ++lllllllllllllllllIIIlIIIIlIIIlII;
-        }
-        lllllllllllllllllIIIlIIIIlIIIIll.size = lllllllllllllllllIIIlIIIIlIIIlII;
-        return lllllllllllllllllIIIlIIIIlIIIIll.size != lllllllllllllllllIIIlIIIIlIIIlIl;
-    }
-
-    private static int hugeCapacity(int lllllllllllllllllIIIlIIIIIlIIIIl) {
-        if (lllllllllllllllllIIIlIIIIIlIIIIl < 0) {
-            throw new OutOfMemoryError();
-        }
-        return lllllllllllllllllIIIlIIIIIlIIIIl > 0x7FFFFFF7 ? Integer.MAX_VALUE : 0x7FFFFFF7;
-    }
-
-    @Override
-    public boolean add(T lllllllllllllllllIIIlIIIlIIlIIIl) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIlIIlIIII;
-        if (lllllllllllllllllIIIlIIIlIIlIIII.size == lllllllllllllllllIIIlIIIlIIlIIII.items.length) {
-            lllllllllllllllllIIIlIIIlIIlIIII.grow(lllllllllllllllllIIIlIIIlIIlIIII.size + 1);
-        }
-        lllllllllllllllllIIIlIIIlIIlIIII.items[lllllllllllllllllIIIlIIIlIIlIIII.size++] = lllllllllllllllllIIIlIIIlIIlIIIl;
-        ++lllllllllllllllllIIIlIIIlIIlIIII.modCount;
-        return true;
-    }
-
-    @Override
-    public boolean remove(Object lllllllllllllllllIIIlIIIIlIlllIl) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIlIllIll;
-        int lllllllllllllllllIIIlIIIIlIlllII = lllllllllllllllllIIIlIIIIlIllIll.indexOf(lllllllllllllllllIIIlIIIIlIlllIl);
-        if (lllllllllllllllllIIIlIIIIlIlllII == -1) {
+            ++n2;
+            if (-1 <= 4) continue;
             return false;
         }
-        lllllllllllllllllIIIlIIIIlIllIll.items[lllllllllllllllllIIIlIIIIlIlllII] = null;
-        lllllllllllllllllIIIlIIIIlIllIll.items[lllllllllllllllllIIIlIIIIlIlllII] = lllllllllllllllllIIIlIIIIlIllIll.items[--lllllllllllllllllIIIlIIIIlIllIll.size];
-        ++lllllllllllllllllIIIlIIIIlIllIll.modCount;
+        this.size = n2;
+        return this.size != n;
+    }
+
+    private static int hugeCapacity(int n) {
+        if (n < 0) {
+            throw new OutOfMemoryError();
+        }
+        return n > 0x7FFFFFF7 ? Integer.MAX_VALUE : 0x7FFFFFF7;
+    }
+
+    @Override
+    public boolean add(T t) {
+        if (this.size == this.items.length) {
+            this.grow(this.size + 1);
+        }
+        this.items[this.size++] = t;
+        ++this.modCount;
         return true;
     }
 
     @Override
-    public T get(int lllllllllllllllllIIIlIIIIlllllll) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIllllllI;
-        return lllllllllllllllllIIIlIIIIllllllI.items[lllllllllllllllllIIIlIIIIlllllll];
+    public boolean remove(Object object) {
+        int n = this.indexOf(object);
+        if (n == -1) {
+            return false;
+        }
+        this.items[n] = null;
+        this.items[n] = this.items[--this.size];
+        ++this.modCount;
+        return true;
     }
 
     @Override
-    public int lastIndexOf(Object lllllllllllllllllIIIlIIIIllIIlll) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIllIlIII;
-        T[] lllllllllllllllllIIIlIIIIllIIllI = lllllllllllllllllIIIlIIIIllIlIII.items;
-        for (int lllllllllllllllllIIIlIIIIllIlIIl = lllllllllllllllllIIIlIIIIllIlIII.size - 1; lllllllllllllllllIIIlIIIIllIlIIl >= 0; --lllllllllllllllllIIIlIIIIllIlIIl) {
-            if (!Objects.equals(lllllllllllllllllIIIlIIIIllIIllI[lllllllllllllllllIIIlIIIIllIlIIl], lllllllllllllllllIIIlIIIIllIIlll)) continue;
-            return lllllllllllllllllIIIlIIIIllIlIIl;
+    public T get(int n) {
+        return this.items[n];
+    }
+
+    @Override
+    public int lastIndexOf(Object object) {
+        T[] arrT = this.items;
+        for (int i = this.size - 1; i >= 0; --i) {
+            if (!Objects.equals(arrT[i], object)) continue;
+            return i;
         }
         return -1;
     }
 
     @Override
-    public T set(int lllllllllllllllllIIIlIIIlIIIIlIl, T lllllllllllllllllIIIlIIIlIIIIlII) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIlIIIlIlI;
-        T lllllllllllllllllIIIlIIIlIIIIlll = lllllllllllllllllIIIlIIIlIIIlIlI.items[lllllllllllllllllIIIlIIIlIIIIlIl];
-        lllllllllllllllllIIIlIIIlIIIlIlI.items[lllllllllllllllllIIIlIIIlIIIIlIl] = lllllllllllllllllIIIlIIIlIIIIlII;
-        return lllllllllllllllllIIIlIIIlIIIIlll;
+    public T set(int n, T t) {
+        T t2 = this.items[n];
+        this.items[n] = t;
+        return t2;
     }
 
     @Override
-    public T remove(int lllllllllllllllllIIIlIIIIlIlIIIl) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIlIlIlIl;
-        T lllllllllllllllllIIIlIIIIlIlIIll = lllllllllllllllllIIIlIIIIlIlIlIl.items[lllllllllllllllllIIIlIIIIlIlIIIl];
-        lllllllllllllllllIIIlIIIIlIlIlIl.items[lllllllllllllllllIIIlIIIIlIlIIIl] = null;
-        lllllllllllllllllIIIlIIIIlIlIlIl.items[lllllllllllllllllIIIlIIIIlIlIIIl] = lllllllllllllllllIIIlIIIIlIlIlIl.items[--lllllllllllllllllIIIlIIIIlIlIlIl.size];
-        ++lllllllllllllllllIIIlIIIIlIlIlIl.modCount;
-        return lllllllllllllllllIIIlIIIIlIlIIll;
+    public T remove(int n) {
+        T t = this.items[n];
+        this.items[n] = null;
+        this.items[n] = this.items[--this.size];
+        ++this.modCount;
+        return t;
     }
 
     static {
@@ -157,11 +144,10 @@ extends AbstractList<T> {
         DEFAULTCAPACITY_EMPTY_ELEMENTDATA = new Object[0];
     }
 
-    public void ensureCapacity(int lllllllllllllllllIIIlIIIIIllIlIl) {
-        UnorderedArrayList lllllllllllllllllIIIlIIIIIllIllI;
-        if (lllllllllllllllllIIIlIIIIIllIlIl > lllllllllllllllllIIIlIIIIIllIllI.items.length && (lllllllllllllllllIIIlIIIIIllIllI.items != DEFAULTCAPACITY_EMPTY_ELEMENTDATA || lllllllllllllllllIIIlIIIIIllIlIl > 10)) {
-            ++lllllllllllllllllIIIlIIIIIllIllI.modCount;
-            lllllllllllllllllIIIlIIIIIllIllI.grow(lllllllllllllllllIIIlIIIIIllIlIl);
+    public void ensureCapacity(int n) {
+        if (n > this.items.length && (this.items != DEFAULTCAPACITY_EMPTY_ELEMENTDATA || n > 10)) {
+            ++this.modCount;
+            this.grow(n);
         }
     }
 }

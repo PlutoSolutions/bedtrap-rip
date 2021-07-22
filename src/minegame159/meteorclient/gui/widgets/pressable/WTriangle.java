@@ -7,18 +7,13 @@ import minegame159.meteorclient.gui.widgets.pressable.WPressable;
 
 public abstract class WTriangle
 extends WPressable {
-    public /* synthetic */ double rotation;
-
-    public WTriangle() {
-        WTriangle llllllllllllllllllllIIlIlIIlIIIl;
-    }
+    public double rotation;
 
     @Override
     protected void onCalculateSize() {
-        WTriangle llllllllllllllllllllIIlIlIIIllII;
-        double llllllllllllllllllllIIlIlIIIllIl;
-        llllllllllllllllllllIIlIlIIIllII.width = llllllllllllllllllllIIlIlIIIllIl = llllllllllllllllllllIIlIlIIIllII.theme.textHeight();
-        llllllllllllllllllllIIlIlIIIllII.height = llllllllllllllllllllIIlIlIIIllIl;
+        double d;
+        this.width = d = this.theme.textHeight();
+        this.height = d;
     }
 }
 

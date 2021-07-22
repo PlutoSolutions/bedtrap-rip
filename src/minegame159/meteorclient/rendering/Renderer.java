@@ -16,60 +16,56 @@ import net.minecraft.class_2338;
 import net.minecraft.class_290;
 
 public class Renderer {
-    private static /* synthetic */ boolean building;
-    public static final /* synthetic */ MeshBuilder NORMAL;
-    public static final /* synthetic */ MeshBuilder LINES;
+    private static boolean building;
+    public static final MeshBuilder NORMAL;
+    public static final MeshBuilder LINES;
 
-    public static void quadWithLines(MeshBuilder llIlllIIlIllIll, MeshBuilder llIlllIIllIlIll, double llIlllIIlIllIIl, double llIlllIIllIlIIl, double llIlllIIlIlIlll, double llIlllIIlIlIllI, double llIlllIIllIIllI, double llIlllIIllIIlIl, double llIlllIIllIIlII, double llIlllIIlIlIIlI, double llIlllIIlIlIIIl, double llIlllIIlIlIIII, double llIlllIIllIIIII, double llIlllIIlIlllll, Color llIlllIIlIIllIl, Color llIlllIIlIIllII, ShapeMode llIlllIIlIIlIll) {
-        if (llIlllIIlIIlIll == ShapeMode.Sides || llIlllIIlIIlIll == ShapeMode.Both) {
-            llIlllIIlIllIll.quad(llIlllIIlIllIIl, llIlllIIllIlIIl, llIlllIIlIlIlll, llIlllIIlIlIllI, llIlllIIllIIllI, llIlllIIllIIlIl, llIlllIIllIIlII, llIlllIIlIlIIlI, llIlllIIlIlIIIl, llIlllIIlIlIIII, llIlllIIllIIIII, llIlllIIlIlllll, llIlllIIlIIllIl);
+    public static void quadWithLines(MeshBuilder meshBuilder, MeshBuilder meshBuilder2, double d, double d2, double d3, double d4, double d5, double d6, double d7, double d8, double d9, double d10, double d11, double d12, Color color, Color color2, ShapeMode shapeMode) {
+        if (shapeMode == ShapeMode.Sides || shapeMode == ShapeMode.Both) {
+            meshBuilder.quad(d, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, color);
         }
-        if (llIlllIIlIIlIll == ShapeMode.Lines || llIlllIIlIIlIll == ShapeMode.Both) {
-            llIlllIIllIlIll.line(llIlllIIlIllIIl, llIlllIIllIlIIl, llIlllIIlIlIlll, llIlllIIlIlIllI, llIlllIIllIIllI, llIlllIIllIIlIl, llIlllIIlIIllII);
-            llIlllIIllIlIll.line(llIlllIIlIlIllI, llIlllIIllIIllI, llIlllIIllIIlIl, llIlllIIllIIlII, llIlllIIlIlIIlI, llIlllIIlIlIIIl, llIlllIIlIIllII);
-            llIlllIIllIlIll.line(llIlllIIllIIlII, llIlllIIlIlIIlI, llIlllIIlIlIIIl, llIlllIIlIlIIII, llIlllIIllIIIII, llIlllIIlIlllll, llIlllIIlIIllII);
-            llIlllIIllIlIll.line(llIlllIIlIlIIII, llIlllIIllIIIII, llIlllIIlIlllll, llIlllIIlIllIIl, llIlllIIllIlIIl, llIlllIIlIlIlll, llIlllIIlIIllII);
+        if (shapeMode == ShapeMode.Lines || shapeMode == ShapeMode.Both) {
+            meshBuilder2.line(d, d2, d3, d4, d5, d6, color2);
+            meshBuilder2.line(d4, d5, d6, d7, d8, d9, color2);
+            meshBuilder2.line(d7, d8, d9, d10, d11, d12, color2);
+            meshBuilder2.line(d10, d11, d12, d, d2, d3, color2);
         }
     }
 
-    public static void boxWithLines(MeshBuilder llIlllIlIIIlIll, MeshBuilder llIlllIlIIIIIll, class_2338 llIlllIlIIIlIIl, Color llIlllIlIIIIIIl, Color llIlllIlIIIIlll, ShapeMode llIlllIlIIIIllI, int llIlllIlIIIIlIl) {
-        Renderer.boxWithLines(llIlllIlIIIlIll, llIlllIlIIIIIll, llIlllIlIIIlIIl.method_10263(), llIlllIlIIIlIIl.method_10264(), llIlllIlIIIlIIl.method_10260(), llIlllIlIIIlIIl.method_10263() + 1, llIlllIlIIIlIIl.method_10264() + 1, llIlllIlIIIlIIl.method_10260() + 1, llIlllIlIIIIIIl, llIlllIlIIIIlll, llIlllIlIIIIllI, llIlllIlIIIIlIl);
+    public static void boxWithLines(MeshBuilder meshBuilder, MeshBuilder meshBuilder2, class_2338 class_23382, Color color, Color color2, ShapeMode shapeMode, int n) {
+        Renderer.boxWithLines(meshBuilder, meshBuilder2, class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260(), class_23382.method_10263() + 1, class_23382.method_10264() + 1, class_23382.method_10260() + 1, color, color2, shapeMode, n);
     }
 
-    public Renderer() {
-        Renderer llIlllIllIllIIl;
+    public static void quadWithLinesHorizontal(MeshBuilder meshBuilder, MeshBuilder meshBuilder2, double d, double d2, double d3, double d4, double d5, Color color, Color color2, ShapeMode shapeMode) {
+        Renderer.quadWithLines(meshBuilder, meshBuilder2, d, d2, d3, d, d2, d5, d4, d2, d5, d4, d2, d3, color, color2, shapeMode);
     }
 
-    public static void quadWithLinesHorizontal(MeshBuilder llIlllIIIIllIll, MeshBuilder llIlllIIIIllIlI, double llIlllIIIIllIIl, double llIlllIIIlIIIlI, double llIlllIIIlIIIIl, double llIlllIIIIlIllI, double llIlllIIIIlIlIl, Color llIlllIIIIlIlII, Color llIlllIIIIlIIll, ShapeMode llIlllIIIIlllII) {
-        Renderer.quadWithLines(llIlllIIIIllIll, llIlllIIIIllIlI, llIlllIIIIllIIl, llIlllIIIlIIIlI, llIlllIIIlIIIIl, llIlllIIIIllIIl, llIlllIIIlIIIlI, llIlllIIIIlIlIl, llIlllIIIIlIllI, llIlllIIIlIIIlI, llIlllIIIIlIlIl, llIlllIIIIlIllI, llIlllIIIlIIIlI, llIlllIIIlIIIIl, llIlllIIIIlIlII, llIlllIIIIlIIll, llIlllIIIIlllII);
+    public static void quadWithLinesVertical(MeshBuilder meshBuilder, MeshBuilder meshBuilder2, double d, double d2, double d3, double d4, double d5, double d6, Color color, Color color2, ShapeMode shapeMode) {
+        Renderer.quadWithLines(meshBuilder, meshBuilder2, d, d2, d3, d, d5, d3, d4, d5, d6, d4, d2, d6, color, color2, shapeMode);
     }
 
-    public static void quadWithLinesVertical(MeshBuilder llIllIllllllIll, MeshBuilder llIllIllllllIIl, double llIlllIIIIIIlII, double llIllIlllllIlll, double llIlllIIIIIIIlI, double llIllIlllllIlIl, double llIllIlllllIlII, double llIllIlllllIIll, Color llIllIllllllllI, Color llIllIlllllllIl, ShapeMode llIllIllllllIlI) {
-        Renderer.quadWithLines(llIllIllllllIll, llIllIllllllIIl, llIlllIIIIIIlII, llIllIlllllIlll, llIlllIIIIIIIlI, llIlllIIIIIIlII, llIllIlllllIlII, llIlllIIIIIIIlI, llIllIlllllIlIl, llIllIlllllIlII, llIllIlllllIIll, llIllIlllllIlIl, llIllIlllllIlll, llIllIlllllIIll, llIllIllllllllI, llIllIlllllllIl, llIllIllllllIlI);
+    public static void boxWithLines(MeshBuilder meshBuilder, MeshBuilder meshBuilder2, double d, double d2, double d3, double d4, Color color, Color color2, ShapeMode shapeMode, int n) {
+        Renderer.boxWithLines(meshBuilder, meshBuilder2, d, d2, d3, d + d4, d2 + d4, d3 + d4, color, color2, shapeMode, n);
     }
 
-    public static void boxWithLines(MeshBuilder llIlllIlIlIIllI, MeshBuilder llIlllIlIlIIlIl, double llIlllIlIlIIlII, double llIlllIlIIllIIl, double llIlllIlIIllIII, double llIlllIlIlIIIIl, Color llIlllIlIlIIIII, Color llIlllIlIIlllll, ShapeMode llIlllIlIIllllI, int llIlllIlIIlIIll) {
-        Renderer.boxWithLines(llIlllIlIlIIllI, llIlllIlIlIIlIl, llIlllIlIlIIlII, llIlllIlIIllIIl, llIlllIlIIllIII, llIlllIlIlIIlII + llIlllIlIlIIIIl, llIlllIlIIllIIl + llIlllIlIlIIIIl, llIlllIlIIllIII + llIlllIlIlIIIIl, llIlllIlIlIIIII, llIlllIlIIlllll, llIlllIlIIllllI, llIlllIlIIlIIll);
-    }
-
-    public static void begin(RenderEvent llIlllIllIlIlIl) {
+    public static void begin(RenderEvent renderEvent) {
         if (!building) {
-            NORMAL.begin(llIlllIllIlIlIl, DrawMode.Triangles, class_290.field_1576);
-            LINES.begin(llIlllIllIlIlIl, DrawMode.Lines, class_290.field_1576);
+            NORMAL.begin(renderEvent, DrawMode.Triangles, class_290.field_1576);
+            LINES.begin(renderEvent, DrawMode.Lines, class_290.field_1576);
             building = true;
         }
     }
 
-    public static void quadWithLinesHorizontal(MeshBuilder llIlllIIlIIIIIl, MeshBuilder llIlllIIIllIlll, double llIlllIIIllllll, double llIlllIIIllIlIl, double llIlllIIIllllIl, double llIlllIIIllIIll, Color llIlllIIIllIIlI, Color llIlllIIIlllIlI, ShapeMode llIlllIIIllIIII) {
-        Renderer.quadWithLines(llIlllIIlIIIIIl, llIlllIIIllIlll, llIlllIIIllllll, llIlllIIIllIlIl, llIlllIIIllllIl, llIlllIIIllllll, llIlllIIIllIlIl, llIlllIIIllllIl + llIlllIIIllIIll, llIlllIIIllllll + llIlllIIIllIIll, llIlllIIIllIlIl, llIlllIIIllllIl + llIlllIIIllIIll, llIlllIIIllllll + llIlllIIIllIIll, llIlllIIIllIlIl, llIlllIIIllllIl, llIlllIIIllIIlI, llIlllIIIlllIlI, llIlllIIIllIIII);
+    public static void quadWithLinesHorizontal(MeshBuilder meshBuilder, MeshBuilder meshBuilder2, double d, double d2, double d3, double d4, Color color, Color color2, ShapeMode shapeMode) {
+        Renderer.quadWithLines(meshBuilder, meshBuilder2, d, d2, d3, d, d2, d3 + d4, d + d4, d2, d3 + d4, d + d4, d2, d3, color, color2, shapeMode);
     }
 
-    public static void boxWithLines(MeshBuilder llIlllIlIlllIll, MeshBuilder llIlllIlIlllIIl, double llIlllIllIIIllI, double llIlllIllIIIlIl, double llIlllIlIllIllI, double llIlllIlIllIlIl, double llIlllIlIllIlII, double llIlllIllIIIIIl, Color llIlllIlIllIIlI, Color llIlllIlIllIIIl, ShapeMode llIlllIlIlllllI, int llIlllIlIllllIl) {
-        if (llIlllIlIlllllI == ShapeMode.Sides || llIlllIlIlllllI == ShapeMode.Both) {
-            llIlllIlIlllIll.boxSides(llIlllIllIIIllI, llIlllIllIIIlIl, llIlllIlIllIllI, llIlllIlIllIlIl, llIlllIlIllIlII, llIlllIllIIIIIl, llIlllIlIllIIlI, llIlllIlIllllIl);
+    public static void boxWithLines(MeshBuilder meshBuilder, MeshBuilder meshBuilder2, double d, double d2, double d3, double d4, double d5, double d6, Color color, Color color2, ShapeMode shapeMode, int n) {
+        if (shapeMode == ShapeMode.Sides || shapeMode == ShapeMode.Both) {
+            meshBuilder.boxSides(d, d2, d3, d4, d5, d6, color, n);
         }
-        if (llIlllIlIlllllI == ShapeMode.Lines || llIlllIlIlllllI == ShapeMode.Both) {
-            llIlllIlIlllIIl.boxEdges(llIlllIllIIIllI, llIlllIllIIIlIl, llIlllIlIllIllI, llIlllIlIllIlIl, llIlllIlIllIlII, llIlllIllIIIIIl, llIlllIlIllIIIl, llIlllIlIllllIl);
+        if (shapeMode == ShapeMode.Lines || shapeMode == ShapeMode.Both) {
+            meshBuilder2.boxEdges(d, d2, d3, d4, d5, d6, color2, n);
         }
     }
 

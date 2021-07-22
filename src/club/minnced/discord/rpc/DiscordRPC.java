@@ -16,10 +16,10 @@ import javax.annotation.Nullable;
 
 public interface DiscordRPC
 extends Library {
-    public static final /* synthetic */ int DISCORD_REPLY_NO;
-    public static final /* synthetic */ int DISCORD_REPLY_IGNORE;
-    public static final /* synthetic */ int DISCORD_REPLY_YES;
-    public static final /* synthetic */ DiscordRPC INSTANCE;
+    public static final int DISCORD_REPLY_NO;
+    public static final int DISCORD_REPLY_IGNORE;
+    public static final int DISCORD_REPLY_YES;
+    public static final DiscordRPC INSTANCE;
 
     public void Discord_UpdatePresence(@Nullable DiscordRichPresence var1);
 

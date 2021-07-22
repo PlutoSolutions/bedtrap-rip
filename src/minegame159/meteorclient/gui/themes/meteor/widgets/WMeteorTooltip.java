@@ -11,14 +11,12 @@ public class WMeteorTooltip
 extends WTooltip
 implements MeteorWidget {
     @Override
-    protected void onRender(GuiRenderer lllIIIIIIIlIIII, double lllIIIIIIIIllll, double lllIIIIIIIIlllI, double lllIIIIIIIIllIl) {
-        WMeteorTooltip lllIIIIIIIlIIIl;
-        lllIIIIIIIlIIII.quad(lllIIIIIIIlIIIl, lllIIIIIIIlIIIl.theme().backgroundColor.get());
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        guiRenderer.quad(this, this.theme().backgroundColor.get());
     }
 
-    public WMeteorTooltip(String lllIIIIIIIlIllI) {
-        super(lllIIIIIIIlIllI);
-        WMeteorTooltip lllIIIIIIIlIlIl;
+    public WMeteorTooltip(String string) {
+        super(string);
     }
 }
 

@@ -44,66 +44,64 @@ import net.minecraft.class_3419;
 
 public class ElytraBoost
 extends Module {
-    private final /* synthetic */ Setting<Boolean> playSound;
-    private final /* synthetic */ Setting<Keybind> keybind;
-    private final /* synthetic */ Setting<Boolean> dontConsumeFirework;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ List<class_1671> fireworks;
-    private final /* synthetic */ Setting<Integer> fireworkLevel;
+    private final Setting<Boolean> playSound;
+    private final Setting<Keybind> keybind;
+    private final Setting<Boolean> dontConsumeFirework;
+    private final SettingGroup sgGeneral;
+    private final List<class_1671> fireworks;
+    private final Setting<Integer> fireworkLevel;
 
     @Override
     public void onDeactivate() {
-        ElytraBoost llllllllllllllllllIlIIIllIlIlIII;
-        llllllllllllllllllIlIIIllIlIlIII.fireworks.clear();
+        this.fireworks.clear();
+    }
+
+    private static boolean lambda$onTick$0(class_1671 class_16712) {
+        return class_16712.field_5988;
     }
 
     private void boost() {
-        ElytraBoost llllllllllllllllllIlIIIllIIlIIll;
         if (!Utils.canUpdate()) {
             return;
         }
-        if (llllllllllllllllllIlIIIllIIlIIll.mc.field_1724.method_6128() && llllllllllllllllllIlIIIllIIlIIll.mc.field_1755 == null) {
-            class_1799 llllllllllllllllllIlIIIllIIlIllI = class_1802.field_8639.method_7854();
-            llllllllllllllllllIlIIIllIIlIllI.method_7911("Fireworks").method_10567("Flight", llllllllllllllllllIlIIIllIIlIIll.fireworkLevel.get().byteValue());
-            class_1671 llllllllllllllllllIlIIIllIIlIlIl = new class_1671((class_1937)llllllllllllllllllIlIIIllIIlIIll.mc.field_1687, llllllllllllllllllIlIIIllIIlIllI, (class_1309)llllllllllllllllllIlIIIllIIlIIll.mc.field_1724);
-            llllllllllllllllllIlIIIllIIlIIll.fireworks.add(llllllllllllllllllIlIIIllIIlIlIl);
-            if (llllllllllllllllllIlIIIllIIlIIll.playSound.get().booleanValue()) {
-                llllllllllllllllllIlIIIllIIlIIll.mc.field_1687.method_8449((class_1657)llllllllllllllllllIlIIIllIIlIIll.mc.field_1724, (class_1297)llllllllllllllllllIlIIIllIIlIlIl, class_3417.field_14702, class_3419.field_15256, 3.0f, 1.0f);
+        if (this.mc.field_1724.method_6128() && this.mc.field_1755 == null) {
+            class_1799 class_17992 = class_1802.field_8639.method_7854();
+            class_17992.method_7911("Fireworks").method_10567("Flight", this.fireworkLevel.get().byteValue());
+            class_1671 class_16712 = new class_1671((class_1937)this.mc.field_1687, class_17992, (class_1309)this.mc.field_1724);
+            this.fireworks.add(class_16712);
+            if (this.playSound.get().booleanValue()) {
+                this.mc.field_1687.method_8449((class_1657)this.mc.field_1724, (class_1297)class_16712, class_3417.field_14702, class_3419.field_15256, 3.0f, 1.0f);
             }
-            llllllllllllllllllIlIIIllIIlIIll.mc.field_1687.method_2942(llllllllllllllllllIlIIIllIIlIlIl.method_5628(), (class_1297)llllllllllllllllllIlIIIllIIlIlIl);
+            this.mc.field_1687.method_2942(class_16712.method_5628(), (class_1297)class_16712);
         }
     }
 
     public ElytraBoost() {
         super(Categories.Movement, "elytra-boost", "Boosts your elytra as if you used a firework.");
-        ElytraBoost llllllllllllllllllIlIIIllIlIlIlI;
-        llllllllllllllllllIlIIIllIlIlIlI.sgGeneral = llllllllllllllllllIlIIIllIlIlIlI.settings.getDefaultGroup();
-        llllllllllllllllllIlIIIllIlIlIlI.dontConsumeFirework = llllllllllllllllllIlIIIllIlIlIlI.sgGeneral.add(new BoolSetting.Builder().name("anti-consume").description("Prevents fireworks from being consumed when using Elytra Boost.").defaultValue(true).build());
-        llllllllllllllllllIlIIIllIlIlIlI.fireworkLevel = llllllllllllllllllIlIIIllIlIlIlI.sgGeneral.add(new IntSetting.Builder().name("firework-duration").description("The duration of the firework.").defaultValue(0).min(0).max(255).build());
-        llllllllllllllllllIlIIIllIlIlIlI.playSound = llllllllllllllllllIlIIIllIlIlIlI.sgGeneral.add(new BoolSetting.Builder().name("play-sound").description("Plays the firework sound when a boost is triggered.").defaultValue(true).build());
-        llllllllllllllllllIlIIIllIlIlIlI.keybind = llllllllllllllllllIlIIIllIlIlIlI.sgGeneral.add(new KeybindSetting.Builder().name("keybind").description("The keybind to boost.").action(llllllllllllllllllIlIIIllIlIlIlI::boost).build());
-        llllllllllllllllllIlIIIllIlIlIlI.fireworks = new ArrayList<class_1671>();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.dontConsumeFirework = this.sgGeneral.add(new BoolSetting.Builder().name("anti-consume").description("Prevents fireworks from being consumed when using Elytra Boost.").defaultValue(true).build());
+        this.fireworkLevel = this.sgGeneral.add(new IntSetting.Builder().name("firework-duration").description("The duration of the firework.").defaultValue(0).min(0).max(255).build());
+        this.playSound = this.sgGeneral.add(new BoolSetting.Builder().name("play-sound").description("Plays the firework sound when a boost is triggered.").defaultValue(true).build());
+        this.keybind = this.sgGeneral.add(new KeybindSetting.Builder().name("keybind").description("The keybind to boost.").action(this::boost).build());
+        this.fireworks = new ArrayList<class_1671>();
     }
 
-    public boolean isFirework(class_1671 llllllllllllllllllIlIIIllIIIlIll) {
-        ElytraBoost llllllllllllllllllIlIIIllIIIllII;
-        return llllllllllllllllllIlIIIllIIIllII.isActive() && llllllllllllllllllIlIIIllIIIllII.fireworks.contains((Object)llllllllllllllllllIlIIIllIIIlIll);
+    public boolean isFirework(class_1671 class_16712) {
+        return this.isActive() && this.fireworks.contains((Object)class_16712);
     }
 
     @EventHandler
-    private void onInteractItem(InteractItemEvent llllllllllllllllllIlIIIllIlIIIlI) {
-        ElytraBoost llllllllllllllllllIlIIIllIlIIIll;
-        class_1799 llllllllllllllllllIlIIIllIlIIIIl = llllllllllllllllllIlIIIllIlIIIll.mc.field_1724.method_5998(llllllllllllllllllIlIIIllIlIIIlI.hand);
-        if (llllllllllllllllllIlIIIllIlIIIIl.method_7909() instanceof class_1781 && llllllllllllllllllIlIIIllIlIIIll.dontConsumeFirework.get().booleanValue()) {
-            llllllllllllllllllIlIIIllIlIIIlI.toReturn = class_1269.field_5811;
-            llllllllllllllllllIlIIIllIlIIIll.boost();
+    private void onInteractItem(InteractItemEvent interactItemEvent) {
+        class_1799 class_17992 = this.mc.field_1724.method_5998(interactItemEvent.hand);
+        if (class_17992.method_7909() instanceof class_1781 && this.dontConsumeFirework.get().booleanValue()) {
+            interactItemEvent.toReturn = class_1269.field_5811;
+            this.boost();
         }
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llllllllllllllllllIlIIIllIIllIll) {
-        ElytraBoost llllllllllllllllllIlIIIllIIllIlI;
-        llllllllllllllllllIlIIIllIIllIlI.fireworks.removeIf(llllllllllllllllllIlIIIllIIIlIIl -> llllllllllllllllllIlIIIllIIIlIIl.field_5988);
+    private void onTick(TickEvent.Post post) {
+        this.fireworks.removeIf(ElytraBoost::lambda$onTick$0);
     }
 }
 

@@ -9,20 +9,12 @@ package minegame159.meteorclient.events.world;
 import net.minecraft.class_2680;
 
 public class BlockActivateEvent {
-    public /* synthetic */ class_2680 blockState;
-    private static final /* synthetic */ BlockActivateEvent INSTANCE;
+    public class_2680 blockState;
+    private static final BlockActivateEvent INSTANCE = new BlockActivateEvent();
 
-    public BlockActivateEvent() {
-        BlockActivateEvent lIllllIIIIIII;
-    }
-
-    public static BlockActivateEvent get(class_2680 lIlllIllllllI) {
-        BlockActivateEvent.INSTANCE.blockState = lIlllIllllllI;
+    public static BlockActivateEvent get(class_2680 class_26802) {
+        BlockActivateEvent.INSTANCE.blockState = class_26802;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new BlockActivateEvent();
     }
 }
 

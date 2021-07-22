@@ -50,59 +50,65 @@ extends class_437 {
     private int fullLength;
     private int prevWidth;
 
-    public TitleScreenMixin(class_2561 title) {
-        super(title);
+    public TitleScreenMixin(class_2561 class_25612) {
+        super(class_25612);
     }
 
     @Inject(method={"init"}, at={@At(value="TAIL")})
-    private void onInit(CallbackInfo info) {
+    private void onInit(CallbackInfo callbackInfo) {
         this.text1 = "Bed";
         this.text2 = "Trap";
         this.text3 = " by ";
         this.text4 = "Eureka";
         this.text5 = " | ";
-        this.text6 = "murphy#0429";
+        this.text6 = "cracked by PlutoSolutions";
         this.text1Length = this.field_22793.method_1727(this.text1);
         this.text2Length = this.field_22793.method_1727(this.text2);
         this.text3Length = this.field_22793.method_1727(this.text3);
         this.text4Length = this.field_22793.method_1727(this.text4);
         this.text5Length = this.field_22793.method_1727(this.text5);
-        int text6Length = this.field_22793.method_1727(this.text6);
-        this.fullLength = this.text1Length + this.text2Length + this.text3Length + this.text4Length + this.text5Length + text6Length;
+        int n = this.field_22793.method_1727(this.text6);
+        this.fullLength = this.text1Length + this.text2Length + this.text3Length + this.text4Length + this.text5Length + n;
         this.prevWidth = 0;
     }
 
     @Inject(method={"render"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/gui/screen/TitleScreen;drawStringWithShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V", ordinal=0)})
-    private void onRenderIdkDude(class_4587 matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+    private void onRenderIdkDude(class_4587 class_45872, int n, int n2, float f, CallbackInfo callbackInfo) {
         if (Utils.firstTimeTitleScreen) {
             Utils.firstTimeTitleScreen = false;
             MeteorClient.LOG.info("Checking latest version of Meteor Client");
-            MeteorExecutor.execute(() -> HttpUtils.getLines("http://meteorclient.com/api/version", s -> {
-                Version latestVer = new Version((String)s);
-                if (latestVer.isHigherThan(Config.get().version)) {
-                    Utils.mc.method_1507((class_437)new NewUpdateScreen(GuiThemes.get(), latestVer));
-                }
-            }));
+            MeteorExecutor.execute(TitleScreenMixin::lambda$onRenderIdkDude$1);
         }
     }
 
     @Inject(method={"render"}, at={@At(value="TAIL")})
-    private void onRender(class_4587 matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+    private void onRender(class_4587 class_45872, int n, int n2, float f, CallbackInfo callbackInfo) {
         if (!Config.get().titleScreenCredits) {
             return;
         }
         this.prevWidth = 0;
-        this.field_22793.method_1720(matrices, this.text1, (float)(this.field_22789 - this.fullLength - 3), 3.0f, this.WHITE);
+        this.field_22793.method_1720(class_45872, this.text1, (float)(this.field_22789 - this.fullLength - 3), 3.0f, this.WHITE);
         this.prevWidth += this.text1Length;
-        this.field_22793.method_1720(matrices, this.text2, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.GRAY);
+        this.field_22793.method_1720(class_45872, this.text2, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.GRAY);
         this.prevWidth += this.text2Length;
-        this.field_22793.method_1720(matrices, this.text3, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.WHITE);
+        this.field_22793.method_1720(class_45872, this.text3, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.WHITE);
         this.prevWidth += this.text3Length;
-        this.field_22793.method_1720(matrices, this.text4, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.GRAY);
+        this.field_22793.method_1720(class_45872, this.text4, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.GRAY);
         this.prevWidth += this.text4Length;
-        this.field_22793.method_1720(matrices, this.text5, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.WHITE);
+        this.field_22793.method_1720(class_45872, this.text5, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.WHITE);
         this.prevWidth += this.text5Length;
-        this.field_22793.method_1720(matrices, this.text6, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, this.GRAY);
+        this.field_22793.method_1720(class_45872, this.text6, (float)(this.field_22789 - this.fullLength + this.prevWidth - 3), 3.0f, -11776);
+    }
+
+    private static void lambda$onRenderIdkDude$1() {
+        HttpUtils.getLines("http://meteorclient.com/api/version", TitleScreenMixin::lambda$onRenderIdkDude$0);
+    }
+
+    private static void lambda$onRenderIdkDude$0(String string) {
+        Version version = new Version(string);
+        if (version.isHigherThan(Config.get().version)) {
+            Utils.mc.method_1507((class_437)new NewUpdateScreen(GuiThemes.get(), version));
+        }
     }
 }
 

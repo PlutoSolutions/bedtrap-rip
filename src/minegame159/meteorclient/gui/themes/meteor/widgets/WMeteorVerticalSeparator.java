@@ -12,20 +12,15 @@ import minegame159.meteorclient.utils.render.color.Color;
 public class WMeteorVerticalSeparator
 extends WVerticalSeparator
 implements MeteorWidget {
-    public WMeteorVerticalSeparator() {
-        WMeteorVerticalSeparator llllllllllllllllllIIIllIIlllIlII;
-    }
-
     @Override
-    protected void onRender(GuiRenderer llllllllllllllllllIIIllIIllIlIlI, double llllllllllllllllllIIIllIIllIlIIl, double llllllllllllllllllIIIllIIllIlIII, double llllllllllllllllllIIIllIIllIIlll) {
-        WMeteorVerticalSeparator llllllllllllllllllIIIllIIllIIIIl;
-        MeteorGuiTheme llllllllllllllllllIIIllIIllIIllI = llllllllllllllllllIIIllIIllIIIIl.theme();
-        Color llllllllllllllllllIIIllIIllIIlIl = llllllllllllllllllIIIllIIllIIllI.separatorEdges.get();
-        Color llllllllllllllllllIIIllIIllIIlII = llllllllllllllllllIIIllIIllIIllI.separatorCenter.get();
-        double llllllllllllllllllIIIllIIllIIIll = llllllllllllllllllIIIllIIllIIllI.scale(1.0);
-        double llllllllllllllllllIIIllIIllIIIlI = Math.round(llllllllllllllllllIIIllIIllIIIIl.width / 2.0);
-        llllllllllllllllllIIIllIIllIlIlI.quad(llllllllllllllllllIIIllIIllIIIIl.x + llllllllllllllllllIIIllIIllIIIlI, llllllllllllllllllIIIllIIllIIIIl.y, llllllllllllllllllIIIllIIllIIIll, llllllllllllllllllIIIllIIllIIIIl.height / 2.0, llllllllllllllllllIIIllIIllIIlIl, llllllllllllllllllIIIllIIllIIlIl, llllllllllllllllllIIIllIIllIIlII, llllllllllllllllllIIIllIIllIIlII);
-        llllllllllllllllllIIIllIIllIlIlI.quad(llllllllllllllllllIIIllIIllIIIIl.x + llllllllllllllllllIIIllIIllIIIlI, llllllllllllllllllIIIllIIllIIIIl.y + llllllllllllllllllIIIllIIllIIIIl.height / 2.0, llllllllllllllllllIIIllIIllIIIll, llllllllllllllllllIIIllIIllIIIIl.height / 2.0, llllllllllllllllllIIIllIIllIIlII, llllllllllllllllllIIIllIIllIIlII, llllllllllllllllllIIIllIIllIIlIl, llllllllllllllllllIIIllIIllIIlIl);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        Color color = meteorGuiTheme.separatorEdges.get();
+        Color color2 = meteorGuiTheme.separatorCenter.get();
+        double d4 = meteorGuiTheme.scale(1.0);
+        double d5 = Math.round(this.width / 2.0);
+        guiRenderer.quad(this.x + d5, this.y, d4, this.height / 2.0, color, color, color2, color2);
+        guiRenderer.quad(this.x + d5, this.y + this.height / 2.0, d4, this.height / 2.0, color2, color2, color, color);
     }
 }
 

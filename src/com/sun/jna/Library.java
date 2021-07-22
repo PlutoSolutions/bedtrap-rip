@@ -15,15 +15,15 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 public interface Library {
-    public static final /* synthetic */ String OPTION_TYPE_MAPPER;
-    public static final /* synthetic */ String OPTION_STRUCTURE_ALIGNMENT;
-    public static final /* synthetic */ String OPTION_STRING_ENCODING;
-    public static final /* synthetic */ String OPTION_ALLOW_OBJECTS;
-    public static final /* synthetic */ String OPTION_CALLING_CONVENTION;
-    public static final /* synthetic */ String OPTION_INVOCATION_MAPPER;
-    public static final /* synthetic */ String OPTION_CLASSLOADER;
-    public static final /* synthetic */ String OPTION_FUNCTION_MAPPER;
-    public static final /* synthetic */ String OPTION_OPEN_FLAGS;
+    public static final String OPTION_TYPE_MAPPER;
+    public static final String OPTION_STRUCTURE_ALIGNMENT;
+    public static final String OPTION_STRING_ENCODING;
+    public static final String OPTION_ALLOW_OBJECTS;
+    public static final String OPTION_CALLING_CONVENTION;
+    public static final String OPTION_INVOCATION_MAPPER;
+    public static final String OPTION_CLASSLOADER;
+    public static final String OPTION_FUNCTION_MAPPER;
+    public static final String OPTION_OPEN_FLAGS;
 
     static {
         OPTION_INVOCATION_MAPPER = "invocation-mapper";
@@ -39,104 +39,103 @@ public interface Library {
 
     public static class Handler
     implements InvocationHandler {
-        private final /* synthetic */ Map<Method, FunctionInfo> functions;
-        static final /* synthetic */ Method OBJECT_TOSTRING;
-        static final /* synthetic */ Method OBJECT_HASHCODE;
-        private final /* synthetic */ NativeLibrary nativeLibrary;
-        private final /* synthetic */ Map<String, Object> options;
-        static final /* synthetic */ Method OBJECT_EQUALS;
-        private final /* synthetic */ InvocationMapper invocationMapper;
-        private final /* synthetic */ Class<?> interfaceClass;
+        private final Map<Method, FunctionInfo> functions = new WeakHashMap<Method, FunctionInfo>();
+        static final Method OBJECT_TOSTRING;
+        static final Method OBJECT_HASHCODE;
+        private final NativeLibrary nativeLibrary;
+        private final Map<String, Object> options;
+        static final Method OBJECT_EQUALS;
+        private final InvocationMapper invocationMapper;
+        private final Class<?> interfaceClass;
 
         public Class<?> getInterfaceClass() {
-            Handler lllllllllllllllllIIIIIIIlIIlIIIl;
-            return lllllllllllllllllIIIIIIIlIIlIIIl.interfaceClass;
+            return this.interfaceClass;
         }
 
         public NativeLibrary getNativeLibrary() {
-            Handler lllllllllllllllllIIIIIIIlIIlIlll;
-            return lllllllllllllllllIIIIIIIlIIlIlll.nativeLibrary;
+            return this.nativeLibrary;
         }
 
-        public Handler(String lllllllllllllllllIIIIIIIlIlIIIlI, Class<?> lllllllllllllllllIIIIIIIlIlIIIIl, Map<String, ?> lllllllllllllllllIIIIIIIlIIllIll) {
-            int lllllllllllllllllIIIIIIIlIIlllll;
-            Handler lllllllllllllllllIIIIIIIlIlIIIll;
-            lllllllllllllllllIIIIIIIlIlIIIll.functions = new WeakHashMap<Method, FunctionInfo>();
-            if (lllllllllllllllllIIIIIIIlIlIIIlI != null && "".equals(lllllllllllllllllIIIIIIIlIlIIIlI.trim())) {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Invalid library name \"").append(lllllllllllllllllIIIIIIIlIlIIIlI).append("\"")));
+        public Handler(String string, Class<?> class_, Map<String, ?> map) {
+            int n;
+            if (string != null && "".equals(string.trim())) {
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Invalid library name \"").append(string).append("\"")));
             }
-            if (!lllllllllllllllllIIIIIIIlIlIIIIl.isInterface()) {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(lllllllllllllllllIIIIIIIlIlIIIlI).append(" does not implement an interface: ").append(lllllllllllllllllIIIIIIIlIlIIIIl.getName())));
+            if (!class_.isInterface()) {
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(string).append(" does not implement an interface: ").append(class_.getName())));
             }
-            lllllllllllllllllIIIIIIIlIlIIIll.interfaceClass = lllllllllllllllllIIIIIIIlIlIIIIl;
-            lllllllllllllllllIIIIIIIlIlIIIll.options = new HashMap(lllllllllllllllllIIIIIIIlIIllIll);
-            int n = lllllllllllllllllIIIIIIIlIIlllll = AltCallingConvention.class.isAssignableFrom(lllllllllllllllllIIIIIIIlIlIIIIl) ? 63 : 0;
-            if (lllllllllllllllllIIIIIIIlIlIIIll.options.get("calling-convention") == null) {
-                lllllllllllllllllIIIIIIIlIlIIIll.options.put("calling-convention", lllllllllllllllllIIIIIIIlIIlllll);
+            this.interfaceClass = class_;
+            this.options = new HashMap(map);
+            int n2 = n = AltCallingConvention.class.isAssignableFrom(class_) ? 63 : 0;
+            if (this.options.get("calling-convention") == null) {
+                this.options.put("calling-convention", n);
             }
-            if (lllllllllllllllllIIIIIIIlIlIIIll.options.get("classloader") == null) {
-                lllllllllllllllllIIIIIIIlIlIIIll.options.put("classloader", lllllllllllllllllIIIIIIIlIlIIIIl.getClassLoader());
+            if (this.options.get("classloader") == null) {
+                this.options.put("classloader", class_.getClassLoader());
             }
-            lllllllllllllllllIIIIIIIlIlIIIll.nativeLibrary = NativeLibrary.getInstance(lllllllllllllllllIIIIIIIlIlIIIlI, lllllllllllllllllIIIIIIIlIlIIIll.options);
-            lllllllllllllllllIIIIIIIlIlIIIll.invocationMapper = (InvocationMapper)lllllllllllllllllIIIIIIIlIlIIIll.options.get("invocation-mapper");
+            this.nativeLibrary = NativeLibrary.getInstance(string, this.options);
+            this.invocationMapper = (InvocationMapper)this.options.get("invocation-mapper");
         }
 
         public String getLibraryName() {
-            Handler lllllllllllllllllIIIIIIIlIIlIlII;
-            return lllllllllllllllllIIIIIIIlIIlIlII.nativeLibrary.getName();
+            return this.nativeLibrary.getName();
         }
 
         /*
-         * WARNING - Removed try catching itself - possible behaviour change.
+         * Enabled aggressive block sorting
+         * Enabled unnecessary exception pruning
+         * Enabled aggressive exception aggregation
          */
         @Override
-        public Object invoke(Object lllllllllllllllllIIIIIIIIllllIII, Method lllllllllllllllllIIIIIIIIlllllII, Object[] lllllllllllllllllIIIIIIIIllllIll) throws Throwable {
-            Handler lllllllllllllllllIIIIIIIIllllIIl;
-            if (OBJECT_TOSTRING.equals(lllllllllllllllllIIIIIIIIlllllII)) {
-                return String.valueOf(new StringBuilder().append("Proxy interface to ").append(lllllllllllllllllIIIIIIIIllllIIl.nativeLibrary));
+        public Object invoke(Object object, Method method, Object[] arrobject) throws Throwable {
+            if (OBJECT_TOSTRING.equals(method)) {
+                return String.valueOf(new StringBuilder().append("Proxy interface to ").append(this.nativeLibrary));
             }
-            if (OBJECT_HASHCODE.equals(lllllllllllllllllIIIIIIIIlllllII)) {
-                return lllllllllllllllllIIIIIIIIllllIIl.hashCode();
+            if (OBJECT_HASHCODE.equals(method)) {
+                return this.hashCode();
             }
-            if (OBJECT_EQUALS.equals(lllllllllllllllllIIIIIIIIlllllII)) {
-                Object lllllllllllllllllIIIIIIIlIIIIlII = lllllllllllllllllIIIIIIIIllllIll[0];
-                if (lllllllllllllllllIIIIIIIlIIIIlII != null && Proxy.isProxyClass(lllllllllllllllllIIIIIIIlIIIIlII.getClass())) {
-                    return Function.valueOf(Proxy.getInvocationHandler(lllllllllllllllllIIIIIIIlIIIIlII) == lllllllllllllllllIIIIIIIIllllIIl);
+            if (OBJECT_EQUALS.equals(method)) {
+                boolean bl;
+                Object object2 = arrobject[0];
+                if (object2 == null) return Boolean.FALSE;
+                if (!Proxy.isProxyClass(object2.getClass())) return Boolean.FALSE;
+                if (Proxy.getInvocationHandler(object2) == this) {
+                    bl = true;
+                    return Function.valueOf(bl);
                 }
-                return Boolean.FALSE;
+                bl = false;
+                return Function.valueOf(bl);
             }
-            FunctionInfo lllllllllllllllllIIIIIIIIllllIlI = lllllllllllllllllIIIIIIIIllllIIl.functions.get(lllllllllllllllllIIIIIIIIlllllII);
-            if (lllllllllllllllllIIIIIIIIllllIlI == null) {
-                Map<Method, FunctionInfo> lllllllllllllllllIIIIIIIIlllIlII = lllllllllllllllllIIIIIIIIllllIIl.functions;
-                synchronized (lllllllllllllllllIIIIIIIIlllIlII) {
-                    lllllllllllllllllIIIIIIIIllllIlI = lllllllllllllllllIIIIIIIIllllIIl.functions.get(lllllllllllllllllIIIIIIIIlllllII);
-                    if (lllllllllllllllllIIIIIIIIllllIlI == null) {
-                        boolean lllllllllllllllllIIIIIIIlIIIIIll = Function.isVarArgs(lllllllllllllllllIIIIIIIIlllllII);
-                        InvocationHandler lllllllllllllllllIIIIIIIlIIIIIlI = null;
-                        if (lllllllllllllllllIIIIIIIIllllIIl.invocationMapper != null) {
-                            lllllllllllllllllIIIIIIIlIIIIIlI = lllllllllllllllllIIIIIIIIllllIIl.invocationMapper.getInvocationHandler(lllllllllllllllllIIIIIIIIllllIIl.nativeLibrary, lllllllllllllllllIIIIIIIIlllllII);
+            FunctionInfo functionInfo = this.functions.get(method);
+            if (functionInfo == null) {
+                Map<Method, FunctionInfo> map = this.functions;
+                synchronized (map) {
+                    functionInfo = this.functions.get(method);
+                    if (functionInfo == null) {
+                        boolean bl = Function.isVarArgs(method);
+                        InvocationHandler invocationHandler = null;
+                        if (this.invocationMapper != null) {
+                            invocationHandler = this.invocationMapper.getInvocationHandler(this.nativeLibrary, method);
                         }
-                        Function lllllllllllllllllIIIIIIIlIIIIIIl = null;
-                        Class<?>[] lllllllllllllllllIIIIIIIlIIIIIII = null;
-                        HashMap<String, Object> lllllllllllllllllIIIIIIIIlllllll = null;
-                        if (lllllllllllllllllIIIIIIIlIIIIIlI == null) {
-                            lllllllllllllllllIIIIIIIlIIIIIIl = lllllllllllllllllIIIIIIIIllllIIl.nativeLibrary.getFunction(lllllllllllllllllIIIIIIIIlllllII.getName(), lllllllllllllllllIIIIIIIIlllllII);
-                            lllllllllllllllllIIIIIIIlIIIIIII = lllllllllllllllllIIIIIIIIlllllII.getParameterTypes();
-                            lllllllllllllllllIIIIIIIIlllllll = new HashMap<String, Object>(lllllllllllllllllIIIIIIIIllllIIl.options);
-                            lllllllllllllllllIIIIIIIIlllllll.put("invoking-method", lllllllllllllllllIIIIIIIIlllllII);
+                        Function function = null;
+                        Class<?>[] arrclass = null;
+                        HashMap<String, Object> hashMap = null;
+                        if (invocationHandler == null) {
+                            function = this.nativeLibrary.getFunction(method.getName(), method);
+                            arrclass = method.getParameterTypes();
+                            hashMap = new HashMap<String, Object>(this.options);
+                            hashMap.put("invoking-method", method);
                         }
-                        lllllllllllllllllIIIIIIIIllllIlI = new FunctionInfo(lllllllllllllllllIIIIIIIlIIIIIlI, lllllllllllllllllIIIIIIIlIIIIIIl, lllllllllllllllllIIIIIIIlIIIIIII, lllllllllllllllllIIIIIIIlIIIIIll, lllllllllllllllllIIIIIIIIlllllll);
-                        lllllllllllllllllIIIIIIIIllllIIl.functions.put(lllllllllllllllllIIIIIIIIlllllII, lllllllllllllllllIIIIIIIIllllIlI);
+                        functionInfo = new FunctionInfo(invocationHandler, function, arrclass, bl, hashMap);
+                        this.functions.put(method, functionInfo);
                     }
                 }
             }
-            if (lllllllllllllllllIIIIIIIIllllIlI.isVarArgs) {
-                lllllllllllllllllIIIIIIIIllllIll = Function.concatenateVarArgs(lllllllllllllllllIIIIIIIIllllIll);
+            if (functionInfo.isVarArgs) {
+                arrobject = Function.concatenateVarArgs(arrobject);
             }
-            if (lllllllllllllllllIIIIIIIIllllIlI.handler != null) {
-                return lllllllllllllllllIIIIIIIIllllIlI.handler.invoke(lllllllllllllllllIIIIIIIIllllIII, lllllllllllllllllIIIIIIIIlllllII, lllllllllllllllllIIIIIIIIllllIll);
-            }
-            return lllllllllllllllllIIIIIIIIllllIlI.function.invoke(lllllllllllllllllIIIIIIIIlllllII, lllllllllllllllllIIIIIIIIllllIlI.parameterTypes, lllllllllllllllllIIIIIIIIlllllII.getReturnType(), lllllllllllllllllIIIIIIIIllllIll, lllllllllllllllllIIIIIIIIllllIlI.options);
+            if (functionInfo.handler == null) return functionInfo.function.invoke(method, functionInfo.parameterTypes, method.getReturnType(), arrobject, functionInfo.options);
+            return functionInfo.handler.invoke(object, method, arrobject);
         }
 
         static {
@@ -145,25 +144,24 @@ public interface Library {
                 OBJECT_HASHCODE = Object.class.getMethod("hashCode", new Class[0]);
                 OBJECT_EQUALS = Object.class.getMethod("equals", Object.class);
             }
-            catch (Exception lllllllllllllllllIIIIIIIIllIllII) {
+            catch (Exception exception) {
                 throw new Error("Error retrieving Object.toString() method");
             }
         }
 
         private static final class FunctionInfo {
-            final /* synthetic */ Map<String, ?> options;
-            final /* synthetic */ boolean isVarArgs;
-            final /* synthetic */ Function function;
-            final /* synthetic */ Class<?>[] parameterTypes;
-            final /* synthetic */ InvocationHandler handler;
+            final Map<String, ?> options;
+            final boolean isVarArgs;
+            final Function function;
+            final Class<?>[] parameterTypes;
+            final InvocationHandler handler;
 
-            FunctionInfo(InvocationHandler lllIllIlIIlllll, Function lllIllIlIIllIII, Class<?>[] lllIllIlIIlllIl, boolean lllIllIlIIlIllI, Map<String, ?> lllIllIlIIlIlIl) {
-                FunctionInfo lllIllIlIlIIIII;
-                lllIllIlIlIIIII.handler = lllIllIlIIlllll;
-                lllIllIlIlIIIII.function = lllIllIlIIllIII;
-                lllIllIlIlIIIII.isVarArgs = lllIllIlIIlIllI;
-                lllIllIlIlIIIII.options = lllIllIlIIlIlIl;
-                lllIllIlIlIIIII.parameterTypes = lllIllIlIIlllIl;
+            FunctionInfo(InvocationHandler invocationHandler, Function function, Class<?>[] arrclass, boolean bl, Map<String, ?> map) {
+                this.handler = invocationHandler;
+                this.function = function;
+                this.isVarArgs = bl;
+                this.options = map;
+                this.parameterTypes = arrclass;
             }
         }
     }

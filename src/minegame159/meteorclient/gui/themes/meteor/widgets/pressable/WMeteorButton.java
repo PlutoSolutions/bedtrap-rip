@@ -14,22 +14,20 @@ public class WMeteorButton
 extends WButton
 implements MeteorWidget {
     @Override
-    protected void onRender(GuiRenderer llIllIIll, double llIllIIlI, double llIllIIIl, double llIllIIII) {
-        WMeteorButton llIllIlII;
-        MeteorGuiTheme llIlIllll = llIllIlII.theme();
-        double llIlIlllI = llIllIlII.pad();
-        llIllIlII.renderBackground(llIllIIll, llIllIlII, llIllIlII.pressed, llIllIlII.mouseOver);
-        if (llIllIlII.text != null) {
-            llIllIIll.text(llIllIlII.text, llIllIlII.x + llIllIlII.width / 2.0 - llIllIlII.textWidth / 2.0, llIllIlII.y + llIlIlllI, llIlIllll.textColor.get(), false);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d4 = this.pad();
+        this.renderBackground(guiRenderer, this, this.pressed, this.mouseOver);
+        if (this.text != null) {
+            guiRenderer.text(this.text, this.x + this.width / 2.0 - this.textWidth / 2.0, this.y + d4, meteorGuiTheme.textColor.get(), false);
         } else {
-            double llIllIlIl = llIlIllll.textHeight();
-            llIllIIll.quad(llIllIlII.x + llIllIlII.width / 2.0 - llIllIlIl / 2.0, llIllIlII.y + llIlIlllI, llIllIlIl, llIllIlIl, llIllIlII.texture, (Color)llIlIllll.textColor.get());
+            double d5 = meteorGuiTheme.textHeight();
+            guiRenderer.quad(this.x + this.width / 2.0 - d5 / 2.0, this.y + d4, d5, d5, this.texture, (Color)meteorGuiTheme.textColor.get());
         }
     }
 
-    public WMeteorButton(String llIllllll, GuiTexture llIlllIll) {
-        super(llIllllll, llIlllIll);
-        WMeteorButton lllIIIIII;
+    public WMeteorButton(String string, GuiTexture guiTexture) {
+        super(string, guiTexture);
     }
 }
 

@@ -24,1024 +24,922 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 public class Pointer {
-    public static final /* synthetic */ int SIZE;
-    public static final /* synthetic */ Pointer NULL;
-    protected /* synthetic */ long peer;
+    public static final int SIZE = Native.POINTER_SIZE;
+    public static final Pointer NULL;
+    protected long peer;
 
-    public void write(long llllllllllllllllllIIIIIllIIIlIIl, Pointer[] llllllllllllllllllIIIIIllIIIlIII, int llllllllllllllllllIIIIIllIIIllII, int llllllllllllllllllIIIIIllIIIIllI) {
-        for (int llllllllllllllllllIIIIIllIIlIIII = 0; llllllllllllllllllIIIIIllIIlIIII < llllllllllllllllllIIIIIllIIIIllI; ++llllllllllllllllllIIIIIllIIlIIII) {
-            Pointer llllllllllllllllllIIIIIllIIIllll;
-            llllllllllllllllllIIIIIllIIIllll.setPointer(llllllllllllllllllIIIIIllIIIlIIl + (long)(llllllllllllllllllIIIIIllIIlIIII * SIZE), llllllllllllllllllIIIIIllIIIlIII[llllllllllllllllllIIIIIllIIIllII + llllllllllllllllllIIIIIllIIlIIII]);
+    public void write(long l, Pointer[] arrpointer, int n, int n2) {
+        for (int i = 0; i < n2; ++i) {
+            this.setPointer(l + (long)(i * SIZE), arrpointer[n + i]);
+            if (!false) continue;
+            return;
         }
     }
 
-    public void setNativeLong(long lllllllllllllllllIlllllllIIllIII, NativeLong lllllllllllllllllIlllllllIIlIlII) {
-        Pointer lllllllllllllllllIlllllllIIlIllI;
+    public void setNativeLong(long l, NativeLong nativeLong) {
         if (NativeLong.SIZE == 8) {
-            lllllllllllllllllIlllllllIIlIllI.setLong(lllllllllllllllllIlllllllIIllIII, lllllllllllllllllIlllllllIIlIlII.longValue());
+            this.setLong(l, nativeLong.longValue());
         } else {
-            lllllllllllllllllIlllllllIIlIllI.setInt(lllllllllllllllllIlllllllIIllIII, lllllllllllllllllIlllllllIIlIlII.intValue());
+            this.setInt(l, nativeLong.intValue());
         }
     }
 
-    public String[] getWideStringArray(long llllllllllllllllllIIIIIIIlIIlIlI) {
-        Pointer llllllllllllllllllIIIIIIIlIIlIIl;
-        return llllllllllllllllllIIIIIIIlIIlIIl.getWideStringArray(llllllllllllllllllIIIIIIIlIIlIlI, -1);
+    public String[] getWideStringArray(long l) {
+        return this.getWideStringArray(l, -1);
     }
 
-    public Pointer[] getPointerArray(long llllllllllllllllllIIIIIIIllllllI) {
-        Pointer llllllllllllllllllIIIIIIlIIIIlII;
-        ArrayList<Pointer> llllllllllllllllllIIIIIIlIIIIIlI = new ArrayList<Pointer>();
-        int llllllllllllllllllIIIIIIlIIIIIIl = 0;
-        Pointer llllllllllllllllllIIIIIIlIIIIIII = llllllllllllllllllIIIIIIlIIIIlII.getPointer(llllllllllllllllllIIIIIIIllllllI);
-        while (llllllllllllllllllIIIIIIlIIIIIII != null) {
-            llllllllllllllllllIIIIIIlIIIIIlI.add(llllllllllllllllllIIIIIIlIIIIIII);
-            llllllllllllllllllIIIIIIlIIIIIII = llllllllllllllllllIIIIIIlIIIIlII.getPointer(llllllllllllllllllIIIIIIIllllllI + (long)(llllllllllllllllllIIIIIIlIIIIIIl += SIZE));
+    public Pointer[] getPointerArray(long l) {
+        ArrayList<Pointer> arrayList = new ArrayList<Pointer>();
+        int n = 0;
+        Pointer pointer = this.getPointer(l);
+        while (pointer != null) {
+            arrayList.add(pointer);
+            pointer = this.getPointer(l + (long)(n += SIZE));
         }
-        return llllllllllllllllllIIIIIIlIIIIIlI.toArray(new Pointer[llllllllllllllllllIIIIIIlIIIIIlI.size()]);
+        return arrayList.toArray(new Pointer[arrayList.size()]);
     }
 
-    public void read(long llllllllllllllllllIIIIlIIIlIIIII, double[] llllllllllllllllllIIIIlIIIIllIlI, int llllllllllllllllllIIIIlIIIIllIIl, int llllllllllllllllllIIIIlIIIIllIII) {
-        Pointer llllllllllllllllllIIIIlIIIIlllII;
-        Native.read(llllllllllllllllllIIIIlIIIIlllII, llllllllllllllllllIIIIlIIIIlllII.peer, llllllllllllllllllIIIIlIIIlIIIII, llllllllllllllllllIIIIlIIIIllIlI, llllllllllllllllllIIIIlIIIIllIIl, llllllllllllllllllIIIIlIIIIllIII);
+    public void read(long l, double[] arrd, int n, int n2) {
+        Native.read(this, this.peer, l, arrd, n, n2);
     }
 
-    public String getWideString(long llllllllllllllllllIIIIIIlllIllll) {
-        Pointer llllllllllllllllllIIIIIIlllIlllI;
-        return Native.getWideString(llllllllllllllllllIIIIIIlllIlllI, llllllllllllllllllIIIIIIlllIlllI.peer, llllllllllllllllllIIIIIIlllIllll);
+    public String getWideString(long l) {
+        return Native.getWideString(this, this.peer, l);
     }
 
-    public void read(long llllllllllllllllllIIIIlIIIIIlIll, Pointer[] llllllllllllllllllIIIIlIIIIIlIlI, int llllllllllllllllllIIIIlIIIIIIlII, int llllllllllllllllllIIIIlIIIIIlIII) {
-        for (int llllllllllllllllllIIIIlIIIIIllIl = 0; llllllllllllllllllIIIIlIIIIIllIl < llllllllllllllllllIIIIlIIIIIlIII; ++llllllllllllllllllIIIIlIIIIIllIl) {
-            Pointer llllllllllllllllllIIIIlIIIIIIlll;
-            Pointer llllllllllllllllllIIIIlIIIIIllll = llllllllllllllllllIIIIlIIIIIIlll.getPointer(llllllllllllllllllIIIIlIIIIIlIll + (long)(llllllllllllllllllIIIIlIIIIIllIl * SIZE));
-            Pointer llllllllllllllllllIIIIlIIIIIlllI = llllllllllllllllllIIIIlIIIIIlIlI[llllllllllllllllllIIIIlIIIIIllIl + llllllllllllllllllIIIIlIIIIIIlII];
-            if (llllllllllllllllllIIIIlIIIIIlllI != null && llllllllllllllllllIIIIlIIIIIllll != null && llllllllllllllllllIIIIlIIIIIllll.peer == llllllllllllllllllIIIIlIIIIIlllI.peer) continue;
-            llllllllllllllllllIIIIlIIIIIlIlI[llllllllllllllllllIIIIlIIIIIllIl + llllllllllllllllllIIIIlIIIIIIlII] = llllllllllllllllllIIIIlIIIIIllll;
+    public void read(long l, Pointer[] arrpointer, int n, int n2) {
+        for (int i = 0; i < n2; ++i) {
+            Pointer pointer = this.getPointer(l + (long)(i * SIZE));
+            Pointer pointer2 = arrpointer[i + n];
+            if (pointer2 != null && pointer != null && pointer.peer == pointer2.peer) continue;
+            arrpointer[i + n] = pointer;
+            if (3 <= 3) continue;
+            return;
         }
     }
 
-    public void setInt(long lllllllllllllllllIlllllllIlIlIlI, int lllllllllllllllllIlllllllIlIlIIl) {
-        Pointer lllllllllllllllllIlllllllIlIlIll;
-        Native.setInt(lllllllllllllllllIlllllllIlIlIll, lllllllllllllllllIlllllllIlIlIll.peer, lllllllllllllllllIlllllllIlIlIlI, lllllllllllllllllIlllllllIlIlIIl);
+    public void setInt(long l, int n) {
+        Native.setInt(this, this.peer, l, n);
     }
 
     @Deprecated
-    public String getString(long llllllllllllllllllIIIIIIllllIlII, boolean llllllllllllllllllIIIIIIllllIIll) {
-        Pointer llllllllllllllllllIIIIIIlllllIII;
-        return llllllllllllllllllIIIIIIllllIIll ? llllllllllllllllllIIIIIIlllllIII.getWideString(llllllllllllllllllIIIIIIllllIlII) : llllllllllllllllllIIIIIIlllllIII.getString(llllllllllllllllllIIIIIIllllIlII);
+    public String getString(long l, boolean bl) {
+        return bl ? this.getWideString(l) : this.getString(l);
     }
 
-    public void write(long llllllllllllllllllIIIIIllIIllIlI, double[] llllllllllllllllllIIIIIllIIllIIl, int llllllllllllllllllIIIIIllIIllIII, int llllllllllllllllllIIIIIllIIlIlll) {
-        Pointer llllllllllllllllllIIIIIllIIllIll;
-        Native.write(llllllllllllllllllIIIIIllIIllIll, llllllllllllllllllIIIIIllIIllIll.peer, llllllllllllllllllIIIIIllIIllIlI, llllllllllllllllllIIIIIllIIllIIl, llllllllllllllllllIIIIIllIIllIII, llllllllllllllllllIIIIIllIIlIlll);
+    public void write(long l, double[] arrd, int n, int n2) {
+        Native.write(this, this.peer, l, arrd, n, n2);
     }
 
-    public void setFloat(long lllllllllllllllllIlllllllIIIllII, float lllllllllllllllllIlllllllIIIlIll) {
-        Pointer lllllllllllllllllIlllllllIIIllIl;
-        Native.setFloat(lllllllllllllllllIlllllllIIIllIl, lllllllllllllllllIlllllllIIIllIl.peer, lllllllllllllllllIlllllllIIIllII, lllllllllllllllllIlllllllIIIlIll);
+    public void setFloat(long l, float f) {
+        Native.setFloat(this, this.peer, l, f);
     }
 
-    public float getFloat(long llllllllllllllllllIIIIIlIIIlIIIl) {
-        Pointer llllllllllllllllllIIIIIlIIIlIIlI;
-        return Native.getFloat(llllllllllllllllllIIIIIlIIIlIIlI, llllllllllllllllllIIIIIlIIIlIIlI.peer, llllllllllllllllllIIIIIlIIIlIIIl);
+    public float getFloat(long l) {
+        return Native.getFloat(this, this.peer, l);
     }
 
-    public long indexOf(long llllllllllllllllllIIIIlIlIIIIIlI, byte llllllllllllllllllIIIIlIlIIIIIIl) {
-        Pointer llllllllllllllllllIIIIlIlIIIIllI;
-        return Native.indexOf(llllllllllllllllllIIIIlIlIIIIllI, llllllllllllllllllIIIIlIlIIIIllI.peer, llllllllllllllllllIIIIlIlIIIIIlI, llllllllllllllllllIIIIlIlIIIIIIl);
+    public long indexOf(long l, byte by) {
+        return Native.indexOf(this, this.peer, l, by);
     }
 
-    public void write(long llllllllllllllllllIIIIIlllIlIllI, char[] llllllllllllllllllIIIIIlllIlIlIl, int llllllllllllllllllIIIIIlllIlIlII, int llllllllllllllllllIIIIIlllIlIIll) {
-        Pointer llllllllllllllllllIIIIIlllIlIlll;
-        Native.write(llllllllllllllllllIIIIIlllIlIlll, llllllllllllllllllIIIIIlllIlIlll.peer, llllllllllllllllllIIIIIlllIlIllI, llllllllllllllllllIIIIIlllIlIlIl, llllllllllllllllllIIIIIlllIlIlII, llllllllllllllllllIIIIIlllIlIIll);
+    public void write(long l, char[] arrc, int n, int n2) {
+        Native.write(this, this.peer, l, arrc, n, n2);
     }
 
-    public String getString(long llllllllllllllllllIIIIIIlllIIIlI, String llllllllllllllllllIIIIIIlllIIIIl) {
-        Pointer llllllllllllllllllIIIIIIlllIIIll;
-        return Native.getString(llllllllllllllllllIIIIIIlllIIIll, llllllllllllllllllIIIIIIlllIIIlI, llllllllllllllllllIIIIIIlllIIIIl);
+    public String getString(long l, String string) {
+        return Native.getString(this, l, string);
     }
 
-    public void setChar(long lllllllllllllllllIlllllllIllIIll, char lllllllllllllllllIlllllllIllIIlI) {
-        Pointer lllllllllllllllllIlllllllIllIlII;
-        Native.setChar(lllllllllllllllllIlllllllIllIlII, lllllllllllllllllIlllllllIllIlII.peer, lllllllllllllllllIlllllllIllIIll, lllllllllllllllllIlllllllIllIIlI);
+    public void setChar(long l, char c) {
+        Native.setChar(this, this.peer, l, c);
     }
 
     Pointer() {
-        Pointer llllllllllllllllllIIIIlIlIlIllII;
     }
 
-    public void write(long llllllllllllllllllIIIIIllIlllIII, long[] llllllllllllllllllIIIIIllIllllII, int llllllllllllllllllIIIIIllIlllIll, int llllllllllllllllllIIIIIllIlllIlI) {
-        Pointer llllllllllllllllllIIIIIllIlllIIl;
-        Native.write(llllllllllllllllllIIIIIllIlllIIl, llllllllllllllllllIIIIIllIlllIIl.peer, llllllllllllllllllIIIIIllIlllIII, llllllllllllllllllIIIIIllIllllII, llllllllllllllllllIIIIIllIlllIll, llllllllllllllllllIIIIIllIlllIlI);
+    public void write(long l, long[] arrl, int n, int n2) {
+        Native.write(this, this.peer, l, arrl, n, n2);
     }
 
-    public boolean equals(Object llllllllllllllllllIIIIlIlIIIllll) {
-        Pointer llllllllllllllllllIIIIlIlIIIlllI;
-        if (llllllllllllllllllIIIIlIlIIIllll == llllllllllllllllllIIIIlIlIIIlllI) {
+    public boolean equals(Object object) {
+        if (object == this) {
             return true;
         }
-        if (llllllllllllllllllIIIIlIlIIIllll == null) {
+        if (object == null) {
             return false;
         }
-        return llllllllllllllllllIIIIlIlIIIllll instanceof Pointer && ((Pointer)llllllllllllllllllIIIIlIlIIIllll).peer == llllllllllllllllllIIIIlIlIIIlllI.peer;
+        return object instanceof Pointer && ((Pointer)object).peer == this.peer;
     }
 
-    public Pointer(long llllllllllllllllllIIIIlIlIlIIllI) {
-        Pointer llllllllllllllllllIIIIlIlIlIIlll;
-        llllllllllllllllllIIIIlIlIlIIlll.peer = llllllllllllllllllIIIIlIlIlIIllI;
+    public Pointer(long l) {
+        this.peer = l;
     }
 
     static {
-        SIZE = Native.POINTER_SIZE;
         if (SIZE == 0) {
             throw new Error("Native library not initialized");
         }
         NULL = null;
     }
 
-    public void setString(long lllllllllllllllllIllllllIlIIIllI, String lllllllllllllllllIllllllIlIIlIlI, String lllllllllllllllllIllllllIlIIIlII) {
-        Pointer lllllllllllllllllIllllllIlIIIlll;
-        byte[] lllllllllllllllllIllllllIlIIlIII = Native.getBytes(lllllllllllllllllIllllllIlIIlIlI, lllllllllllllllllIllllllIlIIIlII);
-        lllllllllllllllllIllllllIlIIIlll.write(lllllllllllllllllIllllllIlIIIllI, lllllllllllllllllIllllllIlIIlIII, 0, lllllllllllllllllIllllllIlIIlIII.length);
-        lllllllllllllllllIllllllIlIIIlll.setByte(lllllllllllllllllIllllllIlIIIllI + (long)lllllllllllllllllIllllllIlIIlIII.length, (byte)0);
+    public void setString(long l, String string, String string2) {
+        byte[] arrby = Native.getBytes(string, string2);
+        this.write(l, arrby, 0, arrby.length);
+        this.setByte(l + (long)arrby.length, (byte)0);
     }
 
-    public void setString(long lllllllllllllllllIllllllIlIlllII, WString lllllllllllllllllIllllllIlIllIll) {
-        Pointer lllllllllllllllllIllllllIllIIIII;
-        lllllllllllllllllIllllllIllIIIII.setWideString(lllllllllllllllllIllllllIlIlllII, lllllllllllllllllIllllllIlIllIll == null ? null : lllllllllllllllllIllllllIlIllIll.toString());
+    public void setString(long l, WString wString) {
+        this.setWideString(l, wString == null ? null : wString.toString());
     }
 
-    public void write(long llllllllllllllllllIIIIIlllllIlII, byte[] llllllllllllllllllIIIIIlllllIIll, int llllllllllllllllllIIIIIlllllIIlI, int llllllllllllllllllIIIIIlllllIIIl) {
-        Pointer llllllllllllllllllIIIIIllllllIlI;
-        Native.write(llllllllllllllllllIIIIIllllllIlI, llllllllllllllllllIIIIIllllllIlI.peer, llllllllllllllllllIIIIIlllllIlII, llllllllllllllllllIIIIIlllllIIll, llllllllllllllllllIIIIIlllllIIlI, llllllllllllllllllIIIIIlllllIIIl);
+    public void write(long l, byte[] arrby, int n, int n2) {
+        Native.write(this, this.peer, l, arrby, n, n2);
     }
 
-    public String dump(long lllllllllllllllllIllllllIIlIllll, int lllllllllllllllllIllllllIIllIlIl) {
-        int lllllllllllllllllIllllllIIllIlII = 4;
-        String lllllllllllllllllIllllllIIllIIll = "memory dump";
-        StringWriter lllllllllllllllllIllllllIIllIIlI = new StringWriter("memory dump".length() + 2 + lllllllllllllllllIllllllIIllIlIl * 2 + lllllllllllllllllIllllllIIllIlIl / 4 * 4);
-        PrintWriter lllllllllllllllllIllllllIIllIIIl = new PrintWriter(lllllllllllllllllIllllllIIllIIlI);
-        lllllllllllllllllIllllllIIllIIIl.println("memory dump");
-        for (int lllllllllllllllllIllllllIIlllIII = 0; lllllllllllllllllIllllllIIlllIII < lllllllllllllllllIllllllIIllIlIl; ++lllllllllllllllllIllllllIIlllIII) {
-            Pointer lllllllllllllllllIllllllIIllIlll;
-            byte lllllllllllllllllIllllllIIlllIIl = lllllllllllllllllIllllllIIllIlll.getByte(lllllllllllllllllIllllllIIlIllll + (long)lllllllllllllllllIllllllIIlllIII);
-            if (lllllllllllllllllIllllllIIlllIII % 4 == 0) {
-                lllllllllllllllllIllllllIIllIIIl.print("[");
+    public String dump(long l, int n) {
+        int n2 = 4;
+        String string = "memory dump";
+        StringWriter stringWriter = new StringWriter("memory dump".length() + 2 + n * 2 + n / 4 * 4);
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        printWriter.println("memory dump");
+        for (int i = 0; i < n; ++i) {
+            byte by = this.getByte(l + (long)i);
+            if (i % 4 == 0) {
+                printWriter.print("[");
             }
-            if (lllllllllllllllllIllllllIIlllIIl >= 0 && lllllllllllllllllIllllllIIlllIIl < 16) {
-                lllllllllllllllllIllllllIIllIIIl.print("0");
+            if (by >= 0 && by < 16) {
+                printWriter.print("0");
             }
-            lllllllllllllllllIllllllIIllIIIl.print(Integer.toHexString(lllllllllllllllllIllllllIIlllIIl & 0xFF));
-            if (lllllllllllllllllIllllllIIlllIII % 4 != 3 || lllllllllllllllllIllllllIIlllIII >= lllllllllllllllllIllllllIIllIlIl - 1) continue;
-            lllllllllllllllllIllllllIIllIIIl.println("]");
+            printWriter.print(Integer.toHexString(by & 0xFF));
+            if (i % 4 != 3 || i >= n - 1) continue;
+            printWriter.println("]");
+            if (2 == 2) continue;
+            return null;
         }
-        if (lllllllllllllllllIllllllIIllIIlI.getBuffer().charAt(lllllllllllllllllIllllllIIllIIlI.getBuffer().length() - 2) != ']') {
-            lllllllllllllllllIllllllIIllIIIl.println("]");
+        if (stringWriter.getBuffer().charAt(stringWriter.getBuffer().length() - 2) != ']') {
+            printWriter.println("]");
         }
-        return lllllllllllllllllIllllllIIllIIlI.toString();
+        return stringWriter.toString();
     }
 
-    public static long nativeValue(Pointer lllllllllllllllllIllllllIIlIIIlI) {
-        return lllllllllllllllllIllllllIIlIIIlI == null ? 0L : lllllllllllllllllIllllllIIlIIIlI.peer;
+    public static long nativeValue(Pointer pointer) {
+        return pointer == null ? 0L : pointer.peer;
     }
 
-    public Pointer getPointer(long llllllllllllllllllIIIIIlIIIIIlll) {
-        Pointer llllllllllllllllllIIIIIlIIIIlIII;
-        return Native.getPointer(llllllllllllllllllIIIIIlIIIIlIII.peer + llllllllllllllllllIIIIIlIIIIIlll);
+    public Pointer getPointer(long l) {
+        return Native.getPointer(this.peer + l);
     }
 
-    public void clear(long llllllllllllllllllIIIIlIlIIlIlIl) {
-        Pointer llllllllllllllllllIIIIlIlIIlIlII;
-        llllllllllllllllllIIIIlIlIIlIlII.setMemory(0L, llllllllllllllllllIIIIlIlIIlIlIl, (byte)0);
+    public void clear(long l) {
+        this.setMemory(0L, l, (byte)0);
     }
 
     public String toString() {
-        Pointer lllllllllllllllllIllllllIIlIIllI;
-        return String.valueOf(new StringBuilder().append("native@0x").append(Long.toHexString(lllllllllllllllllIllllllIIlIIllI.peer)));
+        return String.valueOf(new StringBuilder().append("native@0x").append(Long.toHexString(this.peer)));
     }
 
-    public String[] getStringArray(long llllllllllllllllllIIIIIIIIlIIlII, int llllllllllllllllllIIIIIIIIIlllII, String llllllllllllllllllIIIIIIIIIllIll) {
-        Pointer llllllllllllllllllIIIIIIIIIllllI;
-        ArrayList<String> llllllllllllllllllIIIIIIIIlIIIIl = new ArrayList<String>();
-        int llllllllllllllllllIIIIIIIIIlllll = 0;
-        if (llllllllllllllllllIIIIIIIIIlllII != -1) {
-            Pointer llllllllllllllllllIIIIIIIIlIIlll = llllllllllllllllllIIIIIIIIIllllI.getPointer(llllllllllllllllllIIIIIIIIlIIlII + (long)llllllllllllllllllIIIIIIIIIlllll);
-            int llllllllllllllllllIIIIIIIIlIlIII = 0;
-            while (llllllllllllllllllIIIIIIIIlIlIII++ < llllllllllllllllllIIIIIIIIIlllII) {
-                String llllllllllllllllllIIIIIIIIlIlIIl = llllllllllllllllllIIIIIIIIlIIlll == null ? null : ("--WIDE-STRING--".equals(llllllllllllllllllIIIIIIIIIllIll) ? llllllllllllllllllIIIIIIIIlIIlll.getWideString(0L) : llllllllllllllllllIIIIIIIIlIIlll.getString(0L, llllllllllllllllllIIIIIIIIIllIll));
-                llllllllllllllllllIIIIIIIIlIIIIl.add(llllllllllllllllllIIIIIIIIlIlIIl);
-                if (llllllllllllllllllIIIIIIIIlIlIII >= llllllllllllllllllIIIIIIIIIlllII) continue;
-                llllllllllllllllllIIIIIIIIlIIlll = llllllllllllllllllIIIIIIIIIllllI.getPointer(llllllllllllllllllIIIIIIIIlIIlII + (long)(llllllllllllllllllIIIIIIIIIlllll += SIZE));
+    public String[] getStringArray(long l, int n, String string) {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        int n2 = 0;
+        if (n != -1) {
+            Pointer pointer = this.getPointer(l + (long)n2);
+            int n3 = 0;
+            while (n3++ < n) {
+                String string2 = pointer == null ? null : ("--WIDE-STRING--".equals(string) ? pointer.getWideString(0L) : pointer.getString(0L, string));
+                arrayList.add(string2);
+                if (n3 >= n) continue;
+                pointer = this.getPointer(l + (long)(n2 += SIZE));
             }
         } else {
-            Pointer llllllllllllllllllIIIIIIIIlIIIII;
-            while ((llllllllllllllllllIIIIIIIIlIIIII = llllllllllllllllllIIIIIIIIIllllI.getPointer(llllllllllllllllllIIIIIIIIlIIlII + (long)llllllllllllllllllIIIIIIIIIlllll)) != null) {
-                String llllllllllllllllllIIIIIIIIlIIllI = llllllllllllllllllIIIIIIIIlIIIII == null ? null : ("--WIDE-STRING--".equals(llllllllllllllllllIIIIIIIIIllIll) ? llllllllllllllllllIIIIIIIIlIIIII.getWideString(0L) : llllllllllllllllllIIIIIIIIlIIIII.getString(0L, llllllllllllllllllIIIIIIIIIllIll));
-                llllllllllllllllllIIIIIIIIlIIIIl.add(llllllllllllllllllIIIIIIIIlIIllI);
-                llllllllllllllllllIIIIIIIIIlllll += SIZE;
+            Pointer pointer;
+            while ((pointer = this.getPointer(l + (long)n2)) != null) {
+                String string3 = pointer == null ? null : ("--WIDE-STRING--".equals(string) ? pointer.getWideString(0L) : pointer.getString(0L, string));
+                arrayList.add(string3);
+                n2 += SIZE;
             }
         }
-        return llllllllllllllllllIIIIIIIIlIIIIl.toArray(new String[llllllllllllllllllIIIIIIIIlIIIIl.size()]);
+        return arrayList.toArray(new String[arrayList.size()]);
     }
 
-    public long getLong(long llllllllllllllllllIIIIIlIIIlllll) {
-        Pointer llllllllllllllllllIIIIIlIIlIIIII;
-        return Native.getLong(llllllllllllllllllIIIIIlIIlIIIII, llllllllllllllllllIIIIIlIIlIIIII.peer, llllllllllllllllllIIIIIlIIIlllll);
+    public long getLong(long l) {
+        return Native.getLong(this, this.peer, l);
     }
 
-    public Pointer share(long llllllllllllllllllIIIIlIlIIllIIl, long llllllllllllllllllIIIIlIlIIllIll) {
-        Pointer llllllllllllllllllIIIIlIlIIllIlI;
-        if (llllllllllllllllllIIIIlIlIIllIIl == 0L) {
-            return llllllllllllllllllIIIIlIlIIllIlI;
+    public Pointer share(long l, long l2) {
+        if (l == 0L) {
+            return this;
         }
-        return new Pointer(llllllllllllllllllIIIIlIlIIllIlI.peer + llllllllllllllllllIIIIlIlIIllIIl);
+        return new Pointer(this.peer + l);
     }
 
-    Object getValue(long llllllllllllllllllIIIIIlIllIllIl, Class<?> llllllllllllllllllIIIIIlIllIIlll, Object llllllllllllllllllIIIIIlIllIlIll) {
-        Pointer llllllllllllllllllIIIIIlIllIlIIl;
-        Object llllllllllllllllllIIIIIlIllIlIlI = null;
-        if (Structure.class.isAssignableFrom(llllllllllllllllllIIIIIlIllIIlll)) {
-            Structure llllllllllllllllllIIIIIlIlllllII = (Structure)llllllllllllllllllIIIIIlIllIlIll;
-            if (Structure.ByReference.class.isAssignableFrom(llllllllllllllllllIIIIIlIllIIlll)) {
-                llllllllllllllllllIIIIIlIlllllII = Structure.updateStructureByReference(llllllllllllllllllIIIIIlIllIIlll, llllllllllllllllllIIIIIlIlllllII, llllllllllllllllllIIIIIlIllIlIIl.getPointer(llllllllllllllllllIIIIIlIllIllIl));
+    Object getValue(long l, Class<?> class_, Object object) {
+        Object object2 = null;
+        if (Structure.class.isAssignableFrom(class_)) {
+            Structure structure = (Structure)object;
+            if (Structure.ByReference.class.isAssignableFrom(class_)) {
+                structure = Structure.updateStructureByReference(class_, structure, this.getPointer(l));
             } else {
-                llllllllllllllllllIIIIIlIlllllII.useMemory(llllllllllllllllllIIIIIlIllIlIIl, (int)llllllllllllllllllIIIIIlIllIllIl, true);
-                llllllllllllllllllIIIIIlIlllllII.read();
+                structure.useMemory(this, (int)l, true);
+                structure.read();
             }
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIlllllII;
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Boolean.TYPE || llllllllllllllllllIIIIIlIllIIlll == Boolean.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = Function.valueOf(llllllllllllllllllIIIIIlIllIlIIl.getInt(llllllllllllllllllIIIIIlIllIllIl) != 0);
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Byte.TYPE || llllllllllllllllllIIIIIlIllIIlll == Byte.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIlIIl.getByte(llllllllllllllllllIIIIIlIllIllIl);
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Short.TYPE || llllllllllllllllllIIIIIlIllIIlll == Short.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIlIIl.getShort(llllllllllllllllllIIIIIlIllIllIl);
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Character.TYPE || llllllllllllllllllIIIIIlIllIIlll == Character.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = Character.valueOf(llllllllllllllllllIIIIIlIllIlIIl.getChar(llllllllllllllllllIIIIIlIllIllIl));
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Integer.TYPE || llllllllllllllllllIIIIIlIllIIlll == Integer.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIlIIl.getInt(llllllllllllllllllIIIIIlIllIllIl);
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Long.TYPE || llllllllllllllllllIIIIIlIllIIlll == Long.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIlIIl.getLong(llllllllllllllllllIIIIIlIllIllIl);
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Float.TYPE || llllllllllllllllllIIIIIlIllIIlll == Float.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = Float.valueOf(llllllllllllllllllIIIIIlIllIlIIl.getFloat(llllllllllllllllllIIIIIlIllIllIl));
-        } else if (llllllllllllllllllIIIIIlIllIIlll == Double.TYPE || llllllllllllllllllIIIIIlIllIIlll == Double.class) {
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIlIIl.getDouble(llllllllllllllllllIIIIIlIllIllIl);
-        } else if (Pointer.class.isAssignableFrom(llllllllllllllllllIIIIIlIllIIlll)) {
-            Pointer llllllllllllllllllIIIIIlIllllIlI = llllllllllllllllllIIIIIlIllIlIIl.getPointer(llllllllllllllllllIIIIIlIllIllIl);
-            if (llllllllllllllllllIIIIIlIllllIlI != null) {
-                Pointer llllllllllllllllllIIIIIlIllllIll;
-                Pointer pointer = llllllllllllllllllIIIIIlIllllIll = llllllllllllllllllIIIIIlIllIlIll instanceof Pointer ? (Pointer)llllllllllllllllllIIIIIlIllIlIll : null;
-                llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllllIll == null || llllllllllllllllllIIIIIlIllllIlI.peer != llllllllllllllllllIIIIIlIllllIll.peer ? llllllllllllllllllIIIIIlIllllIlI : llllllllllllllllllIIIIIlIllllIll;
+            object2 = structure;
+        } else if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+            object2 = Function.valueOf(this.getInt(l) != 0);
+        } else if (class_ == Byte.TYPE || class_ == Byte.class) {
+            object2 = this.getByte(l);
+        } else if (class_ == Short.TYPE || class_ == Short.class) {
+            object2 = this.getShort(l);
+        } else if (class_ == Character.TYPE || class_ == Character.class) {
+            object2 = Character.valueOf(this.getChar(l));
+        } else if (class_ == Integer.TYPE || class_ == Integer.class) {
+            object2 = this.getInt(l);
+        } else if (class_ == Long.TYPE || class_ == Long.class) {
+            object2 = this.getLong(l);
+        } else if (class_ == Float.TYPE || class_ == Float.class) {
+            object2 = Float.valueOf(this.getFloat(l));
+        } else if (class_ == Double.TYPE || class_ == Double.class) {
+            object2 = this.getDouble(l);
+        } else if (Pointer.class.isAssignableFrom(class_)) {
+            Pointer pointer = this.getPointer(l);
+            if (pointer != null) {
+                Pointer pointer2;
+                Pointer pointer3 = pointer2 = object instanceof Pointer ? (Pointer)object : null;
+                object2 = pointer2 == null || pointer.peer != pointer2.peer ? pointer : pointer2;
             }
-        } else if (llllllllllllllllllIIIIIlIllIIlll == String.class) {
-            Pointer llllllllllllllllllIIIIIlIllllIIl = llllllllllllllllllIIIIIlIllIlIIl.getPointer(llllllllllllllllllIIIIIlIllIllIl);
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllllIIl != null ? llllllllllllllllllIIIIIlIllllIIl.getString(0L) : null;
-        } else if (llllllllllllllllllIIIIIlIllIIlll == WString.class) {
-            Pointer llllllllllllllllllIIIIIlIllllIII = llllllllllllllllllIIIIIlIllIlIIl.getPointer(llllllllllllllllllIIIIIlIllIllIl);
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllllIII != null ? new WString(llllllllllllllllllIIIIIlIllllIII.getWideString(0L)) : null;
-        } else if (Callback.class.isAssignableFrom(llllllllllllllllllIIIIIlIllIIlll)) {
-            Pointer llllllllllllllllllIIIIIlIlllIlIl = llllllllllllllllllIIIIIlIllIlIIl.getPointer(llllllllllllllllllIIIIIlIllIllIl);
-            if (llllllllllllllllllIIIIIlIlllIlIl == null) {
-                llllllllllllllllllIIIIIlIllIlIlI = null;
+        } else if (class_ == String.class) {
+            Pointer pointer = this.getPointer(l);
+            object2 = pointer != null ? pointer.getString(0L) : null;
+        } else if (class_ == WString.class) {
+            Pointer pointer = this.getPointer(l);
+            object2 = pointer != null ? new WString(pointer.getWideString(0L)) : null;
+        } else if (Callback.class.isAssignableFrom(class_)) {
+            Pointer pointer = this.getPointer(l);
+            if (pointer == null) {
+                object2 = null;
             } else {
-                Callback llllllllllllllllllIIIIIlIlllIlll = (Callback)llllllllllllllllllIIIIIlIllIlIll;
-                Pointer llllllllllllllllllIIIIIlIlllIllI = CallbackReference.getFunctionPointer(llllllllllllllllllIIIIIlIlllIlll);
-                if (!llllllllllllllllllIIIIIlIlllIlIl.equals(llllllllllllllllllIIIIIlIlllIllI)) {
-                    llllllllllllllllllIIIIIlIlllIlll = CallbackReference.getCallback(llllllllllllllllllIIIIIlIllIIlll, llllllllllllllllllIIIIIlIlllIlIl);
+                Callback callback = (Callback)object;
+                Pointer pointer4 = CallbackReference.getFunctionPointer(callback);
+                if (!pointer.equals(pointer4)) {
+                    callback = CallbackReference.getCallback(class_, pointer);
                 }
-                llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIlllIlll;
+                object2 = callback;
             }
-        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(llllllllllllllllllIIIIIlIllIIlll)) {
-            Pointer llllllllllllllllllIIIIIlIlllIIll = llllllllllllllllllIIIIIlIllIlIIl.getPointer(llllllllllllllllllIIIIIlIllIllIl);
-            if (llllllllllllllllllIIIIIlIlllIIll == null) {
-                llllllllllllllllllIIIIIlIllIlIlI = null;
+        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(class_)) {
+            Pointer pointer = this.getPointer(l);
+            if (pointer == null) {
+                object2 = null;
             } else {
-                Pointer llllllllllllllllllIIIIIlIlllIlII;
-                Pointer pointer = llllllllllllllllllIIIIIlIlllIlII = llllllllllllllllllIIIIIlIllIlIll == null ? null : Native.getDirectBufferPointer((Buffer)llllllllllllllllllIIIIIlIllIlIll);
-                if (llllllllllllllllllIIIIIlIlllIlII == null || !llllllllllllllllllIIIIIlIlllIlII.equals(llllllllllllllllllIIIIIlIlllIIll)) {
+                Pointer pointer5;
+                Pointer pointer6 = pointer5 = object == null ? null : Native.getDirectBufferPointer((Buffer)object);
+                if (pointer5 == null || !pointer5.equals(pointer)) {
                     throw new IllegalStateException("Can't autogenerate a direct buffer on memory read");
                 }
-                llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIlIll;
+                object2 = object;
             }
-        } else if (NativeMapped.class.isAssignableFrom(llllllllllllllllllIIIIIlIllIIlll)) {
-            NativeMapped llllllllllllllllllIIIIIlIllIllll = (NativeMapped)llllllllllllllllllIIIIIlIllIlIll;
-            if (llllllllllllllllllIIIIIlIllIllll != null) {
-                Object llllllllllllllllllIIIIIlIlllIIlI = llllllllllllllllllIIIIIlIllIlIIl.getValue(llllllllllllllllllIIIIIlIllIllIl, llllllllllllllllllIIIIIlIllIllll.nativeType(), null);
-                llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIllll.fromNative(llllllllllllllllllIIIIIlIlllIIlI, new FromNativeContext(llllllllllllllllllIIIIIlIllIIlll));
-                if (llllllllllllllllllIIIIIlIllIllll.equals(llllllllllllllllllIIIIIlIllIlIlI)) {
-                    llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIllll;
+        } else if (NativeMapped.class.isAssignableFrom(class_)) {
+            NativeMapped nativeMapped = (NativeMapped)object;
+            if (nativeMapped != null) {
+                Object object3 = this.getValue(l, nativeMapped.nativeType(), null);
+                object2 = nativeMapped.fromNative(object3, new FromNativeContext(class_));
+                if (nativeMapped.equals(object2)) {
+                    object2 = nativeMapped;
                 }
             } else {
-                NativeMappedConverter llllllllllllllllllIIIIIlIlllIIIl = NativeMappedConverter.getInstance(llllllllllllllllllIIIIIlIllIIlll);
-                Object llllllllllllllllllIIIIIlIlllIIII = llllllllllllllllllIIIIIlIllIlIIl.getValue(llllllllllllllllllIIIIIlIllIllIl, llllllllllllllllllIIIIIlIlllIIIl.nativeType(), null);
-                llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIlllIIIl.fromNative(llllllllllllllllllIIIIIlIlllIIII, new FromNativeContext(llllllllllllllllllIIIIIlIllIIlll));
+                NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+                Object object4 = this.getValue(l, nativeMappedConverter.nativeType(), null);
+                object2 = nativeMappedConverter.fromNative(object4, new FromNativeContext(class_));
             }
-        } else if (llllllllllllllllllIIIIIlIllIIlll.isArray()) {
-            llllllllllllllllllIIIIIlIllIlIlI = llllllllllllllllllIIIIIlIllIlIll;
-            if (llllllllllllllllllIIIIIlIllIlIlI == null) {
+        } else if (class_.isArray()) {
+            object2 = object;
+            if (object2 == null) {
                 throw new IllegalStateException("Need an initialized array");
             }
-            llllllllllllllllllIIIIIlIllIlIIl.readArray(llllllllllllllllllIIIIIlIllIllIl, llllllllllllllllllIIIIIlIllIlIlI, llllllllllllllllllIIIIIlIllIIlll.getComponentType());
+            this.readArray(l, object2, class_.getComponentType());
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading \"").append(llllllllllllllllllIIIIIlIllIIlll).append("\" from memory is not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading \"").append(class_).append("\" from memory is not supported")));
         }
-        return llllllllllllllllllIIIIIlIllIlIlI;
+        return object2;
     }
 
-    public int getInt(long llllllllllllllllllIIIIIlIIlIIlIl) {
-        Pointer llllllllllllllllllIIIIIlIIlIIlII;
-        return Native.getInt(llllllllllllllllllIIIIIlIIlIIlII, llllllllllllllllllIIIIIlIIlIIlII.peer, llllllllllllllllllIIIIIlIIlIIlIl);
+    public int getInt(long l) {
+        return Native.getInt(this, this.peer, l);
     }
 
-    public char getChar(long llllllllllllllllllIIIIIlIIllIIIl) {
-        Pointer llllllllllllllllllIIIIIlIIllIIlI;
-        return Native.getChar(llllllllllllllllllIIIIIlIIllIIlI, llllllllllllllllllIIIIIlIIllIIlI.peer, llllllllllllllllllIIIIIlIIllIIIl);
+    public char getChar(long l) {
+        return Native.getChar(this, this.peer, l);
     }
 
-    public void write(long llllllllllllllllllIIIIIllllIIlIl, short[] llllllllllllllllllIIIIIllllIlIIl, int llllllllllllllllllIIIIIllllIlIII, int llllllllllllllllllIIIIIllllIIlll) {
-        Pointer llllllllllllllllllIIIIIllllIIllI;
-        Native.write(llllllllllllllllllIIIIIllllIIllI, llllllllllllllllllIIIIIllllIIllI.peer, llllllllllllllllllIIIIIllllIIlIl, llllllllllllllllllIIIIIllllIlIIl, llllllllllllllllllIIIIIllllIlIII, llllllllllllllllllIIIIIllllIIlll);
+    public void write(long l, short[] arrs, int n, int n2) {
+        Native.write(this, this.peer, l, arrs, n, n2);
     }
 
-    void setValue(long llllllllllllllllllIIIIIIIIIIIllI, Object llllllllllllllllllIIIIIIIIIIlIIl, Class<?> llllllllllllllllllIIIIIIIIIIlIII) {
-        Pointer llllllllllllllllllIIIIIIIIIIlIll;
-        if (llllllllllllllllllIIIIIIIIIIlIII == Boolean.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Boolean.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setInt(llllllllllllllllllIIIIIIIIIIIllI, Boolean.TRUE.equals(llllllllllllllllllIIIIIIIIIIlIIl) ? -1 : 0);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Byte.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Byte.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setByte(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl == null ? (byte)0 : (Byte)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Short.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Short.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setShort(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl == null ? (short)0 : (Short)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Character.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Character.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setChar(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl == null ? (char)'\u0000' : ((Character)llllllllllllllllllIIIIIIIIIIlIIl).charValue());
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Integer.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Integer.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setInt(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl == null ? 0 : (Integer)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Long.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Long.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setLong(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl == null ? 0L : (Long)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Float.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Float.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setFloat(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl == null ? 0.0f : ((Float)llllllllllllllllllIIIIIIIIIIlIIl).floatValue());
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Double.TYPE || llllllllllllllllllIIIIIIIIIIlIII == Double.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setDouble(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl == null ? 0.0 : (Double)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == Pointer.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setPointer(llllllllllllllllllIIIIIIIIIIIllI, (Pointer)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == String.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setPointer(llllllllllllllllllIIIIIIIIIIIllI, (Pointer)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII == WString.class) {
-            llllllllllllllllllIIIIIIIIIIlIll.setPointer(llllllllllllllllllIIIIIIIIIIIllI, (Pointer)llllllllllllllllllIIIIIIIIIIlIIl);
-        } else if (Structure.class.isAssignableFrom(llllllllllllllllllIIIIIIIIIIlIII)) {
-            Structure llllllllllllllllllIIIIIIIIIIllll = (Structure)llllllllllllllllllIIIIIIIIIIlIIl;
-            if (Structure.ByReference.class.isAssignableFrom(llllllllllllllllllIIIIIIIIIIlIII)) {
-                llllllllllllllllllIIIIIIIIIIlIll.setPointer(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIllll == null ? null : llllllllllllllllllIIIIIIIIIIllll.getPointer());
-                if (llllllllllllllllllIIIIIIIIIIllll != null) {
-                    llllllllllllllllllIIIIIIIIIIllll.autoWrite();
+    void setValue(long l, Object object, Class<?> class_) {
+        if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+            this.setInt(l, Boolean.TRUE.equals(object) ? -1 : 0);
+        } else if (class_ == Byte.TYPE || class_ == Byte.class) {
+            this.setByte(l, object == null ? (byte)0 : (Byte)object);
+        } else if (class_ == Short.TYPE || class_ == Short.class) {
+            this.setShort(l, object == null ? (short)0 : (Short)object);
+        } else if (class_ == Character.TYPE || class_ == Character.class) {
+            this.setChar(l, object == null ? (char)'\u0000' : ((Character)object).charValue());
+        } else if (class_ == Integer.TYPE || class_ == Integer.class) {
+            this.setInt(l, object == null ? 0 : (Integer)object);
+        } else if (class_ == Long.TYPE || class_ == Long.class) {
+            this.setLong(l, object == null ? 0L : (Long)object);
+        } else if (class_ == Float.TYPE || class_ == Float.class) {
+            this.setFloat(l, object == null ? 0.0f : ((Float)object).floatValue());
+        } else if (class_ == Double.TYPE || class_ == Double.class) {
+            this.setDouble(l, object == null ? 0.0 : (Double)object);
+        } else if (class_ == Pointer.class) {
+            this.setPointer(l, (Pointer)object);
+        } else if (class_ == String.class) {
+            this.setPointer(l, (Pointer)object);
+        } else if (class_ == WString.class) {
+            this.setPointer(l, (Pointer)object);
+        } else if (Structure.class.isAssignableFrom(class_)) {
+            Structure structure = (Structure)object;
+            if (Structure.ByReference.class.isAssignableFrom(class_)) {
+                this.setPointer(l, structure == null ? null : structure.getPointer());
+                if (structure != null) {
+                    structure.autoWrite();
                 }
             } else {
-                llllllllllllllllllIIIIIIIIIIllll.useMemory(llllllllllllllllllIIIIIIIIIIlIll, (int)llllllllllllllllllIIIIIIIIIIIllI, true);
-                llllllllllllllllllIIIIIIIIIIllll.write();
+                structure.useMemory(this, (int)l, true);
+                structure.write();
             }
-        } else if (Callback.class.isAssignableFrom(llllllllllllllllllIIIIIIIIIIlIII)) {
-            llllllllllllllllllIIIIIIIIIIlIll.setPointer(llllllllllllllllllIIIIIIIIIIIllI, CallbackReference.getFunctionPointer((Callback)llllllllllllllllllIIIIIIIIIIlIIl));
-        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(llllllllllllllllllIIIIIIIIIIlIII)) {
-            Pointer llllllllllllllllllIIIIIIIIIIlllI = llllllllllllllllllIIIIIIIIIIlIIl == null ? null : Native.getDirectBufferPointer((Buffer)llllllllllllllllllIIIIIIIIIIlIIl);
-            llllllllllllllllllIIIIIIIIIIlIll.setPointer(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlllI);
-        } else if (NativeMapped.class.isAssignableFrom(llllllllllllllllllIIIIIIIIIIlIII)) {
-            NativeMappedConverter llllllllllllllllllIIIIIIIIIIllIl = NativeMappedConverter.getInstance(llllllllllllllllllIIIIIIIIIIlIII);
-            Class<?> llllllllllllllllllIIIIIIIIIIllII = llllllllllllllllllIIIIIIIIIIllIl.nativeType();
-            llllllllllllllllllIIIIIIIIIIlIll.setValue(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIllIl.toNative(llllllllllllllllllIIIIIIIIIIlIIl, new ToNativeContext()), llllllllllllllllllIIIIIIIIIIllII);
-        } else if (llllllllllllllllllIIIIIIIIIIlIII.isArray()) {
-            llllllllllllllllllIIIIIIIIIIlIll.writeArray(llllllllllllllllllIIIIIIIIIIIllI, llllllllllllllllllIIIIIIIIIIlIIl, llllllllllllllllllIIIIIIIIIIlIII.getComponentType());
+        } else if (Callback.class.isAssignableFrom(class_)) {
+            this.setPointer(l, CallbackReference.getFunctionPointer((Callback)object));
+        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(class_)) {
+            Pointer pointer = object == null ? null : Native.getDirectBufferPointer((Buffer)object);
+            this.setPointer(l, pointer);
+        } else if (NativeMapped.class.isAssignableFrom(class_)) {
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+            Class<?> class_2 = nativeMappedConverter.nativeType();
+            this.setValue(l, nativeMappedConverter.toNative(object, new ToNativeContext()), class_2);
+        } else if (class_.isArray()) {
+            this.writeArray(l, object, class_.getComponentType());
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing ").append(llllllllllllllllllIIIIIIIIIIlIII).append(" to memory is not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing ").append(class_).append(" to memory is not supported")));
         }
     }
 
-    public void setDouble(long lllllllllllllllllIlllllllIIIIllI, double lllllllllllllllllIlllllllIIIIlIl) {
-        Pointer lllllllllllllllllIlllllllIIIIlll;
-        Native.setDouble(lllllllllllllllllIlllllllIIIIlll, lllllllllllllllllIlllllllIIIIlll.peer, lllllllllllllllllIlllllllIIIIllI, lllllllllllllllllIlllllllIIIIlIl);
+    public void setDouble(long l, double d) {
+        Native.setDouble(this, this.peer, l, d);
     }
 
-    public NativeLong getNativeLong(long llllllllllllllllllIIIIIlIIIllIIl) {
-        Pointer llllllllllllllllllIIIIIlIIIllIII;
-        return new NativeLong(NativeLong.SIZE == 8 ? llllllllllllllllllIIIIIlIIIllIII.getLong(llllllllllllllllllIIIIIlIIIllIIl) : (long)llllllllllllllllllIIIIIlIIIllIII.getInt(llllllllllllllllllIIIIIlIIIllIIl));
+    public NativeLong getNativeLong(long l) {
+        return new NativeLong(NativeLong.SIZE == 8 ? this.getLong(l) : (long)this.getInt(l));
     }
 
-    public Pointer[] getPointerArray(long llllllllllllllllllIIIIIIIlllIlIl, int llllllllllllllllllIIIIIIIlllIIII) {
-        Pointer llllllllllllllllllIIIIIIIlllIllI;
-        Pointer[] llllllllllllllllllIIIIIIIlllIIll = new Pointer[llllllllllllllllllIIIIIIIlllIIII];
-        llllllllllllllllllIIIIIIIlllIllI.read(llllllllllllllllllIIIIIIIlllIlIl, llllllllllllllllllIIIIIIIlllIIll, 0, llllllllllllllllllIIIIIIIlllIIII);
-        return llllllllllllllllllIIIIIIIlllIIll;
+    public Pointer[] getPointerArray(long l, int n) {
+        Pointer[] arrpointer = new Pointer[n];
+        this.read(l, arrpointer, 0, n);
+        return arrpointer;
     }
 
-    public Pointer share(long llllllllllllllllllIIIIlIlIlIIIlI) {
-        Pointer llllllllllllllllllIIIIlIlIlIIIIl;
-        return llllllllllllllllllIIIIlIlIlIIIIl.share(llllllllllllllllllIIIIlIlIlIIIlI, 0L);
+    public Pointer share(long l) {
+        return this.share(l, 0L);
     }
 
-    public String[] getWideStringArray(long llllllllllllllllllIIIIIIIlIIIIII, int llllllllllllllllllIIIIIIIIllllll) {
-        Pointer llllllllllllllllllIIIIIIIlIIIlII;
-        return llllllllllllllllllIIIIIIIlIIIlII.getStringArray(llllllllllllllllllIIIIIIIlIIIIII, llllllllllllllllllIIIIIIIIllllll, "--WIDE-STRING--");
+    public String[] getWideStringArray(long l, int n) {
+        return this.getStringArray(l, n, "--WIDE-STRING--");
     }
 
-    public void setPointer(long lllllllllllllllllIllllllIlllllIl, Pointer lllllllllllllllllIllllllIllllIIl) {
-        Pointer lllllllllllllllllIllllllIllllIll;
-        Native.setPointer(lllllllllllllllllIllllllIllllIll, lllllllllllllllllIllllllIllllIll.peer, lllllllllllllllllIllllllIlllllIl, lllllllllllllllllIllllllIllllIIl != null ? lllllllllllllllllIllllllIllllIIl.peer : 0L);
+    public void setPointer(long l, Pointer pointer) {
+        Native.setPointer(this, this.peer, l, pointer != null ? pointer.peer : 0L);
     }
 
-    public ByteBuffer getByteBuffer(long llllllllllllllllllIIIIIIllllllIl, long llllllllllllllllllIIIIIIllllllII) {
-        Pointer llllllllllllllllllIIIIIIlllllllI;
-        return Native.getDirectByteBuffer(llllllllllllllllllIIIIIIlllllllI, llllllllllllllllllIIIIIIlllllllI.peer, llllllllllllllllllIIIIIIllllllIl, llllllllllllllllllIIIIIIllllllII).order(ByteOrder.nativeOrder());
+    public ByteBuffer getByteBuffer(long l, long l2) {
+        return Native.getDirectByteBuffer(this, this.peer, l, l2).order(ByteOrder.nativeOrder());
     }
 
     @Deprecated
-    public String[] getStringArray(long llllllllllllllllllIIIIIIIlIIllll, boolean llllllllllllllllllIIIIIIIlIlIIIl) {
-        Pointer llllllllllllllllllIIIIIIIlIlIIll;
-        return llllllllllllllllllIIIIIIIlIlIIll.getStringArray(llllllllllllllllllIIIIIIIlIIllll, -1, llllllllllllllllllIIIIIIIlIlIIIl);
+    public String[] getStringArray(long l, boolean bl) {
+        return this.getStringArray(l, -1, bl);
     }
 
-    public void read(long llllllllllllllllllIIIIlIIlIlllII, char[] llllllllllllllllllIIIIlIIlIlIllI, int llllllllllllllllllIIIIlIIlIllIlI, int llllllllllllllllllIIIIlIIlIlIlII) {
-        Pointer llllllllllllllllllIIIIlIIlIlllIl;
-        Native.read(llllllllllllllllllIIIIlIIlIlllIl, llllllllllllllllllIIIIlIIlIlllIl.peer, llllllllllllllllllIIIIlIIlIlllII, llllllllllllllllllIIIIlIIlIlIllI, llllllllllllllllllIIIIlIIlIllIlI, llllllllllllllllllIIIIlIIlIlIlII);
+    public void read(long l, char[] arrc, int n, int n2) {
+        Native.read(this, this.peer, l, arrc, n, n2);
     }
 
     @Deprecated
-    public void setString(long lllllllllllllllllIllllllIllIllll, String lllllllllllllllllIllllllIlllIIlI, boolean lllllllllllllllllIllllllIllIllIl) {
-        Pointer lllllllllllllllllIllllllIlllIIII;
-        if (lllllllllllllllllIllllllIllIllIl) {
-            lllllllllllllllllIllllllIlllIIII.setWideString(lllllllllllllllllIllllllIllIllll, lllllllllllllllllIllllllIlllIIlI);
+    public void setString(long l, String string, boolean bl) {
+        if (bl) {
+            this.setWideString(l, string);
         } else {
-            lllllllllllllllllIllllllIlllIIII.setString(lllllllllllllllllIllllllIllIllll, lllllllllllllllllIllllllIlllIIlI);
+            this.setString(l, string);
         }
     }
 
-    public void setString(long lllllllllllllllllIllllllIlIlIllI, String lllllllllllllllllIllllllIlIlIIlI) {
-        Pointer lllllllllllllllllIllllllIlIlIlll;
-        lllllllllllllllllIllllllIlIlIlll.setString(lllllllllllllllllIllllllIlIlIllI, lllllllllllllllllIllllllIlIlIIlI, Native.getDefaultStringEncoding());
+    public void setString(long l, String string) {
+        this.setString(l, string, Native.getDefaultStringEncoding());
     }
 
-    public double[] getDoubleArray(long llllllllllllllllllIIIIIIlIIlIIII, int llllllllllllllllllIIIIIIlIIIlIll) {
-        Pointer llllllllllllllllllIIIIIIlIIIllIl;
-        double[] llllllllllllllllllIIIIIIlIIIlllI = new double[llllllllllllllllllIIIIIIlIIIlIll];
-        llllllllllllllllllIIIIIIlIIIllIl.read(llllllllllllllllllIIIIIIlIIlIIII, llllllllllllllllllIIIIIIlIIIlllI, 0, llllllllllllllllllIIIIIIlIIIlIll);
-        return llllllllllllllllllIIIIIIlIIIlllI;
+    public double[] getDoubleArray(long l, int n) {
+        double[] arrd = new double[n];
+        this.read(l, arrd, 0, n);
+        return arrd;
     }
 
-    public void read(long llllllllllllllllllIIIIlIIllIIllI, short[] llllllllllllllllllIIIIlIIllIIlIl, int llllllllllllllllllIIIIlIIllIIlII, int llllllllllllllllllIIIIlIIllIlIII) {
-        Pointer llllllllllllllllllIIIIlIIllIllII;
-        Native.read(llllllllllllllllllIIIIlIIllIllII, llllllllllllllllllIIIIlIIllIllII.peer, llllllllllllllllllIIIIlIIllIIllI, llllllllllllllllllIIIIlIIllIIlIl, llllllllllllllllllIIIIlIIllIIlII, llllllllllllllllllIIIIlIIllIlIII);
+    public void read(long l, short[] arrs, int n, int n2) {
+        Native.read(this, this.peer, l, arrs, n, n2);
     }
 
-    public void write(long llllllllllllllllllIIIIIlllIIllII, int[] llllllllllllllllllIIIIIlllIIIllI, int llllllllllllllllllIIIIIlllIIlIlI, int llllllllllllllllllIIIIIlllIIlIIl) {
-        Pointer llllllllllllllllllIIIIIlllIIlIII;
-        Native.write(llllllllllllllllllIIIIIlllIIlIII, llllllllllllllllllIIIIIlllIIlIII.peer, llllllllllllllllllIIIIIlllIIllII, llllllllllllllllllIIIIIlllIIIllI, llllllllllllllllllIIIIIlllIIlIlI, llllllllllllllllllIIIIIlllIIlIIl);
+    public void write(long l, int[] arrn, int n, int n2) {
+        Native.write(this, this.peer, l, arrn, n, n2);
     }
 
-    public String[] getStringArray(long llllllllllllllllllIIIIIIIllIIlII, String llllllllllllllllllIIIIIIIllIIIII) {
-        Pointer llllllllllllllllllIIIIIIIllIIlIl;
-        return llllllllllllllllllIIIIIIIllIIlIl.getStringArray(llllllllllllllllllIIIIIIIllIIlII, -1, llllllllllllllllllIIIIIIIllIIIII);
+    public String[] getStringArray(long l, String string) {
+        return this.getStringArray(l, -1, string);
     }
 
-    public String[] getStringArray(long llllllllllllllllllIIIIIIIlIllIll, int llllllllllllllllllIIIIIIIlIlIlll) {
-        Pointer llllllllllllllllllIIIIIIIlIlllII;
-        return llllllllllllllllllIIIIIIIlIlllII.getStringArray(llllllllllllllllllIIIIIIIlIllIll, llllllllllllllllllIIIIIIIlIlIlll, Native.getDefaultStringEncoding());
+    public String[] getStringArray(long l, int n) {
+        return this.getStringArray(l, n, Native.getDefaultStringEncoding());
     }
 
-    public void setMemory(long lllllllllllllllllIllllllllIlIIII, long lllllllllllllllllIllllllllIIllll, byte lllllllllllllllllIllllllllIIlIlI) {
-        Pointer lllllllllllllllllIllllllllIIllIl;
-        Native.setMemory(lllllllllllllllllIllllllllIIllIl, lllllllllllllllllIllllllllIIllIl.peer, lllllllllllllllllIllllllllIlIIII, lllllllllllllllllIllllllllIIllll, lllllllllllllllllIllllllllIIlIlI);
+    public void setMemory(long l, long l2, byte by) {
+        Native.setMemory(this, this.peer, l, l2, by);
     }
 
-    public int[] getIntArray(long llllllllllllllllllIIIIIIlIllIlII, int llllllllllllllllllIIIIIIlIlIllll) {
-        Pointer llllllllllllllllllIIIIIIlIllIIIl;
-        int[] llllllllllllllllllIIIIIIlIllIIlI = new int[llllllllllllllllllIIIIIIlIlIllll];
-        llllllllllllllllllIIIIIIlIllIIIl.read(llllllllllllllllllIIIIIIlIllIlII, llllllllllllllllllIIIIIIlIllIIlI, 0, llllllllllllllllllIIIIIIlIlIllll);
-        return llllllllllllllllllIIIIIIlIllIIlI;
+    public int[] getIntArray(long l, int n) {
+        int[] arrn = new int[n];
+        this.read(l, arrn, 0, n);
+        return arrn;
     }
 
-    public String getString(long llllllllllllllllllIIIIIIlllIIlll) {
-        Pointer llllllllllllllllllIIIIIIlllIlIII;
-        return llllllllllllllllllIIIIIIlllIlIII.getString(llllllllllllllllllIIIIIIlllIIlll, Native.getDefaultStringEncoding());
+    public String getString(long l) {
+        return this.getString(l, Native.getDefaultStringEncoding());
     }
 
-    public void setWideString(long lllllllllllllllllIllllllIllIlIII, String lllllllllllllllllIllllllIllIIlII) {
-        Pointer lllllllllllllllllIllllllIllIlIIl;
-        Native.setWideString(lllllllllllllllllIllllllIllIlIIl, lllllllllllllllllIllllllIllIlIIl.peer, lllllllllllllllllIllllllIllIlIII, lllllllllllllllllIllllllIllIIlII);
+    public void setWideString(long l, String string) {
+        Native.setWideString(this, this.peer, l, string);
     }
 
-    public static void nativeValue(Pointer lllllllllllllllllIllllllIIIlllll, long lllllllllllllllllIllllllIIIlllII) {
-        lllllllllllllllllIllllllIIIlllll.peer = lllllllllllllllllIllllllIIIlllII;
+    public static void nativeValue(Pointer pointer, long l) {
+        pointer.peer = l;
     }
 
-    public void read(long llllllllllllllllllIIIIlIIIlllllI, long[] llllllllllllllllllIIIIlIIIlllIII, int llllllllllllllllllIIIIlIIIllllII, int llllllllllllllllllIIIIlIIIllIllI) {
-        Pointer llllllllllllllllllIIIIlIIIlllIlI;
-        Native.read(llllllllllllllllllIIIIlIIIlllIlI, llllllllllllllllllIIIIlIIIlllIlI.peer, llllllllllllllllllIIIIlIIIlllllI, llllllllllllllllllIIIIlIIIlllIII, llllllllllllllllllIIIIlIIIllllII, llllllllllllllllllIIIIlIIIllIllI);
+    public void read(long l, long[] arrl, int n, int n2) {
+        Native.read(this, this.peer, l, arrl, n, n2);
     }
 
-    public float[] getFloatArray(long llllllllllllllllllIIIIIIlIIllIII, int llllllllllllllllllIIIIIIlIIllIll) {
-        Pointer llllllllllllllllllIIIIIIlIIlllIl;
-        float[] llllllllllllllllllIIIIIIlIIllIlI = new float[llllllllllllllllllIIIIIIlIIllIll];
-        llllllllllllllllllIIIIIIlIIlllIl.read(llllllllllllllllllIIIIIIlIIllIII, llllllllllllllllllIIIIIIlIIllIlI, 0, llllllllllllllllllIIIIIIlIIllIll);
-        return llllllllllllllllllIIIIIIlIIllIlI;
+    public float[] getFloatArray(long l, int n) {
+        float[] arrf = new float[n];
+        this.read(l, arrf, 0, n);
+        return arrf;
     }
 
-    public byte[] getByteArray(long llllllllllllllllllIIIIIIllIlIlII, int llllllllllllllllllIIIIIIllIlIlll) {
-        Pointer llllllllllllllllllIIIIIIllIllIIl;
-        byte[] llllllllllllllllllIIIIIIllIlIllI = new byte[llllllllllllllllllIIIIIIllIlIlll];
-        llllllllllllllllllIIIIIIllIllIIl.read(llllllllllllllllllIIIIIIllIlIlII, llllllllllllllllllIIIIIIllIlIllI, 0, llllllllllllllllllIIIIIIllIlIlll);
-        return llllllllllllllllllIIIIIIllIlIllI;
+    public byte[] getByteArray(long l, int n) {
+        byte[] arrby = new byte[n];
+        this.read(l, arrby, 0, n);
+        return arrby;
     }
 
-    public long[] getLongArray(long llllllllllllllllllIIIIIIlIlIlIII, int llllllllllllllllllIIIIIIlIlIIIll) {
-        Pointer llllllllllllllllllIIIIIIlIlIIlIl;
-        long[] llllllllllllllllllIIIIIIlIlIIllI = new long[llllllllllllllllllIIIIIIlIlIIIll];
-        llllllllllllllllllIIIIIIlIlIIlIl.read(llllllllllllllllllIIIIIIlIlIlIII, llllllllllllllllllIIIIIIlIlIIllI, 0, llllllllllllllllllIIIIIIlIlIIIll);
-        return llllllllllllllllllIIIIIIlIlIIllI;
+    public long[] getLongArray(long l, int n) {
+        long[] arrl = new long[n];
+        this.read(l, arrl, 0, n);
+        return arrl;
     }
 
-    private void writeArray(long lllllllllllllllllIlllllllllIIIlI, Object lllllllllllllllllIlllllllllIIIIl, Class<?> lllllllllllllllllIlllllllllIIIII) {
-        Pointer lllllllllllllllllIlllllllllIIIll;
-        if (lllllllllllllllllIlllllllllIIIII == Byte.TYPE) {
-            byte[] lllllllllllllllllIllllllllllIlll = (byte[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIlll, 0, lllllllllllllllllIllllllllllIlll.length);
-        } else if (lllllllllllllllllIlllllllllIIIII == Short.TYPE) {
-            short[] lllllllllllllllllIllllllllllIllI = (short[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIllI, 0, lllllllllllllllllIllllllllllIllI.length);
-        } else if (lllllllllllllllllIlllllllllIIIII == Character.TYPE) {
-            char[] lllllllllllllllllIllllllllllIlIl = (char[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIlIl, 0, lllllllllllllllllIllllllllllIlIl.length);
-        } else if (lllllllllllllllllIlllllllllIIIII == Integer.TYPE) {
-            int[] lllllllllllllllllIllllllllllIlII = (int[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIlII, 0, lllllllllllllllllIllllllllllIlII.length);
-        } else if (lllllllllllllllllIlllllllllIIIII == Long.TYPE) {
-            long[] lllllllllllllllllIllllllllllIIll = (long[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIIll, 0, lllllllllllllllllIllllllllllIIll.length);
-        } else if (lllllllllllllllllIlllllllllIIIII == Float.TYPE) {
-            float[] lllllllllllllllllIllllllllllIIlI = (float[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIIlI, 0, lllllllllllllllllIllllllllllIIlI.length);
-        } else if (lllllllllllllllllIlllllllllIIIII == Double.TYPE) {
-            double[] lllllllllllllllllIllllllllllIIIl = (double[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIIIl, 0, lllllllllllllllllIllllllllllIIIl.length);
-        } else if (Pointer.class.isAssignableFrom(lllllllllllllllllIlllllllllIIIII)) {
-            Pointer[] lllllllllllllllllIllllllllllIIII = (Pointer[])lllllllllllllllllIlllllllllIIIIl;
-            lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIllllllllllIIII, 0, lllllllllllllllllIllllllllllIIII.length);
-        } else if (Structure.class.isAssignableFrom(lllllllllllllllllIlllllllllIIIII)) {
-            Structure[] lllllllllllllllllIlllllllllIlIlI = (Structure[])lllllllllllllllllIlllllllllIIIIl;
-            if (Structure.ByReference.class.isAssignableFrom(lllllllllllllllllIlllllllllIIIII)) {
-                Pointer[] lllllllllllllllllIlllllllllIlllI = new Pointer[lllllllllllllllllIlllllllllIlIlI.length];
-                for (int lllllllllllllllllIlllllllllIllll = 0; lllllllllllllllllIlllllllllIllll < lllllllllllllllllIlllllllllIlIlI.length; ++lllllllllllllllllIlllllllllIllll) {
-                    if (lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllll] == null) {
-                        lllllllllllllllllIlllllllllIlllI[lllllllllllllllllIlllllllllIllll] = null;
+    private void writeArray(long l, Object object, Class<?> class_) {
+        if (class_ == Byte.TYPE) {
+            byte[] arrby = (byte[])object;
+            this.write(l, arrby, 0, arrby.length);
+        } else if (class_ == Short.TYPE) {
+            short[] arrs = (short[])object;
+            this.write(l, arrs, 0, arrs.length);
+        } else if (class_ == Character.TYPE) {
+            char[] arrc = (char[])object;
+            this.write(l, arrc, 0, arrc.length);
+        } else if (class_ == Integer.TYPE) {
+            int[] arrn = (int[])object;
+            this.write(l, arrn, 0, arrn.length);
+        } else if (class_ == Long.TYPE) {
+            long[] arrl = (long[])object;
+            this.write(l, arrl, 0, arrl.length);
+        } else if (class_ == Float.TYPE) {
+            float[] arrf = (float[])object;
+            this.write(l, arrf, 0, arrf.length);
+        } else if (class_ == Double.TYPE) {
+            double[] arrd = (double[])object;
+            this.write(l, arrd, 0, arrd.length);
+        } else if (Pointer.class.isAssignableFrom(class_)) {
+            Pointer[] arrpointer = (Pointer[])object;
+            this.write(l, arrpointer, 0, arrpointer.length);
+        } else if (Structure.class.isAssignableFrom(class_)) {
+            Structure[] arrstructure = (Structure[])object;
+            if (Structure.ByReference.class.isAssignableFrom(class_)) {
+                Pointer[] arrpointer = new Pointer[arrstructure.length];
+                for (int i = 0; i < arrstructure.length; ++i) {
+                    if (arrstructure[i] == null) {
+                        arrpointer[i] = null;
                         continue;
                     }
-                    lllllllllllllllllIlllllllllIlllI[lllllllllllllllllIlllllllllIllll] = lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllll].getPointer();
-                    lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllll].write();
+                    arrpointer[i] = arrstructure[i].getPointer();
+                    arrstructure[i].write();
+                    if (0 != 3) continue;
+                    return;
                 }
-                lllllllllllllllllIlllllllllIIIll.write(lllllllllllllllllIlllllllllIIIlI, lllllllllllllllllIlllllllllIlllI, 0, lllllllllllllllllIlllllllllIlllI.length);
+                this.write(l, arrpointer, 0, arrpointer.length);
             } else {
-                Structure lllllllllllllllllIlllllllllIllII = lllllllllllllllllIlllllllllIlIlI[0];
-                if (lllllllllllllllllIlllllllllIllII == null) {
-                    lllllllllllllllllIlllllllllIlIlI[0] = lllllllllllllllllIlllllllllIllII = Structure.newInstance(lllllllllllllllllIlllllllllIIIII, lllllllllllllllllIlllllllllIIIll.share(lllllllllllllllllIlllllllllIIIlI));
+                Structure structure = arrstructure[0];
+                if (structure == null) {
+                    arrstructure[0] = structure = Structure.newInstance(class_, this.share(l));
                 } else {
-                    lllllllllllllllllIlllllllllIllII.useMemory(lllllllllllllllllIlllllllllIIIll, (int)lllllllllllllllllIlllllllllIIIlI, true);
+                    structure.useMemory(this, (int)l, true);
                 }
-                lllllllllllllllllIlllllllllIllII.write();
-                Structure[] lllllllllllllllllIlllllllllIlIll = lllllllllllllllllIlllllllllIllII.toArray(lllllllllllllllllIlllllllllIlIlI.length);
-                for (int lllllllllllllllllIlllllllllIllIl = 1; lllllllllllllllllIlllllllllIllIl < lllllllllllllllllIlllllllllIlIlI.length; ++lllllllllllllllllIlllllllllIllIl) {
-                    if (lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllIl] == null) {
-                        lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllIl] = lllllllllllllllllIlllllllllIlIll[lllllllllllllllllIlllllllllIllIl];
+                structure.write();
+                Structure[] arrstructure2 = structure.toArray(arrstructure.length);
+                for (int i = 1; i < arrstructure.length; ++i) {
+                    if (arrstructure[i] == null) {
+                        arrstructure[i] = arrstructure2[i];
                     } else {
-                        lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllIl].useMemory(lllllllllllllllllIlllllllllIIIll, (int)(lllllllllllllllllIlllllllllIIIlI + (long)(lllllllllllllllllIlllllllllIllIl * lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllIl].size())), true);
+                        arrstructure[i].useMemory(this, (int)(l + (long)(i * arrstructure[i].size())), true);
                     }
-                    lllllllllllllllllIlllllllllIlIlI[lllllllllllllllllIlllllllllIllIl].write();
+                    arrstructure[i].write();
+                    if (null == null) continue;
+                    return;
                 }
             }
-        } else if (NativeMapped.class.isAssignableFrom(lllllllllllllllllIlllllllllIIIII)) {
-            NativeMapped[] lllllllllllllllllIlllllllllIIlll = (NativeMapped[])lllllllllllllllllIlllllllllIIIIl;
-            NativeMappedConverter lllllllllllllllllIlllllllllIIllI = NativeMappedConverter.getInstance(lllllllllllllllllIlllllllllIIIII);
-            Class<?> lllllllllllllllllIlllllllllIIlIl = lllllllllllllllllIlllllllllIIllI.nativeType();
-            int lllllllllllllllllIlllllllllIIlII = Native.getNativeSize(lllllllllllllllllIlllllllllIIIIl.getClass(), lllllllllllllllllIlllllllllIIIIl) / lllllllllllllllllIlllllllllIIlll.length;
-            for (int lllllllllllllllllIlllllllllIlIII = 0; lllllllllllllllllIlllllllllIlIII < lllllllllllllllllIlllllllllIIlll.length; ++lllllllllllllllllIlllllllllIlIII) {
-                Object lllllllllllllllllIlllllllllIlIIl = lllllllllllllllllIlllllllllIIllI.toNative(lllllllllllllllllIlllllllllIIlll[lllllllllllllllllIlllllllllIlIII], new ToNativeContext());
-                lllllllllllllllllIlllllllllIIIll.setValue(lllllllllllllllllIlllllllllIIIlI + (long)(lllllllllllllllllIlllllllllIlIII * lllllllllllllllllIlllllllllIIlII), lllllllllllllllllIlllllllllIlIIl, lllllllllllllllllIlllllllllIIlIl);
+        } else if (NativeMapped.class.isAssignableFrom(class_)) {
+            NativeMapped[] arrnativeMapped = (NativeMapped[])object;
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+            Class<?> class_2 = nativeMappedConverter.nativeType();
+            int n = Native.getNativeSize(object.getClass(), object) / arrnativeMapped.length;
+            for (int i = 0; i < arrnativeMapped.length; ++i) {
+                Object object2 = nativeMappedConverter.toNative(arrnativeMapped[i], new ToNativeContext());
+                this.setValue(l + (long)(i * n), object2, class_2);
+                if (1 >= 0) continue;
+                return;
             }
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing array of ").append(lllllllllllllllllIlllllllllIIIII).append(" to memory not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing array of ").append(class_).append(" to memory not supported")));
         }
     }
 
-    public void read(long llllllllllllllllllIIIIlIIlIIllIl, int[] llllllllllllllllllIIIIlIIlIIllII, int llllllllllllllllllIIIIlIIlIIIllI, int llllllllllllllllllIIIIlIIlIIlIlI) {
-        Pointer llllllllllllllllllIIIIlIIlIIlllI;
-        Native.read(llllllllllllllllllIIIIlIIlIIlllI, llllllllllllllllllIIIIlIIlIIlllI.peer, llllllllllllllllllIIIIlIIlIIllIl, llllllllllllllllllIIIIlIIlIIllII, llllllllllllllllllIIIIlIIlIIIllI, llllllllllllllllllIIIIlIIlIIlIlI);
+    public void read(long l, int[] arrn, int n, int n2) {
+        Native.read(this, this.peer, l, arrn, n, n2);
     }
 
-    public double getDouble(long llllllllllllllllllIIIIIlIIIIllIl) {
-        Pointer llllllllllllllllllIIIIIlIIIIllII;
-        return Native.getDouble(llllllllllllllllllIIIIIlIIIIllII, llllllllllllllllllIIIIIlIIIIllII.peer, llllllllllllllllllIIIIIlIIIIllIl);
+    public double getDouble(long l) {
+        return Native.getDouble(this, this.peer, l);
     }
 
-    public void read(long llllllllllllllllllIIIIlIIIlIlIlI, float[] llllllllllllllllllIIIIlIIIlIlllI, int llllllllllllllllllIIIIlIIIlIllIl, int llllllllllllllllllIIIIlIIIlIllII) {
-        Pointer llllllllllllllllllIIIIlIIIlIlIll;
-        Native.read(llllllllllllllllllIIIIlIIIlIlIll, llllllllllllllllllIIIIlIIIlIlIll.peer, llllllllllllllllllIIIIlIIIlIlIlI, llllllllllllllllllIIIIlIIIlIlllI, llllllllllllllllllIIIIlIIIlIllIl, llllllllllllllllllIIIIlIIIlIllII);
+    public void read(long l, float[] arrf, int n, int n2) {
+        Native.read(this, this.peer, l, arrf, n, n2);
     }
 
     @Deprecated
-    public String[] getStringArray(long llllllllllllllllllIIIIIIIIllIlIl, int llllllllllllllllllIIIIIIIIllIlII, boolean llllllllllllllllllIIIIIIIIllIlll) {
-        Pointer llllllllllllllllllIIIIIIIIlllIlI;
-        return llllllllllllllllllIIIIIIIIlllIlI.getStringArray(llllllllllllllllllIIIIIIIIllIlIl, llllllllllllllllllIIIIIIIIllIlII, llllllllllllllllllIIIIIIIIllIlll ? "--WIDE-STRING--" : Native.getDefaultStringEncoding());
+    public String[] getStringArray(long l, int n, boolean bl) {
+        return this.getStringArray(l, n, bl ? "--WIDE-STRING--" : Native.getDefaultStringEncoding());
     }
 
-    public String[] getStringArray(long llllllllllllllllllIIIIIIIllIlIIl) {
-        Pointer llllllllllllllllllIIIIIIIllIlIlI;
-        return llllllllllllllllllIIIIIIIllIlIlI.getStringArray(llllllllllllllllllIIIIIIIllIlIIl, -1, Native.getDefaultStringEncoding());
+    public String[] getStringArray(long l) {
+        return this.getStringArray(l, -1, Native.getDefaultStringEncoding());
     }
 
     public int hashCode() {
-        Pointer llllllllllllllllllIIIIlIlIIIlIll;
-        return (int)((llllllllllllllllllIIIIlIlIIIlIll.peer >>> 32) + (llllllllllllllllllIIIIlIlIIIlIll.peer & 0xFFFFFFFFFFFFFFFFL));
+        return (int)((this.peer >>> 32) + (this.peer & 0xFFFFFFFFFFFFFFFFL));
     }
 
-    public static final Pointer createConstant(long llllllllllllllllllIIIIlIlIllIIlI) {
-        return new Opaque(llllllllllllllllllIIIIlIlIllIIlI);
+    public static final Pointer createConstant(long l) {
+        return new Opaque(l, null);
     }
 
-    private void readArray(long llllllllllllllllllIIIIIlIlIIlIlI, Object llllllllllllllllllIIIIIlIlIIIIll, Class<?> llllllllllllllllllIIIIIlIlIIlIII) {
-        Pointer llllllllllllllllllIIIIIlIlIIlIll;
-        int llllllllllllllllllIIIIIlIlIIIlll = 0;
-        llllllllllllllllllIIIIIlIlIIIlll = Array.getLength(llllllllllllllllllIIIIIlIlIIIIll);
-        Object llllllllllllllllllIIIIIlIlIIIllI = llllllllllllllllllIIIIIlIlIIIIll;
-        if (llllllllllllllllllIIIIIlIlIIlIII == Byte.TYPE) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (byte[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (llllllllllllllllllIIIIIlIlIIlIII == Short.TYPE) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (short[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (llllllllllllllllllIIIIIlIlIIlIII == Character.TYPE) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (char[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (llllllllllllllllllIIIIIlIlIIlIII == Integer.TYPE) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (int[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (llllllllllllllllllIIIIIlIlIIlIII == Long.TYPE) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (long[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (llllllllllllllllllIIIIIlIlIIlIII == Float.TYPE) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (float[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (llllllllllllllllllIIIIIlIlIIlIII == Double.TYPE) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (double[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (Pointer.class.isAssignableFrom(llllllllllllllllllIIIIIlIlIIlIII)) {
-            llllllllllllllllllIIIIIlIlIIlIll.read(llllllllllllllllllIIIIIlIlIIlIlI, (Pointer[])llllllllllllllllllIIIIIlIlIIIllI, 0, llllllllllllllllllIIIIIlIlIIIlll);
-        } else if (Structure.class.isAssignableFrom(llllllllllllllllllIIIIIlIlIIlIII)) {
-            Structure[] llllllllllllllllllIIIIIlIlIlIIIl = (Structure[])llllllllllllllllllIIIIIlIlIIIllI;
-            if (Structure.ByReference.class.isAssignableFrom(llllllllllllllllllIIIIIlIlIIlIII)) {
-                Pointer[] llllllllllllllllllIIIIIlIlIlIlIl = llllllllllllllllllIIIIIlIlIIlIll.getPointerArray(llllllllllllllllllIIIIIlIlIIlIlI, llllllllllllllllllIIIIIlIlIlIIIl.length);
-                for (int llllllllllllllllllIIIIIlIlIlIllI = 0; llllllllllllllllllIIIIIlIlIlIllI < llllllllllllllllllIIIIIlIlIlIIIl.length; ++llllllllllllllllllIIIIIlIlIlIllI) {
-                    llllllllllllllllllIIIIIlIlIlIIIl[llllllllllllllllllIIIIIlIlIlIllI] = Structure.updateStructureByReference(llllllllllllllllllIIIIIlIlIIlIII, llllllllllllllllllIIIIIlIlIlIIIl[llllllllllllllllllIIIIIlIlIlIllI], llllllllllllllllllIIIIIlIlIlIlIl[llllllllllllllllllIIIIIlIlIlIllI]);
+    private void readArray(long l, Object object, Class<?> class_) {
+        int n = 0;
+        n = Array.getLength(object);
+        Object object2 = object;
+        if (class_ == Byte.TYPE) {
+            this.read(l, (byte[])object2, 0, n);
+        } else if (class_ == Short.TYPE) {
+            this.read(l, (short[])object2, 0, n);
+        } else if (class_ == Character.TYPE) {
+            this.read(l, (char[])object2, 0, n);
+        } else if (class_ == Integer.TYPE) {
+            this.read(l, (int[])object2, 0, n);
+        } else if (class_ == Long.TYPE) {
+            this.read(l, (long[])object2, 0, n);
+        } else if (class_ == Float.TYPE) {
+            this.read(l, (float[])object2, 0, n);
+        } else if (class_ == Double.TYPE) {
+            this.read(l, (double[])object2, 0, n);
+        } else if (Pointer.class.isAssignableFrom(class_)) {
+            this.read(l, (Pointer[])object2, 0, n);
+        } else if (Structure.class.isAssignableFrom(class_)) {
+            Structure[] arrstructure = (Structure[])object2;
+            if (Structure.ByReference.class.isAssignableFrom(class_)) {
+                Pointer[] arrpointer = this.getPointerArray(l, arrstructure.length);
+                for (int i = 0; i < arrstructure.length; ++i) {
+                    arrstructure[i] = Structure.updateStructureByReference(class_, arrstructure[i], arrpointer[i]);
+                    if (!false) continue;
+                    return;
                 }
             } else {
-                Structure llllllllllllllllllIIIIIlIlIlIIll = llllllllllllllllllIIIIIlIlIlIIIl[0];
-                if (llllllllllllllllllIIIIIlIlIlIIll == null) {
-                    llllllllllllllllllIIIIIlIlIlIIll = Structure.newInstance(llllllllllllllllllIIIIIlIlIIlIII, llllllllllllllllllIIIIIlIlIIlIll.share(llllllllllllllllllIIIIIlIlIIlIlI));
-                    llllllllllllllllllIIIIIlIlIlIIll.conditionalAutoRead();
-                    llllllllllllllllllIIIIIlIlIlIIIl[0] = llllllllllllllllllIIIIIlIlIlIIll;
+                Structure structure = arrstructure[0];
+                if (structure == null) {
+                    structure = Structure.newInstance(class_, this.share(l));
+                    structure.conditionalAutoRead();
+                    arrstructure[0] = structure;
                 } else {
-                    llllllllllllllllllIIIIIlIlIlIIll.useMemory(llllllllllllllllllIIIIIlIlIIlIll, (int)llllllllllllllllllIIIIIlIlIIlIlI, true);
-                    llllllllllllllllllIIIIIlIlIlIIll.read();
+                    structure.useMemory(this, (int)l, true);
+                    structure.read();
                 }
-                Structure[] llllllllllllllllllIIIIIlIlIlIIlI = llllllllllllllllllIIIIIlIlIlIIll.toArray(llllllllllllllllllIIIIIlIlIlIIIl.length);
-                for (int llllllllllllllllllIIIIIlIlIlIlII = 1; llllllllllllllllllIIIIIlIlIlIlII < llllllllllllllllllIIIIIlIlIlIIIl.length; ++llllllllllllllllllIIIIIlIlIlIlII) {
-                    if (llllllllllllllllllIIIIIlIlIlIIIl[llllllllllllllllllIIIIIlIlIlIlII] == null) {
-                        llllllllllllllllllIIIIIlIlIlIIIl[llllllllllllllllllIIIIIlIlIlIlII] = llllllllllllllllllIIIIIlIlIlIIlI[llllllllllllllllllIIIIIlIlIlIlII];
+                Structure[] arrstructure2 = structure.toArray(arrstructure.length);
+                for (int i = 1; i < arrstructure.length; ++i) {
+                    if (arrstructure[i] == null) {
+                        arrstructure[i] = arrstructure2[i];
                         continue;
                     }
-                    llllllllllllllllllIIIIIlIlIlIIIl[llllllllllllllllllIIIIIlIlIlIlII].useMemory(llllllllllllllllllIIIIIlIlIIlIll, (int)(llllllllllllllllllIIIIIlIlIIlIlI + (long)(llllllllllllllllllIIIIIlIlIlIlII * llllllllllllllllllIIIIIlIlIlIIIl[llllllllllllllllllIIIIIlIlIlIlII].size())), true);
-                    llllllllllllllllllIIIIIlIlIlIIIl[llllllllllllllllllIIIIIlIlIlIlII].read();
+                    arrstructure[i].useMemory(this, (int)(l + (long)(i * arrstructure[i].size())), true);
+                    arrstructure[i].read();
                 }
             }
-        } else if (NativeMapped.class.isAssignableFrom(llllllllllllllllllIIIIIlIlIIlIII)) {
-            NativeMapped[] llllllllllllllllllIIIIIlIlIIlllI = (NativeMapped[])llllllllllllllllllIIIIIlIlIIIllI;
-            NativeMappedConverter llllllllllllllllllIIIIIlIlIIllIl = NativeMappedConverter.getInstance(llllllllllllllllllIIIIIlIlIIlIII);
-            int llllllllllllllllllIIIIIlIlIIllII = Native.getNativeSize(llllllllllllllllllIIIIIlIlIIIllI.getClass(), llllllllllllllllllIIIIIlIlIIIllI) / llllllllllllllllllIIIIIlIlIIlllI.length;
-            for (int llllllllllllllllllIIIIIlIlIIllll = 0; llllllllllllllllllIIIIIlIlIIllll < llllllllllllllllllIIIIIlIlIIlllI.length; ++llllllllllllllllllIIIIIlIlIIllll) {
-                Object llllllllllllllllllIIIIIlIlIlIIII = llllllllllllllllllIIIIIlIlIIlIll.getValue(llllllllllllllllllIIIIIlIlIIlIlI + (long)(llllllllllllllllllIIIIIlIlIIllII * llllllllllllllllllIIIIIlIlIIllll), llllllllllllllllllIIIIIlIlIIllIl.nativeType(), llllllllllllllllllIIIIIlIlIIlllI[llllllllllllllllllIIIIIlIlIIllll]);
-                llllllllllllllllllIIIIIlIlIIlllI[llllllllllllllllllIIIIIlIlIIllll] = (NativeMapped)llllllllllllllllllIIIIIlIlIIllIl.fromNative(llllllllllllllllllIIIIIlIlIlIIII, new FromNativeContext(llllllllllllllllllIIIIIlIlIIlIII));
+        } else if (NativeMapped.class.isAssignableFrom(class_)) {
+            NativeMapped[] arrnativeMapped = (NativeMapped[])object2;
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+            int n2 = Native.getNativeSize(object2.getClass(), object2) / arrnativeMapped.length;
+            for (int i = 0; i < arrnativeMapped.length; ++i) {
+                Object object3 = this.getValue(l + (long)(n2 * i), nativeMappedConverter.nativeType(), arrnativeMapped[i]);
+                arrnativeMapped[i] = (NativeMapped)nativeMappedConverter.fromNative(object3, new FromNativeContext(class_));
+                if (!false) continue;
+                return;
             }
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading array of ").append(llllllllllllllllllIIIIIlIlIIlIII).append(" from memory not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading array of ").append(class_).append(" from memory not supported")));
         }
     }
 
-    public void write(long llllllllllllllllllIIIIIllIlIlllI, float[] llllllllllllllllllIIIIIllIlIlIII, int llllllllllllllllllIIIIIllIlIIlll, int llllllllllllllllllIIIIIllIlIlIll) {
-        Pointer llllllllllllllllllIIIIIllIlIllll;
-        Native.write(llllllllllllllllllIIIIIllIlIllll, llllllllllllllllllIIIIIllIlIllll.peer, llllllllllllllllllIIIIIllIlIlllI, llllllllllllllllllIIIIIllIlIlIII, llllllllllllllllllIIIIIllIlIIlll, llllllllllllllllllIIIIIllIlIlIll);
+    public void write(long l, float[] arrf, int n, int n2) {
+        Native.write(this, this.peer, l, arrf, n, n2);
     }
 
-    public void setShort(long lllllllllllllllllIlllllllIlllIIl, short lllllllllllllllllIlllllllIlllIll) {
-        Pointer lllllllllllllllllIlllllllIlllIlI;
-        Native.setShort(lllllllllllllllllIlllllllIlllIlI, lllllllllllllllllIlllllllIlllIlI.peer, lllllllllllllllllIlllllllIlllIIl, lllllllllllllllllIlllllllIlllIll);
+    public void setShort(long l, short s) {
+        Native.setShort(this, this.peer, l, s);
     }
 
-    public char[] getCharArray(long llllllllllllllllllIIIIIIllIIlIII, int llllllllllllllllllIIIIIIllIIIlll) {
-        Pointer llllllllllllllllllIIIIIIllIIllIl;
-        char[] llllllllllllllllllIIIIIIllIIlIlI = new char[llllllllllllllllllIIIIIIllIIIlll];
-        llllllllllllllllllIIIIIIllIIllIl.read(llllllllllllllllllIIIIIIllIIlIII, llllllllllllllllllIIIIIIllIIlIlI, 0, llllllllllllllllllIIIIIIllIIIlll);
-        return llllllllllllllllllIIIIIIllIIlIlI;
+    public char[] getCharArray(long l, int n) {
+        char[] arrc = new char[n];
+        this.read(l, arrc, 0, n);
+        return arrc;
     }
 
-    public short getShort(long llllllllllllllllllIIIIIlIIlIlIIl) {
-        Pointer llllllllllllllllllIIIIIlIIlIllII;
-        return Native.getShort(llllllllllllllllllIIIIIlIIlIllII, llllllllllllllllllIIIIIlIIlIllII.peer, llllllllllllllllllIIIIIlIIlIlIIl);
+    public short getShort(long l) {
+        return Native.getShort(this, this.peer, l);
     }
 
-    public void setByte(long lllllllllllllllllIllllllllIIIlIl, byte lllllllllllllllllIllllllllIIIIIl) {
-        Pointer lllllllllllllllllIllllllllIIIIll;
-        Native.setByte(lllllllllllllllllIllllllllIIIIll, lllllllllllllllllIllllllllIIIIll.peer, lllllllllllllllllIllllllllIIIlIl, lllllllllllllllllIllllllllIIIIIl);
+    public void setByte(long l, byte by) {
+        Native.setByte(this, this.peer, l, by);
     }
 
-    public void setLong(long lllllllllllllllllIlllllllIlIIIIl, long lllllllllllllllllIlllllllIlIIIII) {
-        Pointer lllllllllllllllllIlllllllIIlllll;
-        Native.setLong(lllllllllllllllllIlllllllIIlllll, lllllllllllllllllIlllllllIIlllll.peer, lllllllllllllllllIlllllllIlIIIIl, lllllllllllllllllIlllllllIlIIIII);
+    public void setLong(long l, long l2) {
+        Native.setLong(this, this.peer, l, l2);
     }
 
-    public void read(long llllllllllllllllllIIIIlIIlllIlIl, byte[] llllllllllllllllllIIIIlIIlllIlII, int llllllllllllllllllIIIIlIIlllIIll, int llllllllllllllllllIIIIlIIlllIlll) {
-        Pointer llllllllllllllllllIIIIlIIllllIll;
-        Native.read(llllllllllllllllllIIIIlIIllllIll, llllllllllllllllllIIIIlIIllllIll.peer, llllllllllllllllllIIIIlIIlllIlIl, llllllllllllllllllIIIIlIIlllIlII, llllllllllllllllllIIIIlIIlllIIll, llllllllllllllllllIIIIlIIlllIlll);
+    public void read(long l, byte[] arrby, int n, int n2) {
+        Native.read(this, this.peer, l, arrby, n, n2);
     }
 
-    public static final Pointer createConstant(int llllllllllllllllllIIIIlIlIllIIII) {
-        return new Opaque((long)llllllllllllllllllIIIIlIlIllIIII & 0xFFFFFFFFFFFFFFFFL);
+    public static final Pointer createConstant(int n) {
+        return new Opaque((long)n & 0xFFFFFFFFFFFFFFFFL, null);
     }
 
-    public byte getByte(long llllllllllllllllllIIIIIlIIllIlIl) {
-        Pointer llllllllllllllllllIIIIIlIIlllIII;
-        return Native.getByte(llllllllllllllllllIIIIIlIIlllIII, llllllllllllllllllIIIIIlIIlllIII.peer, llllllllllllllllllIIIIIlIIllIlIl);
+    public byte getByte(long l) {
+        return Native.getByte(this, this.peer, l);
     }
 
-    public short[] getShortArray(long llllllllllllllllllIIIIIIllIIIIII, int llllllllllllllllllIIIIIIlIlllIll) {
-        Pointer llllllllllllllllllIIIIIIllIIIIIl;
-        short[] llllllllllllllllllIIIIIIlIlllllI = new short[llllllllllllllllllIIIIIIlIlllIll];
-        llllllllllllllllllIIIIIIllIIIIIl.read(llllllllllllllllllIIIIIIllIIIIII, llllllllllllllllllIIIIIIlIlllllI, 0, llllllllllllllllllIIIIIIlIlllIll);
-        return llllllllllllllllllIIIIIIlIlllllI;
+    public short[] getShortArray(long l, int n) {
+        short[] arrs = new short[n];
+        this.read(l, arrs, 0, n);
+        return arrs;
     }
 
     private static class Opaque
     extends Pointer {
-        private final /* synthetic */ String MSG;
+        private final String MSG = String.valueOf(new StringBuilder().append("This pointer is opaque: ").append(this));
 
         @Override
-        public void read(long lIIIlIIIIIllIlI, byte[] lIIIlIIIIIllIIl, int lIIIlIIIIIllIII, int lIIIlIIIIIlIlll) {
-            Opaque lIIIlIIIIIlIllI;
-            throw new UnsupportedOperationException(lIIIlIIIIIlIllI.MSG);
+        public void read(long l, byte[] arrby, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIllllIIIllI, long[] lIIIIllllIIIlIl, int lIIIIllllIIIlII, int lIIIIllllIIIIll) {
-            Opaque lIIIIllllIIIIlI;
-            throw new UnsupportedOperationException(lIIIIllllIIIIlI.MSG);
+        public void write(long l, long[] arrl, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public String dump(long lIIIIllIlIIIIll, int lIIIIllIlIIIIlI) {
-            Opaque lIIIIllIlIIIIIl;
-            throw new UnsupportedOperationException(lIIIIllIlIIIIIl.MSG);
+        public String dump(long l, int n) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
-        private Opaque(long lIIIlIIIIlIllIl) {
-            super(lIIIlIIIIlIllIl);
-            Opaque lIIIlIIIIlIlllI;
-            lIIIlIIIIlIlllI.MSG = String.valueOf(new StringBuilder().append("This pointer is opaque: ").append(lIIIlIIIIlIlllI));
+        private Opaque(long l) {
+            super(l);
         }
 
         @Override
-        public Pointer share(long lIIIlIIIIlIlIII, long lIIIlIIIIlIIlll) {
-            Opaque lIIIlIIIIlIlIIl;
-            throw new UnsupportedOperationException(lIIIlIIIIlIlIIl.MSG);
+        public Pointer share(long l, long l2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setPointer(long lIIIIllIlIllIIl, Pointer lIIIIllIlIllIII) {
-            Opaque lIIIIllIlIllIlI;
-            throw new UnsupportedOperationException(lIIIIllIlIllIlI.MSG);
+        public void setPointer(long l, Pointer pointer) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public short getShort(long lIIIIlllIIlllIl) {
-            Opaque lIIIIlllIIlllII;
-            throw new UnsupportedOperationException(lIIIIlllIIlllII.MSG);
+        public short getShort(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public float getFloat(long lIIIIlllIIlIIIl) {
-            Opaque lIIIIlllIIlIIlI;
-            throw new UnsupportedOperationException(lIIIIlllIIlIIlI.MSG);
+        public float getFloat(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long lIIIIllllllIIII, double[] lIIIIlllllIllll, int lIIIIlllllIlllI, int lIIIIlllllIllIl) {
-            Opaque lIIIIlllllIllII;
-            throw new UnsupportedOperationException(lIIIIlllllIllII.MSG);
+        public void read(long l, double[] arrd, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long lIIIlIIIIIIIlIl, int[] lIIIlIIIIIIIlII, int lIIIlIIIIIIIIll, int lIIIlIIIIIIIIlI) {
-            Opaque lIIIlIIIIIIIIIl;
-            throw new UnsupportedOperationException(lIIIlIIIIIIIIIl.MSG);
+        public void read(long l, int[] arrn, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public long indexOf(long lIIIlIIIIIlllll, byte lIIIlIIIIIllllI) {
-            Opaque lIIIlIIIIlIIIII;
-            throw new UnsupportedOperationException(lIIIlIIIIlIIIII.MSG);
+        public long indexOf(long l, byte by) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public byte getByte(long lIIIIlllIlIIlIl) {
-            Opaque lIIIIlllIlIIllI;
-            throw new UnsupportedOperationException(lIIIIlllIlIIllI.MSG);
+        public byte getByte(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIllllIIllIl, int[] lIIIIllllIIllII, int lIIIIllllIIlIll, int lIIIIllllIIlIlI) {
-            Opaque lIIIIllllIIlIIl;
-            throw new UnsupportedOperationException(lIIIIllllIIlIIl.MSG);
+        public void write(long l, int[] arrn, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public int getInt(long lIIIIlllIIllIIl) {
-            Opaque lIIIIlllIIllIII;
-            throw new UnsupportedOperationException(lIIIIlllIIllIII.MSG);
+        public int getInt(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void clear(long lIIIlIIIIlIIIll) {
-            Opaque lIIIlIIIIlIIlII;
-            throw new UnsupportedOperationException(lIIIlIIIIlIIlII.MSG);
+        public void clear(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long lIIIIllllllIlll, float[] lIIIIllllllIllI, int lIIIIllllllIlIl, int lIIIIllllllIlII) {
-            Opaque lIIIIlllllllIII;
-            throw new UnsupportedOperationException(lIIIIlllllllIII.MSG);
+        public void read(long l, float[] arrf, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setMemory(long lIIIIllIlIIlIIl, long lIIIIllIlIIlIII, byte lIIIIllIlIIIlll) {
-            Opaque lIIIIllIlIIIllI;
-            throw new UnsupportedOperationException(lIIIIllIlIIIllI.MSG);
+        public void setMemory(long l, long l2, byte by) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setByte(long lIIIIllIlllllII, byte lIIIIllIllllIll) {
-            Opaque lIIIIllIllllIlI;
-            throw new UnsupportedOperationException(lIIIIllIllllIlI.MSG);
+        public void setByte(long l, byte by) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long lIIIlIIIIIIllII, short[] lIIIlIIIIIIlIll, int lIIIlIIIIIIlIlI, int lIIIlIIIIIIlIIl) {
-            Opaque lIIIlIIIIIIlIII;
-            throw new UnsupportedOperationException(lIIIlIIIIIIlIII.MSG);
+        public void read(long l, short[] arrs, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setLong(long lIIIIllIllIlIII, long lIIIIllIllIIlll) {
-            Opaque lIIIIllIllIIllI;
-            throw new UnsupportedOperationException(lIIIIllIllIIllI.MSG);
+        public void setLong(long l, long l2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public char getChar(long lIIIIlllIlIIIIl) {
-            Opaque lIIIIlllIlIIIlI;
-            throw new UnsupportedOperationException(lIIIIlllIlIIIlI.MSG);
+        public char getChar(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIllllIlIlII, short[] lIIIIllllIlIIll, int lIIIIllllIlIIlI, int lIIIIllllIlIIIl) {
-            Opaque lIIIIllllIlIIII;
-            throw new UnsupportedOperationException(lIIIIllllIlIIII.MSG);
+        public void write(long l, short[] arrs, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIlllllIIIlI, byte[] lIIIIlllllIIIIl, int lIIIIlllllIIIII, int lIIIIllllIlllll) {
-            Opaque lIIIIllllIllllI;
-            throw new UnsupportedOperationException(lIIIIllllIllllI.MSG);
+        public void write(long l, byte[] arrby, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setFloat(long lIIIIllIllIIIll, float lIIIIllIllIIIlI) {
-            Opaque lIIIIllIllIIlII;
-            throw new UnsupportedOperationException(lIIIIllIllIIlII.MSG);
+        public void setFloat(long l, float f) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIlllIllllll, float[] lIIIIlllIlllllI, int lIIIIlllIllllIl, int lIIIIlllIllllII) {
-            Opaque lIIIIlllIlllIll;
-            throw new UnsupportedOperationException(lIIIIlllIlllIll.MSG);
+        public void write(long l, float[] arrf, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setString(long lIIIIllIlIlIlII, String lIIIIllIlIlIIll, String lIIIIllIlIlIIlI) {
-            Opaque lIIIIllIlIlIIIl;
-            throw new UnsupportedOperationException(lIIIIllIlIlIIIl.MSG);
+        public void setString(long l, String string, String string2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long lIIIIlllllllllI, long[] lIIIIllllllllIl, int lIIIIllllllllII, int lIIIIlllllllIll) {
-            Opaque lIIIIllllllllll;
-            throw new UnsupportedOperationException(lIIIIllllllllll.MSG);
+        public void read(long l, long[] arrl, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public Pointer getPointer(long lIIIIlllIIIlIIl) {
-            Opaque lIIIIlllIIIlIII;
-            throw new UnsupportedOperationException(lIIIIlllIIIlIII.MSG);
+        public Pointer getPointer(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long lIIIIlllllIlIIl, Pointer[] lIIIIlllllIlIII, int lIIIIlllllIIlll, int lIIIIlllllIIllI) {
-            Opaque lIIIIlllllIIlIl;
-            throw new UnsupportedOperationException(lIIIIlllllIIlIl.MSG);
+        public void read(long l, Pointer[] arrpointer, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIllllIllIll, char[] lIIIIllllIllIlI, int lIIIIllllIllIIl, int lIIIIllllIllIII) {
-            Opaque lIIIIllllIlllII;
-            throw new UnsupportedOperationException(lIIIIllllIlllII.MSG);
+        public void write(long l, char[] arrc, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public ByteBuffer getByteBuffer(long lIIIIlllIlIlIlI, long lIIIIlllIlIlIIl) {
-            Opaque lIIIIlllIlIlIll;
-            throw new UnsupportedOperationException(lIIIIlllIlIlIll.MSG);
+        public ByteBuffer getByteBuffer(long l, long l2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setDouble(long lIIIIllIlIllllI, double lIIIIllIlIlllIl) {
-            Opaque lIIIIllIlIlllll;
-            throw new UnsupportedOperationException(lIIIIllIlIlllll.MSG);
+        public void setDouble(long l, double d) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIlllIllIIIl, Pointer[] lIIIIlllIllIIII, int lIIIIlllIlIllll, int lIIIIlllIlIlllI) {
-            Opaque lIIIIlllIlIllIl;
-            throw new UnsupportedOperationException(lIIIIlllIlIllIl.MSG);
+        public void write(long l, Pointer[] arrpointer, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setWideString(long lIIIIllIlIIlllI, String lIIIIllIlIIllIl) {
-            Opaque lIIIIllIlIIllll;
-            throw new UnsupportedOperationException(lIIIIllIlIIllll.MSG);
+        public void setWideString(long l, String string) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setInt(long lIIIIllIllIllIl, int lIIIIllIllIllII) {
-            Opaque lIIIIllIllIlllI;
-            throw new UnsupportedOperationException(lIIIIllIllIlllI.MSG);
+        public void setInt(long l, int n) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long lIIIlIIIIIlIIll, char[] lIIIlIIIIIlIIlI, int lIIIlIIIIIlIIIl, int lIIIlIIIIIlIIII) {
-            Opaque lIIIlIIIIIlIlII;
-            throw new UnsupportedOperationException(lIIIlIIIIIlIlII.MSG);
+        public void read(long l, char[] arrc, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public String getWideString(long lIIIIlllIIIIIII) {
-            Opaque lIIIIllIlllllll;
-            throw new UnsupportedOperationException(lIIIIllIlllllll.MSG);
+        public String getWideString(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setChar(long lIIIIllIlllIlll, char lIIIIllIlllIllI) {
-            Opaque lIIIIllIllllIII;
-            throw new UnsupportedOperationException(lIIIIllIllllIII.MSG);
+        public void setChar(long l, char c) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void setShort(long lIIIIllIlllIIlI, short lIIIIllIlllIIIl) {
-            Opaque lIIIIllIlllIIll;
-            throw new UnsupportedOperationException(lIIIIllIlllIIll.MSG);
+        public void setShort(long l, short s) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public long getLong(long lIIIIlllIIlIlIl) {
-            Opaque lIIIIlllIIlIlII;
-            throw new UnsupportedOperationException(lIIIIlllIIlIlII.MSG);
+        public long getLong(long l) {
+            throw new UnsupportedOperationException(this.MSG);
+        }
+
+        Opaque(long l, 1 var3_2) {
+            this(l);
         }
 
         @Override
-        public String getString(long lIIIIlllIIIIlIl, String lIIIIlllIIIIlII) {
-            Opaque lIIIIlllIIIIIll;
-            throw new UnsupportedOperationException(lIIIIlllIIIIIll.MSG);
+        public String getString(long l, String string) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long lIIIIlllIlllIII, double[] lIIIIlllIllIlll, int lIIIIlllIllIllI, int lIIIIlllIllIlIl) {
-            Opaque lIIIIlllIllIlII;
-            throw new UnsupportedOperationException(lIIIIlllIllIlII.MSG);
+        public void write(long l, double[] arrd, int n, int n2) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public double getDouble(long lIIIIlllIIIllIl) {
-            Opaque lIIIIlllIIIlllI;
-            throw new UnsupportedOperationException(lIIIIlllIIIlllI.MSG);
+        public double getDouble(long l) {
+            throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
         public String toString() {
-            Opaque lIIIIllIIllllll;
-            return String.valueOf(new StringBuilder().append("const@0x").append(Long.toHexString(lIIIIllIIllllll.peer)));
+            return String.valueOf(new StringBuilder().append("const@0x").append(Long.toHexString(this.peer)));
         }
     }
 }

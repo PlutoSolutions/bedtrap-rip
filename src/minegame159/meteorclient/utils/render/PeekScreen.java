@@ -28,54 +28,48 @@ import net.minecraft.class_495;
 
 public class PeekScreen
 extends class_495 {
-    private final /* synthetic */ class_2960 TEXTURE;
-    private final /* synthetic */ class_1799[] contents;
-    private final /* synthetic */ class_1799 storageBlock;
+    private final class_2960 TEXTURE = new class_2960("textures/gui/container/shulker_box.png");
+    private final class_1799[] contents;
+    private final class_1799 storageBlock;
 
-    public boolean method_25404(int llllllIIl, int llllllIII, int lllllIlll) {
-        if (llllllIIl == 256) {
-            PeekScreen llllllIlI;
-            llllllIlI.method_25419();
+    public boolean method_25404(int n, int n2, int n3) {
+        if (n == 256) {
+            this.method_25419();
             return true;
         }
         return false;
     }
 
-    public boolean method_25402(double lIIIIIIlll, double lIIIIIIllI, int lIIIIIIlIl) {
-        PeekScreen lIIIIIlIII;
-        BetterTooltips lIIIIIIlII = Modules.get().get(BetterTooltips.class);
-        if (lIIIIIIlIl == 2 && lIIIIIlIII.field_2787 != null && !lIIIIIlIII.field_2787.method_7677().method_7960() && Utils.mc.field_1724.field_7514.method_7399().method_7960() && lIIIIIIlII.middleClickOpen()) {
-            return Utils.openContainer(lIIIIIlIII.field_2787.method_7677(), lIIIIIlIII.contents, false);
+    public boolean method_25402(double d, double d2, int n) {
+        BetterTooltips betterTooltips = Modules.get().get(BetterTooltips.class);
+        if (n == 2 && this.field_2787 != null && !this.field_2787.method_7677().method_7960() && Utils.mc.field_1724.field_7514.method_7399().method_7960() && betterTooltips.middleClickOpen()) {
+            return Utils.openContainer(this.field_2787.method_7677(), this.contents, false);
         }
         return false;
     }
 
-    protected void method_2389(class_4587 lllIllllI, float llllIIlIl, int llllIIlII, int llllIIIll) {
-        PeekScreen lllIlllll;
-        Color llllIIIlI = Utils.getShulkerColor(lllIlllll.storageBlock);
-        RenderSystem.color4f((float)((float)llllIIIlI.r / 255.0f), (float)((float)llllIIIlI.g / 255.0f), (float)((float)llllIIIlI.b / 255.0f), (float)1.0f);
-        lllIlllll.field_22787.method_1531().method_22813(lllIlllll.TEXTURE);
-        int llllIIIIl = (lllIlllll.field_22789 - lllIlllll.field_2792) / 2;
-        int llllIIIII = (lllIlllll.field_22790 - lllIlllll.field_2779) / 2;
-        lllIlllll.method_25302(lllIllllI, llllIIIIl, llllIIIII, 0, 0, lllIlllll.field_2792, lllIlllll.field_2779);
+    protected void method_2389(class_4587 class_45872, float f, int n, int n2) {
+        Color color = Utils.getShulkerColor(this.storageBlock);
+        RenderSystem.color4f((float)((float)color.r / 255.0f), (float)((float)color.g / 255.0f), (float)((float)color.b / 255.0f), (float)1.0f);
+        this.field_22787.method_1531().method_22813(this.TEXTURE);
+        int n3 = (this.field_22789 - this.field_2792) / 2;
+        int n4 = (this.field_22790 - this.field_2779) / 2;
+        this.method_25302(class_45872, n3, n4, 0, 0, this.field_2792, this.field_2779);
     }
 
-    public PeekScreen(class_1799 lIIIIIllIl, class_1799[] lIIIIIllll) {
-        super(new class_1733(0, Utils.mc.field_1724.field_7514, (class_1263)new class_1277(lIIIIIllll)), Utils.mc.field_1724.field_7514, lIIIIIllIl.method_7964());
-        PeekScreen lIIIIlIIIl;
-        lIIIIlIIIl.TEXTURE = new class_2960("textures/gui/container/shulker_box.png");
-        lIIIIlIIIl.contents = lIIIIIllll;
-        lIIIIlIIIl.storageBlock = lIIIIIllIl;
+    public PeekScreen(class_1799 class_17992, class_1799[] arrclass_1799) {
+        super(new class_1733(0, Utils.mc.field_1724.field_7514, (class_1263)new class_1277(arrclass_1799)), Utils.mc.field_1724.field_7514, class_17992.method_7964());
+        this.contents = arrclass_1799;
+        this.storageBlock = class_17992;
     }
 
-    public boolean method_25406(double lllllllll, double llllllllI, int lllllllIl) {
+    public boolean method_25406(double d, double d2, int n) {
         return false;
     }
 
-    public boolean method_16803(int lllllIIIl, int lllllIIII, int llllIllll) {
-        if (lllllIIIl == 256) {
-            PeekScreen llllIlllI;
-            llllIlllI.method_25419();
+    public boolean method_16803(int n, int n2, int n3) {
+        if (n == 256) {
+            this.method_25419();
             return true;
         }
         return false;

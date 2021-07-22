@@ -19,11 +19,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 @Mixin(value={class_5223.class})
 public abstract class TextVisitFactoryMixin {
     @ModifyArg(at=@At(value="INVOKE", target="Lnet/minecraft/client/font/TextVisitFactory;visitFormatted(Ljava/lang/String;ILnet/minecraft/text/Style;Lnet/minecraft/text/Style;Lnet/minecraft/text/CharacterVisitor;)Z", ordinal=0), method={"visitFormatted(Ljava/lang/String;ILnet/minecraft/text/Style;Lnet/minecraft/text/CharacterVisitor;)Z"}, index=0)
-    private static String adjustText(String text) {
+    private static String adjustText(String string) {
         if (Modules.get() != null) {
-            return Modules.get().get(NameProtect.class).replaceName(text);
+            return Modules.get().get(NameProtect.class).replaceName(string);
         }
-        return text;
+        return string;
     }
 }
 

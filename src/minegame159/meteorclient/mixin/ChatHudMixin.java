@@ -37,10 +37,10 @@ implements IChatHud {
     protected abstract void method_1815(class_2561 var1, int var2, int var3, boolean var4);
 
     @Inject(at={@At(value="HEAD")}, method={"addMessage(Lnet/minecraft/text/Text;I)V"}, cancellable=true)
-    private void onAddMessage(class_2561 text, int id, CallbackInfo info) {
-        ReceiveMessageEvent event = MeteorClient.EVENT_BUS.post(ReceiveMessageEvent.get(text, id));
-        if (event.isCancelled()) {
-            info.cancel();
+    private void onAddMessage(class_2561 class_25612, int n, CallbackInfo callbackInfo) {
+        ReceiveMessageEvent receiveMessageEvent = MeteorClient.EVENT_BUS.post(ReceiveMessageEvent.get(class_25612, n));
+        if (receiveMessageEvent.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 
@@ -51,8 +51,8 @@ implements IChatHud {
     }
 
     @Override
-    public void add(class_2561 message, int messageId, int timestamp, boolean refresh) {
-        this.method_1815(message, messageId, timestamp, refresh);
+    public void add(class_2561 class_25612, int n, int n2, boolean bl) {
+        this.method_1815(class_25612, n, n2, bl);
     }
 }
 

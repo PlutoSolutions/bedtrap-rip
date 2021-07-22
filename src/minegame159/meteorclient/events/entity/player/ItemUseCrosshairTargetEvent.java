@@ -9,20 +9,12 @@ package minegame159.meteorclient.events.entity.player;
 import net.minecraft.class_239;
 
 public class ItemUseCrosshairTargetEvent {
-    private static final /* synthetic */ ItemUseCrosshairTargetEvent INSTANCE;
-    public /* synthetic */ class_239 target;
+    private static final ItemUseCrosshairTargetEvent INSTANCE = new ItemUseCrosshairTargetEvent();
+    public class_239 target;
 
-    public static ItemUseCrosshairTargetEvent get(class_239 lIllIlllIIIlIII) {
-        ItemUseCrosshairTargetEvent.INSTANCE.target = lIllIlllIIIlIII;
+    public static ItemUseCrosshairTargetEvent get(class_239 class_2392) {
+        ItemUseCrosshairTargetEvent.INSTANCE.target = class_2392;
         return INSTANCE;
-    }
-
-    public ItemUseCrosshairTargetEvent() {
-        ItemUseCrosshairTargetEvent lIllIlllIIIlIlI;
-    }
-
-    static {
-        INSTANCE = new ItemUseCrosshairTargetEvent();
     }
 }
 

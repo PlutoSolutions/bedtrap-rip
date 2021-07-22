@@ -27,10 +27,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_824.class})
 public class BlockEntityRenderDispatcherMixin {
     @Inject(method={"render(Lnet/minecraft/block/entity/BlockEntity;FLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;)V"}, at={@At(value="HEAD")}, cancellable=true)
-    private <E extends class_2586> void onRenderEntity(E blockEntity, float tickDelta, class_4587 matrix, class_4597 vertexConsumerProvider, CallbackInfo info) {
-        RenderBlockEntityEvent event = MeteorClient.EVENT_BUS.post(RenderBlockEntityEvent.get(blockEntity));
-        if (event.isCancelled()) {
-            info.cancel();
+    private <E extends class_2586> void onRenderEntity(E e, float f, class_4587 class_45872, class_4597 class_45972, CallbackInfo callbackInfo) {
+        RenderBlockEntityEvent renderBlockEntityEvent = MeteorClient.EVENT_BUS.post(RenderBlockEntityEvent.get(e));
+        if (renderBlockEntityEvent.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 }

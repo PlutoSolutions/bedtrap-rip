@@ -28,9 +28,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_2490.class})
 public class SlimeBlockMixin {
     @Inject(method={"onSteppedOn"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onSteppedOn(class_1937 world, class_2338 pos, class_1297 entity, CallbackInfo info) {
-        if (Modules.get().get(NoSlow.class).slimeBlock() && entity == Utils.mc.field_1724) {
-            info.cancel();
+    private void onSteppedOn(class_1937 class_19372, class_2338 class_23382, class_1297 class_12972, CallbackInfo callbackInfo) {
+        if (Modules.get().get(NoSlow.class).slimeBlock() && class_12972 == Utils.mc.field_1724) {
+            callbackInfo.cancel();
         }
     }
 }

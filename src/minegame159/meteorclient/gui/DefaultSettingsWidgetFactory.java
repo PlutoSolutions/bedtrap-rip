@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import minegame159.meteorclient.gui.GuiTheme;
 import minegame159.meteorclient.gui.renderer.GuiRenderer;
 import minegame159.meteorclient.gui.screens.settings.BlockDataSettingScreen;
@@ -32,6 +33,7 @@ import minegame159.meteorclient.gui.screens.settings.PotionSettingScreen;
 import minegame159.meteorclient.gui.screens.settings.SoundEventListSettingScreen;
 import minegame159.meteorclient.gui.screens.settings.StatusEffectSettingScreen;
 import minegame159.meteorclient.gui.screens.settings.StorageBlockListSettingScreen;
+import minegame159.meteorclient.gui.utils.Cell;
 import minegame159.meteorclient.gui.utils.IScreenFactory;
 import minegame159.meteorclient.gui.utils.SettingsWidgetFactory;
 import minegame159.meteorclient.gui.widgets.WItem;
@@ -85,407 +87,480 @@ import org.apache.commons.lang3.StringUtils;
 
 public class DefaultSettingsWidgetFactory
 implements SettingsWidgetFactory {
-    private final /* synthetic */ GuiTheme theme;
-    private final /* synthetic */ Map<Class<?>, Factory> factories;
+    private final GuiTheme theme;
+    private final Map<Class<?>, Factory> factories = new HashMap();
 
-    private void keybindW(WTable lllllllllllllllllIIIIIlllllllIII, KeybindSetting lllllllllllllllllIIIIIllllllIlll) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllllllllIl;
-        WKeybind lllllllllllllllllIIIIIlllllllIlI = lllllllllllllllllIIIIIlllllllIII.add(lllllllllllllllllIIIIIllllllllIl.theme.keybind((Keybind)lllllllllllllllllIIIIIllllllIlll.get(), ((Keybind)lllllllllllllllllIIIIIllllllIlll.getDefaultValue()).getValue())).expandX().widget();
-        lllllllllllllllllIIIIIlllllllIlI.action = lllllllllllllllllIIIIIllllllIlll::changed;
-        lllllllllllllllllIIIIIllllllIlll.widget = lllllllllllllllllIIIIIlllllllIlI;
+    private void lambda$soundEventListW$51(SoundEventListSetting soundEventListSetting) {
+        Utils.mc.method_1507((class_437)new SoundEventListSettingScreen(this.theme, soundEventListSetting));
     }
 
-    private void stringW(WTable lllllllllllllllllIIIIlIIIIlIIllI, StringSetting lllllllllllllllllIIIIlIIIIlIIIIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIIlIIIll;
-        WTextBox lllllllllllllllllIIIIlIIIIlIIlII = lllllllllllllllllIIIIlIIIIlIIllI.add(lllllllllllllllllIIIIlIIIIlIIIll.theme.textBox((String)lllllllllllllllllIIIIlIIIIlIIIIl.get())).expandX().widget();
-        lllllllllllllllllIIIIlIIIIlIIlII.action = () -> lllllllllllllllllIIIIlIIIIlIIIIl.set(lllllllllllllllllIIIIlIIIIlIIlII.get());
-        lllllllllllllllllIIIIlIIIIlIIIll.reset(lllllllllllllllllIIIIlIIIIlIIllI, lllllllllllllllllIIIIlIIIIlIIIIl, () -> lllllllllllllllllIIIIlIIIIlIIlII.set((String)lllllllllllllllllIIIIlIIIIlIIIIl.get()));
+    private void keybindW(WTable wTable, KeybindSetting keybindSetting) {
+        WKeybind wKeybind = wTable.add(this.theme.keybind((Keybind)keybindSetting.get(), ((Keybind)keybindSetting.getDefaultValue()).getValue())).expandX().widget();
+        Objects.requireNonNull(keybindSetting);
+        wKeybind.action = keybindSetting::changed;
+        keybindSetting.widget = wKeybind;
     }
 
-    private void colorW(WTable lllllllllllllllllIIIIlIIIIllIIII, ColorSetting lllllllllllllllllIIIIlIIIIlIllll) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIIllIIIl;
-        WHorizontalList lllllllllllllllllIIIIlIIIIllIlII = lllllllllllllllllIIIIlIIIIllIIII.add(lllllllllllllllllIIIIlIIIIllIIIl.theme.horizontalList()).expandX().widget();
-        WQuad lllllllllllllllllIIIIlIIIIllIIll = lllllllllllllllllIIIIlIIIIllIlII.add(lllllllllllllllllIIIIlIIIIllIIIl.theme.quad((Color)lllllllllllllllllIIIIlIIIIlIllll.get())).widget();
-        WButton lllllllllllllllllIIIIlIIIIllIIlI = lllllllllllllllllIIIIlIIIIllIlII.add(lllllllllllllllllIIIIlIIIIllIIIl.theme.button(GuiRenderer.EDIT)).widget();
-        lllllllllllllllllIIIIlIIIIllIIlI.action = () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIIllllIlI;
-            Utils.mc.method_1507((class_437)new ColorSettingScreen(lllllllllllllllllIIIIIlIIllllIlI.theme, lllllllllllllllllIIIIlIIIIlIllll));
-        };
-        lllllllllllllllllIIIIlIIIIllIIIl.reset(lllllllllllllllllIIIIlIIIIllIIII, lllllllllllllllllIIIIlIIIIlIllll, () -> {
-            lllllllllllllllllIIIIIlIIllllllI.color = (Color)lllllllllllllllllIIIIlIIIIlIllll.get();
-        });
+    private void lambda$enchListW$47(EnchListSetting enchListSetting) {
+        Utils.mc.method_1507((class_437)new EnchListSettingScreen(this.theme, enchListSetting));
     }
 
-    private void soundEventListW(WTable lllllllllllllllllIIIIIlllIlIIIll, SoundEventListSetting lllllllllllllllllIIIIIlllIlIIlIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllIlIIlll;
-        lllllllllllllllllIIIIIlllIlIIlll.selectW(lllllllllllllllllIIIIIlllIlIIIll, lllllllllllllllllIIIIIlllIlIIlIl, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIlIIlIIl;
-            Utils.mc.method_1507((class_437)new SoundEventListSettingScreen(lllllllllllllllllIIIIIllIlIIlIIl.theme, lllllllllllllllllIIIIIlllIlIIlIl));
-        });
+    private void stringW(WTable wTable, StringSetting stringSetting) {
+        WTextBox wTextBox = wTable.add(this.theme.textBox((String)stringSetting.get())).expandX().widget();
+        wTextBox.action = () -> DefaultSettingsWidgetFactory.lambda$stringW$36(stringSetting, wTextBox);
+        this.reset(wTable, stringSetting, () -> DefaultSettingsWidgetFactory.lambda$stringW$37(wTextBox, stringSetting));
     }
 
-    private void blockDataSettingW(WTable lllllllllllllllllIIIIIlllIIIIllI, BlockDataSetting<?> lllllllllllllllllIIIIIlllIIIIlIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllIIIIlll;
-        WButton lllllllllllllllllIIIIIlllIIIlIII = lllllllllllllllllIIIIIlllIIIIllI.add(lllllllllllllllllIIIIIlllIIIIlll.theme.button(GuiRenderer.EDIT)).expandCellX().widget();
-        lllllllllllllllllIIIIIlllIIIlIII.action = () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIlIlllIl;
-            Utils.mc.method_1507((class_437)new BlockDataSettingScreen(lllllllllllllllllIIIIIllIlIlllIl.theme, lllllllllllllllllIIIIIlllIIIIlIl));
-        };
-        lllllllllllllllllIIIIIlllIIIIlll.reset(lllllllllllllllllIIIIIlllIIIIllI, lllllllllllllllllIIIIIlllIIIIlIl, null);
+    private void lambda$new$14(WTable wTable, Setting setting) {
+        this.enchListW(wTable, (EnchListSetting)setting);
     }
 
-    private void doubleW(WTable lllllllllllllllllIIIIlIIIllIIlII, DoubleSetting lllllllllllllllllIIIIlIIIllIIIll) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIllIIIII;
-        WDoubleEdit lllllllllllllllllIIIIlIIIllIIIlI = lllllllllllllllllIIIIlIIIllIIIII.theme.doubleEdit((Double)lllllllllllllllllIIIIlIIIllIIIll.get(), lllllllllllllllllIIIIlIIIllIIIll.getSliderMin(), lllllllllllllllllIIIIlIIIllIIIll.getSliderMax());
-        lllllllllllllllllIIIIlIIIllIIIlI.min = lllllllllllllllllIIIIlIIIllIIIll.min;
-        lllllllllllllllllIIIIlIIIllIIIlI.max = lllllllllllllllllIIIIlIIIllIIIll.max;
-        lllllllllllllllllIIIIlIIIllIIIlI.decimalPlaces = lllllllllllllllllIIIIlIIIllIIIll.decimalPlaces;
-        lllllllllllllllllIIIIlIIIllIIlII.add(lllllllllllllllllIIIIlIIIllIIIlI).expandX();
-        Runnable lllllllllllllllllIIIIlIIIllIIIIl = () -> {
-            if (!lllllllllllllllllIIIIlIIIllIIIll.set(lllllllllllllllllIIIIlIIIllIIIlI.get())) {
-                lllllllllllllllllIIIIlIIIllIIIlI.set((Double)lllllllllllllllllIIIIlIIIllIIIll.get());
-            }
-        };
-        if (lllllllllllllllllIIIIlIIIllIIIll.onSliderRelease) {
-            lllllllllllllllllIIIIlIIIllIIIlI.actionOnRelease = lllllllllllllllllIIIIlIIIllIIIIl;
+    private void colorW(WTable wTable, ColorSetting colorSetting) {
+        WHorizontalList wHorizontalList = wTable.add(this.theme.horizontalList()).expandX().widget();
+        WQuad wQuad = wHorizontalList.add(this.theme.quad((Color)colorSetting.get())).widget();
+        WButton wButton = wHorizontalList.add(this.theme.button(GuiRenderer.EDIT)).widget();
+        wButton.action = () -> this.lambda$colorW$34(colorSetting);
+        this.reset(wTable, colorSetting, () -> DefaultSettingsWidgetFactory.lambda$colorW$35(wQuad, colorSetting));
+    }
+
+    private void soundEventListW(WTable wTable, SoundEventListSetting soundEventListSetting) {
+        this.selectW(wTable, soundEventListSetting, () -> this.lambda$soundEventListW$51(soundEventListSetting));
+    }
+
+    private void blockDataSettingW(WTable wTable, BlockDataSetting<?> blockDataSetting) {
+        WButton wButton = wTable.add(this.theme.button(GuiRenderer.EDIT)).expandCellX().widget();
+        wButton.action = () -> this.lambda$blockDataSettingW$54(blockDataSetting);
+        this.reset(wTable, blockDataSetting, null);
+    }
+
+    private void doubleW(WTable wTable, DoubleSetting doubleSetting) {
+        WDoubleEdit wDoubleEdit = this.theme.doubleEdit((Double)doubleSetting.get(), doubleSetting.getSliderMin(), doubleSetting.getSliderMax());
+        wDoubleEdit.min = doubleSetting.min;
+        wDoubleEdit.max = doubleSetting.max;
+        wDoubleEdit.decimalPlaces = doubleSetting.decimalPlaces;
+        wTable.add(wDoubleEdit).expandX();
+        Runnable runnable = () -> DefaultSettingsWidgetFactory.lambda$doubleW$27(doubleSetting, wDoubleEdit);
+        if (doubleSetting.onSliderRelease) {
+            wDoubleEdit.actionOnRelease = runnable;
         } else {
-            lllllllllllllllllIIIIlIIIllIIIlI.action = lllllllllllllllllIIIIlIIIllIIIIl;
+            wDoubleEdit.action = runnable;
         }
-        lllllllllllllllllIIIIlIIIllIIIII.reset(lllllllllllllllllIIIIlIIIllIIlII, lllllllllllllllllIIIIlIIIllIIIll, () -> lllllllllllllllllIIIIlIIIllIIIlI.set((Double)lllllllllllllllllIIIIlIIIllIIIll.get()));
+        this.reset(wTable, doubleSetting, () -> DefaultSettingsWidgetFactory.lambda$doubleW$28(wDoubleEdit, doubleSetting));
     }
 
-    private void selectW(WContainer lllllllllllllllllIIIIIllIllllIII, Setting<?> lllllllllllllllllIIIIIllIlllllII, Runnable lllllllllllllllllIIIIIllIllllIll) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIllllIIl;
-        WButton lllllllllllllllllIIIIIllIllllIlI = lllllllllllllllllIIIIIllIllllIII.add(lllllllllllllllllIIIIIllIllllIIl.theme.button("Select")).expandCellX().widget();
-        lllllllllllllllllIIIIIllIllllIlI.action = lllllllllllllllllIIIIIllIllllIll;
-        lllllllllllllllllIIIIIllIllllIIl.reset(lllllllllllllllllIIIIIllIllllIII, lllllllllllllllllIIIIIllIlllllII, null);
+    private void lambda$new$6(WTable wTable, Setting setting) {
+        this.stringW(wTable, (StringSetting)setting);
     }
 
-    private void boolW(WTable lllllllllllllllllIIIIlIIIllllIIl, BoolSetting lllllllllllllllllIIIIlIIIlllllII) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIllllllI;
-        WCheckbox lllllllllllllllllIIIIlIIIllllIll = lllllllllllllllllIIIIlIIIllllIIl.add(lllllllllllllllllIIIIlIIIllllllI.theme.checkbox((Boolean)lllllllllllllllllIIIIlIIIlllllII.get())).expandCellX().widget();
-        lllllllllllllllllIIIIlIIIllllIll.action = () -> lllllllllllllllllIIIIlIIIlllllII.set(lllllllllllllllllIIIIIlIIIlIllll.checked);
-        lllllllllllllllllIIIIlIIIllllllI.reset(lllllllllllllllllIIIIlIIIllllIIl, lllllllllllllllllIIIIlIIIlllllII, () -> {
-            lllllllllllllllllIIIIIlIIIlllIII.checked = (Boolean)lllllllllllllllllIIIIlIIIlllllII.get();
-        });
+    private static void lambda$potionW$33(WItemWithLabel wItemWithLabel, PotionSetting potionSetting) {
+        wItemWithLabel.set(((MyPotion)potionSetting.get()).potion);
     }
 
-    private void entityTypeListW(WTable lllllllllllllllllIIIIIllllIlIIll, EntityTypeListSetting lllllllllllllllllIIIIIllllIlIIlI) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllllIlIIIl;
-        lllllllllllllllllIIIIIllllIlIIIl.selectW(lllllllllllllllllIIIIIllllIlIIll, lllllllllllllllllIIIIIllllIlIIlI, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIIlIIlll;
-            Utils.mc.method_1507((class_437)new EntityTypeListSettingScreen(lllllllllllllllllIIIIIllIIlIIlll.theme, lllllllllllllllllIIIIIllllIlIIlI));
-        });
+    private static void lambda$group$22(SettingGroup settingGroup, WSection wSection) {
+        settingGroup.sectionExpanded = wSection.isExpanded();
     }
 
-    private void reset(WContainer lllllllllllllllllIIIIIllIllIlllI, Setting<?> lllllllllllllllllIIIIIllIllIllIl, Runnable lllllllllllllllllIIIIIllIllIIlll) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIllIllll;
-        WButton lllllllllllllllllIIIIIllIllIlIll = lllllllllllllllllIIIIIllIllIlllI.add(lllllllllllllllllIIIIIllIllIllll.theme.button(GuiRenderer.RESET)).widget();
-        lllllllllllllllllIIIIIllIllIlIll.action = () -> {
-            lllllllllllllllllIIIIIllIllIllIl.reset();
-            if (lllllllllllllllllIIIIIllIllIIlll != null) {
-                lllllllllllllllllIIIIIllIllIIlll.run();
-            }
-        };
+    private static void lambda$boolW$24(WCheckbox wCheckbox, BoolSetting boolSetting) {
+        wCheckbox.checked = (Boolean)boolSetting.get();
     }
 
-    private void potionW(WTable lllllllllllllllllIIIIlIIIlIIIIlI, PotionSetting lllllllllllllllllIIIIlIIIlIIIIIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIlIIlIIl;
-        WHorizontalList lllllllllllllllllIIIIlIIIlIIIllI = lllllllllllllllllIIIIlIIIlIIIIlI.add(lllllllllllllllllIIIIlIIIlIIlIIl.theme.horizontalList()).expandX().widget();
-        WItemWithLabel lllllllllllllllllIIIIlIIIlIIIlIl = lllllllllllllllllIIIIlIIIlIIIllI.add(lllllllllllllllllIIIIlIIIlIIlIIl.theme.itemWithLabel(((MyPotion)lllllllllllllllllIIIIlIIIlIIIIIl.get()).potion, ((MyPotion)lllllllllllllllllIIIIlIIIlIIIIIl.get()).potion.method_7964().getString())).widget();
-        WButton lllllllllllllllllIIIIlIIIlIIIlII = lllllllllllllllllIIIIlIIIlIIIllI.add(lllllllllllllllllIIIIlIIIlIIlIIl.theme.button("Select")).expandCellX().widget();
-        lllllllllllllllllIIIIlIIIlIIIlII.action = () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIIllIlIII;
-            PotionSettingScreen lllllllllllllllllIIIIIlIIllIlIIl = new PotionSettingScreen(lllllllllllllllllIIIIIlIIllIlIII.theme, lllllllllllllllllIIIIlIIIlIIIIIl);
-            lllllllllllllllllIIIIIlIIllIlIIl.onClosed(() -> lllllllllllllllllIIIIlIIIlIIIlIl.set(((MyPotion)lllllllllllllllllIIIIIlIIllIIIIl.get()).potion));
-            Utils.mc.method_1507((class_437)lllllllllllllllllIIIIIlIIllIlIIl);
-        };
-        lllllllllllllllllIIIIlIIIlIIlIIl.reset(lllllllllllllllllIIIIlIIIlIIIllI, lllllllllllllllllIIIIlIIIlIIIIIl, () -> lllllllllllllllllIIIIlIIIlIIIlIl.set(((MyPotion)lllllllllllllllllIIIIIlIIlllIIIl.get()).potion));
+    private void lambda$packetBoolW$49(PacketBoolSetting packetBoolSetting) {
+        Utils.mc.method_1507((class_437)new PacketBoolSettingScreen(this.theme, packetBoolSetting));
     }
 
-    private void blockW(WTable lllllllllllllllllIIIIlIIIIIIIllI, BlockSetting lllllllllllllllllIIIIlIIIIIIIlIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIIIIllIl;
-        WHorizontalList lllllllllllllllllIIIIlIIIIIIlIlI = lllllllllllllllllIIIIlIIIIIIIllI.add(lllllllllllllllllIIIIlIIIIIIllIl.theme.horizontalList()).expandX().widget();
-        WItem lllllllllllllllllIIIIlIIIIIIlIIl = lllllllllllllllllIIIIlIIIIIIlIlI.add(lllllllllllllllllIIIIlIIIIIIllIl.theme.item(((class_2248)lllllllllllllllllIIIIlIIIIIIIlIl.get()).method_8389().method_7854())).widget();
-        WButton lllllllllllllllllIIIIlIIIIIIlIII = lllllllllllllllllIIIIlIIIIIIlIlI.add(lllllllllllllllllIIIIlIIIIIIllIl.theme.button("Select")).widget();
-        lllllllllllllllllIIIIlIIIIIIlIII.action = () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIlIlIIlII;
-            BlockSettingScreen lllllllllllllllllIIIIIlIlIlIIlIl = new BlockSettingScreen(lllllllllllllllllIIIIIlIlIlIIlII.theme, lllllllllllllllllIIIIlIIIIIIIlIl);
-            lllllllllllllllllIIIIIlIlIlIIlIl.onClosed(() -> lllllllllllllllllIIIIlIIIIIIlIIl.set(((class_2248)lllllllllllllllllIIIIlIIIIIIIlIl.get()).method_8389().method_7854()));
-            Utils.mc.method_1507((class_437)lllllllllllllllllIIIIIlIlIlIIlIl);
-        };
-        lllllllllllllllllIIIIlIIIIIIllIl.reset(lllllllllllllllllIIIIlIIIIIIIllI, lllllllllllllllllIIIIlIIIIIIIlIl, () -> lllllllllllllllllIIIIlIIIIIIlIIl.set(((class_2248)lllllllllllllllllIIIIlIIIIIIIlIl.get()).method_8389().method_7854()));
+    private static void lambda$intW$26(WIntEdit wIntEdit, IntSetting intSetting) {
+        wIntEdit.set((Integer)intSetting.get());
     }
 
-    private void providedStringW(WTable lllllllllllllllllIIIIlIIIIIllIlI, ProvidedStringSetting lllllllllllllllllIIIIlIIIIIllIIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIIIllIll;
-        WDropdown<String> lllllllllllllllllIIIIlIIIIIllIII = lllllllllllllllllIIIIlIIIIIllIlI.add(lllllllllllllllllIIIIlIIIIIllIll.theme.dropdown(lllllllllllllllllIIIIlIIIIIllIIl.supplier.get(), (String)lllllllllllllllllIIIIlIIIIIllIIl.get())).expandCellX().widget();
-        lllllllllllllllllIIIIlIIIIIllIII.action = () -> lllllllllllllllllIIIIlIIIIIllIIl.set((String)lllllllllllllllllIIIIlIIIIIllIII.get());
-        lllllllllllllllllIIIIlIIIIIllIll.reset(lllllllllllllllllIIIIlIIIIIllIlI, lllllllllllllllllIIIIlIIIIIllIIl, () -> lllllllllllllllllIIIIlIIIIIllIII.set((String)lllllllllllllllllIIIIlIIIIIllIIl.get()));
+    private static void lambda$blockW$40(WItem wItem, BlockSetting blockSetting) {
+        wItem.set(((class_2248)blockSetting.get()).method_8389().method_7854());
     }
 
-    public DefaultSettingsWidgetFactory(GuiTheme lllllllllllllllllIIIIlIIllIIIIII) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIllIIIIIl;
-        lllllllllllllllllIIIIlIIllIIIIIl.factories = new HashMap();
-        lllllllllllllllllIIIIlIIllIIIIIl.theme = lllllllllllllllllIIIIlIIllIIIIII;
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(BoolSetting.class, (lllllllllllllllllIIIIIIlIllIIlll, lllllllllllllllllIIIIIIlIllIIllI) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIlIllIIlIl;
-            lllllllllllllllllIIIIIIlIllIIlIl.boolW(lllllllllllllllllIIIIIIlIllIIlll, (BoolSetting)lllllllllllllllllIIIIIIlIllIIllI);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(IntSetting.class, (lllllllllllllllllIIIIIIlIllIllIl, lllllllllllllllllIIIIIIlIllIllll) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIlIllIlllI;
-            lllllllllllllllllIIIIIIlIllIlllI.intW(lllllllllllllllllIIIIIIlIllIllIl, (IntSetting)lllllllllllllllllIIIIIIlIllIllll);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(DoubleSetting.class, (lllllllllllllllllIIIIIIlIlllIllI, lllllllllllllllllIIIIIIlIllllIII) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIlIlllIlll;
-            lllllllllllllllllIIIIIIlIlllIlll.doubleW(lllllllllllllllllIIIIIIlIlllIllI, (DoubleSetting)lllllllllllllllllIIIIIIlIllllIII);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(EnumSetting.class, (lllllllllllllllllIIIIIIlIlllllll, lllllllllllllllllIIIIIIllIIIIIIl) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIIIIIll;
-            lllllllllllllllllIIIIIIllIIIIIll.enumW(lllllllllllllllllIIIIIIlIlllllll, (EnumSetting)lllllllllllllllllIIIIIIllIIIIIIl);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(PotionSetting.class, (lllllllllllllllllIIIIIIllIIIlIII, lllllllllllllllllIIIIIIllIIIlIlI) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIIIlIIl;
-            lllllllllllllllllIIIIIIllIIIlIIl.potionW(lllllllllllllllllIIIIIIllIIIlIII, (PotionSetting)lllllllllllllllllIIIIIIllIIIlIlI);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(ColorSetting.class, (lllllllllllllllllIIIIIIllIIlIlII, lllllllllllllllllIIIIIIllIIlIIll) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIIlIIlI;
-            lllllllllllllllllIIIIIIllIIlIIlI.colorW(lllllllllllllllllIIIIIIllIIlIlII, (ColorSetting)lllllllllllllllllIIIIIIllIIlIIll);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(StringSetting.class, (lllllllllllllllllIIIIIIllIIllIlI, lllllllllllllllllIIIIIIllIIllIIl) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIIllllI;
-            lllllllllllllllllIIIIIIllIIllllI.stringW(lllllllllllllllllIIIIIIllIIllIlI, (StringSetting)lllllllllllllllllIIIIIIllIIllIIl);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(ProvidedStringSetting.class, (lllllllllllllllllIIIIIIllIlIIIll, lllllllllllllllllIIIIIIllIlIIIlI) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIlIIlll;
-            lllllllllllllllllIIIIIIllIlIIlll.providedStringW(lllllllllllllllllIIIIIIllIlIIIll, (ProvidedStringSetting)lllllllllllllllllIIIIIIllIlIIIlI);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(BlockSetting.class, (lllllllllllllllllIIIIIIllIlIllII, lllllllllllllllllIIIIIIllIlIlIll) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIlIllIl;
-            lllllllllllllllllIIIIIIllIlIllIl.blockW(lllllllllllllllllIIIIIIllIlIllII, (BlockSetting)lllllllllllllllllIIIIIIllIlIlIll);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(KeybindSetting.class, (lllllllllllllllllIIIIIIllIllIlIl, lllllllllllllllllIIIIIIllIllIlll) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIlllIIl;
-            lllllllllllllllllIIIIIIllIlllIIl.keybindW(lllllllllllllllllIIIIIIllIllIlIl, (KeybindSetting)lllllllllllllllllIIIIIIllIllIlll);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(GenericSetting.class, (lllllllllllllllllIIIIIIllIlllllI, lllllllllllllllllIIIIIIlllIIIIII) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllIllllll;
-            lllllllllllllllllIIIIIIllIllllll.genericW(lllllllllllllllllIIIIIIllIlllllI, (GenericSetting)lllllllllllllllllIIIIIIlllIIIIII);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(BlockListSetting.class, (lllllllllllllllllIIIIIIlllIIlIlI, lllllllllllllllllIIIIIIlllIIIllI) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIlllIIlIII;
-            lllllllllllllllllIIIIIIlllIIlIII.blockListW(lllllllllllllllllIIIIIIlllIIlIlI, (BlockListSetting)lllllllllllllllllIIIIIIlllIIIllI);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(ItemListSetting.class, (lllllllllllllllllIIIIIIlllIlIIll, lllllllllllllllllIIIIIIlllIlIIlI) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIlllIlIIIl;
-            lllllllllllllllllIIIIIIlllIlIIIl.itemListW(lllllllllllllllllIIIIIIlllIlIIll, (ItemListSetting)lllllllllllllllllIIIIIIlllIlIIlI);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(EntityTypeListSetting.class, (lllllllllllllllllIIIIIIlllIlllII, lllllllllllllllllIIIIIIlllIllIll) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIlllIlllIl;
-            lllllllllllllllllIIIIIIlllIlllIl.entityTypeListW(lllllllllllllllllIIIIIIlllIlllII, (EntityTypeListSetting)lllllllllllllllllIIIIIIlllIllIll);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(EnchListSetting.class, (lllllllllllllllllIIIIIIllllIIIlI, lllllllllllllllllIIIIIIllllIIIIl) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllllIIIll;
-            lllllllllllllllllIIIIIIllllIIIll.enchListW(lllllllllllllllllIIIIIIllllIIIlI, (EnchListSetting)lllllllllllllllllIIIIIIllllIIIIl);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(ModuleListSetting.class, (lllllllllllllllllIIIIIIllllIlllI, lllllllllllllllllIIIIIIllllIllIl) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllllIllll;
-            lllllllllllllllllIIIIIIllllIllll.moduleListW(lllllllllllllllllIIIIIIllllIlllI, (ModuleListSetting)lllllllllllllllllIIIIIIllllIllIl);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(PacketBoolSetting.class, (lllllllllllllllllIIIIIIlllllIlII, lllllllllllllllllIIIIIIlllllIIll) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllllllIII;
-            lllllllllllllllllIIIIIIllllllIII.packetBoolW(lllllllllllllllllIIIIIIlllllIlII, (PacketBoolSetting)lllllllllllllllllIIIIIIlllllIIll);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(ParticleTypeListSetting.class, (lllllllllllllllllIIIIIlIIIIIIIII, lllllllllllllllllIIIIIIlllllllll) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIIllllllllI;
-            lllllllllllllllllIIIIIIllllllllI.particleEffectListW(lllllllllllllllllIIIIIlIIIIIIIII, (ParticleTypeListSetting)lllllllllllllllllIIIIIIlllllllll);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(SoundEventListSetting.class, (lllllllllllllllllIIIIIlIIIIIlIIl, lllllllllllllllllIIIIIlIIIIIlIII) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIIIIIlIlI;
-            lllllllllllllllllIIIIIlIIIIIlIlI.soundEventListW(lllllllllllllllllIIIIIlIIIIIlIIl, (SoundEventListSetting)lllllllllllllllllIIIIIlIIIIIlIII);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(StatusEffectSetting.class, (lllllllllllllllllIIIIIlIIIIIllll, lllllllllllllllllIIIIIlIIIIIlllI) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIIIIlIIII;
-            lllllllllllllllllIIIIIlIIIIlIIII.statusEffectW(lllllllllllllllllIIIIIlIIIIIllll, (StatusEffectSetting)lllllllllllllllllIIIIIlIIIIIlllI);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(StorageBlockListSetting.class, (lllllllllllllllllIIIIIlIIIIllIll, lllllllllllllllllIIIIIlIIIIllIlI) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIIIIlllII;
-            lllllllllllllllllIIIIIlIIIIlllII.storageBlockListW(lllllllllllllllllIIIIIlIIIIllIll, (StorageBlockListSetting)lllllllllllllllllIIIIIlIIIIllIlI);
-        });
-        lllllllllllllllllIIIIlIIllIIIIIl.factories.put(BlockDataSetting.class, (lllllllllllllllllIIIIIlIIIlIIlII, lllllllllllllllllIIIIIlIIIlIIIII) -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIIIlIIIlI;
-            lllllllllllllllllIIIIIlIIIlIIIlI.blockDataSettingW(lllllllllllllllllIIIIIlIIIlIIlII, (BlockDataSetting)lllllllllllllllllIIIIIlIIIlIIIII);
-        });
+    private void selectW(WContainer wContainer, Setting<?> setting, Runnable runnable) {
+        WButton wButton = wContainer.add(this.theme.button("Select")).expandCellX().widget();
+        wButton.action = runnable;
+        this.reset(wContainer, setting, null);
     }
 
-    private void blockListW(WTable lllllllllllllllllIIIIIlllllIIlIl, BlockListSetting lllllllllllllllllIIIIIlllllIIIIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllllIIIll;
-        lllllllllllllllllIIIIIlllllIIIll.selectW(lllllllllllllllllIIIIIlllllIIlIl, lllllllllllllllllIIIIIlllllIIIIl, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIlIlllIlI;
-            Utils.mc.method_1507((class_437)new BlockListSettingScreen(lllllllllllllllllIIIIIlIlIlllIlI.theme, lllllllllllllllllIIIIIlllllIIIIl));
-        });
+    private void boolW(WTable wTable, BoolSetting boolSetting) {
+        WCheckbox wCheckbox = wTable.add(this.theme.checkbox((Boolean)boolSetting.get())).expandCellX().widget();
+        wCheckbox.action = () -> DefaultSettingsWidgetFactory.lambda$boolW$23(boolSetting, wCheckbox);
+        this.reset(wTable, boolSetting, () -> DefaultSettingsWidgetFactory.lambda$boolW$24(wCheckbox, boolSetting));
     }
 
-    private <T extends Enum<?>> void enumW(WTable lllllllllllllllllIIIIlIIIlIlIIlI, EnumSetting<T> lllllllllllllllllIIIIlIIIlIlIlIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIlIlIIll;
-        WDropdown<Enum> lllllllllllllllllIIIIlIIIlIlIlII = lllllllllllllllllIIIIlIIIlIlIIlI.add(lllllllllllllllllIIIIlIIIlIlIIll.theme.dropdown((Enum)lllllllllllllllllIIIIlIIIlIlIlIl.get())).expandCellX().widget();
-        lllllllllllllllllIIIIlIIIlIlIlII.action = () -> lllllllllllllllllIIIIlIIIlIlIlIl.set((Enum)lllllllllllllllllIIIIlIIIlIlIlII.get());
-        lllllllllllllllllIIIIlIIIlIlIIll.reset(lllllllllllllllllIIIIlIIIlIlIIlI, lllllllllllllllllIIIIlIIIlIlIlIl, () -> lllllllllllllllllIIIIlIIIlIlIlII.set((Enum)lllllllllllllllllIIIIlIIIlIlIlIl.get()));
+    private static void lambda$doubleW$28(WDoubleEdit wDoubleEdit, DoubleSetting doubleSetting) {
+        wDoubleEdit.set((Double)doubleSetting.get());
     }
 
-    private void packetBoolW(WTable lllllllllllllllllIIIIIlllIllIlIl, PacketBoolSetting lllllllllllllllllIIIIIlllIllIlII) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllIlllIIl;
-        lllllllllllllllllIIIIIlllIlllIIl.selectW(lllllllllllllllllIIIIIlllIllIlIl, lllllllllllllllllIIIIIlllIllIlII, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIIllllII;
-            Utils.mc.method_1507((class_437)new PacketBoolSettingScreen(lllllllllllllllllIIIIIllIIllllII.theme, lllllllllllllllllIIIIIlllIllIlII));
-        });
+    private void lambda$new$16(WTable wTable, Setting setting) {
+        this.packetBoolW(wTable, (PacketBoolSetting)setting);
     }
 
-    private void itemListW(WTable lllllllllllllllllIIIIIllllIlllII, ItemListSetting lllllllllllllllllIIIIIllllIllIll) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllllIlllIl;
-        lllllllllllllllllIIIIIllllIlllIl.selectW(lllllllllllllllllIIIIIllllIlllII, lllllllllllllllllIIIIIllllIllIll, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIIlIIIII;
-            Utils.mc.method_1507((class_437)new ItemListSettingScreen(lllllllllllllllllIIIIIllIIlIIIII.theme, lllllllllllllllllIIIIIllllIllIll));
-        });
+    private static void lambda$providedStringW$39(WDropdown wDropdown, ProvidedStringSetting providedStringSetting) {
+        wDropdown.set((String)providedStringSetting.get());
     }
 
-    private void statusEffectW(WTable lllllllllllllllllIIIIIlllIIllIlI, StatusEffectSetting lllllllllllllllllIIIIIlllIIllIIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllIIllIll;
-        lllllllllllllllllIIIIIlllIIllIll.selectW(lllllllllllllllllIIIIIlllIIllIlI, lllllllllllllllllIIIIIlllIIllIIl, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIlIIllll;
-            Utils.mc.method_1507((class_437)new StatusEffectSettingScreen(lllllllllllllllllIIIIIllIlIIllll.theme, lllllllllllllllllIIIIIlllIIllIIl));
-        });
+    private void lambda$new$8(WTable wTable, Setting setting) {
+        this.blockW(wTable, (BlockSetting)setting);
     }
 
-    private void storageBlockListW(WTable lllllllllllllllllIIIIIlllIIlIIIl, StorageBlockListSetting lllllllllllllllllIIIIIlllIIlIIII) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllIIlIlIl;
-        lllllllllllllllllIIIIIlllIIlIlIl.selectW(lllllllllllllllllIIIIIlllIIlIIIl, lllllllllllllllllIIIIIlllIIlIIII, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIlIlIlIl;
-            Utils.mc.method_1507((class_437)new StorageBlockListSettingScreen(lllllllllllllllllIIIIIllIlIlIlIl.theme, lllllllllllllllllIIIIIlllIIlIIII));
-        });
+    private void lambda$new$18(WTable wTable, Setting setting) {
+        this.soundEventListW(wTable, (SoundEventListSetting)setting);
     }
 
-    private void genericW(WTable lllllllllllllllllIIIIIlllllIllII, GenericSetting<?> lllllllllllllllllIIIIIlllllIllll) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllllIllIl;
-        WButton lllllllllllllllllIIIIIlllllIlllI = lllllllllllllllllIIIIIlllllIllII.add(lllllllllllllllllIIIIIlllllIllIl.theme.button(GuiRenderer.EDIT)).widget();
-        lllllllllllllllllIIIIIlllllIlllI.action = () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlIlIllIllI;
-            Utils.mc.method_1507((class_437)((IScreenFactory)lllllllllllllllllIIIIIlllllIllll.get()).createScreen(lllllllllllllllllIIIIIlIlIllIllI.theme));
-        };
-        lllllllllllllllllIIIIIlllllIllIl.reset(lllllllllllllllllIIIIIlllllIllII, lllllllllllllllllIIIIIlllllIllll, null);
+    private static void lambda$enumW$29(EnumSetting enumSetting, WDropdown wDropdown) {
+        enumSetting.set((Enum)wDropdown.get());
     }
 
-    private void particleEffectListW(WTable lllllllllllllllllIIIIIlllIlIllll, ParticleTypeListSetting lllllllllllllllllIIIIIlllIlIlllI) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIlllIllIIII;
-        lllllllllllllllllIIIIIlllIllIIII.selectW(lllllllllllllllllIIIIIlllIlIllll, lllllllllllllllllIIIIIlllIlIlllI, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIlIIIlIl;
-            Utils.mc.method_1507((class_437)new ParticleTypeListSettingScreen(lllllllllllllllllIIIIIllIlIIIlIl.theme, lllllllllllllllllIIIIIlllIlIlllI));
-        });
+    private void lambda$itemListW$45(ItemListSetting itemListSetting) {
+        Utils.mc.method_1507((class_437)new ItemListSettingScreen(this.theme, itemListSetting));
     }
 
-    private void moduleListW(WTable lllllllllllllllllIIIIIllllIIIIIl, ModuleListSetting lllllllllllllllllIIIIIllllIIIIII) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllllIIIIlI;
-        lllllllllllllllllIIIIIllllIIIIlI.selectW(lllllllllllllllllIIIIIllllIIIIIl, lllllllllllllllllIIIIIllllIIIIII, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIIllIllI;
-            Utils.mc.method_1507((class_437)new ModuleListSettingScreen(lllllllllllllllllIIIIIllIIllIllI.theme, lllllllllllllllllIIIIIllllIIIIII));
-        });
+    private void lambda$moduleListW$48(ModuleListSetting moduleListSetting) {
+        Utils.mc.method_1507((class_437)new ModuleListSettingScreen(this.theme, moduleListSetting));
     }
 
-    private void group(WVerticalList lllllllllllllllllIIIIlIIlIIIllIl, SettingGroup lllllllllllllllllIIIIlIIlIIIllII, String lllllllllllllllllIIIIlIIlIIIlIll, List<RemoveInfo> lllllllllllllllllIIIIlIIlIIIlIlI) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIlIIlIllI;
-        WSection lllllllllllllllllIIIIlIIlIIlIIIl = lllllllllllllllllIIIIlIIlIIIllIl.add(lllllllllllllllllIIIIlIIlIIlIllI.theme.section(lllllllllllllllllIIIIlIIlIIIllII.name, lllllllllllllllllIIIIlIIlIIIllII.sectionExpanded)).expandX().widget();
-        lllllllllllllllllIIIIlIIlIIlIIIl.action = () -> {
-            lllllllllllllllllIIIIIlIIIlIlIlI.sectionExpanded = lllllllllllllllllIIIIlIIlIIlIIIl.isExpanded();
-        };
-        WTable lllllllllllllllllIIIIlIIlIIlIIII = lllllllllllllllllIIIIlIIlIIlIIIl.add(lllllllllllllllllIIIIlIIlIIlIllI.theme.table()).expandX().widget();
-        RemoveInfo lllllllllllllllllIIIIlIIlIIIllll = null;
-        for (Setting<?> lllllllllllllllllIIIIlIIlIIlIlll : lllllllllllllllllIIIIlIIlIIIllII) {
-            boolean lllllllllllllllllIIIIlIIlIIllIIl;
-            if (!StringUtils.containsIgnoreCase((CharSequence)lllllllllllllllllIIIIlIIlIIlIlll.title, (CharSequence)lllllllllllllllllIIIIlIIlIIIlIll)) continue;
-            lllllllllllllllllIIIIlIIlIIlIlll.lastWasVisible = lllllllllllllllllIIIIlIIlIIllIIl = lllllllllllllllllIIIIlIIlIIlIlll.isVisible();
-            if (!lllllllllllllllllIIIIlIIlIIllIIl) {
-                if (lllllllllllllllllIIIIlIIlIIIllll == null) {
-                    lllllllllllllllllIIIIlIIlIIIllll = new RemoveInfo(lllllllllllllllllIIIIlIIlIIlIIIl, lllllllllllllllllIIIIlIIlIIlIIII);
+    private static void lambda$boolW$23(BoolSetting boolSetting, WCheckbox wCheckbox) {
+        boolSetting.set(wCheckbox.checked);
+    }
+
+    private static void lambda$enumW$30(WDropdown wDropdown, EnumSetting enumSetting) {
+        wDropdown.set((Enum)enumSetting.get());
+    }
+
+    private static void lambda$blockW$42(WItem wItem, BlockSetting blockSetting) {
+        wItem.set(((class_2248)blockSetting.get()).method_8389().method_7854());
+    }
+
+    private void entityTypeListW(WTable wTable, EntityTypeListSetting entityTypeListSetting) {
+        this.selectW(wTable, entityTypeListSetting, () -> this.lambda$entityTypeListW$46(entityTypeListSetting));
+    }
+
+    private void reset(WContainer wContainer, Setting<?> setting, Runnable runnable) {
+        WButton wButton = wContainer.add(this.theme.button(GuiRenderer.RESET)).widget();
+        wButton.action = () -> DefaultSettingsWidgetFactory.lambda$reset$55(setting, runnable);
+    }
+
+    private void potionW(WTable wTable, PotionSetting potionSetting) {
+        WHorizontalList wHorizontalList = wTable.add(this.theme.horizontalList()).expandX().widget();
+        WItemWithLabel wItemWithLabel = wHorizontalList.add(this.theme.itemWithLabel(((MyPotion)potionSetting.get()).potion, ((MyPotion)potionSetting.get()).potion.method_7964().getString())).widget();
+        WButton wButton = wHorizontalList.add(this.theme.button("Select")).expandCellX().widget();
+        wButton.action = () -> this.lambda$potionW$32(potionSetting, wItemWithLabel);
+        this.reset(wHorizontalList, potionSetting, () -> DefaultSettingsWidgetFactory.lambda$potionW$33(wItemWithLabel, potionSetting));
+    }
+
+    private void lambda$blockDataSettingW$54(BlockDataSetting blockDataSetting) {
+        Utils.mc.method_1507((class_437)new BlockDataSettingScreen(this.theme, blockDataSetting));
+    }
+
+    private void blockW(WTable wTable, BlockSetting blockSetting) {
+        WHorizontalList wHorizontalList = wTable.add(this.theme.horizontalList()).expandX().widget();
+        WItem wItem = wHorizontalList.add(this.theme.item(((class_2248)blockSetting.get()).method_8389().method_7854())).widget();
+        WButton wButton = wHorizontalList.add(this.theme.button("Select")).widget();
+        wButton.action = () -> this.lambda$blockW$41(blockSetting, wItem);
+        this.reset(wTable, blockSetting, () -> DefaultSettingsWidgetFactory.lambda$blockW$42(wItem, blockSetting));
+    }
+
+    private void lambda$new$2(WTable wTable, Setting setting) {
+        this.doubleW(wTable, (DoubleSetting)setting);
+    }
+
+    private void providedStringW(WTable wTable, ProvidedStringSetting providedStringSetting) {
+        WDropdown<String> wDropdown = wTable.add(this.theme.dropdown(providedStringSetting.supplier.get(), (String)providedStringSetting.get())).expandCellX().widget();
+        wDropdown.action = () -> DefaultSettingsWidgetFactory.lambda$providedStringW$38(providedStringSetting, wDropdown);
+        this.reset(wTable, providedStringSetting, () -> DefaultSettingsWidgetFactory.lambda$providedStringW$39(wDropdown, providedStringSetting));
+    }
+
+    private void lambda$new$10(WTable wTable, Setting setting) {
+        this.genericW(wTable, (GenericSetting)setting);
+    }
+
+    private void lambda$new$5(WTable wTable, Setting setting) {
+        this.colorW(wTable, (ColorSetting)setting);
+    }
+
+    private void lambda$new$13(WTable wTable, Setting setting) {
+        this.entityTypeListW(wTable, (EntityTypeListSetting)setting);
+    }
+
+    private void lambda$entityTypeListW$46(EntityTypeListSetting entityTypeListSetting) {
+        Utils.mc.method_1507((class_437)new EntityTypeListSettingScreen(this.theme, entityTypeListSetting));
+    }
+
+    private void lambda$new$19(WTable wTable, Setting setting) {
+        this.statusEffectW(wTable, (StatusEffectSetting)setting);
+    }
+
+    private void lambda$genericW$43(GenericSetting genericSetting) {
+        Utils.mc.method_1507((class_437)((IScreenFactory)genericSetting.get()).createScreen(this.theme));
+    }
+
+    private void lambda$statusEffectW$52(StatusEffectSetting statusEffectSetting) {
+        Utils.mc.method_1507((class_437)new StatusEffectSettingScreen(this.theme, statusEffectSetting));
+    }
+
+    public DefaultSettingsWidgetFactory(GuiTheme guiTheme) {
+        this.theme = guiTheme;
+        this.factories.put(BoolSetting.class, (arg_0, arg_1) -> this.lambda$new$0(arg_0, arg_1));
+        this.factories.put(IntSetting.class, (arg_0, arg_1) -> this.lambda$new$1(arg_0, arg_1));
+        this.factories.put(DoubleSetting.class, (arg_0, arg_1) -> this.lambda$new$2(arg_0, arg_1));
+        this.factories.put(EnumSetting.class, (arg_0, arg_1) -> this.lambda$new$3(arg_0, arg_1));
+        this.factories.put(PotionSetting.class, (arg_0, arg_1) -> this.lambda$new$4(arg_0, arg_1));
+        this.factories.put(ColorSetting.class, (arg_0, arg_1) -> this.lambda$new$5(arg_0, arg_1));
+        this.factories.put(StringSetting.class, (arg_0, arg_1) -> this.lambda$new$6(arg_0, arg_1));
+        this.factories.put(ProvidedStringSetting.class, (arg_0, arg_1) -> this.lambda$new$7(arg_0, arg_1));
+        this.factories.put(BlockSetting.class, (arg_0, arg_1) -> this.lambda$new$8(arg_0, arg_1));
+        this.factories.put(KeybindSetting.class, (arg_0, arg_1) -> this.lambda$new$9(arg_0, arg_1));
+        this.factories.put(GenericSetting.class, (arg_0, arg_1) -> this.lambda$new$10(arg_0, arg_1));
+        this.factories.put(BlockListSetting.class, (arg_0, arg_1) -> this.lambda$new$11(arg_0, arg_1));
+        this.factories.put(ItemListSetting.class, (arg_0, arg_1) -> this.lambda$new$12(arg_0, arg_1));
+        this.factories.put(EntityTypeListSetting.class, (arg_0, arg_1) -> this.lambda$new$13(arg_0, arg_1));
+        this.factories.put(EnchListSetting.class, (arg_0, arg_1) -> this.lambda$new$14(arg_0, arg_1));
+        this.factories.put(ModuleListSetting.class, (arg_0, arg_1) -> this.lambda$new$15(arg_0, arg_1));
+        this.factories.put(PacketBoolSetting.class, (arg_0, arg_1) -> this.lambda$new$16(arg_0, arg_1));
+        this.factories.put(ParticleTypeListSetting.class, (arg_0, arg_1) -> this.lambda$new$17(arg_0, arg_1));
+        this.factories.put(SoundEventListSetting.class, (arg_0, arg_1) -> this.lambda$new$18(arg_0, arg_1));
+        this.factories.put(StatusEffectSetting.class, (arg_0, arg_1) -> this.lambda$new$19(arg_0, arg_1));
+        this.factories.put(StorageBlockListSetting.class, (arg_0, arg_1) -> this.lambda$new$20(arg_0, arg_1));
+        this.factories.put(BlockDataSetting.class, (arg_0, arg_1) -> this.lambda$new$21(arg_0, arg_1));
+    }
+
+    private void lambda$new$15(WTable wTable, Setting setting) {
+        this.moduleListW(wTable, (ModuleListSetting)setting);
+    }
+
+    private void lambda$blockListW$44(BlockListSetting blockListSetting) {
+        Utils.mc.method_1507((class_437)new BlockListSettingScreen(this.theme, blockListSetting));
+    }
+
+    private void blockListW(WTable wTable, BlockListSetting blockListSetting) {
+        this.selectW(wTable, blockListSetting, () -> this.lambda$blockListW$44(blockListSetting));
+    }
+
+    private void lambda$new$9(WTable wTable, Setting setting) {
+        this.keybindW(wTable, (KeybindSetting)setting);
+    }
+
+    private void lambda$particleEffectListW$50(ParticleTypeListSetting particleTypeListSetting) {
+        Utils.mc.method_1507((class_437)new ParticleTypeListSettingScreen(this.theme, particleTypeListSetting));
+    }
+
+    private void lambda$storageBlockListW$53(StorageBlockListSetting storageBlockListSetting) {
+        Utils.mc.method_1507((class_437)new StorageBlockListSettingScreen(this.theme, storageBlockListSetting));
+    }
+
+    private void lambda$new$3(WTable wTable, Setting setting) {
+        this.enumW(wTable, (EnumSetting)setting);
+    }
+
+    private <T extends Enum<?>> void enumW(WTable wTable, EnumSetting<T> enumSetting) {
+        WDropdown<Enum> wDropdown = wTable.add(this.theme.dropdown((Enum)enumSetting.get())).expandCellX().widget();
+        wDropdown.action = () -> DefaultSettingsWidgetFactory.lambda$enumW$29(enumSetting, wDropdown);
+        this.reset(wTable, enumSetting, () -> DefaultSettingsWidgetFactory.lambda$enumW$30(wDropdown, enumSetting));
+    }
+
+    private static void lambda$stringW$37(WTextBox wTextBox, StringSetting stringSetting) {
+        wTextBox.set((String)stringSetting.get());
+    }
+
+    private static void lambda$reset$55(Setting setting, Runnable runnable) {
+        setting.reset();
+        if (runnable != null) {
+            runnable.run();
+        }
+    }
+
+    private void lambda$new$0(WTable wTable, Setting setting) {
+        this.boolW(wTable, (BoolSetting)setting);
+    }
+
+    private void lambda$new$17(WTable wTable, Setting setting) {
+        this.particleEffectListW(wTable, (ParticleTypeListSetting)setting);
+    }
+
+    private void packetBoolW(WTable wTable, PacketBoolSetting packetBoolSetting) {
+        this.selectW(wTable, packetBoolSetting, () -> this.lambda$packetBoolW$49(packetBoolSetting));
+    }
+
+    private void itemListW(WTable wTable, ItemListSetting itemListSetting) {
+        this.selectW(wTable, itemListSetting, () -> this.lambda$itemListW$45(itemListSetting));
+    }
+
+    private void lambda$new$21(WTable wTable, Setting setting) {
+        this.blockDataSettingW(wTable, (BlockDataSetting)setting);
+    }
+
+    private static void lambda$doubleW$27(DoubleSetting doubleSetting, WDoubleEdit wDoubleEdit) {
+        if (!doubleSetting.set(wDoubleEdit.get())) {
+            wDoubleEdit.set((Double)doubleSetting.get());
+        }
+    }
+
+    private void statusEffectW(WTable wTable, StatusEffectSetting statusEffectSetting) {
+        this.selectW(wTable, statusEffectSetting, () -> this.lambda$statusEffectW$52(statusEffectSetting));
+    }
+
+    private void storageBlockListW(WTable wTable, StorageBlockListSetting storageBlockListSetting) {
+        this.selectW(wTable, storageBlockListSetting, () -> this.lambda$storageBlockListW$53(storageBlockListSetting));
+    }
+
+    private void lambda$new$1(WTable wTable, Setting setting) {
+        this.intW(wTable, (IntSetting)setting);
+    }
+
+    private void lambda$blockW$41(BlockSetting blockSetting, WItem wItem) {
+        BlockSettingScreen blockSettingScreen = new BlockSettingScreen(this.theme, blockSetting);
+        blockSettingScreen.onClosed(() -> DefaultSettingsWidgetFactory.lambda$blockW$40(wItem, blockSetting));
+        Utils.mc.method_1507((class_437)blockSettingScreen);
+    }
+
+    private static void lambda$providedStringW$38(ProvidedStringSetting providedStringSetting, WDropdown wDropdown) {
+        providedStringSetting.set((String)wDropdown.get());
+    }
+
+    private void lambda$new$12(WTable wTable, Setting setting) {
+        this.itemListW(wTable, (ItemListSetting)setting);
+    }
+
+    private static void lambda$potionW$31(WItemWithLabel wItemWithLabel, PotionSetting potionSetting) {
+        wItemWithLabel.set(((MyPotion)potionSetting.get()).potion);
+    }
+
+    private void genericW(WTable wTable, GenericSetting<?> genericSetting) {
+        WButton wButton = wTable.add(this.theme.button(GuiRenderer.EDIT)).widget();
+        wButton.action = () -> this.lambda$genericW$43(genericSetting);
+        this.reset(wTable, genericSetting, null);
+    }
+
+    private void particleEffectListW(WTable wTable, ParticleTypeListSetting particleTypeListSetting) {
+        this.selectW(wTable, particleTypeListSetting, () -> this.lambda$particleEffectListW$50(particleTypeListSetting));
+    }
+
+    private void lambda$new$20(WTable wTable, Setting setting) {
+        this.storageBlockListW(wTable, (StorageBlockListSetting)setting);
+    }
+
+    private static void lambda$stringW$36(StringSetting stringSetting, WTextBox wTextBox) {
+        stringSetting.set(wTextBox.get());
+    }
+
+    private void moduleListW(WTable wTable, ModuleListSetting moduleListSetting) {
+        this.selectW(wTable, moduleListSetting, () -> this.lambda$moduleListW$48(moduleListSetting));
+    }
+
+    private void lambda$colorW$34(ColorSetting colorSetting) {
+        Utils.mc.method_1507((class_437)new ColorSettingScreen(this.theme, colorSetting));
+    }
+
+    private void lambda$potionW$32(PotionSetting potionSetting, WItemWithLabel wItemWithLabel) {
+        PotionSettingScreen potionSettingScreen = new PotionSettingScreen(this.theme, potionSetting);
+        potionSettingScreen.onClosed(() -> DefaultSettingsWidgetFactory.lambda$potionW$31(wItemWithLabel, potionSetting));
+        Utils.mc.method_1507((class_437)potionSettingScreen);
+    }
+
+    private void group(WVerticalList wVerticalList, SettingGroup settingGroup, String string, List<RemoveInfo> list) {
+        WSection wSection = wVerticalList.add(this.theme.section(settingGroup.name, settingGroup.sectionExpanded)).expandX().widget();
+        wSection.action = () -> DefaultSettingsWidgetFactory.lambda$group$22(settingGroup, wSection);
+        WTable wTable = wSection.add(this.theme.table()).expandX().widget();
+        RemoveInfo removeInfo = null;
+        for (Setting<?> setting : settingGroup) {
+            boolean bl;
+            if (!StringUtils.containsIgnoreCase((CharSequence)setting.title, (CharSequence)string)) continue;
+            setting.lastWasVisible = bl = setting.isVisible();
+            if (!bl) {
+                if (removeInfo == null) {
+                    removeInfo = new RemoveInfo(wSection, wTable);
                 }
-                lllllllllllllllllIIIIlIIlIIIllll.markRowForRemoval();
+                removeInfo.markRowForRemoval();
             }
-            lllllllllllllllllIIIIlIIlIIlIIII.add(lllllllllllllllllIIIIlIIlIIlIllI.theme.label((String)lllllllllllllllllIIIIlIIlIIlIlll.title)).widget().tooltip = lllllllllllllllllIIIIlIIlIIlIlll.description;
-            Factory lllllllllllllllllIIIIlIIlIIllIII = lllllllllllllllllIIIIlIIlIIlIllI.factories.get(lllllllllllllllllIIIIlIIlIIlIlll.getClass());
-            if (lllllllllllllllllIIIIlIIlIIllIII != null) {
-                lllllllllllllllllIIIIlIIlIIllIII.create(lllllllllllllllllIIIIlIIlIIlIIII, lllllllllllllllllIIIIlIIlIIlIlll);
+            wTable.add(this.theme.label((String)setting.title)).widget().tooltip = setting.description;
+            Factory factory = this.factories.get(setting.getClass());
+            if (factory != null) {
+                factory.create(wTable, setting);
             }
-            lllllllllllllllllIIIIlIIlIIlIIII.row();
+            wTable.row();
         }
-        if (lllllllllllllllllIIIIlIIlIIIllll != null) {
-            lllllllllllllllllIIIIlIIlIIIlIlI.add(lllllllllllllllllIIIIlIIlIIIllll);
+        if (removeInfo != null) {
+            list.add(removeInfo);
         }
     }
 
-    private void intW(WTable lllllllllllllllllIIIIlIIIllIllIl, IntSetting lllllllllllllllllIIIIlIIIlllIIII) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIIlllIIlI;
-        WIntEdit lllllllllllllllllIIIIlIIIllIllll = lllllllllllllllllIIIIlIIIllIllIl.add(lllllllllllllllllIIIIlIIIlllIIlI.theme.intEdit((Integer)lllllllllllllllllIIIIlIIIlllIIII.get(), lllllllllllllllllIIIIlIIIlllIIII.getSliderMin(), lllllllllllllllllIIIIlIIIlllIIII.getSliderMax())).expandX().widget();
-        lllllllllllllllllIIIIlIIIllIllll.min = lllllllllllllllllIIIIlIIIlllIIII.min;
-        lllllllllllllllllIIIIlIIIllIllll.max = lllllllllllllllllIIIIlIIIlllIIII.max;
-        lllllllllllllllllIIIIlIIIllIllll.actionOnRelease = () -> {
-            if (!lllllllllllllllllIIIIlIIIlllIIII.set(lllllllllllllllllIIIIlIIIllIllll.get())) {
-                lllllllllllllllllIIIIlIIIllIllll.set((Integer)lllllllllllllllllIIIIlIIIlllIIII.get());
-            }
-        };
-        lllllllllllllllllIIIIlIIIlllIIlI.reset(lllllllllllllllllIIIIlIIIllIllIl, lllllllllllllllllIIIIlIIIlllIIII, () -> lllllllllllllllllIIIIlIIIllIllll.set((Integer)lllllllllllllllllIIIIlIIIlllIIII.get()));
+    private static void lambda$intW$25(IntSetting intSetting, WIntEdit wIntEdit) {
+        if (!intSetting.set(wIntEdit.get())) {
+            wIntEdit.set((Integer)intSetting.get());
+        }
+    }
+
+    private void intW(WTable wTable, IntSetting intSetting) {
+        WIntEdit wIntEdit = wTable.add(this.theme.intEdit((Integer)intSetting.get(), intSetting.getSliderMin(), intSetting.getSliderMax())).expandX().widget();
+        wIntEdit.min = intSetting.min;
+        wIntEdit.max = intSetting.max;
+        wIntEdit.actionOnRelease = () -> DefaultSettingsWidgetFactory.lambda$intW$25(intSetting, wIntEdit);
+        this.reset(wTable, intSetting, () -> DefaultSettingsWidgetFactory.lambda$intW$26(wIntEdit, intSetting));
+    }
+
+    private void lambda$new$11(WTable wTable, Setting setting) {
+        this.blockListW(wTable, (BlockListSetting)setting);
+    }
+
+    private void lambda$new$7(WTable wTable, Setting setting) {
+        this.providedStringW(wTable, (ProvidedStringSetting)setting);
+    }
+
+    private static void lambda$colorW$35(WQuad wQuad, ColorSetting colorSetting) {
+        wQuad.color = (Color)colorSetting.get();
     }
 
     @Override
-    public WWidget create(GuiTheme lllllllllllllllllIIIIlIIlIllIIlI, Settings lllllllllllllllllIIIIlIIlIlIlIll, String lllllllllllllllllIIIIlIIlIllIIII) {
-        WVerticalList lllllllllllllllllIIIIlIIlIlIllll = lllllllllllllllllIIIIlIIlIllIIlI.verticalList();
-        ArrayList<RemoveInfo> lllllllllllllllllIIIIlIIlIlIlllI = new ArrayList<RemoveInfo>();
-        for (SettingGroup lllllllllllllllllIIIIlIIlIllIlIl : lllllllllllllllllIIIIlIIlIlIlIll.groups) {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIlIIlIllIIll;
-            lllllllllllllllllIIIIlIIlIllIIll.group(lllllllllllllllllIIIIlIIlIlIllll, lllllllllllllllllIIIIlIIlIllIlIl, lllllllllllllllllIIIIlIIlIllIIII, lllllllllllllllllIIIIlIIlIlIlllI);
+    public WWidget create(GuiTheme guiTheme, Settings settings, String string) {
+        WVerticalList wVerticalList = guiTheme.verticalList();
+        ArrayList<RemoveInfo> arrayList = new ArrayList<RemoveInfo>();
+        for (SettingGroup object : settings.groups) {
+            this.group(wVerticalList, object, string, arrayList);
         }
-        lllllllllllllllllIIIIlIIlIlIllll.calculateSize();
-        lllllllllllllllllIIIIlIIlIlIllll.minWidth = lllllllllllllllllIIIIlIIlIlIllll.width;
-        for (RemoveInfo lllllllllllllllllIIIIlIIlIllIlII : lllllllllllllllllIIIIlIIlIlIlllI) {
-            lllllllllllllllllIIIIlIIlIllIlII.remove(lllllllllllllllllIIIIlIIlIlIllll);
+        wVerticalList.calculateSize();
+        wVerticalList.minWidth = wVerticalList.width;
+        for (RemoveInfo removeInfo : arrayList) {
+            removeInfo.remove(wVerticalList);
         }
-        return lllllllllllllllllIIIIlIIlIlIllll;
+        return wVerticalList;
     }
 
-    private void enchListW(WTable lllllllllllllllllIIIIIllllIIlIlI, EnchListSetting lllllllllllllllllIIIIIllllIIlIIl) {
-        DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllllIIlIll;
-        lllllllllllllllllIIIIIllllIIlIll.selectW(lllllllllllllllllIIIIIllllIIlIlI, lllllllllllllllllIIIIIllllIIlIIl, () -> {
-            DefaultSettingsWidgetFactory lllllllllllllllllIIIIIllIIlIllIl;
-            Utils.mc.method_1507((class_437)new EnchListSettingScreen(lllllllllllllllllIIIIIllIIlIllIl.theme, lllllllllllllllllIIIIIllllIIlIIl));
-        });
+    private void lambda$new$4(WTable wTable, Setting setting) {
+        this.potionW(wTable, (PotionSetting)setting);
+    }
+
+    private void enchListW(WTable wTable, EnchListSetting enchListSetting) {
+        this.selectW(wTable, enchListSetting, () -> this.lambda$enchListW$47(enchListSetting));
     }
 
     private static class RemoveInfo {
-        private final /* synthetic */ WTable table;
-        private final /* synthetic */ IntList rowIds;
-        private final /* synthetic */ WSection section;
+        private final WTable table;
+        private final IntList rowIds = new IntArrayList();
+        private final WSection section;
 
         public void markRowForRemoval() {
-            RemoveInfo lIIllIIlIllI;
-            lIIllIIlIllI.rowIds.add(lIIllIIlIllI.table.rowI());
+            this.rowIds.add(this.table.rowI());
         }
 
-        public void remove(WVerticalList lIIllIIIllIl) {
-            RemoveInfo lIIllIIlIIII;
-            for (int lIIllIIlIIIl = 0; lIIllIIlIIIl < lIIllIIlIIII.rowIds.size(); ++lIIllIIlIIIl) {
-                lIIllIIlIIII.table.removeRow(lIIllIIlIIII.rowIds.getInt(lIIllIIlIIIl) - lIIllIIlIIIl);
+        private boolean lambda$remove$0(Cell cell) {
+            return cell.widget() == this.section;
+        }
+
+        public void remove(WVerticalList wVerticalList) {
+            for (int i = 0; i < this.rowIds.size(); ++i) {
+                this.table.removeRow(this.rowIds.getInt(i) - i);
+                if (3 > 0) continue;
+                return;
             }
-            if (lIIllIIlIIII.table.cells.isEmpty()) {
-                lIIllIIIllIl.cells.removeIf(lIIllIIIlIII -> {
-                    RemoveInfo lIIllIIIIlll;
-                    return lIIllIIIlIII.widget() == lIIllIIIIlll.section;
-                });
+            if (this.table.cells.isEmpty()) {
+                wVerticalList.cells.removeIf(this::lambda$remove$0);
             }
         }
 
-        public RemoveInfo(WSection lIIllIIlllII, WTable lIIllIIllIll) {
-            RemoveInfo lIIllIIlllIl;
-            lIIllIIlllIl.rowIds = new IntArrayList();
-            lIIllIIlllIl.section = lIIllIIlllII;
-            lIIllIIlllIl.table = lIIllIIllIll;
+        public RemoveInfo(WSection wSection, WTable wTable) {
+            this.section = wSection;
+            this.table = wTable;
         }
     }
 

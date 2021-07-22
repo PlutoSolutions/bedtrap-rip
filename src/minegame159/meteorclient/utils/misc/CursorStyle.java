@@ -13,28 +13,23 @@ public enum CursorStyle {
     Click,
     Type;
 
-    private /* synthetic */ long cursor;
-    private /* synthetic */ boolean created;
+    private long cursor;
+    private boolean created;
 
     public long getGlfwCursor() {
-        CursorStyle llllllllllllllllIllIlllIlIlIIIlI;
-        if (!llllllllllllllllIllIlllIlIlIIIlI.created) {
-            switch (llllllllllllllllIllIlllIlIlIIIlI) {
-                case Click: {
-                    llllllllllllllllIllIlllIlIlIIIlI.cursor = GLFW.glfwCreateStandardCursor((int)221188);
+        if (!this.created) {
+            switch (1.$SwitchMap$minegame159$meteorclient$utils$misc$CursorStyle[this.ordinal()]) {
+                case 1: {
+                    this.cursor = GLFW.glfwCreateStandardCursor((int)221188);
                     break;
                 }
-                case Type: {
-                    llllllllllllllllIllIlllIlIlIIIlI.cursor = GLFW.glfwCreateStandardCursor((int)221186);
+                case 2: {
+                    this.cursor = GLFW.glfwCreateStandardCursor((int)221186);
                 }
             }
-            llllllllllllllllIllIlllIlIlIIIlI.created = true;
+            this.created = true;
         }
-        return llllllllllllllllIllIlllIlIlIIIlI.cursor;
-    }
-
-    private CursorStyle() {
-        CursorStyle llllllllllllllllIllIlllIlIlIlIII;
+        return this.cursor;
     }
 }
 

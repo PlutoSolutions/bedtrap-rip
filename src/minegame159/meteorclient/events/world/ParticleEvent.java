@@ -11,21 +11,13 @@ import net.minecraft.class_2394;
 
 public class ParticleEvent
 extends Cancellable {
-    public /* synthetic */ class_2394 particle;
-    private static final /* synthetic */ ParticleEvent INSTANCE;
+    public class_2394 particle;
+    private static final ParticleEvent INSTANCE = new ParticleEvent();
 
-    public ParticleEvent() {
-        ParticleEvent lllIllIlIlIlIlI;
-    }
-
-    public static ParticleEvent get(class_2394 lllIllIlIlIIlll) {
+    public static ParticleEvent get(class_2394 class_23942) {
         INSTANCE.setCancelled(false);
-        ParticleEvent.INSTANCE.particle = lllIllIlIlIIlll;
+        ParticleEvent.INSTANCE.particle = class_23942;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new ParticleEvent();
     }
 }
 

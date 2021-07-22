@@ -4,16 +4,14 @@
 package com.sun.jna;
 
 public class FromNativeContext {
-    private /* synthetic */ Class<?> type;
+    private Class<?> type;
 
-    FromNativeContext(Class<?> lllllllllllllllllllIlIlIIIlllIII) {
-        FromNativeContext lllllllllllllllllllIlIlIIIlllIIl;
-        lllllllllllllllllllIlIlIIIlllIIl.type = lllllllllllllllllllIlIlIIIlllIII;
+    FromNativeContext(Class<?> class_) {
+        this.type = class_;
     }
 
     public Class<?> getTargetType() {
-        FromNativeContext lllllllllllllllllllIlIlIIIllIIll;
-        return lllllllllllllllllllIlIlIIIllIIll.type;
+        return this.type;
     }
 }
 

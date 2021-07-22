@@ -12,18 +12,18 @@ public class WMeteorMultiLabel
 extends WMultiLabel
 implements MeteorWidget {
     @Override
-    protected void onRender(GuiRenderer lllllIlIlllIll, double lllllIllIIIIIl, double lllllIllIIIIII, double lllllIlIllllll) {
-        WMeteorMultiLabel lllllIllIIIIll;
-        double lllllIlIlllllI = lllllIllIIIIll.theme.textHeight(lllllIllIIIIll.title);
-        Color lllllIlIllllIl = lllllIllIIIIll.theme().textColor.get();
-        for (int lllllIllIIIlII = 0; lllllIllIIIlII < lllllIllIIIIll.lines.size(); ++lllllIllIIIlII) {
-            lllllIlIlllIll.text((String)lllllIllIIIIll.lines.get(lllllIllIIIlII), lllllIllIIIIll.x, lllllIllIIIIll.y + lllllIlIlllllI * (double)lllllIllIIIlII, lllllIlIllllIl, false);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        double d4 = this.theme.textHeight(this.title);
+        Color color = this.theme().textColor.get();
+        for (int i = 0; i < this.lines.size(); ++i) {
+            guiRenderer.text((String)this.lines.get(i), this.x, this.y + d4 * (double)i, color, false);
+            if (-1 < 2) continue;
+            return;
         }
     }
 
-    public WMeteorMultiLabel(String lllllIllIlllII, boolean lllllIllIlIIll, double lllllIllIlIIlI) {
-        super(lllllIllIlllII, lllllIllIlIIll, lllllIllIlIIlI);
-        WMeteorMultiLabel lllllIllIlIllI;
+    public WMeteorMultiLabel(String string, boolean bl, double d) {
+        super(string, bl, d);
     }
 }
 

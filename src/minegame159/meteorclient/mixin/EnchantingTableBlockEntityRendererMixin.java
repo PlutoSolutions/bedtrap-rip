@@ -25,9 +25,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value={class_828.class})
 public class EnchantingTableBlockEntityRendererMixin {
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/model/BookModel;method_24184(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
-    private void onRenderBookModelRenderProxy(class_557 model, class_4587 matrixStack, class_4588 vertexConsumer, int i, int j, float f, float g, float h, float k) {
+    private void onRenderBookModelRenderProxy(class_557 class_5572, class_4587 class_45872, class_4588 class_45882, int n, int n2, float f, float f2, float f3, float f4) {
         if (!Modules.get().get(NoRender.class).noEnchTableBook()) {
-            model.method_24184(matrixStack, vertexConsumer, i, j, f, g, h, k);
+            class_5572.method_24184(class_45872, class_45882, n, n2, f, f2, f3, f4);
         }
     }
 }

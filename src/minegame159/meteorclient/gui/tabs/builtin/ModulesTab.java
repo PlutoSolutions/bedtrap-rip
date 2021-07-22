@@ -15,18 +15,17 @@ import net.minecraft.class_437;
 public class ModulesTab
 extends Tab {
     @Override
-    public boolean isScreen(class_437 llllllllllllllllIllIIIIIIllIlIll) {
-        return GuiThemes.get().isModulesScreen(llllllllllllllllIllIIIIIIllIlIll);
+    public boolean isScreen(class_437 class_4372) {
+        return GuiThemes.get().isModulesScreen(class_4372);
     }
 
     public ModulesTab() {
         super("Modules");
-        ModulesTab llllllllllllllllIllIIIIIIlllIIll;
     }
 
     @Override
-    public TabScreen createScreen(GuiTheme llllllllllllllllIllIIIIIIllIllll) {
-        return llllllllllllllllIllIIIIIIllIllll.modulesScreen();
+    public TabScreen createScreen(GuiTheme guiTheme) {
+        return guiTheme.modulesScreen();
     }
 }
 

@@ -11,20 +11,12 @@ import net.minecraft.class_2586;
 
 public class RenderBlockEntityEvent
 extends Cancellable {
-    private static final /* synthetic */ RenderBlockEntityEvent INSTANCE;
-    public /* synthetic */ class_2586 blockEntity;
+    private static final RenderBlockEntityEvent INSTANCE = new RenderBlockEntityEvent();
+    public class_2586 blockEntity;
 
-    static {
-        INSTANCE = new RenderBlockEntityEvent();
-    }
-
-    public RenderBlockEntityEvent() {
-        RenderBlockEntityEvent lllIlIlIlIlI;
-    }
-
-    public static RenderBlockEntityEvent get(class_2586 lllIlIlIIllI) {
+    public static RenderBlockEntityEvent get(class_2586 class_25862) {
         INSTANCE.setCancelled(false);
-        RenderBlockEntityEvent.INSTANCE.blockEntity = lllIlIlIIllI;
+        RenderBlockEntityEvent.INSTANCE.blockEntity = class_25862;
         return INSTANCE;
     }
 }

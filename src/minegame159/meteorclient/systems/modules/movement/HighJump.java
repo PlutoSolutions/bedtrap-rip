@@ -13,20 +13,18 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class HighJump
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Double> multiplier;
+    private final SettingGroup sgGeneral;
+    private final Setting<Double> multiplier;
 
     public HighJump() {
         super(Categories.Movement, "high-jump", "Makes you jump higher than normal.");
-        HighJump lIllllIIIIIIlll;
-        lIllllIIIIIIlll.sgGeneral = lIllllIIIIIIlll.settings.getDefaultGroup();
-        lIllllIIIIIIlll.multiplier = lIllllIIIIIIlll.sgGeneral.add(new DoubleSetting.Builder().name("jump-multiplier").description("Jump height multiplier.").defaultValue(1.0).min(0.0).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.multiplier = this.sgGeneral.add(new DoubleSetting.Builder().name("jump-multiplier").description("Jump height multiplier.").defaultValue(1.0).min(0.0).build());
     }
 
     @EventHandler
-    private void onJumpVelocityMultiplier(JumpVelocityMultiplierEvent lIllllIIIIIIIlI) {
-        HighJump lIllllIIIIIIIIl;
-        lIllllIIIIIIIlI.multiplier = (float)((double)lIllllIIIIIIIlI.multiplier * lIllllIIIIIIIIl.multiplier.get());
+    private void onJumpVelocityMultiplier(JumpVelocityMultiplierEvent jumpVelocityMultiplierEvent) {
+        jumpVelocityMultiplierEvent.multiplier = (float)((double)jumpVelocityMultiplierEvent.multiplier * this.multiplier.get());
     }
 }
 

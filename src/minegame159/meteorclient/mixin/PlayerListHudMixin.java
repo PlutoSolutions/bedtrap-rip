@@ -27,16 +27,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_355.class})
 public class PlayerListHudMixin {
     @ModifyArg(method={"render"}, at=@At(value="INVOKE", target="Ljava/lang/Math;min(II)I", ordinal=0), index=1)
-    private int modifyCount(int count) {
-        BetterTab module = Modules.get().get(BetterTab.class);
-        return module.isActive() ? module.tabSize.get() : 80;
+    private int modifyCount(int n) {
+        BetterTab betterTab = Modules.get().get(BetterTab.class);
+        return betterTab.isActive() ? betterTab.tabSize.get() : 80;
     }
 
     @Inject(method={"getPlayerName"}, at={@At(value="HEAD")}, cancellable=true)
-    public void getPlayerName(class_640 playerListEntry, CallbackInfoReturnable<class_2561> info) {
+    public void getPlayerName(class_640 class_6402, CallbackInfoReturnable<class_2561> callbackInfoReturnable) {
         BetterTab betterTab = Modules.get().get(BetterTab.class);
         if (betterTab.isActive()) {
-            info.setReturnValue((Object)betterTab.getPlayerName(playerListEntry));
+            callbackInfoReturnable.setReturnValue((Object)betterTab.getPlayerName(class_6402));
         }
     }
 }

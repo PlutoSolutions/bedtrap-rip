@@ -13,22 +13,20 @@ import minegame159.meteorclient.utils.player.PlayerUtils;
 
 public class PotionSaver
 extends Module {
-    public final /* synthetic */ Setting<Boolean> onlyWhenStationary;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    public final Setting<Boolean> onlyWhenStationary;
+    private final SettingGroup sgGeneral;
 
     public PotionSaver() {
         super(Categories.Player, "potion-saver", "Stops potion effects ticking when you stand still.");
-        PotionSaver llllllllllllllllIllIIIIlIIIlIlll;
-        llllllllllllllllIllIIIIlIIIlIlll.sgGeneral = llllllllllllllllIllIIIIlIIIlIlll.settings.getDefaultGroup();
-        llllllllllllllllIllIIIIlIIIlIlll.onlyWhenStationary = llllllllllllllllIllIIIIlIIIlIlll.sgGeneral.add(new BoolSetting.Builder().name("only-when-stationary").description("Only freezes effects when you aren't moving.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.onlyWhenStationary = this.sgGeneral.add(new BoolSetting.Builder().name("only-when-stationary").description("Only freezes effects when you aren't moving.").defaultValue(true).build());
     }
 
     public boolean shouldFreeze() {
-        PotionSaver llllllllllllllllIllIIIIlIIIlIlII;
         if (!Utils.canUpdate()) {
             return false;
         }
-        return llllllllllllllllIllIIIIlIIIlIlII.isActive() && (llllllllllllllllIllIIIIlIIIlIlII.onlyWhenStationary.get() != false && !PlayerUtils.isMoving() || llllllllllllllllIllIIIIlIIIlIlII.onlyWhenStationary.get() == false) && !llllllllllllllllIllIIIIlIIIlIlII.mc.field_1724.method_6026().isEmpty();
+        return this.isActive() && (this.onlyWhenStationary.get() != false && !PlayerUtils.isMoving() || this.onlyWhenStationary.get() == false) && !this.mc.field_1724.method_6026().isEmpty();
     }
 }
 

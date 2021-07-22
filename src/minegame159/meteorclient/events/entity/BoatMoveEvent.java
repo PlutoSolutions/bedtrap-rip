@@ -9,19 +9,11 @@ package minegame159.meteorclient.events.entity;
 import net.minecraft.class_1690;
 
 public class BoatMoveEvent {
-    private static final /* synthetic */ BoatMoveEvent INSTANCE;
-    public /* synthetic */ class_1690 boat;
+    private static final BoatMoveEvent INSTANCE = new BoatMoveEvent();
+    public class_1690 boat;
 
-    public BoatMoveEvent() {
-        BoatMoveEvent lllllllllllllllllIIlIlIIIIIllIII;
-    }
-
-    static {
-        INSTANCE = new BoatMoveEvent();
-    }
-
-    public static BoatMoveEvent get(class_1690 lllllllllllllllllIIlIlIIIIIlIllI) {
-        BoatMoveEvent.INSTANCE.boat = lllllllllllllllllIIlIlIIIIIlIllI;
+    public static BoatMoveEvent get(class_1690 class_16902) {
+        BoatMoveEvent.INSTANCE.boat = class_16902;
         return INSTANCE;
     }
 }

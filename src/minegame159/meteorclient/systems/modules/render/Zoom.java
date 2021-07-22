@@ -16,70 +16,64 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class Zoom
 extends Module {
-    private /* synthetic */ double lastFov;
-    private final /* synthetic */ Setting<Boolean> cinematic;
-    private /* synthetic */ double value;
-    private final /* synthetic */ Setting<Double> scrollSensitivity;
-    private final /* synthetic */ Setting<Double> zoom;
-    private /* synthetic */ double preMouseSensitivity;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ boolean preCinematic;
+    private double lastFov;
+    private final Setting<Boolean> cinematic;
+    private double value;
+    private final Setting<Double> scrollSensitivity;
+    private final Setting<Double> zoom;
+    private double preMouseSensitivity;
+    private final SettingGroup sgGeneral;
+    private boolean preCinematic;
 
     @Override
     public void onActivate() {
-        Zoom llllllllllllllllllIlllIIIlIllIlI;
-        llllllllllllllllllIlllIIIlIllIlI.preCinematic = llllllllllllllllllIlllIIIlIllIlI.mc.field_1690.field_1914;
-        llllllllllllllllllIlllIIIlIllIlI.preMouseSensitivity = llllllllllllllllllIlllIIIlIllIlI.mc.field_1690.field_1843;
-        llllllllllllllllllIlllIIIlIllIlI.value = llllllllllllllllllIlllIIIlIllIlI.zoom.get();
-        llllllllllllllllllIlllIIIlIllIlI.lastFov = llllllllllllllllllIlllIIIlIllIlI.mc.field_1690.field_1826;
+        this.preCinematic = this.mc.field_1690.field_1914;
+        this.preMouseSensitivity = this.mc.field_1690.field_1843;
+        this.value = this.zoom.get();
+        this.lastFov = this.mc.field_1690.field_1826;
     }
 
     @EventHandler
-    private void onGetFov(GetFovEvent llllllllllllllllllIlllIIIlIIlIII) {
-        Zoom llllllllllllllllllIlllIIIlIIlIIl;
-        llllllllllllllllllIlllIIIlIIlIII.fov /= llllllllllllllllllIlllIIIlIIlIIl.value;
-        if (llllllllllllllllllIlllIIIlIIlIIl.lastFov != llllllllllllllllllIlllIIIlIIlIII.fov) {
-            llllllllllllllllllIlllIIIlIIlIIl.mc.field_1769.method_3292();
+    private void onGetFov(GetFovEvent getFovEvent) {
+        getFovEvent.fov /= this.value;
+        if (this.lastFov != getFovEvent.fov) {
+            this.mc.field_1769.method_3292();
         }
-        llllllllllllllllllIlllIIIlIIlIIl.lastFov = llllllllllllllllllIlllIIIlIIlIII.fov;
+        this.lastFov = getFovEvent.fov;
     }
 
     public Zoom() {
         super(Categories.Render, "zoom", "Zooms your view.");
-        Zoom llllllllllllllllllIlllIIIlIlllIl;
-        llllllllllllllllllIlllIIIlIlllIl.sgGeneral = llllllllllllllllllIlllIIIlIlllIl.settings.getDefaultGroup();
-        llllllllllllllllllIlllIIIlIlllIl.zoom = llllllllllllllllllIlllIIIlIlllIl.sgGeneral.add(new DoubleSetting.Builder().name("zoom").description("How much to zoom.").defaultValue(6.0).min(1.0).build());
-        llllllllllllllllllIlllIIIlIlllIl.scrollSensitivity = llllllllllllllllllIlllIIIlIlllIl.sgGeneral.add(new DoubleSetting.Builder().name("scroll-sensitivity").description("Allows you to change zoom value using scroll wheel. 0 to disable.").defaultValue(1.0).min(0.0).build());
-        llllllllllllllllllIlllIIIlIlllIl.cinematic = llllllllllllllllllIlllIIIlIlllIl.sgGeneral.add(new BoolSetting.Builder().name("cinematic").description("Enables cinematic camera.").defaultValue(false).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.zoom = this.sgGeneral.add(new DoubleSetting.Builder().name("zoom").description("How much to zoom.").defaultValue(6.0).min(1.0).build());
+        this.scrollSensitivity = this.sgGeneral.add(new DoubleSetting.Builder().name("scroll-sensitivity").description("Allows you to change zoom value using scroll wheel. 0 to disable.").defaultValue(1.0).min(0.0).build());
+        this.cinematic = this.sgGeneral.add(new BoolSetting.Builder().name("cinematic").description("Enables cinematic camera.").defaultValue(false).build());
     }
 
     @EventHandler
-    private void onMouseScroll(MouseScrollEvent llllllllllllllllllIlllIIIlIIllII) {
-        Zoom llllllllllllllllllIlllIIIlIIllll;
-        if (llllllllllllllllllIlllIIIlIIllll.scrollSensitivity.get() > 0.0) {
-            llllllllllllllllllIlllIIIlIIllll.value += llllllllllllllllllIlllIIIlIIllII.value * 0.25 * (llllllllllllllllllIlllIIIlIIllll.scrollSensitivity.get() * llllllllllllllllllIlllIIIlIIllll.value);
-            if (llllllllllllllllllIlllIIIlIIllll.value < 1.0) {
-                llllllllllllllllllIlllIIIlIIllll.value = 1.0;
+    private void onMouseScroll(MouseScrollEvent mouseScrollEvent) {
+        if (this.scrollSensitivity.get() > 0.0) {
+            this.value += mouseScrollEvent.value * 0.25 * (this.scrollSensitivity.get() * this.value);
+            if (this.value < 1.0) {
+                this.value = 1.0;
             }
-            llllllllllllllllllIlllIIIlIIllII.cancel();
+            mouseScrollEvent.cancel();
         }
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llllllllllllllllllIlllIIIlIlIIll) {
-        Zoom llllllllllllllllllIlllIIIlIlIIlI;
-        llllllllllllllllllIlllIIIlIlIIlI.mc.field_1690.field_1914 = llllllllllllllllllIlllIIIlIlIIlI.cinematic.get();
-        if (!llllllllllllllllllIlllIIIlIlIIlI.cinematic.get().booleanValue()) {
-            llllllllllllllllllIlllIIIlIlIIlI.mc.field_1690.field_1843 = llllllllllllllllllIlllIIIlIlIIlI.preMouseSensitivity / Math.max(llllllllllllllllllIlllIIIlIlIIlI.value * 0.5, 1.0);
+    private void onTick(TickEvent.Post post) {
+        this.mc.field_1690.field_1914 = this.cinematic.get();
+        if (!this.cinematic.get().booleanValue()) {
+            this.mc.field_1690.field_1843 = this.preMouseSensitivity / Math.max(this.value * 0.5, 1.0);
         }
     }
 
     @Override
     public void onDeactivate() {
-        Zoom llllllllllllllllllIlllIIIlIlIllI;
-        llllllllllllllllllIlllIIIlIlIllI.mc.field_1690.field_1914 = llllllllllllllllllIlllIIIlIlIllI.preCinematic;
-        llllllllllllllllllIlllIIIlIlIllI.mc.field_1690.field_1843 = llllllllllllllllllIlllIIIlIlIllI.preMouseSensitivity;
-        llllllllllllllllllIlllIIIlIlIllI.mc.field_1769.method_3292();
+        this.mc.field_1690.field_1914 = this.preCinematic;
+        this.mc.field_1690.field_1843 = this.preMouseSensitivity;
+        this.mc.field_1769.method_3292();
     }
 }
 

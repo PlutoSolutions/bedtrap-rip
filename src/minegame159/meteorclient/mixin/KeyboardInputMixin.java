@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class KeyboardInputMixin
 extends class_744 {
     @Inject(method={"tick"}, at={@At(value="TAIL")})
-    private void isPressed(boolean slowDown, CallbackInfo ci) {
+    private void isPressed(boolean bl, CallbackInfo callbackInfo) {
         if (Modules.get().get(Sneak.class).doVanilla()) {
             this.field_3903 = true;
         }

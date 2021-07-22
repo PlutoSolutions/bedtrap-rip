@@ -26,133 +26,142 @@ import net.minecraft.class_3545;
 
 public abstract class LeftRightListSettingScreen<T>
 extends WindowScreen {
-    protected final /* synthetic */ Collection<T> collection;
-    protected final /* synthetic */ Setting<?> setting;
-    private /* synthetic */ WTable table;
-    private final /* synthetic */ WTextBox filter;
-    private /* synthetic */ String filterText;
+    protected final Collection<T> collection;
+    protected final Setting<?> setting;
+    private WTable table;
+    private final WTextBox filter;
+    private String filterText = "";
 
-    protected boolean skipValue(T lllllllllllllllllIIlIllIlIIllIlI) {
+    private void lambda$initWidgets$2(class_2378 class_23782, List list) {
+        class_23782.forEach(arg_0 -> this.lambda$initWidgets$1(list, arg_0));
+    }
+
+    protected boolean skipValue(T t) {
         return false;
     }
 
     protected abstract WWidget getValueWidget(T var1);
 
-    protected T getAdditionalValue(T lllllllllllllllllIIlIllIlIIllIII) {
+    private static int lambda$abc$8(class_3545 class_35452) {
+        return -((Integer)class_35452.method_15441()).intValue();
+    }
+
+    private void lambda$initWidgets$1(List list, Object object) {
+        if (this.skipValue(object) || this.collection.contains(object)) {
+            return;
+        }
+        int n = Utils.search(this.getValueName(object), this.filterText);
+        if (n > 0) {
+            list.add(new class_3545(object, (Object)n));
+        }
+    }
+
+    private void lambda$initWidgets$3(class_2378 class_23782, Object object) {
+        this.addValue(class_23782, object);
+        Object object2 = this.getAdditionalValue(object);
+        if (object2 != null) {
+            this.addValue(class_23782, object2);
+        }
+    }
+
+    protected T getAdditionalValue(T t) {
         return null;
     }
 
-    private void removeValue(class_2378<T> lllllllllllllllllIIlIllIlIllllll, T lllllllllllllllllIIlIllIlIlllIll) {
-        LeftRightListSettingScreen lllllllllllllllllIIlIllIlIllllIl;
-        if (lllllllllllllllllIIlIllIlIllllIl.collection.remove(lllllllllllllllllIIlIllIlIlllIll)) {
-            lllllllllllllllllIIlIllIlIllllIl.setting.changed();
-            lllllllllllllllllIIlIllIlIllllIl.table.clear();
-            lllllllllllllllllIIlIllIlIllllIl.initWidgets(lllllllllllllllllIIlIllIlIllllll);
+    private void removeValue(class_2378<T> class_23782, T t) {
+        if (this.collection.remove(t)) {
+            this.setting.changed();
+            this.table.clear();
+            this.initWidgets(class_23782);
         }
     }
 
-    protected boolean includeValue(T lllllllllllllllllIIlIllIlIIlllII) {
+    protected boolean includeValue(T t) {
         return true;
     }
 
-    private WTable abc(Consumer<List<class_3545<T, Integer>>> lllllllllllllllllIIlIllIlIlIIllI, boolean lllllllllllllllllIIlIllIlIlIllIl, Consumer<T> lllllllllllllllllIIlIllIlIlIIlII) {
-        LeftRightListSettingScreen lllllllllllllllllIIlIllIlIlIIlll;
-        Cell<WTable> lllllllllllllllllIIlIllIlIlIlIll = lllllllllllllllllIIlIllIlIlIIlll.table.add(lllllllllllllllllIIlIllIlIlIIlll.theme.table()).top();
-        WTable lllllllllllllllllIIlIllIlIlIlIlI = lllllllllllllllllIIlIllIlIlIlIll.widget();
-        Consumer<Object> lllllllllllllllllIIlIllIlIlIlIIl = lllllllllllllllllIIlIllIlIIIIlII -> {
-            LeftRightListSettingScreen lllllllllllllllllIIlIllIlIIIlIII;
-            if (!lllllllllllllllllIIlIllIlIIIlIII.includeValue(lllllllllllllllllIIlIllIlIIIIlII)) {
-                return;
-            }
-            lllllllllllllllllIIlIllIlIlIlIlI.add(lllllllllllllllllIIlIllIlIIIlIII.getValueWidget(lllllllllllllllllIIlIllIlIIIIlII));
-            WPressable lllllllllllllllllIIlIllIlIIIlIIl = lllllllllllllllllIIlIllIlIlIlIlI.add(lllllllllllllllllIIlIllIlIlIllIl ? lllllllllllllllllIIlIllIlIIIlIII.theme.plus() : lllllllllllllllllIIlIllIlIIIlIII.theme.minus()).expandCellX().right().widget();
-            lllllllllllllllllIIlIllIlIIIlIIl.action = () -> lllllllllllllllllIIlIllIlIlIIlII.accept(lllllllllllllllllIIlIllIlIIIIlII);
-            lllllllllllllllllIIlIllIlIlIlIlI.row();
-        };
-        ArrayList<class_3545> lllllllllllllllllIIlIllIlIlIlIII = new ArrayList<class_3545>();
-        lllllllllllllllllIIlIllIlIlIIllI.accept(lllllllllllllllllIIlIllIlIlIlIII);
-        if (!lllllllllllllllllIIlIllIlIlIIlll.filterText.isEmpty()) {
-            lllllllllllllllllIIlIllIlIlIlIII.sort(Comparator.comparingInt(lllllllllllllllllIIlIllIlIIlIlIl -> -((Integer)lllllllllllllllllIIlIllIlIIlIlIl.method_15441()).intValue()));
+    private WTable abc(Consumer<List<class_3545<T, Integer>>> consumer, boolean bl, Consumer<T> consumer2) {
+        Cell<WTable> cell = this.table.add(this.theme.table()).top();
+        WTable wTable = cell.widget();
+        Consumer<Object> consumer3 = arg_0 -> this.lambda$abc$7(wTable, bl, consumer2, arg_0);
+        ArrayList<class_3545> arrayList = new ArrayList<class_3545>();
+        consumer.accept(arrayList);
+        if (!this.filterText.isEmpty()) {
+            arrayList.sort(Comparator.comparingInt(LeftRightListSettingScreen::lambda$abc$8));
         }
-        for (class_3545 lllllllllllllllllIIlIllIlIllIIII : lllllllllllllllllIIlIllIlIlIlIII) {
-            lllllllllllllllllIIlIllIlIlIlIIl.accept(lllllllllllllllllIIlIllIlIllIIII.method_15442());
+        for (class_3545 class_35452 : arrayList) {
+            consumer3.accept(class_35452.method_15442());
         }
-        if (lllllllllllllllllIIlIllIlIlIlIlI.cells.size() > 0) {
-            lllllllllllllllllIIlIllIlIlIlIll.expandX();
+        if (wTable.cells.size() > 0) {
+            cell.expandX();
         }
-        return lllllllllllllllllIIlIllIlIlIlIlI;
+        return wTable;
     }
 
-    private void initWidgets(class_2378<T> lllllllllllllllllIIlIllIllIlIIIl) {
-        LeftRightListSettingScreen lllllllllllllllllIIlIllIllIIllll;
-        WTable lllllllllllllllllIIlIllIllIlIIII = lllllllllllllllllIIlIllIllIIllll.abc(lllllllllllllllllIIlIllIIlIIlllI -> {
-            LeftRightListSettingScreen lllllllllllllllllIIlIllIIlIlIIII;
-            lllllllllllllllllIIlIllIllIlIIIl.forEach(lllllllllllllllllIIlIllIIlIIIlll -> {
-                LeftRightListSettingScreen lllllllllllllllllIIlIllIIlIIlIIl;
-                if (lllllllllllllllllIIlIllIIlIIlIIl.skipValue(lllllllllllllllllIIlIllIIlIIIlll) || lllllllllllllllllIIlIllIIlIIlIIl.collection.contains(lllllllllllllllllIIlIllIIlIIIlll)) {
-                    return;
-                }
-                int lllllllllllllllllIIlIllIIlIIIllI = Utils.search(lllllllllllllllllIIlIllIIlIIlIIl.getValueName(lllllllllllllllllIIlIllIIlIIIlll), lllllllllllllllllIIlIllIIlIIlIIl.filterText);
-                if (lllllllllllllllllIIlIllIIlIIIllI > 0) {
-                    lllllllllllllllllIIlIllIIlIIlllI.add(new class_3545(lllllllllllllllllIIlIllIIlIIIlll, (Object)lllllllllllllllllIIlIllIIlIIIllI));
-                }
-            });
-        }, true, lllllllllllllllllIIlIllIIlIlllII -> {
-            LeftRightListSettingScreen lllllllllllllllllIIlIllIIlIllllI;
-            lllllllllllllllllIIlIllIIlIllllI.addValue(lllllllllllllllllIIlIllIllIlIIIl, lllllllllllllllllIIlIllIIlIlllII);
-            Object lllllllllllllllllIIlIllIIlIllIll = lllllllllllllllllIIlIllIIlIllllI.getAdditionalValue(lllllllllllllllllIIlIllIIlIlllII);
-            if (lllllllllllllllllIIlIllIIlIllIll != null) {
-                lllllllllllllllllIIlIllIIlIllllI.addValue(lllllllllllllllllIIlIllIllIlIIIl, lllllllllllllllllIIlIllIIlIllIll);
-            }
-        });
-        if (lllllllllllllllllIIlIllIllIlIIII.cells.size() > 0) {
-            lllllllllllllllllIIlIllIllIIllll.table.add(lllllllllllllllllIIlIllIllIIllll.theme.verticalSeparator()).expandWidgetY();
-        }
-        lllllllllllllllllIIlIllIllIIllll.abc(lllllllllllllllllIIlIllIIllIIllI -> {
-            LeftRightListSettingScreen lllllllllllllllllIIlIllIIllIIlll;
-            for (T lllllllllllllllllIIlIllIIllIlIlI : lllllllllllllllllIIlIllIIllIIlll.collection) {
-                int lllllllllllllllllIIlIllIIllIlIll;
-                if (lllllllllllllllllIIlIllIIllIIlll.skipValue(lllllllllllllllllIIlIllIIllIlIlI) || (lllllllllllllllllIIlIllIIllIlIll = Utils.search(lllllllllllllllllIIlIllIIllIIlll.getValueName(lllllllllllllllllIIlIllIIllIlIlI), lllllllllllllllllIIlIllIIllIIlll.filterText)) <= 0) continue;
-                lllllllllllllllllIIlIllIIllIIllI.add(new class_3545(lllllllllllllllllIIlIllIIllIlIlI, (Object)lllllllllllllllllIIlIllIIllIlIll));
-            }
-        }, false, lllllllllllllllllIIlIllIIlllIIlI -> {
-            LeftRightListSettingScreen lllllllllllllllllIIlIllIIllllIII;
-            lllllllllllllllllIIlIllIIllllIII.removeValue(lllllllllllllllllIIlIllIllIlIIIl, lllllllllllllllllIIlIllIIlllIIlI);
-            Object lllllllllllllllllIIlIllIIlllIlIl = lllllllllllllllllIIlIllIIllllIII.getAdditionalValue(lllllllllllllllllIIlIllIIlllIIlI);
-            if (lllllllllllllllllIIlIllIIlllIlIl != null) {
-                lllllllllllllllllIIlIllIIllllIII.removeValue(lllllllllllllllllIIlIllIllIlIIIl, lllllllllllllllllIIlIllIIlllIlIl);
-            }
-        });
+    private void lambda$new$0(class_2378 class_23782) {
+        this.filterText = this.filter.get().trim();
+        this.table.clear();
+        this.initWidgets(class_23782);
     }
 
-    private void addValue(class_2378<T> lllllllllllllllllIIlIllIllIIlIII, T lllllllllllllllllIIlIllIllIIIlII) {
-        LeftRightListSettingScreen lllllllllllllllllIIlIllIllIIlIIl;
-        if (!lllllllllllllllllIIlIllIllIIlIIl.collection.contains(lllllllllllllllllIIlIllIllIIIlII)) {
-            lllllllllllllllllIIlIllIllIIlIIl.collection.add(lllllllllllllllllIIlIllIllIIIlII);
-            lllllllllllllllllIIlIllIllIIlIIl.setting.changed();
-            lllllllllllllllllIIlIllIllIIlIIl.table.clear();
-            lllllllllllllllllIIlIllIllIIlIIl.initWidgets(lllllllllllllllllIIlIllIllIIlIII);
+    private void lambda$initWidgets$4(List list) {
+        for (T t : this.collection) {
+            int n;
+            if (this.skipValue(t) || (n = Utils.search(this.getValueName(t), this.filterText)) <= 0) continue;
+            list.add(new class_3545(t, (Object)n));
+        }
+    }
+
+    private void initWidgets(class_2378<T> class_23782) {
+        WTable wTable = this.abc(arg_0 -> this.lambda$initWidgets$2(class_23782, arg_0), true, arg_0 -> this.lambda$initWidgets$3(class_23782, arg_0));
+        if (wTable.cells.size() > 0) {
+            this.table.add(this.theme.verticalSeparator()).expandWidgetY();
+        }
+        this.abc(this::lambda$initWidgets$4, false, arg_0 -> this.lambda$initWidgets$5(class_23782, arg_0));
+    }
+
+    private void addValue(class_2378<T> class_23782, T t) {
+        if (!this.collection.contains(t)) {
+            this.collection.add(t);
+            this.setting.changed();
+            this.table.clear();
+            this.initWidgets(class_23782);
         }
     }
 
     protected abstract String getValueName(T var1);
 
-    public LeftRightListSettingScreen(GuiTheme lllllllllllllllllIIlIllIllIllIlI, String lllllllllllllllllIIlIllIllIllIIl, Setting<?> lllllllllllllllllIIlIllIllIllllI, Collection<T> lllllllllllllllllIIlIllIllIlIlll, class_2378<T> lllllllllllllllllIIlIllIllIlIllI) {
-        super(lllllllllllllllllIIlIllIllIllIlI, lllllllllllllllllIIlIllIllIllIIl);
-        LeftRightListSettingScreen lllllllllllllllllIIlIllIlllIIIIl;
-        lllllllllllllllllIIlIllIlllIIIIl.filterText = "";
-        lllllllllllllllllIIlIllIlllIIIIl.setting = lllllllllllllllllIIlIllIllIllllI;
-        lllllllllllllllllIIlIllIlllIIIIl.collection = lllllllllllllllllIIlIllIllIlIlll;
-        lllllllllllllllllIIlIllIlllIIIIl.filter = lllllllllllllllllIIlIllIlllIIIIl.add(lllllllllllllllllIIlIllIllIllIlI.textBox("")).minWidth(400.0).expandX().widget();
-        lllllllllllllllllIIlIllIlllIIIIl.filter.setFocused(true);
-        lllllllllllllllllIIlIllIlllIIIIl.filter.action = () -> {
-            LeftRightListSettingScreen lllllllllllllllllIIlIllIIIllllll;
-            lllllllllllllllllIIlIllIIIllllll.filterText = lllllllllllllllllIIlIllIIIllllll.filter.get().trim();
-            lllllllllllllllllIIlIllIIIllllll.table.clear();
-            lllllllllllllllllIIlIllIIIllllll.initWidgets(lllllllllllllllllIIlIllIllIlIllI);
-        };
-        lllllllllllllllllIIlIllIlllIIIIl.table = lllllllllllllllllIIlIllIlllIIIIl.add(lllllllllllllllllIIlIllIllIllIlI.table()).expandX().widget();
-        lllllllllllllllllIIlIllIlllIIIIl.initWidgets(lllllllllllllllllIIlIllIllIlIllI);
+    private void lambda$abc$7(WTable wTable, boolean bl, Consumer consumer, Object object) {
+        if (!this.includeValue(object)) {
+            return;
+        }
+        wTable.add(this.getValueWidget(object));
+        WPressable wPressable = wTable.add(bl ? this.theme.plus() : this.theme.minus()).expandCellX().right().widget();
+        wPressable.action = () -> LeftRightListSettingScreen.lambda$abc$6(consumer, object);
+        wTable.row();
+    }
+
+    private static void lambda$abc$6(Consumer consumer, Object object) {
+        consumer.accept(object);
+    }
+
+    public LeftRightListSettingScreen(GuiTheme guiTheme, String string, Setting<?> setting, Collection<T> collection, class_2378<T> class_23782) {
+        super(guiTheme, string);
+        this.setting = setting;
+        this.collection = collection;
+        this.filter = this.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        this.filter.setFocused(true);
+        this.filter.action = () -> this.lambda$new$0(class_23782);
+        this.table = this.add(guiTheme.table()).expandX().widget();
+        this.initWidgets(class_23782);
+    }
+
+    private void lambda$initWidgets$5(class_2378 class_23782, Object object) {
+        this.removeValue(class_23782, object);
+        Object object2 = this.getAdditionalValue(object);
+        if (object2 != null) {
+            this.removeValue(class_23782, object2);
+        }
     }
 }
 

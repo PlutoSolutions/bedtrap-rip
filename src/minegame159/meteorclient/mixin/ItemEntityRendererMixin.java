@@ -41,10 +41,10 @@ public abstract class ItemEntityRendererMixin {
     private class_918 field_4726;
 
     @Inject(method={"render"}, at={@At(value="HEAD")}, cancellable=true)
-    private void render(class_1542 itemEntity, float f, float g, class_4587 matrixStack, class_4597 vertexConsumerProvider, int i, CallbackInfo ci) {
-        RenderItemEntityEvent event = MeteorClient.EVENT_BUS.post(RenderItemEntityEvent.get(itemEntity, f, g, matrixStack, vertexConsumerProvider, i, this.field_4725, this.field_4726));
-        if (event.isCancelled()) {
-            ci.cancel();
+    private void render(class_1542 class_15422, float f, float f2, class_4587 class_45872, class_4597 class_45972, int n, CallbackInfo callbackInfo) {
+        RenderItemEntityEvent renderItemEntityEvent = MeteorClient.EVENT_BUS.post(RenderItemEntityEvent.get(class_15422, f, f2, class_45872, class_45972, n, this.field_4725, this.field_4726));
+        if (renderItemEntityEvent.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 }

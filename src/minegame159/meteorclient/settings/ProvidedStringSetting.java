@@ -11,74 +11,59 @@ import minegame159.meteorclient.settings.StringSetting;
 
 public class ProvidedStringSetting
 extends StringSetting {
-    public final /* synthetic */ Supplier<String[]> supplier;
+    public final Supplier<String[]> supplier;
 
-    public ProvidedStringSetting(String llllllllllllllllIllIlIlIlIIIIlIl, String llllllllllllllllIllIlIlIIlllllII, String llllllllllllllllIllIlIlIIllllIll, Consumer<String> llllllllllllllllIllIlIlIlIIIIIlI, Consumer<Setting<String>> llllllllllllllllIllIlIlIlIIIIIIl, IVisible llllllllllllllllIllIlIlIlIIIIIII, Supplier<String[]> llllllllllllllllIllIlIlIIlllllll) {
-        super(llllllllllllllllIllIlIlIlIIIIlIl, llllllllllllllllIllIlIlIIlllllII, llllllllllllllllIllIlIlIIllllIll, llllllllllllllllIllIlIlIlIIIIIlI, llllllllllllllllIllIlIlIlIIIIIIl, llllllllllllllllIllIlIlIlIIIIIII);
-        ProvidedStringSetting llllllllllllllllIllIlIlIIllllllI;
-        llllllllllllllllIllIlIlIIllllllI.supplier = llllllllllllllllIllIlIlIIlllllll;
+    public ProvidedStringSetting(String string, String string2, String string3, Consumer<String> consumer, Consumer<Setting<String>> consumer2, IVisible iVisible, Supplier<String[]> supplier) {
+        super(string, string2, string3, consumer, consumer2, iVisible);
+        this.supplier = supplier;
     }
 
     public static class Builder {
-        private /* synthetic */ String defaultValue;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ Supplier<String[]> supplier;
-        private /* synthetic */ Consumer<Setting<String>> onModuleActivated;
-        private /* synthetic */ String name;
-        private /* synthetic */ Consumer<String> onChanged;
-        private /* synthetic */ String description;
+        private String defaultValue;
+        private IVisible visible;
+        private Supplier<String[]> supplier;
+        private Consumer<Setting<String>> onModuleActivated;
+        private String name = "undefined";
+        private Consumer<String> onChanged;
+        private String description = "";
 
         public ProvidedStringSetting build() {
-            Builder lllllllllllllllllIIIIIIIllIllIII;
-            return new ProvidedStringSetting(lllllllllllllllllIIIIIIIllIllIII.name, lllllllllllllllllIIIIIIIllIllIII.description, lllllllllllllllllIIIIIIIllIllIII.defaultValue, lllllllllllllllllIIIIIIIllIllIII.onChanged, lllllllllllllllllIIIIIIIllIllIII.onModuleActivated, lllllllllllllllllIIIIIIIllIllIII.visible, lllllllllllllllllIIIIIIIllIllIII.supplier);
+            return new ProvidedStringSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible, this.supplier);
         }
 
-        public Builder visible(IVisible lllllllllllllllllIIIIIIIlllIIIIl) {
-            Builder lllllllllllllllllIIIIIIIlllIIlII;
-            lllllllllllllllllIIIIIIIlllIIlII.visible = lllllllllllllllllIIIIIIIlllIIIIl;
-            return lllllllllllllllllIIIIIIIlllIIlII;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder defaultValue(String lllllllllllllllllIIIIIIIllllIlIl) {
-            Builder lllllllllllllllllIIIIIIIllllIlII;
-            lllllllllllllllllIIIIIIIllllIlII.defaultValue = lllllllllllllllllIIIIIIIllllIlIl;
-            return lllllllllllllllllIIIIIIIllllIlII;
+        public Builder defaultValue(String string) {
+            this.defaultValue = string;
+            return this;
         }
 
-        public Builder() {
-            Builder lllllllllllllllllIIIIIIlIIIIIllI;
-            lllllllllllllllllIIIIIIlIIIIIllI.name = "undefined";
-            lllllllllllllllllIIIIIIlIIIIIllI.description = "";
+        public Builder onModuleActivated(Consumer<Setting<String>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<String>> lllllllllllllllllIIIIIIIlllIIlll) {
-            Builder lllllllllllllllllIIIIIIIlllIlIlI;
-            lllllllllllllllllIIIIIIIlllIlIlI.onModuleActivated = lllllllllllllllllIIIIIIIlllIIlll;
-            return lllllllllllllllllIIIIIIIlllIlIlI;
+        public Builder supplier(Supplier<String[]> supplier) {
+            this.supplier = supplier;
+            return this;
         }
 
-        public Builder supplier(Supplier<String[]> lllllllllllllllllIIIIIIIllIlllIl) {
-            Builder lllllllllllllllllIIIIIIIllIllllI;
-            lllllllllllllllllIIIIIIIllIllllI.supplier = lllllllllllllllllIIIIIIIllIlllIl;
-            return lllllllllllllllllIIIIIIIllIllllI;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder name(String lllllllllllllllllIIIIIIlIIIIIIIl) {
-            Builder lllllllllllllllllIIIIIIlIIIIIIlI;
-            lllllllllllllllllIIIIIIlIIIIIIlI.name = lllllllllllllllllIIIIIIlIIIIIIIl;
-            return lllllllllllllllllIIIIIIlIIIIIIlI;
+        public Builder onChanged(Consumer<String> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder onChanged(Consumer<String> lllllllllllllllllIIIIIIIlllIllIl) {
-            Builder lllllllllllllllllIIIIIIIlllIlllI;
-            lllllllllllllllllIIIIIIIlllIlllI.onChanged = lllllllllllllllllIIIIIIIlllIllIl;
-            return lllllllllllllllllIIIIIIIlllIlllI;
-        }
-
-        public Builder description(String lllllllllllllllllIIIIIIIlllllIll) {
-            Builder lllllllllllllllllIIIIIIIlllllIlI;
-            lllllllllllllllllIIIIIIIlllllIlI.description = lllllllllllllllllIIIIIIIlllllIll;
-            return lllllllllllllllllIIIIIIIlllllIlI;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
     }
 }

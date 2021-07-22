@@ -12,41 +12,37 @@ import minegame159.meteorclient.utils.render.color.Color;
 public class WMeteorHorizontalSeparator
 extends WHorizontalSeparator
 implements MeteorWidget {
-    public WMeteorHorizontalSeparator(String lIllIlIIlllIII) {
-        super(lIllIlIIlllIII);
-        WMeteorHorizontalSeparator lIllIlIIlllIIl;
+    public WMeteorHorizontalSeparator(String string) {
+        super(string);
     }
 
-    private void renderWithoutText(GuiRenderer lIllIlIIlIIIIl) {
-        WMeteorHorizontalSeparator lIllIlIIlIIlll;
-        MeteorGuiTheme lIllIlIIlIIlIl = lIllIlIIlIIlll.theme();
-        double lIllIlIIlIIlII = lIllIlIIlIIlIl.scale(1.0);
-        double lIllIlIIlIIIll = lIllIlIIlIIlll.width / 2.0;
-        lIllIlIIlIIIIl.quad(lIllIlIIlIIlll.x, lIllIlIIlIIlll.y + lIllIlIIlIIlII, lIllIlIIlIIIll, lIllIlIIlIIlII, lIllIlIIlIIlIl.separatorEdges.get(), (Color)lIllIlIIlIIlIl.separatorCenter.get());
-        lIllIlIIlIIIIl.quad(lIllIlIIlIIlll.x + lIllIlIIlIIIll, lIllIlIIlIIlll.y + lIllIlIIlIIlII, lIllIlIIlIIIll, lIllIlIIlIIlII, lIllIlIIlIIlIl.separatorCenter.get(), (Color)lIllIlIIlIIlIl.separatorEdges.get());
+    private void renderWithoutText(GuiRenderer guiRenderer) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d = meteorGuiTheme.scale(1.0);
+        double d2 = this.width / 2.0;
+        guiRenderer.quad(this.x, this.y + d, d2, d, meteorGuiTheme.separatorEdges.get(), (Color)meteorGuiTheme.separatorCenter.get());
+        guiRenderer.quad(this.x + d2, this.y + d, d2, d, meteorGuiTheme.separatorCenter.get(), (Color)meteorGuiTheme.separatorEdges.get());
     }
 
     @Override
-    protected void onRender(GuiRenderer lIllIlIIlIllIl, double lIllIlIIllIIIl, double lIllIlIIllIIII, double lIllIlIIlIllll) {
-        WMeteorHorizontalSeparator lIllIlIIlIlllI;
-        if (lIllIlIIlIlllI.text == null) {
-            lIllIlIIlIlllI.renderWithoutText(lIllIlIIlIllIl);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (this.text == null) {
+            this.renderWithoutText(guiRenderer);
         } else {
-            lIllIlIIlIlllI.renderWithText(lIllIlIIlIllIl);
+            this.renderWithText(guiRenderer);
         }
     }
 
-    private void renderWithText(GuiRenderer lIllIlIIIIllII) {
-        WMeteorHorizontalSeparator lIllIlIIIIllIl;
-        MeteorGuiTheme lIllIlIIIlIIll = lIllIlIIIIllIl.theme();
-        double lIllIlIIIlIIlI = lIllIlIIIlIIll.scale(2.0);
-        double lIllIlIIIlIIIl = lIllIlIIIlIIll.scale(1.0);
-        double lIllIlIIIlIIII = Math.round(lIllIlIIIIllIl.width / 2.0 - lIllIlIIIIllIl.textWidth / 2.0 - lIllIlIIIlIIlI);
-        double lIllIlIIIIllll = lIllIlIIIlIIlI + lIllIlIIIlIIII + lIllIlIIIIllIl.textWidth + lIllIlIIIlIIlI;
-        double lIllIlIIIIlllI = Math.round(lIllIlIIIIllIl.height / 2.0);
-        lIllIlIIIIllII.quad(lIllIlIIIIllIl.x, lIllIlIIIIllIl.y + lIllIlIIIIlllI, lIllIlIIIlIIII, lIllIlIIIlIIIl, lIllIlIIIlIIll.separatorEdges.get(), (Color)lIllIlIIIlIIll.separatorCenter.get());
-        lIllIlIIIIllII.text(lIllIlIIIIllIl.text, lIllIlIIIIllIl.x + lIllIlIIIlIIII + lIllIlIIIlIIlI, lIllIlIIIIllIl.y, lIllIlIIIlIIll.separatorText.get(), false);
-        lIllIlIIIIllII.quad(lIllIlIIIIllIl.x + lIllIlIIIIllll, lIllIlIIIIllIl.y + lIllIlIIIIlllI, lIllIlIIIIllIl.width - lIllIlIIIIllll, lIllIlIIIlIIIl, lIllIlIIIlIIll.separatorCenter.get(), (Color)lIllIlIIIlIIll.separatorEdges.get());
+    private void renderWithText(GuiRenderer guiRenderer) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d = meteorGuiTheme.scale(2.0);
+        double d2 = meteorGuiTheme.scale(1.0);
+        double d3 = Math.round(this.width / 2.0 - this.textWidth / 2.0 - d);
+        double d4 = d + d3 + this.textWidth + d;
+        double d5 = Math.round(this.height / 2.0);
+        guiRenderer.quad(this.x, this.y + d5, d3, d2, meteorGuiTheme.separatorEdges.get(), (Color)meteorGuiTheme.separatorCenter.get());
+        guiRenderer.text(this.text, this.x + d3 + d, this.y, meteorGuiTheme.separatorText.get(), false);
+        guiRenderer.quad(this.x + d4, this.y + d5, this.width - d4, d2, meteorGuiTheme.separatorCenter.get(), (Color)meteorGuiTheme.separatorEdges.get());
     }
 }
 

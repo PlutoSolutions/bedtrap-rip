@@ -30,9 +30,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_2560.class})
 public class CobwebBlockMixin {
     @Inject(method={"onEntityCollision"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onEntityCollision(class_2680 state, class_1937 world, class_2338 pos, class_1297 entity, CallbackInfo info) {
-        if (Modules.get().get(NoSlow.class).web() && entity == Utils.mc.field_1724) {
-            info.cancel();
+    private void onEntityCollision(class_2680 class_26802, class_1937 class_19372, class_2338 class_23382, class_1297 class_12972, CallbackInfo callbackInfo) {
+        if (Modules.get().get(NoSlow.class).web() && class_12972 == Utils.mc.field_1724) {
+            callbackInfo.cancel();
         }
     }
 }

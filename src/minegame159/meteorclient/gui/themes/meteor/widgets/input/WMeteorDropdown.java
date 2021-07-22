@@ -12,62 +12,64 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 public class WMeteorDropdown<T>
 extends WDropdown<T>
 implements MeteorWidget {
-    public WMeteorDropdown(T[] llllllllllllllllllllllIlllIlIlII, T llllllllllllllllllllllIlllIlIllI) {
-        super(llllllllllllllllllllllIlllIlIlII, llllllllllllllllllllllIlllIlIllI);
-        WMeteorDropdown llllllllllllllllllllllIlllIlIlIl;
+    public WMeteorDropdown(T[] arrT, T t) {
+        super(arrT, t);
     }
 
     @Override
     protected WDropdown.WDropdownValue createValueWidget() {
-        WMeteorDropdown llllllllllllllllllllllIlllIlIIII;
-        return llllllllllllllllllllllIlllIlIIII.new WValue();
+        return new WValue(this, null);
     }
 
     @Override
     protected WDropdown.WDropdownRoot createRootWidget() {
-        return new WRoot();
+        return new WRoot(null);
     }
 
     @Override
-    protected void onRender(GuiRenderer llllllllllllllllllllllIlllIIIllI, double llllllllllllllllllllllIlllIIIlIl, double llllllllllllllllllllllIlllIIIlII, double llllllllllllllllllllllIlllIIIIll) {
-        WMeteorDropdown llllllllllllllllllllllIllIllllIl;
-        MeteorGuiTheme llllllllllllllllllllllIlllIIIIlI = llllllllllllllllllllllIllIllllIl.theme();
-        double llllllllllllllllllllllIlllIIIIIl = llllllllllllllllllllllIllIllllIl.pad();
-        double llllllllllllllllllllllIlllIIIIII = llllllllllllllllllllllIlllIIIIlI.textHeight();
-        llllllllllllllllllllllIllIllllIl.renderBackground(llllllllllllllllllllllIlllIIIllI, llllllllllllllllllllllIllIllllIl, llllllllllllllllllllllIllIllllIl.pressed, llllllllllllllllllllllIllIllllIl.mouseOver);
-        String llllllllllllllllllllllIllIllllll = llllllllllllllllllllllIllIllllIl.get().toString();
-        double llllllllllllllllllllllIllIlllllI = llllllllllllllllllllllIlllIIIIlI.textWidth(llllllllllllllllllllllIllIllllll);
-        llllllllllllllllllllllIlllIIIllI.text(llllllllllllllllllllllIllIllllll, llllllllllllllllllllllIllIllllIl.x + llllllllllllllllllllllIlllIIIIIl + llllllllllllllllllllllIllIllllIl.maxValueWidth / 2.0 - llllllllllllllllllllllIllIlllllI / 2.0, llllllllllllllllllllllIllIllllIl.y + llllllllllllllllllllllIlllIIIIIl, llllllllllllllllllllllIlllIIIIlI.textColor.get(), false);
-        llllllllllllllllllllllIlllIIIllI.rotatedQuad(llllllllllllllllllllllIllIllllIl.x + llllllllllllllllllllllIlllIIIIIl + llllllllllllllllllllllIllIllllIl.maxValueWidth + llllllllllllllllllllllIlllIIIIIl, llllllllllllllllllllllIllIllllIl.y + llllllllllllllllllllllIlllIIIIIl, llllllllllllllllllllllIlllIIIIII, llllllllllllllllllllllIlllIIIIII, 0.0, GuiRenderer.TRIANGLE, llllllllllllllllllllllIlllIIIIlI.textColor.get());
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d4 = this.pad();
+        double d5 = meteorGuiTheme.textHeight();
+        this.renderBackground(guiRenderer, this, this.pressed, this.mouseOver);
+        String string = this.get().toString();
+        double d6 = meteorGuiTheme.textWidth(string);
+        guiRenderer.text(string, this.x + d4 + this.maxValueWidth / 2.0 - d6 / 2.0, this.y + d4, meteorGuiTheme.textColor.get(), false);
+        guiRenderer.rotatedQuad(this.x + d4 + this.maxValueWidth + d4, this.y + d4, d5, d5, 0.0, GuiRenderer.TRIANGLE, meteorGuiTheme.textColor.get());
     }
 
     private class WValue
     extends WDropdown.WDropdownValue
     implements MeteorWidget {
+        final WMeteorDropdown this$0;
+
+        WValue(WMeteorDropdown wMeteorDropdown, 1 var2_2) {
+            this(wMeteorDropdown);
+        }
+
         @Override
         protected void onCalculateSize() {
-            WValue lllllllllllllllllIllIlIIlIIlIlII;
-            double lllllllllllllllllIllIlIIlIIlIIll = lllllllllllllllllIllIlIIlIIlIlII.pad();
-            lllllllllllllllllIllIlIIlIIlIlII.width = lllllllllllllllllIllIlIIlIIlIIll + lllllllllllllllllIllIlIIlIIlIlII.theme.textWidth(lllllllllllllllllIllIlIIlIIlIlII.value.toString()) + lllllllllllllllllIllIlIIlIIlIIll;
-            lllllllllllllllllIllIlIIlIIlIlII.height = lllllllllllllllllIllIlIIlIIlIIll + lllllllllllllllllIllIlIIlIIlIlII.theme.textHeight() + lllllllllllllllllIllIlIIlIIlIIll;
+            double d = this.pad();
+            this.width = d + this.theme.textWidth(this.value.toString()) + d;
+            this.height = d + this.theme.textHeight() + d;
         }
 
-        private WValue() {
-            WValue lllllllllllllllllIllIlIIlIIllIII;
+        private WValue(WMeteorDropdown wMeteorDropdown) {
+            this.this$0 = wMeteorDropdown;
+            super(wMeteorDropdown);
         }
 
         @Override
-        protected void onRender(GuiRenderer lllllllllllllllllIllIlIIlIIIIIII, double lllllllllllllllllIllIlIIlIIIlIII, double lllllllllllllllllIllIlIIlIIIIlll, double lllllllllllllllllIllIlIIlIIIIllI) {
-            WValue lllllllllllllllllIllIlIIlIIIIIIl;
-            MeteorGuiTheme lllllllllllllllllIllIlIIlIIIIlIl = lllllllllllllllllIllIlIIlIIIIIIl.theme();
-            SettingColor lllllllllllllllllIllIlIIlIIIIlII = lllllllllllllllllIllIlIIlIIIIlIl.backgroundColor.get(lllllllllllllllllIllIlIIlIIIIIIl.pressed, lllllllllllllllllIllIlIIlIIIIIIl.mouseOver, true);
-            int lllllllllllllllllIllIlIIlIIIIIll = lllllllllllllllllIllIlIIlIIIIlII.a;
-            lllllllllllllllllIllIlIIlIIIIlII.a += lllllllllllllllllIllIlIIlIIIIlII.a / 2;
-            lllllllllllllllllIllIlIIlIIIIlII.validate();
-            lllllllllllllllllIllIlIIlIIIIIII.quad(lllllllllllllllllIllIlIIlIIIIIIl, lllllllllllllllllIllIlIIlIIIIlII);
-            lllllllllllllllllIllIlIIlIIIIlII.a = lllllllllllllllllIllIlIIlIIIIIll;
-            String lllllllllllllllllIllIlIIlIIIIIlI = lllllllllllllllllIllIlIIlIIIIIIl.value.toString();
-            lllllllllllllllllIllIlIIlIIIIIII.text(lllllllllllllllllIllIlIIlIIIIIlI, lllllllllllllllllIllIlIIlIIIIIIl.x + lllllllllllllllllIllIlIIlIIIIIIl.width / 2.0 - lllllllllllllllllIllIlIIlIIIIlIl.textWidth(lllllllllllllllllIllIlIIlIIIIIlI) / 2.0, lllllllllllllllllIllIlIIlIIIIIIl.y + lllllllllllllllllIllIlIIlIIIIIIl.pad(), lllllllllllllllllIllIlIIlIIIIlIl.textColor.get(), false);
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            MeteorGuiTheme meteorGuiTheme = this.theme();
+            SettingColor settingColor = meteorGuiTheme.backgroundColor.get(this.pressed, this.mouseOver, true);
+            int n = settingColor.a;
+            settingColor.a += settingColor.a / 2;
+            settingColor.validate();
+            guiRenderer.quad(this, settingColor);
+            settingColor.a = n;
+            String string = this.value.toString();
+            guiRenderer.text(string, this.x + this.width / 2.0 - meteorGuiTheme.textWidth(string) / 2.0, this.y + this.pad(), meteorGuiTheme.textColor.get(), false);
         }
     }
 
@@ -75,18 +77,20 @@ implements MeteorWidget {
     extends WDropdown.WDropdownRoot
     implements MeteorWidget {
         private WRoot() {
-            WRoot lllllllllllllllllIIIlllIIllllIII;
+        }
+
+        WRoot(1 var1_1) {
+            this();
         }
 
         @Override
-        protected void onRender(GuiRenderer lllllllllllllllllIIIlllIIlllIIIl, double lllllllllllllllllIIIlllIIlllIIII, double lllllllllllllllllIIIlllIIllIllll, double lllllllllllllllllIIIlllIIllIlllI) {
-            WRoot lllllllllllllllllIIIlllIIlllIIlI;
-            MeteorGuiTheme lllllllllllllllllIIIlllIIllIllIl = lllllllllllllllllIIIlllIIlllIIlI.theme();
-            double lllllllllllllllllIIIlllIIllIllII = lllllllllllllllllIIIlllIIllIllIl.scale(2.0);
-            SettingColor lllllllllllllllllIIIlllIIllIlIll = lllllllllllllllllIIIlllIIllIllIl.outlineColor.get();
-            lllllllllllllllllIIIlllIIlllIIIl.quad(lllllllllllllllllIIIlllIIlllIIlI.x, lllllllllllllllllIIIlllIIlllIIlI.y + lllllllllllllllllIIIlllIIlllIIlI.height - lllllllllllllllllIIIlllIIllIllII, lllllllllllllllllIIIlllIIlllIIlI.width, lllllllllllllllllIIIlllIIllIllII, lllllllllllllllllIIIlllIIllIlIll);
-            lllllllllllllllllIIIlllIIlllIIIl.quad(lllllllllllllllllIIIlllIIlllIIlI.x, lllllllllllllllllIIIlllIIlllIIlI.y, lllllllllllllllllIIIlllIIllIllII, lllllllllllllllllIIIlllIIlllIIlI.height - lllllllllllllllllIIIlllIIllIllII, lllllllllllllllllIIIlllIIllIlIll);
-            lllllllllllllllllIIIlllIIlllIIIl.quad(lllllllllllllllllIIIlllIIlllIIlI.x + lllllllllllllllllIIIlllIIlllIIlI.width - lllllllllllllllllIIIlllIIllIllII, lllllllllllllllllIIIlllIIlllIIlI.y, lllllllllllllllllIIIlllIIllIllII, lllllllllllllllllIIIlllIIlllIIlI.height - lllllllllllllllllIIIlllIIllIllII, lllllllllllllllllIIIlllIIllIlIll);
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            MeteorGuiTheme meteorGuiTheme = this.theme();
+            double d4 = meteorGuiTheme.scale(2.0);
+            SettingColor settingColor = meteorGuiTheme.outlineColor.get();
+            guiRenderer.quad(this.x, this.y + this.height - d4, this.width, d4, settingColor);
+            guiRenderer.quad(this.x, this.y, d4, this.height - d4, settingColor);
+            guiRenderer.quad(this.x + this.width - d4, this.y, d4, this.height - d4, settingColor);
         }
     }
 }

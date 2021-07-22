@@ -46,23 +46,23 @@ implements IBox {
     public double field_1324;
 
     @Override
-    public void expand(double v) {
-        this.field_1323 -= v;
-        this.field_1322 -= v;
-        this.field_1321 -= v;
-        this.field_1320 += v;
-        this.field_1325 += v;
-        this.field_1324 += v;
+    public void expand(double d) {
+        this.field_1323 -= d;
+        this.field_1322 -= d;
+        this.field_1321 -= d;
+        this.field_1320 += d;
+        this.field_1325 += d;
+        this.field_1324 += d;
     }
 
     @Override
-    public void set(double x1, double y1, double z1, double x2, double y2, double z2) {
-        this.field_1323 = Math.min(x1, x2);
-        this.field_1322 = Math.min(y1, y2);
-        this.field_1321 = Math.min(z1, z2);
-        this.field_1320 = Math.max(x1, x2);
-        this.field_1325 = Math.max(y1, y2);
-        this.field_1324 = Math.max(z1, z2);
+    public void set(double d, double d2, double d3, double d4, double d5, double d6) {
+        this.field_1323 = Math.min(d, d4);
+        this.field_1322 = Math.min(d2, d5);
+        this.field_1321 = Math.min(d3, d6);
+        this.field_1320 = Math.max(d, d4);
+        this.field_1325 = Math.max(d2, d5);
+        this.field_1324 = Math.max(d3, d6);
     }
 }
 

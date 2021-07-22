@@ -93,65 +93,67 @@ import org.apache.commons.lang3.SystemUtils;
 import org.lwjgl.glfw.GLFW;
 
 public class Utils {
-    public static /* synthetic */ class_310 mc;
-    private static final /* synthetic */ Random random;
-    public static /* synthetic */ boolean isReleasingTrident;
-    public static final /* synthetic */ Color WHITE;
-    private static final /* synthetic */ DecimalFormat df;
-    public static /* synthetic */ boolean firstTimeTitleScreen;
+    public static class_310 mc;
+    private static final Random random;
+    public static boolean isReleasingTrident;
+    public static final Color WHITE;
+    private static final DecimalFormat df;
+    public static boolean firstTimeTitleScreen;
 
-    public static int unpackLong2(long lllllllllllllllllIllIIlIllllIlIl) {
-        return (int)(lllllllllllllllllIllIIlIllllIlIl >> 32 & 0xFFFFL);
+    public static int unpackLong2(long l) {
+        return (int)(l >> 32 & 0xFFFFL);
     }
 
-    public static boolean isThrowable(class_1792 lllllllllllllllllIllIIllIIllIlll) {
-        return lllllllllllllllllIllIIllIIllIlll instanceof class_1779 || lllllllllllllllllIllIIllIIllIlll instanceof class_1753 || lllllllllllllllllIllIIllIIllIlll instanceof class_1764 || lllllllllllllllllIllIIllIIllIlll instanceof class_1823 || lllllllllllllllllIllIIllIIllIlll instanceof class_1771 || lllllllllllllllllIllIIllIIllIlll instanceof class_1776 || lllllllllllllllllIllIIllIIllIlll instanceof class_1828 || lllllllllllllllllIllIIllIIllIlll instanceof class_1803 || lllllllllllllllllIllIIllIIllIlll instanceof class_1787 || lllllllllllllllllIllIIllIIllIlll instanceof class_1835;
+    public static boolean isThrowable(class_1792 class_17922) {
+        return class_17922 instanceof class_1779 || class_17922 instanceof class_1753 || class_17922 instanceof class_1764 || class_17922 instanceof class_1823 || class_17922 instanceof class_1771 || class_17922 instanceof class_1776 || class_17922 instanceof class_1828 || class_17922 instanceof class_1803 || class_17922 instanceof class_1787 || class_17922 instanceof class_1835;
     }
 
-    public static boolean isShulker(class_1792 lllllllllllllllllIllIIllIIlllIlI) {
-        return lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8545 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8722 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8380 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8050 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8829 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8271 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8548 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8520 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8627 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8451 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8213 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8816 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8350 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8584 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8461 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8676 || lllllllllllllllllIllIIllIIlllIlI == class_1802.field_8268;
+    public static boolean isShulker(class_1792 class_17922) {
+        return class_17922 == class_1802.field_8545 || class_17922 == class_1802.field_8722 || class_17922 == class_1802.field_8380 || class_17922 == class_1802.field_8050 || class_17922 == class_1802.field_8829 || class_17922 == class_1802.field_8271 || class_17922 == class_1802.field_8548 || class_17922 == class_1802.field_8520 || class_17922 == class_1802.field_8627 || class_17922 == class_1802.field_8451 || class_17922 == class_1802.field_8213 || class_17922 == class_1802.field_8816 || class_17922 == class_1802.field_8350 || class_17922 == class_1802.field_8584 || class_17922 == class_1802.field_8461 || class_17922 == class_1802.field_8676 || class_17922 == class_1802.field_8268;
     }
 
-    public static int unpackLong4(long lllllllllllllllllIllIIlIllllIIII) {
-        return (int)(lllllllllllllllllIllIIlIllllIIII & 0xFFFFL);
+    public static int unpackLong4(long l) {
+        return (int)(l & 0xFFFFL);
     }
 
-    public static float clamp(float lllllllllllllllllIllIIllIIlIIlII, float lllllllllllllllllIllIIllIIlIIIll, float lllllllllllllllllIllIIllIIIlllll) {
-        if (lllllllllllllllllIllIIllIIlIIlII < lllllllllllllllllIllIIllIIlIIIll) {
-            return lllllllllllllllllIllIIllIIlIIIll;
+    public static float clamp(float f, float f2, float f3) {
+        if (f < f2) {
+            return f2;
         }
-        if (lllllllllllllllllIllIIllIIlIIlII > lllllllllllllllllIllIIllIIIlllll) {
-            return lllllllllllllllllIllIIllIIIlllll;
+        if (f > f3) {
+            return f3;
         }
-        return lllllllllllllllllIllIIllIIlIIlII;
+        return f;
     }
 
     public static boolean canUpdate() {
         return mc != null && Utils.mc.field_1687 != null && Utils.mc.field_1724 != null;
     }
 
-    public static class_243 vec3d(class_2338 lllllllllllllllllIllIIllllIlIIll) {
-        return new class_243((double)lllllllllllllllllIllIIllllIlIIll.method_10263(), (double)lllllllllllllllllIllIIllllIlIIll.method_10264(), (double)lllllllllllllllllIllIIllllIlIIll.method_10260());
+    public static class_243 vec3d(class_2338 class_23382) {
+        return new class_243((double)class_23382.method_10263(), (double)class_23382.method_10264(), (double)class_23382.method_10260());
     }
 
-    public static int search(String lllllllllllllllllIllIIlllIllllll, String lllllllllllllllllIllIIlllIlllllI) {
-        String[] lllllllllllllllllIllIIlllIllllII;
-        int lllllllllllllllllIllIIlllIllllIl = 0;
-        for (String lllllllllllllllllIllIIllllIIIIII : lllllllllllllllllIllIIlllIllllII = lllllllllllllllllIllIIlllIlllllI.split(" ")) {
-            if (!StringUtils.containsIgnoreCase((CharSequence)lllllllllllllllllIllIIlllIllllll, (CharSequence)lllllllllllllllllIllIIllllIIIIII)) continue;
-            ++lllllllllllllllllIllIIlllIllllIl;
+    public static int search(String string, String string2) {
+        String[] arrstring;
+        int n = 0;
+        for (String string3 : arrstring = string2.split(" ")) {
+            if (!StringUtils.containsIgnoreCase((CharSequence)string, (CharSequence)string3)) continue;
+            ++n;
+            if (-1 < 2) continue;
+            return 0;
         }
-        return lllllllllllllllllIllIIlllIllllIl;
+        return n;
     }
 
-    public static int clamp(int lllllllllllllllllIllIIllIIlIllIl, int lllllllllllllllllIllIIllIIlIllII, int lllllllllllllllllIllIIllIIlIlIll) {
-        if (lllllllllllllllllIllIIllIIlIllIl < lllllllllllllllllIllIIllIIlIllII) {
-            return lllllllllllllllllIllIIllIIlIllII;
+    public static int clamp(int n, int n2, int n3) {
+        if (n < n2) {
+            return n2;
         }
-        if (lllllllllllllllllIllIIllIIlIllIl > lllllllllllllllllIllIIllIIlIlIll) {
-            return lllllllllllllllllIllIIllIIlIlIll;
+        if (n > n3) {
+            return n3;
         }
-        return lllllllllllllllllIllIIllIIlIllIl;
+        return n;
     }
 
     public static void leftClick() {
@@ -172,21 +174,21 @@ public class Utils {
         return Dimension.Overworld;
     }
 
-    public static double distance(double lllllllllllllllllIllIIlllIIIllll, double lllllllllllllllllIllIIlllIIIlllI, double lllllllllllllllllIllIIlllIIIIIll, double lllllllllllllllllIllIIlllIIIIIlI, double lllllllllllllllllIllIIlllIIIIIIl, double lllllllllllllllllIllIIlllIIIlIlI) {
-        double lllllllllllllllllIllIIlllIIIlIIl = lllllllllllllllllIllIIlllIIIIIlI - lllllllllllllllllIllIIlllIIIllll;
-        double lllllllllllllllllIllIIlllIIIlIII = lllllllllllllllllIllIIlllIIIIIIl - lllllllllllllllllIllIIlllIIIlllI;
-        double lllllllllllllllllIllIIlllIIIIlll = lllllllllllllllllIllIIlllIIIlIlI - lllllllllllllllllIllIIlllIIIIIll;
-        return Math.sqrt(lllllllllllllllllIllIIlllIIIlIIl * lllllllllllllllllIllIIlllIIIlIIl + lllllllllllllllllIllIIlllIIIlIII * lllllllllllllllllIllIIlllIIIlIII + lllllllllllllllllIllIIlllIIIIlll * lllllllllllllllllIllIIlllIIIIlll);
+    public static double distance(double d, double d2, double d3, double d4, double d5, double d6) {
+        double d7 = d4 - d;
+        double d8 = d5 - d2;
+        double d9 = d6 - d3;
+        return Math.sqrt(d7 * d7 + d8 * d8 + d9 * d9);
     }
 
     public static Object2IntMap<class_1291> createStatusEffectMap() {
-        Object2IntArrayMap lllllllllllllllllIllIIllllIlIIII = new Object2IntArrayMap(class_2378.field_11159.method_10235().size());
-        class_2378.field_11159.forEach(arg_0 -> Utils.lambda$createStatusEffectMap$0((Object2IntMap)lllllllllllllllllIllIIllllIlIIII, arg_0));
-        return lllllllllllllllllIllIIllllIlIIII;
+        Object2IntArrayMap object2IntArrayMap = new Object2IntArrayMap(class_2378.field_11159.method_10235().size());
+        class_2378.field_11159.forEach(arg_0 -> Utils.lambda$createStatusEffectMap$0((Object2IntMap)object2IntArrayMap, arg_0));
+        return object2IntArrayMap;
     }
 
-    public static double distanceToCamera(class_1297 lllllllllllllllllIllIIllIlIIllll) {
-        return Utils.distanceToCamera(lllllllllllllllllIllIIllIlIIllll.method_23317(), lllllllllllllllllIllIIllIlIIllll.method_23318(), lllllllllllllllllIllIIllIlIIllll.method_23321());
+    public static double distanceToCamera(class_1297 class_12972) {
+        return Utils.distanceToCamera(class_12972.method_23317(), class_12972.method_23318(), class_12972.method_23321());
     }
 
     public static void rightClick() {
@@ -194,34 +196,36 @@ public class Utils {
     }
 
     @SafeVarargs
-    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... lllllllllllllllllIllIIllIIIIllII) {
-        HashMap<T, Boolean> lllllllllllllllllIllIIllIIIIllIl = new HashMap<T, Boolean>();
-        for (T lllllllllllllllllIllIIllIIIIllll : lllllllllllllllllIllIIllIIIIllII) {
-            lllllllllllllllllIllIIllIIIIllIl.put(lllllllllllllllllIllIIllIIIIllll, true);
+    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... arrT) {
+        HashMap<T, Boolean> hashMap = new HashMap<T, Boolean>();
+        for (T t : arrT) {
+            hashMap.put(t, true);
+            if (!false) continue;
+            return null;
         }
-        return new Object2BooleanOpenHashMap(lllllllllllllllllIllIIllIIIIllIl);
+        return new Object2BooleanOpenHashMap(hashMap);
     }
 
-    public static byte[] readBytes(File lllllllllllllllllIllIIllIllIIIll) {
+    public static byte[] readBytes(File file) {
         try {
-            int lllllllllllllllllIllIIllIllIIlIl;
-            FileInputStream lllllllllllllllllIllIIllIllIlIII = new FileInputStream(lllllllllllllllllIllIIllIllIIIll);
-            ByteArrayOutputStream lllllllllllllllllIllIIllIllIIlll = new ByteArrayOutputStream();
-            byte[] lllllllllllllllllIllIIllIllIIllI = new byte[256];
-            while ((lllllllllllllllllIllIIllIllIIlIl = ((InputStream)lllllllllllllllllIllIIllIllIlIII).read(lllllllllllllllllIllIIllIllIIllI)) > 0) {
-                lllllllllllllllllIllIIllIllIIlll.write(lllllllllllllllllIllIIllIllIIllI, 0, lllllllllllllllllIllIIllIllIIlIl);
+            int n;
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] arrby = new byte[256];
+            while ((n = ((InputStream)fileInputStream).read(arrby)) > 0) {
+                byteArrayOutputStream.write(arrby, 0, n);
             }
-            ((InputStream)lllllllllllllllllIllIIllIllIlIII).close();
-            return lllllllllllllllllIllIIllIllIIlll.toByteArray();
+            ((InputStream)fileInputStream).close();
+            return byteArrayOutputStream.toByteArray();
         }
-        catch (IOException lllllllllllllllllIllIIllIllIIlII) {
-            lllllllllllllllllIllIIllIllIIlII.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
             return new byte[0];
         }
     }
 
-    public static String getKeyName(int lllllllllllllllllIllIIllIlllIIlI) {
-        switch (lllllllllllllllllIllIIllIlllIIlI) {
+    public static String getKeyName(int n) {
+        switch (n) {
             case -1: {
                 return "Unknown";
             }
@@ -397,36 +401,36 @@ public class Utils {
                 return "F25";
             }
         }
-        String lllllllllllllllllIllIIllIlllIlII = GLFW.glfwGetKeyName((int)lllllllllllllllllIllIIllIlllIIlI, (int)0);
-        if (lllllllllllllllllIllIIllIlllIlII == null) {
+        String string = GLFW.glfwGetKeyName((int)n, (int)0);
+        if (string == null) {
             return "Unknown";
         }
-        return StringUtils.capitalize((String)lllllllllllllllllIllIIllIlllIlII);
+        return StringUtils.capitalize((String)string);
     }
 
-    public static String doubleToString(double lllllllllllllllllIllIIllIIllIIlI) {
-        if (lllllllllllllllllIllIIllIIllIIlI % 1.0 == 0.0) {
-            return Integer.toString((int)lllllllllllllllllIllIIllIIllIIlI);
+    public static String doubleToString(double d) {
+        if (d % 1.0 == 0.0) {
+            return Integer.toString((int)d);
         }
-        return df.format(lllllllllllllllllIllIIllIIllIIlI);
+        return df.format(d);
     }
 
-    public static String getEnchantSimpleName(class_1887 lllllllllllllllllIllIIllllIIlIlI, int lllllllllllllllllIllIIllllIIlIIl) {
-        return lllllllllllllllllIllIIllllIIlIlI.method_8179(0).getString().substring(0, lllllllllllllllllIllIIllllIIlIIl);
+    public static String getEnchantSimpleName(class_1887 class_18872, int n) {
+        return class_18872.method_8179(0).getString().substring(0, n);
     }
 
-    public static double clamp(double lllllllllllllllllIllIIllIIIllIII, double lllllllllllllllllIllIIllIIIllIlI, double lllllllllllllllllIllIIllIIIlIllI) {
-        if (lllllllllllllllllIllIIllIIIllIII < lllllllllllllllllIllIIllIIIllIlI) {
-            return lllllllllllllllllIllIIllIIIllIlI;
+    public static double clamp(double d, double d2, double d3) {
+        if (d < d2) {
+            return d2;
         }
-        if (lllllllllllllllllIllIIllIIIllIII > lllllllllllllllllIllIIllIIIlIllI) {
-            return lllllllllllllllllIllIIllIIIlIllI;
+        if (d > d3) {
+            return d3;
         }
-        return lllllllllllllllllIllIIllIIIllIII;
+        return d;
     }
 
-    public static String getButtonName(int lllllllllllllllllIllIIllIllIllll) {
-        switch (lllllllllllllllllIllIIllIllIllll) {
+    public static String getButtonName(int n) {
+        switch (n) {
             case -1: {
                 return "Unknown";
             }
@@ -440,55 +444,51 @@ public class Utils {
                 return "Mouse Middle";
             }
         }
-        return String.valueOf(new StringBuilder().append("Mouse ").append(lllllllllllllllllIllIIllIllIllll));
+        return String.valueOf(new StringBuilder().append("Mouse ").append(n));
     }
 
-    public static String floatToString(float lllllllllllllllllIllIIllIIllIlIl) {
-        if (lllllllllllllllllIllIIllIIllIlIl % 1.0f == 0.0f) {
-            return Integer.toString((int)lllllllllllllllllIllIIllIIllIlIl);
+    public static String floatToString(float f) {
+        if (f % 1.0f == 0.0f) {
+            return Integer.toString((int)f);
         }
-        return Float.toString(lllllllllllllllllIllIIllIIllIlIl);
+        return Float.toString(f);
     }
 
-    public static long packLong(int lllllllllllllllllIllIIllIIIIIIlI, int lllllllllllllllllIllIIlIllllllIl, int lllllllllllllllllIllIIlIllllllII, int lllllllllllllllllIllIIlIllllllll) {
-        return ((long)lllllllllllllllllIllIIllIIIIIIlI << 48) + ((long)lllllllllllllllllIllIIlIllllllIl << 32) + ((long)lllllllllllllllllIllIIlIllllllII << 16) + (long)lllllllllllllllllIllIIlIllllllll;
+    public static long packLong(int n, int n2, int n3, int n4) {
+        return ((long)n << 48) + ((long)n2 << 32) + ((long)n3 << 16) + (long)n4;
     }
 
-    public static double distanceToCamera(double lllllllllllllllllIllIIllIlIllIIl, double lllllllllllllllllIllIIllIlIlIlII, double lllllllllllllllllIllIIllIlIlIlll) {
-        class_4184 lllllllllllllllllIllIIllIlIlIllI = Utils.mc.field_1773.method_19418();
-        return Math.sqrt(lllllllllllllllllIllIIllIlIlIllI.method_19326().method_1028(lllllllllllllllllIllIIllIlIllIIl, lllllllllllllllllIllIIllIlIlIlII, lllllllllllllllllIllIIllIlIlIlll));
+    public static double distanceToCamera(double d, double d2, double d3) {
+        class_4184 class_41842 = Utils.mc.field_1773.method_19418();
+        return Math.sqrt(class_41842.method_19326().method_1028(d, d2, d3));
     }
 
-    public static double squaredDistance(double lllllllllllllllllIllIIlllIlIIIIl, double lllllllllllllllllIllIIlllIIlllll, double lllllllllllllllllIllIIlllIlIlIII, double lllllllllllllllllIllIIlllIIlllIl, double lllllllllllllllllIllIIlllIIlllII, double lllllllllllllllllIllIIlllIIllIll) {
-        double lllllllllllllllllIllIIlllIlIIlII = lllllllllllllllllIllIIlllIIlllIl - lllllllllllllllllIllIIlllIlIIIIl;
-        double lllllllllllllllllIllIIlllIlIIIll = lllllllllllllllllIllIIlllIIlllII - lllllllllllllllllIllIIlllIIlllll;
-        double lllllllllllllllllIllIIlllIlIIIlI = lllllllllllllllllIllIIlllIIllIll - lllllllllllllllllIllIIlllIlIlIII;
-        return lllllllllllllllllIllIIlllIlIIlII * lllllllllllllllllIllIIlllIlIIlII + lllllllllllllllllIllIIlllIlIIIll * lllllllllllllllllIllIIlllIlIIIll + lllllllllllllllllIllIIlllIlIIIlI * lllllllllllllllllIllIIlllIlIIIlI;
+    public static double squaredDistance(double d, double d2, double d3, double d4, double d5, double d6) {
+        double d7 = d4 - d;
+        double d8 = d5 - d2;
+        double d9 = d6 - d3;
+        return d7 * d7 + d8 * d8 + d9 * d9;
     }
 
-    private static /* synthetic */ void lambda$createStatusEffectMap$0(Object2IntMap lllllllllllllllllIllIIlIlllIllII, class_1291 lllllllllllllllllIllIIlIlllIlIll) {
-        lllllllllllllllllIllIIlIlllIllII.put((Object)lllllllllllllllllIllIIlIlllIlIll, 0);
-    }
-
-    public Utils() {
-        Utils lllllllllllllllllIllIIlllllIIllI;
+    private static void lambda$createStatusEffectMap$0(Object2IntMap object2IntMap, class_1291 class_12912) {
+        object2IntMap.put((Object)class_12912, 0);
     }
 
     public static String getWorldName() {
         if (mc.method_1542()) {
-            File lllllllllllllllllIllIIllIlllllII = ((MinecraftServerAccessor)mc.method_1576()).getSession().method_27424(Utils.mc.field_1687.method_27983());
-            if (lllllllllllllllllIllIIllIlllllII.toPath().relativize(Utils.mc.field_1697.toPath()).getNameCount() != 2) {
-                lllllllllllllllllIllIIllIlllllII = lllllllllllllllllIllIIllIlllllII.getParentFile();
+            File file = ((MinecraftServerAccessor)mc.method_1576()).getSession().method_27424(Utils.mc.field_1687.method_27983());
+            if (file.toPath().relativize(Utils.mc.field_1697.toPath()).getNameCount() != 2) {
+                file = file.getParentFile();
             }
-            return lllllllllllllllllIllIIllIlllllII.getName();
+            return file.getName();
         }
         if (mc.method_1558() != null) {
-            String lllllllllllllllllIllIIllIllllIll;
-            String string = lllllllllllllllllIllIIllIllllIll = mc.method_1589() ? "realms" : Utils.mc.method_1558().field_3761;
+            String string;
+            String string2 = string = mc.method_1589() ? "realms" : Utils.mc.method_1558().field_3761;
             if (SystemUtils.IS_OS_WINDOWS) {
-                lllllllllllllllllIllIIllIllllIll = lllllllllllllllllIllIIllIllllIll.replace(":", "_");
+                string = string.replace(":", "_");
             }
-            return lllllllllllllllllIllIIllIllllIll;
+            return string;
         }
         return "";
     }
@@ -503,67 +503,67 @@ public class Utils {
         firstTimeTitleScreen = true;
         df = new DecimalFormat("0");
         df.setMaximumFractionDigits(340);
-        DecimalFormatSymbols lllllllllllllllllIllIIlIlllIIlll = new DecimalFormatSymbols();
-        lllllllllllllllllIllIIlIlllIIlll.setDecimalSeparator('.');
-        df.setDecimalFormatSymbols(lllllllllllllllllIllIIlIlllIIlll);
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+        decimalFormatSymbols.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(decimalFormatSymbols);
     }
 
     public static void addMeteorPvpToServerList() {
-        class_641 lllllllllllllllllIllIIllllIllllI = new class_641(mc);
-        lllllllllllllllllIllIIllllIllllI.method_2981();
-        boolean lllllllllllllllllIllIIllllIlllIl = false;
-        for (int lllllllllllllllllIllIIllllIlllll = 0; lllllllllllllllllIllIIllllIlllll < lllllllllllllllllIllIIllllIllllI.method_2984(); ++lllllllllllllllllIllIIllllIlllll) {
-            class_642 lllllllllllllllllIllIIlllllIIIII = lllllllllllllllllIllIIllllIllllI.method_2982(lllllllllllllllllIllIIllllIlllll);
-            if (!lllllllllllllllllIllIIlllllIIIII.field_3761.contains("pvp.meteorclient.com")) continue;
-            lllllllllllllllllIllIIllllIlllIl = true;
+        class_641 class_6412 = new class_641(mc);
+        class_6412.method_2981();
+        boolean bl = false;
+        for (int i = 0; i < class_6412.method_2984(); ++i) {
+            class_642 class_6422 = class_6412.method_2982(i);
+            if (!class_6422.field_3761.contains("pvp.meteorclient.com")) continue;
+            bl = true;
             break;
         }
-        if (!lllllllllllllllllIllIIllllIlllIl) {
-            lllllllllllllllllIllIIllllIllllI.method_2988(new class_642("Meteor Pvp", "pvp.meteorclient.com", false));
-            lllllllllllllllllIllIIllllIllllI.method_2987();
+        if (!bl) {
+            class_6412.method_2988(new class_642("Meteor Pvp", "pvp.meteorclient.com", false));
+            class_6412.method_2987();
         }
     }
 
-    public static double random(double lllllllllllllllllIllIIllIlIIIllI, double lllllllllllllllllIllIIllIlIIIIll) {
-        return lllllllllllllllllIllIIllIlIIIllI + (lllllllllllllllllIllIIllIlIIIIll - lllllllllllllllllIllIIllIlIIIllI) * random.nextDouble();
+    public static double random(double d, double d2) {
+        return d + (d2 - d) * random.nextDouble();
     }
 
     public static int getRenderDistance() {
         return Math.max(Utils.mc.field_1690.field_1870, ((ClientPlayNetworkHandlerAccessor)mc.method_1562()).getChunkLoadDistance());
     }
 
-    public static String nameToTitle(String lllllllllllllllllIllIIllIllllIII) {
-        return Arrays.stream(lllllllllllllllllIllIIllIllllIII.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+    public static String nameToTitle(String string) {
+        return Arrays.stream(string.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
     }
 
-    public static int unpackLong1(long lllllllllllllllllIllIIlIlllllIII) {
-        return (int)(lllllllllllllllllIllIIlIlllllIII >> 48 & 0xFFFFL);
+    public static int unpackLong1(long l) {
+        return (int)(l >> 48 & 0xFFFFL);
     }
 
-    public static int unpackLong3(long lllllllllllllllllIllIIlIllllIIll) {
-        return (int)(lllllllllllllllllIllIIlIllllIIll >> 16 & 0xFFFFL);
+    public static int unpackLong3(long l) {
+        return (int)(l >> 16 & 0xFFFFL);
     }
 
     public static int getWindowWidth() {
         return mc.method_22683().method_4489();
     }
 
-    public static int random(int lllllllllllllllllIllIIllIlIIllII, int lllllllllllllllllIllIIllIlIIlIIl) {
-        return random.nextInt(lllllllllllllllllIllIIllIlIIlIIl - lllllllllllllllllIllIIllIlIIllII) + lllllllllllllllllIllIIllIlIIllII;
+    public static int random(int n, int n2) {
+        return random.nextInt(n2 - n) + n;
     }
 
-    public static void sendMessage(String lllllllllllllllllIllIIllIIlllllI, Object ... lllllllllllllllllIllIIllIIllllIl) {
+    public static void sendMessage(String string, Object ... arrobject) {
         if (Utils.mc.field_1724 == null) {
             return;
         }
-        lllllllllllllllllIllIIllIIlllllI = String.format(lllllllllllllllllIllIIllIIlllllI, lllllllllllllllllIllIIllIIllllIl);
-        lllllllllllllllllIllIIllIIlllllI = lllllllllllllllllIllIIllIIlllllI.replaceAll("#yellow", class_124.field_1054.toString());
-        lllllllllllllllllIllIIllIIlllllI = lllllllllllllllllIllIIllIIlllllI.replaceAll("#white", class_124.field_1068.toString());
-        lllllllllllllllllIllIIllIIlllllI = lllllllllllllllllIllIIllIIlllllI.replaceAll("#red", class_124.field_1061.toString());
-        lllllllllllllllllIllIIllIIlllllI = lllllllllllllllllIllIIllIIlllllI.replaceAll("#blue", class_124.field_1078.toString());
-        lllllllllllllllllIllIIllIIlllllI = lllllllllllllllllIllIIllIIlllllI.replaceAll("#pink", class_124.field_1076.toString());
-        lllllllllllllllllIllIIllIIlllllI = lllllllllllllllllIllIIllIIlllllI.replaceAll("#gray", class_124.field_1080.toString());
-        Utils.mc.field_1724.method_7353((class_2561)new class_2585(lllllllllllllllllIllIIllIIlllllI), false);
+        string = String.format(string, arrobject);
+        string = string.replaceAll("#yellow", class_124.field_1054.toString());
+        string = string.replaceAll("#white", class_124.field_1068.toString());
+        string = string.replaceAll("#red", class_124.field_1061.toString());
+        string = string.replaceAll("#blue", class_124.field_1078.toString());
+        string = string.replaceAll("#pink", class_124.field_1076.toString());
+        string = string.replaceAll("#gray", class_124.field_1080.toString());
+        Utils.mc.field_1724.method_7353((class_2561)new class_2585(string), false);
     }
 
     public static boolean isWhitelistedScreen() {

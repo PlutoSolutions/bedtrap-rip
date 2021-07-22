@@ -25,127 +25,129 @@ import net.minecraft.class_1657;
 import net.minecraft.class_1934;
 
 public class TargetUtils {
-    private static final /* synthetic */ List<class_1297> ENTITIES;
+    private static final List<class_1297> ENTITIES = new ArrayList<class_1297>();
 
-    private static int sortHealth(class_1297 llllllllllllllllIlIllllIIlIllIlI, class_1297 llllllllllllllllIlIllllIIlIlIlIl) {
-        boolean llllllllllllllllIlIllllIIlIllIII = llllllllllllllllIlIllllIIlIllIlI instanceof class_1309;
-        boolean llllllllllllllllIlIllllIIlIlIlll = llllllllllllllllIlIllllIIlIlIlIl instanceof class_1309;
-        if (!llllllllllllllllIlIllllIIlIllIII && !llllllllllllllllIlIllllIIlIlIlll) {
+    private static int sortHealth(class_1297 class_12972, class_1297 class_12973) {
+        boolean bl = class_12972 instanceof class_1309;
+        boolean bl2 = class_12973 instanceof class_1309;
+        if (!bl && !bl2) {
             return 0;
         }
-        if (llllllllllllllllIlIllllIIlIllIII && !llllllllllllllllIlIllllIIlIlIlll) {
+        if (bl && !bl2) {
             return 1;
         }
-        if (!llllllllllllllllIlIllllIIlIllIII) {
+        if (!bl) {
             return -1;
         }
-        return Float.compare(((class_1309)llllllllllllllllIlIllllIIlIllIlI).method_6032(), ((class_1309)llllllllllllllllIlIllllIIlIlIlIl).method_6032());
+        return Float.compare(((class_1309)class_12972).method_6032(), ((class_1309)class_12973).method_6032());
     }
 
-    public static boolean isBadTarget(class_1657 llllllllllllllllIlIllllIIllIlIll, double llllllllllllllllIlIllllIIllIlIII) {
-        if (llllllllllllllllIlIllllIIllIlIll == null) {
+    public static boolean isBadTarget(class_1657 class_16572, double d) {
+        if (class_16572 == null) {
             return true;
         }
-        return (double)Utils.mc.field_1724.method_5739((class_1297)llllllllllllllllIlIllllIIllIlIll) > llllllllllllllllIlIllllIIllIlIII || !llllllllllllllllIlIllllIIllIlIll.method_5805() || llllllllllllllllIlIllllIIllIlIll.method_29504() || llllllllllllllllIlIllllIIllIlIll.method_6032() <= 0.0f;
+        return (double)Utils.mc.field_1724.method_5739((class_1297)class_16572) > d || !class_16572.method_5805() || class_16572.method_29504() || class_16572.method_6032() <= 0.0f;
     }
 
-    public TargetUtils() {
-        TargetUtils llllllllllllllllIlIllllIlIIIllIl;
+    private static int lambda$getList$0(SortPriority sortPriority, class_1297 class_12972, class_1297 class_12973) {
+        return TargetUtils.sort(class_12972, class_12973, sortPriority);
     }
 
-    private static int sort(class_1297 llllllllllllllllIlIllllIIllIIIIl, class_1297 llllllllllllllllIlIllllIIllIIIII, SortPriority llllllllllllllllIlIllllIIllIIIlI) {
-        switch (llllllllllllllllIlIllllIIllIIIlI) {
-            case LowestDistance: {
-                return Double.compare(llllllllllllllllIlIllllIIllIIIIl.method_5739((class_1297)Utils.mc.field_1724), llllllllllllllllIlIllllIIllIIIII.method_5739((class_1297)Utils.mc.field_1724));
+    private static int sort(class_1297 class_12972, class_1297 class_12973, SortPriority sortPriority) {
+        switch (1.$SwitchMap$minegame159$meteorclient$utils$entity$SortPriority[sortPriority.ordinal()]) {
+            case 1: {
+                return Double.compare(class_12972.method_5739((class_1297)Utils.mc.field_1724), class_12973.method_5739((class_1297)Utils.mc.field_1724));
             }
-            case HighestDistance: {
-                return TargetUtils.invertSort(Double.compare(llllllllllllllllIlIllllIIllIIIIl.method_5739((class_1297)Utils.mc.field_1724), llllllllllllllllIlIllllIIllIIIII.method_5739((class_1297)Utils.mc.field_1724)));
+            case 2: {
+                return TargetUtils.invertSort(Double.compare(class_12972.method_5739((class_1297)Utils.mc.field_1724), class_12973.method_5739((class_1297)Utils.mc.field_1724)));
             }
-            case LowestHealth: {
-                return TargetUtils.sortHealth(llllllllllllllllIlIllllIIllIIIIl, llllllllllllllllIlIllllIIllIIIII);
+            case 3: {
+                return TargetUtils.sortHealth(class_12972, class_12973);
             }
-            case HighestHealth: {
-                return TargetUtils.invertSort(TargetUtils.sortHealth(llllllllllllllllIlIllllIIllIIIIl, llllllllllllllllIlIllllIIllIIIII));
+            case 4: {
+                return TargetUtils.invertSort(TargetUtils.sortHealth(class_12972, class_12973));
             }
-            case ClosestAngle: {
-                return TargetUtils.sortAngle(llllllllllllllllIlIllllIIllIIIIl, llllllllllllllllIlIllllIIllIIIII);
+            case 5: {
+                return TargetUtils.sortAngle(class_12972, class_12973);
             }
         }
         return 0;
     }
 
-    private static int invertSort(int llllllllllllllllIlIllllIIIlllIII) {
-        if (llllllllllllllllIlIllllIIIlllIII == 0) {
+    private static int invertSort(int n) {
+        if (n == 0) {
             return 0;
         }
-        return llllllllllllllllIlIllllIIIlllIII > 0 ? -1 : 1;
+        return n > 0 ? -1 : 1;
     }
 
-    static {
-        ENTITIES = new ArrayList<class_1297>();
+    private static boolean lambda$getList$1(List list, int n, class_1297 class_12972) {
+        return list.indexOf((Object)class_12972) > n - 1;
     }
 
-    public static void getList(List<class_1297> llllllllllllllllIlIllllIIllllIIl, Predicate<class_1297> llllllllllllllllIlIllllIIllllIII, SortPriority llllllllllllllllIlIllllIIllllIll, int llllllllllllllllIlIllllIIlllIllI) {
-        llllllllllllllllIlIllllIIllllIIl.clear();
+    private static boolean lambda$getPlayerTarget$2(double d, class_1297 class_12972) {
+        if (!(class_12972 instanceof class_1657) || class_12972 == Utils.mc.field_1724) {
+            return false;
+        }
+        if (((class_1657)class_12972).method_29504() || ((class_1657)class_12972).method_6032() <= 0.0f) {
+            return false;
+        }
+        if ((double)Utils.mc.field_1724.method_5739(class_12972) > d) {
+            return false;
+        }
+        if (!Friends.get().shouldAttack((class_1657)class_12972)) {
+            return false;
+        }
+        return EntityUtils.getGameMode((class_1657)class_12972) == class_1934.field_9215 || class_12972 instanceof FakePlayerEntity;
+    }
+
+    public static void getList(List<class_1297> list, Predicate<class_1297> predicate, SortPriority sortPriority, int n) {
+        list.clear();
         for (class_1297 class_12972 : Utils.mc.field_1687.method_18112()) {
-            if (!llllllllllllllllIlIllllIIllllIII.test(class_12972)) continue;
-            llllllllllllllllIlIllllIIllllIIl.add(class_12972);
+            if (!predicate.test(class_12972)) continue;
+            list.add(class_12972);
         }
-        for (class_1297 class_12973 : FakePlayerManager.getPlayers()) {
-            if (!llllllllllllllllIlIllllIIllllIII.test(class_12973)) continue;
-            llllllllllllllllIlIllllIIllllIIl.add(class_12973);
+        for (class_1297 class_12972 : FakePlayerManager.getPlayers()) {
+            if (!predicate.test(class_12972)) continue;
+            list.add(class_12972);
         }
-        llllllllllllllllIlIllllIIllllIIl.sort((llllllllllllllllIlIllllIIIlIIIIl, llllllllllllllllIlIllllIIIlIIIll) -> TargetUtils.sort(llllllllllllllllIlIllllIIIlIIIIl, llllllllllllllllIlIllllIIIlIIIll, llllllllllllllllIlIllllIIllllIll));
-        llllllllllllllllIlIllllIIllllIIl.removeIf(llllllllllllllllIlIllllIIIlIllII -> llllllllllllllllIlIllllIIllllIIl.indexOf(llllllllllllllllIlIllllIIIlIllII) > llllllllllllllllIlIllllIIlllIllI - 1);
+        list.sort((arg_0, arg_1) -> TargetUtils.lambda$getList$0(sortPriority, arg_0, arg_1));
+        list.removeIf(arg_0 -> TargetUtils.lambda$getList$1(list, n, arg_0));
     }
 
-    private static int sortAngle(class_1297 llllllllllllllllIlIllllIIlIIlIlI, class_1297 llllllllllllllllIlIllllIIlIIIIIl) {
-        boolean llllllllllllllllIlIllllIIlIIlIII = llllllllllllllllIlIllllIIlIIlIlI instanceof class_1309;
-        boolean llllllllllllllllIlIllllIIlIIIlll = llllllllllllllllIlIllllIIlIIIIIl instanceof class_1309;
-        if (!llllllllllllllllIlIllllIIlIIlIII && !llllllllllllllllIlIllllIIlIIIlll) {
+    private static int sortAngle(class_1297 class_12972, class_1297 class_12973) {
+        boolean bl = class_12972 instanceof class_1309;
+        boolean bl2 = class_12973 instanceof class_1309;
+        if (!bl && !bl2) {
             return 0;
         }
-        if (llllllllllllllllIlIllllIIlIIlIII && !llllllllllllllllIlIllllIIlIIIlll) {
+        if (bl && !bl2) {
             return 1;
         }
-        if (!llllllllllllllllIlIllllIIlIIlIII) {
+        if (!bl) {
             return -1;
         }
-        double llllllllllllllllIlIllllIIlIIIllI = Math.abs(Rotations.getYaw(llllllllllllllllIlIllllIIlIIlIlI) - (double)Utils.mc.field_1724.field_6031);
-        double llllllllllllllllIlIllllIIlIIIlIl = Math.abs(Rotations.getYaw(llllllllllllllllIlIllllIIlIIIIIl) - (double)Utils.mc.field_1724.field_6031);
-        double llllllllllllllllIlIllllIIlIIIlII = Math.abs(Rotations.getPitch(llllllllllllllllIlIllllIIlIIlIlI) - (double)Utils.mc.field_1724.field_5965);
-        double llllllllllllllllIlIllllIIlIIIIll = Math.abs(Rotations.getPitch(llllllllllllllllIlIllllIIlIIIIIl) - (double)Utils.mc.field_1724.field_5965);
-        return Double.compare(Math.sqrt(llllllllllllllllIlIllllIIlIIIllI * llllllllllllllllIlIllllIIlIIIllI + llllllllllllllllIlIllllIIlIIIlII * llllllllllllllllIlIllllIIlIIIlII), Math.sqrt(llllllllllllllllIlIllllIIlIIIlIl * llllllllllllllllIlIllllIIlIIIlIl + llllllllllllllllIlIllllIIlIIIIll * llllllllllllllllIlIllllIIlIIIIll));
+        double d = Math.abs(Rotations.getYaw(class_12972) - (double)Utils.mc.field_1724.field_6031);
+        double d2 = Math.abs(Rotations.getYaw(class_12973) - (double)Utils.mc.field_1724.field_6031);
+        double d3 = Math.abs(Rotations.getPitch(class_12972) - (double)Utils.mc.field_1724.field_5965);
+        double d4 = Math.abs(Rotations.getPitch(class_12973) - (double)Utils.mc.field_1724.field_5965);
+        return Double.compare(Math.sqrt(d * d + d3 * d3), Math.sqrt(d2 * d2 + d4 * d4));
     }
 
-    public static class_1297 get(Predicate<class_1297> llllllllllllllllIlIllllIlIIIIlll, SortPriority llllllllllllllllIlIllllIlIIIIllI) {
+    public static class_1297 get(Predicate<class_1297> predicate, SortPriority sortPriority) {
         ENTITIES.clear();
-        TargetUtils.getList(ENTITIES, llllllllllllllllIlIllllIlIIIIlll, llllllllllllllllIlIllllIlIIIIllI, 1);
+        TargetUtils.getList(ENTITIES, predicate, sortPriority, 1);
         if (!ENTITIES.isEmpty()) {
             return ENTITIES.get(0);
         }
         return null;
     }
 
-    public static class_1657 getPlayerTarget(double llllllllllllllllIlIllllIIllIllll, SortPriority llllllllllllllllIlIllllIIlllIIII) {
+    public static class_1657 getPlayerTarget(double d, SortPriority sortPriority) {
         if (!Utils.canUpdate()) {
             return null;
         }
-        return (class_1657)TargetUtils.get(llllllllllllllllIlIllllIIIllIlII -> {
-            if (!(llllllllllllllllIlIllllIIIllIlII instanceof class_1657) || llllllllllllllllIlIllllIIIllIlII == Utils.mc.field_1724) {
-                return false;
-            }
-            if (((class_1657)llllllllllllllllIlIllllIIIllIlII).method_29504() || ((class_1657)llllllllllllllllIlIllllIIIllIlII).method_6032() <= 0.0f) {
-                return false;
-            }
-            if ((double)Utils.mc.field_1724.method_5739(llllllllllllllllIlIllllIIIllIlII) > llllllllllllllllIlIllllIIllIllll) {
-                return false;
-            }
-            if (!Friends.get().shouldAttack((class_1657)llllllllllllllllIlIllllIIIllIlII)) {
-                return false;
-            }
-            return EntityUtils.getGameMode((class_1657)llllllllllllllllIlIllllIIIllIlII) == class_1934.field_9215 || llllllllllllllllIlIllllIIIllIlII instanceof FakePlayerEntity;
-        }, llllllllllllllllIlIllllIIlllIIII);
+        return (class_1657)TargetUtils.get(arg_0 -> TargetUtils.lambda$getPlayerTarget$2(d, arg_0), sortPriority);
     }
 }
 

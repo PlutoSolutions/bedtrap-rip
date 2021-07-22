@@ -12,41 +12,37 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class AccountUtils {
-    public static void setCheckUrl(YggdrasilMinecraftSessionService llllllllllllllllIlIlllIllIlllIIl, String llllllllllllllllIlIlllIllIlllIII) {
+    public static void setCheckUrl(YggdrasilMinecraftSessionService yggdrasilMinecraftSessionService, String string) {
         try {
-            Field llllllllllllllllIlIlllIllIllllIl = llllllllllllllllIlIlllIllIlllIIl.getClass().getDeclaredField("checkUrl");
-            llllllllllllllllIlIlllIllIllllIl.setAccessible(true);
-            llllllllllllllllIlIlllIllIllllIl.set((Object)llllllllllllllllIlIlllIllIlllIIl, new URL(llllllllllllllllIlIlllIllIlllIII));
+            Field field = yggdrasilMinecraftSessionService.getClass().getDeclaredField("checkUrl");
+            field.setAccessible(true);
+            field.set((Object)yggdrasilMinecraftSessionService, new URL(string));
         }
-        catch (IllegalAccessException | NoSuchFieldException | MalformedURLException llllllllllllllllIlIlllIllIllllII) {
-            llllllllllllllllIlIlllIllIllllII.printStackTrace();
+        catch (IllegalAccessException | NoSuchFieldException | MalformedURLException exception) {
+            exception.printStackTrace();
         }
     }
 
-    public static void setBaseUrl(YggdrasilMinecraftSessionService llllllllllllllllIlIlllIlllIIllll, String llllllllllllllllIlIlllIlllIIllII) {
+    public static void setBaseUrl(YggdrasilMinecraftSessionService yggdrasilMinecraftSessionService, String string) {
         try {
-            Field llllllllllllllllIlIlllIlllIlIIIl = llllllllllllllllIlIlllIlllIIllll.getClass().getDeclaredField("baseUrl");
-            llllllllllllllllIlIlllIlllIlIIIl.setAccessible(true);
-            llllllllllllllllIlIlllIlllIlIIIl.set((Object)llllllllllllllllIlIlllIlllIIllll, llllllllllllllllIlIlllIlllIIllII);
+            Field field = yggdrasilMinecraftSessionService.getClass().getDeclaredField("baseUrl");
+            field.setAccessible(true);
+            field.set((Object)yggdrasilMinecraftSessionService, string);
         }
-        catch (IllegalAccessException | NoSuchFieldException llllllllllllllllIlIlllIlllIlIIII) {
-            llllllllllllllllIlIlllIlllIlIIII.printStackTrace();
+        catch (IllegalAccessException | NoSuchFieldException reflectiveOperationException) {
+            reflectiveOperationException.printStackTrace();
         }
     }
 
-    public static void setJoinUrl(YggdrasilMinecraftSessionService llllllllllllllllIlIlllIlllIIIIll, String llllllllllllllllIlIlllIlllIIIIlI) {
+    public static void setJoinUrl(YggdrasilMinecraftSessionService yggdrasilMinecraftSessionService, String string) {
         try {
-            Field llllllllllllllllIlIlllIlllIIIlll = llllllllllllllllIlIlllIlllIIIIll.getClass().getDeclaredField("joinUrl");
-            llllllllllllllllIlIlllIlllIIIlll.setAccessible(true);
-            llllllllllllllllIlIlllIlllIIIlll.set((Object)llllllllllllllllIlIlllIlllIIIIll, new URL(llllllllllllllllIlIlllIlllIIIIlI));
+            Field field = yggdrasilMinecraftSessionService.getClass().getDeclaredField("joinUrl");
+            field.setAccessible(true);
+            field.set((Object)yggdrasilMinecraftSessionService, new URL(string));
         }
-        catch (IllegalAccessException | NoSuchFieldException | MalformedURLException llllllllllllllllIlIlllIlllIIIllI) {
-            llllllllllllllllIlIlllIlllIIIllI.printStackTrace();
+        catch (IllegalAccessException | NoSuchFieldException | MalformedURLException exception) {
+            exception.printStackTrace();
         }
-    }
-
-    public AccountUtils() {
-        AccountUtils llllllllllllllllIlIlllIlllIlIllI;
     }
 }
 

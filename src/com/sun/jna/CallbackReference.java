@@ -34,7 +34,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -42,319 +41,334 @@ import java.util.WeakHashMap;
 
 public class CallbackReference
 extends WeakReference<Callback> {
-    /* synthetic */ CallbackProxy proxy;
-    private static final /* synthetic */ Map<Callback, CallbackThreadInitializer> initializers;
-    static final /* synthetic */ Map<Object, Object> allocations;
-    /* synthetic */ int callingConvention;
-    static final /* synthetic */ Map<Callback, CallbackReference> directCallbackMap;
-    static final /* synthetic */ Map<Pointer, Reference<Callback>> pointerCallbackMap;
-    /* synthetic */ Pointer trampoline;
-    private static final /* synthetic */ Map<CallbackReference, Reference<CallbackReference>> allocatedMemory;
-    /* synthetic */ Pointer cbstruct;
-    static final /* synthetic */ Map<Callback, CallbackReference> callbackMap;
-    private static final /* synthetic */ Method PROXY_CALLBACK_METHOD;
-    /* synthetic */ Method method;
+    CallbackProxy proxy;
+    private static final Map<Callback, CallbackThreadInitializer> initializers;
+    static final Map<Object, Object> allocations;
+    int callingConvention;
+    static final Map<Callback, CallbackReference> directCallbackMap;
+    static final Map<Pointer, Reference<Callback>> pointerCallbackMap;
+    Pointer trampoline;
+    private static final Map<CallbackReference, Reference<CallbackReference>> allocatedMemory;
+    Pointer cbstruct;
+    static final Map<Callback, CallbackReference> callbackMap;
+    private static final Method PROXY_CALLBACK_METHOD;
+    Method method;
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    private static ThreadGroup initializeThread(Callback lllllllllllllllllIIllllIIIllIlIl, AttachOptions lllllllllllllllllIIllllIIIllIlII) {
-        CallbackThreadInitializer lllllllllllllllllIIllllIIIllIIll = null;
-        if (lllllllllllllllllIIllllIIIllIlIl instanceof DefaultCallbackProxy) {
-            lllllllllllllllllIIllllIIIllIlIl = ((DefaultCallbackProxy)lllllllllllllllllIIllllIIIllIlIl).getCallback();
+    private static ThreadGroup initializeThread(Callback callback, AttachOptions attachOptions) {
+        CallbackThreadInitializer callbackThreadInitializer = null;
+        if (callback instanceof DefaultCallbackProxy) {
+            callback = ((DefaultCallbackProxy)callback).getCallback();
         }
-        Map<Callback, CallbackThreadInitializer> lllllllllllllllllIIllllIIIlIlllI = initializers;
-        synchronized (lllllllllllllllllIIllllIIIlIlllI) {
-            lllllllllllllllllIIllllIIIllIIll = initializers.get(lllllllllllllllllIIllllIIIllIlIl);
+        Object object = initializers;
+        synchronized (object) {
+            callbackThreadInitializer = initializers.get(callback);
         }
-        ThreadGroup lllllllllllllllllIIllllIIIllIIlI = null;
-        if (lllllllllllllllllIIllllIIIllIIll != null) {
-            lllllllllllllllllIIllllIIIllIIlI = lllllllllllllllllIIllllIIIllIIll.getThreadGroup(lllllllllllllllllIIllllIIIllIlIl);
-            lllllllllllllllllIIllllIIIllIlII.name = lllllllllllllllllIIllllIIIllIIll.getName(lllllllllllllllllIIllllIIIllIlIl);
-            lllllllllllllllllIIllllIIIllIlII.daemon = lllllllllllllllllIIllllIIIllIIll.isDaemon(lllllllllllllllllIIllllIIIllIlIl);
-            lllllllllllllllllIIllllIIIllIlII.detach = lllllllllllllllllIIllllIIIllIIll.detach(lllllllllllllllllIIllllIIIllIlIl);
-            lllllllllllllllllIIllllIIIllIlII.write();
+        object = null;
+        if (callbackThreadInitializer != null) {
+            object = callbackThreadInitializer.getThreadGroup(callback);
+            attachOptions.name = callbackThreadInitializer.getName(callback);
+            attachOptions.daemon = callbackThreadInitializer.isDaemon(callback);
+            attachOptions.detach = callbackThreadInitializer.detach(callback);
+            attachOptions.write();
         }
-        return lllllllllllllllllIIllllIIIllIIlI;
+        return object;
     }
 
     static void disposeAll() {
-        LinkedList<CallbackReference> lllllllllllllllllIIlllIllIIlIIII = new LinkedList<CallbackReference>(allocatedMemory.keySet());
-        for (CallbackReference lllllllllllllllllIIlllIllIIlIIIl : lllllllllllllllllIIlllIllIIlIIII) {
-            lllllllllllllllllIIlllIllIIlIIIl.dispose();
+        LinkedList<CallbackReference> linkedList = new LinkedList<CallbackReference>(allocatedMemory.keySet());
+        for (CallbackReference callbackReference : linkedList) {
+            callbackReference.dispose();
         }
     }
 
     private Callback getCallback() {
-        CallbackReference lllllllllllllllllIIlllIllIIIlIll;
-        return (Callback)lllllllllllllllllIIlllIllIIIlIll.get();
+        return (Callback)this.get();
     }
 
-    private void setCallbackOptions(int lllllllllllllllllIIlllIllIlIIIII) {
-        CallbackReference lllllllllllllllllIIlllIllIlIIIll;
-        lllllllllllllllllIIlllIllIlIIIll.cbstruct.setInt(Pointer.SIZE, lllllllllllllllllIIlllIllIlIIIII);
+    private void setCallbackOptions(int n) {
+        this.cbstruct.setInt(Pointer.SIZE, n);
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    private static Callback getCallback(Class<?> lllllllllllllllllIIllllIIIIlIIlI, Pointer lllllllllllllllllIIllllIIIIlIlIl, boolean lllllllllllllllllIIllllIIIIlIIII) {
-        if (lllllllllllllllllIIllllIIIIlIlIl == null) {
+    private static Callback getCallback(Class<?> class_, Pointer pointer, boolean bl) {
+        if (pointer == null) {
             return null;
         }
-        if (!lllllllllllllllllIIllllIIIIlIIlI.isInterface()) {
+        if (!class_.isInterface()) {
             throw new IllegalArgumentException("Callback type must be an interface");
         }
-        Map<Callback, CallbackReference> lllllllllllllllllIIllllIIIIlIIll = lllllllllllllllllIIllllIIIIlIIII ? directCallbackMap : callbackMap;
-        Map<Pointer, Reference<Callback>> lllllllllllllllllIIllllIIIIIlllI = pointerCallbackMap;
-        synchronized (lllllllllllllllllIIllllIIIIIlllI) {
-            Callback lllllllllllllllllIIllllIIIIllIll = null;
-            Reference<Callback> lllllllllllllllllIIllllIIIIllIlI = pointerCallbackMap.get(lllllllllllllllllIIllllIIIIlIlIl);
-            if (lllllllllllllllllIIllllIIIIllIlI != null) {
-                lllllllllllllllllIIllllIIIIllIll = lllllllllllllllllIIllllIIIIllIlI.get();
-                if (lllllllllllllllllIIllllIIIIllIll != null && !lllllllllllllllllIIllllIIIIlIIlI.isAssignableFrom(lllllllllllllllllIIllllIIIIllIll.getClass())) {
-                    throw new IllegalStateException(String.valueOf(new StringBuilder().append("Pointer ").append(lllllllllllllllllIIllllIIIIlIlIl).append(" already mapped to ").append(lllllllllllllllllIIllllIIIIllIll).append(".\nNative code may be re-using a default function pointer, in which case you may need to use a common Callback class wherever the function pointer is reused.")));
+        Map<Callback, CallbackReference> map = bl ? directCallbackMap : callbackMap;
+        Map<Pointer, Reference<Callback>> map2 = pointerCallbackMap;
+        synchronized (map2) {
+            Callback callback = null;
+            Reference<Callback> reference = pointerCallbackMap.get(pointer);
+            if (reference != null) {
+                callback = reference.get();
+                if (callback != null && !class_.isAssignableFrom(callback.getClass())) {
+                    throw new IllegalStateException(String.valueOf(new StringBuilder().append("Pointer ").append(pointer).append(" already mapped to ").append(callback).append(".\nNative code may be re-using a default function pointer, in which case you may need to use a common Callback class wherever the function pointer is reused.")));
                 }
-                return lllllllllllllllllIIllllIIIIllIll;
+                return callback;
             }
-            int lllllllllllllllllIIllllIIIIllIIl = AltCallingConvention.class.isAssignableFrom(lllllllllllllllllIIllllIIIIlIIlI) ? 63 : 0;
-            HashMap<String, Object> lllllllllllllllllIIllllIIIIllIII = new HashMap<String, Object>(Native.getLibraryOptions(lllllllllllllllllIIllllIIIIlIIlI));
-            lllllllllllllllllIIllllIIIIllIII.put("invoking-method", CallbackReference.getCallbackMethod(lllllllllllllllllIIllllIIIIlIIlI));
-            NativeFunctionHandler lllllllllllllllllIIllllIIIIlIlll = new NativeFunctionHandler(lllllllllllllllllIIllllIIIIlIlIl, lllllllllllllllllIIllllIIIIllIIl, lllllllllllllllllIIllllIIIIllIII);
-            lllllllllllllllllIIllllIIIIllIll = (Callback)Proxy.newProxyInstance(lllllllllllllllllIIllllIIIIlIIlI.getClassLoader(), new Class[]{lllllllllllllllllIIllllIIIIlIIlI}, (InvocationHandler)lllllllllllllllllIIllllIIIIlIlll);
-            lllllllllllllllllIIllllIIIIlIIll.remove(lllllllllllllllllIIllllIIIIllIll);
-            pointerCallbackMap.put(lllllllllllllllllIIllllIIIIlIlIl, new WeakReference<Callback>(lllllllllllllllllIIllllIIIIllIll));
-            return lllllllllllllllllIIllllIIIIllIll;
+            int n = AltCallingConvention.class.isAssignableFrom(class_) ? 63 : 0;
+            HashMap<String, Object> hashMap = new HashMap<String, Object>(Native.getLibraryOptions(class_));
+            hashMap.put("invoking-method", CallbackReference.getCallbackMethod(class_));
+            NativeFunctionHandler nativeFunctionHandler = new NativeFunctionHandler(pointer, n, hashMap);
+            callback = (Callback)Proxy.newProxyInstance(class_.getClassLoader(), new Class[]{class_}, (InvocationHandler)nativeFunctionHandler);
+            map.remove(callback);
+            pointerCallbackMap.put(pointer, new WeakReference<Callback>(callback));
+            return callback;
         }
     }
 
     protected synchronized void dispose() {
-        CallbackReference lllllllllllllllllIIlllIllIIlIlll;
-        if (lllllllllllllllllIIlllIllIIlIlll.cbstruct != null) {
+        if (this.cbstruct != null) {
             try {
-                Native.freeNativeCallback(lllllllllllllllllIIlllIllIIlIlll.cbstruct.peer);
+                Native.freeNativeCallback(this.cbstruct.peer);
             }
             finally {
-                lllllllllllllllllIIlllIllIIlIlll.cbstruct.peer = 0L;
-                lllllllllllllllllIIlllIllIIlIlll.cbstruct = null;
-                allocatedMemory.remove(lllllllllllllllllIIlllIllIIlIlll);
+                this.cbstruct.peer = 0L;
+                this.cbstruct = null;
+                allocatedMemory.remove(this);
             }
         }
     }
 
-    private static Pointer getNativeString(Object lllllllllllllllllIIlllIlIllIIIII, boolean lllllllllllllllllIIlllIlIlIlllIl) {
-        if (lllllllllllllllllIIlllIlIllIIIII != null) {
-            NativeString lllllllllllllllllIIlllIlIllIIIIl = new NativeString(lllllllllllllllllIIlllIlIllIIIII.toString(), lllllllllllllllllIIlllIlIlIlllIl);
-            allocations.put(lllllllllllllllllIIlllIlIllIIIII, lllllllllllllllllIIlllIlIllIIIIl);
-            return lllllllllllllllllIIlllIlIllIIIIl.getPointer();
+    private static Pointer getNativeString(Object object, boolean bl) {
+        if (object != null) {
+            NativeString nativeString = new NativeString(object.toString(), bl);
+            allocations.put(object, nativeString);
+            return nativeString.getPointer();
         }
         return null;
     }
 
     protected void finalize() {
-        CallbackReference lllllllllllllllllIIlllIllIIllIlI;
-        lllllllllllllllllIIlllIllIIllIlI.dispose();
+        this.dispose();
     }
 
-    private static Method getCallbackMethod(Callback lllllllllllllllllIIlllIllIlllllI) {
-        return CallbackReference.getCallbackMethod(CallbackReference.findCallbackClass(lllllllllllllllllIIlllIllIlllllI.getClass()));
+    private static Method getCallbackMethod(Callback callback) {
+        return CallbackReference.getCallbackMethod(CallbackReference.findCallbackClass(callback.getClass()));
     }
 
-    private static Pointer getNativeFunctionPointer(Callback lllllllllllllllllIIlllIllIIIIllI) {
-        InvocationHandler lllllllllllllllllIIlllIllIIIIlll;
-        if (Proxy.isProxyClass(lllllllllllllllllIIlllIllIIIIllI.getClass()) && (lllllllllllllllllIIlllIllIIIIlll = Proxy.getInvocationHandler(lllllllllllllllllIIlllIllIIIIllI)) instanceof NativeFunctionHandler) {
-            return ((NativeFunctionHandler)lllllllllllllllllIIlllIllIIIIlll).getPointer();
+    private static Pointer getNativeFunctionPointer(Callback callback) {
+        InvocationHandler invocationHandler;
+        if (Proxy.isProxyClass(callback.getClass()) && (invocationHandler = Proxy.getInvocationHandler(callback)) instanceof NativeFunctionHandler) {
+            return ((NativeFunctionHandler)invocationHandler).getPointer();
         }
         return null;
     }
 
-    private CallbackReference(Callback lllllllllllllllllIIlllIllllIIIlI, int lllllllllllllllllIIlllIllllIIIIl, boolean lllllllllllllllllIIlllIllllIIIII) {
-        super(lllllllllllllllllIIlllIllllIIIlI);
-        CallbackReference lllllllllllllllllIIlllIllllIIIll;
-        TypeMapper lllllllllllllllllIIlllIllllIlIIl = Native.getTypeMapper(lllllllllllllllllIIlllIllllIIIlI.getClass());
-        lllllllllllllllllIIlllIllllIIIll.callingConvention = lllllllllllllllllIIlllIllllIIIIl;
-        boolean lllllllllllllllllIIlllIllllIIllI = Platform.isPPC();
-        if (lllllllllllllllllIIlllIllllIIIII) {
-            Method lllllllllllllllllIIlllIllllllIIl = CallbackReference.getCallbackMethod(lllllllllllllllllIIlllIllllIIIlI);
-            Class<?>[] lllllllllllllllllIIlllIllllllIII = lllllllllllllllllIIlllIllllllIIl.getParameterTypes();
-            for (int lllllllllllllllllIIlllIllllllIlI = 0; lllllllllllllllllIIlllIllllllIlI < lllllllllllllllllIIlllIllllllIII.length; ++lllllllllllllllllIIlllIllllllIlI) {
-                if (lllllllllllllllllIIlllIllllIIllI && (lllllllllllllllllIIlllIllllllIII[lllllllllllllllllIIlllIllllllIlI] == Float.TYPE || lllllllllllllllllIIlllIllllllIII[lllllllllllllllllIIlllIllllllIlI] == Double.TYPE)) {
-                    lllllllllllllllllIIlllIllllIIIII = false;
+    private CallbackReference(Callback callback, int n, boolean bl) {
+        super(callback);
+        Object object;
+        TypeMapper typeMapper = Native.getTypeMapper(callback.getClass());
+        this.callingConvention = n;
+        boolean bl2 = Platform.isPPC();
+        if (bl) {
+            object = CallbackReference.getCallbackMethod(callback);
+            Class<?>[] arrclass = ((Method)object).getParameterTypes();
+            for (int i = 0; i < arrclass.length; ++i) {
+                if (bl2 && (arrclass[i] == Float.TYPE || arrclass[i] == Double.TYPE)) {
+                    bl = false;
                     break;
                 }
-                if (lllllllllllllllllIIlllIllllIlIIl == null || lllllllllllllllllIIlllIllllIlIIl.getFromNativeConverter(lllllllllllllllllIIlllIllllllIII[lllllllllllllllllIIlllIllllllIlI]) == null) continue;
-                lllllllllllllllllIIlllIllllIIIII = false;
+                if (typeMapper == null || typeMapper.getFromNativeConverter(arrclass[i]) == null) continue;
+                bl = false;
                 break;
             }
-            if (lllllllllllllllllIIlllIllllIlIIl != null && lllllllllllllllllIIlllIllllIlIIl.getToNativeConverter(lllllllllllllllllIIlllIllllllIIl.getReturnType()) != null) {
-                lllllllllllllllllIIlllIllllIIIII = false;
+            if (typeMapper != null && typeMapper.getToNativeConverter(((Method)object).getReturnType()) != null) {
+                bl = false;
             }
         }
-        String lllllllllllllllllIIlllIllllIIlIl = Native.getStringEncoding(lllllllllllllllllIIlllIllllIIIlI.getClass());
-        long lllllllllllllllllIIlllIllllIIlII = 0L;
-        if (lllllllllllllllllIIlllIllllIIIII) {
-            lllllllllllllllllIIlllIllllIIIll.method = CallbackReference.getCallbackMethod(lllllllllllllllllIIlllIllllIIIlI);
-            Class<?>[] lllllllllllllllllIIlllIlllllIllI = lllllllllllllllllIIlllIllllIIIll.method.getParameterTypes();
-            Class<?> lllllllllllllllllIIlllIlllllIlIl = lllllllllllllllllIIlllIllllIIIll.method.getReturnType();
-            int lllllllllllllllllIIlllIlllllIlll = 1;
-            if (lllllllllllllllllIIlllIllllIIIlI instanceof DLLCallback) {
-                lllllllllllllllllIIlllIlllllIlll |= 2;
+        object = Native.getStringEncoding(callback.getClass());
+        long l = 0L;
+        if (bl) {
+            this.method = CallbackReference.getCallbackMethod(callback);
+            Class<?>[] arrclass = this.method.getParameterTypes();
+            Class<?> class_ = this.method.getReturnType();
+            int n2 = 1;
+            if (callback instanceof DLLCallback) {
+                n2 |= 2;
             }
-            lllllllllllllllllIIlllIllllIIlII = Native.createNativeCallback(lllllllllllllllllIIlllIllllIIIlI, lllllllllllllllllIIlllIllllIIIll.method, lllllllllllllllllIIlllIlllllIllI, lllllllllllllllllIIlllIlllllIlIl, lllllllllllllllllIIlllIllllIIIIl, lllllllllllllllllIIlllIlllllIlll, lllllllllllllllllIIlllIllllIIlIl);
+            l = Native.createNativeCallback(callback, this.method, arrclass, class_, n, n2, (String)object);
         } else {
-            lllllllllllllllllIIlllIllllIIIll.proxy = lllllllllllllllllIIlllIllllIIIlI instanceof CallbackProxy ? (CallbackProxy)lllllllllllllllllIIlllIllllIIIlI : lllllllllllllllllIIlllIllllIIIll.new DefaultCallbackProxy(CallbackReference.getCallbackMethod(lllllllllllllllllIIlllIllllIIIlI), lllllllllllllllllIIlllIllllIlIIl, lllllllllllllllllIIlllIllllIIlIl);
-            Class<?>[] lllllllllllllllllIIlllIllllIlIII = lllllllllllllllllIIlllIllllIIIll.proxy.getParameterTypes();
-            Class<?> lllllllllllllllllIIlllIllllIIlll = lllllllllllllllllIIlllIllllIIIll.proxy.getReturnType();
-            if (lllllllllllllllllIIlllIllllIlIIl != null) {
-                for (int lllllllllllllllllIIlllIlllllIIll = 0; lllllllllllllllllIIlllIlllllIIll < lllllllllllllllllIIlllIllllIlIII.length; ++lllllllllllllllllIIlllIlllllIIll) {
-                    FromNativeConverter lllllllllllllllllIIlllIlllllIlII = lllllllllllllllllIIlllIllllIlIIl.getFromNativeConverter(lllllllllllllllllIIlllIllllIlIII[lllllllllllllllllIIlllIlllllIIll]);
-                    if (lllllllllllllllllIIlllIlllllIlII == null) continue;
-                    lllllllllllllllllIIlllIllllIlIII[lllllllllllllllllIIlllIlllllIIll] = lllllllllllllllllIIlllIlllllIlII.nativeType();
+            int n3;
+            Object object2;
+            this.proxy = callback instanceof CallbackProxy ? (CallbackProxy)callback : new DefaultCallbackProxy(this, CallbackReference.getCallbackMethod(callback), typeMapper, (String)object);
+            Class<?>[] arrclass = this.proxy.getParameterTypes();
+            Class<?> class_ = this.proxy.getReturnType();
+            if (typeMapper != null) {
+                for (int i = 0; i < arrclass.length; ++i) {
+                    object2 = typeMapper.getFromNativeConverter(arrclass[i]);
+                    if (object2 == null) continue;
+                    arrclass[i] = object2.nativeType();
+                    if (null == null) continue;
+                    throw null;
                 }
-                ToNativeConverter lllllllllllllllllIIlllIlllllIIlI = lllllllllllllllllIIlllIllllIlIIl.getToNativeConverter(lllllllllllllllllIIlllIllllIIlll);
-                if (lllllllllllllllllIIlllIlllllIIlI != null) {
-                    lllllllllllllllllIIlllIllllIIlll = lllllllllllllllllIIlllIlllllIIlI.nativeType();
+                ToNativeConverter toNativeConverter = typeMapper.getToNativeConverter(class_);
+                if (toNativeConverter != null) {
+                    class_ = toNativeConverter.nativeType();
                 }
             }
-            for (int lllllllllllllllllIIlllIlllllIIII = 0; lllllllllllllllllIIlllIlllllIIII < lllllllllllllllllIIlllIllllIlIII.length; ++lllllllllllllllllIIlllIlllllIIII) {
-                lllllllllllllllllIIlllIllllIlIII[lllllllllllllllllIIlllIlllllIIII] = lllllllllllllllllIIlllIllllIIIll.getNativeType(lllllllllllllllllIIlllIllllIlIII[lllllllllllllllllIIlllIlllllIIII]);
-                if (CallbackReference.isAllowableNativeType(lllllllllllllllllIIlllIllllIlIII[lllllllllllllllllIIlllIlllllIIII])) continue;
-                String lllllllllllllllllIIlllIlllllIIIl = String.valueOf(new StringBuilder().append("Callback argument ").append(lllllllllllllllllIIlllIllllIlIII[lllllllllllllllllIIlllIlllllIIII]).append(" requires custom type conversion"));
-                throw new IllegalArgumentException(lllllllllllllllllIIlllIlllllIIIl);
+            for (n3 = 0; n3 < arrclass.length; ++n3) {
+                arrclass[n3] = this.getNativeType(arrclass[n3]);
+                if (CallbackReference.isAllowableNativeType(arrclass[n3])) continue;
+                object2 = String.valueOf(new StringBuilder().append("Callback argument ").append(arrclass[n3]).append(" requires custom type conversion"));
+                throw new IllegalArgumentException((String)object2);
             }
-            if (!CallbackReference.isAllowableNativeType(lllllllllllllllllIIlllIllllIIlll = lllllllllllllllllIIlllIllllIIIll.getNativeType(lllllllllllllllllIIlllIllllIIlll))) {
-                String lllllllllllllllllIIlllIllllIllll = String.valueOf(new StringBuilder().append("Callback return type ").append(lllllllllllllllllIIlllIllllIIlll).append(" requires custom type conversion"));
-                throw new IllegalArgumentException(lllllllllllllllllIIlllIllllIllll);
+            if (!CallbackReference.isAllowableNativeType(class_ = this.getNativeType(class_))) {
+                String string = String.valueOf(new StringBuilder().append("Callback return type ").append(class_).append(" requires custom type conversion"));
+                throw new IllegalArgumentException(string);
             }
-            int lllllllllllllllllIIlllIllllIlllI = lllllllllllllllllIIlllIllllIIIlI instanceof DLLCallback ? 2 : 0;
-            lllllllllllllllllIIlllIllllIIlII = Native.createNativeCallback(lllllllllllllllllIIlllIllllIIIll.proxy, PROXY_CALLBACK_METHOD, lllllllllllllllllIIlllIllllIlIII, lllllllllllllllllIIlllIllllIIlll, lllllllllllllllllIIlllIllllIIIIl, lllllllllllllllllIIlllIllllIlllI, lllllllllllllllllIIlllIllllIIlIl);
+            n3 = callback instanceof DLLCallback ? 2 : 0;
+            l = Native.createNativeCallback(this.proxy, PROXY_CALLBACK_METHOD, arrclass, class_, n, n3, (String)object);
         }
-        lllllllllllllllllIIlllIllllIIIll.cbstruct = lllllllllllllllllIIlllIllllIIlII != 0L ? new Pointer(lllllllllllllllllIIlllIllllIIlII) : null;
-        allocatedMemory.put(lllllllllllllllllIIlllIllllIIIll, new WeakReference<CallbackReference>(lllllllllllllllllIIlllIllllIIIll));
+        this.cbstruct = l != 0L ? new Pointer(l) : null;
+        allocatedMemory.put(this, new WeakReference<CallbackReference>(this));
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    static CallbackThreadInitializer setCallbackThreadInitializer(Callback lllllllllllllllllIIllllIIIlllllI, CallbackThreadInitializer lllllllllllllllllIIllllIIIllllIl) {
-        Map<Callback, CallbackThreadInitializer> lllllllllllllllllIIllllIIIllllII = initializers;
-        synchronized (lllllllllllllllllIIllllIIIllllII) {
-            if (lllllllllllllllllIIllllIIIllllIl != null) {
-                return initializers.put(lllllllllllllllllIIllllIIIlllllI, lllllllllllllllllIIllllIIIllllIl);
+    static CallbackThreadInitializer setCallbackThreadInitializer(Callback callback, CallbackThreadInitializer callbackThreadInitializer) {
+        Map<Callback, CallbackThreadInitializer> map = initializers;
+        synchronized (map) {
+            if (callbackThreadInitializer != null) {
+                return initializers.put(callback, callbackThreadInitializer);
             }
-            return initializers.remove(lllllllllllllllllIIllllIIIlllllI);
+            return initializers.remove(callback);
         }
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    private static Pointer getFunctionPointer(Callback lllllllllllllllllIIlllIlIlllIIII, boolean lllllllllllllllllIIlllIlIlllIlIl) {
-        Pointer lllllllllllllllllIIlllIlIlllIlII = null;
-        if (lllllllllllllllllIIlllIlIlllIIII == null) {
+    private static Pointer getFunctionPointer(Callback callback, boolean bl) {
+        Pointer pointer = null;
+        if (callback == null) {
             return null;
         }
-        lllllllllllllllllIIlllIlIlllIlII = CallbackReference.getNativeFunctionPointer(lllllllllllllllllIIlllIlIlllIIII);
-        if (lllllllllllllllllIIlllIlIlllIlII != null) {
-            return lllllllllllllllllIIlllIlIlllIlII;
+        pointer = CallbackReference.getNativeFunctionPointer(callback);
+        if (pointer != null) {
+            return pointer;
         }
-        Map<String, Object> lllllllllllllllllIIlllIlIlllIIll = Native.getLibraryOptions(lllllllllllllllllIIlllIlIlllIIII.getClass());
-        int lllllllllllllllllIIlllIlIlllIIlI = lllllllllllllllllIIlllIlIlllIIII instanceof AltCallingConvention ? 63 : (lllllllllllllllllIIlllIlIlllIIll != null && lllllllllllllllllIIlllIlIlllIIll.containsKey("calling-convention") ? (Integer)lllllllllllllllllIIlllIlIlllIIll.get("calling-convention") : 0);
-        Map<Callback, CallbackReference> lllllllllllllllllIIlllIlIlllIIIl = lllllllllllllllllIIlllIlIlllIlIl ? directCallbackMap : callbackMap;
-        Map<Pointer, Reference<Callback>> lllllllllllllllllIIlllIlIllIlIlI = pointerCallbackMap;
-        synchronized (lllllllllllllllllIIlllIlIllIlIlI) {
-            CallbackReference lllllllllllllllllIIlllIlIlllIlll = lllllllllllllllllIIlllIlIlllIIIl.get(lllllllllllllllllIIlllIlIlllIIII);
-            if (lllllllllllllllllIIlllIlIlllIlll == null) {
-                lllllllllllllllllIIlllIlIlllIlll = new CallbackReference(lllllllllllllllllIIlllIlIlllIIII, lllllllllllllllllIIlllIlIlllIIlI, lllllllllllllllllIIlllIlIlllIlIl);
-                lllllllllllllllllIIlllIlIlllIIIl.put(lllllllllllllllllIIlllIlIlllIIII, lllllllllllllllllIIlllIlIlllIlll);
-                pointerCallbackMap.put(lllllllllllllllllIIlllIlIlllIlll.getTrampoline(), new WeakReference<Callback>(lllllllllllllllllIIlllIlIlllIIII));
-                if (initializers.containsKey(lllllllllllllllllIIlllIlIlllIIII)) {
-                    lllllllllllllllllIIlllIlIlllIlll.setCallbackOptions(1);
+        Map<String, Object> map = Native.getLibraryOptions(callback.getClass());
+        int n = callback instanceof AltCallingConvention ? 63 : (map != null && map.containsKey("calling-convention") ? (Integer)map.get("calling-convention") : 0);
+        Map<Callback, CallbackReference> map2 = bl ? directCallbackMap : callbackMap;
+        Map<Pointer, Reference<Callback>> map3 = pointerCallbackMap;
+        synchronized (map3) {
+            CallbackReference callbackReference = map2.get(callback);
+            if (callbackReference == null) {
+                callbackReference = new CallbackReference(callback, n, bl);
+                map2.put(callback, callbackReference);
+                pointerCallbackMap.put(callbackReference.getTrampoline(), new WeakReference<Callback>(callback));
+                if (initializers.containsKey(callback)) {
+                    callbackReference.setCallbackOptions(1);
                 }
             }
-            return lllllllllllllllllIIlllIlIlllIlll.getTrampoline();
+            return callbackReference.getTrampoline();
         }
     }
 
-    public static Callback getCallback(Class<?> lllllllllllllllllIIllllIIIlIlIlI, Pointer lllllllllllllllllIIllllIIIlIIlll) {
-        return CallbackReference.getCallback(lllllllllllllllllIIllllIIIlIlIlI, lllllllllllllllllIIllllIIIlIIlll, false);
+    static Callback access$000(CallbackReference callbackReference) {
+        return callbackReference.getCallback();
     }
 
-    static Class<?> findCallbackClass(Class<?> lllllllllllllllllIIlllIlllIIIlII) {
-        if (!Callback.class.isAssignableFrom(lllllllllllllllllIIlllIlllIIIlII)) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(lllllllllllllllllIIlllIlllIIIlII.getName()).append(" is not derived from com.sun.jna.Callback")));
+    public static Callback getCallback(Class<?> class_, Pointer pointer) {
+        return CallbackReference.getCallback(class_, pointer, false);
+    }
+
+    static Pointer access$100(Object object, boolean bl) {
+        return CallbackReference.getNativeString(object, bl);
+    }
+
+    static Class<?> findCallbackClass(Class<?> class_) {
+        if (!Callback.class.isAssignableFrom(class_)) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(class_.getName()).append(" is not derived from com.sun.jna.Callback")));
         }
-        if (lllllllllllllllllIIlllIlllIIIlII.isInterface()) {
-            return lllllllllllllllllIIlllIlllIIIlII;
+        if (class_.isInterface()) {
+            return class_;
         }
-        Class<?>[] lllllllllllllllllIIlllIlllIIIlIl = lllllllllllllllllIIlllIlllIIIlII.getInterfaces();
-        for (int lllllllllllllllllIIlllIlllIIIlll = 0; lllllllllllllllllIIlllIlllIIIlll < lllllllllllllllllIIlllIlllIIIlIl.length; ++lllllllllllllllllIIlllIlllIIIlll) {
-            if (!Callback.class.isAssignableFrom(lllllllllllllllllIIlllIlllIIIlIl[lllllllllllllllllIIlllIlllIIIlll])) continue;
+        Class<?>[] arrclass = class_.getInterfaces();
+        for (int i = 0; i < arrclass.length; ++i) {
+            if (!Callback.class.isAssignableFrom(arrclass[i])) continue;
             try {
-                CallbackReference.getCallbackMethod(lllllllllllllllllIIlllIlllIIIlIl[lllllllllllllllllIIlllIlllIIIlll]);
-                return lllllllllllllllllIIlllIlllIIIlIl[lllllllllllllllllIIlllIlllIIIlll];
+                CallbackReference.getCallbackMethod(arrclass[i]);
+                return arrclass[i];
             }
-            catch (IllegalArgumentException lllllllllllllllllIIlllIlllIIlIII) {
+            catch (IllegalArgumentException illegalArgumentException) {
                 break;
             }
         }
-        if (Callback.class.isAssignableFrom(lllllllllllllllllIIlllIlllIIIlII.getSuperclass())) {
-            return CallbackReference.findCallbackClass(lllllllllllllllllIIlllIlllIIIlII.getSuperclass());
+        if (Callback.class.isAssignableFrom(class_.getSuperclass())) {
+            return CallbackReference.findCallbackClass(class_.getSuperclass());
         }
-        return lllllllllllllllllIIlllIlllIIIlII;
+        return class_;
     }
 
-    private Class<?> getNativeType(Class<?> lllllllllllllllllIIlllIlllIlIlII) {
-        if (Structure.class.isAssignableFrom(lllllllllllllllllIIlllIlllIlIlII)) {
-            Structure.validate(lllllllllllllllllIIlllIlllIlIlII);
-            if (!Structure.ByValue.class.isAssignableFrom(lllllllllllllllllIIlllIlllIlIlII)) {
+    private Class<?> getNativeType(Class<?> class_) {
+        if (Structure.class.isAssignableFrom(class_)) {
+            Structure.validate(class_);
+            if (!Structure.ByValue.class.isAssignableFrom(class_)) {
                 return Pointer.class;
             }
         } else {
-            if (NativeMapped.class.isAssignableFrom(lllllllllllllllllIIlllIlllIlIlII)) {
-                return NativeMappedConverter.getInstance(lllllllllllllllllIIlllIlllIlIlII).nativeType();
+            if (NativeMapped.class.isAssignableFrom(class_)) {
+                return NativeMappedConverter.getInstance(class_).nativeType();
             }
-            if (lllllllllllllllllIIlllIlllIlIlII == String.class || lllllllllllllllllIIlllIlllIlIlII == WString.class || lllllllllllllllllIIlllIlllIlIlII == String[].class || lllllllllllllllllIIlllIlllIlIlII == WString[].class || Callback.class.isAssignableFrom(lllllllllllllllllIIlllIlllIlIlII)) {
+            if (class_ == String.class || class_ == WString.class || class_ == String[].class || class_ == WString[].class || Callback.class.isAssignableFrom(class_)) {
                 return Pointer.class;
             }
         }
-        return lllllllllllllllllIIlllIlllIlIlII;
+        return class_;
     }
 
     public Pointer getTrampoline() {
-        CallbackReference lllllllllllllllllIIlllIllIIllllI;
-        if (lllllllllllllllllIIlllIllIIllllI.trampoline == null) {
-            lllllllllllllllllIIlllIllIIllllI.trampoline = lllllllllllllllllIIlllIllIIllllI.cbstruct.getPointer(0L);
+        if (this.trampoline == null) {
+            this.trampoline = this.cbstruct.getPointer(0L);
         }
-        return lllllllllllllllllIIlllIllIIllllI.trampoline;
+        return this.trampoline;
     }
 
-    private static Method getCallbackMethod(Class<?> lllllllllllllllllIIlllIllIlIllII) {
-        Method[] lllllllllllllllllIIlllIllIllIIIl = lllllllllllllllllIIlllIllIlIllII.getDeclaredMethods();
-        Method[] lllllllllllllllllIIlllIllIllIIII = lllllllllllllllllIIlllIllIlIllII.getMethods();
-        HashSet<Method> lllllllllllllllllIIlllIllIlIllll = new HashSet<Method>(Arrays.asList(lllllllllllllllllIIlllIllIllIIIl));
-        lllllllllllllllllIIlllIllIlIllll.retainAll(Arrays.asList(lllllllllllllllllIIlllIllIllIIII));
-        Iterator lllllllllllllllllIIlllIllIllIlIl = lllllllllllllllllIIlllIllIlIllll.iterator();
-        while (lllllllllllllllllIIlllIllIllIlIl.hasNext()) {
-            Method lllllllllllllllllIIlllIllIllIllI = (Method)lllllllllllllllllIIlllIllIllIlIl.next();
-            if (!Callback.FORBIDDEN_NAMES.contains(lllllllllllllllllIIlllIllIllIllI.getName())) continue;
-            lllllllllllllllllIIlllIllIllIlIl.remove();
+    private static Method getCallbackMethod(Class<?> class_) {
+        Method[] arrmethod = class_.getDeclaredMethods();
+        Method[] arrmethod2 = class_.getMethods();
+        HashSet<Method> hashSet = new HashSet<Method>(Arrays.asList(arrmethod));
+        hashSet.retainAll(Arrays.asList(arrmethod2));
+        Method[] arrmethod3 = hashSet.iterator();
+        while (arrmethod3.hasNext()) {
+            Method method = (Method)arrmethod3.next();
+            if (!Callback.FORBIDDEN_NAMES.contains(method.getName())) continue;
+            arrmethod3.remove();
         }
-        Method[] lllllllllllllllllIIlllIllIlIlllI = lllllllllllllllllIIlllIllIlIllll.toArray(new Method[lllllllllllllllllIIlllIllIlIllll.size()]);
-        if (lllllllllllllllllIIlllIllIlIlllI.length == 1) {
-            return CallbackReference.checkMethod(lllllllllllllllllIIlllIllIlIlllI[0]);
+        arrmethod3 = hashSet.toArray(new Method[hashSet.size()]);
+        if (arrmethod3.length == 1) {
+            return CallbackReference.checkMethod(arrmethod3[0]);
         }
-        for (int lllllllllllllllllIIlllIllIllIIll = 0; lllllllllllllllllIIlllIllIllIIll < lllllllllllllllllIIlllIllIlIlllI.length; ++lllllllllllllllllIIlllIllIllIIll) {
-            Method lllllllllllllllllIIlllIllIllIlII = lllllllllllllllllIIlllIllIlIlllI[lllllllllllllllllIIlllIllIllIIll];
-            if (!"callback".equals(lllllllllllllllllIIlllIllIllIlII.getName())) continue;
-            return CallbackReference.checkMethod(lllllllllllllllllIIlllIllIllIlII);
+        for (int i = 0; i < arrmethod3.length; ++i) {
+            Method method = arrmethod3[i];
+            if (!"callback".equals(method.getName())) continue;
+            return CallbackReference.checkMethod(method);
         }
-        String lllllllllllllllllIIlllIllIlIllIl = "Callback must implement a single public method, or one public method named 'callback'";
-        throw new IllegalArgumentException(lllllllllllllllllIIlllIllIlIllIl);
+        String string = "Callback must implement a single public method, or one public method named 'callback'";
+        throw new IllegalArgumentException(string);
     }
 
-    public static Pointer getFunctionPointer(Callback lllllllllllllllllIIlllIllIIIIIlI) {
-        return CallbackReference.getFunctionPointer(lllllllllllllllllIIlllIllIIIIIlI, false);
+    public static Pointer getFunctionPointer(Callback callback) {
+        return CallbackReference.getFunctionPointer(callback, false);
     }
 
     static {
@@ -366,250 +380,243 @@ extends WeakReference<Callback> {
         try {
             PROXY_CALLBACK_METHOD = CallbackProxy.class.getMethod("callback", Object[].class);
         }
-        catch (Exception lllllllllllllllllIIlllIlIlIlIIIl) {
+        catch (Exception exception) {
             throw new Error("Error looking up CallbackProxy.callback() method");
         }
         initializers = new WeakHashMap<Callback, CallbackThreadInitializer>();
     }
 
-    private static boolean isAllowableNativeType(Class<?> lllllllllllllllllIIlllIlIllIIlIl) {
-        return lllllllllllllllllIIlllIlIllIIlIl == Void.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Void.class || lllllllllllllllllIIlllIlIllIIlIl == Boolean.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Boolean.class || lllllllllllllllllIIlllIlIllIIlIl == Byte.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Byte.class || lllllllllllllllllIIlllIlIllIIlIl == Short.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Short.class || lllllllllllllllllIIlllIlIllIIlIl == Character.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Character.class || lllllllllllllllllIIlllIlIllIIlIl == Integer.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Integer.class || lllllllllllllllllIIlllIlIllIIlIl == Long.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Long.class || lllllllllllllllllIIlllIlIllIIlIl == Float.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Float.class || lllllllllllllllllIIlllIlIllIIlIl == Double.TYPE || lllllllllllllllllIIlllIlIllIIlIl == Double.class || Structure.ByValue.class.isAssignableFrom(lllllllllllllllllIIlllIlIllIIlIl) && Structure.class.isAssignableFrom(lllllllllllllllllIIlllIlIllIIlIl) || Pointer.class.isAssignableFrom(lllllllllllllllllIIlllIlIllIIlIl);
+    private static boolean isAllowableNativeType(Class<?> class_) {
+        return class_ == Void.TYPE || class_ == Void.class || class_ == Boolean.TYPE || class_ == Boolean.class || class_ == Byte.TYPE || class_ == Byte.class || class_ == Short.TYPE || class_ == Short.class || class_ == Character.TYPE || class_ == Character.class || class_ == Integer.TYPE || class_ == Integer.class || class_ == Long.TYPE || class_ == Long.class || class_ == Float.TYPE || class_ == Float.class || class_ == Double.TYPE || class_ == Double.class || Structure.ByValue.class.isAssignableFrom(class_) && Structure.class.isAssignableFrom(class_) || Pointer.class.isAssignableFrom(class_);
     }
 
-    private static Method checkMethod(Method lllllllllllllllllIIlllIlllIIllll) {
-        if (lllllllllllllllllIIlllIlllIIllll.getParameterTypes().length > 256) {
-            String lllllllllllllllllIIlllIlllIlIIII = String.valueOf(new StringBuilder().append("Method signature exceeds the maximum parameter count: ").append(lllllllllllllllllIIlllIlllIIllll));
-            throw new UnsupportedOperationException(lllllllllllllllllIIlllIlllIlIIII);
+    private static Method checkMethod(Method method) {
+        if (method.getParameterTypes().length > 256) {
+            String string = String.valueOf(new StringBuilder().append("Method signature exceeds the maximum parameter count: ").append(method));
+            throw new UnsupportedOperationException(string);
         }
-        return lllllllllllllllllIIlllIlllIIllll;
+        return method;
     }
 
     private static class NativeFunctionHandler
     implements InvocationHandler {
-        private final /* synthetic */ Map<String, ?> options;
-        private final /* synthetic */ Function function;
+        private final Map<String, ?> options;
+        private final Function function;
 
         @Override
-        public Object invoke(Object lllIIlIIlII, Method lllIIlIIIll, Object[] lllIIlIIIlI) throws Throwable {
-            NativeFunctionHandler lllIIlIIIIl;
-            if (Library.Handler.OBJECT_TOSTRING.equals(lllIIlIIIll)) {
-                String lllIIlIlIIl = String.valueOf(new StringBuilder().append("Proxy interface to ").append(lllIIlIIIIl.function));
-                Method lllIIlIlIII = (Method)lllIIlIIIIl.options.get("invoking-method");
-                Class<?> lllIIlIIlll = CallbackReference.findCallbackClass(lllIIlIlIII.getDeclaringClass());
-                lllIIlIlIIl = String.valueOf(new StringBuilder().append(lllIIlIlIIl).append(" (").append(lllIIlIIlll.getName()).append(")"));
-                return lllIIlIlIIl;
+        public Object invoke(Object object, Method method, Object[] arrobject) throws Throwable {
+            if (Library.Handler.OBJECT_TOSTRING.equals(method)) {
+                String string = String.valueOf(new StringBuilder().append("Proxy interface to ").append(this.function));
+                Method method2 = (Method)this.options.get("invoking-method");
+                Class<?> class_ = CallbackReference.findCallbackClass(method2.getDeclaringClass());
+                string = String.valueOf(new StringBuilder().append(string).append(" (").append(class_.getName()).append(")"));
+                return string;
             }
-            if (Library.Handler.OBJECT_HASHCODE.equals(lllIIlIIIll)) {
-                return lllIIlIIIIl.hashCode();
+            if (Library.Handler.OBJECT_HASHCODE.equals(method)) {
+                return this.hashCode();
             }
-            if (Library.Handler.OBJECT_EQUALS.equals(lllIIlIIIll)) {
-                Object lllIIlIIllI = lllIIlIIIlI[0];
-                if (lllIIlIIllI != null && Proxy.isProxyClass(lllIIlIIllI.getClass())) {
-                    return Function.valueOf(Proxy.getInvocationHandler(lllIIlIIllI) == lllIIlIIIIl);
+            if (Library.Handler.OBJECT_EQUALS.equals(method)) {
+                Object object2 = arrobject[0];
+                if (object2 != null && Proxy.isProxyClass(object2.getClass())) {
+                    return Function.valueOf(Proxy.getInvocationHandler(object2) == this);
                 }
                 return Boolean.FALSE;
             }
-            if (Function.isVarArgs(lllIIlIIIll)) {
-                lllIIlIIIlI = Function.concatenateVarArgs(lllIIlIIIlI);
+            if (Function.isVarArgs(method)) {
+                arrobject = Function.concatenateVarArgs(arrobject);
             }
-            return lllIIlIIIIl.function.invoke(lllIIlIIIll.getReturnType(), lllIIlIIIlI, lllIIlIIIIl.options);
+            return this.function.invoke(method.getReturnType(), arrobject, this.options);
         }
 
-        public NativeFunctionHandler(Pointer lllIIllIIlI, int lllIIllIIIl, Map<String, ?> lllIIllIIII) {
-            NativeFunctionHandler lllIIllIIll;
-            lllIIllIIll.options = lllIIllIIII;
-            lllIIllIIll.function = new Function(lllIIllIIlI, lllIIllIIIl, (String)lllIIllIIII.get("string-encoding"));
+        public NativeFunctionHandler(Pointer pointer, int n, Map<String, ?> map) {
+            this.options = map;
+            this.function = new Function(pointer, n, (String)map.get("string-encoding"));
         }
 
         public Pointer getPointer() {
-            NativeFunctionHandler lllIIIllIIl;
-            return lllIIIllIIl.function;
+            return this.function;
         }
     }
 
     private class DefaultCallbackProxy
     implements CallbackProxy {
-        private final /* synthetic */ String encoding;
-        private final /* synthetic */ Method callbackMethod;
-        private final /* synthetic */ FromNativeConverter[] fromNative;
-        private /* synthetic */ ToNativeConverter toNative;
+        private final String encoding;
+        private final Method callbackMethod;
+        private final FromNativeConverter[] fromNative;
+        private ToNativeConverter toNative;
+        final CallbackReference this$0;
 
         @Override
         public Class<?> getReturnType() {
-            DefaultCallbackProxy lllllllllllllllllIlIlllIIIlIlIlI;
-            return lllllllllllllllllIlIlllIIIlIlIlI.callbackMethod.getReturnType();
+            return this.callbackMethod.getReturnType();
         }
 
-        private Object invokeCallback(Object[] lllllllllllllllllIlIlllIIlIllIlI) {
-            DefaultCallbackProxy lllllllllllllllllIlIlllIIllIIIIl;
-            Class<?>[] lllllllllllllllllIlIlllIIlIlllll = lllllllllllllllllIlIlllIIllIIIIl.callbackMethod.getParameterTypes();
-            Object[] lllllllllllllllllIlIlllIIlIllllI = new Object[lllllllllllllllllIlIlllIIlIllIlI.length];
-            for (int lllllllllllllllllIlIlllIIllIIllI = 0; lllllllllllllllllIlIlllIIllIIllI < lllllllllllllllllIlIlllIIlIllIlI.length; ++lllllllllllllllllIlIlllIIllIIllI) {
-                Class<?> lllllllllllllllllIlIlllIIllIlIII = lllllllllllllllllIlIlllIIlIlllll[lllllllllllllllllIlIlllIIllIIllI];
-                Object lllllllllllllllllIlIlllIIllIIlll = lllllllllllllllllIlIlllIIlIllIlI[lllllllllllllllllIlIlllIIllIIllI];
-                if (lllllllllllllllllIlIlllIIllIIIIl.fromNative[lllllllllllllllllIlIlllIIllIIllI] != null) {
-                    CallbackParameterContext lllllllllllllllllIlIlllIIllIlIIl = new CallbackParameterContext(lllllllllllllllllIlIlllIIllIlIII, lllllllllllllllllIlIlllIIllIIIIl.callbackMethod, lllllllllllllllllIlIlllIIlIllIlI, lllllllllllllllllIlIlllIIllIIllI);
-                    lllllllllllllllllIlIlllIIlIllllI[lllllllllllllllllIlIlllIIllIIllI] = lllllllllllllllllIlIlllIIllIIIIl.fromNative[lllllllllllllllllIlIlllIIllIIllI].fromNative(lllllllllllllllllIlIlllIIllIIlll, lllllllllllllllllIlIlllIIllIlIIl);
+        private Object invokeCallback(Object[] arrobject) {
+            Object object;
+            Class<?>[] arrclass = this.callbackMethod.getParameterTypes();
+            Object[] arrobject2 = new Object[arrobject.length];
+            for (int i = 0; i < arrobject.length; ++i) {
+                object = arrclass[i];
+                Object object2 = arrobject[i];
+                if (this.fromNative[i] != null) {
+                    CallbackParameterContext callbackParameterContext = new CallbackParameterContext((Class<?>)object, this.callbackMethod, arrobject, i);
+                    arrobject2[i] = this.fromNative[i].fromNative(object2, callbackParameterContext);
                     continue;
                 }
-                lllllllllllllllllIlIlllIIlIllllI[lllllllllllllllllIlIlllIIllIIllI] = lllllllllllllllllIlIlllIIllIIIIl.convertArgument(lllllllllllllllllIlIlllIIllIIlll, lllllllllllllllllIlIlllIIllIlIII);
-            }
-            Object lllllllllllllllllIlIlllIIlIlllIl = null;
-            Callback lllllllllllllllllIlIlllIIlIlllII = lllllllllllllllllIlIlllIIllIIIIl.getCallback();
-            if (lllllllllllllllllIlIlllIIlIlllII != null) {
-                try {
-                    lllllllllllllllllIlIlllIIlIlllIl = lllllllllllllllllIlIlllIIllIIIIl.convertResult(lllllllllllllllllIlIlllIIllIIIIl.callbackMethod.invoke(lllllllllllllllllIlIlllIIlIlllII, lllllllllllllllllIlIlllIIlIllllI));
-                }
-                catch (IllegalArgumentException lllllllllllllllllIlIlllIIllIIlIl) {
-                    Native.getCallbackExceptionHandler().uncaughtException(lllllllllllllllllIlIlllIIlIlllII, lllllllllllllllllIlIlllIIllIIlIl);
-                }
-                catch (IllegalAccessException lllllllllllllllllIlIlllIIllIIlII) {
-                    Native.getCallbackExceptionHandler().uncaughtException(lllllllllllllllllIlIlllIIlIlllII, lllllllllllllllllIlIlllIIllIIlII);
-                }
-                catch (InvocationTargetException lllllllllllllllllIlIlllIIllIIIll) {
-                    Native.getCallbackExceptionHandler().uncaughtException(lllllllllllllllllIlIlllIIlIlllII, lllllllllllllllllIlIlllIIllIIIll.getTargetException());
-                }
-            }
-            for (int lllllllllllllllllIlIlllIIllIIIlI = 0; lllllllllllllllllIlIlllIIllIIIlI < lllllllllllllllllIlIlllIIlIllllI.length; ++lllllllllllllllllIlIlllIIllIIIlI) {
-                if (!(lllllllllllllllllIlIlllIIlIllllI[lllllllllllllllllIlIlllIIllIIIlI] instanceof Structure) || lllllllllllllllllIlIlllIIlIllllI[lllllllllllllllllIlIlllIIllIIIlI] instanceof Structure.ByValue) continue;
-                ((Structure)lllllllllllllllllIlIlllIIlIllllI[lllllllllllllllllIlIlllIIllIIIlI]).autoWrite();
-            }
-            return lllllllllllllllllIlIlllIIlIlllIl;
-        }
-
-        private Object convertArgument(Object lllllllllllllllllIlIlllIIIlllllI, Class<?> lllllllllllllllllIlIlllIIIllllIl) {
-            if (lllllllllllllllllIlIlllIIIlllllI instanceof Pointer) {
-                DefaultCallbackProxy lllllllllllllllllIlIlllIIlIIIIlI;
-                if (lllllllllllllllllIlIlllIIIllllIl == String.class) {
-                    lllllllllllllllllIlIlllIIIlllllI = ((Pointer)lllllllllllllllllIlIlllIIIlllllI).getString(0L, lllllllllllllllllIlIlllIIlIIIIlI.encoding);
-                } else if (lllllllllllllllllIlIlllIIIllllIl == WString.class) {
-                    lllllllllllllllllIlIlllIIIlllllI = new WString(((Pointer)lllllllllllllllllIlIlllIIIlllllI).getWideString(0L));
-                } else if (lllllllllllllllllIlIlllIIIllllIl == String[].class) {
-                    lllllllllllllllllIlIlllIIIlllllI = ((Pointer)lllllllllllllllllIlIlllIIIlllllI).getStringArray(0L, lllllllllllllllllIlIlllIIlIIIIlI.encoding);
-                } else if (lllllllllllllllllIlIlllIIIllllIl == WString[].class) {
-                    lllllllllllllllllIlIlllIIIlllllI = ((Pointer)lllllllllllllllllIlIlllIIIlllllI).getWideStringArray(0L);
-                } else if (Callback.class.isAssignableFrom(lllllllllllllllllIlIlllIIIllllIl)) {
-                    lllllllllllllllllIlIlllIIIlllllI = CallbackReference.getCallback(lllllllllllllllllIlIlllIIIllllIl, (Pointer)lllllllllllllllllIlIlllIIIlllllI);
-                } else if (Structure.class.isAssignableFrom(lllllllllllllllllIlIlllIIIllllIl)) {
-                    if (Structure.ByValue.class.isAssignableFrom(lllllllllllllllllIlIlllIIIllllIl)) {
-                        Structure lllllllllllllllllIlIlllIIlIIIlIl = Structure.newInstance(lllllllllllllllllIlIlllIIIllllIl);
-                        byte[] lllllllllllllllllIlIlllIIlIIIlII = new byte[lllllllllllllllllIlIlllIIlIIIlIl.size()];
-                        ((Pointer)lllllllllllllllllIlIlllIIIlllllI).read(0L, lllllllllllllllllIlIlllIIlIIIlII, 0, lllllllllllllllllIlIlllIIlIIIlII.length);
-                        lllllllllllllllllIlIlllIIlIIIlIl.getPointer().write(0L, lllllllllllllllllIlIlllIIlIIIlII, 0, lllllllllllllllllIlIlllIIlIIIlII.length);
-                        lllllllllllllllllIlIlllIIlIIIlIl.read();
-                        lllllllllllllllllIlIlllIIIlllllI = lllllllllllllllllIlIlllIIlIIIlIl;
-                    } else {
-                        Structure lllllllllllllllllIlIlllIIlIIIIll = Structure.newInstance(lllllllllllllllllIlIlllIIIllllIl, (Pointer)lllllllllllllllllIlIlllIIIlllllI);
-                        lllllllllllllllllIlIlllIIlIIIIll.conditionalAutoRead();
-                        lllllllllllllllllIlIlllIIIlllllI = lllllllllllllllllIlIlllIIlIIIIll;
-                    }
-                }
-            } else if ((Boolean.TYPE == lllllllllllllllllIlIlllIIIllllIl || Boolean.class == lllllllllllllllllIlIlllIIIllllIl) && lllllllllllllllllIlIlllIIIlllllI instanceof Number) {
-                lllllllllllllllllIlIlllIIIlllllI = Function.valueOf(((Number)lllllllllllllllllIlIlllIIIlllllI).intValue() != 0);
-            }
-            return lllllllllllllllllIlIlllIIIlllllI;
-        }
-
-        private Object convertResult(Object lllllllllllllllllIlIlllIIIllIIIl) {
-            DefaultCallbackProxy lllllllllllllllllIlIlllIIIllIIlI;
-            if (lllllllllllllllllIlIlllIIIllIIlI.toNative != null) {
-                lllllllllllllllllIlIlllIIIllIIIl = lllllllllllllllllIlIlllIIIllIIlI.toNative.toNative(lllllllllllllllllIlIlllIIIllIIIl, new CallbackResultContext(lllllllllllllllllIlIlllIIIllIIlI.callbackMethod));
-            }
-            if (lllllllllllllllllIlIlllIIIllIIIl == null) {
+                arrobject2[i] = this.convertArgument(object2, (Class<?>)object);
+                if (3 >= 0) continue;
                 return null;
             }
-            Class<?> lllllllllllllllllIlIlllIIIllIIll = lllllllllllllllllIlIlllIIIllIIIl.getClass();
-            if (Structure.class.isAssignableFrom(lllllllllllllllllIlIlllIIIllIIll)) {
-                if (Structure.ByValue.class.isAssignableFrom(lllllllllllllllllIlIlllIIIllIIll)) {
-                    return lllllllllllllllllIlIlllIIIllIIIl;
+            Object object3 = null;
+            object = this.getCallback();
+            if (object != null) {
+                try {
+                    object3 = this.convertResult(this.callbackMethod.invoke(object, arrobject2));
                 }
-                return ((Structure)lllllllllllllllllIlIlllIIIllIIIl).getPointer();
+                catch (IllegalArgumentException illegalArgumentException) {
+                    Native.getCallbackExceptionHandler().uncaughtException((Callback)object, illegalArgumentException);
+                }
+                catch (IllegalAccessException illegalAccessException) {
+                    Native.getCallbackExceptionHandler().uncaughtException((Callback)object, illegalAccessException);
+                }
+                catch (InvocationTargetException invocationTargetException) {
+                    Native.getCallbackExceptionHandler().uncaughtException((Callback)object, invocationTargetException.getTargetException());
+                }
             }
-            if (lllllllllllllllllIlIlllIIIllIIll == Boolean.TYPE || lllllllllllllllllIlIlllIIIllIIll == Boolean.class) {
-                return Boolean.TRUE.equals(lllllllllllllllllIlIlllIIIllIIIl) ? Function.INTEGER_TRUE : Function.INTEGER_FALSE;
+            for (int i = 0; i < arrobject2.length; ++i) {
+                if (!(arrobject2[i] instanceof Structure) || arrobject2[i] instanceof Structure.ByValue) continue;
+                ((Structure)arrobject2[i]).autoWrite();
+                if (2 != 0) continue;
+                return null;
             }
-            if (lllllllllllllllllIlIlllIIIllIIll == String.class || lllllllllllllllllIlIlllIIIllIIll == WString.class) {
-                return CallbackReference.getNativeString(lllllllllllllllllIlIlllIIIllIIIl, lllllllllllllllllIlIlllIIIllIIll == WString.class);
+            return object3;
+        }
+
+        private Object convertArgument(Object object, Class<?> class_) {
+            if (object instanceof Pointer) {
+                if (class_ == String.class) {
+                    object = ((Pointer)object).getString(0L, this.encoding);
+                } else if (class_ == WString.class) {
+                    object = new WString(((Pointer)object).getWideString(0L));
+                } else if (class_ == String[].class) {
+                    object = ((Pointer)object).getStringArray(0L, this.encoding);
+                } else if (class_ == WString[].class) {
+                    object = ((Pointer)object).getWideStringArray(0L);
+                } else if (Callback.class.isAssignableFrom(class_)) {
+                    object = CallbackReference.getCallback(class_, (Pointer)object);
+                } else if (Structure.class.isAssignableFrom(class_)) {
+                    if (Structure.ByValue.class.isAssignableFrom(class_)) {
+                        Structure structure = Structure.newInstance(class_);
+                        byte[] arrby = new byte[structure.size()];
+                        ((Pointer)object).read(0L, arrby, 0, arrby.length);
+                        structure.getPointer().write(0L, arrby, 0, arrby.length);
+                        structure.read();
+                        object = structure;
+                    } else {
+                        Structure structure = Structure.newInstance(class_, (Pointer)object);
+                        structure.conditionalAutoRead();
+                        object = structure;
+                    }
+                }
+            } else if ((Boolean.TYPE == class_ || Boolean.class == class_) && object instanceof Number) {
+                object = Function.valueOf(((Number)object).intValue() != 0);
             }
-            if (lllllllllllllllllIlIlllIIIllIIll == String[].class || lllllllllllllllllIlIlllIIIllIIll == WString.class) {
-                StringArray lllllllllllllllllIlIlllIIIllIllI = lllllllllllllllllIlIlllIIIllIIll == String[].class ? new StringArray((String[])lllllllllllllllllIlIlllIIIllIIIl, lllllllllllllllllIlIlllIIIllIIlI.encoding) : new StringArray((WString[])lllllllllllllllllIlIlllIIIllIIIl);
-                allocations.put(lllllllllllllllllIlIlllIIIllIIIl, lllllllllllllllllIlIlllIIIllIllI);
-                return lllllllllllllllllIlIlllIIIllIllI;
+            return object;
+        }
+
+        private Object convertResult(Object object) {
+            if (this.toNative != null) {
+                object = this.toNative.toNative(object, new CallbackResultContext(this.callbackMethod));
             }
-            if (Callback.class.isAssignableFrom(lllllllllllllllllIlIlllIIIllIIll)) {
-                return CallbackReference.getFunctionPointer((Callback)lllllllllllllllllIlIlllIIIllIIIl);
+            if (object == null) {
+                return null;
             }
-            return lllllllllllllllllIlIlllIIIllIIIl;
+            Class<?> class_ = object.getClass();
+            if (Structure.class.isAssignableFrom(class_)) {
+                if (Structure.ByValue.class.isAssignableFrom(class_)) {
+                    return object;
+                }
+                return ((Structure)object).getPointer();
+            }
+            if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+                return Boolean.TRUE.equals(object) ? Function.INTEGER_TRUE : Function.INTEGER_FALSE;
+            }
+            if (class_ == String.class || class_ == WString.class) {
+                return CallbackReference.access$100(object, class_ == WString.class);
+            }
+            if (class_ == String[].class || class_ == WString.class) {
+                StringArray stringArray = class_ == String[].class ? new StringArray((String[])object, this.encoding) : new StringArray((WString[])object);
+                allocations.put(object, stringArray);
+                return stringArray;
+            }
+            if (Callback.class.isAssignableFrom(class_)) {
+                return CallbackReference.getFunctionPointer((Callback)object);
+            }
+            return object;
         }
 
         @Override
         public Class<?>[] getParameterTypes() {
-            DefaultCallbackProxy lllllllllllllllllIlIlllIIIlIllII;
-            return lllllllllllllllllIlIlllIIIlIllII.callbackMethod.getParameterTypes();
+            return this.callbackMethod.getParameterTypes();
         }
 
-        public DefaultCallbackProxy(Method lllllllllllllllllIlIlllIlIIIIIIl, TypeMapper lllllllllllllllllIlIlllIlIIIIIII, String lllllllllllllllllIlIlllIIlllllll) {
-            DefaultCallbackProxy lllllllllllllllllIlIlllIlIIIIIlI;
-            lllllllllllllllllIlIlllIlIIIIIlI.callbackMethod = lllllllllllllllllIlIlllIlIIIIIIl;
-            lllllllllllllllllIlIlllIlIIIIIlI.encoding = lllllllllllllllllIlIlllIIlllllll;
-            Class<?>[] lllllllllllllllllIlIlllIIllllllI = lllllllllllllllllIlIlllIlIIIIIIl.getParameterTypes();
-            Class<?> lllllllllllllllllIlIlllIIlllllIl = lllllllllllllllllIlIlllIlIIIIIIl.getReturnType();
-            lllllllllllllllllIlIlllIlIIIIIlI.fromNative = new FromNativeConverter[lllllllllllllllllIlIlllIIllllllI.length];
-            if (NativeMapped.class.isAssignableFrom(lllllllllllllllllIlIlllIIlllllIl)) {
-                lllllllllllllllllIlIlllIlIIIIIlI.toNative = NativeMappedConverter.getInstance(lllllllllllllllllIlIlllIIlllllIl);
-            } else if (lllllllllllllllllIlIlllIlIIIIIII != null) {
-                lllllllllllllllllIlIlllIlIIIIIlI.toNative = lllllllllllllllllIlIlllIlIIIIIII.getToNativeConverter(lllllllllllllllllIlIlllIIlllllIl);
+        public DefaultCallbackProxy(CallbackReference callbackReference, Method method, TypeMapper typeMapper, String string) {
+            this.this$0 = callbackReference;
+            this.callbackMethod = method;
+            this.encoding = string;
+            Class<?>[] arrclass = method.getParameterTypes();
+            Class<?> class_ = method.getReturnType();
+            this.fromNative = new FromNativeConverter[arrclass.length];
+            if (NativeMapped.class.isAssignableFrom(class_)) {
+                this.toNative = NativeMappedConverter.getInstance(class_);
+            } else if (typeMapper != null) {
+                this.toNative = typeMapper.getToNativeConverter(class_);
             }
-            for (int lllllllllllllllllIlIlllIlIIIIlII = 0; lllllllllllllllllIlIlllIlIIIIlII < lllllllllllllllllIlIlllIlIIIIIlI.fromNative.length; ++lllllllllllllllllIlIlllIlIIIIlII) {
-                if (NativeMapped.class.isAssignableFrom(lllllllllllllllllIlIlllIIllllllI[lllllllllllllllllIlIlllIlIIIIlII])) {
-                    lllllllllllllllllIlIlllIlIIIIIlI.fromNative[lllllllllllllllllIlIlllIlIIIIlII] = new NativeMappedConverter(lllllllllllllllllIlIlllIIllllllI[lllllllllllllllllIlIlllIlIIIIlII]);
+            for (int i = 0; i < this.fromNative.length; ++i) {
+                if (NativeMapped.class.isAssignableFrom(arrclass[i])) {
+                    this.fromNative[i] = new NativeMappedConverter(arrclass[i]);
                     continue;
                 }
-                if (lllllllllllllllllIlIlllIlIIIIIII == null) continue;
-                lllllllllllllllllIlIlllIlIIIIIlI.fromNative[lllllllllllllllllIlIlllIlIIIIlII] = lllllllllllllllllIlIlllIlIIIIIII.getFromNativeConverter(lllllllllllllllllIlIlllIIllllllI[lllllllllllllllllIlIlllIlIIIIlII]);
+                if (typeMapper == null) continue;
+                this.fromNative[i] = typeMapper.getFromNativeConverter(arrclass[i]);
+                if (!false) continue;
+                throw null;
             }
-            if (!lllllllllllllllllIlIlllIlIIIIIIl.isAccessible()) {
+            if (!method.isAccessible()) {
                 try {
-                    lllllllllllllllllIlIlllIlIIIIIIl.setAccessible(true);
+                    method.setAccessible(true);
                 }
-                catch (SecurityException lllllllllllllllllIlIlllIlIIIIIll) {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Callback method is inaccessible, make sure the interface is public: ").append(lllllllllllllllllIlIlllIlIIIIIIl)));
+                catch (SecurityException securityException) {
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Callback method is inaccessible, make sure the interface is public: ").append(method)));
                 }
             }
         }
 
         @Override
-        public Object callback(Object[] lllllllllllllllllIlIlllIIlIIlllI) {
-            DefaultCallbackProxy lllllllllllllllllIlIlllIIlIIllll;
+        public Object callback(Object[] arrobject) {
             try {
-                return lllllllllllllllllIlIlllIIlIIllll.invokeCallback(lllllllllllllllllIlIlllIIlIIlllI);
+                return this.invokeCallback(arrobject);
             }
-            catch (Throwable lllllllllllllllllIlIlllIIlIlIIII) {
-                Native.getCallbackExceptionHandler().uncaughtException(lllllllllllllllllIlIlllIIlIIllll.getCallback(), lllllllllllllllllIlIlllIIlIlIIII);
+            catch (Throwable throwable) {
+                Native.getCallbackExceptionHandler().uncaughtException(this.getCallback(), throwable);
                 return null;
             }
         }
 
         public Callback getCallback() {
-            DefaultCallbackProxy lllllllllllllllllIlIlllIIlllIIlI;
-            return lllllllllllllllllIlIlllIIlllIIlI.CallbackReference.this.getCallback();
+            return CallbackReference.access$000(this.this$0);
         }
     }
 
     static class AttachOptions
     extends Structure {
-        public /* synthetic */ String name;
-        public /* synthetic */ boolean detach;
-        public /* synthetic */ boolean daemon;
-        public static final /* synthetic */ List<String> FIELDS;
-
-        static {
-            FIELDS = AttachOptions.createFieldsOrder("daemon", "detach", "name");
-        }
+        public String name;
+        public boolean detach;
+        public boolean daemon;
+        public static final List<String> FIELDS = AttachOptions.createFieldsOrder("daemon", "detach", "name");
 
         AttachOptions() {
-            AttachOptions lIIIllllllllI;
-            lIIIllllllllI.setStringEncoding("utf8");
+            this.setStringEncoding("utf8");
         }
 
         @Override

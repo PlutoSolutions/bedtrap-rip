@@ -11,20 +11,12 @@ import net.minecraft.class_1268;
 import net.minecraft.class_1269;
 
 public class InteractItemEvent {
-    public /* synthetic */ class_1269 toReturn;
-    private static final /* synthetic */ InteractItemEvent INSTANCE;
-    public /* synthetic */ class_1268 hand;
+    public class_1269 toReturn;
+    private static final InteractItemEvent INSTANCE = new InteractItemEvent();
+    public class_1268 hand;
 
-    public InteractItemEvent() {
-        InteractItemEvent llllllllllllllllllllIlIlIIlllIlI;
-    }
-
-    static {
-        INSTANCE = new InteractItemEvent();
-    }
-
-    public static InteractItemEvent get(class_1268 llllllllllllllllllllIlIlIIllIllI) {
-        InteractItemEvent.INSTANCE.hand = llllllllllllllllllllIlIlIIllIllI;
+    public static InteractItemEvent get(class_1268 class_12682) {
+        InteractItemEvent.INSTANCE.hand = class_12682;
         InteractItemEvent.INSTANCE.toReturn = null;
         return INSTANCE;
     }

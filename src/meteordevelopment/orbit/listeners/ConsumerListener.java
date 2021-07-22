@@ -8,43 +8,38 @@ import meteordevelopment.orbit.listeners.IListener;
 
 public class ConsumerListener<T>
 implements IListener {
-    private final /* synthetic */ int priority;
-    private final /* synthetic */ Class<?> target;
-    private final /* synthetic */ Consumer<T> executor;
+    private final int priority;
+    private final Class<?> target;
+    private final Consumer<T> executor;
 
     @Override
     public boolean isStatic() {
         return false;
     }
 
-    public ConsumerListener(Class<?> llllIIIIIlllIIl, int llllIIIIIllllII, Consumer<T> llllIIIIIllIlll) {
-        ConsumerListener llllIIIIIlllIlI;
-        llllIIIIIlllIlI.target = llllIIIIIlllIIl;
-        llllIIIIIlllIlI.priority = llllIIIIIllllII;
-        llllIIIIIlllIlI.executor = llllIIIIIllIlll;
+    public ConsumerListener(Class<?> class_, int n, Consumer<T> consumer) {
+        this.target = class_;
+        this.priority = n;
+        this.executor = consumer;
     }
 
     @Override
-    public void call(Object llllIIIIIlIlIII) {
-        ConsumerListener llllIIIIIlIlIll;
-        llllIIIIIlIlIll.executor.accept(llllIIIIIlIlIII);
+    public void call(Object object) {
+        this.executor.accept(object);
     }
 
     @Override
     public Class<?> getTarget() {
-        ConsumerListener llllIIIIIlIIllI;
-        return llllIIIIIlIIllI.target;
+        return this.target;
     }
 
-    public ConsumerListener(Class<?> llllIIIIIlIllll, Consumer<T> llllIIIIIllIIIl) {
-        llllIIIIIllIIll(llllIIIIIlIllll, 0, llllIIIIIllIIIl);
-        ConsumerListener<T> llllIIIIIllIIll;
+    public ConsumerListener(Class<?> class_, Consumer<T> consumer) {
+        this(class_, 0, consumer);
     }
 
     @Override
     public int getPriority() {
-        ConsumerListener llllIIIIIlIIIll;
-        return llllIIIIIlIIIll.priority;
+        return this.priority;
     }
 }
 

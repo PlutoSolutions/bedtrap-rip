@@ -16,119 +16,114 @@ import net.minecraft.class_1735;
 
 public class AutoSmelter
 extends Module {
-    private /* synthetic */ int step;
-    private /* synthetic */ boolean waitingForItemsToSmelt;
-    private /* synthetic */ boolean first;
-    private /* synthetic */ int timer;
+    private int step;
+    private boolean waitingForItemsToSmelt;
+    private boolean first;
+    private int timer;
 
     public void onFurnaceClose() {
-        llIlIIlllIlIlI.first = true;
-        llIlIIlllIlIlI.waitingForItemsToSmelt = false;
+        this.first = true;
+        this.waitingForItemsToSmelt = false;
     }
 
-    public void tick(class_1720 llIlIIlllIIIll) {
-        AutoSmelter llIlIIlllIIllI;
-        ++llIlIIlllIIllI.timer;
-        if (!llIlIIlllIIllI.first) {
-            llIlIIlllIIllI.first = true;
-            llIlIIlllIIllI.step = 0;
-            llIlIIlllIIllI.timer = 0;
+    public void tick(class_1720 class_17202) {
+        ++this.timer;
+        if (!this.first) {
+            this.first = true;
+            this.step = 0;
+            this.timer = 0;
         }
-        if (llIlIIlllIIllI.checkFuel(llIlIIlllIIIll)) {
+        if (this.checkFuel(class_17202)) {
             return;
         }
-        if (llIlIIlllIIIll.method_17363() != 0 || llIlIIlllIIllI.timer < 5) {
+        if (class_17202.method_17363() != 0 || this.timer < 5) {
             return;
         }
-        if (llIlIIlllIIllI.step == 0) {
-            if (llIlIIlllIIllI.takeResults(llIlIIlllIIIll)) {
+        if (this.step == 0) {
+            if (this.takeResults(class_17202)) {
                 return;
             }
-            ++llIlIIlllIIllI.step;
-            llIlIIlllIIllI.timer = 0;
-        } else if (llIlIIlllIIllI.step == 1) {
-            if (llIlIIlllIIllI.waitingForItemsToSmelt) {
-                if (((class_1735)llIlIIlllIIIll.field_7761.get(0)).method_7677().method_7960()) {
-                    llIlIIlllIIllI.step = 0;
-                    llIlIIlllIIllI.timer = 0;
-                    llIlIIlllIIllI.waitingForItemsToSmelt = false;
+            ++this.step;
+            this.timer = 0;
+        } else if (this.step == 1) {
+            if (this.waitingForItemsToSmelt) {
+                if (((class_1735)class_17202.field_7761.get(0)).method_7677().method_7960()) {
+                    this.step = 0;
+                    this.timer = 0;
+                    this.waitingForItemsToSmelt = false;
                 }
                 return;
             }
-            if (llIlIIlllIIllI.insertItems(llIlIIlllIIIll)) {
+            if (this.insertItems(class_17202)) {
                 return;
             }
-            llIlIIlllIIllI.waitingForItemsToSmelt = true;
+            this.waitingForItemsToSmelt = true;
         }
     }
 
-    private boolean takeResults(class_1720 llIlIIllIIIlll) {
+    private boolean takeResults(class_1720 class_17202) {
         InvUtils.quickMove().slotId(2);
-        if (!((class_1735)llIlIIllIIIlll.field_7761.get(2)).method_7677().method_7960()) {
-            AutoSmelter llIlIIllIIIllI;
-            llIlIIllIIIllI.error("Your inventory is full... disabling.", new Object[0]);
-            llIlIIllIIIllI.toggle();
+        if (!((class_1735)class_17202.field_7761.get(2)).method_7677().method_7960()) {
+            this.error("Your inventory is full... disabling.", new Object[0]);
+            this.toggle();
             return true;
         }
         return false;
     }
 
-    private boolean insertItems(class_1720 llIlIIllIlllII) {
-        if (!((class_1735)llIlIIllIlllII.field_7761.get(0)).method_7677().method_7960()) {
+    private boolean insertItems(class_1720 class_17202) {
+        if (!((class_1735)class_17202.field_7761.get(0)).method_7677().method_7960()) {
             return true;
         }
-        int llIlIIllIllIll = -1;
-        for (int llIlIIllIllllI = 3; llIlIIllIllllI < llIlIIllIlllII.field_7761.size(); ++llIlIIllIllllI) {
-            if (!((AbstractFurnaceScreenHandlerAccessor)llIlIIllIlllII).isSmeltable(((class_1735)llIlIIllIlllII.field_7761.get(llIlIIllIllllI)).method_7677())) continue;
-            llIlIIllIllIll = llIlIIllIllllI;
+        int n = -1;
+        for (int i = 3; i < class_17202.field_7761.size(); ++i) {
+            if (!((AbstractFurnaceScreenHandlerAccessor)class_17202).isSmeltable(((class_1735)class_17202.field_7761.get(i)).method_7677())) continue;
+            n = i;
             break;
         }
-        if (llIlIIllIllIll == -1) {
-            AutoSmelter llIlIIllIllIlI;
-            llIlIIllIllIlI.error("You do not have any items in your inventory that can be smelted... disabling.", new Object[0]);
-            llIlIIllIllIlI.toggle();
+        if (n == -1) {
+            this.error("You do not have any items in your inventory that can be smelted... disabling.", new Object[0]);
+            this.toggle();
             return true;
         }
-        InvUtils.move().fromId(llIlIIllIllIll).toId(0);
+        InvUtils.move().fromId(n).toId(0);
         return false;
     }
 
     public AutoSmelter() {
         super(Categories.World, "auto-smelter", "Automatically smelts all items in your inventory that can be smelted.");
-        AutoSmelter llIlIIllllIIII;
     }
 
-    private boolean checkFuel(class_1720 llIlIIllIIllIl) {
-        if (llIlIIllIIllIl.method_17364() <= 1 && !((AbstractFurnaceScreenHandlerAccessor)llIlIIllIIllIl).isFuel(((class_1735)llIlIIllIIllIl.field_7761.get(1)).method_7677())) {
-            AutoSmelter llIlIIllIIlllI;
-            if (!((class_1735)llIlIIllIIllIl.field_7761.get(1)).method_7677().method_7960()) {
+    private boolean checkFuel(class_1720 class_17202) {
+        if (class_17202.method_17364() <= 1 && !((AbstractFurnaceScreenHandlerAccessor)class_17202).isFuel(((class_1735)class_17202.field_7761.get(1)).method_7677())) {
+            if (!((class_1735)class_17202.field_7761.get(1)).method_7677().method_7960()) {
                 InvUtils.quickMove().slotId(1);
-                if (!((class_1735)llIlIIllIIllIl.field_7761.get(1)).method_7677().method_7960()) {
-                    llIlIIllIIlllI.error("Your inventory is currently full... disabling.", new Object[0]);
-                    llIlIIllIIlllI.toggle();
+                if (!((class_1735)class_17202.field_7761.get(1)).method_7677().method_7960()) {
+                    this.error("Your inventory is currently full... disabling.", new Object[0]);
+                    this.toggle();
                     return true;
                 }
             }
-            int llIlIIllIlIIIl = -1;
-            for (int llIlIIllIlIIlI = 3; llIlIIllIlIIlI < llIlIIllIIllIl.field_7761.size(); ++llIlIIllIlIIlI) {
-                if (!((AbstractFurnaceScreenHandlerAccessor)llIlIIllIIllIl).isFuel(((class_1735)llIlIIllIIllIl.field_7761.get(llIlIIllIlIIlI)).method_7677())) continue;
-                llIlIIllIlIIIl = llIlIIllIlIIlI;
+            int n = -1;
+            for (int i = 3; i < class_17202.field_7761.size(); ++i) {
+                if (!((AbstractFurnaceScreenHandlerAccessor)class_17202).isFuel(((class_1735)class_17202.field_7761.get(i)).method_7677())) continue;
+                n = i;
                 break;
             }
-            if (llIlIIllIlIIIl == -1) {
-                llIlIIllIIlllI.error("You do not have any fuel in your inventory... disabling.", new Object[0]);
-                llIlIIllIIlllI.toggle();
+            if (n == -1) {
+                this.error("You do not have any fuel in your inventory... disabling.", new Object[0]);
+                this.toggle();
                 return true;
             }
-            InvUtils.move().fromId(llIlIIllIlIIIl).toId(1);
+            InvUtils.move().fromId(n).toId(1);
         }
         return false;
     }
 
     @Override
     public void onActivate() {
-        llIlIIlllIllII.first = true;
-        llIlIIlllIllII.waitingForItemsToSmelt = false;
+        this.first = true;
+        this.waitingForItemsToSmelt = false;
     }
 }
 

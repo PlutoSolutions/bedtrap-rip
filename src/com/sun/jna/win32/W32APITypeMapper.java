@@ -13,35 +13,36 @@ import com.sun.jna.WString;
 
 public class W32APITypeMapper
 extends DefaultTypeMapper {
-    public static final /* synthetic */ TypeMapper DEFAULT;
-    public static final /* synthetic */ TypeMapper UNICODE;
-    public static final /* synthetic */ TypeMapper ASCII;
+    public static final TypeMapper DEFAULT;
+    public static final TypeMapper UNICODE;
+    public static final TypeMapper ASCII;
 
-    protected W32APITypeMapper(boolean lllIIllIIIIlIlI) {
-        W32APITypeMapper lllIIllIIIIlIll;
-        if (lllIIllIIIIlIlI) {
-            TypeConverter lllIIllIIIIllII = new TypeConverter(){
+    protected W32APITypeMapper(boolean bl) {
+        TypeConverter typeConverter;
+        if (bl) {
+            typeConverter = new TypeConverter(this){
+                final W32APITypeMapper this$0;
                 {
-                    1 lllllllllllllllllIlIlIIIIlllIIll;
+                    this.this$0 = w32APITypeMapper;
                 }
 
                 @Override
-                public Object fromNative(Object lllllllllllllllllIlIlIIIIlIllIlI, FromNativeContext lllllllllllllllllIlIlIIIIlIllIIl) {
-                    if (lllllllllllllllllIlIlIIIIlIllIlI == null) {
+                public Object fromNative(Object object, FromNativeContext fromNativeContext) {
+                    if (object == null) {
                         return null;
                     }
-                    return lllllllllllllllllIlIlIIIIlIllIlI.toString();
+                    return object.toString();
                 }
 
                 @Override
-                public Object toNative(Object lllllllllllllllllIlIlIIIIllIIlIl, ToNativeContext lllllllllllllllllIlIlIIIIllIIlII) {
-                    if (lllllllllllllllllIlIlIIIIllIIlIl == null) {
+                public Object toNative(Object object, ToNativeContext toNativeContext) {
+                    if (object == null) {
                         return null;
                     }
-                    if (lllllllllllllllllIlIlIIIIllIIlIl instanceof String[]) {
-                        return new StringArray((String[])lllllllllllllllllIlIlIIIIllIIlIl, true);
+                    if (object instanceof String[]) {
+                        return new StringArray((String[])object, true);
                     }
-                    return new WString(lllllllllllllllllIlIlIIIIllIIlIl.toString());
+                    return new WString(object.toString());
                 }
 
                 @Override
@@ -49,14 +50,15 @@ extends DefaultTypeMapper {
                     return WString.class;
                 }
             };
-            lllIIllIIIIlIll.addTypeConverter(String.class, lllIIllIIIIllII);
-            lllIIllIIIIlIll.addToNativeConverter(String[].class, lllIIllIIIIllII);
+            this.addTypeConverter(String.class, typeConverter);
+            this.addToNativeConverter(String[].class, typeConverter);
         }
-        TypeConverter lllIIllIIIIlIIl = new TypeConverter(){
+        typeConverter = new TypeConverter(this){
+            final W32APITypeMapper this$0;
 
             @Override
-            public Object toNative(Object lIIlIlIlllIllII, ToNativeContext lIIlIlIlllIllIl) {
-                return Boolean.TRUE.equals(lIIlIlIlllIllII) ? 1 : 0;
+            public Object toNative(Object object, ToNativeContext toNativeContext) {
+                return Boolean.TRUE.equals(object) ? 1 : 0;
             }
 
             @Override
@@ -64,15 +66,15 @@ extends DefaultTypeMapper {
                 return Integer.class;
             }
             {
-                2 lIIlIlIllllIIlI;
+                this.this$0 = w32APITypeMapper;
             }
 
             @Override
-            public Object fromNative(Object lIIlIlIlllIlIIl, FromNativeContext lIIlIlIlllIlIII) {
-                return (Integer)lIIlIlIlllIlIIl != 0 ? Boolean.TRUE : Boolean.FALSE;
+            public Object fromNative(Object object, FromNativeContext fromNativeContext) {
+                return (Integer)object != 0 ? Boolean.TRUE : Boolean.FALSE;
             }
         };
-        lllIIllIIIIlIll.addTypeConverter(Boolean.class, lllIIllIIIIlIIl);
+        this.addTypeConverter(Boolean.class, typeConverter);
     }
 
     static {

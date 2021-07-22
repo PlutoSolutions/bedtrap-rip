@@ -9,15 +9,11 @@ public enum KeyAction {
     Release;
 
 
-    private KeyAction() {
-        KeyAction llllllllllllllllllIlllllIIlIlIIl;
-    }
-
-    public static KeyAction get(int llllllllllllllllllIlllllIIlIIIll) {
-        if (llllllllllllllllllIlllllIIlIIIll == 1) {
+    public static KeyAction get(int n) {
+        if (n == 1) {
             return Press;
         }
-        if (llllllllllllllllllIlllllIIlIIIll == 0) {
+        if (n == 0) {
             return Release;
         }
         return Repeat;

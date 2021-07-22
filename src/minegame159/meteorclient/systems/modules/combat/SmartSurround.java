@@ -29,65 +29,61 @@ import net.minecraft.class_1802;
 
 public class SmartSurround
 extends Module {
-    private /* synthetic */ int rPosX;
-    private /* synthetic */ int rPosZ;
-    private final /* synthetic */ Setting<Double> minDamage;
-    private /* synthetic */ class_1297 crystal;
-    private final /* synthetic */ Setting<Boolean> rotate;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private int rPosX;
+    private int rPosZ;
+    private final Setting<Double> minDamage;
+    private class_1297 crystal;
+    private final Setting<Boolean> rotate;
+    private final SettingGroup sgGeneral;
 
     public SmartSurround() {
         super(Categories.Combat, "smart-surround", "Attempts to save you from crystals automatically.");
-        SmartSurround lIlIlIIlIllIIl;
-        lIlIlIIlIllIIl.sgGeneral = lIlIlIIlIllIIl.settings.getDefaultGroup();
-        lIlIlIIlIllIIl.minDamage = lIlIlIIlIllIIl.sgGeneral.add(new DoubleSetting.Builder().name("min-damage").description("The minimum damage before this activates.").defaultValue(5.5).build());
-        lIlIlIIlIllIIl.rotate = lIlIlIIlIllIIl.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Forces you to rotate towards the blocks being placed.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.minDamage = this.sgGeneral.add(new DoubleSetting.Builder().name("min-damage").description("The minimum damage before this activates.").defaultValue(5.5).build());
+        this.rotate = this.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Forces you to rotate towards the blocks being placed.").defaultValue(true).build());
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre lIlIlIIIllIIIl) {
-        SmartSurround lIlIlIIIlIlllI;
-        FindItemResult lIlIlIIIllIIII = InvUtils.findInHotbar(class_1802.field_8281, class_1802.field_22421);
-        if (!lIlIlIIIllIIII.found()) {
+    private void onTick(TickEvent.Pre pre) {
+        FindItemResult findItemResult = InvUtils.findInHotbar(class_1802.field_8281, class_1802.field_22421);
+        if (!findItemResult.found()) {
             return;
         }
-        int lIlIlIIIlIllll = lIlIlIIIlIlllI.mc.field_1724.field_7514.field_7545;
-        if (lIlIlIIIlIlllI.rPosX >= 2 && lIlIlIIIlIlllI.rPosZ == 0) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX - 1, 0, lIlIlIIIllIIII);
-        } else if (lIlIlIIIlIlllI.rPosX > 1 && lIlIlIIIlIlllI.rPosZ > 1) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX, lIlIlIIIlIlllI.rPosZ - 1, lIlIlIIIllIIII);
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX - 1, lIlIlIIIlIlllI.rPosZ, lIlIlIIIllIIII);
-        } else if (lIlIlIIIlIlllI.rPosX == 0 && lIlIlIIIlIlllI.rPosZ >= 2) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, 0, lIlIlIIIlIlllI.rPosZ - 1, lIlIlIIIllIIII);
-        } else if (lIlIlIIIlIlllI.rPosX < -1 && lIlIlIIIlIlllI.rPosZ < -1) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX, lIlIlIIIlIlllI.rPosZ + 1, lIlIlIIIllIIII);
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX + 1, lIlIlIIIlIlllI.rPosZ, lIlIlIIIllIIII);
-        } else if (lIlIlIIIlIlllI.rPosX == 0 && lIlIlIIIlIlllI.rPosZ <= -2) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, 0, lIlIlIIIlIlllI.rPosZ + 1, lIlIlIIIllIIII);
-        } else if (lIlIlIIIlIlllI.rPosX > 1 && lIlIlIIIlIlllI.rPosZ < -1) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX, lIlIlIIIlIlllI.rPosZ + 1, lIlIlIIIllIIII);
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX - 1, lIlIlIIIlIlllI.rPosZ, lIlIlIIIllIIII);
-        } else if (lIlIlIIIlIlllI.rPosX <= -2 && lIlIlIIIlIlllI.rPosZ == 0) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX + 1, 0, lIlIlIIIllIIII);
-        } else if (lIlIlIIIlIlllI.rPosX < -1 && lIlIlIIIlIlllI.rPosZ > 1) {
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX, lIlIlIIIlIlllI.rPosZ - 1, lIlIlIIIllIIII);
-            lIlIlIIIlIlllI.placeObi(lIlIlIIIlIlllI.crystal, lIlIlIIIlIlllI.rPosX + 1, lIlIlIIIlIlllI.rPosZ, lIlIlIIIllIIII);
+        int n = this.mc.field_1724.field_7514.field_7545;
+        if (this.rPosX >= 2 && this.rPosZ == 0) {
+            this.placeObi(this.crystal, this.rPosX - 1, 0, findItemResult);
+        } else if (this.rPosX > 1 && this.rPosZ > 1) {
+            this.placeObi(this.crystal, this.rPosX, this.rPosZ - 1, findItemResult);
+            this.placeObi(this.crystal, this.rPosX - 1, this.rPosZ, findItemResult);
+        } else if (this.rPosX == 0 && this.rPosZ >= 2) {
+            this.placeObi(this.crystal, 0, this.rPosZ - 1, findItemResult);
+        } else if (this.rPosX < -1 && this.rPosZ < -1) {
+            this.placeObi(this.crystal, this.rPosX, this.rPosZ + 1, findItemResult);
+            this.placeObi(this.crystal, this.rPosX + 1, this.rPosZ, findItemResult);
+        } else if (this.rPosX == 0 && this.rPosZ <= -2) {
+            this.placeObi(this.crystal, 0, this.rPosZ + 1, findItemResult);
+        } else if (this.rPosX > 1 && this.rPosZ < -1) {
+            this.placeObi(this.crystal, this.rPosX, this.rPosZ + 1, findItemResult);
+            this.placeObi(this.crystal, this.rPosX - 1, this.rPosZ, findItemResult);
+        } else if (this.rPosX <= -2 && this.rPosZ == 0) {
+            this.placeObi(this.crystal, this.rPosX + 1, 0, findItemResult);
+        } else if (this.rPosX < -1 && this.rPosZ > 1) {
+            this.placeObi(this.crystal, this.rPosX, this.rPosZ - 1, findItemResult);
+            this.placeObi(this.crystal, this.rPosX + 1, this.rPosZ, findItemResult);
         }
-        InvUtils.swap(lIlIlIIIlIllll);
+        InvUtils.swap(n);
     }
 
-    private void placeObi(class_1297 lIlIlIIIlIIIII, int lIlIlIIIlIIlII, int lIlIlIIIIllllI, FindItemResult lIlIlIIIIlllIl) {
-        SmartSurround lIlIlIIIlIIllI;
-        BlockUtils.place(lIlIlIIIlIIIII.method_24515().method_10069(lIlIlIIIlIIlII, -1, lIlIlIIIIllllI), lIlIlIIIIlllIl, lIlIlIIIlIIllI.rotate.get(), 100, false, true, false);
+    private void placeObi(class_1297 class_12972, int n, int n2, FindItemResult findItemResult) {
+        BlockUtils.place(class_12972.method_24515().method_10069(n, -1, n2), findItemResult, this.rotate.get(), 100, false, true, false);
     }
 
     @EventHandler
-    private void onSpawn(EntityAddedEvent lIlIlIIlIIlllI) {
-        SmartSurround lIlIlIIlIlIIlI;
-        lIlIlIIlIlIIlI.crystal = lIlIlIIlIIlllI.entity;
-        if (lIlIlIIlIIlllI.entity.method_5864() == class_1299.field_6110 && DamageCalcUtils.crystalDamage((class_1309)lIlIlIIlIlIIlI.mc.field_1724, lIlIlIIlIIlllI.entity.method_19538()) > lIlIlIIlIlIIlI.minDamage.get()) {
-            lIlIlIIlIlIIlI.rPosX = lIlIlIIlIlIIlI.mc.field_1724.method_24515().method_10263() - lIlIlIIlIIlllI.entity.method_24515().method_10263();
-            lIlIlIIlIlIIlI.rPosZ = lIlIlIIlIlIIlI.mc.field_1724.method_24515().method_10260() - lIlIlIIlIIlllI.entity.method_24515().method_10260();
+    private void onSpawn(EntityAddedEvent entityAddedEvent) {
+        this.crystal = entityAddedEvent.entity;
+        if (entityAddedEvent.entity.method_5864() == class_1299.field_6110 && DamageCalcUtils.crystalDamage((class_1309)this.mc.field_1724, entityAddedEvent.entity.method_19538()) > this.minDamage.get()) {
+            this.rPosX = this.mc.field_1724.method_24515().method_10263() - entityAddedEvent.entity.method_24515().method_10263();
+            this.rPosZ = this.mc.field_1724.method_24515().method_10260() - entityAddedEvent.entity.method_24515().method_10260();
         }
     }
 }

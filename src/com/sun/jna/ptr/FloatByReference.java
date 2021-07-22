@@ -8,24 +8,20 @@ import com.sun.jna.ptr.ByReference;
 public class FloatByReference
 extends ByReference {
     public FloatByReference() {
-        lllllIlIlIIlIll(0.0f);
-        FloatByReference lllllIlIlIIlIll;
+        this(0.0f);
     }
 
-    public void setValue(float lllllIlIlIIIIII) {
-        FloatByReference lllllIlIlIIIIIl;
-        lllllIlIlIIIIIl.getPointer().setFloat(0L, lllllIlIlIIIIII);
+    public void setValue(float f) {
+        this.getPointer().setFloat(0L, f);
     }
 
     public float getValue() {
-        FloatByReference lllllIlIIllllII;
-        return lllllIlIIllllII.getPointer().getFloat(0L);
+        return this.getPointer().getFloat(0L);
     }
 
-    public FloatByReference(float lllllIlIlIIIllI) {
+    public FloatByReference(float f) {
         super(4);
-        FloatByReference lllllIlIlIIIlIl;
-        lllllIlIlIIIlIl.setValue(lllllIlIlIIIllI);
+        this.setValue(f);
     }
 }
 

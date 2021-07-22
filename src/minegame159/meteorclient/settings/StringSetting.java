@@ -11,101 +11,102 @@ import minegame159.meteorclient.settings.IVisible;
 import minegame159.meteorclient.settings.Setting;
 import net.minecraft.class_2487;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class StringSetting
 extends Setting<String> {
     @Override
-    public String fromTag(class_2487 lllllIllIlIll) {
-        StringSetting lllllIllIlIlI;
-        lllllIllIlIlI.set(lllllIllIlIll.method_10558("value"));
-        return (String)lllllIllIlIlI.get();
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((String)object);
     }
 
     @Override
-    protected String parseImpl(String lllllIllllllI) {
-        return lllllIllllllI;
+    public String fromTag(class_2487 class_24872) {
+        this.set(class_24872.method_10558("value"));
+        return (String)this.get();
     }
 
     @Override
-    protected boolean isValueValid(String lllllIlllIlIl) {
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    @Override
+    protected String parseImpl(String string) {
+        return string;
+    }
+
+    @Override
+    protected boolean isValueValid(String string) {
         return true;
     }
 
-    public StringSetting(String llllllIIIllIl, String llllllIIIIlIl, String llllllIIIlIll, Consumer<String> llllllIIIIIll, Consumer<Setting<String>> llllllIIIlIIl, IVisible llllllIIIIIIl) {
-        super(llllllIIIllIl, llllllIIIIlIl, llllllIIIlIll, llllllIIIIIll, llllllIIIlIIl, llllllIIIIIIl);
-        StringSetting llllllIIIlllI;
-        llllllIIIlllI.value = llllllIIIlIll;
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public StringSetting(String string, String string2, String string3, Consumer<String> consumer, Consumer<Setting<String>> consumer2, IVisible iVisible) {
+        super(string, string2, string3, consumer, consumer2, iVisible);
+        this.value = string3;
     }
 
     @Override
     public class_2487 toTag() {
-        StringSetting lllllIlllIIII;
-        class_2487 lllllIlllIIIl = lllllIlllIIII.saveGeneral();
-        lllllIlllIIIl.method_10582("value", (String)lllllIlllIIII.get());
-        return lllllIlllIIIl;
+        class_2487 class_24872 = this.saveGeneral();
+        class_24872.method_10582("value", (String)this.get());
+        return class_24872;
     }
 
     @Override
-    public void reset(boolean lllllIllllIIl) {
-        StringSetting lllllIllllIlI;
-        lllllIllllIlI.value = lllllIllllIlI.defaultValue;
-        if (lllllIllllIIl) {
-            lllllIllllIlI.changed();
+    public void reset(boolean bl) {
+        this.value = this.defaultValue;
+        if (bl) {
+            this.changed();
         }
     }
 
     public static class Builder {
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ String description;
-        private /* synthetic */ String defaultValue;
-        private /* synthetic */ String name;
-        private /* synthetic */ Consumer<String> onChanged;
-        private /* synthetic */ Consumer<Setting<String>> onModuleActivated;
+        private IVisible visible;
+        private String description = "";
+        private String defaultValue;
+        private String name = "undefined";
+        private Consumer<String> onChanged;
+        private Consumer<Setting<String>> onModuleActivated;
 
-        public Builder onModuleActivated(Consumer<Setting<String>> llllllIlIlIIll) {
-            Builder llllllIlIlIIlI;
-            llllllIlIlIIlI.onModuleActivated = llllllIlIlIIll;
-            return llllllIlIlIIlI;
+        public Builder onModuleActivated(Consumer<Setting<String>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder onChanged(Consumer<String> llllllIlIlIlll) {
-            Builder llllllIlIllIII;
-            llllllIlIllIII.onChanged = llllllIlIlIlll;
-            return llllllIlIllIII;
-        }
-
-        public Builder() {
-            Builder llllllIllIllll;
-            llllllIllIllll.name = "undefined";
-            llllllIllIllll.description = "";
+        public Builder onChanged(Consumer<String> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
         public StringSetting build() {
-            Builder llllllIlIIlIIl;
-            return new StringSetting(llllllIlIIlIIl.name, llllllIlIIlIIl.description, llllllIlIIlIIl.defaultValue, llllllIlIIlIIl.onChanged, llllllIlIIlIIl.onModuleActivated, llllllIlIIlIIl.visible);
+            return new StringSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
 
-        public Builder description(String llllllIllIIlIl) {
-            Builder llllllIllIIlII;
-            llllllIllIIlII.description = llllllIllIIlIl;
-            return llllllIllIIlII;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder defaultValue(String llllllIlIlllll) {
-            Builder llllllIllIIIII;
-            llllllIllIIIII.defaultValue = llllllIlIlllll;
-            return llllllIllIIIII;
+        public Builder defaultValue(String string) {
+            this.defaultValue = string;
+            return this;
         }
 
-        public Builder visible(IVisible llllllIlIIlIll) {
-            Builder llllllIlIIllII;
-            llllllIlIIllII.visible = llllllIlIIlIll;
-            return llllllIlIIllII;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder name(String llllllIllIlIIl) {
-            Builder llllllIllIlIlI;
-            llllllIllIlIlI.name = llllllIllIlIIl;
-            return llllllIllIlIlI;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
     }
 }

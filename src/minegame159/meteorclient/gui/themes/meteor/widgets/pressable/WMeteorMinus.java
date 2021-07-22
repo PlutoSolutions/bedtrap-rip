@@ -10,17 +10,12 @@ import minegame159.meteorclient.gui.widgets.pressable.WMinus;
 public class WMeteorMinus
 extends WMinus
 implements MeteorWidget {
-    public WMeteorMinus() {
-        WMeteorMinus lllllllllllllllllllIIlIIIlllllII;
-    }
-
     @Override
-    protected void onRender(GuiRenderer lllllllllllllllllllIIlIIIllIIIIl, double lllllllllllllllllllIIlIIIllIllII, double lllllllllllllllllllIIlIIIllIlIll, double lllllllllllllllllllIIlIIIllIlIIl) {
-        WMeteorMinus lllllllllllllllllllIIlIIIllIIIll;
-        double lllllllllllllllllllIIlIIIllIIlll = lllllllllllllllllllIIlIIIllIIIll.pad();
-        double lllllllllllllllllllIIlIIIllIIlIl = lllllllllllllllllllIIlIIIllIIIll.theme.scale(3.0);
-        lllllllllllllllllllIIlIIIllIIIll.renderBackground(lllllllllllllllllllIIlIIIllIIIIl, lllllllllllllllllllIIlIIIllIIIll, lllllllllllllllllllIIlIIIllIIIll.pressed, lllllllllllllllllllIIlIIIllIIIll.mouseOver);
-        lllllllllllllllllllIIlIIIllIIIIl.quad(lllllllllllllllllllIIlIIIllIIIll.x + lllllllllllllllllllIIlIIIllIIlll, lllllllllllllllllllIIlIIIllIIIll.y + lllllllllllllllllllIIlIIIllIIIll.height / 2.0 - lllllllllllllllllllIIlIIIllIIlIl / 2.0, lllllllllllllllllllIIlIIIllIIIll.width - lllllllllllllllllllIIlIIIllIIlll * 2.0, lllllllllllllllllllIIlIIIllIIlIl, lllllllllllllllllllIIlIIIllIIIll.theme().minusColor.get());
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        double d4 = this.pad();
+        double d5 = this.theme.scale(3.0);
+        this.renderBackground(guiRenderer, this, this.pressed, this.mouseOver);
+        guiRenderer.quad(this.x + d4, this.y + this.height / 2.0 - d5 / 2.0, this.width - d4 * 2.0, d5, this.theme().minusColor.get());
     }
 }
 

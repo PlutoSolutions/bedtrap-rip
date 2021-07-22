@@ -36,64 +36,63 @@ import net.minecraft.class_3191;
 
 public class BreakIndicators
 extends Module {
-    private final /* synthetic */ Setting<SettingColor> startColor;
-    private final /* synthetic */ Setting<SettingColor> endColor;
-    private final /* synthetic */ Color cSides;
-    private final /* synthetic */ Color cLines;
-    private final /* synthetic */ Setting<ShapeMode> shapeMode;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<SettingColor> startColor;
+    private final Setting<SettingColor> endColor;
+    private final Color cSides;
+    private final Color cLines;
+    private final Setting<ShapeMode> shapeMode;
+    private final SettingGroup sgGeneral;
 
     public BreakIndicators() {
         super(Categories.Render, "break-indicators", "Renders the progress of a block being broken.");
-        BreakIndicators llllllllllllllllllIlIIIlIIIlIIll;
-        llllllllllllllllllIlIIIlIIIlIIll.sgGeneral = llllllllllllllllllIlIIIlIIIlIIll.settings.getDefaultGroup();
-        llllllllllllllllllIlIIIlIIIlIIll.shapeMode = llllllllllllllllllIlIIIlIIIlIIll.sgGeneral.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
-        llllllllllllllllllIlIIIlIIIlIIll.startColor = llllllllllllllllllIlIIIlIIIlIIll.sgGeneral.add(new ColorSetting.Builder().name("start-color").description("The color for the non-broken block.").defaultValue(new SettingColor(25, 252, 25, 150)).build());
-        llllllllllllllllllIlIIIlIIIlIIll.endColor = llllllllllllllllllIlIIIlIIIlIIll.sgGeneral.add(new ColorSetting.Builder().name("end-color").description("The color for the fully-broken block.").defaultValue(new SettingColor(255, 25, 25, 150)).build());
-        llllllllllllllllllIlIIIlIIIlIIll.cSides = new Color();
-        llllllllllllllllllIlIIIlIIIlIIll.cLines = new Color();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.shapeMode = this.sgGeneral.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
+        this.startColor = this.sgGeneral.add(new ColorSetting.Builder().name("start-color").description("The color for the non-broken block.").defaultValue(new SettingColor(25, 252, 25, 150)).build());
+        this.endColor = this.sgGeneral.add(new ColorSetting.Builder().name("end-color").description("The color for the fully-broken block.").defaultValue(new SettingColor(255, 25, 25, 150)).build());
+        this.cSides = new Color();
+        this.cLines = new Color();
+    }
+
+    private void lambda$onRender$0(class_2338 class_23382, float f, class_3191 class_31912) {
+        class_238 class_2383;
+        class_2338 class_23383 = class_31912.method_13991();
+        int n = class_31912.method_13988();
+        class_2680 class_26802 = this.mc.field_1687.method_8320(class_23383);
+        class_265 class_2652 = class_26802.method_26218((class_1922)this.mc.field_1687, class_23383);
+        if (class_2652.method_1110()) {
+            return;
+        }
+        class_238 class_2384 = class_2383 = class_2652.method_1107();
+        double d = (double)(9 - (n + 1)) / 9.0;
+        if (class_23382 != null && f > 0.0f && class_23382.equals((Object)class_23383)) {
+            d = 1.0 - (double)f;
+        }
+        double d2 = 1.0 - d;
+        class_2384 = class_2384.method_1002(class_2384.method_17939() * d, class_2384.method_17940() * d, class_2384.method_17941() * d);
+        double d3 = class_2383.method_17939() * d / 2.0;
+        double d4 = class_2383.method_17940() * d / 2.0;
+        double d5 = class_2383.method_17941() * d / 2.0;
+        double d6 = (double)class_23383.method_10263() + class_2384.field_1323 + d3;
+        double d7 = (double)class_23383.method_10264() + class_2384.field_1322 + d4;
+        double d8 = (double)class_23383.method_10260() + class_2384.field_1321 + d5;
+        double d9 = (double)class_23383.method_10263() + class_2384.field_1320 + d3;
+        double d10 = (double)class_23383.method_10264() + class_2384.field_1325 + d4;
+        double d11 = (double)class_23383.method_10260() + class_2384.field_1324 + d5;
+        Color color = this.startColor.get().copy().a(this.startColor.get().a / 2);
+        Color color2 = this.endColor.get().copy().a(this.endColor.get().a / 2);
+        this.cSides.set((int)Math.round((double)color.r + (double)(color2.r - color.r) * d2), (int)Math.round((double)color.g + (double)(color2.g - color.g) * d2), (int)Math.round((double)color.b + (double)(color2.b - color.b) * d2), (int)Math.round((double)color.a + (double)(color2.a - color.a) * d2));
+        Color color3 = this.startColor.get();
+        Color color4 = this.endColor.get();
+        this.cLines.set((int)Math.round((double)color3.r + (double)(color4.r - color3.r) * d2), (int)Math.round((double)color3.g + (double)(color4.g - color3.g) * d2), (int)Math.round((double)color3.b + (double)(color4.b - color3.b) * d2), (int)Math.round((double)color3.a + (double)(color4.a - color3.a) * d2));
+        Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, d6, d7, d8, d9, d10, d11, this.cSides, this.cLines, this.shapeMode.get(), 0);
     }
 
     @EventHandler
-    private void onRender(RenderEvent llllllllllllllllllIlIIIlIIIIllIl) {
-        BreakIndicators llllllllllllllllllIlIIIlIIIIlIIl;
-        Int2ObjectMap<class_3191> llllllllllllllllllIlIIIlIIIIllII = ((WorldRendererAccessor)llllllllllllllllllIlIIIlIIIIlIIl.mc.field_1769).getBlockBreakingInfos();
-        float llllllllllllllllllIlIIIlIIIIlIll = ((ClientPlayerInteractionManagerAccessor)llllllllllllllllllIlIIIlIIIIlIIl.mc.field_1761).getBreakingProgress();
-        class_2338 llllllllllllllllllIlIIIlIIIIlIlI = ((ClientPlayerInteractionManagerAccessor)llllllllllllllllllIlIIIlIIIIlIIl.mc.field_1761).getCurrentBreakingBlockPos();
-        llllllllllllllllllIlIIIlIIIIllII.values().forEach(llllllllllllllllllIlIIIIllIlIIII -> {
-            class_238 llllllllllllllllllIlIIIIlllIIlII;
-            BreakIndicators llllllllllllllllllIlIIIIllIlIIll;
-            class_2338 llllllllllllllllllIlIIIIlllIlIII = llllllllllllllllllIlIIIIllIlIIII.method_13991();
-            int llllllllllllllllllIlIIIIlllIIlll = llllllllllllllllllIlIIIIllIlIIII.method_13988();
-            class_2680 llllllllllllllllllIlIIIIlllIIllI = llllllllllllllllllIlIIIIllIlIIll.mc.field_1687.method_8320(llllllllllllllllllIlIIIIlllIlIII);
-            class_265 llllllllllllllllllIlIIIIlllIIlIl = llllllllllllllllllIlIIIIlllIIllI.method_26218((class_1922)llllllllllllllllllIlIIIIllIlIIll.mc.field_1687, llllllllllllllllllIlIIIIlllIlIII);
-            if (llllllllllllllllllIlIIIIlllIIlIl.method_1110()) {
-                return;
-            }
-            class_238 llllllllllllllllllIlIIIIlllIIIll = llllllllllllllllllIlIIIIlllIIlII = llllllllllllllllllIlIIIIlllIIlIl.method_1107();
-            double llllllllllllllllllIlIIIIlllIIIlI = (double)(9 - (llllllllllllllllllIlIIIIlllIIlll + 1)) / 9.0;
-            if (llllllllllllllllllIlIIIlIIIIlIlI != null && llllllllllllllllllIlIIIlIIIIlIll > 0.0f && llllllllllllllllllIlIIIlIIIIlIlI.equals((Object)llllllllllllllllllIlIIIIlllIlIII)) {
-                llllllllllllllllllIlIIIIlllIIIlI = 1.0 - (double)llllllllllllllllllIlIIIlIIIIlIll;
-            }
-            double llllllllllllllllllIlIIIIlllIIIIl = 1.0 - llllllllllllllllllIlIIIIlllIIIlI;
-            llllllllllllllllllIlIIIIlllIIIll = llllllllllllllllllIlIIIIlllIIIll.method_1002(llllllllllllllllllIlIIIIlllIIIll.method_17939() * llllllllllllllllllIlIIIIlllIIIlI, llllllllllllllllllIlIIIIlllIIIll.method_17940() * llllllllllllllllllIlIIIIlllIIIlI, llllllllllllllllllIlIIIIlllIIIll.method_17941() * llllllllllllllllllIlIIIIlllIIIlI);
-            double llllllllllllllllllIlIIIIlllIIIII = llllllllllllllllllIlIIIIlllIIlII.method_17939() * llllllllllllllllllIlIIIIlllIIIlI / 2.0;
-            double llllllllllllllllllIlIIIIllIlllll = llllllllllllllllllIlIIIIlllIIlII.method_17940() * llllllllllllllllllIlIIIIlllIIIlI / 2.0;
-            double llllllllllllllllllIlIIIIllIllllI = llllllllllllllllllIlIIIIlllIIlII.method_17941() * llllllllllllllllllIlIIIIlllIIIlI / 2.0;
-            double llllllllllllllllllIlIIIIllIlllIl = (double)llllllllllllllllllIlIIIIlllIlIII.method_10263() + llllllllllllllllllIlIIIIlllIIIll.field_1323 + llllllllllllllllllIlIIIIlllIIIII;
-            double llllllllllllllllllIlIIIIllIlllII = (double)llllllllllllllllllIlIIIIlllIlIII.method_10264() + llllllllllllllllllIlIIIIlllIIIll.field_1322 + llllllllllllllllllIlIIIIllIlllll;
-            double llllllllllllllllllIlIIIIllIllIll = (double)llllllllllllllllllIlIIIIlllIlIII.method_10260() + llllllllllllllllllIlIIIIlllIIIll.field_1321 + llllllllllllllllllIlIIIIllIllllI;
-            double llllllllllllllllllIlIIIIllIllIlI = (double)llllllllllllllllllIlIIIIlllIlIII.method_10263() + llllllllllllllllllIlIIIIlllIIIll.field_1320 + llllllllllllllllllIlIIIIlllIIIII;
-            double llllllllllllllllllIlIIIIllIllIIl = (double)llllllllllllllllllIlIIIIlllIlIII.method_10264() + llllllllllllllllllIlIIIIlllIIIll.field_1325 + llllllllllllllllllIlIIIIllIlllll;
-            double llllllllllllllllllIlIIIIllIllIII = (double)llllllllllllllllllIlIIIIlllIlIII.method_10260() + llllllllllllllllllIlIIIIlllIIIll.field_1324 + llllllllllllllllllIlIIIIllIllllI;
-            Color llllllllllllllllllIlIIIIllIlIlll = llllllllllllllllllIlIIIIllIlIIll.startColor.get().copy().a(llllllllllllllllllIlIIIIllIlIIll.startColor.get().a / 2);
-            Color llllllllllllllllllIlIIIIllIlIllI = llllllllllllllllllIlIIIIllIlIIll.endColor.get().copy().a(llllllllllllllllllIlIIIIllIlIIll.endColor.get().a / 2);
-            llllllllllllllllllIlIIIIllIlIIll.cSides.set((int)Math.round((double)llllllllllllllllllIlIIIIllIlIlll.r + (double)(llllllllllllllllllIlIIIIllIlIllI.r - llllllllllllllllllIlIIIIllIlIlll.r) * llllllllllllllllllIlIIIIlllIIIIl), (int)Math.round((double)llllllllllllllllllIlIIIIllIlIlll.g + (double)(llllllllllllllllllIlIIIIllIlIllI.g - llllllllllllllllllIlIIIIllIlIlll.g) * llllllllllllllllllIlIIIIlllIIIIl), (int)Math.round((double)llllllllllllllllllIlIIIIllIlIlll.b + (double)(llllllllllllllllllIlIIIIllIlIllI.b - llllllllllllllllllIlIIIIllIlIlll.b) * llllllllllllllllllIlIIIIlllIIIIl), (int)Math.round((double)llllllllllllllllllIlIIIIllIlIlll.a + (double)(llllllllllllllllllIlIIIIllIlIllI.a - llllllllllllllllllIlIIIIllIlIlll.a) * llllllllllllllllllIlIIIIlllIIIIl));
-            Color llllllllllllllllllIlIIIIllIlIlIl = llllllllllllllllllIlIIIIllIlIIll.startColor.get();
-            Color llllllllllllllllllIlIIIIllIlIlII = llllllllllllllllllIlIIIIllIlIIll.endColor.get();
-            llllllllllllllllllIlIIIIllIlIIll.cLines.set((int)Math.round((double)llllllllllllllllllIlIIIIllIlIlIl.r + (double)(llllllllllllllllllIlIIIIllIlIlII.r - llllllllllllllllllIlIIIIllIlIlIl.r) * llllllllllllllllllIlIIIIlllIIIIl), (int)Math.round((double)llllllllllllllllllIlIIIIllIlIlIl.g + (double)(llllllllllllllllllIlIIIIllIlIlII.g - llllllllllllllllllIlIIIIllIlIlIl.g) * llllllllllllllllllIlIIIIlllIIIIl), (int)Math.round((double)llllllllllllllllllIlIIIIllIlIlIl.b + (double)(llllllllllllllllllIlIIIIllIlIlII.b - llllllllllllllllllIlIIIIllIlIlIl.b) * llllllllllllllllllIlIIIIlllIIIIl), (int)Math.round((double)llllllllllllllllllIlIIIIllIlIlIl.a + (double)(llllllllllllllllllIlIIIIllIlIlII.a - llllllllllllllllllIlIIIIllIlIlIl.a) * llllllllllllllllllIlIIIIlllIIIIl));
-            Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, llllllllllllllllllIlIIIIllIlllIl, llllllllllllllllllIlIIIIllIlllII, llllllllllllllllllIlIIIIllIllIll, llllllllllllllllllIlIIIIllIllIlI, llllllllllllllllllIlIIIIllIllIIl, llllllllllllllllllIlIIIIllIllIII, llllllllllllllllllIlIIIIllIlIIll.cSides, llllllllllllllllllIlIIIIllIlIIll.cLines, llllllllllllllllllIlIIIIllIlIIll.shapeMode.get(), 0);
-        });
+    private void onRender(RenderEvent renderEvent) {
+        Int2ObjectMap<class_3191> int2ObjectMap = ((WorldRendererAccessor)this.mc.field_1769).getBlockBreakingInfos();
+        float f = ((ClientPlayerInteractionManagerAccessor)this.mc.field_1761).getBreakingProgress();
+        class_2338 class_23382 = ((ClientPlayerInteractionManagerAccessor)this.mc.field_1761).getCurrentBreakingBlockPos();
+        int2ObjectMap.values().forEach(arg_0 -> this.lambda$onRender$0(class_23382, f, arg_0));
     }
 }
 

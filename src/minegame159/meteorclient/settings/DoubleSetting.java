@@ -11,163 +11,159 @@ import minegame159.meteorclient.settings.IVisible;
 import minegame159.meteorclient.settings.Setting;
 import net.minecraft.class_2487;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class DoubleSetting
 extends Setting<Double> {
-    public final /* synthetic */ int decimalPlaces;
-    public final /* synthetic */ Double min;
-    private final /* synthetic */ Double sliderMin;
-    private final /* synthetic */ Double sliderMax;
-    public final /* synthetic */ Double max;
-    public final /* synthetic */ boolean onSliderRelease;
+    public final int decimalPlaces;
+    public final Double min;
+    private final Double sliderMin;
+    private final Double sliderMax;
+    public final Double max;
+    public final boolean onSliderRelease;
 
     @Override
-    public Double fromTag(class_2487 lIlIIllllIIIIlI) {
-        DoubleSetting lIlIIllllIIIlIl;
-        lIlIIllllIIIlIl.set(lIlIIllllIIIIlI.method_10574("value"));
-        return (Double)lIlIIllllIIIlIl.get();
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((Double)object);
+    }
+
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    @Override
+    public Double fromTag(class_2487 class_24872) {
+        this.set(class_24872.method_10574("value"));
+        return (Double)this.get();
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     @Override
     public class_2487 toTag() {
-        DoubleSetting lIlIIllllIIlIIl;
-        class_2487 lIlIIllllIIlIlI = lIlIIllllIIlIIl.saveGeneral();
-        lIlIIllllIIlIlI.method_10549("value", ((Double)lIlIIllllIIlIIl.get()).doubleValue());
-        return lIlIIllllIIlIlI;
+        class_2487 class_24872 = this.saveGeneral();
+        class_24872.method_10549("value", ((Double)this.get()).doubleValue());
+        return class_24872;
+    }
+
+    DoubleSetting(String string, String string2, Double d, Consumer consumer, Consumer consumer2, IVisible iVisible, Double d2, Double d3, Double d4, Double d5, boolean bl, int n, 1 var13_13) {
+        this(string, string2, d, consumer, consumer2, iVisible, d2, d3, d4, d5, bl, n);
     }
 
     public double getSliderMin() {
-        DoubleSetting lIlIIllllIlIIIl;
-        return lIlIIllllIlIIIl.sliderMin != null ? lIlIIllllIlIIIl.sliderMin : 0.0;
+        return this.sliderMin != null ? this.sliderMin : 0.0;
     }
 
     public double getSliderMax() {
-        DoubleSetting lIlIIllllIIllll;
-        return lIlIIllllIIllll.sliderMax != null ? lIlIIllllIIllll.sliderMax : 10.0;
+        return this.sliderMax != null ? this.sliderMax : 10.0;
     }
 
     @Override
-    protected boolean isValueValid(Double lIlIIllllIlIlII) {
-        DoubleSetting lIlIIllllIlIlll;
-        return (lIlIIllllIlIlll.min == null || lIlIIllllIlIlII >= lIlIIllllIlIlll.min) && (lIlIIllllIlIlll.max == null || lIlIIllllIlIlII <= lIlIIllllIlIlll.max);
+    protected boolean isValueValid(Double d) {
+        return (this.min == null || d >= this.min) && (this.max == null || d <= this.max);
     }
 
     @Override
-    protected Double parseImpl(String lIlIIllllIlllII) {
+    protected Double parseImpl(String string) {
         try {
-            return Double.parseDouble(lIlIIllllIlllII.trim());
+            return Double.parseDouble(string.trim());
         }
-        catch (NumberFormatException lIlIIllllIllllI) {
+        catch (NumberFormatException numberFormatException) {
             return null;
         }
     }
 
-    private DoubleSetting(String lIlIIlllllIllII, String lIlIIlllllllIII, Double lIlIIllllllIlll, Consumer<Double> lIlIIlllllIlIIl, Consumer<Setting<Double>> lIlIIllllllIlIl, IVisible lIlIIlllllIIlll, Double lIlIIllllllIIll, Double lIlIIlllllIIlIl, Double lIlIIllllllIIIl, Double lIlIIlllllIIIll, boolean lIlIIlllllIllll, int lIlIIlllllIIIIl) {
-        super(lIlIIlllllIllII, lIlIIlllllllIII, lIlIIllllllIlll, lIlIIlllllIlIIl, lIlIIllllllIlIl, lIlIIlllllIIlll);
-        DoubleSetting lIlIIlllllllIlI;
-        lIlIIlllllllIlI.min = lIlIIllllllIIll;
-        lIlIIlllllllIlI.max = lIlIIlllllIIlIl;
-        lIlIIlllllllIlI.sliderMin = lIlIIllllllIIIl;
-        lIlIIlllllllIlI.sliderMax = lIlIIlllllIIIll;
-        lIlIIlllllllIlI.decimalPlaces = lIlIIlllllIIIIl;
-        lIlIIlllllllIlI.onSliderRelease = lIlIIlllllIllll;
+    private DoubleSetting(String string, String string2, Double d, Consumer<Double> consumer, Consumer<Setting<Double>> consumer2, IVisible iVisible, Double d2, Double d3, Double d4, Double d5, boolean bl, int n) {
+        super(string, string2, d, consumer, consumer2, iVisible);
+        this.min = d2;
+        this.max = d3;
+        this.sliderMin = d4;
+        this.sliderMax = d5;
+        this.decimalPlaces = n;
+        this.onSliderRelease = bl;
     }
 
     public static class Builder {
-        private /* synthetic */ boolean onSliderRelease;
-        private /* synthetic */ String name;
-        private /* synthetic */ Double defaultValue;
-        private /* synthetic */ String description;
-        private /* synthetic */ Double max;
-        private /* synthetic */ Double sliderMax;
-        private /* synthetic */ int decimalPlaces;
-        private /* synthetic */ Consumer<Double> onChanged;
-        private /* synthetic */ Consumer<Setting<Double>> onModuleActivated;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ Double min;
-        private /* synthetic */ Double sliderMin;
+        private boolean onSliderRelease;
+        private String name = "undefined";
+        private Double defaultValue;
+        private String description = "";
+        private Double max;
+        private Double sliderMax;
+        private int decimalPlaces = 3;
+        private Consumer<Double> onChanged;
+        private Consumer<Setting<Double>> onModuleActivated;
+        private IVisible visible;
+        private Double min;
+        private Double sliderMin;
 
-        public Builder defaultValue(double lllllllllllllllllllllIlIIllIIlII) {
-            Builder lllllllllllllllllllllIlIIllIIlIl;
-            lllllllllllllllllllllIlIIllIIlIl.defaultValue = lllllllllllllllllllllIlIIllIIlII;
-            return lllllllllllllllllllllIlIIllIIlIl;
+        public Builder defaultValue(double d) {
+            this.defaultValue = d;
+            return this;
         }
 
-        public Builder name(String lllllllllllllllllllllIlIIllIlllI) {
-            Builder lllllllllllllllllllllIlIIlllIIIl;
-            lllllllllllllllllllllIlIIlllIIIl.name = lllllllllllllllllllllIlIIllIlllI;
-            return lllllllllllllllllllllIlIIlllIIIl;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder onChanged(Consumer<Double> lllllllllllllllllllllIlIIlIlllII) {
-            Builder lllllllllllllllllllllIlIIlIlllIl;
-            lllllllllllllllllllllIlIIlIlllIl.onChanged = lllllllllllllllllllllIlIIlIlllII;
-            return lllllllllllllllllllllIlIIlIlllIl;
+        public Builder onChanged(Consumer<Double> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
         public Builder onSliderRelease() {
-            Builder lllllllllllllllllllllIlIIIllIlIl;
-            lllllllllllllllllllllIlIIIllIlIl.onSliderRelease = true;
-            return lllllllllllllllllllllIlIIIllIlIl;
+            this.onSliderRelease = true;
+            return this;
         }
 
-        public Builder visible(IVisible lllllllllllllllllllllIlIIlIlIIlI) {
-            Builder lllllllllllllllllllllIlIIlIlIIll;
-            lllllllllllllllllllllIlIIlIlIIll.visible = lllllllllllllllllllllIlIIlIlIIlI;
-            return lllllllllllllllllllllIlIIlIlIIll;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<Double>> lllllllllllllllllllllIlIIlIllIII) {
-            Builder lllllllllllllllllllllIlIIlIlIlll;
-            lllllllllllllllllllllIlIIlIlIlll.onModuleActivated = lllllllllllllllllllllIlIIlIllIII;
-            return lllllllllllllllllllllIlIIlIlIlll;
+        public Builder onModuleActivated(Consumer<Setting<Double>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder decimalPlaces(int lllllllllllllllllllllIlIIIlIllll) {
-            Builder lllllllllllllllllllllIlIIIllIIlI;
-            lllllllllllllllllllllIlIIIllIIlI.decimalPlaces = lllllllllllllllllllllIlIIIlIllll;
-            return lllllllllllllllllllllIlIIIllIIlI;
+        public Builder decimalPlaces(int n) {
+            this.decimalPlaces = n;
+            return this;
         }
 
-        public Builder sliderMax(double lllllllllllllllllllllIlIIIlllIII) {
-            Builder lllllllllllllllllllllIlIIIlllIIl;
-            lllllllllllllllllllllIlIIIlllIIl.sliderMax = lllllllllllllllllllllIlIIIlllIII;
-            return lllllllllllllllllllllIlIIIlllIIl;
+        public Builder sliderMax(double d) {
+            this.sliderMax = d;
+            return this;
         }
 
-        public Builder() {
-            Builder lllllllllllllllllllllIlIIlllIlII;
-            lllllllllllllllllllllIlIIlllIlII.name = "undefined";
-            lllllllllllllllllllllIlIIlllIlII.description = "";
-            lllllllllllllllllllllIlIIlllIlII.decimalPlaces = 3;
-        }
-
-        public Builder min(double lllllllllllllllllllllIlIIlIIllII) {
-            Builder lllllllllllllllllllllIlIIlIIlIll;
-            lllllllllllllllllllllIlIIlIIlIll.min = lllllllllllllllllllllIlIIlIIllII;
-            return lllllllllllllllllllllIlIIlIIlIll;
+        public Builder min(double d) {
+            this.min = d;
+            return this;
         }
 
         public DoubleSetting build() {
-            Builder lllllllllllllllllllllIlIIIlIllII;
-            return new DoubleSetting(lllllllllllllllllllllIlIIIlIllII.name, lllllllllllllllllllllIlIIIlIllII.description, lllllllllllllllllllllIlIIIlIllII.defaultValue, lllllllllllllllllllllIlIIIlIllII.onChanged, lllllllllllllllllllllIlIIIlIllII.onModuleActivated, lllllllllllllllllllllIlIIIlIllII.visible, lllllllllllllllllllllIlIIIlIllII.min, lllllllllllllllllllllIlIIIlIllII.max, lllllllllllllllllllllIlIIIlIllII.sliderMin, lllllllllllllllllllllIlIIIlIllII.sliderMax, lllllllllllllllllllllIlIIIlIllII.onSliderRelease, lllllllllllllllllllllIlIIIlIllII.decimalPlaces);
+            return new DoubleSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible, this.min, this.max, this.sliderMin, this.sliderMax, this.onSliderRelease, this.decimalPlaces, null);
         }
 
-        public Builder sliderMin(double lllllllllllllllllllllIlIIlIIIIII) {
-            Builder lllllllllllllllllllllIlIIlIIIIIl;
-            lllllllllllllllllllllIlIIlIIIIIl.sliderMin = lllllllllllllllllllllIlIIlIIIIII;
-            return lllllllllllllllllllllIlIIlIIIIIl;
+        public Builder sliderMin(double d) {
+            this.sliderMin = d;
+            return this;
         }
 
-        public Builder max(double lllllllllllllllllllllIlIIlIIIllI) {
-            Builder lllllllllllllllllllllIlIIlIIIlIl;
-            lllllllllllllllllllllIlIIlIIIlIl.max = lllllllllllllllllllllIlIIlIIIllI;
-            return lllllllllllllllllllllIlIIlIIIlIl;
+        public Builder max(double d) {
+            this.max = d;
+            return this;
         }
 
-        public Builder description(String lllllllllllllllllllllIlIIllIlIII) {
-            Builder lllllllllllllllllllllIlIIllIlIIl;
-            lllllllllllllllllllllIlIIllIlIIl.description = lllllllllllllllllllllIlIIllIlIII;
-            return lllllllllllllllllllllIlIIllIlIIl;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
     }
 }

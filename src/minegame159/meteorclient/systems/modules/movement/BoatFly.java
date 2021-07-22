@@ -23,45 +23,42 @@ import net.minecraft.class_2692;
 
 public class BoatFly
 extends Module {
-    private final /* synthetic */ Setting<Double> verticalSpeed;
-    private final /* synthetic */ Setting<Boolean> cancelServerPackets;
-    private final /* synthetic */ Setting<Double> speed;
-    private final /* synthetic */ Setting<Double> fallSpeed;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Double> verticalSpeed;
+    private final Setting<Boolean> cancelServerPackets;
+    private final Setting<Double> speed;
+    private final Setting<Double> fallSpeed;
+    private final SettingGroup sgGeneral;
 
     public BoatFly() {
         super(Categories.Movement, "boat-fly", "Transforms your boat into a plane.");
-        BoatFly llllllllllllllllllllIIllllIIIlll;
-        llllllllllllllllllllIIllllIIIlll.sgGeneral = llllllllllllllllllllIIllllIIIlll.settings.getDefaultGroup();
-        llllllllllllllllllllIIllllIIIlll.speed = llllllllllllllllllllIIllllIIIlll.sgGeneral.add(new DoubleSetting.Builder().name("speed").description("Horizontal speed in blocks per second.").defaultValue(10.0).min(0.0).sliderMax(50.0).build());
-        llllllllllllllllllllIIllllIIIlll.verticalSpeed = llllllllllllllllllllIIllllIIIlll.sgGeneral.add(new DoubleSetting.Builder().name("vertical-speed").description("Vertical speed in blocks per second.").defaultValue(6.0).min(0.0).sliderMax(20.0).build());
-        llllllllllllllllllllIIllllIIIlll.fallSpeed = llllllllllllllllllllIIllllIIIlll.sgGeneral.add(new DoubleSetting.Builder().name("fall-speed").description("How fast you fall in blocks per second.").defaultValue(0.1).min(0.0).build());
-        llllllllllllllllllllIIllllIIIlll.cancelServerPackets = llllllllllllllllllllIIllllIIIlll.sgGeneral.add(new BoolSetting.Builder().name("cancel-server-packets").description("Cancels incoming boat move packets.").defaultValue(false).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.speed = this.sgGeneral.add(new DoubleSetting.Builder().name("speed").description("Horizontal speed in blocks per second.").defaultValue(10.0).min(0.0).sliderMax(50.0).build());
+        this.verticalSpeed = this.sgGeneral.add(new DoubleSetting.Builder().name("vertical-speed").description("Vertical speed in blocks per second.").defaultValue(6.0).min(0.0).sliderMax(20.0).build());
+        this.fallSpeed = this.sgGeneral.add(new DoubleSetting.Builder().name("fall-speed").description("How fast you fall in blocks per second.").defaultValue(0.1).min(0.0).build());
+        this.cancelServerPackets = this.sgGeneral.add(new BoolSetting.Builder().name("cancel-server-packets").description("Cancels incoming boat move packets.").defaultValue(false).build());
     }
 
     @EventHandler
-    private void onBoatMove(BoatMoveEvent llllllllllllllllllllIIlllIlllIIl) {
-        BoatFly llllllllllllllllllllIIllllIIIIII;
-        if (llllllllllllllllllllIIlllIlllIIl.boat.method_5642() != llllllllllllllllllllIIllllIIIIII.mc.field_1724) {
+    private void onBoatMove(BoatMoveEvent boatMoveEvent) {
+        if (boatMoveEvent.boat.method_5642() != this.mc.field_1724) {
             return;
         }
-        llllllllllllllllllllIIlllIlllIIl.boat.field_6031 = llllllllllllllllllllIIllllIIIIII.mc.field_1724.field_6031;
-        class_243 llllllllllllllllllllIIlllIlllllI = PlayerUtils.getHorizontalVelocity(llllllllllllllllllllIIllllIIIIII.speed.get());
-        double llllllllllllllllllllIIlllIllllIl = llllllllllllllllllllIIlllIlllllI.method_10216();
-        double llllllllllllllllllllIIlllIllllII = 0.0;
-        double llllllllllllllllllllIIlllIlllIll = llllllllllllllllllllIIlllIlllllI.method_10215();
-        if (llllllllllllllllllllIIllllIIIIII.mc.field_1690.field_1903.method_1434()) {
-            llllllllllllllllllllIIlllIllllII += llllllllllllllllllllIIllllIIIIII.verticalSpeed.get() / 20.0;
+        boatMoveEvent.boat.field_6031 = this.mc.field_1724.field_6031;
+        class_243 class_2432 = PlayerUtils.getHorizontalVelocity(this.speed.get());
+        double d = class_2432.method_10216();
+        double d2 = 0.0;
+        double d3 = class_2432.method_10215();
+        if (this.mc.field_1690.field_1903.method_1434()) {
+            d2 += this.verticalSpeed.get() / 20.0;
         }
-        llllllllllllllllllllIIlllIllllII = llllllllllllllllllllIIllllIIIIII.mc.field_1690.field_1867.method_1434() ? (llllllllllllllllllllIIlllIllllII -= llllllllllllllllllllIIllllIIIIII.verticalSpeed.get() / 20.0) : (llllllllllllllllllllIIlllIllllII -= llllllllllllllllllllIIllllIIIIII.fallSpeed.get() / 20.0);
-        ((IVec3d)llllllllllllllllllllIIlllIlllIIl.boat.method_18798()).set(llllllllllllllllllllIIlllIllllIl, llllllllllllllllllllIIlllIllllII, llllllllllllllllllllIIlllIlllIll);
+        d2 = this.mc.field_1690.field_1867.method_1434() ? (d2 -= this.verticalSpeed.get() / 20.0) : (d2 -= this.fallSpeed.get() / 20.0);
+        ((IVec3d)boatMoveEvent.boat.method_18798()).set(d, d2, d3);
     }
 
     @EventHandler
-    private void onReceivePacket(PacketEvent.Receive llllllllllllllllllllIIlllIlIllll) {
-        BoatFly llllllllllllllllllllIIlllIllIIII;
-        if (llllllllllllllllllllIIlllIlIllll.packet instanceof class_2692 && llllllllllllllllllllIIlllIllIIII.cancelServerPackets.get().booleanValue()) {
-            llllllllllllllllllllIIlllIlIllll.cancel();
+    private void onReceivePacket(PacketEvent.Receive receive) {
+        if (receive.packet instanceof class_2692 && this.cancelServerPackets.get().booleanValue()) {
+            receive.cancel();
         }
     }
 }

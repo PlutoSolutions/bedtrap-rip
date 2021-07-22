@@ -17,40 +17,37 @@ import net.minecraft.class_745;
 
 public class FakePlayerEntity
 extends class_745 {
-    public FakePlayerEntity(String lllllllllllllllllIIIllIlIlIlIIlI, float lllllllllllllllllIIIllIlIlIlIIIl, boolean lllllllllllllllllIIIllIlIlIlIlIl) {
-        super(Utils.mc.field_1687, new GameProfile(Utils.mc.field_1724.method_5667(), lllllllllllllllllIIIllIlIlIlIIlI));
-        FakePlayerEntity lllllllllllllllllIIIllIlIlIlIIll;
-        lllllllllllllllllIIIllIlIlIlIIll.method_5719((class_1297)Utils.mc.field_1724);
-        lllllllllllllllllIIIllIlIlIlIIll.field_6241 = Utils.mc.field_1724.field_6241;
-        lllllllllllllllllIIIllIlIlIlIIll.field_6283 = Utils.mc.field_1724.field_6283;
-        Byte lllllllllllllllllIIIllIlIlIlIlII = (Byte)Utils.mc.field_1724.method_5841().method_12789(class_1657.field_7518);
-        lllllllllllllllllIIIllIlIlIlIIll.field_6011.method_12778(class_1657.field_7518, (Object)lllllllllllllllllIIIllIlIlIlIlII);
-        lllllllllllllllllIIIllIlIlIlIIll.method_6127().method_26846(Utils.mc.field_1724.method_6127());
-        lllllllllllllllllIIIllIlIlIlIIll.field_7500 = lllllllllllllllllIIIllIlIlIlIIll.method_23317();
-        lllllllllllllllllIIIllIlIlIlIIll.field_7521 = lllllllllllllllllIIIllIlIlIlIIll.method_23318();
-        lllllllllllllllllIIIllIlIlIlIIll.field_7499 = lllllllllllllllllIIIllIlIlIlIIll.method_23321();
-        if (lllllllllllllllllIIIllIlIlIlIIIl <= 20.0f) {
-            lllllllllllllllllIIIllIlIlIlIIll.method_6033(lllllllllllllllllIIIllIlIlIlIIIl);
+    public FakePlayerEntity(String string, float f, boolean bl) {
+        super(Utils.mc.field_1687, new GameProfile(Utils.mc.field_1724.method_5667(), string));
+        this.method_5719((class_1297)Utils.mc.field_1724);
+        this.field_6241 = Utils.mc.field_1724.field_6241;
+        this.field_6283 = Utils.mc.field_1724.field_6283;
+        Byte by = (Byte)Utils.mc.field_1724.method_5841().method_12789(class_1657.field_7518);
+        this.field_6011.method_12778(class_1657.field_7518, (Object)by);
+        this.method_6127().method_26846(Utils.mc.field_1724.method_6127());
+        this.field_7500 = this.method_23317();
+        this.field_7521 = this.method_23318();
+        this.field_7499 = this.method_23321();
+        if (f <= 20.0f) {
+            this.method_6033(f);
         } else {
-            lllllllllllllllllIIIllIlIlIlIIll.method_6033(lllllllllllllllllIIIllIlIlIlIIIl);
-            lllllllllllllllllIIIllIlIlIlIIll.method_6073(lllllllllllllllllIIIllIlIlIlIIIl - 20.0f);
+            this.method_6033(f);
+            this.method_6073(f - 20.0f);
         }
-        if (lllllllllllllllllIIIllIlIlIlIlIl) {
-            lllllllllllllllllIIIllIlIlIlIIll.field_7514.method_7377(Utils.mc.field_1724.field_7514);
+        if (bl) {
+            this.field_7514.method_7377(Utils.mc.field_1724.field_7514);
         }
-        lllllllllllllllllIIIllIlIlIlIIll.spawn();
+        this.spawn();
     }
 
     public void despawn() {
-        FakePlayerEntity lllllllllllllllllIIIllIlIlIIlIlI;
-        Utils.mc.field_1687.method_2945(lllllllllllllllllIIIllIlIlIIlIlI.method_5628());
-        lllllllllllllllllIIIllIlIlIIlIlI.field_5988 = true;
+        Utils.mc.field_1687.method_2945(this.method_5628());
+        this.field_5988 = true;
     }
 
     private void spawn() {
-        FakePlayerEntity lllllllllllllllllIIIllIlIlIIllIl;
-        lllllllllllllllllIIIllIlIlIIllIl.field_5988 = false;
-        Utils.mc.field_1687.method_2942(lllllllllllllllllIIIllIlIlIIllIl.method_5628(), (class_1297)lllllllllllllllllIIIllIlIlIIllIl);
+        this.field_5988 = false;
+        Utils.mc.field_1687.method_2942(this.method_5628(), (class_1297)this);
     }
 }
 

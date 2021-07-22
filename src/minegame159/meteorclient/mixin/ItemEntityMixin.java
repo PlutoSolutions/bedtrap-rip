@@ -24,8 +24,8 @@ implements IItemEntity {
     }
 
     @Override
-    public void setRotation(class_243 rotation) {
-        this.rotation = rotation;
+    public void setRotation(class_243 class_2432) {
+        this.rotation = class_2432;
     }
 }
 

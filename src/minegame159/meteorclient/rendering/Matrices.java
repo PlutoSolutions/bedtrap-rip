@@ -13,42 +13,38 @@ import net.minecraft.class_1159;
 import net.minecraft.class_4587;
 
 public class Matrices {
-    private static /* synthetic */ class_4587 matrixStack;
+    private static class_4587 matrixStack;
 
     public static void pop() {
         matrixStack.method_22909();
     }
 
-    public static void rotate(double lllllllllllllllllIIIIllllIIIIlII, double lllllllllllllllllIIIIllllIIIIlll, double lllllllllllllllllIIIIllllIIIIllI, double lllllllllllllllllIIIIllllIIIIlIl) {
-        matrixStack.method_22907(new class_1158((float)(lllllllllllllllllIIIIllllIIIIlll * lllllllllllllllllIIIIllllIIIIlII), (float)(lllllllllllllllllIIIIllllIIIIllI * lllllllllllllllllIIIIllllIIIIlII), (float)(lllllllllllllllllIIIIllllIIIIlIl * lllllllllllllllllIIIIllllIIIIlII), true));
+    public static void rotate(double d, double d2, double d3, double d4) {
+        matrixStack.method_22907(new class_1158((float)(d2 * d), (float)(d3 * d), (float)(d4 * d), true));
     }
 
     public static class_1159 getTop() {
         return matrixStack.method_23760().method_23761();
     }
 
-    public Matrices() {
-        Matrices lllllllllllllllllIIIIllllIIllIIl;
-    }
-
     public static class_4587 getMatrixStack() {
         return matrixStack;
     }
 
-    public static void translate(double lllllllllllllllllIIIIllllIIlIIlI, double lllllllllllllllllIIIIllllIIIlllI, double lllllllllllllllllIIIIllllIIIllIl) {
-        matrixStack.method_22904(lllllllllllllllllIIIIllllIIlIIlI, lllllllllllllllllIIIIllllIIIlllI, lllllllllllllllllIIIIllllIIIllIl);
+    public static void translate(double d, double d2, double d3) {
+        matrixStack.method_22904(d, d2, d3);
     }
 
     public static void push() {
         matrixStack.method_22903();
     }
 
-    public static void begin(class_4587 lllllllllllllllllIIIIllllIIlIllI) {
-        matrixStack = lllllllllllllllllIIIIllllIIlIllI;
+    public static void begin(class_4587 class_45872) {
+        matrixStack = class_45872;
     }
 
-    public static void scale(double lllllllllllllllllIIIIlllIlllllIl, double lllllllllllllllllIIIIlllIllllIIl, double lllllllllllllllllIIIIlllIllllIll) {
-        matrixStack.method_22905((float)lllllllllllllllllIIIIlllIlllllIl, (float)lllllllllllllllllIIIIlllIllllIIl, (float)lllllllllllllllllIIIIlllIllllIll);
+    public static void scale(double d, double d2, double d3) {
+        matrixStack.method_22905((float)d, (float)d2, (float)d3);
     }
 }
 

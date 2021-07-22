@@ -36,71 +36,68 @@ import net.minecraft.class_2879;
 
 public class AntiBed
 extends Module {
-    private final /* synthetic */ Setting<Boolean> placeStringMiddle;
-    private final /* synthetic */ Setting<Boolean> placeStringBottom;
-    private /* synthetic */ boolean breaking;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> placeStringTop;
-    private final /* synthetic */ Setting<Boolean> onlyInHole;
+    private final Setting<Boolean> placeStringMiddle;
+    private final Setting<Boolean> placeStringBottom;
+    private boolean breaking;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> placeStringTop;
+    private final Setting<Boolean> onlyInHole;
+
+    private void lambda$onTick$1(class_2338 class_23382) {
+        this.sendStopPackets(class_23382);
+    }
+
+    private void lambda$onTick$0(class_2338 class_23382) {
+        this.sendMinePackets(class_23382);
+    }
 
     @EventHandler
-    private void onTick(TickEvent.Pre llllllllllllllllIllIlIIlIllIllll) {
-        AntiBed llllllllllllllllIllIlIIlIllIllIl;
-        if (llllllllllllllllIllIlIIlIllIllIl.onlyInHole.get().booleanValue() && !PlayerUtils.isInHole(true)) {
+    private void onTick(TickEvent.Pre pre) {
+        if (this.onlyInHole.get().booleanValue() && !PlayerUtils.isInHole(true)) {
             return;
         }
-        class_2338 llllllllllllllllIllIlIIlIllIlllI = llllllllllllllllIllIlIIlIllIllIl.mc.field_1724.method_24515().method_10084();
-        if (llllllllllllllllIllIlIIlIllIllIl.mc.field_1687.method_8320(llllllllllllllllIllIlIIlIllIlllI).method_26204() instanceof class_2244 && !llllllllllllllllIllIlIIlIllIllIl.breaking) {
-            Rotations.rotate(Rotations.getYaw(llllllllllllllllIllIlIIlIllIlllI), Rotations.getPitch(llllllllllllllllIllIlIIlIllIlllI), 50, () -> {
-                AntiBed llllllllllllllllIllIlIIlIlIIllll;
-                llllllllllllllllIllIlIIlIlIIllll.sendMinePackets(llllllllllllllllIllIlIIlIllIlllI);
-            });
-            llllllllllllllllIllIlIIlIllIllIl.breaking = true;
-        } else if (llllllllllllllllIllIlIIlIllIllIl.breaking) {
-            Rotations.rotate(Rotations.getYaw(llllllllllllllllIllIlIIlIllIlllI), Rotations.getPitch(llllllllllllllllIllIlIIlIllIlllI), 50, () -> {
-                AntiBed llllllllllllllllIllIlIIlIlIlIlIl;
-                llllllllllllllllIllIlIIlIlIlIlIl.sendStopPackets(llllllllllllllllIllIlIIlIllIlllI);
-            });
-            llllllllllllllllIllIlIIlIllIllIl.breaking = false;
+        class_2338 class_23382 = this.mc.field_1724.method_24515().method_10084();
+        if (this.mc.field_1687.method_8320(class_23382).method_26204() instanceof class_2244 && !this.breaking) {
+            Rotations.rotate(Rotations.getYaw(class_23382), Rotations.getPitch(class_23382), 50, () -> this.lambda$onTick$0(class_23382));
+            this.breaking = true;
+        } else if (this.breaking) {
+            Rotations.rotate(Rotations.getYaw(class_23382), Rotations.getPitch(class_23382), 50, () -> this.lambda$onTick$1(class_23382));
+            this.breaking = false;
         }
-        if (llllllllllllllllIllIlIIlIllIllIl.placeStringTop.get().booleanValue()) {
-            llllllllllllllllIllIlIIlIllIllIl.place(llllllllllllllllIllIlIIlIllIllIl.mc.field_1724.method_24515().method_10086(2));
+        if (this.placeStringTop.get().booleanValue()) {
+            this.place(this.mc.field_1724.method_24515().method_10086(2));
         }
-        if (llllllllllllllllIllIlIIlIllIllIl.placeStringMiddle.get().booleanValue()) {
-            llllllllllllllllIllIlIIlIllIllIl.place(llllllllllllllllIllIlIIlIllIllIl.mc.field_1724.method_24515().method_10086(1));
+        if (this.placeStringMiddle.get().booleanValue()) {
+            this.place(this.mc.field_1724.method_24515().method_10086(1));
         }
-        if (llllllllllllllllIllIlIIlIllIllIl.placeStringBottom.get().booleanValue()) {
-            llllllllllllllllIllIlIIlIllIllIl.place(llllllllllllllllIllIlIIlIllIllIl.mc.field_1724.method_24515());
+        if (this.placeStringBottom.get().booleanValue()) {
+            this.place(this.mc.field_1724.method_24515());
         }
     }
 
     public AntiBed() {
         super(Categories.Combat, "anti-bed", "Places string to prevent beds being placed on you.");
-        AntiBed llllllllllllllllIllIlIIlIlllIlII;
-        llllllllllllllllIllIlIIlIlllIlII.sgGeneral = llllllllllllllllIllIlIIlIlllIlII.settings.getDefaultGroup();
-        llllllllllllllllIllIlIIlIlllIlII.placeStringTop = llllllllllllllllIllIlIIlIlllIlII.sgGeneral.add(new BoolSetting.Builder().name("place-string-top").description("Places string above you.").defaultValue(false).build());
-        llllllllllllllllIllIlIIlIlllIlII.placeStringMiddle = llllllllllllllllIllIlIIlIlllIlII.sgGeneral.add(new BoolSetting.Builder().name("place-string-middle").description("Places string in your upper hitbox.").defaultValue(true).build());
-        llllllllllllllllIllIlIIlIlllIlII.placeStringBottom = llllllllllllllllIllIlIIlIlllIlII.sgGeneral.add(new BoolSetting.Builder().name("place-string-bottom").description("Places string at your feet.").defaultValue(false).build());
-        llllllllllllllllIllIlIIlIlllIlII.onlyInHole = llllllllllllllllIllIlIIlIlllIlII.sgGeneral.add(new BoolSetting.Builder().name("only-in-hole").description("Only functions when you are standing in a hole.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.placeStringTop = this.sgGeneral.add(new BoolSetting.Builder().name("place-string-top").description("Places string above you.").defaultValue(false).build());
+        this.placeStringMiddle = this.sgGeneral.add(new BoolSetting.Builder().name("place-string-middle").description("Places string in your upper hitbox.").defaultValue(true).build());
+        this.placeStringBottom = this.sgGeneral.add(new BoolSetting.Builder().name("place-string-bottom").description("Places string at your feet.").defaultValue(false).build());
+        this.onlyInHole = this.sgGeneral.add(new BoolSetting.Builder().name("only-in-hole").description("Only functions when you are standing in a hole.").defaultValue(true).build());
     }
 
-    private void place(class_2338 llllllllllllllllIllIlIIlIllIlIII) {
-        AntiBed llllllllllllllllIllIlIIlIllIlIIl;
-        if (llllllllllllllllIllIlIIlIllIlIIl.mc.field_1687.method_8320(llllllllllllllllIllIlIIlIllIlIII).method_26204().method_8389() != class_1802.field_8276) {
-            BlockUtils.place(llllllllllllllllIllIlIIlIllIlIII, InvUtils.findInHotbar(class_1802.field_8276), 50, false);
+    private void place(class_2338 class_23382) {
+        if (this.mc.field_1687.method_8320(class_23382).method_26204().method_8389() != class_1802.field_8276) {
+            BlockUtils.place(class_23382, InvUtils.findInHotbar(class_1802.field_8276), 50, false);
         }
     }
 
-    private void sendStopPackets(class_2338 llllllllllllllllIllIlIIlIlIlllII) {
-        AntiBed llllllllllllllllIllIlIIlIlIllIll;
-        llllllllllllllllIllIlIIlIlIllIll.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12971, llllllllllllllllIllIlIIlIlIlllII, class_2350.field_11036));
-        llllllllllllllllIllIlIIlIlIllIll.mc.method_1562().method_2883((class_2596)new class_2879(class_1268.field_5808));
+    private void sendStopPackets(class_2338 class_23382) {
+        this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12971, class_23382, class_2350.field_11036));
+        this.mc.method_1562().method_2883((class_2596)new class_2879(class_1268.field_5808));
     }
 
-    private void sendMinePackets(class_2338 llllllllllllllllIllIlIIlIllIIIII) {
-        AntiBed llllllllllllllllIllIlIIlIllIIIll;
-        llllllllllllllllIllIlIIlIllIIIll.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12968, llllllllllllllllIllIlIIlIllIIIII, class_2350.field_11036));
-        llllllllllllllllIllIlIIlIllIIIll.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, llllllllllllllllIllIlIIlIllIIIII, class_2350.field_11036));
+    private void sendMinePackets(class_2338 class_23382) {
+        this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12968, class_23382, class_2350.field_11036));
+        this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, class_23382, class_2350.field_11036));
     }
 }
 

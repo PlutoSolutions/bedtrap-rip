@@ -50,7 +50,7 @@ public abstract class AbstractQuadRendererMixin {
     protected class_1160 normalVec;
 
     @Shadow
-    public static void bufferQuad(class_4588 buff, MutableQuadViewImpl quad, class_1159 matrix, int overlay, class_4581 normalMatrix, class_1160 normalVec) {
+    public static void bufferQuad(class_4588 class_45882, MutableQuadViewImpl mutableQuadViewImpl, class_1159 class_11592, int n, class_4581 class_45812, class_1160 class_11602) {
     }
 
     @Shadow
@@ -63,42 +63,42 @@ public abstract class AbstractQuadRendererMixin {
     protected abstract class_4581 normalMatrix();
 
     @Inject(method={"bufferQuad(Lnet/fabricmc/fabric/impl/client/indigo/renderer/mesh/MutableQuadViewImpl;Lnet/minecraft/class_1921;)V"}, at={@At(value="HEAD")}, cancellable=true, remap=false)
-    private void onBufferQuad(MutableQuadViewImpl quad, class_1921 renderLayer, CallbackInfo ci) {
+    private void onBufferQuad(MutableQuadViewImpl mutableQuadViewImpl, class_1921 class_19212, CallbackInfo callbackInfo) {
         WallHack wallHack = Modules.get().get(WallHack.class);
         if (wallHack.isActive()) {
             if (wallHack.blocks.get().contains((Object)this.blockInfo.blockState.method_26204())) {
-                AbstractQuadRendererMixin.whBufferQuad(this.bufferFunc.apply(renderLayer), quad, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec, wallHack);
+                AbstractQuadRendererMixin.whBufferQuad(this.bufferFunc.apply(class_19212), mutableQuadViewImpl, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec, wallHack);
             } else {
-                AbstractQuadRendererMixin.bufferQuad(this.bufferFunc.apply(renderLayer), quad, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec);
+                AbstractQuadRendererMixin.bufferQuad(this.bufferFunc.apply(class_19212), mutableQuadViewImpl, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec);
             }
         } else {
-            AbstractQuadRendererMixin.bufferQuad(this.bufferFunc.apply(renderLayer), quad, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec);
+            AbstractQuadRendererMixin.bufferQuad(this.bufferFunc.apply(class_19212), mutableQuadViewImpl, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec);
         }
-        ci.cancel();
+        callbackInfo.cancel();
     }
 
-    private static void whBufferQuad(class_4588 buff, MutableQuadViewImpl quad, class_1159 matrix, int overlay, class_4581 normalMatrix, class_1160 normalVec, WallHack wallHack) {
-        boolean useNormals = quad.hasVertexNormals();
-        if (useNormals) {
-            quad.populateMissingNormals();
+    private static void whBufferQuad(class_4588 class_45882, MutableQuadViewImpl mutableQuadViewImpl, class_1159 class_11592, int n, class_4581 class_45812, class_1160 class_11602, WallHack wallHack) {
+        boolean bl = mutableQuadViewImpl.hasVertexNormals();
+        if (bl) {
+            mutableQuadViewImpl.populateMissingNormals();
         } else {
-            class_1160 faceNormal = quad.faceNormal();
-            normalVec.method_4949(faceNormal.method_4943(), faceNormal.method_4945(), faceNormal.method_4947());
-            normalVec.method_23215(normalMatrix);
+            class_1160 class_11603 = mutableQuadViewImpl.faceNormal();
+            class_11602.method_4949(class_11603.method_4943(), class_11603.method_4945(), class_11603.method_4947());
+            class_11602.method_23215(class_45812);
         }
         for (int i = 0; i < 4; ++i) {
-            buff.method_22918(matrix, quad.x(i), quad.y(i), quad.z(i));
-            int color = quad.spriteColor(i, 0);
-            buff.method_1336(color & 0xFF, color >> 8 & 0xFF, color >> 16 & 0xFF, wallHack.opacity.get().intValue());
-            buff.method_22913(quad.spriteU(i, 0), quad.spriteV(i, 0));
-            buff.method_22922(overlay);
-            buff.method_22916(quad.lightmap(i));
-            if (useNormals) {
-                normalVec.method_4949(quad.normalX(i), quad.normalY(i), quad.normalZ(i));
-                normalVec.method_23215(normalMatrix);
+            class_45882.method_22918(class_11592, mutableQuadViewImpl.x(i), mutableQuadViewImpl.y(i), mutableQuadViewImpl.z(i));
+            int n2 = mutableQuadViewImpl.spriteColor(i, 0);
+            class_45882.method_1336(n2 & 0xFF, n2 >> 8 & 0xFF, n2 >> 16 & 0xFF, wallHack.opacity.get().intValue());
+            class_45882.method_22913(mutableQuadViewImpl.spriteU(i, 0), mutableQuadViewImpl.spriteV(i, 0));
+            class_45882.method_22922(n);
+            class_45882.method_22916(mutableQuadViewImpl.lightmap(i));
+            if (bl) {
+                class_11602.method_4949(mutableQuadViewImpl.normalX(i), mutableQuadViewImpl.normalY(i), mutableQuadViewImpl.normalZ(i));
+                class_11602.method_23215(class_45812);
             }
-            buff.method_22914(normalVec.method_4943(), normalVec.method_4945(), normalVec.method_4947());
-            buff.method_1344();
+            class_45882.method_22914(class_11602.method_4943(), class_11602.method_4945(), class_11602.method_4947());
+            class_45882.method_1344();
         }
     }
 }

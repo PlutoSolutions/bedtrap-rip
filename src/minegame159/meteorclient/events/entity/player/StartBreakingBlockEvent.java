@@ -13,23 +13,15 @@ import net.minecraft.class_2350;
 
 public class StartBreakingBlockEvent
 extends Cancellable {
-    public /* synthetic */ class_2338 blockPos;
-    public /* synthetic */ class_2350 direction;
-    private static final /* synthetic */ StartBreakingBlockEvent INSTANCE;
+    public class_2338 blockPos;
+    public class_2350 direction;
+    private static final StartBreakingBlockEvent INSTANCE = new StartBreakingBlockEvent();
 
-    public static StartBreakingBlockEvent get(class_2338 llllllllllllllllllllllllIlIIlIlI, class_2350 llllllllllllllllllllllllIlIIlIIl) {
+    public static StartBreakingBlockEvent get(class_2338 class_23382, class_2350 class_23502) {
         INSTANCE.setCancelled(false);
-        StartBreakingBlockEvent.INSTANCE.blockPos = llllllllllllllllllllllllIlIIlIlI;
-        StartBreakingBlockEvent.INSTANCE.direction = llllllllllllllllllllllllIlIIlIIl;
+        StartBreakingBlockEvent.INSTANCE.blockPos = class_23382;
+        StartBreakingBlockEvent.INSTANCE.direction = class_23502;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new StartBreakingBlockEvent();
-    }
-
-    public StartBreakingBlockEvent() {
-        StartBreakingBlockEvent llllllllllllllllllllllllIlIIllll;
     }
 }
 

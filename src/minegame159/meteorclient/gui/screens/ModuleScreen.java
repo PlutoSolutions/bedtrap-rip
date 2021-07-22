@@ -20,64 +20,72 @@ import minegame159.meteorclient.utils.Utils;
 
 public class ModuleScreen
 extends WindowScreen {
-    private final /* synthetic */ Module module;
-    private final /* synthetic */ WContainer settings;
-    private final /* synthetic */ WKeybind keybind;
+    private final Module module;
+    private final WContainer settings;
+    private final WKeybind keybind;
 
     public void method_25393() {
-        ModuleScreen llllllllllllllllIllllIIllIlIIlll;
         super.method_25393();
-        llllllllllllllllIllllIIllIlIIlll.module.settings.tick(llllllllllllllllIllllIIllIlIIlll.settings, llllllllllllllllIllllIIllIlIIlll.theme);
+        this.module.settings.tick(this.settings, this.theme);
+    }
+
+    private static void lambda$new$2(Module module, WCheckbox wCheckbox) {
+        if (module.isActive() != wCheckbox.checked) {
+            module.toggle(Utils.canUpdate());
+        }
     }
 
     @EventHandler
-    private void onModuleBindChanged(ModuleBindChangedEvent llllllllllllllllIllllIIllIlIIlII) {
-        ModuleScreen llllllllllllllllIllllIIllIlIIIll;
-        llllllllllllllllIllllIIllIlIIIll.keybind.reset();
+    private void onModuleBindChanged(ModuleBindChangedEvent moduleBindChangedEvent) {
+        this.keybind.reset();
     }
 
-    public ModuleScreen(GuiTheme llllllllllllllllIllllIIllIllllII, Module llllllllllllllllIllllIIllIllIIIl) {
-        super(llllllllllllllllIllllIIllIllllII, llllllllllllllllIllllIIllIllIIIl.title);
-        WWidget llllllllllllllllIllllIIllIlllIlI;
-        ModuleScreen llllllllllllllllIllllIIllIllIIll;
-        llllllllllllllllIllllIIllIllIIll.module = llllllllllllllllIllllIIllIllIIIl;
-        llllllllllllllllIllllIIllIllIIll.add(llllllllllllllllIllllIIllIllllII.label(llllllllllllllllIllllIIllIllIIIl.description, (double)Utils.getWindowWidth() / 2.0));
-        llllllllllllllllIllllIIllIllIIll.settings = llllllllllllllllIllllIIllIllIIll.add(llllllllllllllllIllllIIllIllllII.verticalList()).expandX().widget();
-        if (llllllllllllllllIllllIIllIllIIIl.settings.groups.size() > 0) {
-            llllllllllllllllIllllIIllIllIIll.settings.add(llllllllllllllllIllllIIllIllllII.settings(llllllllllllllllIllllIIllIllIIIl.settings)).expandX();
+    private static void lambda$new$3(Module module, WCheckbox wCheckbox) {
+        if (module.isVisible() != wCheckbox.checked) {
+            module.setVisible(wCheckbox.checked);
         }
-        if ((llllllllllllllllIllllIIllIlllIlI = llllllllllllllllIllllIIllIllIIIl.getWidget(llllllllllllllllIllllIIllIllllII)) != null) {
-            llllllllllllllllIllllIIllIllIIll.add(llllllllllllllllIllllIIllIllllII.horizontalSeparator()).expandX();
-            Cell<WWidget> llllllllllllllllIllllIIllIlllllI = llllllllllllllllIllllIIllIllIIll.add(llllllllllllllllIllllIIllIlllIlI);
-            if (llllllllllllllllIllllIIllIlllIlI instanceof WContainer) {
-                llllllllllllllllIllllIIllIlllllI.expandX();
+    }
+
+    private static void lambda$new$0(Module module) {
+        Modules.get().setModuleToBind(module);
+    }
+
+    private static void lambda$new$1(Module module, WCheckbox wCheckbox) {
+        module.toggleOnBindRelease = wCheckbox.checked;
+    }
+
+    public ModuleScreen(GuiTheme guiTheme, Module module) {
+        super(guiTheme, module.title);
+        Object object;
+        WWidget wWidget;
+        this.module = module;
+        this.add(guiTheme.label(module.description, (double)Utils.getWindowWidth() / 2.0));
+        this.settings = this.add(guiTheme.verticalList()).expandX().widget();
+        if (module.settings.groups.size() > 0) {
+            this.settings.add(guiTheme.settings(module.settings)).expandX();
+        }
+        if ((wWidget = module.getWidget(guiTheme)) != null) {
+            this.add(guiTheme.horizontalSeparator()).expandX();
+            object = this.add(wWidget);
+            if (wWidget instanceof WContainer) {
+                ((Cell)object).expandX();
             }
         }
-        WSection llllllllllllllllIllllIIllIlllIIl = llllllllllllllllIllllIIllIllIIll.add(llllllllllllllllIllllIIllIllllII.section("Bind", true)).expandX().widget();
-        llllllllllllllllIllllIIllIllIIll.keybind = llllllllllllllllIllllIIllIlllIIl.add(llllllllllllllllIllllIIllIllllII.keybind(llllllllllllllllIllllIIllIllIIIl.keybind)).expandX().widget();
-        llllllllllllllllIllllIIllIllIIll.keybind.actionOnSet = () -> Modules.get().setModuleToBind(llllllllllllllllIllllIIllIllIIIl);
-        WHorizontalList llllllllllllllllIllllIIllIlllIII = llllllllllllllllIllllIIllIlllIIl.add(llllllllllllllllIllllIIllIllllII.horizontalList()).widget();
-        llllllllllllllllIllllIIllIlllIII.add(llllllllllllllllIllllIIllIllllII.label("Toggle on bind release: "));
-        WCheckbox llllllllllllllllIllllIIllIllIlll = llllllllllllllllIllllIIllIlllIII.add(llllllllllllllllIllllIIllIllllII.checkbox(llllllllllllllllIllllIIllIllIIIl.toggleOnBindRelease)).widget();
-        llllllllllllllllIllllIIllIllIlll.action = () -> {
-            llllllllllllllllIllllIIllIIlIIlI.toggleOnBindRelease = llllllllllllllllIllllIIllIIlIIll.checked;
-        };
-        llllllllllllllllIllllIIllIllIIll.add(llllllllllllllllIllllIIllIllllII.horizontalSeparator()).expandX();
-        WHorizontalList llllllllllllllllIllllIIllIllIllI = llllllllllllllllIllllIIllIllIIll.add(llllllllllllllllIllllIIllIllllII.horizontalList()).expandX().widget();
-        llllllllllllllllIllllIIllIllIllI.add(llllllllllllllllIllllIIllIllllII.label("Active: "));
-        WCheckbox llllllllllllllllIllllIIllIllIlIl = llllllllllllllllIllllIIllIllIllI.add(llllllllllllllllIllllIIllIllllII.checkbox(llllllllllllllllIllllIIllIllIIIl.isActive())).expandCellX().widget();
-        llllllllllllllllIllllIIllIllIlIl.action = () -> {
-            if (llllllllllllllllIllllIIllIllIIIl.isActive() != llllllllllllllllIllllIIllIIlIlll.checked) {
-                llllllllllllllllIllllIIllIllIIIl.toggle(Utils.canUpdate());
-            }
-        };
-        llllllllllllllllIllllIIllIllIllI.add(llllllllllllllllIllllIIllIllllII.label("Visible: "));
-        WCheckbox llllllllllllllllIllllIIllIllIlII = llllllllllllllllIllllIIllIllIllI.add(llllllllllllllllIllllIIllIllllII.checkbox(llllllllllllllllIllllIIllIllIIIl.isVisible())).widget();
-        llllllllllllllllIllllIIllIllIlII.action = () -> {
-            if (llllllllllllllllIllllIIllIllIIIl.isVisible() != llllllllllllllllIllllIIllIIlllIl.checked) {
-                llllllllllllllllIllllIIllIllIIIl.setVisible(llllllllllllllllIllllIIllIIlllIl.checked);
-            }
-        };
+        object = this.add(guiTheme.section("Bind", true)).expandX().widget();
+        this.keybind = ((WSection)object).add(guiTheme.keybind(module.keybind)).expandX().widget();
+        this.keybind.actionOnSet = () -> ModuleScreen.lambda$new$0(module);
+        WHorizontalList wHorizontalList = ((WSection)object).add(guiTheme.horizontalList()).widget();
+        wHorizontalList.add(guiTheme.label("Toggle on bind release: "));
+        WCheckbox wCheckbox = wHorizontalList.add(guiTheme.checkbox(module.toggleOnBindRelease)).widget();
+        wCheckbox.action = () -> ModuleScreen.lambda$new$1(module, wCheckbox);
+        this.add(guiTheme.horizontalSeparator()).expandX();
+        WHorizontalList wHorizontalList2 = this.add(guiTheme.horizontalList()).expandX().widget();
+        wHorizontalList2.add(guiTheme.label("Active: "));
+        WCheckbox wCheckbox2 = wHorizontalList2.add(guiTheme.checkbox(module.isActive())).expandCellX().widget();
+        wCheckbox2.action = () -> ModuleScreen.lambda$new$2(module, wCheckbox2);
+        wHorizontalList2.add(guiTheme.label("Visible: "));
+        WCheckbox wCheckbox3 = wHorizontalList2.add(guiTheme.checkbox(module.isVisible())).widget();
+        wCheckbox3.action = () -> ModuleScreen.lambda$new$3(module, wCheckbox3);
     }
 }
 

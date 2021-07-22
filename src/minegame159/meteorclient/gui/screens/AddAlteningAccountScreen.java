@@ -13,21 +13,21 @@ import minegame159.meteorclient.systems.accounts.types.TheAlteningAccount;
 
 public class AddAlteningAccountScreen
 extends WindowScreen {
-    public AddAlteningAccountScreen(GuiTheme lIllIllllIIIII) {
-        super(lIllIllllIIIII, "Add The Altening Account");
-        AddAlteningAccountScreen lIllIlllIlllII;
-        WTable lIllIlllIlllll = lIllIlllIlllII.add(lIllIllllIIIII.table()).widget();
-        lIllIlllIlllll.add(lIllIllllIIIII.label("Token: "));
-        WTextBox lIllIlllIllllI = lIllIlllIlllll.add(lIllIllllIIIII.textBox("")).minWidth(400.0).expandX().widget();
-        lIllIlllIllllI.setFocused(true);
-        lIllIlllIlllll.row();
-        WButton lIllIlllIlllIl = lIllIlllIlllll.add(lIllIllllIIIII.button("Add")).expandX().widget();
-        lIllIlllIlllII.enterAction = lIllIlllIlllIl.action = () -> {
-            if (!lIllIlllIllllI.get().isEmpty()) {
-                AddAlteningAccountScreen lIllIlllIlIIIl;
-                AccountsScreen.addAccount(lIllIlllIlllIl, lIllIlllIlIIIl, new TheAlteningAccount(lIllIlllIllllI.get()));
-            }
-        };
+    public AddAlteningAccountScreen(GuiTheme guiTheme) {
+        super(guiTheme, "Add The Altening Account");
+        WTable wTable = this.add(guiTheme.table()).widget();
+        wTable.add(guiTheme.label("Token: "));
+        WTextBox wTextBox = wTable.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        wTextBox.setFocused(true);
+        wTable.row();
+        WButton wButton = wTable.add(guiTheme.button("Add")).expandX().widget();
+        this.enterAction = wButton.action = () -> this.lambda$new$0(wTextBox, wButton);
+    }
+
+    private void lambda$new$0(WTextBox wTextBox, WButton wButton) {
+        if (!wTextBox.get().isEmpty()) {
+            AccountsScreen.addAccount(wButton, this, new TheAlteningAccount(wTextBox.get()));
+        }
     }
 }
 

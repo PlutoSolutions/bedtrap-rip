@@ -16,70 +16,65 @@ import meteordevelopment.orbit.listeners.IListener;
 
 public class LambdaListener
 implements IListener {
-    private final /* synthetic */ int priority;
-    private static /* synthetic */ boolean isJava1dot8;
-    private final /* synthetic */ Class<?> target;
-    private static /* synthetic */ Method privateLookupInMethod;
-    private /* synthetic */ Consumer<Object> executor;
-    private static /* synthetic */ Constructor<MethodHandles.Lookup> lookupConstructor;
-    private final /* synthetic */ boolean isStatic;
+    private final int priority;
+    private static boolean isJava1dot8;
+    private final Class<?> target;
+    private static Method privateLookupInMethod;
+    private Consumer<Object> executor;
+    private static Constructor<MethodHandles.Lookup> lookupConstructor;
+    private final boolean isStatic;
 
     @Override
-    public void call(Object llIlIlllIllllll) {
-        LambdaListener llIlIllllIIIIlI;
-        llIlIllllIIIIlI.executor.accept(llIlIlllIllllll);
+    public void call(Object object) {
+        this.executor.accept(object);
     }
 
     @Override
     public Class<?> getTarget() {
-        LambdaListener llIlIlllIllllII;
-        return llIlIlllIllllII.target;
+        return this.target;
     }
 
     @Override
     public int getPriority() {
-        LambdaListener llIlIlllIlllIIl;
-        return llIlIlllIlllIIl.priority;
+        return this.priority;
     }
 
-    public LambdaListener(Class<?> llIlIllllIlIIIl, Object llIlIllllIlIIII, Method llIlIllllIIllll) {
-        LambdaListener llIlIllllIIlllI;
-        llIlIllllIIlllI.target = llIlIllllIIllll.getParameters()[0].getType();
-        llIlIllllIIlllI.isStatic = Modifier.isStatic(llIlIllllIIllll.getModifiers());
-        llIlIllllIIlllI.priority = llIlIllllIIllll.getAnnotation(EventHandler.class).priority();
+    public LambdaListener(Class<?> class_, Object object, Method method) {
+        this.target = method.getParameters()[0].getType();
+        this.isStatic = Modifier.isStatic(method.getModifiers());
+        this.priority = method.getAnnotation(EventHandler.class).priority();
         try {
-            MethodType llIlIllllIlIlIl;
-            MethodHandle llIlIllllIlIllI;
-            MethodHandles.Lookup llIlIllllIllIII;
-            String llIlIllllIllIIl = llIlIllllIIllll.getName();
+            MethodType methodType;
+            MethodHandle methodHandle;
+            MethodHandles.Lookup lookup;
+            String string = method.getName();
             if (isJava1dot8) {
-                boolean llIlIllllIlllIl = lookupConstructor.isAccessible();
+                boolean bl = lookupConstructor.isAccessible();
                 lookupConstructor.setAccessible(true);
-                MethodHandles.Lookup llIlIllllIlllII = lookupConstructor.newInstance(llIlIllllIlIIIl);
-                lookupConstructor.setAccessible(llIlIllllIlllIl);
+                lookup = lookupConstructor.newInstance(class_);
+                lookupConstructor.setAccessible(bl);
             } else {
-                llIlIllllIllIII = (MethodHandles.Lookup)privateLookupInMethod.invoke(null, llIlIllllIlIIIl, MethodHandles.lookup());
+                lookup = (MethodHandles.Lookup)privateLookupInMethod.invoke(null, class_, MethodHandles.lookup());
             }
-            MethodType llIlIllllIlIlll = MethodType.methodType(Void.TYPE, llIlIllllIIllll.getParameters()[0].getType());
-            if (llIlIllllIIlllI.isStatic) {
-                MethodHandle llIlIllllIllIll = llIlIllllIllIII.findStatic(llIlIllllIlIIIl, llIlIllllIllIIl, llIlIllllIlIlll);
-                MethodType llIlIllllIllIlI = MethodType.methodType(Consumer.class);
+            MethodType methodType2 = MethodType.methodType(Void.TYPE, method.getParameters()[0].getType());
+            if (this.isStatic) {
+                methodHandle = lookup.findStatic(class_, string, methodType2);
+                methodType = MethodType.methodType(Consumer.class);
             } else {
-                llIlIllllIlIllI = llIlIllllIllIII.findVirtual(llIlIllllIlIIIl, llIlIllllIllIIl, llIlIllllIlIlll);
-                llIlIllllIlIlIl = MethodType.methodType(Consumer.class, llIlIllllIlIIIl);
+                methodHandle = lookup.findVirtual(class_, string, methodType2);
+                methodType = MethodType.methodType(Consumer.class, class_);
             }
-            MethodHandle llIlIllllIlIlII = LambdaMetafactory.metafactory(llIlIllllIllIII, "accept", llIlIllllIlIlIl, MethodType.methodType(Void.TYPE, Object.class), llIlIllllIlIllI, llIlIllllIlIlll).getTarget();
-            llIlIllllIIlllI.executor = llIlIllllIIlllI.isStatic ? llIlIllllIlIlII.invoke() : llIlIllllIlIlII.invoke(llIlIllllIlIIII);
+            MethodHandle methodHandle2 = LambdaMetafactory.metafactory(lookup, "accept", methodType, MethodType.methodType(Void.TYPE, Object.class), methodHandle, methodType2).getTarget();
+            this.executor = this.isStatic ? methodHandle2.invoke() : methodHandle2.invoke(object);
         }
-        catch (Throwable llIlIllllIlIIll) {
-            llIlIllllIlIIll.printStackTrace();
+        catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
     }
 
     @Override
     public boolean isStatic() {
-        LambdaListener llIlIlllIllIlll;
-        return llIlIlllIllIlll.isStatic;
+        return this.isStatic;
     }
 
     static {
@@ -91,8 +86,8 @@ implements IListener {
                 privateLookupInMethod = MethodHandles.class.getDeclaredMethod("privateLookupIn", Class.class, MethodHandles.Lookup.class);
             }
         }
-        catch (NoSuchMethodException llIlIlllIllIlII) {
-            llIlIlllIllIlII.printStackTrace();
+        catch (NoSuchMethodException noSuchMethodException) {
+            noSuchMethodException.printStackTrace();
         }
     }
 }

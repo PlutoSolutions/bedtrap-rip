@@ -18,73 +18,68 @@ import net.minecraft.class_437;
 public class WMeteorModule
 extends WPressable
 implements MeteorWidget {
-    private final /* synthetic */ Module module;
-    private /* synthetic */ double animationProgress1;
-    private /* synthetic */ double animationProgress2;
-    private /* synthetic */ double titleWidth;
+    private final Module module;
+    private double animationProgress1;
+    private double animationProgress2;
+    private double titleWidth;
 
-    public WMeteorModule(Module llllllllllllllllIllIIlIIllllIlll) {
-        WMeteorModule llllllllllllllllIllIIlIIlllllIII;
-        llllllllllllllllIllIIlIIlllllIII.module = llllllllllllllllIllIIlIIllllIlll;
-        if (llllllllllllllllIllIIlIIllllIlll.isActive()) {
-            llllllllllllllllIllIIlIIlllllIII.animationProgress1 = 1.0;
-            llllllllllllllllIllIIlIIlllllIII.animationProgress2 = 1.0;
+    public WMeteorModule(Module module) {
+        this.module = module;
+        if (module.isActive()) {
+            this.animationProgress1 = 1.0;
+            this.animationProgress2 = 1.0;
         } else {
-            llllllllllllllllIllIIlIIlllllIII.animationProgress1 = 0.0;
-            llllllllllllllllIllIIlIIlllllIII.animationProgress2 = 0.0;
+            this.animationProgress1 = 0.0;
+            this.animationProgress2 = 0.0;
         }
     }
 
     @Override
     protected void onCalculateSize() {
-        WMeteorModule llllllllllllllllIllIIlIIlllIllIl;
-        double llllllllllllllllIllIIlIIlllIlllI = llllllllllllllllIllIIlIIlllIllIl.pad();
-        if (llllllllllllllllIllIIlIIlllIllIl.titleWidth == 0.0) {
-            llllllllllllllllIllIIlIIlllIllIl.titleWidth = llllllllllllllllIllIIlIIlllIllIl.theme.textWidth(llllllllllllllllIllIIlIIlllIllIl.module.title);
+        double d = this.pad();
+        if (this.titleWidth == 0.0) {
+            this.titleWidth = this.theme.textWidth(this.module.title);
         }
-        llllllllllllllllIllIIlIIlllIllIl.width = llllllllllllllllIllIIlIIlllIlllI + llllllllllllllllIllIIlIIlllIllIl.titleWidth + llllllllllllllllIllIIlIIlllIlllI;
-        llllllllllllllllIllIIlIIlllIllIl.height = llllllllllllllllIllIIlIIlllIlllI + llllllllllllllllIllIIlIIlllIllIl.theme.textHeight() + llllllllllllllllIllIIlIIlllIlllI;
+        this.width = d + this.titleWidth + d;
+        this.height = d + this.theme.textHeight() + d;
     }
 
     @Override
     public double pad() {
-        WMeteorModule llllllllllllllllIllIIlIIllllIIll;
-        return llllllllllllllllIllIIlIIllllIIll.theme.scale(4.0);
+        return this.theme.scale(4.0);
     }
 
     @Override
-    protected void onPressed(int llllllllllllllllIllIIlIIlllIlIII) {
-        WMeteorModule llllllllllllllllIllIIlIIlllIlIIl;
-        if (llllllllllllllllIllIIlIIlllIlIII == 0) {
-            llllllllllllllllIllIIlIIlllIlIIl.module.toggle(Utils.canUpdate());
-        } else if (llllllllllllllllIllIIlIIlllIlIII == 1) {
-            Utils.mc.method_1507((class_437)llllllllllllllllIllIIlIIlllIlIIl.theme.moduleScreen(llllllllllllllllIllIIlIIlllIlIIl.module));
+    protected void onPressed(int n) {
+        if (n == 0) {
+            this.module.toggle(Utils.canUpdate());
+        } else if (n == 1) {
+            Utils.mc.method_1507((class_437)this.theme.moduleScreen(this.module));
         }
     }
 
     @Override
-    protected void onRender(GuiRenderer llllllllllllllllIllIIlIIllIlIlII, double llllllllllllllllIllIIlIIllIlllII, double llllllllllllllllIllIIlIIllIllIll, double llllllllllllllllIllIIlIIllIlIIll) {
-        WMeteorModule llllllllllllllllIllIIlIIllIlIlIl;
-        MeteorGuiTheme llllllllllllllllIllIIlIIllIllIIl = llllllllllllllllIllIIlIIllIlIlIl.theme();
-        double llllllllllllllllIllIIlIIllIllIII = llllllllllllllllIllIIlIIllIlIlIl.pad();
-        llllllllllllllllIllIIlIIllIlIlIl.animationProgress1 += llllllllllllllllIllIIlIIllIlIIll * 4.0 * (double)(llllllllllllllllIllIIlIIllIlIlIl.module.isActive() || llllllllllllllllIllIIlIIllIlIlIl.mouseOver ? 1 : -1);
-        llllllllllllllllIllIIlIIllIlIlIl.animationProgress1 = Utils.clamp(llllllllllllllllIllIIlIIllIlIlIl.animationProgress1, 0.0, 1.0);
-        llllllllllllllllIllIIlIIllIlIlIl.animationProgress2 += llllllllllllllllIllIIlIIllIlIIll * 6.0 * (double)(llllllllllllllllIllIIlIIllIlIlIl.module.isActive() ? 1 : -1);
-        llllllllllllllllIllIIlIIllIlIlIl.animationProgress2 = Utils.clamp(llllllllllllllllIllIIlIIllIlIlIl.animationProgress2, 0.0, 1.0);
-        if (llllllllllllllllIllIIlIIllIlIlIl.animationProgress1 > 0.0) {
-            llllllllllllllllIllIIlIIllIlIlII.quad(llllllllllllllllIllIIlIIllIlIlIl.x, llllllllllllllllIllIIlIIllIlIlIl.y, llllllllllllllllIllIIlIIllIlIlIl.width * llllllllllllllllIllIIlIIllIlIlIl.animationProgress1, llllllllllllllllIllIIlIIllIlIlIl.height, llllllllllllllllIllIIlIIllIllIIl.moduleBackground.get());
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d4 = this.pad();
+        this.animationProgress1 += d3 * 4.0 * (double)(this.module.isActive() || this.mouseOver ? 1 : -1);
+        this.animationProgress1 = Utils.clamp(this.animationProgress1, 0.0, 1.0);
+        this.animationProgress2 += d3 * 6.0 * (double)(this.module.isActive() ? 1 : -1);
+        this.animationProgress2 = Utils.clamp(this.animationProgress2, 0.0, 1.0);
+        if (this.animationProgress1 > 0.0) {
+            guiRenderer.quad(this.x, this.y, this.width * this.animationProgress1, this.height, meteorGuiTheme.moduleBackground.get());
         }
-        if (llllllllllllllllIllIIlIIllIlIlIl.animationProgress2 > 0.0) {
-            llllllllllllllllIllIIlIIllIlIlII.quad(llllllllllllllllIllIIlIIllIlIlIl.x, llllllllllllllllIllIIlIIllIlIlIl.y + llllllllllllllllIllIIlIIllIlIlIl.height * (1.0 - llllllllllllllllIllIIlIIllIlIlIl.animationProgress2), llllllllllllllllIllIIlIIllIllIIl.scale(2.0), llllllllllllllllIllIIlIIllIlIlIl.height * llllllllllllllllIllIIlIIllIlIlIl.animationProgress2, llllllllllllllllIllIIlIIllIllIIl.accentColor.get());
+        if (this.animationProgress2 > 0.0) {
+            guiRenderer.quad(this.x, this.y + this.height * (1.0 - this.animationProgress2), meteorGuiTheme.scale(2.0), this.height * this.animationProgress2, meteorGuiTheme.accentColor.get());
         }
-        double llllllllllllllllIllIIlIIllIlIlll = llllllllllllllllIllIIlIIllIlIlIl.x + llllllllllllllllIllIIlIIllIllIII;
-        double llllllllllllllllIllIIlIIllIlIllI = llllllllllllllllIllIIlIIllIlIlIl.width - llllllllllllllllIllIIlIIllIllIII * 2.0;
-        if (llllllllllllllllIllIIlIIllIllIIl.moduleAlignment.get() == AlignmentX.Center) {
-            llllllllllllllllIllIIlIIllIlIlll += llllllllllllllllIllIIlIIllIlIllI / 2.0 - llllllllllllllllIllIIlIIllIlIlIl.titleWidth / 2.0;
-        } else if (llllllllllllllllIllIIlIIllIllIIl.moduleAlignment.get() == AlignmentX.Right) {
-            llllllllllllllllIllIIlIIllIlIlll += llllllllllllllllIllIIlIIllIlIllI - llllllllllllllllIllIIlIIllIlIlIl.titleWidth;
+        double d5 = this.x + d4;
+        double d6 = this.width - d4 * 2.0;
+        if (meteorGuiTheme.moduleAlignment.get() == AlignmentX.Center) {
+            d5 += d6 / 2.0 - this.titleWidth / 2.0;
+        } else if (meteorGuiTheme.moduleAlignment.get() == AlignmentX.Right) {
+            d5 += d6 - this.titleWidth;
         }
-        llllllllllllllllIllIIlIIllIlIlII.text(llllllllllllllllIllIIlIIllIlIlIl.module.title, llllllllllllllllIllIIlIIllIlIlll, llllllllllllllllIllIIlIIllIlIlIl.y + llllllllllllllllIllIIlIIllIllIII, llllllllllllllllIllIIlIIllIllIIl.textColor.get(), false);
+        guiRenderer.text(this.module.title, d5, this.y + d4, meteorGuiTheme.textColor.get(), false);
     }
 }
 

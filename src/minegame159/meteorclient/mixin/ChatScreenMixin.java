@@ -29,7 +29,7 @@ public class ChatScreenMixin {
     protected class_342 field_2382;
 
     @Inject(method={"init"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/gui/widget/TextFieldWidget;setMaxLength(I)V", shift=At.Shift.AFTER)})
-    private void onInit(CallbackInfo info) {
+    private void onInit(CallbackInfo callbackInfo) {
         if (Modules.get().get(BetterChat.class).isInfiniteChatBox()) {
             this.field_2382.method_1880(Integer.MAX_VALUE);
         }

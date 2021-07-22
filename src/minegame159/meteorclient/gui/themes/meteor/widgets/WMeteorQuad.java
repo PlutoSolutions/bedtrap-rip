@@ -9,15 +9,13 @@ import minegame159.meteorclient.utils.render.color.Color;
 
 public class WMeteorQuad
 extends WQuad {
-    public WMeteorQuad(Color llllllllllllllllllIIlIIIIIIllIll) {
-        super(llllllllllllllllllIIlIIIIIIllIll);
-        WMeteorQuad llllllllllllllllllIIlIIIIIIllllI;
+    public WMeteorQuad(Color color) {
+        super(color);
     }
 
     @Override
-    protected void onRender(GuiRenderer llllllllllllllllllIIlIIIIIIlIlll, double llllllllllllllllllIIlIIIIIIlIllI, double llllllllllllllllllIIlIIIIIIlIlIl, double llllllllllllllllllIIlIIIIIIlIlII) {
-        WMeteorQuad llllllllllllllllllIIlIIIIIIlIIll;
-        llllllllllllllllllIIlIIIIIIlIlll.quad(llllllllllllllllllIIlIIIIIIlIIll.x, llllllllllllllllllIIlIIIIIIlIIll.y, llllllllllllllllllIIlIIIIIIlIIll.width, llllllllllllllllllIIlIIIIIIlIIll.height, llllllllllllllllllIIlIIIIIIlIIll.color);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        guiRenderer.quad(this.x, this.y, this.width, this.height, this.color);
     }
 }
 

@@ -16,73 +16,69 @@ import java.util.List;
 public class StringArray
 extends Memory
 implements Function.PostCallRead {
-    private /* synthetic */ String encoding;
-    private /* synthetic */ List<NativeString> natives;
-    private /* synthetic */ Object[] original;
+    private String encoding;
+    private List<NativeString> natives = new ArrayList<NativeString>();
+    private Object[] original;
 
     @Override
     public void read() {
-        StringArray llllllllllllllllllIIllllllllIlll;
-        boolean llllllllllllllllllIIlllllllllIIl = llllllllllllllllllIIllllllllIlll.original instanceof WString[];
-        boolean llllllllllllllllllIIlllllllllIII = "--WIDE-STRING--".equals(llllllllllllllllllIIllllllllIlll.encoding);
-        for (int llllllllllllllllllIIlllllllllIll = 0; llllllllllllllllllIIlllllllllIll < llllllllllllllllllIIllllllllIlll.original.length; ++llllllllllllllllllIIlllllllllIll) {
-            Pointer llllllllllllllllllIIllllllllllIl = llllllllllllllllllIIllllllllIlll.getPointer(llllllllllllllllllIIlllllllllIll * Pointer.SIZE);
-            CharSequence llllllllllllllllllIIllllllllllII = null;
-            if (llllllllllllllllllIIllllllllllIl != null) {
-                String string = llllllllllllllllllIIllllllllllII = llllllllllllllllllIIlllllllllIII ? llllllllllllllllllIIllllllllllIl.getWideString(0L) : llllllllllllllllllIIllllllllllIl.getString(0L, llllllllllllllllllIIllllllllIlll.encoding);
-                if (llllllllllllllllllIIlllllllllIIl) {
-                    llllllllllllllllllIIllllllllllII = new WString((String)llllllllllllllllllIIllllllllllII);
+        boolean bl = this.original instanceof WString[];
+        boolean bl2 = "--WIDE-STRING--".equals(this.encoding);
+        for (int i = 0; i < this.original.length; ++i) {
+            Pointer pointer = this.getPointer(i * Pointer.SIZE);
+            CharSequence charSequence = null;
+            if (pointer != null) {
+                String string = charSequence = bl2 ? pointer.getWideString(0L) : pointer.getString(0L, this.encoding);
+                if (bl) {
+                    charSequence = new WString((String)charSequence);
                 }
             }
-            llllllllllllllllllIIllllllllIlll.original[llllllllllllllllllIIlllllllllIll] = llllllllllllllllllIIllllllllllII;
+            this.original[i] = charSequence;
+            if (3 != 0) continue;
+            return;
         }
     }
 
-    private StringArray(Object[] llllllllllllllllllIlIIIIIIIIlIII, String llllllllllllllllllIlIIIIIIIIlIlI) {
-        super((llllllllllllllllllIlIIIIIIIIlIII.length + 1) * Pointer.SIZE);
-        StringArray llllllllllllllllllIlIIIIIIIIlIIl;
-        llllllllllllllllllIlIIIIIIIIlIIl.natives = new ArrayList<NativeString>();
-        llllllllllllllllllIlIIIIIIIIlIIl.original = llllllllllllllllllIlIIIIIIIIlIII;
-        llllllllllllllllllIlIIIIIIIIlIIl.encoding = llllllllllllllllllIlIIIIIIIIlIlI;
-        for (int llllllllllllllllllIlIIIIIIIIllIl = 0; llllllllllllllllllIlIIIIIIIIllIl < llllllllllllllllllIlIIIIIIIIlIII.length; ++llllllllllllllllllIlIIIIIIIIllIl) {
-            Pointer llllllllllllllllllIlIIIIIIIIlllI = null;
-            if (llllllllllllllllllIlIIIIIIIIlIII[llllllllllllllllllIlIIIIIIIIllIl] != null) {
-                NativeString llllllllllllllllllIlIIIIIIIIllll = new NativeString(llllllllllllllllllIlIIIIIIIIlIII[llllllllllllllllllIlIIIIIIIIllIl].toString(), llllllllllllllllllIlIIIIIIIIlIlI);
-                llllllllllllllllllIlIIIIIIIIlIIl.natives.add(llllllllllllllllllIlIIIIIIIIllll);
-                llllllllllllllllllIlIIIIIIIIlllI = llllllllllllllllllIlIIIIIIIIllll.getPointer();
+    private StringArray(Object[] arrobject, String string) {
+        super((arrobject.length + 1) * Pointer.SIZE);
+        this.original = arrobject;
+        this.encoding = string;
+        for (int i = 0; i < arrobject.length; ++i) {
+            Pointer pointer = null;
+            if (arrobject[i] != null) {
+                NativeString nativeString = new NativeString(arrobject[i].toString(), string);
+                this.natives.add(nativeString);
+                pointer = nativeString.getPointer();
             }
-            llllllllllllllllllIlIIIIIIIIlIIl.setPointer(Pointer.SIZE * llllllllllllllllllIlIIIIIIIIllIl, llllllllllllllllllIlIIIIIIIIlllI);
+            this.setPointer(Pointer.SIZE * i, pointer);
+            if (-4 <= 0) continue;
+            throw null;
         }
-        llllllllllllllllllIlIIIIIIIIlIIl.setPointer(Pointer.SIZE * llllllllllllllllllIlIIIIIIIIlIII.length, null);
+        this.setPointer(Pointer.SIZE * arrobject.length, null);
     }
 
     @Override
     public String toString() {
-        StringArray llllllllllllllllllIIlllllllIlIll;
-        boolean llllllllllllllllllIIlllllllIllIl = "--WIDE-STRING--".equals(llllllllllllllllllIIlllllllIlIll.encoding);
-        String llllllllllllllllllIIlllllllIllII = llllllllllllllllllIIlllllllIllIl ? "const wchar_t*[]" : "const char*[]";
-        llllllllllllllllllIIlllllllIllII = String.valueOf(new StringBuilder().append(llllllllllllllllllIIlllllllIllII).append(Arrays.asList(llllllllllllllllllIIlllllllIlIll.original)));
-        return llllllllllllllllllIIlllllllIllII;
+        boolean bl = "--WIDE-STRING--".equals(this.encoding);
+        String string = bl ? "const wchar_t*[]" : "const char*[]";
+        string = String.valueOf(new StringBuilder().append(string).append(Arrays.asList(this.original)));
+        return string;
     }
 
-    public StringArray(WString[] llllllllllllllllllIlIIIIIIIlIllI) {
-        llllllllllllllllllIlIIIIIIIlIlll(llllllllllllllllllIlIIIIIIIlIllI, "--WIDE-STRING--");
-        StringArray llllllllllllllllllIlIIIIIIIlIlll;
+    public StringArray(WString[] arrwString) {
+        this(arrwString, "--WIDE-STRING--");
     }
 
-    public StringArray(String[] llllllllllllllllllIlIIIIIIlIIIII, String llllllllllllllllllIlIIIIIIIlllII) {
-        llllllllllllllllllIlIIIIIIlIIIIl((Object[])llllllllllllllllllIlIIIIIIlIIIII, llllllllllllllllllIlIIIIIIIlllII);
-        StringArray llllllllllllllllllIlIIIIIIlIIIIl;
+    public StringArray(String[] arrstring, String string) {
+        this((Object[])arrstring, string);
     }
 
-    public StringArray(String[] llllllllllllllllllIlIIIIIIllIIII) {
-        llllllllllllllllllIlIIIIIIllIIIl(llllllllllllllllllIlIIIIIIllIIII, false);
-        StringArray llllllllllllllllllIlIIIIIIllIIIl;
+    public StringArray(String[] arrstring) {
+        this(arrstring, false);
     }
 
-    public StringArray(String[] llllllllllllllllllIlIIIIIIlIIllI, boolean llllllllllllllllllIlIIIIIIlIlIII) {
-        llllllllllllllllllIlIIIIIIlIlIlI((Object[])llllllllllllllllllIlIIIIIIlIIllI, llllllllllllllllllIlIIIIIIlIlIII ? "--WIDE-STRING--" : Native.getDefaultStringEncoding());
-        StringArray llllllllllllllllllIlIIIIIIlIlIlI;
+    public StringArray(String[] arrstring, boolean bl) {
+        this((Object[])arrstring, bl ? "--WIDE-STRING--" : Native.getDefaultStringEncoding());
     }
 }
 

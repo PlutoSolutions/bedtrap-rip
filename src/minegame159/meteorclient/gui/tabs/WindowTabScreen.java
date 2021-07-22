@@ -12,24 +12,21 @@ import minegame159.meteorclient.gui.widgets.containers.WWindow;
 
 public class WindowTabScreen
 extends TabScreen {
-    private final /* synthetic */ WWindow window;
+    private final WWindow window;
 
     @Override
     public void clear() {
-        WindowTabScreen llllllllllllllllIlllllIlIIIlIIlI;
-        llllllllllllllllIlllllIlIIIlIIlI.window.clear();
+        this.window.clear();
     }
 
-    public WindowTabScreen(GuiTheme llllllllllllllllIlllllIlIIIlllII, Tab llllllllllllllllIlllllIlIIIllIll) {
-        super(llllllllllllllllIlllllIlIIIlllII, llllllllllllllllIlllllIlIIIllIll);
-        WindowTabScreen llllllllllllllllIlllllIlIIIlllIl;
-        llllllllllllllllIlllllIlIIIlllIl.window = super.add(llllllllllllllllIlllllIlIIIlllII.window(llllllllllllllllIlllllIlIIIllIll.name)).center().widget();
+    public WindowTabScreen(GuiTheme guiTheme, Tab tab) {
+        super(guiTheme, tab);
+        this.window = super.add(guiTheme.window(tab.name)).center().widget();
     }
 
     @Override
-    public <W extends WWidget> Cell<W> add(W llllllllllllllllIlllllIlIIIlIlll) {
-        WindowTabScreen llllllllllllllllIlllllIlIIIllIII;
-        return llllllllllllllllIlllllIlIIIllIII.window.add(llllllllllllllllIlllllIlIIIlIlll);
+    public <W extends WWidget> Cell<W> add(W w) {
+        return this.window.add(w);
     }
 }
 

@@ -39,36 +39,36 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 @Mixin(value={class_1007.class})
 public class PlayerEntityRendererMixin {
     @ModifyArgs(method={"renderArm"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V", ordinal=0))
-    private void modifyRenderLayer(Args args, class_4587 matrices, class_4597 vertexConsumers, int light, class_742 player, class_630 arm, class_630 sleeve) {
+    private void modifyRenderLayer(Args args, class_4587 class_45872, class_4597 class_45972, int n, class_742 class_7422, class_630 class_6302, class_630 class_6303) {
         Chams chams = Modules.get().get(Chams.class);
         if (chams.isActive() && chams.hand.get().booleanValue()) {
-            class_2960 texture = chams.handTexture.get() != false ? player.method_3117() : Chams.BLANK;
-            args.set(1, (Object)vertexConsumers.getBuffer(class_1921.method_23580((class_2960)texture)));
+            class_2960 class_29602 = chams.handTexture.get() != false ? class_7422.method_3117() : Chams.BLANK;
+            args.set(1, (Object)class_45972.getBuffer(class_1921.method_23580((class_2960)class_29602)));
         }
     }
 
     @Redirect(method={"renderArm"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V", ordinal=0))
-    private void redirectRenderMain(class_630 modelPart, class_4587 matrices, class_4588 vertices, int light, int overlay) {
+    private void redirectRenderMain(class_630 class_6302, class_4587 class_45872, class_4588 class_45882, int n, int n2) {
         Chams chams = Modules.get().get(Chams.class);
         if (chams.isActive() && chams.hand.get().booleanValue()) {
             Color color = chams.handColor.get();
-            modelPart.method_22699(matrices, vertices, light, overlay, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
+            class_6302.method_22699(class_45872, class_45882, n, n2, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
         } else {
-            modelPart.method_22698(matrices, vertices, light, overlay);
+            class_6302.method_22698(class_45872, class_45882, n, n2);
         }
     }
 
     @Redirect(method={"renderArm"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V", ordinal=1))
-    private void redirectRenderSleeve(class_630 modelPart, class_4587 matrices, class_4588 vertices, int light, int overlay) {
+    private void redirectRenderSleeve(class_630 class_6302, class_4587 class_45872, class_4588 class_45882, int n, int n2) {
         Chams chams = Modules.get().get(Chams.class);
         if (Modules.get().isActive(HandView.class)) {
             return;
         }
         if (chams.isActive() && chams.hand.get().booleanValue()) {
             Color color = chams.handColor.get();
-            modelPart.method_22699(matrices, vertices, light, overlay, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
+            class_6302.method_22699(class_45872, class_45882, n, n2, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
         } else {
-            modelPart.method_22698(matrices, vertices, light, overlay);
+            class_6302.method_22698(class_45872, class_45882, n, n2);
         }
     }
 }

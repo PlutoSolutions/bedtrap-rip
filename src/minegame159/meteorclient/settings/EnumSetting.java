@@ -16,113 +16,112 @@ import net.minecraft.class_2487;
 
 public class EnumSetting<T extends Enum<?>>
 extends Setting<T> {
-    private final /* synthetic */ List<String> suggestions;
-    private /* synthetic */ T[] values;
+    private final List<String> suggestions;
+    private T[] values;
+
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
 
     @Override
     public class_2487 toTag() {
-        EnumSetting llllIlIllIlIllI;
-        class_2487 llllIlIllIlIlIl = llllIlIllIlIllI.saveGeneral();
-        llllIlIllIlIlIl.method_10582("value", ((Enum)llllIlIllIlIllI.get()).toString());
-        return llllIlIllIlIlIl;
+        class_2487 class_24872 = this.saveGeneral();
+        class_24872.method_10582("value", ((Enum)this.get()).toString());
+        return class_24872;
     }
 
-    public EnumSetting(String llllIlIllllIllI, String llllIlIllllllII, T llllIlIlllllIll, Consumer<T> llllIlIlllllIlI, Consumer<Setting<T>> llllIlIllllIIlI, IVisible llllIlIlllllIII) {
-        super(llllIlIllllIllI, llllIlIllllllII, llllIlIlllllIll, llllIlIlllllIlI, llllIlIllllIIlI, llllIlIlllllIII);
-        EnumSetting llllIlIllllIlll;
+    public EnumSetting(String string, String string2, T t, Consumer<T> consumer, Consumer<Setting<T>> consumer2, IVisible iVisible) {
+        super(string, string2, t, consumer, consumer2, iVisible);
         try {
-            llllIlIllllIlll.values = (Enum[])llllIlIlllllIll.getClass().getMethod("values", new Class[0]).invoke(null, new Object[0]);
+            this.values = (Enum[])t.getClass().getMethod("values", new Class[0]).invoke(null, new Object[0]);
         }
-        catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException llllIllIIIIIIII) {
-            llllIllIIIIIIII.printStackTrace();
+        catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException reflectiveOperationException) {
+            reflectiveOperationException.printStackTrace();
         }
-        llllIlIllllIlll.suggestions = new ArrayList<String>(llllIlIllllIlll.values.length);
-        for (T llllIlIllllllll : llllIlIllllIlll.values) {
-            llllIlIllllIlll.suggestions.add(((Enum)llllIlIllllllll).toString());
+        this.suggestions = new ArrayList<String>(this.values.length);
+        for (T t2 : this.values) {
+            this.suggestions.add(((Enum)t2).toString());
+            if (true) continue;
+            throw null;
         }
     }
 
     @Override
     public List<String> getSuggestions() {
-        EnumSetting llllIlIllIllIIl;
-        return llllIlIllIllIIl.suggestions;
+        return this.suggestions;
     }
 
     @Override
-    public T fromTag(class_2487 llllIlIllIIllIl) {
-        EnumSetting llllIlIllIIlllI;
-        llllIlIllIIlllI.parse(llllIlIllIIllIl.method_10558("value"));
-        return (T)((Enum)llllIlIllIIlllI.get());
+    public T fromTag(class_2487 class_24872) {
+        this.parse(class_24872.method_10558("value"));
+        return (T)((Enum)this.get());
     }
 
     @Override
-    protected boolean isValueValid(T llllIlIllIlllII) {
+    protected boolean isValueValid(T t) {
         return true;
     }
 
     @Override
-    protected T parseImpl(String llllIlIlllIIIlI) {
-        EnumSetting llllIlIlllIIIll;
-        for (T llllIlIlllIIllI : llllIlIlllIIIll.values) {
-            if (!llllIlIlllIIIlI.equalsIgnoreCase(((Enum)llllIlIlllIIllI).toString())) continue;
-            return llllIlIlllIIllI;
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    @Override
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((T)((Enum)object));
+    }
+
+    @Override
+    protected T parseImpl(String string) {
+        for (T t : this.values) {
+            if (!string.equalsIgnoreCase(((Enum)t).toString())) continue;
+            return t;
         }
         return null;
     }
 
     public static class Builder<T extends Enum<?>> {
-        protected /* synthetic */ String name;
-        protected /* synthetic */ Consumer<Setting<T>> onModuleActivated;
-        protected /* synthetic */ String description;
-        protected /* synthetic */ IVisible visible;
-        protected /* synthetic */ T defaultValue;
-        protected /* synthetic */ Consumer<T> onChanged;
+        protected String name = "undefined";
+        protected Consumer<Setting<T>> onModuleActivated;
+        protected String description = "";
+        protected IVisible visible;
+        protected T defaultValue;
+        protected Consumer<T> onChanged;
 
-        public Builder<T> defaultValue(T lllllllllllllllllIIIlIllIIIIlIll) {
-            Builder lllllllllllllllllIIIlIllIIIIllII;
-            lllllllllllllllllIIIlIllIIIIllII.defaultValue = lllllllllllllllllIIIlIllIIIIlIll;
-            return lllllllllllllllllIIIlIllIIIIllII;
+        public Builder<T> defaultValue(T t) {
+            this.defaultValue = t;
+            return this;
         }
 
-        public Builder<T> name(String lllllllllllllllllIIIlIllIIIllIIl) {
-            Builder lllllllllllllllllIIIlIllIIIllIlI;
-            lllllllllllllllllIIIlIllIIIllIlI.name = lllllllllllllllllIIIlIllIIIllIIl;
-            return lllllllllllllllllIIIlIllIIIllIlI;
+        public Builder<T> name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder<T> onModuleActivated(Consumer<Setting<T>> lllllllllllllllllIIIlIlIllllllll) {
-            Builder lllllllllllllllllIIIlIllIIIIIIII;
-            lllllllllllllllllIIIlIllIIIIIIII.onModuleActivated = lllllllllllllllllIIIlIlIllllllll;
-            return lllllllllllllllllIIIlIllIIIIIIII;
+        public Builder<T> onModuleActivated(Consumer<Setting<T>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder<T> description(String lllllllllllllllllIIIlIllIIIlIIll) {
-            Builder lllllllllllllllllIIIlIllIIIlIIlI;
-            lllllllllllllllllIIIlIllIIIlIIlI.description = lllllllllllllllllIIIlIllIIIlIIll;
-            return lllllllllllllllllIIIlIllIIIlIIlI;
+        public Builder<T> description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder<T> onChanged(Consumer<T> lllllllllllllllllIIIlIllIIIIIlIl) {
-            Builder lllllllllllllllllIIIlIllIIIIIllI;
-            lllllllllllllllllIIIlIllIIIIIllI.onChanged = lllllllllllllllllIIIlIllIIIIIlIl;
-            return lllllllllllllllllIIIlIllIIIIIllI;
+        public Builder<T> onChanged(Consumer<T> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder() {
-            Builder lllllllllllllllllIIIlIllIIIllllI;
-            lllllllllllllllllIIIlIllIIIllllI.name = "undefined";
-            lllllllllllllllllIIIlIllIIIllllI.description = "";
-        }
-
-        public Builder<T> visible(IVisible lllllllllllllllllIIIlIlIlllllIIl) {
-            Builder lllllllllllllllllIIIlIlIlllllIlI;
-            lllllllllllllllllIIIlIlIlllllIlI.visible = lllllllllllllllllIIIlIlIlllllIIl;
-            return lllllllllllllllllIIIlIlIlllllIlI;
+        public Builder<T> visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
         public EnumSetting<T> build() {
-            Builder lllllllllllllllllIIIlIlIllllIlll;
-            return new EnumSetting<T>(lllllllllllllllllIIIlIlIllllIlll.name, lllllllllllllllllIIIlIlIllllIlll.description, lllllllllllllllllIIIlIlIllllIlll.defaultValue, lllllllllllllllllIIIlIlIllllIlll.onChanged, lllllllllllllllllIIIlIlIllllIlll.onModuleActivated, lllllllllllllllllIIIlIlIllllIlll.visible);
+            return new EnumSetting<T>(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
     }
 }

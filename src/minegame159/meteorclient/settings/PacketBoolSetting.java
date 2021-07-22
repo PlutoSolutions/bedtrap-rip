@@ -28,40 +28,51 @@ import net.minecraft.class_2596;
 
 public class PacketBoolSetting
 extends Setting<Set<Class<? extends class_2596<?>>>> {
-    private static /* synthetic */ List<String> suggestions;
+    private static List<String> suggestions;
 
     @Override
-    protected Set<Class<? extends class_2596<?>>> parseImpl(String llllllllllllllllllIlIIlIIIIIIlIl) {
-        String[] llllllllllllllllllIlIIlIIIIIIlII = llllllllllllllllllIlIIlIIIIIIlIl.split(",");
-        ObjectOpenHashSet llllllllllllllllllIlIIlIIIIIIIll = new ObjectOpenHashSet(llllllllllllllllllIlIIlIIIIIIlII.length);
-        try {
-            for (String llllllllllllllllllIlIIlIIIIIIlll : llllllllllllllllllIlIIlIIIIIIlII) {
-                Class<? extends class_2596<?>> llllllllllllllllllIlIIlIIIIIlIII = PacketUtils.getPacket(llllllllllllllllllIlIIlIIIIIIlll.trim());
-                if (llllllllllllllllllIlIIlIIIIIlIII == null) continue;
-                llllllllllllllllllIlIIlIIIIIIIll.add(llllllllllllllllllIlIIlIIIIIlIII);
-            }
-        }
-        catch (Exception llllllllllllllllllIlIIIlllllllll) {
-            // empty catch block
-        }
-        return llllllllllllllllllIlIIlIIIIIIIll;
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
     }
 
     @Override
-    protected boolean isValueValid(Set<Class<? extends class_2596<?>>> llllllllllllllllllIlIIIllllllIIl) {
+    protected Set<Class<? extends class_2596<?>>> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        ObjectOpenHashSet objectOpenHashSet = new ObjectOpenHashSet(arrstring.length);
+        try {
+            for (String string2 : arrstring) {
+                Class<? extends class_2596<?>> class_ = PacketUtils.getPacket(string2.trim());
+                if (class_ == null) continue;
+                objectOpenHashSet.add(class_);
+                if (-4 <= 0) continue;
+                return null;
+            }
+        }
+        catch (Exception exception) {
+            // empty catch block
+        }
+        return objectOpenHashSet;
+    }
+
+    @Override
+    protected boolean isValueValid(Set<Class<? extends class_2596<?>>> set) {
         return true;
     }
 
     @Override
     public class_2487 toTag() {
-        PacketBoolSetting llllllllllllllllllIlIIIllllIlIll;
-        class_2487 llllllllllllllllllIlIIIllllIlIlI = llllllllllllllllllIlIIIllllIlIll.saveGeneral();
-        class_2499 llllllllllllllllllIlIIIllllIlIIl = new class_2499();
-        for (Class llllllllllllllllllIlIIIllllIllII : (Set)llllllllllllllllllIlIIIllllIlIll.get()) {
-            llllllllllllllllllIlIIIllllIlIIl.add((Object)class_2519.method_23256((String)PacketUtils.getName(llllllllllllllllllIlIIIllllIllII)));
+        class_2487 class_24872 = this.saveGeneral();
+        class_2499 class_24992 = new class_2499();
+        for (Class class_ : (Set)this.get()) {
+            class_24992.add((Object)class_2519.method_23256((String)PacketUtils.getName(class_)));
         }
-        llllllllllllllllllIlIIIllllIlIlI.method_10566("value", (class_2520)llllllllllllllllllIlIIIllllIlIIl);
-        return llllllllllllllllllIlIIIllllIlIlI;
+        class_24872.method_10566("value", (class_2520)class_24992);
+        return class_24872;
+    }
+
+    @Override
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((Set)object);
     }
 
     @Override
@@ -79,89 +90,78 @@ extends Setting<Set<Class<? extends class_2596<?>>>> {
     }
 
     @Override
-    public Set<Class<? extends class_2596<?>>> fromTag(class_2487 llllllllllllllllllIlIIIlllIlIlll) {
-        PacketBoolSetting llllllllllllllllllIlIIIlllIllIll;
-        ((Set)llllllllllllllllllIlIIIlllIllIll.get()).clear();
-        class_2520 llllllllllllllllllIlIIIlllIllIIl = llllllllllllllllllIlIIIlllIlIlll.method_10580("value");
-        if (llllllllllllllllllIlIIIlllIllIIl instanceof class_2499) {
-            for (class_2520 llllllllllllllllllIlIIIlllIlllII : (class_2499)llllllllllllllllllIlIIIlllIllIIl) {
-                Class<? extends class_2596<?>> llllllllllllllllllIlIIIlllIlllIl = PacketUtils.getPacket(llllllllllllllllllIlIIIlllIlllII.method_10714());
-                if (llllllllllllllllllIlIIIlllIlllIl == null) continue;
-                ((Set)llllllllllllllllllIlIIIlllIllIll.get()).add(llllllllllllllllllIlIIIlllIlllIl);
+    public Set<Class<? extends class_2596<?>>> fromTag(class_2487 class_24872) {
+        ((Set)this.get()).clear();
+        class_2520 class_25202 = class_24872.method_10580("value");
+        if (class_25202 instanceof class_2499) {
+            for (class_2520 class_25203 : (class_2499)class_25202) {
+                Class<? extends class_2596<?>> class_ = PacketUtils.getPacket(class_25203.method_10714());
+                if (class_ == null) continue;
+                ((Set)this.get()).add(class_);
             }
         }
-        llllllllllllllllllIlIIIlllIllIll.changed();
-        return (Set)llllllllllllllllllIlIIIlllIllIll.get();
+        this.changed();
+        return (Set)this.get();
     }
 
     @Override
-    public void reset(boolean llllllllllllllllllIlIIlIIIIlIIll) {
-        PacketBoolSetting llllllllllllllllllIlIIlIIIIlIIlI;
-        llllllllllllllllllIlIIlIIIIlIIlI.value = new ObjectOpenHashSet((Collection)llllllllllllllllllIlIIlIIIIlIIlI.defaultValue);
-        if (llllllllllllllllllIlIIlIIIIlIIll) {
-            llllllllllllllllllIlIIlIIIIlIIlI.changed();
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    @Override
+    public void reset(boolean bl) {
+        this.value = new ObjectOpenHashSet((Collection)this.defaultValue);
+        if (bl) {
+            this.changed();
         }
     }
 
-    public PacketBoolSetting(String llllllllllllllllllIlIIlIIIlIIIll, String llllllllllllllllllIlIIlIIIlIIIlI, Set<Class<? extends class_2596<?>>> llllllllllllllllllIlIIlIIIIllIlI, Consumer<Set<Class<? extends class_2596<?>>>> llllllllllllllllllIlIIlIIIIllIIl, Consumer<Setting<Set<Class<? extends class_2596<?>>>>> llllllllllllllllllIlIIlIIIIllIII, IVisible llllllllllllllllllIlIIlIIIIllllI) {
-        super(llllllllllllllllllIlIIlIIIlIIIll, llllllllllllllllllIlIIlIIIlIIIlI, llllllllllllllllllIlIIlIIIIllIlI, llllllllllllllllllIlIIlIIIIllIIl, llllllllllllllllllIlIIlIIIIllIII, llllllllllllllllllIlIIlIIIIllllI);
-        PacketBoolSetting llllllllllllllllllIlIIlIIIIlllIl;
-        llllllllllllllllllIlIIlIIIIlllIl.value = new ObjectOpenHashSet(llllllllllllllllllIlIIlIIIIllIlI);
+    public PacketBoolSetting(String string, String string2, Set<Class<? extends class_2596<?>>> set, Consumer<Set<Class<? extends class_2596<?>>>> consumer, Consumer<Setting<Set<Class<? extends class_2596<?>>>>> consumer2, IVisible iVisible) {
+        super(string, string2, set, consumer, consumer2, iVisible);
+        this.value = new ObjectOpenHashSet(set);
     }
 
     public static class Builder {
-        private /* synthetic */ Consumer<Set<Class<? extends class_2596<?>>>> onChanged;
-        private /* synthetic */ Set<Class<? extends class_2596<?>>> defaultValue;
-        private /* synthetic */ String name;
-        private /* synthetic */ Consumer<Setting<Set<Class<? extends class_2596<?>>>>> onModuleActivated;
-        private /* synthetic */ String description;
-        private /* synthetic */ IVisible visible;
+        private Consumer<Set<Class<? extends class_2596<?>>>> onChanged;
+        private Set<Class<? extends class_2596<?>>> defaultValue;
+        private String name = "undefined";
+        private Consumer<Setting<Set<Class<? extends class_2596<?>>>>> onModuleActivated;
+        private String description = "";
+        private IVisible visible;
 
-        public Builder() {
-            Builder lIIllIlIlIlIlII;
-            lIIllIlIlIlIlII.name = "undefined";
-            lIIllIlIlIlIlII.description = "";
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder name(String lIIllIlIlIIllll) {
-            Builder lIIllIlIlIIlllI;
-            lIIllIlIlIIlllI.name = lIIllIlIlIIllll;
-            return lIIllIlIlIIlllI;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder description(String lIIllIlIlIIIlll) {
-            Builder lIIllIlIlIIlIII;
-            lIIllIlIlIIlIII.description = lIIllIlIlIIIlll;
-            return lIIllIlIlIIlIII;
+        public Builder defaultValue(Set<Class<? extends class_2596<?>>> set) {
+            this.defaultValue = set;
+            return this;
         }
 
-        public Builder defaultValue(Set<Class<? extends class_2596<?>>> lIIllIlIlIIIIIl) {
-            Builder lIIllIlIlIIIlII;
-            lIIllIlIlIIIlII.defaultValue = lIIllIlIlIIIIIl;
-            return lIIllIlIlIIIlII;
-        }
-
-        public Builder onChanged(Consumer<Set<Class<? extends class_2596<?>>>> lIIllIlIIllllIl) {
-            Builder lIIllIlIIlllllI;
-            lIIllIlIIlllllI.onChanged = lIIllIlIIllllIl;
-            return lIIllIlIIlllllI;
+        public Builder onChanged(Consumer<Set<Class<? extends class_2596<?>>>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
         public PacketBoolSetting build() {
-            Builder lIIllIlIIlIllIl;
-            return new PacketBoolSetting(lIIllIlIIlIllIl.name, lIIllIlIIlIllIl.description, lIIllIlIIlIllIl.defaultValue, lIIllIlIIlIllIl.onChanged, lIIllIlIIlIllIl.onModuleActivated, lIIllIlIIlIllIl.visible);
+            return new PacketBoolSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
 
-        public Builder visible(IVisible lIIllIlIIllIIIl) {
-            Builder lIIllIlIIllIIlI;
-            lIIllIlIIllIIlI.visible = lIIllIlIIllIIIl;
-            return lIIllIlIIllIIlI;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<Set<Class<? extends class_2596<?>>>>> lIIllIlIIllIlll) {
-            Builder lIIllIlIIllIllI;
-            lIIllIlIIllIllI.onModuleActivated = lIIllIlIIllIlll;
-            return lIIllIlIIllIllI;
+        public Builder onModuleActivated(Consumer<Setting<Set<Class<? extends class_2596<?>>>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
     }
 }

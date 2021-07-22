@@ -11,16 +11,14 @@ import minegame159.meteorclient.utils.render.color.Color;
 public interface TextRenderer {
     public double getWidth(String var1, int var2);
 
-    default public double render(String llllllllllllllllllllIlIIIlIIllll, double llllllllllllllllllllIlIIIlIIlIIl, double llllllllllllllllllllIlIIIlIIllIl, Color llllllllllllllllllllIlIIIlIIllII) {
-        TextRenderer llllllllllllllllllllIlIIIlIIlIll;
-        return llllllllllllllllllllIlIIIlIIlIll.render(llllllllllllllllllllIlIIIlIIllll, llllllllllllllllllllIlIIIlIIlIIl, llllllllllllllllllllIlIIIlIIllIl, llllllllllllllllllllIlIIIlIIllII, false);
+    default public double render(String string, double d, double d2, Color color) {
+        return this.render(string, d, d2, color, false);
     }
 
     public void begin(double var1, boolean var3, boolean var4);
 
-    default public double getWidth(String llllllllllllllllllllIlIIIlIlIllI) {
-        TextRenderer llllllllllllllllllllIlIIIlIlIlll;
-        return llllllllllllllllllllIlIIIlIlIlll.getWidth(llllllllllllllllllllIlIIIlIlIllI, llllllllllllllllllllIlIIIlIlIllI.length());
+    default public double getWidth(String string) {
+        return this.getWidth(string, string.length());
     }
 
     public double getHeight();
@@ -29,19 +27,16 @@ public interface TextRenderer {
 
     public boolean isBuilding();
 
-    default public void begin(double llllllllllllllllllllIlIIIllIIIlI) {
-        TextRenderer llllllllllllllllllllIlIIIllIIIll;
-        llllllllllllllllllllIlIIIllIIIll.begin(llllllllllllllllllllIlIIIllIIIlI, false, false);
+    default public void begin(double d) {
+        this.begin(d, false, false);
     }
 
     default public void beginBig() {
-        TextRenderer llllllllllllllllllllIlIIIlIlllIl;
-        llllllllllllllllllllIlIIIlIlllIl.begin(1.0, false, true);
+        this.begin(1.0, false, true);
     }
 
     default public void begin() {
-        TextRenderer llllllllllllllllllllIlIIIllIIIII;
-        llllllllllllllllllllIlIIIllIIIII.begin(1.0, false, false);
+        this.begin(1.0, false, false);
     }
 
     public void end();

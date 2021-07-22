@@ -10,9 +10,5 @@ public enum SortPriority {
     HighestHealth,
     ClosestAngle;
 
-
-    private SortPriority() {
-        SortPriority lllllllllllllllllIIlIIllIllllIlI;
-    }
 }
 

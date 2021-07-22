@@ -9,20 +9,12 @@ package minegame159.meteorclient.events.entity;
 import net.minecraft.class_1297;
 
 public class EntityRemovedEvent {
-    private static final /* synthetic */ EntityRemovedEvent INSTANCE;
-    public /* synthetic */ class_1297 entity;
+    private static final EntityRemovedEvent INSTANCE = new EntityRemovedEvent();
+    public class_1297 entity;
 
-    public static EntityRemovedEvent get(class_1297 llllIIlIIIlIIII) {
-        EntityRemovedEvent.INSTANCE.entity = llllIIlIIIlIIII;
+    public static EntityRemovedEvent get(class_1297 class_12972) {
+        EntityRemovedEvent.INSTANCE.entity = class_12972;
         return INSTANCE;
-    }
-
-    public EntityRemovedEvent() {
-        EntityRemovedEvent llllIIlIIIlIIlI;
-    }
-
-    static {
-        INSTANCE = new EntityRemovedEvent();
     }
 }
 

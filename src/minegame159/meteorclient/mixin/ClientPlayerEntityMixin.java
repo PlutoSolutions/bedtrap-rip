@@ -65,99 +65,99 @@ extends class_742 {
     @Final
     public class_634 field_3944;
 
-    public ClientPlayerEntityMixin(class_638 world, GameProfile profile) {
-        super(world, profile);
+    public ClientPlayerEntityMixin(class_638 class_6382, GameProfile gameProfile) {
+        super(class_6382, gameProfile);
     }
 
     @Inject(method={"dropSelectedItem"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onDropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> info) {
+    private void onDropSelectedItem(boolean bl, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (MeteorClient.EVENT_BUS.post(DropItemsEvent.get(this.method_6047())).isCancelled()) {
-            info.setReturnValue((Object)false);
+            callbackInfoReturnable.setReturnValue((Object)false);
         }
     }
 
     @Inject(at={@At(value="HEAD")}, method={"sendChatMessage"}, cancellable=true)
-    private void onSendChatMessage(String message, CallbackInfo info) {
-        if (!(message.startsWith(Config.get().prefix) || message.startsWith("/") || message.startsWith((String)BaritoneAPI.getSettings().prefix.value))) {
-            SendMessageEvent event = MeteorClient.EVENT_BUS.post(SendMessageEvent.get(message));
-            if (!event.isCancelled()) {
-                this.field_3944.method_2883((class_2596)new class_2797(event.message));
+    private void onSendChatMessage(String string, CallbackInfo callbackInfo) {
+        if (!(string.startsWith(Config.get().prefix) || string.startsWith("/") || string.startsWith((String)BaritoneAPI.getSettings().prefix.value))) {
+            SendMessageEvent sendMessageEvent = MeteorClient.EVENT_BUS.post(SendMessageEvent.get(string));
+            if (!sendMessageEvent.isCancelled()) {
+                this.field_3944.method_2883((class_2596)new class_2797(sendMessageEvent.message));
             }
-            info.cancel();
+            callbackInfo.cancel();
             return;
         }
-        if (message.startsWith(Config.get().prefix)) {
+        if (string.startsWith(Config.get().prefix)) {
             try {
-                Commands.get().dispatch(message.substring(Config.get().prefix.length()));
+                Commands.get().dispatch(string.substring(Config.get().prefix.length()));
             }
-            catch (CommandSyntaxException e) {
-                ChatUtils.error(e.getMessage(), new Object[0]);
+            catch (CommandSyntaxException commandSyntaxException) {
+                ChatUtils.error(commandSyntaxException.getMessage(), new Object[0]);
             }
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Redirect(method={"updateNausea"}, at=@At(value="FIELD", target="Lnet/minecraft/client/MinecraftClient;currentScreen:Lnet/minecraft/client/gui/screen/Screen;"))
-    private class_437 updateNauseaGetCurrentScreenProxy(class_310 client) {
+    private class_437 updateNauseaGetCurrentScreenProxy(class_310 class_3102) {
         if (Modules.get().isActive(Portals.class)) {
             return null;
         }
-        return client.field_1755;
+        return class_3102.field_1755;
     }
 
     @Redirect(method={"tickMovement"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerEntity;isUsingItem()Z"))
-    private boolean proxy_tickMovement_isUsingItem(class_746 player) {
+    private boolean proxy_tickMovement_isUsingItem(class_746 class_7462) {
         if (Modules.get().get(NoSlow.class).items()) {
             return false;
         }
-        return player.method_6115();
+        return class_7462.method_6115();
     }
 
     @Inject(method={"isSneaking"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onIsSneaking(CallbackInfoReturnable<Boolean> info) {
+    private void onIsSneaking(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Modules.get().isActive(Scaffold.class)) {
-            info.setReturnValue((Object)false);
+            callbackInfoReturnable.setReturnValue((Object)false);
         }
     }
 
     @Inject(method={"shouldSlowDown"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onShouldSlowDown(CallbackInfoReturnable<Boolean> info) {
+    private void onShouldSlowDown(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Modules.get().get(NoSlow.class).sneaking()) {
-            info.setReturnValue((Object)this.method_20448());
+            callbackInfoReturnable.setReturnValue((Object)this.method_20448());
         }
     }
 
     @Inject(method={"pushOutOfBlocks"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onPushOutOfBlocks(double x, double d, CallbackInfo info) {
+    private void onPushOutOfBlocks(double d, double d2, CallbackInfo callbackInfo) {
         Velocity velocity = Modules.get().get(Velocity.class);
         if (velocity.isActive() && velocity.blocks.get().booleanValue()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"sendMovementPackets"}, at={@At(value="HEAD")})
-    private void onSendMovementPacketsHead(CallbackInfo info) {
+    private void onSendMovementPacketsHead(CallbackInfo callbackInfo) {
         MeteorClient.EVENT_BUS.post(SendMovementPacketsEvent.Pre.get());
     }
 
     @Inject(method={"tick"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/Packet;)V", ordinal=0)})
-    private void onTickHasVehicleBeforeSendPackets(CallbackInfo info) {
+    private void onTickHasVehicleBeforeSendPackets(CallbackInfo callbackInfo) {
         MeteorClient.EVENT_BUS.post(SendMovementPacketsEvent.Pre.get());
     }
 
     @Inject(method={"sendMovementPackets"}, at={@At(value="TAIL")})
-    private void onSendMovementPacketsTail(CallbackInfo info) {
+    private void onSendMovementPacketsTail(CallbackInfo callbackInfo) {
         MeteorClient.EVENT_BUS.post(SendMovementPacketsEvent.Post.get());
     }
 
     @Inject(method={"tick"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/Packet;)V", ordinal=1, shift=At.Shift.AFTER)})
-    private void onTickHasVehicleAfterSendPackets(CallbackInfo info) {
+    private void onTickHasVehicleAfterSendPackets(CallbackInfo callbackInfo) {
         MeteorClient.EVENT_BUS.post(SendMovementPacketsEvent.Post.get());
     }
 
     @Redirect(method={"sendMovementPackets"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerEntity;isSneaking()Z"))
-    private boolean isSneaking(class_746 clientPlayerEntity) {
-        return Modules.get().get(Sneak.class).doPacket() || Modules.get().get(NoSlow.class).airStrict() || clientPlayerEntity.method_5715();
+    private boolean isSneaking(class_746 class_7462) {
+        return Modules.get().get(Sneak.class).doPacket() || Modules.get().get(NoSlow.class).airStrict() || class_7462.method_5715();
     }
 }
 

@@ -36,119 +36,113 @@ import net.minecraft.class_2879;
 
 public class Criticals
 extends Module {
-    private final /* synthetic */ Setting<Mode> mode;
-    private /* synthetic */ int sendTimer;
-    private /* synthetic */ class_2824 attackPacket;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ class_2879 swingPacket;
-    private /* synthetic */ boolean sendPackets;
-    private final /* synthetic */ Setting<Boolean> ka;
+    private final Setting<Mode> mode;
+    private int sendTimer;
+    private class_2824 attackPacket;
+    private final SettingGroup sgGeneral;
+    private class_2879 swingPacket;
+    private boolean sendPackets;
+    private final Setting<Boolean> ka;
 
     @EventHandler
-    private void onTick(TickEvent.Pre lllllllllllllllllIllIIlIlIlllIlI) {
-        Criticals lllllllllllllllllIllIIlIlIlllIll;
-        if (lllllllllllllllllIllIIlIlIlllIll.sendPackets) {
-            if (lllllllllllllllllIllIIlIlIlllIll.sendTimer <= 0) {
-                lllllllllllllllllIllIIlIlIlllIll.sendPackets = false;
-                if (lllllllllllllllllIllIIlIlIlllIll.attackPacket == null || lllllllllllllllllIllIIlIlIlllIll.swingPacket == null) {
+    private void onTick(TickEvent.Pre pre) {
+        if (this.sendPackets) {
+            if (this.sendTimer <= 0) {
+                this.sendPackets = false;
+                if (this.attackPacket == null || this.swingPacket == null) {
                     return;
                 }
-                lllllllllllllllllIllIIlIlIlllIll.mc.method_1562().method_2883((class_2596)lllllllllllllllllIllIIlIlIlllIll.attackPacket);
-                lllllllllllllllllIllIIlIlIlllIll.mc.method_1562().method_2883((class_2596)lllllllllllllllllIllIIlIlIlllIll.swingPacket);
-                lllllllllllllllllIllIIlIlIlllIll.attackPacket = null;
-                lllllllllllllllllIllIIlIlIlllIll.swingPacket = null;
+                this.mc.method_1562().method_2883((class_2596)this.attackPacket);
+                this.mc.method_1562().method_2883((class_2596)this.swingPacket);
+                this.attackPacket = null;
+                this.swingPacket = null;
             } else {
-                --lllllllllllllllllIllIIlIlIlllIll.sendTimer;
+                --this.sendTimer;
             }
         }
     }
 
     private boolean skipCrit() {
-        Criticals lllllllllllllllllIllIIlIlIlIIlII;
-        return !lllllllllllllllllIllIIlIlIlIIlII.mc.field_1724.method_24828() || lllllllllllllllllIllIIlIlIlIIlII.mc.field_1724.method_5869() || lllllllllllllllllIllIIlIlIlIIlII.mc.field_1724.method_5771() || lllllllllllllllllIllIIlIlIlIIlII.mc.field_1724.method_6101();
+        return !this.mc.field_1724.method_24828() || this.mc.field_1724.method_5869() || this.mc.field_1724.method_5771() || this.mc.field_1724.method_6101();
     }
 
     @EventHandler
-    private void onSendPacket(PacketEvent.Send lllllllllllllllllIllIIlIlIlllllI) {
-        Criticals lllllllllllllllllIllIIlIlIllllll;
-        if (lllllllllllllllllIllIIlIlIlllllI.packet instanceof class_2824 && ((class_2824)lllllllllllllllllIllIIlIlIlllllI.packet).method_12252() == class_2824.class_2825.field_12875) {
-            if (lllllllllllllllllIllIIlIlIllllll.skipCrit()) {
+    private void onSendPacket(PacketEvent.Send send) {
+        if (send.packet instanceof class_2824 && ((class_2824)send.packet).method_12252() == class_2824.class_2825.field_12875) {
+            if (this.skipCrit()) {
                 return;
             }
-            class_1297 lllllllllllllllllIllIIlIllIIIIlI = ((class_2824)lllllllllllllllllIllIIlIlIlllllI.packet).method_12248((class_1937)lllllllllllllllllIllIIlIlIllllll.mc.field_1687);
-            if (!(lllllllllllllllllIllIIlIllIIIIlI instanceof class_1309) || lllllllllllllllllIllIIlIllIIIIlI != Modules.get().get(KillAura.class).getTarget() && lllllllllllllllllIllIIlIlIllllll.ka.get().booleanValue()) {
+            class_1297 class_12972 = ((class_2824)send.packet).method_12248((class_1937)this.mc.field_1687);
+            if (!(class_12972 instanceof class_1309) || class_12972 != Modules.get().get(KillAura.class).getTarget() && this.ka.get().booleanValue()) {
                 return;
             }
-            switch (lllllllllllllllllIllIIlIlIllllll.mode.get()) {
-                case Packet: {
-                    lllllllllllllllllIllIIlIlIllllll.sendPacket(0.0625);
-                    lllllllllllllllllIllIIlIlIllllll.sendPacket(0.0);
+            switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$combat$Criticals$Mode[this.mode.get().ordinal()]) {
+                case 1: {
+                    this.sendPacket(0.0625);
+                    this.sendPacket(0.0);
                     break;
                 }
-                case Bypass: {
-                    lllllllllllllllllIllIIlIlIllllll.sendPacket(0.11);
-                    lllllllllllllllllIllIIlIlIllllll.sendPacket(0.1100013579);
-                    lllllllllllllllllIllIIlIlIllllll.sendPacket(1.3579E-6);
+                case 2: {
+                    this.sendPacket(0.11);
+                    this.sendPacket(0.1100013579);
+                    this.sendPacket(1.3579E-6);
                     break;
                 }
                 default: {
-                    if (!lllllllllllllllllIllIIlIlIllllll.sendPackets) {
-                        lllllllllllllllllIllIIlIlIllllll.sendPackets = true;
-                        lllllllllllllllllIllIIlIlIllllll.sendTimer = lllllllllllllllllIllIIlIlIllllll.mode.get() == Mode.Jump ? 6 : 4;
-                        lllllllllllllllllIllIIlIlIllllll.attackPacket = (class_2824)lllllllllllllllllIllIIlIlIlllllI.packet;
-                        if (lllllllllllllllllIllIIlIlIllllll.mode.get() == Mode.Jump) {
-                            lllllllllllllllllIllIIlIlIllllll.mc.field_1724.method_6043();
+                    if (!this.sendPackets) {
+                        this.sendPackets = true;
+                        this.sendTimer = this.mode.get() == Mode.Jump ? 6 : 4;
+                        this.attackPacket = (class_2824)send.packet;
+                        if (this.mode.get() == Mode.Jump) {
+                            this.mc.field_1724.method_6043();
                         } else {
-                            ((IVec3d)lllllllllllllllllIllIIlIlIllllll.mc.field_1724.method_18798()).setY(0.25);
+                            ((IVec3d)this.mc.field_1724.method_18798()).setY(0.25);
                         }
-                        lllllllllllllllllIllIIlIlIlllllI.cancel();
+                        send.cancel();
                         break;
                     } else {
                         break;
                     }
                 }
             }
-        } else if (lllllllllllllllllIllIIlIlIlllllI.packet instanceof class_2879 && lllllllllllllllllIllIIlIlIllllll.mode.get() != Mode.Packet) {
-            if (lllllllllllllllllIllIIlIlIllllll.skipCrit()) {
+        } else if (send.packet instanceof class_2879 && this.mode.get() != Mode.Packet) {
+            if (this.skipCrit()) {
                 return;
             }
-            if (lllllllllllllllllIllIIlIlIllllll.sendPackets && lllllllllllllllllIllIIlIlIllllll.swingPacket == null) {
-                lllllllllllllllllIllIIlIlIllllll.swingPacket = (class_2879)lllllllllllllllllIllIIlIlIlllllI.packet;
-                lllllllllllllllllIllIIlIlIlllllI.cancel();
+            if (this.sendPackets && this.swingPacket == null) {
+                this.swingPacket = (class_2879)send.packet;
+                send.cancel();
             }
         }
     }
 
     public Criticals() {
         super(Categories.Combat, "criticals", "Performs critical attacks when you hit your target.");
-        Criticals lllllllllllllllllIllIIlIllIIlIIl;
-        lllllllllllllllllIllIIlIllIIlIIl.sgGeneral = lllllllllllllllllIllIIlIllIIlIIl.settings.getDefaultGroup();
-        lllllllllllllllllIllIIlIllIIlIIl.mode = lllllllllllllllllIllIIlIllIIlIIl.sgGeneral.add(new EnumSetting.Builder().name("mode").description("The mode on how Criticals will function.").defaultValue(Mode.Packet).build());
-        lllllllllllllllllIllIIlIllIIlIIl.ka = lllllllllllllllllIllIIlIllIIlIIl.sgGeneral.add(new BoolSetting.Builder().name("only-killaura").description("Only performs crits when using killaura.").defaultValue(false).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("The mode on how Criticals will function.").defaultValue(Mode.Packet).build());
+        this.ka = this.sgGeneral.add(new BoolSetting.Builder().name("only-killaura").description("Only performs crits when using killaura.").defaultValue(false).build());
     }
 
     @Override
     public void onActivate() {
-        lllllllllllllllllIllIIlIllIIIllI.attackPacket = null;
-        lllllllllllllllllIllIIlIllIIIllI.swingPacket = null;
-        lllllllllllllllllIllIIlIllIIIllI.sendPackets = false;
-        lllllllllllllllllIllIIlIllIIIllI.sendTimer = 0;
+        this.attackPacket = null;
+        this.swingPacket = null;
+        this.sendPackets = false;
+        this.sendTimer = 0;
     }
 
     @Override
     public String getInfoString() {
-        Criticals lllllllllllllllllIllIIlIlIlIIIlI;
-        return lllllllllllllllllIllIIlIlIlIIIlI.mode.get().name();
+        return this.mode.get().name();
     }
 
-    private void sendPacket(double lllllllllllllllllIllIIlIlIllIIIl) {
-        Criticals lllllllllllllllllIllIIlIlIlIllII;
-        double lllllllllllllllllIllIIlIlIllIIII = lllllllllllllllllIllIIlIlIlIllII.mc.field_1724.method_23317();
-        double lllllllllllllllllIllIIlIlIlIllll = lllllllllllllllllIllIIlIlIlIllII.mc.field_1724.method_23318();
-        double lllllllllllllllllIllIIlIlIlIlllI = lllllllllllllllllIllIIlIlIlIllII.mc.field_1724.method_23321();
-        class_2828.class_2829 lllllllllllllllllIllIIlIlIlIllIl = new class_2828.class_2829(lllllllllllllllllIllIIlIlIllIIII, lllllllllllllllllIllIIlIlIlIllll + lllllllllllllllllIllIIlIlIllIIIl, lllllllllllllllllIllIIlIlIlIlllI, false);
-        ((IPlayerMoveC2SPacket)lllllllllllllllllIllIIlIlIlIllIl).setTag(1337);
-        lllllllllllllllllIllIIlIlIlIllII.mc.field_1724.field_3944.method_2883((class_2596)lllllllllllllllllIllIIlIlIlIllIl);
+    private void sendPacket(double d) {
+        double d2 = this.mc.field_1724.method_23317();
+        double d3 = this.mc.field_1724.method_23318();
+        double d4 = this.mc.field_1724.method_23321();
+        class_2828.class_2829 class_28292 = new class_2828.class_2829(d2, d3 + d, d4, false);
+        ((IPlayerMoveC2SPacket)class_28292).setTag(1337);
+        this.mc.field_1724.field_3944.method_2883((class_2596)class_28292);
     }
 
     public static enum Mode {
@@ -157,10 +151,6 @@ extends Module {
         Jump,
         MiniJump;
 
-
-        private Mode() {
-            Mode llllIIllIIIIlll;
-        }
     }
 }
 

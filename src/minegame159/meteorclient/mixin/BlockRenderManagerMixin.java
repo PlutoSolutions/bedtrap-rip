@@ -32,9 +32,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_776.class})
 public class BlockRenderManagerMixin {
     @Inject(method={"renderDamage"}, at={@At(value="HEAD")}, cancellable=true)
-    private void renderDamage(class_2680 state, class_2338 pos, class_1920 world, class_4587 matrix, class_4588 vertexConsumer, CallbackInfo info) {
+    private void renderDamage(class_2680 class_26802, class_2338 class_23382, class_1920 class_19202, class_4587 class_45872, class_4588 class_45882, CallbackInfo callbackInfo) {
         if (Modules.get().isActive(BreakIndicators.class) || Modules.get().get(NoRender.class).noBlockBreakOverlay()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 }

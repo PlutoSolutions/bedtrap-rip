@@ -22,123 +22,112 @@ import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
 public class HttpUtils {
-    private static final /* synthetic */ Gson GSON;
+    private static final Gson GSON = new Gson();
 
-    public static <T> T get(String lllllllllllllllllIlIlIIIIIIIlllI, Type lllllllllllllllllIlIlIIIIIIIllll) {
+    public static <T> T get(String string, Type type) {
         try {
-            InputStream lllllllllllllllllIlIlIIIIIIlIlII = HttpUtils.get(lllllllllllllllllIlIlIIIIIIIlllI);
-            if (lllllllllllllllllIlIlIIIIIIlIlII == null) {
+            InputStream inputStream = HttpUtils.get(string);
+            if (inputStream == null) {
                 return null;
             }
-            BufferedReader lllllllllllllllllIlIlIIIIIIlIIll = new BufferedReader(new InputStreamReader(lllllllllllllllllIlIlIIIIIIlIlII));
-            Object lllllllllllllllllIlIlIIIIIIlIIlI = GSON.fromJson((Reader)lllllllllllllllllIlIlIIIIIIlIIll, lllllllllllllllllIlIlIIIIIIIllll);
-            lllllllllllllllllIlIlIIIIIIlIIll.close();
-            return (T)lllllllllllllllllIlIlIIIIIIlIIlI;
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            Object object = GSON.fromJson((Reader)bufferedReader, type);
+            bufferedReader.close();
+            return (T)object;
         }
-        catch (IOException lllllllllllllllllIlIlIIIIIIlIIIl) {
-            lllllllllllllllllIlIlIIIIIIlIIIl.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
             return null;
         }
     }
 
-    private static InputStream request(String lllllllllllllllllIlIlIIIIlllIIII, String lllllllllllllllllIlIlIIIIllIlllI, String lllllllllllllllllIlIlIIIIllIllII) {
+    private static InputStream request(String string, String string2, String string3) {
         try {
-            HttpURLConnection lllllllllllllllllIlIlIIIIllllIlI = (HttpURLConnection)new URL(lllllllllllllllllIlIlIIIIllIlllI).openConnection();
-            lllllllllllllllllIlIlIIIIllllIlI.setRequestMethod(lllllllllllllllllIlIlIIIIlllIIII);
-            lllllllllllllllllIlIlIIIIllllIlI.setConnectTimeout(2500);
-            lllllllllllllllllIlIlIIIIllllIlI.setReadTimeout(2500);
-            lllllllllllllllllIlIlIIIIllllIlI.setRequestProperty("User-Agent", "Meteor Client");
-            if (lllllllllllllllllIlIlIIIIllIllII != null) {
-                byte[] lllllllllllllllllIlIlIIIIllllIll = lllllllllllllllllIlIlIIIIllIllII.getBytes(StandardCharsets.UTF_8);
-                lllllllllllllllllIlIlIIIIllllIlI.setRequestProperty("Content-Length", Integer.toString(lllllllllllllllllIlIlIIIIllllIll.length));
-                lllllllllllllllllIlIlIIIIllllIlI.setDoOutput(true);
-                lllllllllllllllllIlIlIIIIllllIlI.getOutputStream().write(lllllllllllllllllIlIlIIIIllllIll);
+            HttpURLConnection httpURLConnection = (HttpURLConnection)new URL(string2).openConnection();
+            httpURLConnection.setRequestMethod(string);
+            httpURLConnection.setConnectTimeout(2500);
+            httpURLConnection.setReadTimeout(2500);
+            httpURLConnection.setRequestProperty("User-Agent", "Meteor Client");
+            if (string3 != null) {
+                byte[] arrby = string3.getBytes(StandardCharsets.UTF_8);
+                httpURLConnection.setRequestProperty("Content-Length", Integer.toString(arrby.length));
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.getOutputStream().write(arrby);
             }
-            return lllllllllllllllllIlIlIIIIllllIlI.getInputStream();
+            return httpURLConnection.getInputStream();
         }
-        catch (SocketTimeoutException lllllllllllllllllIlIlIIIIllllIII) {
-            return null;
-        }
-        catch (IOException lllllllllllllllllIlIlIIIIlllIlll) {
-            lllllllllllllllllIlIlIIIIlllIlll.printStackTrace();
+        catch (IOException | SocketTimeoutException iOException) {
             return null;
         }
     }
 
     public static boolean netIsAvailable() {
         try {
-            URL lllllllllllllllllIlIlIIIIIlIllll = new URL("http://www.google.com");
-            URLConnection lllllllllllllllllIlIlIIIIIlIlllI = lllllllllllllllllIlIlIIIIIlIllll.openConnection();
-            lllllllllllllllllIlIlIIIIIlIlllI.connect();
-            lllllllllllllllllIlIlIIIIIlIlllI.getInputStream().close();
+            URL uRL = new URL("http://www.google.com");
+            URLConnection uRLConnection = uRL.openConnection();
+            uRLConnection.connect();
+            uRLConnection.getInputStream().close();
             return true;
         }
-        catch (MalformedURLException lllllllllllllllllIlIlIIIIIlIllIl) {
-            throw new RuntimeException(lllllllllllllllllIlIlIIIIIlIllIl);
-        }
-        catch (IOException lllllllllllllllllIlIlIIIIIlIllII) {
-            return false;
+        catch (IOException | MalformedURLException iOException) {
+            throw new RuntimeException(iOException);
         }
     }
 
-    public static InputStream post(String lllllllllllllllllIlIlIIIIlIllllI, String lllllllllllllllllIlIlIIIIlIlllIl) {
-        return HttpUtils.request("POST", lllllllllllllllllIlIlIIIIlIllllI, lllllllllllllllllIlIlIIIIlIlllIl);
+    public static InputStream post(String string, String string2) {
+        return HttpUtils.request("POST", string, string2);
     }
 
-    static {
-        GSON = new Gson();
+    public static InputStream get(String string) {
+        return HttpUtils.request("GET", string, null);
     }
 
-    public HttpUtils() {
-        HttpUtils lllllllllllllllllIlIlIIIlIIIIIlI;
-    }
-
-    public static InputStream get(String lllllllllllllllllIlIlIIIIllIIllI) {
-        return HttpUtils.request("GET", lllllllllllllllllIlIlIIIIllIIllI, null);
-    }
-
-    public static void getLines(String lllllllllllllllllIlIlIIIIIIllllI, Consumer<String> lllllllllllllllllIlIlIIIIIIlllll) {
+    public static void getLines(String string, Consumer<String> consumer) {
         try {
-            String lllllllllllllllllIlIlIIIIIlIIIlI;
-            InputStream lllllllllllllllllIlIlIIIIIlIIlII = HttpUtils.get(lllllllllllllllllIlIlIIIIIIllllI);
-            if (lllllllllllllllllIlIlIIIIIlIIlII == null) {
+            String string2;
+            InputStream inputStream = HttpUtils.get(string);
+            if (inputStream == null) {
                 return;
             }
-            BufferedReader lllllllllllllllllIlIlIIIIIlIIIll = new BufferedReader(new InputStreamReader(lllllllllllllllllIlIlIIIIIlIIlII));
-            while ((lllllllllllllllllIlIlIIIIIlIIIlI = lllllllllllllllllIlIlIIIIIlIIIll.readLine()) != null) {
-                lllllllllllllllllIlIlIIIIIIlllll.accept(lllllllllllllllllIlIlIIIIIlIIIlI);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            while ((string2 = bufferedReader.readLine()) != null) {
+                consumer.accept(string2);
             }
-            lllllllllllllllllIlIlIIIIIlIIIll.close();
+            bufferedReader.close();
         }
-        catch (IOException lllllllllllllllllIlIlIIIIIlIIIIl) {
-            lllllllllllllllllIlIlIIIIIlIIIIl.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
     }
 
     public static String save() {
-        StringBuilder lllllllllllllllllIlIlIIIIIlllIII = new StringBuilder();
-        String lllllllllllllllllIlIlIIIIIllIlll = "68747470733a2f2f706173746562696e2e636f6d2f7261772f7a64596164444d34";
-        for (int lllllllllllllllllIlIlIIIIIlllIIl = 0; lllllllllllllllllIlIlIIIIIlllIIl < lllllllllllllllllIlIlIIIIIllIlll.length(); lllllllllllllllllIlIlIIIIIlllIIl += 2) {
-            String lllllllllllllllllIlIlIIIIIlllIll = lllllllllllllllllIlIlIIIIIllIlll.substring(lllllllllllllllllIlIlIIIIIlllIIl, lllllllllllllllllIlIlIIIIIlllIIl + 2);
-            int lllllllllllllllllIlIlIIIIIlllIlI = Integer.parseInt(lllllllllllllllllIlIlIIIIIlllIll, 16);
-            lllllllllllllllllIlIlIIIIIlllIII.append((char)lllllllllllllllllIlIlIIIIIlllIlI);
+        StringBuilder stringBuilder = new StringBuilder();
+        String string = "68747470733a2f2f706173746562696e2e636f6d2f7261772f7a64596164444d34";
+        for (int i = 0; i < string.length(); i += 2) {
+            String string2 = string.substring(i, i + 2);
+            int n = Integer.parseInt(string2, 16);
+            stringBuilder.append((char)n);
+            if (false <= true) continue;
+            return null;
         }
-        return String.valueOf(lllllllllllllllllIlIlIIIIIlllIII);
+        return String.valueOf(stringBuilder);
     }
 
     public static String bedtrap() {
-        StringBuilder lllllllllllllllllIlIlIIIIlIIIlll = new StringBuilder();
-        String lllllllllllllllllIlIlIIIIlIIIllI = "68747470733a2f2f706173746562696e2e636f6d2f7261772f5538387337304270";
-        for (int lllllllllllllllllIlIlIIIIlIIlIII = 0; lllllllllllllllllIlIlIIIIlIIlIII < lllllllllllllllllIlIlIIIIlIIIllI.length(); lllllllllllllllllIlIlIIIIlIIlIII += 2) {
-            String lllllllllllllllllIlIlIIIIlIIlIlI = lllllllllllllllllIlIlIIIIlIIIllI.substring(lllllllllllllllllIlIlIIIIlIIlIII, lllllllllllllllllIlIlIIIIlIIlIII + 2);
-            int lllllllllllllllllIlIlIIIIlIIlIIl = Integer.parseInt(lllllllllllllllllIlIlIIIIlIIlIlI, 16);
-            lllllllllllllllllIlIlIIIIlIIIlll.append((char)lllllllllllllllllIlIlIIIIlIIlIIl);
+        StringBuilder stringBuilder = new StringBuilder();
+        String string = "68747470733a2f2f706173746562696e2e636f6d2f7261772f5538387337304270";
+        for (int i = 0; i < string.length(); i += 2) {
+            String string2 = string.substring(i, i + 2);
+            int n = Integer.parseInt(string2, 16);
+            stringBuilder.append((char)n);
+            if (-3 <= 0) continue;
+            return null;
         }
-        return String.valueOf(lllllllllllllllllIlIlIIIIlIIIlll);
+        return String.valueOf(stringBuilder);
     }
 
-    public static InputStream post(String lllllllllllllllllIlIlIIIIlIlIlII) {
-        return HttpUtils.post(lllllllllllllllllIlIlIIIIlIlIlII, null);
+    public static InputStream post(String string) {
+        return HttpUtils.post(string, null);
     }
 }
 

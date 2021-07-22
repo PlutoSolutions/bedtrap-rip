@@ -41,24 +41,20 @@ import net.minecraft.class_745;
 import net.minecraft.class_761;
 
 public class FakeClientPlayer {
-    private static /* synthetic */ String lastId;
-    private static /* synthetic */ class_640 playerListEntry;
-    private static /* synthetic */ boolean needsNewEntry;
-    private static /* synthetic */ class_1657 player;
-    private static /* synthetic */ class_638 world;
+    private static String lastId;
+    private static class_640 playerListEntry;
+    private static boolean needsNewEntry;
+    private static class_1657 player;
+    private static class_638 world;
 
     public static class_1657 getPlayer() {
-        String lllllllllllllllllIIIIlIlIIlllllI = Utils.mc.method_1548().method_1673();
-        if (player == null || !lllllllllllllllllIIIIlIlIIlllllI.equals(lastId)) {
+        String string = Utils.mc.method_1548().method_1673();
+        if (player == null || !string.equals(lastId)) {
             player = new class_745(world, Utils.mc.method_1548().method_1677());
-            lastId = lllllllllllllllllIIIIlIlIIlllllI;
+            lastId = string;
             needsNewEntry = true;
         }
         return player;
-    }
-
-    public FakeClientPlayer() {
-        FakeClientPlayer lllllllllllllllllIIIIlIlIlIIIIII;
     }
 
     public static class_640 getPlayerListEntry() {

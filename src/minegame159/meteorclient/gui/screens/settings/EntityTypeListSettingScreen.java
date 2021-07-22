@@ -33,334 +33,337 @@ import net.minecraft.class_3545;
 
 public class EntityTypeListSettingScreen
 extends WindowScreen {
-    private /* synthetic */ WSection ambient;
-    /* synthetic */ int hasAmbient;
-    private /* synthetic */ WSection animals;
-    private /* synthetic */ WTable ambientT;
-    /* synthetic */ int hasWaterAnimal;
-    /* synthetic */ int hasMisc;
-    private /* synthetic */ String filterText;
-    private /* synthetic */ WTable monstersT;
-    private /* synthetic */ WTable animalsT;
-    private /* synthetic */ WTable waterAnimalsT;
-    private /* synthetic */ WVerticalList list;
-    private final /* synthetic */ EntityTypeListSetting setting;
-    /* synthetic */ int hasAnimal;
-    private /* synthetic */ WSection waterAnimals;
-    private /* synthetic */ WSection misc;
-    private /* synthetic */ WTable miscT;
-    /* synthetic */ int hasMonster;
-    private final /* synthetic */ WTextBox filter;
-    private /* synthetic */ WSection monsters;
+    private WSection ambient;
+    int hasAmbient = 0;
+    private WSection animals;
+    private WTable ambientT;
+    int hasWaterAnimal = 0;
+    int hasMisc = 0;
+    private String filterText = "";
+    private WTable monstersT;
+    private WTable animalsT;
+    private WTable waterAnimalsT;
+    private WVerticalList list;
+    private final EntityTypeListSetting setting;
+    int hasAnimal = 0;
+    private WSection waterAnimals;
+    private WSection misc;
+    private WTable miscT;
+    int hasMonster = 0;
+    private final WTextBox filter;
+    private WSection monsters;
 
-    private void tableChecked(List<class_1299<?>> llIlIIIlIllllll, boolean llIlIIIlIlllIlI) {
-        EntityTypeListSettingScreen llIlIIIllIIIIII;
-        boolean llIlIIIlIllllIl = false;
-        for (class_1299<?> llIlIIIllIIIIIl : llIlIIIlIllllll) {
-            if (llIlIIIlIlllIlI) {
-                ((Object2BooleanMap)llIlIIIllIIIIII.setting.get()).put(llIlIIIllIIIIIl, true);
-                llIlIIIlIllllIl = true;
+    private void lambda$initWidgets$5(List list, WCheckbox wCheckbox) {
+        this.tableChecked(list, wCheckbox.checked);
+    }
+
+    private void lambda$initWidgets$4(List list, WCheckbox wCheckbox) {
+        this.tableChecked(list, wCheckbox.checked);
+    }
+
+    private void tableChecked(List<class_1299<?>> list, boolean bl) {
+        boolean bl2 = false;
+        for (class_1299<?> class_12992 : list) {
+            if (bl) {
+                ((Object2BooleanMap)this.setting.get()).put(class_12992, true);
+                bl2 = true;
                 continue;
             }
-            if (!((Object2BooleanMap)llIlIIIllIIIIII.setting.get()).removeBoolean(llIlIIIllIIIIIl)) continue;
-            llIlIIIlIllllIl = true;
+            if (!((Object2BooleanMap)this.setting.get()).removeBoolean(class_12992)) continue;
+            bl2 = true;
         }
-        if (llIlIIIlIllllIl) {
-            llIlIIIllIIIIII.list.clear();
-            llIlIIIllIIIIII.initWidgets();
-            llIlIIIllIIIIII.setting.changed();
+        if (bl2) {
+            this.list.clear();
+            this.initWidgets();
+            this.setting.changed();
         }
+    }
+
+    private void lambda$new$0() {
+        this.filterText = this.filter.get().trim();
+        this.list.clear();
+        this.initWidgets();
+    }
+
+    private void lambda$initWidgets$2(List list, WCheckbox wCheckbox) {
+        this.tableChecked(list, wCheckbox.checked);
+    }
+
+    private static int lambda$initWidgets$8(class_3545 class_35452) {
+        return -((Integer)class_35452.method_15441()).intValue();
+    }
+
+    private void lambda$initWidgets$6(List list, WCheckbox wCheckbox, List list2, WCheckbox wCheckbox2, List list3, WCheckbox wCheckbox3, List list4, WCheckbox wCheckbox4, List list5, WCheckbox wCheckbox5, class_1299 class_12992) {
+        if (!this.setting.onlyAttackable || EntityUtils.isAttackable(class_12992)) {
+            switch (1.$SwitchMap$net$minecraft$entity$SpawnGroup[class_12992.method_5891().ordinal()]) {
+                case 1: {
+                    list.add(class_12992);
+                    this.addEntityType(this.animalsT, wCheckbox, class_12992);
+                    break;
+                }
+                case 2: 
+                case 3: {
+                    list2.add(class_12992);
+                    this.addEntityType(this.waterAnimalsT, wCheckbox2, class_12992);
+                    break;
+                }
+                case 4: {
+                    list3.add(class_12992);
+                    this.addEntityType(this.monstersT, wCheckbox3, class_12992);
+                    break;
+                }
+                case 5: {
+                    list4.add(class_12992);
+                    this.addEntityType(this.ambientT, wCheckbox4, class_12992);
+                    break;
+                }
+                case 6: {
+                    list5.add(class_12992);
+                    this.addEntityType(this.miscT, wCheckbox5, class_12992);
+                }
+            }
+        }
+    }
+
+    private void lambda$initWidgets$7(List list, class_1299 class_12992) {
+        int n = Utils.search(Names.get(class_12992), this.filterText);
+        if (n > 0) {
+            list.add(new class_3545((Object)class_12992, (Object)n));
+        }
+    }
+
+    private void lambda$addEntityType$9(WCheckbox wCheckbox, class_1299 class_12992, WCheckbox wCheckbox2) {
+        if (wCheckbox.checked) {
+            ((Object2BooleanMap)this.setting.get()).put((Object)class_12992, true);
+            switch (1.$SwitchMap$net$minecraft$entity$SpawnGroup[class_12992.method_5891().ordinal()]) {
+                case 1: {
+                    if (this.hasAnimal == 0) {
+                        wCheckbox2.checked = true;
+                    }
+                    ++this.hasAnimal;
+                    break;
+                }
+                case 2: 
+                case 3: {
+                    if (this.hasWaterAnimal == 0) {
+                        wCheckbox2.checked = true;
+                    }
+                    ++this.hasWaterAnimal;
+                    break;
+                }
+                case 4: {
+                    if (this.hasMonster == 0) {
+                        wCheckbox2.checked = true;
+                    }
+                    ++this.hasMonster;
+                    break;
+                }
+                case 5: {
+                    if (this.hasAmbient == 0) {
+                        wCheckbox2.checked = true;
+                    }
+                    ++this.hasAmbient;
+                    break;
+                }
+                case 6: {
+                    if (this.hasMisc == 0) {
+                        wCheckbox2.checked = true;
+                    }
+                    ++this.hasMisc;
+                }
+            }
+        } else if (((Object2BooleanMap)this.setting.get()).removeBoolean((Object)class_12992)) {
+            switch (1.$SwitchMap$net$minecraft$entity$SpawnGroup[class_12992.method_5891().ordinal()]) {
+                case 1: {
+                    --this.hasAnimal;
+                    if (this.hasAnimal != 0) break;
+                    wCheckbox2.checked = false;
+                    break;
+                }
+                case 2: 
+                case 3: {
+                    --this.hasWaterAnimal;
+                    if (this.hasWaterAnimal != 0) break;
+                    wCheckbox2.checked = false;
+                    break;
+                }
+                case 4: {
+                    --this.hasMonster;
+                    if (this.hasMonster != 0) break;
+                    wCheckbox2.checked = false;
+                    break;
+                }
+                case 5: {
+                    --this.hasAmbient;
+                    if (this.hasAmbient != 0) break;
+                    wCheckbox2.checked = false;
+                    break;
+                }
+                case 6: {
+                    --this.hasMisc;
+                    if (this.hasMisc != 0) break;
+                    wCheckbox2.checked = false;
+                }
+            }
+        }
+        this.setting.changed();
     }
 
     @Override
-    public <W extends WWidget> Cell<W> add(W llIlIIlIIIIlIII) {
-        EntityTypeListSettingScreen llIlIIlIIIIlIll;
-        return llIlIIlIIIIlIll.list.add(llIlIIlIIIIlIII);
+    public <W extends WWidget> Cell<W> add(W w) {
+        return this.list.add(w);
     }
 
-    public EntityTypeListSettingScreen(GuiTheme llIlIIlIIIlIIlI, EntityTypeListSetting llIlIIlIIIIlllI) {
-        super(llIlIIlIIIlIIlI, "Select entities");
-        EntityTypeListSettingScreen llIlIIlIIIlIIll;
-        llIlIIlIIIlIIll.filterText = "";
-        llIlIIlIIIlIIll.hasAnimal = 0;
-        llIlIIlIIIlIIll.hasWaterAnimal = 0;
-        llIlIIlIIIlIIll.hasMonster = 0;
-        llIlIIlIIIlIIll.hasAmbient = 0;
-        llIlIIlIIIlIIll.hasMisc = 0;
-        llIlIIlIIIlIIll.setting = llIlIIlIIIIlllI;
-        llIlIIlIIIlIIll.filter = super.add(llIlIIlIIIlIIlI.textBox("")).minWidth(400.0).expandX().widget();
-        llIlIIlIIIlIIll.filter.setFocused(true);
-        llIlIIlIIIlIIll.filter.action = () -> {
-            EntityTypeListSettingScreen llIlIIIIIlllIIl;
-            llIlIIIIIlllIIl.filterText = llIlIIIIIlllIIl.filter.get().trim();
-            llIlIIIIIlllIIl.list.clear();
-            llIlIIIIIlllIIl.initWidgets();
-        };
-        llIlIIlIIIlIIll.list = super.add(llIlIIlIIIlIIlI.verticalList()).expandX().widget();
-        llIlIIlIIIlIIll.initWidgets();
+    public EntityTypeListSettingScreen(GuiTheme guiTheme, EntityTypeListSetting entityTypeListSetting) {
+        super(guiTheme, "Select entities");
+        this.setting = entityTypeListSetting;
+        this.filter = super.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        this.filter.setFocused(true);
+        this.filter.action = this::lambda$new$0;
+        this.list = super.add(guiTheme.verticalList()).expandX().widget();
+        this.initWidgets();
     }
 
-    private void addEntityType(WTable llIlIIIlIllIIII, WCheckbox llIlIIIlIlIlIlI, class_1299<?> llIlIIIlIlIlllI) {
-        EntityTypeListSettingScreen llIlIIIlIlIllII;
-        llIlIIIlIllIIII.add(llIlIIIlIlIllII.theme.label(Names.get(llIlIIIlIlIlllI)));
-        WCheckbox llIlIIIlIlIllIl = llIlIIIlIllIIII.add(llIlIIIlIlIllII.theme.checkbox(((Object2BooleanMap)llIlIIIlIlIllII.setting.get()).getBoolean(llIlIIIlIlIlllI))).expandCellX().right().widget();
-        llIlIIIlIlIllIl.action = () -> {
-            EntityTypeListSettingScreen llIlIIIlIlIIIll;
-            if (llIlIIIlIIllllI.checked) {
-                ((Object2BooleanMap)llIlIIIlIlIIIll.setting.get()).put((Object)llIlIIIlIlIlllI, true);
-                switch (llIlIIIlIlIlllI.method_5891()) {
-                    case field_6294: {
-                        if (llIlIIIlIlIIIll.hasAnimal == 0) {
-                            llIlIIIlIIlllII.checked = true;
-                        }
-                        ++llIlIIIlIlIIIll.hasAnimal;
-                        break;
-                    }
-                    case field_24460: 
-                    case field_6300: {
-                        if (llIlIIIlIlIIIll.hasWaterAnimal == 0) {
-                            llIlIIIlIIlllII.checked = true;
-                        }
-                        ++llIlIIIlIlIIIll.hasWaterAnimal;
-                        break;
-                    }
-                    case field_6302: {
-                        if (llIlIIIlIlIIIll.hasMonster == 0) {
-                            llIlIIIlIIlllII.checked = true;
-                        }
-                        ++llIlIIIlIlIIIll.hasMonster;
-                        break;
-                    }
-                    case field_6303: {
-                        if (llIlIIIlIlIIIll.hasAmbient == 0) {
-                            llIlIIIlIIlllII.checked = true;
-                        }
-                        ++llIlIIIlIlIIIll.hasAmbient;
-                        break;
-                    }
-                    case field_17715: {
-                        if (llIlIIIlIlIIIll.hasMisc == 0) {
-                            llIlIIIlIIlllII.checked = true;
-                        }
-                        ++llIlIIIlIlIIIll.hasMisc;
-                    }
-                }
-            } else if (((Object2BooleanMap)llIlIIIlIlIIIll.setting.get()).removeBoolean((Object)llIlIIIlIlIlllI)) {
-                switch (llIlIIIlIlIlllI.method_5891()) {
-                    case field_6294: {
-                        --llIlIIIlIlIIIll.hasAnimal;
-                        if (llIlIIIlIlIIIll.hasAnimal != 0) break;
-                        llIlIIIlIIlllII.checked = false;
-                        break;
-                    }
-                    case field_24460: 
-                    case field_6300: {
-                        --llIlIIIlIlIIIll.hasWaterAnimal;
-                        if (llIlIIIlIlIIIll.hasWaterAnimal != 0) break;
-                        llIlIIIlIIlllII.checked = false;
-                        break;
-                    }
-                    case field_6302: {
-                        --llIlIIIlIlIIIll.hasMonster;
-                        if (llIlIIIlIlIIIll.hasMonster != 0) break;
-                        llIlIIIlIIlllII.checked = false;
-                        break;
-                    }
-                    case field_6303: {
-                        --llIlIIIlIlIIIll.hasAmbient;
-                        if (llIlIIIlIlIIIll.hasAmbient != 0) break;
-                        llIlIIIlIIlllII.checked = false;
-                        break;
-                    }
-                    case field_17715: {
-                        --llIlIIIlIlIIIll.hasMisc;
-                        if (llIlIIIlIlIIIll.hasMisc != 0) break;
-                        llIlIIIlIIlllII.checked = false;
-                    }
-                }
-            }
-            llIlIIIlIlIIIll.setting.changed();
-        };
-        llIlIIIlIllIIII.row();
+    private void lambda$initWidgets$1(List list, WCheckbox wCheckbox) {
+        this.tableChecked(list, wCheckbox.checked);
+    }
+
+    private void addEntityType(WTable wTable, WCheckbox wCheckbox, class_1299<?> class_12992) {
+        wTable.add(this.theme.label(Names.get(class_12992)));
+        WCheckbox wCheckbox2 = wTable.add(this.theme.checkbox(((Object2BooleanMap)this.setting.get()).getBoolean(class_12992))).expandCellX().right().widget();
+        wCheckbox2.action = () -> this.lambda$addEntityType$9(wCheckbox2, class_12992, wCheckbox);
+        wTable.row();
     }
 
     private void initWidgets() {
-        EntityTypeListSettingScreen llIlIIIlllIlllI;
-        llIlIIIlllIlllI.hasMisc = 0;
-        llIlIIIlllIlllI.hasAmbient = 0;
-        llIlIIIlllIlllI.hasMonster = 0;
-        llIlIIIlllIlllI.hasWaterAnimal = 0;
-        llIlIIIlllIlllI.hasAnimal = 0;
-        for (class_1299 llIlIIIllllIIlI : ((Object2BooleanMap)llIlIIIlllIlllI.setting.get()).keySet()) {
-            if (!((Object2BooleanMap)llIlIIIlllIlllI.setting.get()).getBoolean((Object)llIlIIIllllIIlI) || llIlIIIlllIlllI.setting.onlyAttackable && !EntityUtils.isAttackable(llIlIIIllllIIlI)) continue;
-            switch (llIlIIIllllIIlI.method_5891()) {
-                case field_6294: {
-                    ++llIlIIIlllIlllI.hasAnimal;
-                    break;
+        Object object2;
+        this.hasMisc = 0;
+        this.hasAmbient = 0;
+        this.hasMonster = 0;
+        this.hasWaterAnimal = 0;
+        this.hasAnimal = 0;
+        block7: for (Object object2 : ((Object2BooleanMap)this.setting.get()).keySet()) {
+            if (!((Object2BooleanMap)this.setting.get()).getBoolean(object2) || this.setting.onlyAttackable && !EntityUtils.isAttackable(object2)) continue;
+            switch (1.$SwitchMap$net$minecraft$entity$SpawnGroup[object2.method_5891().ordinal()]) {
+                case 1: {
+                    ++this.hasAnimal;
+                    continue block7;
                 }
-                case field_24460: 
-                case field_6300: {
-                    ++llIlIIIlllIlllI.hasWaterAnimal;
-                    break;
+                case 2: 
+                case 3: {
+                    ++this.hasWaterAnimal;
+                    continue block7;
                 }
-                case field_6302: {
-                    ++llIlIIIlllIlllI.hasMonster;
-                    break;
+                case 4: {
+                    ++this.hasMonster;
+                    continue block7;
                 }
-                case field_6303: {
-                    ++llIlIIIlllIlllI.hasAmbient;
-                    break;
+                case 5: {
+                    ++this.hasAmbient;
+                    continue block7;
                 }
-                case field_17715: {
-                    ++llIlIIIlllIlllI.hasMisc;
+                case 6: {
+                    ++this.hasMisc;
                 }
             }
         }
-        boolean llIlIIIlllIllIl = llIlIIIlllIlllI.animals == null;
-        ArrayList llIlIIIlllIllII = new ArrayList();
-        WCheckbox llIlIIIlllIlIll = llIlIIIlllIlllI.theme.checkbox(llIlIIIlllIlllI.hasAnimal > 0);
-        llIlIIIlllIlllI.animals = llIlIIIlllIlllI.theme.section("Animals", llIlIIIlllIlllI.animals != null && llIlIIIlllIlllI.animals.isExpanded(), llIlIIIlllIlIll);
-        llIlIIIlllIlIll.action = () -> {
-            EntityTypeListSettingScreen llIlIIIIIlllllI;
-            llIlIIIIIlllllI.tableChecked(llIlIIIlllIllII, llIlIIIIIllllII.checked);
-        };
-        Cell<WSection> llIlIIIlllIlIlI = llIlIIIlllIlllI.add(llIlIIIlllIlllI.animals).expandX();
-        llIlIIIlllIlllI.animalsT = llIlIIIlllIlllI.animals.add(llIlIIIlllIlllI.theme.table()).expandX().widget();
-        ArrayList llIlIIIlllIlIIl = new ArrayList();
-        WCheckbox llIlIIIlllIlIII = llIlIIIlllIlllI.theme.checkbox(llIlIIIlllIlllI.hasWaterAnimal > 0);
-        llIlIIIlllIlllI.waterAnimals = llIlIIIlllIlllI.theme.section("Water Animals", llIlIIIlllIlllI.waterAnimals != null && llIlIIIlllIlllI.waterAnimals.isExpanded(), llIlIIIlllIlIII);
-        llIlIIIlllIlIII.action = () -> {
-            EntityTypeListSettingScreen llIlIIIIlIIIlll;
-            llIlIIIIlIIIlll.tableChecked(llIlIIIlllIlIIl, llIlIIIIlIIIlIl.checked);
-        };
-        Cell<WSection> llIlIIIlllIIlll = llIlIIIlllIlllI.add(llIlIIIlllIlllI.waterAnimals).expandX();
-        llIlIIIlllIlllI.waterAnimalsT = llIlIIIlllIlllI.waterAnimals.add(llIlIIIlllIlllI.theme.table()).expandX().widget();
-        ArrayList llIlIIIlllIIllI = new ArrayList();
-        WCheckbox llIlIIIlllIIlIl = llIlIIIlllIlllI.theme.checkbox(llIlIIIlllIlllI.hasMonster > 0);
-        llIlIIIlllIlllI.monsters = llIlIIIlllIlllI.theme.section("Monsters", llIlIIIlllIlllI.monsters != null && llIlIIIlllIlllI.monsters.isExpanded(), llIlIIIlllIIlIl);
-        llIlIIIlllIIlIl.action = () -> {
-            EntityTypeListSettingScreen llIlIIIIlIlIIll;
-            llIlIIIIlIlIIll.tableChecked(llIlIIIlllIIllI, llIlIIIIlIIlllI.checked);
-        };
-        Cell<WSection> llIlIIIlllIIlII = llIlIIIlllIlllI.add(llIlIIIlllIlllI.monsters).expandX();
-        llIlIIIlllIlllI.monstersT = llIlIIIlllIlllI.monsters.add(llIlIIIlllIlllI.theme.table()).expandX().widget();
-        ArrayList llIlIIIlllIIIll = new ArrayList();
-        WCheckbox llIlIIIlllIIIlI = llIlIIIlllIlllI.theme.checkbox(llIlIIIlllIlllI.hasAmbient > 0);
-        llIlIIIlllIlllI.ambient = llIlIIIlllIlllI.theme.section("Ambient", llIlIIIlllIlllI.ambient != null && llIlIIIlllIlllI.ambient.isExpanded(), llIlIIIlllIIIlI);
-        llIlIIIlllIIIlI.action = () -> {
-            EntityTypeListSettingScreen llIlIIIIlIlllII;
-            llIlIIIIlIlllII.tableChecked(llIlIIIlllIIIll, llIlIIIIlIlIlll.checked);
-        };
-        Cell<WSection> llIlIIIlllIIIIl = llIlIIIlllIlllI.add(llIlIIIlllIlllI.ambient).expandX();
-        llIlIIIlllIlllI.ambientT = llIlIIIlllIlllI.ambient.add(llIlIIIlllIlllI.theme.table()).expandX().widget();
-        ArrayList llIlIIIlllIIIII = new ArrayList();
-        WCheckbox llIlIIIllIlllll = llIlIIIlllIlllI.theme.checkbox(llIlIIIlllIlllI.hasMisc > 0);
-        llIlIIIlllIlllI.misc = llIlIIIlllIlllI.theme.section("Misc", llIlIIIlllIlllI.misc != null && llIlIIIlllIlllI.misc.isExpanded(), llIlIIIllIlllll);
-        llIlIIIllIlllll.action = () -> {
-            EntityTypeListSettingScreen llIlIIIIllIIIlI;
-            llIlIIIIllIIIlI.tableChecked(llIlIIIlllIIIII, llIlIIIIllIIIll.checked);
-        };
-        Cell<WSection> llIlIIIllIllllI = llIlIIIlllIlllI.add(llIlIIIlllIlllI.misc).expandX();
-        llIlIIIlllIlllI.miscT = llIlIIIlllIlllI.misc.add(llIlIIIlllIlllI.theme.table()).expandX().widget();
-        Consumer<class_1299> llIlIIIllIlllIl = llIlIIIIlllIlIl -> {
-            EntityTypeListSettingScreen llIlIIIIlllIlII;
-            if (!llIlIIIIlllIlII.setting.onlyAttackable || EntityUtils.isAttackable(llIlIIIIlllIlIl)) {
-                switch (llIlIIIIlllIlIl.method_5891()) {
-                    case field_6294: {
-                        llIlIIIlllIllII.add(llIlIIIIlllIlIl);
-                        llIlIIIIlllIlII.addEntityType(llIlIIIIlllIlII.animalsT, llIlIIIlllIlIll, (class_1299<?>)llIlIIIIlllIlIl);
-                        break;
-                    }
-                    case field_24460: 
-                    case field_6300: {
-                        llIlIIIlllIlIIl.add(llIlIIIIlllIlIl);
-                        llIlIIIIlllIlII.addEntityType(llIlIIIIlllIlII.waterAnimalsT, llIlIIIlllIlIII, (class_1299<?>)llIlIIIIlllIlIl);
-                        break;
-                    }
-                    case field_6302: {
-                        llIlIIIlllIIllI.add(llIlIIIIlllIlIl);
-                        llIlIIIIlllIlII.addEntityType(llIlIIIIlllIlII.monstersT, llIlIIIlllIIlIl, (class_1299<?>)llIlIIIIlllIlIl);
-                        break;
-                    }
-                    case field_6303: {
-                        llIlIIIlllIIIll.add(llIlIIIIlllIlIl);
-                        llIlIIIIlllIlII.addEntityType(llIlIIIIlllIlII.ambientT, llIlIIIlllIIIlI, (class_1299<?>)llIlIIIIlllIlIl);
-                        break;
-                    }
-                    case field_17715: {
-                        llIlIIIlllIIIII.add(llIlIIIIlllIlIl);
-                        llIlIIIIlllIlII.addEntityType(llIlIIIIlllIlII.miscT, llIlIIIllIlllll, (class_1299<?>)llIlIIIIlllIlIl);
-                    }
-                }
-            }
-        };
-        if (llIlIIIlllIlllI.filterText.isEmpty()) {
-            class_2378.field_11145.forEach(llIlIIIllIlllIl);
+        boolean bl = this.animals == null;
+        object2 = new ArrayList();
+        WCheckbox wCheckbox = this.theme.checkbox(this.hasAnimal > 0);
+        this.animals = this.theme.section("Animals", this.animals != null && this.animals.isExpanded(), wCheckbox);
+        wCheckbox.action = () -> this.lambda$initWidgets$1((List)object2, wCheckbox);
+        Cell<WSection> cell = this.add(this.animals).expandX();
+        this.animalsT = this.animals.add(this.theme.table()).expandX().widget();
+        ArrayList arrayList = new ArrayList();
+        WCheckbox wCheckbox2 = this.theme.checkbox(this.hasWaterAnimal > 0);
+        this.waterAnimals = this.theme.section("Water Animals", this.waterAnimals != null && this.waterAnimals.isExpanded(), wCheckbox2);
+        wCheckbox2.action = () -> this.lambda$initWidgets$2(arrayList, wCheckbox2);
+        Cell<WSection> cell2 = this.add(this.waterAnimals).expandX();
+        this.waterAnimalsT = this.waterAnimals.add(this.theme.table()).expandX().widget();
+        ArrayList arrayList2 = new ArrayList();
+        WCheckbox wCheckbox3 = this.theme.checkbox(this.hasMonster > 0);
+        this.monsters = this.theme.section("Monsters", this.monsters != null && this.monsters.isExpanded(), wCheckbox3);
+        wCheckbox3.action = () -> this.lambda$initWidgets$3(arrayList2, wCheckbox3);
+        Cell<WSection> cell3 = this.add(this.monsters).expandX();
+        this.monstersT = this.monsters.add(this.theme.table()).expandX().widget();
+        ArrayList arrayList3 = new ArrayList();
+        WCheckbox wCheckbox4 = this.theme.checkbox(this.hasAmbient > 0);
+        this.ambient = this.theme.section("Ambient", this.ambient != null && this.ambient.isExpanded(), wCheckbox4);
+        wCheckbox4.action = () -> this.lambda$initWidgets$4(arrayList3, wCheckbox4);
+        Cell<WSection> cell4 = this.add(this.ambient).expandX();
+        this.ambientT = this.ambient.add(this.theme.table()).expandX().widget();
+        ArrayList arrayList4 = new ArrayList();
+        WCheckbox wCheckbox5 = this.theme.checkbox(this.hasMisc > 0);
+        this.misc = this.theme.section("Misc", this.misc != null && this.misc.isExpanded(), wCheckbox5);
+        wCheckbox5.action = () -> this.lambda$initWidgets$5(arrayList4, wCheckbox5);
+        Cell<WSection> cell5 = this.add(this.misc).expandX();
+        this.miscT = this.misc.add(this.theme.table()).expandX().widget();
+        Consumer<class_1299> consumer = arg_0 -> this.lambda$initWidgets$6((List)object2, wCheckbox, arrayList, wCheckbox2, arrayList2, wCheckbox3, arrayList3, wCheckbox4, arrayList4, wCheckbox5, arg_0);
+        if (this.filterText.isEmpty()) {
+            class_2378.field_11145.forEach(consumer);
         } else {
-            ArrayList<class_3545> llIlIIIllllIIII = new ArrayList<class_3545>();
-            class_2378.field_11145.forEach(llIlIIIlIIlIIlI -> {
-                EntityTypeListSettingScreen llIlIIIlIIlIIII;
-                int llIlIIIlIIlIIIl = Utils.search(Names.get(llIlIIIlIIlIIlI), llIlIIIlIIlIIII.filterText);
-                if (llIlIIIlIIlIIIl > 0) {
-                    llIlIIIllllIIII.add(new class_3545(llIlIIIlIIlIIlI, (Object)llIlIIIlIIlIIIl));
-                }
-            });
-            llIlIIIllllIIII.sort(Comparator.comparingInt(llIlIIIlIIllIlI -> -((Integer)llIlIIIlIIllIlI.method_15441()).intValue()));
-            for (class_3545 llIlIIIllllIIIl : llIlIIIllllIIII) {
-                llIlIIIllIlllIl.accept((class_1299)llIlIIIllllIIIl.method_15442());
+            ArrayList<class_3545> arrayList5 = new ArrayList<class_3545>();
+            class_2378.field_11145.forEach(arg_0 -> this.lambda$initWidgets$7(arrayList5, arg_0));
+            arrayList5.sort(Comparator.comparingInt(EntityTypeListSettingScreen::lambda$initWidgets$8));
+            for (class_3545 class_35452 : arrayList5) {
+                consumer.accept((class_1299)class_35452.method_15442());
             }
         }
-        if (llIlIIIlllIlllI.animalsT.cells.size() == 0) {
-            llIlIIIlllIlllI.list.cells.remove(llIlIIIlllIlIlI);
+        if (this.animalsT.cells.size() == 0) {
+            this.list.cells.remove(cell);
         }
-        if (llIlIIIlllIlllI.waterAnimalsT.cells.size() == 0) {
-            llIlIIIlllIlllI.list.cells.remove(llIlIIIlllIIlll);
+        if (this.waterAnimalsT.cells.size() == 0) {
+            this.list.cells.remove(cell2);
         }
-        if (llIlIIIlllIlllI.monstersT.cells.size() == 0) {
-            llIlIIIlllIlllI.list.cells.remove(llIlIIIlllIIlII);
+        if (this.monstersT.cells.size() == 0) {
+            this.list.cells.remove(cell3);
         }
-        if (llIlIIIlllIlllI.ambientT.cells.size() == 0) {
-            llIlIIIlllIlllI.list.cells.remove(llIlIIIlllIIIIl);
+        if (this.ambientT.cells.size() == 0) {
+            this.list.cells.remove(cell4);
         }
-        if (llIlIIIlllIlllI.miscT.cells.size() == 0) {
-            llIlIIIlllIlllI.list.cells.remove(llIlIIIllIllllI);
+        if (this.miscT.cells.size() == 0) {
+            this.list.cells.remove(cell5);
         }
-        if (llIlIIIlllIllIl) {
-            int llIlIIIlllIllll = (llIlIIIlllIlllI.hasWaterAnimal + llIlIIIlllIlllI.waterAnimals.cells.size() + llIlIIIlllIlllI.monsters.cells.size() + llIlIIIlllIlllI.ambient.cells.size() + llIlIIIlllIlllI.misc.cells.size()) / 2;
-            if (llIlIIIlllIllll <= 20) {
-                if (llIlIIIlllIlllI.animalsT.cells.size() > 0) {
-                    llIlIIIlllIlllI.animals.setExpanded(true);
+        if (bl) {
+            int n = (this.hasWaterAnimal + this.waterAnimals.cells.size() + this.monsters.cells.size() + this.ambient.cells.size() + this.misc.cells.size()) / 2;
+            if (n <= 20) {
+                if (this.animalsT.cells.size() > 0) {
+                    this.animals.setExpanded(true);
                 }
-                if (llIlIIIlllIlllI.waterAnimalsT.cells.size() > 0) {
-                    llIlIIIlllIlllI.waterAnimals.setExpanded(true);
+                if (this.waterAnimalsT.cells.size() > 0) {
+                    this.waterAnimals.setExpanded(true);
                 }
-                if (llIlIIIlllIlllI.monstersT.cells.size() > 0) {
-                    llIlIIIlllIlllI.monsters.setExpanded(true);
+                if (this.monstersT.cells.size() > 0) {
+                    this.monsters.setExpanded(true);
                 }
-                if (llIlIIIlllIlllI.ambientT.cells.size() > 0) {
-                    llIlIIIlllIlllI.ambient.setExpanded(true);
+                if (this.ambientT.cells.size() > 0) {
+                    this.ambient.setExpanded(true);
                 }
-                if (llIlIIIlllIlllI.miscT.cells.size() > 0) {
-                    llIlIIIlllIlllI.misc.setExpanded(true);
+                if (this.miscT.cells.size() > 0) {
+                    this.misc.setExpanded(true);
                 }
             } else {
-                if (llIlIIIlllIlllI.animalsT.cells.size() > 0) {
-                    llIlIIIlllIlllI.animals.setExpanded(false);
+                if (this.animalsT.cells.size() > 0) {
+                    this.animals.setExpanded(false);
                 }
-                if (llIlIIIlllIlllI.waterAnimalsT.cells.size() > 0) {
-                    llIlIIIlllIlllI.waterAnimals.setExpanded(false);
+                if (this.waterAnimalsT.cells.size() > 0) {
+                    this.waterAnimals.setExpanded(false);
                 }
-                if (llIlIIIlllIlllI.monstersT.cells.size() > 0) {
-                    llIlIIIlllIlllI.monsters.setExpanded(false);
+                if (this.monstersT.cells.size() > 0) {
+                    this.monsters.setExpanded(false);
                 }
-                if (llIlIIIlllIlllI.ambientT.cells.size() > 0) {
-                    llIlIIIlllIlllI.ambient.setExpanded(false);
+                if (this.ambientT.cells.size() > 0) {
+                    this.ambient.setExpanded(false);
                 }
-                if (llIlIIIlllIlllI.miscT.cells.size() > 0) {
-                    llIlIIIlllIlllI.misc.setExpanded(false);
+                if (this.miscT.cells.size() > 0) {
+                    this.misc.setExpanded(false);
                 }
             }
         }
+    }
+
+    private void lambda$initWidgets$3(List list, WCheckbox wCheckbox) {
+        this.tableChecked(list, wCheckbox.checked);
     }
 }
 

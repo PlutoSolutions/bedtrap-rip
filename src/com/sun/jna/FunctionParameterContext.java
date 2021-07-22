@@ -8,30 +8,26 @@ import com.sun.jna.ToNativeContext;
 
 public class FunctionParameterContext
 extends ToNativeContext {
-    private /* synthetic */ Function function;
-    private /* synthetic */ Object[] args;
-    private /* synthetic */ int index;
+    private Function function;
+    private Object[] args;
+    private int index;
 
     public Function getFunction() {
-        FunctionParameterContext lIlIlllllIIIIl;
-        return lIlIlllllIIIIl.function;
+        return this.function;
     }
 
-    FunctionParameterContext(Function lIlIlllllIlIIl, Object[] lIlIlllllIIlII, int lIlIlllllIIIll) {
-        FunctionParameterContext lIlIlllllIIllI;
-        lIlIlllllIIllI.function = lIlIlllllIlIIl;
-        lIlIlllllIIllI.args = lIlIlllllIIlII;
-        lIlIlllllIIllI.index = lIlIlllllIIIll;
+    FunctionParameterContext(Function function, Object[] arrobject, int n) {
+        this.function = function;
+        this.args = arrobject;
+        this.index = n;
     }
 
     public int getParameterIndex() {
-        FunctionParameterContext lIlIllllIllIlI;
-        return lIlIllllIllIlI.index;
+        return this.index;
     }
 
     public Object[] getParameters() {
-        FunctionParameterContext lIlIllllIlllIl;
-        return lIlIllllIlllIl.args;
+        return this.args;
     }
 }
 

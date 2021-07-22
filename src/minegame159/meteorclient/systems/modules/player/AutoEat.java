@@ -34,166 +34,158 @@ import net.minecraft.class_1802;
 
 public class AutoEat
 extends Module {
-    private final /* synthetic */ List<Class<? extends Module>> wasAura;
-    private static final /* synthetic */ Class<? extends Module>[] AURAS;
-    private /* synthetic */ boolean wasBaritone;
-    private /* synthetic */ int slot;
-    private final /* synthetic */ SettingGroup sgHunger;
-    private /* synthetic */ int prevSlot;
-    private final /* synthetic */ Setting<Integer> hungerThreshold;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> pauseBaritone;
-    private final /* synthetic */ Setting<Boolean> pauseAuras;
-    private final /* synthetic */ Setting<List<class_1792>> blacklist;
-    private /* synthetic */ boolean eating;
+    private final List<Class<? extends Module>> wasAura;
+    private static final Class<? extends Module>[] AURAS = new Class[]{KillAura.class, CrystalAura.class, AnchorAura.class, BedAura.class};
+    private boolean wasBaritone;
+    private int slot;
+    private final SettingGroup sgHunger;
+    private int prevSlot;
+    private final Setting<Integer> hungerThreshold;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> pauseBaritone;
+    private final Setting<Boolean> pauseAuras;
+    private final Setting<List<class_1792>> blacklist;
+    private boolean eating;
 
     @EventHandler(priority=-100)
-    private void onTick(TickEvent.Pre llllllllllllllllllIlIlIIIlIIIIII) {
-        AutoEat llllllllllllllllllIlIlIIIIllllll;
+    private void onTick(TickEvent.Pre pre) {
         if (Modules.get().get(AutoGap.class).isEating()) {
             return;
         }
-        if (llllllllllllllllllIlIlIIIIllllll.eating) {
-            if (llllllllllllllllllIlIlIIIIllllll.shouldEat()) {
-                if (!llllllllllllllllllIlIlIIIIllllll.mc.field_1724.field_7514.method_5438(llllllllllllllllllIlIlIIIIllllll.slot).method_19267()) {
-                    int llllllllllllllllllIlIlIIIlIIIIlI = llllllllllllllllllIlIlIIIIllllll.findSlot();
-                    if (llllllllllllllllllIlIlIIIlIIIIlI == -1) {
-                        llllllllllllllllllIlIlIIIIllllll.stopEating();
+        if (this.eating) {
+            if (this.shouldEat()) {
+                if (!this.mc.field_1724.field_7514.method_5438(this.slot).method_19267()) {
+                    int n = this.findSlot();
+                    if (n == -1) {
+                        this.stopEating();
                         return;
                     }
-                    llllllllllllllllllIlIlIIIIllllll.changeSlot(llllllllllllllllllIlIlIIIlIIIIlI);
+                    this.changeSlot(n);
                 }
-                llllllllllllllllllIlIlIIIIllllll.eat();
+                this.eat();
             } else {
-                llllllllllllllllllIlIlIIIIllllll.stopEating();
+                this.stopEating();
             }
-        } else if (llllllllllllllllllIlIlIIIIllllll.shouldEat()) {
-            llllllllllllllllllIlIlIIIIllllll.slot = llllllllllllllllllIlIlIIIIllllll.findSlot();
-            if (llllllllllllllllllIlIlIIIIllllll.slot != -1) {
-                llllllllllllllllllIlIlIIIIllllll.startEating();
+        } else if (this.shouldEat()) {
+            this.slot = this.findSlot();
+            if (this.slot != -1) {
+                this.startEating();
             }
         }
     }
 
     private void stopEating() {
-        AutoEat llllllllllllllllllIlIlIIIIIlllIl;
-        llllllllllllllllllIlIlIIIIIlllIl.changeSlot(llllllllllllllllllIlIlIIIIIlllIl.prevSlot);
-        llllllllllllllllllIlIlIIIIIlllIl.setPressed(false);
-        llllllllllllllllllIlIlIIIIIlllIl.eating = false;
-        if (llllllllllllllllllIlIlIIIIIlllIl.pauseAuras.get().booleanValue()) {
-            for (Class<? extends Module> llllllllllllllllllIlIlIIIIIllllI : AURAS) {
-                Module llllllllllllllllllIlIlIIIIIlllll = Modules.get().get(llllllllllllllllllIlIlIIIIIllllI);
-                if (!llllllllllllllllllIlIlIIIIIlllIl.wasAura.contains(llllllllllllllllllIlIlIIIIIllllI) || llllllllllllllllllIlIlIIIIIlllll.isActive()) continue;
-                llllllllllllllllllIlIlIIIIIlllll.toggle();
+        this.changeSlot(this.prevSlot);
+        this.setPressed(false);
+        this.eating = false;
+        if (this.pauseAuras.get().booleanValue()) {
+            for (Class<? extends Module> class_ : AURAS) {
+                Module module = Modules.get().get(class_);
+                if (!this.wasAura.contains(class_) || module.isActive()) continue;
+                module.toggle();
+                if (!false) continue;
+                return;
             }
         }
-        if (llllllllllllllllllIlIlIIIIIlllIl.pauseBaritone.get().booleanValue() && llllllllllllllllllIlIlIIIIIlllIl.wasBaritone) {
+        if (this.pauseBaritone.get().booleanValue() && this.wasBaritone) {
             BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("resume");
         }
     }
 
     @EventHandler
-    private void onItemUseCrosshairTarget(ItemUseCrosshairTargetEvent llllllllllllllllllIlIlIIIIlllIlI) {
-        AutoEat llllllllllllllllllIlIlIIIIlllIIl;
-        if (llllllllllllllllllIlIlIIIIlllIIl.eating) {
-            llllllllllllllllllIlIlIIIIlllIlI.target = null;
+    private void onItemUseCrosshairTarget(ItemUseCrosshairTargetEvent itemUseCrosshairTargetEvent) {
+        if (this.eating) {
+            itemUseCrosshairTargetEvent.target = null;
         }
     }
 
     private void startEating() {
-        AutoEat llllllllllllllllllIlIlIIIIlIllll;
-        llllllllllllllllllIlIlIIIIlIllll.prevSlot = llllllllllllllllllIlIlIIIIlIllll.mc.field_1724.field_7514.field_7545;
-        llllllllllllllllllIlIlIIIIlIllll.eat();
-        llllllllllllllllllIlIlIIIIlIllll.wasAura.clear();
-        if (llllllllllllllllllIlIlIIIIlIllll.pauseAuras.get().booleanValue()) {
-            for (Class<? extends Module> llllllllllllllllllIlIlIIIIllIIII : AURAS) {
-                Module llllllllllllllllllIlIlIIIIllIIIl = Modules.get().get(llllllllllllllllllIlIlIIIIllIIII);
-                if (!llllllllllllllllllIlIlIIIIllIIIl.isActive()) continue;
-                llllllllllllllllllIlIlIIIIlIllll.wasAura.add(llllllllllllllllllIlIlIIIIllIIII);
-                llllllllllllllllllIlIlIIIIllIIIl.toggle();
+        this.prevSlot = this.mc.field_1724.field_7514.field_7545;
+        this.eat();
+        this.wasAura.clear();
+        if (this.pauseAuras.get().booleanValue()) {
+            for (Class<? extends Module> class_ : AURAS) {
+                Module module = Modules.get().get(class_);
+                if (!module.isActive()) continue;
+                this.wasAura.add(class_);
+                module.toggle();
+                if (!false) continue;
+                return;
             }
         }
-        llllllllllllllllllIlIlIIIIlIllll.wasBaritone = false;
-        if (llllllllllllllllllIlIlIIIIlIllll.pauseBaritone.get().booleanValue() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
-            llllllllllllllllllIlIlIIIIlIllll.wasBaritone = true;
+        this.wasBaritone = false;
+        if (this.pauseBaritone.get().booleanValue() && BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().isPathing()) {
+            this.wasBaritone = true;
             BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("pause");
         }
     }
 
     private static List<class_1792> getDefaultBlacklist() {
-        ArrayList<class_1792> llllllllllllllllllIlIIllllllIlII = new ArrayList<class_1792>(9);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8367);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8463);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8233);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8635);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8323);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8726);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8511);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8680);
-        llllllllllllllllllIlIIllllllIlII.add(class_1802.field_8766);
-        return llllllllllllllllllIlIIllllllIlII;
+        ArrayList<class_1792> arrayList = new ArrayList<class_1792>(9);
+        arrayList.add(class_1802.field_8367);
+        arrayList.add(class_1802.field_8463);
+        arrayList.add(class_1802.field_8233);
+        arrayList.add(class_1802.field_8635);
+        arrayList.add(class_1802.field_8323);
+        arrayList.add(class_1802.field_8726);
+        arrayList.add(class_1802.field_8511);
+        arrayList.add(class_1802.field_8680);
+        arrayList.add(class_1802.field_8766);
+        return arrayList;
     }
 
     private void eat() {
-        AutoEat llllllllllllllllllIlIlIIIIlIIlll;
-        llllllllllllllllllIlIlIIIIlIIlll.changeSlot(llllllllllllllllllIlIlIIIIlIIlll.slot);
-        llllllllllllllllllIlIlIIIIlIIlll.setPressed(true);
-        if (!llllllllllllllllllIlIlIIIIlIIlll.mc.field_1724.method_6115()) {
+        this.changeSlot(this.slot);
+        this.setPressed(true);
+        if (!this.mc.field_1724.method_6115()) {
             Utils.rightClick();
         }
-        llllllllllllllllllIlIlIIIIlIIlll.eating = true;
+        this.eating = true;
     }
 
     public AutoEat() {
         super(Categories.Player, "auto-eat", "Automatically eats food.");
-        AutoEat llllllllllllllllllIlIlIIIlIIlIIl;
-        llllllllllllllllllIlIlIIIlIIlIIl.sgGeneral = llllllllllllllllllIlIlIIIlIIlIIl.settings.getDefaultGroup();
-        llllllllllllllllllIlIlIIIlIIlIIl.sgHunger = llllllllllllllllllIlIlIIIlIIlIIl.settings.createGroup("Hunger");
-        llllllllllllllllllIlIlIIIlIIlIIl.blacklist = llllllllllllllllllIlIlIIIlIIlIIl.sgGeneral.add(new ItemListSetting.Builder().name("blacklist").description("Which items to not eat.").defaultValue(AutoEat.getDefaultBlacklist()).filter(class_1792::method_19263).build());
-        llllllllllllllllllIlIlIIIlIIlIIl.pauseAuras = llllllllllllllllllIlIlIIIlIIlIIl.sgGeneral.add(new BoolSetting.Builder().name("pause-auras").description("Pauses all auras when eating.").defaultValue(true).build());
-        llllllllllllllllllIlIlIIIlIIlIIl.pauseBaritone = llllllllllllllllllIlIlIIIlIIlIIl.sgGeneral.add(new BoolSetting.Builder().name("pause-baritone").description("Pause baritone when eating.").defaultValue(true).build());
-        llllllllllllllllllIlIlIIIlIIlIIl.hungerThreshold = llllllllllllllllllIlIlIIIlIIlIIl.sgHunger.add(new IntSetting.Builder().name("hunger-threshold").description("The level of hunger you eat at.").defaultValue(16).min(1).max(19).sliderMin(1).sliderMax(19).build());
-        llllllllllllllllllIlIlIIIlIIlIIl.wasAura = new ArrayList<Class<? extends Module>>();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgHunger = this.settings.createGroup("Hunger");
+        this.blacklist = this.sgGeneral.add(new ItemListSetting.Builder().name("blacklist").description("Which items to not eat.").defaultValue(AutoEat.getDefaultBlacklist()).filter(class_1792::method_19263).build());
+        this.pauseAuras = this.sgGeneral.add(new BoolSetting.Builder().name("pause-auras").description("Pauses all auras when eating.").defaultValue(true).build());
+        this.pauseBaritone = this.sgGeneral.add(new BoolSetting.Builder().name("pause-baritone").description("Pause baritone when eating.").defaultValue(true).build());
+        this.hungerThreshold = this.sgHunger.add(new IntSetting.Builder().name("hunger-threshold").description("The level of hunger you eat at.").defaultValue(16).min(1).max(19).sliderMin(1).sliderMax(19).build());
+        this.wasAura = new ArrayList<Class<? extends Module>>();
     }
 
-    private void setPressed(boolean llllllllllllllllllIlIlIIIIIlIIIl) {
-        AutoEat llllllllllllllllllIlIlIIIIIlIlII;
-        llllllllllllllllllIlIlIIIIIlIlII.mc.field_1690.field_1904.method_23481(llllllllllllllllllIlIlIIIIIlIIIl);
+    private void setPressed(boolean bl) {
+        this.mc.field_1690.field_1904.method_23481(bl);
     }
 
-    private void changeSlot(int llllllllllllllllllIlIlIIIIIIllIl) {
-        InvUtils.swap(llllllllllllllllllIlIlIIIIIIllIl);
-        llllllllllllllllllIlIlIIIIIIlllI.slot = llllllllllllllllllIlIlIIIIIIllIl;
+    private void changeSlot(int n) {
+        InvUtils.swap(n);
+        this.slot = n;
     }
 
     private int findSlot() {
-        int llllllllllllllllllIlIIllllllllIl = -1;
-        int llllllllllllllllllIlIIllllllllII = -1;
-        for (int llllllllllllllllllIlIIllllllllll = 0; llllllllllllllllllIlIIllllllllll < 9; ++llllllllllllllllllIlIIllllllllll) {
-            int llllllllllllllllllIlIlIIIIIIIIII;
-            AutoEat llllllllllllllllllIlIIlllllllIll;
-            class_1792 llllllllllllllllllIlIlIIIIIIIIIl = llllllllllllllllllIlIIlllllllIll.mc.field_1724.field_7514.method_5438(llllllllllllllllllIlIIllllllllll).method_7909();
-            if (!llllllllllllllllllIlIlIIIIIIIIIl.method_19263() || (llllllllllllllllllIlIlIIIIIIIIII = llllllllllllllllllIlIlIIIIIIIIIl.method_19264().method_19230()) <= llllllllllllllllllIlIIllllllllII || llllllllllllllllllIlIIlllllllIll.blacklist.get().contains((Object)llllllllllllllllllIlIlIIIIIIIIIl)) continue;
-            llllllllllllllllllIlIIllllllllIl = llllllllllllllllllIlIIllllllllll;
-            llllllllllllllllllIlIIllllllllII = llllllllllllllllllIlIlIIIIIIIIII;
+        int n = -1;
+        int n2 = -1;
+        for (int i = 0; i < 9; ++i) {
+            int n3;
+            class_1792 class_17922 = this.mc.field_1724.field_7514.method_5438(i).method_7909();
+            if (!class_17922.method_19263() || (n3 = class_17922.method_19264().method_19230()) <= n2 || this.blacklist.get().contains((Object)class_17922)) continue;
+            n = i;
+            n2 = n3;
+            if (null == null) continue;
+            return 0;
         }
-        return llllllllllllllllllIlIIllllllllIl;
-    }
-
-    static {
-        AURAS = new Class[]{KillAura.class, CrystalAura.class, AnchorAura.class, BedAura.class};
+        return n;
     }
 
     private boolean shouldEat() {
-        AutoEat llllllllllllllllllIlIlIIIIIIlIII;
-        return llllllllllllllllllIlIlIIIIIIlIII.mc.field_1724.method_7344().method_7586() <= llllllllllllllllllIlIlIIIIIIlIII.hungerThreshold.get();
+        return this.mc.field_1724.method_7344().method_7586() <= this.hungerThreshold.get();
     }
 
     @Override
     public void onDeactivate() {
-        AutoEat llllllllllllllllllIlIlIIIlIIIllI;
-        if (llllllllllllllllllIlIlIIIlIIIllI.eating) {
-            llllllllllllllllllIlIlIIIlIIIllI.stopEating();
+        if (this.eating) {
+            this.stopEating();
         }
     }
 }

@@ -8,9 +8,5 @@ public enum AlignmentY {
     Center,
     Bottom;
 
-
-    private AlignmentY() {
-        AlignmentY llllllllllllllllllllIIIIIIIIIIII;
-    }
 }
 

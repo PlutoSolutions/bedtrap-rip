@@ -29,82 +29,84 @@ import net.minecraft.class_2828;
 import net.minecraft.class_3532;
 
 public class Rotations {
-    public static /* synthetic */ int rotationTimer;
-    public static /* synthetic */ float serverPitch;
-    private static final /* synthetic */ Pool<Rotation> rotationPool;
-    private static /* synthetic */ Rotation lastRotation;
-    private static /* synthetic */ float preYaw;
-    private static /* synthetic */ int i;
-    private static /* synthetic */ int lastRotationTimer;
-    private static /* synthetic */ boolean sentLastRotation;
-    private static final /* synthetic */ List<Rotation> rotations;
-    public static /* synthetic */ float serverYaw;
-    private static /* synthetic */ float prePitch;
-
-    public Rotations() {
-        Rotations llIlllllIIIIIII;
-    }
+    public static int rotationTimer;
+    public static float serverPitch;
+    private static final Pool<Rotation> rotationPool;
+    private static Rotation lastRotation;
+    private static float preYaw;
+    private static int i;
+    private static int lastRotationTimer;
+    private static boolean sentLastRotation;
+    private static final List<Rotation> rotations;
+    public static float serverYaw;
+    private static float prePitch;
 
     public static void init() {
         MeteorClient.EVENT_BUS.subscribe(Rotations.class);
     }
 
-    public static double getPitch(class_243 llIllllIIlIllll) {
-        double llIllllIIllIIll = llIllllIIlIllll.method_10216() - Utils.mc.field_1724.method_23317();
-        double llIllllIIllIIlI = llIllllIIlIllll.method_10214() - (Utils.mc.field_1724.method_23318() + (double)Utils.mc.field_1724.method_18381(Utils.mc.field_1724.method_18376()));
-        double llIllllIIllIIIl = llIllllIIlIllll.method_10215() - Utils.mc.field_1724.method_23321();
-        double llIllllIIllIIII = Math.sqrt(llIllllIIllIIll * llIllllIIllIIll + llIllllIIllIIIl * llIllllIIllIIIl);
-        return Utils.mc.field_1724.field_5965 + class_3532.method_15393((float)((float)(-Math.toDegrees(Math.atan2(llIllllIIllIIlI, llIllllIIllIIII))) - Utils.mc.field_1724.field_5965));
+    public static double getPitch(class_243 class_2432) {
+        double d = class_2432.method_10216() - Utils.mc.field_1724.method_23317();
+        double d2 = class_2432.method_10214() - (Utils.mc.field_1724.method_23318() + (double)Utils.mc.field_1724.method_18381(Utils.mc.field_1724.method_18376()));
+        double d3 = class_2432.method_10215() - Utils.mc.field_1724.method_23321();
+        double d4 = Math.sqrt(d * d + d3 * d3);
+        return Utils.mc.field_1724.field_5965 + class_3532.method_15393((float)((float)(-Math.toDegrees(Math.atan2(d2, d4))) - Utils.mc.field_1724.field_5965));
     }
 
-    public static void rotate(double llIllllIlllIIII, double llIllllIllIllll, int llIllllIllIlllI, boolean llIllllIllIllIl, Runnable llIllllIllIllII) {
-        int llIllllIlllIIIl;
-        Rotation llIllllIlllIIlI = rotationPool.get();
-        llIllllIlllIIlI.set(llIllllIlllIIII, llIllllIllIllll, llIllllIllIlllI, llIllllIllIllIl, llIllllIllIllII);
-        for (llIllllIlllIIIl = 0; llIllllIlllIIIl < rotations.size() && llIllllIllIlllI <= Rotations.rotations.get((int)llIllllIlllIIIl).priority; ++llIllllIlllIIIl) {
+    public static void rotate(double d, double d2, int n, boolean bl, Runnable runnable) {
+        int n2;
+        Rotation rotation = rotationPool.get();
+        rotation.set(d, d2, n, bl, runnable);
+        for (n2 = 0; n2 < rotations.size() && n <= Rotations.rotations.get((int)n2).priority; ++n2) {
+            if (4 > 3) continue;
+            return;
         }
-        rotations.add(llIllllIlllIIIl, llIllllIlllIIlI);
+        rotations.add(n2, rotation);
     }
 
-    private static void setupMovementPacketRotation(Rotation llIllllIlIIlIIl) {
-        Rotations.setClientRotation(llIllllIlIIlIIl);
-        Rotations.setCamRotation(llIllllIlIIlIIl.yaw, llIllllIlIIlIIl.pitch);
+    private static void setupMovementPacketRotation(Rotation rotation) {
+        Rotations.setClientRotation(rotation);
+        Rotations.setCamRotation(rotation.yaw, rotation.pitch);
+    }
+
+    private static Rotation lambda$static$0() {
+        return new Rotation(null);
     }
 
     @EventHandler
-    private static void onTick(TickEvent.Pre llIllllIlIIIIII) {
+    private static void onTick(TickEvent.Pre pre) {
         ++rotationTimer;
     }
 
     static {
-        rotationPool = new Pool<Rotation>(() -> new Rotation());
+        rotationPool = new Pool<Rotation>(Rotations::lambda$static$0);
         rotations = new ArrayList<Rotation>();
         i = 0;
     }
 
-    private static void setClientRotation(Rotation llIllllIlIIIlIl) {
+    private static void setClientRotation(Rotation rotation) {
         preYaw = Utils.mc.field_1724.field_6031;
         prePitch = Utils.mc.field_1724.field_5965;
-        Utils.mc.field_1724.field_6031 = (float)llIllllIlIIIlIl.yaw;
-        Utils.mc.field_1724.field_5965 = (float)llIllllIlIIIlIl.pitch;
+        Utils.mc.field_1724.field_6031 = (float)rotation.yaw;
+        Utils.mc.field_1724.field_5965 = (float)rotation.pitch;
     }
 
-    public static double getPitch(class_1297 llIllllIIIlIIlI) {
-        return Rotations.getPitch(llIllllIIIlIIlI, Target.Body);
+    public static double getPitch(class_1297 class_12972) {
+        return Rotations.getPitch(class_12972, Target.Body);
     }
 
     @EventHandler
-    private static void onSendMovementPacketsPre(SendMovementPacketsEvent.Pre llIllllIlIIllII) {
+    private static void onSendMovementPacketsPre(SendMovementPacketsEvent.Pre pre) {
         if (Utils.mc.field_1719 != Utils.mc.field_1724) {
             return;
         }
         sentLastRotation = false;
         if (!rotations.isEmpty()) {
             Rotations.resetLastRotation();
-            Rotation llIllllIlIIllIl = rotations.get(i);
-            Rotations.setupMovementPacketRotation(llIllllIlIIllIl);
+            Rotation rotation = rotations.get(i);
+            Rotations.setupMovementPacketRotation(rotation);
             if (rotations.size() > 1) {
-                rotationPool.free(llIllllIlIIllIl);
+                rotationPool.free(rotation);
             }
             ++i;
         } else if (lastRotation != null) {
@@ -119,7 +121,7 @@ public class Rotations {
     }
 
     @EventHandler
-    private static void onSendMovementPacketsPost(SendMovementPacketsEvent.Post llIllllIlIIIIlI) {
+    private static void onSendMovementPacketsPost(SendMovementPacketsEvent.Post post) {
         if (!rotations.isEmpty()) {
             if (Utils.mc.field_1719 == Utils.mc.field_1724) {
                 rotations.get(i - 1).runCallback();
@@ -129,20 +131,20 @@ public class Rotations {
                 Rotations.resetPreRotation();
             }
             while (++i < rotations.size()) {
-                Rotation llIllllIlIIIIll = rotations.get(i);
-                Rotations.setCamRotation(llIllllIlIIIIll.yaw, llIllllIlIIIIll.pitch);
-                if (llIllllIlIIIIll.clientSide) {
-                    Rotations.setClientRotation(llIllllIlIIIIll);
+                Rotation rotation = rotations.get(i);
+                Rotations.setCamRotation(rotation.yaw, rotation.pitch);
+                if (rotation.clientSide) {
+                    Rotations.setClientRotation(rotation);
                 }
-                llIllllIlIIIIll.sendPacket();
-                if (llIllllIlIIIIll.clientSide) {
+                rotation.sendPacket();
+                if (rotation.clientSide) {
                     Rotations.resetPreRotation();
                 }
                 if (i == rotations.size() - 1) {
-                    lastRotation = llIllllIlIIIIll;
+                    lastRotation = rotation;
                     continue;
                 }
-                rotationPool.free(llIllllIlIIIIll);
+                rotationPool.free(rotation);
             }
             rotations.clear();
             i = 0;
@@ -151,8 +153,8 @@ public class Rotations {
         }
     }
 
-    public static void rotate(double llIllllIlIllIlI, double llIllllIlIlIllI, Runnable llIllllIlIllIII) {
-        Rotations.rotate(llIllllIlIllIlI, llIllllIlIlIllI, 0, llIllllIlIllIII);
+    public static void rotate(double d, double d2, Runnable runnable) {
+        Rotations.rotate(d, d2, 0, runnable);
     }
 
     private static void resetPreRotation() {
@@ -160,41 +162,34 @@ public class Rotations {
         Utils.mc.field_1724.field_5965 = prePitch;
     }
 
-    public static double getPitch(class_1297 llIllllIIIllIlI, Target llIllllIIlIIIII) {
-        double llIllllIIIlllll;
-        if (llIllllIIlIIIII == Target.Head) {
-            double llIllllIIlIIIll = llIllllIIIllIlI.method_23320();
-        } else if (llIllllIIlIIIII == Target.Body) {
-            double llIllllIIlIIIlI = llIllllIIIllIlI.method_23318() + (double)(llIllllIIIllIlI.method_17682() / 2.0f);
-        } else {
-            llIllllIIIlllll = llIllllIIIllIlI.method_23318();
-        }
-        double llIllllIIIllllI = llIllllIIIllIlI.method_23317() - Utils.mc.field_1724.method_23317();
-        double llIllllIIIlllIl = llIllllIIIlllll - (Utils.mc.field_1724.method_23318() + (double)Utils.mc.field_1724.method_18381(Utils.mc.field_1724.method_18376()));
-        double llIllllIIIlllII = llIllllIIIllIlI.method_23321() - Utils.mc.field_1724.method_23321();
-        double llIllllIIIllIll = Math.sqrt(llIllllIIIllllI * llIllllIIIllllI + llIllllIIIlllII * llIllllIIIlllII);
-        return Utils.mc.field_1724.field_5965 + class_3532.method_15393((float)((float)(-Math.toDegrees(Math.atan2(llIllllIIIlllIl, llIllllIIIllIll))) - Utils.mc.field_1724.field_5965));
+    public static double getPitch(class_1297 class_12972, Target target) {
+        double d = target == Target.Head ? class_12972.method_23320() : (target == Target.Body ? class_12972.method_23318() + (double)(class_12972.method_17682() / 2.0f) : class_12972.method_23318());
+        double d2 = class_12972.method_23317() - Utils.mc.field_1724.method_23317();
+        double d3 = d - (Utils.mc.field_1724.method_23318() + (double)Utils.mc.field_1724.method_18381(Utils.mc.field_1724.method_18376()));
+        double d4 = class_12972.method_23321() - Utils.mc.field_1724.method_23321();
+        double d5 = Math.sqrt(d2 * d2 + d4 * d4);
+        return Utils.mc.field_1724.field_5965 + class_3532.method_15393((float)((float)(-Math.toDegrees(Math.atan2(d3, d5))) - Utils.mc.field_1724.field_5965));
     }
 
-    public static double getYaw(class_2338 llIllllIIIIlllI) {
-        return Utils.mc.field_1724.field_6031 + class_3532.method_15393((float)((float)Math.toDegrees(Math.atan2((double)llIllllIIIIlllI.method_10260() + 0.5 - Utils.mc.field_1724.method_23321(), (double)llIllllIIIIlllI.method_10263() + 0.5 - Utils.mc.field_1724.method_23317())) - 90.0f - Utils.mc.field_1724.field_6031));
+    public static double getYaw(class_2338 class_23382) {
+        return Utils.mc.field_1724.field_6031 + class_3532.method_15393((float)((float)Math.toDegrees(Math.atan2((double)class_23382.method_10260() + 0.5 - Utils.mc.field_1724.method_23321(), (double)class_23382.method_10263() + 0.5 - Utils.mc.field_1724.method_23317())) - 90.0f - Utils.mc.field_1724.field_6031));
     }
 
-    public static void rotate(double llIllllIlIlIIII, double llIllllIlIlIIIl) {
-        Rotations.rotate(llIllllIlIlIIII, llIllllIlIlIIIl, 0, null);
+    public static void rotate(double d, double d2) {
+        Rotations.rotate(d, d2, 0, null);
     }
 
-    public static void rotate(double llIllllIllIIIIl, double llIllllIllIIIII, int llIllllIllIIIll, Runnable llIllllIlIllllI) {
-        Rotations.rotate(llIllllIllIIIIl, llIllllIllIIIII, llIllllIllIIIll, false, llIllllIlIllllI);
+    public static void rotate(double d, double d2, int n, Runnable runnable) {
+        Rotations.rotate(d, d2, n, false, runnable);
     }
 
-    public static double getYaw(class_1297 llIllllIIlllllI) {
-        return Utils.mc.field_1724.field_6031 + class_3532.method_15393((float)((float)Math.toDegrees(Math.atan2(llIllllIIlllllI.method_23321() - Utils.mc.field_1724.method_23321(), llIllllIIlllllI.method_23317() - Utils.mc.field_1724.method_23317())) - 90.0f - Utils.mc.field_1724.field_6031));
+    public static double getYaw(class_1297 class_12972) {
+        return Utils.mc.field_1724.field_6031 + class_3532.method_15393((float)((float)Math.toDegrees(Math.atan2(class_12972.method_23321() - Utils.mc.field_1724.method_23321(), class_12972.method_23317() - Utils.mc.field_1724.method_23317())) - 90.0f - Utils.mc.field_1724.field_6031));
     }
 
-    public static void setCamRotation(double llIlllIllllllII, double llIlllIlllllIIl) {
-        serverYaw = (float)llIlllIllllllII;
-        serverPitch = (float)llIlllIlllllIIl;
+    public static void setCamRotation(double d, double d2) {
+        serverYaw = (float)d;
+        serverPitch = (float)d2;
         rotationTimer = 0;
     }
 
@@ -206,48 +201,49 @@ public class Rotations {
         }
     }
 
-    public static double getPitch(class_2338 llIllllIIIIlIII) {
-        double llIllllIIIIIlll = (double)llIllllIIIIlIII.method_10263() + 0.5 - Utils.mc.field_1724.method_23317();
-        double llIllllIIIIIllI = (double)llIllllIIIIlIII.method_10264() + 0.5 - (Utils.mc.field_1724.method_23318() + (double)Utils.mc.field_1724.method_18381(Utils.mc.field_1724.method_18376()));
-        double llIllllIIIIIlIl = (double)llIllllIIIIlIII.method_10260() + 0.5 - Utils.mc.field_1724.method_23321();
-        double llIllllIIIIIlII = Math.sqrt(llIllllIIIIIlll * llIllllIIIIIlll + llIllllIIIIIlIl * llIllllIIIIIlIl);
-        return Utils.mc.field_1724.field_5965 + class_3532.method_15393((float)((float)(-Math.toDegrees(Math.atan2(llIllllIIIIIllI, llIllllIIIIIlII))) - Utils.mc.field_1724.field_5965));
+    public static double getPitch(class_2338 class_23382) {
+        double d = (double)class_23382.method_10263() + 0.5 - Utils.mc.field_1724.method_23317();
+        double d2 = (double)class_23382.method_10264() + 0.5 - (Utils.mc.field_1724.method_23318() + (double)Utils.mc.field_1724.method_18381(Utils.mc.field_1724.method_18376()));
+        double d3 = (double)class_23382.method_10260() + 0.5 - Utils.mc.field_1724.method_23321();
+        double d4 = Math.sqrt(d * d + d3 * d3);
+        return Utils.mc.field_1724.field_5965 + class_3532.method_15393((float)((float)(-Math.toDegrees(Math.atan2(d2, d4))) - Utils.mc.field_1724.field_5965));
     }
 
-    public static double getYaw(class_243 llIllllIIlllIlI) {
-        return Utils.mc.field_1724.field_6031 + class_3532.method_15393((float)((float)Math.toDegrees(Math.atan2(llIllllIIlllIlI.method_10215() - Utils.mc.field_1724.method_23321(), llIllllIIlllIlI.method_10216() - Utils.mc.field_1724.method_23317())) - 90.0f - Utils.mc.field_1724.field_6031));
+    public static double getYaw(class_243 class_2432) {
+        return Utils.mc.field_1724.field_6031 + class_3532.method_15393((float)((float)Math.toDegrees(Math.atan2(class_2432.method_10215() - Utils.mc.field_1724.method_23321(), class_2432.method_10216() - Utils.mc.field_1724.method_23317())) - 90.0f - Utils.mc.field_1724.field_6031));
     }
 
     private static class Rotation {
-        public /* synthetic */ double pitch;
-        public /* synthetic */ int priority;
-        public /* synthetic */ boolean clientSide;
-        public /* synthetic */ Runnable callback;
-        public /* synthetic */ double yaw;
+        public double pitch;
+        public int priority;
+        public boolean clientSide;
+        public Runnable callback;
+        public double yaw;
 
         private Rotation() {
-            Rotation llllllllllllllllllIIIlllllllllIl;
         }
 
         public void sendPacket() {
-            Rotation llllllllllllllllllIIIllllllIlIIl;
-            Utils.mc.method_1562().method_2883((class_2596)new class_2828.class_2831((float)llllllllllllllllllIIIllllllIlIIl.yaw, (float)llllllllllllllllllIIIllllllIlIIl.pitch, Utils.mc.field_1724.method_24828()));
-            llllllllllllllllllIIIllllllIlIIl.runCallback();
+            Utils.mc.method_1562().method_2883((class_2596)new class_2828.class_2831((float)this.yaw, (float)this.pitch, Utils.mc.field_1724.method_24828()));
+            this.runCallback();
         }
 
         public void runCallback() {
-            Rotation llllllllllllllllllIIIllllllIIlIl;
-            if (llllllllllllllllllIIIllllllIIlIl.callback != null) {
-                llllllllllllllllllIIIllllllIIlIl.callback.run();
+            if (this.callback != null) {
+                this.callback.run();
             }
         }
 
-        public void set(double llllllllllllllllllIIIlllllllIlIl, double llllllllllllllllllIIIlllllllIlII, int llllllllllllllllllIIIlllllllIIll, boolean llllllllllllllllllIIIllllllIllII, Runnable llllllllllllllllllIIIllllllIlIll) {
-            llllllllllllllllllIIIlllllllIllI.yaw = llllllllllllllllllIIIlllllllIlIl;
-            llllllllllllllllllIIIlllllllIllI.pitch = llllllllllllllllllIIIlllllllIlII;
-            llllllllllllllllllIIIlllllllIllI.priority = llllllllllllllllllIIIlllllllIIll;
-            llllllllllllllllllIIIlllllllIllI.clientSide = llllllllllllllllllIIIllllllIllII;
-            llllllllllllllllllIIIlllllllIllI.callback = llllllllllllllllllIIIllllllIlIll;
+        public void set(double d, double d2, int n, boolean bl, Runnable runnable) {
+            this.yaw = d;
+            this.pitch = d2;
+            this.priority = n;
+            this.clientSide = bl;
+            this.callback = runnable;
+        }
+
+        Rotation(1 var1_1) {
+            this();
         }
     }
 }

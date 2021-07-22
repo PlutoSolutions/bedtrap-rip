@@ -13,15 +13,10 @@ import net.minecraft.class_243;
 
 public class MissHitResult
 extends class_239 {
-    public static final /* synthetic */ MissHitResult INSTANCE;
+    public static final MissHitResult INSTANCE = new MissHitResult();
 
     private MissHitResult() {
         super(new class_243(0.0, 0.0, 0.0));
-        MissHitResult lllllllllllllllllIIlIIIIlllllIII;
-    }
-
-    static {
-        INSTANCE = new MissHitResult();
     }
 
     public class_239.class_240 method_17783() {

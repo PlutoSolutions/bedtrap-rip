@@ -25,38 +25,38 @@ import minegame159.meteorclient.systems.commands.arguments.SettingArgumentType;
 import net.minecraft.class_2172;
 import net.minecraft.class_2960;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class SettingValueArgumentType
 implements ArgumentType<String> {
     public static SettingValueArgumentType value() {
         return new SettingValueArgumentType();
     }
 
-    /*
-     * WARNING - void declaration
-     */
-    public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> lIlIIIlIIIIlIl, SuggestionsBuilder lIlIIIlIIIIlII) {
-        void lIlIIIlIIIIIll;
+    public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> commandContext, SuggestionsBuilder suggestionsBuilder) {
+        Setting<?> setting;
         try {
-            Setting<?> lIlIIIlIIIlIII = SettingArgumentType.getSetting(lIlIIIlIIIIlIl);
+            setting = SettingArgumentType.getSetting(commandContext);
         }
-        catch (CommandSyntaxException lIlIIIlIIIIlll) {
+        catch (CommandSyntaxException commandSyntaxException) {
             return null;
         }
-        Iterable<class_2960> lIlIIIlIIIIIlI = lIlIIIlIIIIIll.getIdentifierSuggestions();
-        if (lIlIIIlIIIIIlI != null) {
-            return class_2172.method_9270(lIlIIIlIIIIIlI, (SuggestionsBuilder)lIlIIIlIIIIlII);
+        Iterable<class_2960> iterable = setting.getIdentifierSuggestions();
+        if (iterable != null) {
+            return class_2172.method_9270(iterable, (SuggestionsBuilder)suggestionsBuilder);
         }
-        return class_2172.method_9265(lIlIIIlIIIIIll.getSuggestions(), (SuggestionsBuilder)lIlIIIlIIIIlII);
+        return class_2172.method_9265(setting.getSuggestions(), (SuggestionsBuilder)suggestionsBuilder);
     }
 
-    public String parse(StringReader lIlIIIlIIlIIII) throws CommandSyntaxException {
-        String lIlIIIlIIIllll = lIlIIIlIIlIIII.getRemaining();
-        lIlIIIlIIlIIII.setCursor(lIlIIIlIIlIIII.getTotalLength());
-        return lIlIIIlIIIllll;
+    public String parse(StringReader stringReader) throws CommandSyntaxException {
+        String string = stringReader.getRemaining();
+        stringReader.setCursor(stringReader.getTotalLength());
+        return string;
     }
 
-    public SettingValueArgumentType() {
-        SettingValueArgumentType lIlIIIlIIlIlIl;
+    public Object parse(StringReader stringReader) throws CommandSyntaxException {
+        return this.parse(stringReader);
     }
 }
 

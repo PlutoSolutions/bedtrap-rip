@@ -56,72 +56,73 @@ import net.minecraft.class_3965;
 
 public class CrystalHead
 extends Module {
-    /* synthetic */ int pause;
-    private final /* synthetic */ Setting<Integer> delay;
-    /* synthetic */ boolean firtDone;
-    /* synthetic */ boolean isDone;
-    /* synthetic */ class_2338 pos;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Double> range;
-    private final /* synthetic */ Setting<Boolean> rotate;
-    private final /* synthetic */ class_2338.class_2339 blockPos;
+    int pause;
+    private final Setting<Integer> delay;
+    boolean firtDone;
+    boolean isDone;
+    static final boolean $assertionsDisabled = !CrystalHead.class.desiredAssertionStatus();
+    class_2338 pos;
+    private final SettingGroup sgGeneral;
+    private final Setting<Double> range;
+    private final Setting<Boolean> rotate;
+    private final class_2338.class_2339 blockPos;
 
     @EventHandler
-    private void onTick(TickEvent.Pre lIlIIIlIIIlllll) {
-        CrystalHead lIlIIIlIIlIIIII;
-        if (lIlIIIlIIlIIIII.mc.field_1687 != null && lIlIIIlIIlIIIII.mc.field_1724 != null) {
-            if (lIlIIIlIIlIIIII.pause > 0) {
-                --lIlIIIlIIlIIIII.pause;
+    private void onTick(TickEvent.Pre pre) {
+        if (this.mc.field_1687 != null && this.mc.field_1724 != null) {
+            if (this.pause > 0) {
+                --this.pause;
             } else {
-                lIlIIIlIIlIIIII.pause = lIlIIIlIIlIIIII.delay.get();
-                SortPriority lIlIIIlIIlIIIlI = SortPriority.LowestDistance;
-                class_1657 lIlIIIlIIlIIIIl = TargetUtils.getPlayerTarget(7.0, lIlIIIlIIlIIIlI);
-                if (lIlIIIlIIlIIIIl != null) {
-                    class_2338 lIlIIIlIIlIIlII;
-                    class_2338 lIlIIIlIIlIIIll = new class_2338(lIlIIIlIIlIIIIl.method_24515().method_10263(), lIlIIIlIIlIIIIl.method_24515().method_10264() + 2, lIlIIIlIIlIIIIl.method_24515().method_10260());
-                    if ((double)lIlIIIlIIlIIIII.mc.field_1724.method_5739((class_1297)lIlIIIlIIlIIIIl) <= lIlIIIlIIlIIIII.range.get() && lIlIIIlIIlIIIII.mc.field_1687.method_8320(lIlIIIlIIlIIlII = new class_2338(lIlIIIlIIlIIIIl.method_24515().method_10263(), lIlIIIlIIlIIIIl.method_24515().method_10264() + 1, lIlIIIlIIlIIIIl.method_24515().method_10260())).method_26204() != class_2246.field_10540 && lIlIIIlIIlIIIII.mc.field_1687.method_8320(lIlIIIlIIlIIlII).method_26204() != class_2246.field_9987) {
-                        class_2338 lIlIIIlIIlIIlIl = new class_2338(lIlIIIlIIlIIIIl.method_24515().method_10263(), lIlIIIlIIlIIIIl.method_24515().method_10264() + 3, lIlIIIlIIlIIIIl.method_24515().method_10260());
-                        if (lIlIIIlIIlIIIII.mc.field_1687.method_8320(lIlIIIlIIlIIIll).method_26215() || lIlIIIlIIlIIIII.mc.field_1687.method_8320(lIlIIIlIIlIIIll).method_26204() == class_2246.field_10540) {
-                            int lIlIIIlIIlIIllI = InvUtils.findItemInHotbar(class_1802.field_8403);
-                            if (lIlIIIlIIlIIllI == -1) {
-                                lIlIIIlIIlIIllI = InvUtils.findItemInHotbar(class_1802.field_22024);
+                this.pause = this.delay.get();
+                SortPriority sortPriority = SortPriority.LowestDistance;
+                class_1657 class_16572 = TargetUtils.getPlayerTarget(7.0, sortPriority);
+                if (class_16572 != null) {
+                    class_2338 class_23382;
+                    class_2338 class_23383 = new class_2338(class_16572.method_24515().method_10263(), class_16572.method_24515().method_10264() + 2, class_16572.method_24515().method_10260());
+                    if ((double)this.mc.field_1724.method_5739((class_1297)class_16572) <= this.range.get() && this.mc.field_1687.method_8320(class_23382 = new class_2338(class_16572.method_24515().method_10263(), class_16572.method_24515().method_10264() + 1, class_16572.method_24515().method_10260())).method_26204() != class_2246.field_10540 && this.mc.field_1687.method_8320(class_23382).method_26204() != class_2246.field_9987) {
+                        class_2338 class_23384 = new class_2338(class_16572.method_24515().method_10263(), class_16572.method_24515().method_10264() + 3, class_16572.method_24515().method_10260());
+                        if (this.mc.field_1687.method_8320(class_23383).method_26215() || this.mc.field_1687.method_8320(class_23383).method_26204() == class_2246.field_10540) {
+                            int n = InvUtils.findItemInHotbar(class_1802.field_8403);
+                            if (n == -1) {
+                                n = InvUtils.findItemInHotbar(class_1802.field_22024);
                             }
-                            if (lIlIIIlIIlIIllI == -1) {
-                                lIlIIIlIIlIIllI = InvUtils.findItemInHotbar(class_1802.field_8377);
+                            if (n == -1) {
+                                n = InvUtils.findItemInHotbar(class_1802.field_8377);
                             }
-                            if (lIlIIIlIIlIIllI == -1) {
+                            if (n == -1) {
                                 ChatUtils.info("Can't find pickaxe in hotbar!", new Object[0]);
-                                lIlIIIlIIlIIIII.toggle();
+                                this.toggle();
                             } else {
-                                if (lIlIIIlIIlIIIII.mc.field_1687.method_8320(lIlIIIlIIlIIIll).method_26204() != class_2246.field_10540) {
-                                    lIlIIIlIIlIIIII.BlockPlace(lIlIIIlIIlIIIll, InvUtils.findItemInHotbar(class_1802.field_8281), lIlIIIlIIlIIIII.rotate.get());
+                                if (this.mc.field_1687.method_8320(class_23383).method_26204() != class_2246.field_10540) {
+                                    this.BlockPlace(class_23383, InvUtils.findItemInHotbar(class_1802.field_8281), this.rotate.get());
                                 }
-                                if (!lIlIIIlIIlIIIII.equalsBlockPos(lIlIIIlIIlIIIII.pos, lIlIIIlIIlIIIll)) {
-                                    lIlIIIlIIlIIIII.pos = lIlIIIlIIlIIIll;
-                                    InvUtils.swap(lIlIIIlIIlIIllI);
-                                    lIlIIIlIIlIIIII.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12968, lIlIIIlIIlIIIII.pos, class_2350.field_11036));
-                                    lIlIIIlIIlIIIII.mc.field_1724.method_6104(class_1268.field_5810);
-                                    lIlIIIlIIlIIIII.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, lIlIIIlIIlIIIII.pos, class_2350.field_11036));
-                                    lIlIIIlIIlIIIII.isDone = false;
-                                } else if (lIlIIIlIIlIIIII.isDone) {
-                                    class_1511 lIlIIIlIIlIlIII = null;
-                                    for (class_1297 lIlIIIlIIlIlIll : lIlIIIlIIlIIIII.mc.field_1687.method_18112()) {
-                                        if (!(lIlIIIlIIlIlIll instanceof class_1511) || !lIlIIIlIIlIIIII.equalsBlockPos(lIlIIIlIIlIlIll.method_24515(), lIlIIIlIIlIIlIl)) continue;
-                                        lIlIIIlIIlIlIII = (class_1511)lIlIIIlIIlIlIll;
+                                if (!this.equalsBlockPos(this.pos, class_23383)) {
+                                    this.pos = class_23383;
+                                    InvUtils.swap(n);
+                                    this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12968, this.pos, class_2350.field_11036));
+                                    this.mc.field_1724.method_6104(class_1268.field_5810);
+                                    this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, this.pos, class_2350.field_11036));
+                                    this.isDone = false;
+                                } else if (this.isDone) {
+                                    class_1511 class_15112 = null;
+                                    for (Object object : this.mc.field_1687.method_18112()) {
+                                        if (!(object instanceof class_1511) || !this.equalsBlockPos(object.method_24515(), class_23384)) continue;
+                                        class_15112 = (class_1511)object;
                                         break;
                                     }
-                                    if (lIlIIIlIIlIlIII != null) {
-                                        if (lIlIIIlIIlIIIII.rotate.get().booleanValue()) {
-                                            float[] lIlIIIlIIlIlIlI = PlayerUtils.calculateAngle(lIlIIIlIIlIlIII.method_19538());
-                                            Rotations.rotate(lIlIIIlIIlIlIlI[0], lIlIIIlIIlIlIlI[1]);
+                                    if (class_15112 != null) {
+                                        if (this.rotate.get().booleanValue()) {
+                                            Object object;
+                                            object = PlayerUtils.calculateAngle(class_15112.method_19538());
+                                            Rotations.rotate((double)object[0], (double)object[1]);
                                         }
-                                        int lIlIIIlIIlIlIIl = lIlIIIlIIlIIIII.mc.field_1724.field_7514.field_7545;
-                                        InvUtils.swap(lIlIIIlIIlIIllI);
-                                        lIlIIIlIIlIIIII.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, lIlIIIlIIlIIIII.pos, class_2350.field_11036));
-                                        InvUtils.swap(lIlIIIlIIlIlIIl);
-                                        lIlIIIlIIlIIIII.attackEntity(lIlIIIlIIlIlIII);
+                                        int n2 = this.mc.field_1724.field_7514.field_7545;
+                                        InvUtils.swap(n);
+                                        this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, this.pos, class_2350.field_11036));
+                                        InvUtils.swap(n2);
+                                        this.attackEntity(class_15112);
                                     } else {
-                                        lIlIIIlIIlIIIII.placeCrystal(lIlIIIlIIlIIIIl, lIlIIIlIIlIIIll);
+                                        this.placeCrystal(class_16572, class_23383);
                                     }
                                 }
                             }
@@ -132,105 +133,111 @@ extends Module {
         }
     }
 
-    private boolean placeCrystal(class_1657 lIlIIIIlllllIll, class_2338 lIlIIIIllllIllI) {
-        CrystalHead lIlIIIIlllllIII;
-        class_2338 lIlIIIIlllllIIl = new class_2338(lIlIIIIlllllIll.method_24515().method_10263(), lIlIIIIlllllIll.method_24515().method_10264() + 3, lIlIIIIlllllIll.method_24515().method_10260());
-        if (!BlockUtils.canPlace(lIlIIIIlllllIIl, true)) {
+    private boolean placeCrystal(class_1657 class_16572, class_2338 class_23382) {
+        class_2338 class_23383 = new class_2338(class_16572.method_24515().method_10263(), class_16572.method_24515().method_10264() + 3, class_16572.method_24515().method_10260());
+        if (!BlockUtils.canPlace(class_23383, true)) {
             return false;
         }
-        assert (lIlIIIIlllllIII.mc.field_1687 != null);
-        if (!lIlIIIIlllllIII.mc.field_1687.method_8320(lIlIIIIlllllIIl).method_26215()) {
+        if (!$assertionsDisabled && this.mc.field_1687 == null) {
+            throw new AssertionError();
+        }
+        if (!this.mc.field_1687.method_8320(class_23383).method_26215()) {
             return false;
         }
-        int lIlIIIIllllllIl = InvUtils.findItemInHotbar(class_1802.field_8301);
-        if (lIlIIIIllllllIl == -1) {
+        int n = InvUtils.findItemInHotbar(class_1802.field_8301);
+        if (n == -1) {
             ChatUtils.info("Can't find crystal in hotbar!", new Object[0]);
-            lIlIIIIlllllIII.toggle();
+            this.toggle();
             return false;
         }
-        lIlIIIIlllllIII.interact(lIlIIIIllllIllI, lIlIIIIllllllIl, class_2350.field_11036);
+        this.interact(class_23382, n, class_2350.field_11036);
         return true;
     }
 
-    public boolean equalsBlockPos(class_2338 lIlIIIlIIlllIIl, class_2338 lIlIIIlIIlllIII) {
-        if (lIlIIIlIIlllIIl == null || lIlIIIlIIlllIII == null) {
+    public boolean equalsBlockPos(class_2338 class_23382, class_2338 class_23383) {
+        if (class_23382 == null || class_23383 == null) {
             return false;
         }
-        if (lIlIIIlIIlllIIl.method_10263() != lIlIIIlIIlllIII.method_10263()) {
+        if (class_23382.method_10263() != class_23383.method_10263()) {
             return false;
         }
-        if (lIlIIIlIIlllIIl.method_10264() != lIlIIIlIIlllIII.method_10264()) {
+        if (class_23382.method_10264() != class_23383.method_10264()) {
             return false;
         }
-        return lIlIIIlIIlllIIl.method_10260() == lIlIIIlIIlllIII.method_10260();
+        return class_23382.method_10260() == class_23383.method_10260();
     }
 
     public CrystalHead() {
         super(Categories.BedTrap, "crystal-head", "Traps people in an obsidian box to prevent them from moving.");
-        CrystalHead lIlIIIlIlIIlIlI;
-        lIlIIIlIlIIlIlI.sgGeneral = lIlIIIlIlIIlIlI.settings.getDefaultGroup();
-        lIlIIIlIlIIlIlI.delay = lIlIIIlIlIIlIlI.sgGeneral.add(new IntSetting.Builder().name("delay").description("How many ticks between block placements.").defaultValue(4).sliderMin(0).sliderMax(20).build());
-        lIlIIIlIlIIlIlI.range = lIlIIIlIlIIlIlI.sgGeneral.add(new DoubleSetting.Builder().name("range").description("The radius players can be in to be targeted.").defaultValue(5.0).sliderMin(0.0).sliderMax(10.0).build());
-        lIlIIIlIlIIlIlI.rotate = lIlIIIlIlIIlIlI.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Sends rotation packets to the server when placing.").defaultValue(false).build());
-        lIlIIIlIlIIlIlI.blockPos = new class_2338.class_2339();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.delay = this.sgGeneral.add(new IntSetting.Builder().name("delay").description("How many ticks between block placements.").defaultValue(4).sliderMin(0).sliderMax(20).build());
+        this.range = this.sgGeneral.add(new DoubleSetting.Builder().name("range").description("The radius players can be in to be targeted.").defaultValue(5.0).sliderMin(0.0).sliderMax(10.0).build());
+        this.rotate = this.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Sends rotation packets to the server when placing.").defaultValue(false).build());
+        this.blockPos = new class_2338.class_2339();
     }
 
     @EventHandler
-    private void BlockUpdate(PacketEvent.Receive lIlIIIlIlIIIIIl) {
-        CrystalHead lIlIIIlIIllllll;
-        if (!(lIlIIIlIlIIIIIl.packet instanceof class_2626)) {
+    private void BlockUpdate(PacketEvent.Receive receive) {
+        if (!(receive.packet instanceof class_2626)) {
             return;
         }
-        class_2626 lIlIIIlIlIIIIII = (class_2626)lIlIIIlIlIIIIIl.packet;
-        if (lIlIIIlIIllllll.equalsBlockPos(lIlIIIlIlIIIIII.method_11309(), lIlIIIlIIllllll.pos) && lIlIIIlIlIIIIII.method_11308().method_26215()) {
-            lIlIIIlIIllllll.isDone = true;
+        class_2626 class_26262 = (class_2626)receive.packet;
+        if (this.equalsBlockPos(class_26262.method_11309(), this.pos) && class_26262.method_11308().method_26215()) {
+            this.isDone = true;
         }
     }
 
-    public boolean BlockPlace(class_2338 lIlIIIlIIIIIlll, int lIlIIIlIIIIlIll, boolean lIlIIIlIIIIIlIl) {
-        CrystalHead lIlIIIlIIIIlIII;
-        if (lIlIIIlIIIIlIll == -1) {
+    public boolean BlockPlace(class_2338 class_23382, int n, boolean bl) {
+        if (n == -1) {
             return false;
         }
-        if (!BlockUtils.canPlace(lIlIIIlIIIIIlll, true)) {
+        if (!BlockUtils.canPlace(class_23382, true)) {
             return false;
         }
-        assert (lIlIIIlIIIIlIII.mc.field_1724 != null);
-        int lIlIIIlIIIIlIIl = lIlIIIlIIIIlIII.mc.field_1724.field_7514.field_7545;
-        InvUtils.swap(lIlIIIlIIIIlIll);
-        if (lIlIIIlIIIIIlIl) {
-            class_243 lIlIIIlIIIIlllI = new class_243(0.0, 0.0, 0.0);
-            ((IVec3d)lIlIIIlIIIIlllI).set((double)lIlIIIlIIIIIlll.method_10263() + 0.5, (double)lIlIIIlIIIIIlll.method_10264() + 0.5, (double)lIlIIIlIIIIIlll.method_10260() + 0.5);
-            Rotations.rotate(Rotations.getYaw(lIlIIIlIIIIlllI), Rotations.getPitch(lIlIIIlIIIIlllI));
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
         }
-        assert (lIlIIIlIIIIlIII.mc.field_1761 != null);
-        lIlIIIlIIIIlIII.mc.field_1761.method_2896(lIlIIIlIIIIlIII.mc.field_1724, lIlIIIlIIIIlIII.mc.field_1687, class_1268.field_5808, new class_3965(lIlIIIlIIIIlIII.mc.field_1724.method_19538(), class_2350.field_11036, lIlIIIlIIIIIlll, true));
-        InvUtils.swap(lIlIIIlIIIIlIIl);
+        int n2 = this.mc.field_1724.field_7514.field_7545;
+        InvUtils.swap(n);
+        if (bl) {
+            class_243 class_2432 = new class_243(0.0, 0.0, 0.0);
+            ((IVec3d)class_2432).set((double)class_23382.method_10263() + 0.5, (double)class_23382.method_10264() + 0.5, (double)class_23382.method_10260() + 0.5);
+            Rotations.rotate(Rotations.getYaw(class_2432), Rotations.getPitch(class_2432));
+        }
+        if (!$assertionsDisabled && this.mc.field_1761 == null) {
+            throw new AssertionError();
+        }
+        this.mc.field_1761.method_2896(this.mc.field_1724, this.mc.field_1687, class_1268.field_5808, new class_3965(this.mc.field_1724.method_19538(), class_2350.field_11036, class_23382, true));
+        InvUtils.swap(n2);
         return true;
     }
 
     @Override
     public void onActivate() {
-        lIlIIIlIlIIIllI.pos = null;
-        lIlIIIlIlIIIllI.isDone = false;
-        lIlIIIlIlIIIllI.firtDone = false;
-        lIlIIIlIlIIIllI.pause = 0;
+        this.pos = null;
+        this.isDone = false;
+        this.firtDone = false;
+        this.pause = 0;
     }
 
-    public void attackEntity(class_1511 lIlIIIIlllIlllI) {
-        CrystalHead lIlIIIIlllIllll;
-        assert (lIlIIIIlllIllll.mc.field_1761 != null);
-        lIlIIIIlllIllll.mc.field_1724.field_3944.method_2883((class_2596)new class_2824((class_1297)lIlIIIIlllIlllI, false));
+    public void attackEntity(class_1511 class_15112) {
+        if (!$assertionsDisabled && this.mc.field_1761 == null) {
+            throw new AssertionError();
+        }
+        this.mc.field_1724.field_3944.method_2883((class_2596)new class_2824((class_1297)class_15112, false));
     }
 
-    public void interact(class_2338 lIlIIIIlllIIIlI, int lIlIIIIlllIIIIl, class_2350 lIlIIIIlllIIlIl) {
-        CrystalHead lIlIIIIlllIIIll;
-        assert (lIlIIIIlllIIIll.mc.field_1724 != null);
-        int lIlIIIIlllIIlII = lIlIIIIlllIIIll.mc.field_1724.field_7514.field_7545;
-        InvUtils.swap(lIlIIIIlllIIIIl);
-        assert (lIlIIIIlllIIIll.mc.field_1761 != null);
-        lIlIIIIlllIIIll.mc.field_1761.method_2896(lIlIIIIlllIIIll.mc.field_1724, lIlIIIIlllIIIll.mc.field_1687, class_1268.field_5808, new class_3965(lIlIIIIlllIIIll.mc.field_1724.method_19538(), lIlIIIIlllIIlIl, lIlIIIIlllIIIlI, true));
-        InvUtils.swap(lIlIIIIlllIIlII);
+    public void interact(class_2338 class_23382, int n, class_2350 class_23502) {
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
+        }
+        int n2 = this.mc.field_1724.field_7514.field_7545;
+        InvUtils.swap(n);
+        if (!$assertionsDisabled && this.mc.field_1761 == null) {
+            throw new AssertionError();
+        }
+        this.mc.field_1761.method_2896(this.mc.field_1724, this.mc.field_1687, class_1268.field_5808, new class_3965(this.mc.field_1724.method_19538(), class_23502, class_23382, true));
+        InvUtils.swap(n2);
     }
 }
 

@@ -39,100 +39,88 @@ import net.minecraft.class_4587;
 
 public abstract class WidgetScreen
 extends class_437 {
-    private /* synthetic */ List<Runnable> onClosed;
-    private /* synthetic */ boolean onClose;
-    private /* synthetic */ double lastMouseX;
-    private /* synthetic */ double lastMouseY;
-    public /* synthetic */ boolean locked;
-    protected final /* synthetic */ GuiTheme theme;
-    private /* synthetic */ boolean debug;
-    public /* synthetic */ Runnable taskAfterRender;
-    private final /* synthetic */ WContainer root;
-    public /* synthetic */ double animProgress;
-    private /* synthetic */ boolean closed;
-    private static final /* synthetic */ GuiRenderer RENDERER;
-    protected /* synthetic */ Runnable enterAction;
-    private static final /* synthetic */ GuiDebugRenderer DEBUG_RENDERER;
-    protected /* synthetic */ class_437 parent;
+    private List<Runnable> onClosed;
+    private boolean onClose;
+    private double lastMouseX;
+    private double lastMouseY;
+    public boolean locked;
+    protected final GuiTheme theme;
+    private boolean debug;
+    public Runnable taskAfterRender;
+    private final WContainer root;
+    public double animProgress;
+    private boolean closed;
+    private static final GuiRenderer RENDERER = new GuiRenderer();
+    protected Runnable enterAction;
+    private static final GuiDebugRenderer DEBUG_RENDERER = new GuiDebugRenderer();
+    protected class_437 parent;
 
-    static {
-        RENDERER = new GuiRenderer();
-        DEBUG_RENDERER = new GuiDebugRenderer();
+    private static void lambda$keyPressed$0(AtomicBoolean atomicBoolean, AtomicBoolean atomicBoolean2, AtomicReference atomicReference, WWidget wWidget) {
+        if (atomicBoolean.get() || !(wWidget instanceof WTextBox)) {
+            return;
+        }
+        WTextBox wTextBox = (WTextBox)wWidget;
+        if (atomicBoolean2.get()) {
+            wTextBox.setFocused(true);
+            wTextBox.setCursorMax();
+            atomicBoolean.set(true);
+        } else if (wTextBox.isFocused()) {
+            wTextBox.setFocused(false);
+            atomicBoolean2.set(true);
+        }
+        if (atomicReference.get() == null) {
+            atomicReference.set(wTextBox);
+        }
     }
 
-    public boolean method_25400(char lllllllllllllllllllIlIIlIIIIIlll, int lllllllllllllllllllIlIIlIIIIIllI) {
-        WidgetScreen lllllllllllllllllllIlIIlIIIIlIII;
-        if (lllllllllllllllllllIlIIlIIIIlIII.locked) {
+    public boolean method_25400(char c, int n) {
+        if (this.locked) {
             return false;
         }
-        return lllllllllllllllllllIlIIlIIIIlIII.root.charTyped(lllllllllllllllllllIlIIlIIIIIlll);
+        return this.root.charTyped(c);
     }
 
-    public void method_25410(class_310 lllllllllllllllllllIlIIIlllIIlll, int lllllllllllllllllllIlIIIlllIIllI, int lllllllllllllllllllIlIIIlllIIIIl) {
-        WidgetScreen lllllllllllllllllllIlIIIlllIIlII;
-        super.method_25410(lllllllllllllllllllIlIIIlllIIlll, lllllllllllllllllllIlIIIlllIIllI, lllllllllllllllllllIlIIIlllIIIIl);
-        lllllllllllllllllllIlIIIlllIIlII.root.invalidate();
+    public void method_25410(class_310 class_3102, int n, int n2) {
+        super.method_25410(class_3102, n, n2);
+        this.root.invalidate();
     }
 
     public void method_25432() {
-        WidgetScreen lllllllllllllllllllIlIIIllIlIllI;
-        if (!lllllllllllllllllllIlIIIllIlIllI.closed) {
-            lllllllllllllllllllIlIIIllIlIllI.closed = true;
-            lllllllllllllllllllIlIIIllIlIllI.onClosed();
+        if (!this.closed) {
+            this.closed = true;
+            this.onClosed();
             Input.setCursorStyle(CursorStyle.Default);
-            lllllllllllllllllllIlIIIllIlIllI.loopWidgets(lllllllllllllllllllIlIIIllIlIllI.root, lllllllllllllllllllIlIIIlIlllIll -> {
-                WTextBox lllllllllllllllllllIlIIIlIllllIl;
-                if (lllllllllllllllllllIlIIIlIlllIll instanceof WTextBox && (lllllllllllllllllllIlIIIlIllllIl = (WTextBox)lllllllllllllllllllIlIIIlIlllIll).isFocused()) {
-                    lllllllllllllllllllIlIIIlIllllIl.setFocused(false);
-                }
-            });
-            MeteorClient.EVENT_BUS.unsubscribe((Object)lllllllllllllllllllIlIIIllIlIllI);
+            this.loopWidgets(this.root, WidgetScreen::lambda$removed$1);
+            MeteorClient.EVENT_BUS.unsubscribe((Object)this);
             GuiKeyEvents.canUseKeys = true;
-            if (lllllllllllllllllllIlIIIllIlIllI.onClosed != null) {
-                for (Runnable lllllllllllllllllllIlIIIllIlIlll : lllllllllllllllllllIlIIIllIlIllI.onClosed) {
-                    lllllllllllllllllllIlIIIllIlIlll.run();
+            if (this.onClosed != null) {
+                for (Runnable runnable : this.onClosed) {
+                    runnable.run();
                 }
             }
-            if (lllllllllllllllllllIlIIIllIlIllI.onClose) {
-                Utils.mc.method_1507(lllllllllllllllllllIlIIIllIlIllI.parent);
+            if (this.onClose) {
+                Utils.mc.method_1507(this.parent);
             }
         }
     }
 
-    public boolean method_25404(int lllllllllllllllllllIlIIlIIIlllll, int lllllllllllllllllllIlIIlIIIllllI, int lllllllllllllllllllIlIIlIIIllIII) {
-        boolean lllllllllllllllllllIlIIlIIIlllII;
-        WidgetScreen lllllllllllllllllllIlIIlIIlIIIII;
-        if (lllllllllllllllllllIlIIlIIlIIIII.locked) {
+    public boolean method_25404(int n, int n2, int n3) {
+        boolean bl;
+        if (this.locked) {
             return false;
         }
-        boolean bl = lllllllllllllllllllIlIIlIIIlllII = lllllllllllllllllllIlIIlIIlIIIII.root.keyPressed(lllllllllllllllllllIlIIlIIIlllll, lllllllllllllllllllIlIIlIIIllIII) || super.method_25404(lllllllllllllllllllIlIIlIIIlllll, lllllllllllllllllllIlIIlIIIllllI, lllllllllllllllllllIlIIlIIIllIII);
-        if (lllllllllllllllllllIlIIlIIIlllII) {
+        boolean bl2 = bl = this.root.keyPressed(n, n3) || super.method_25404(n, n2, n3);
+        if (bl) {
             return true;
         }
-        if (lllllllllllllllllllIlIIlIIIlllll == 258) {
-            AtomicReference<Object> lllllllllllllllllllIlIIlIIlIIIll = new AtomicReference<Object>(null);
-            AtomicBoolean lllllllllllllllllllIlIIlIIlIIIlI = new AtomicBoolean(false);
-            AtomicBoolean lllllllllllllllllllIlIIlIIlIIIIl = new AtomicBoolean(false);
-            lllllllllllllllllllIlIIlIIlIIIII.loopWidgets(lllllllllllllllllllIlIIlIIlIIIII.root, lllllllllllllllllllIlIIIlIlIllII -> {
-                if (lllllllllllllllllllIlIIlIIlIIIlI.get() || !(lllllllllllllllllllIlIIIlIlIllII instanceof WTextBox)) {
-                    return;
-                }
-                WTextBox lllllllllllllllllllIlIIIlIllIIII = (WTextBox)lllllllllllllllllllIlIIIlIlIllII;
-                if (lllllllllllllllllllIlIIlIIlIIIIl.get()) {
-                    lllllllllllllllllllIlIIIlIllIIII.setFocused(true);
-                    lllllllllllllllllllIlIIIlIllIIII.setCursorMax();
-                    lllllllllllllllllllIlIIlIIlIIIlI.set(true);
-                } else if (lllllllllllllllllllIlIIIlIllIIII.isFocused()) {
-                    lllllllllllllllllllIlIIIlIllIIII.setFocused(false);
-                    lllllllllllllllllllIlIIlIIlIIIIl.set(true);
-                }
-                if (lllllllllllllllllllIlIIlIIlIIIll.get() == null) {
-                    lllllllllllllllllllIlIIlIIlIIIll.set(lllllllllllllllllllIlIIIlIllIIII);
-                }
-            });
-            if (!lllllllllllllllllllIlIIlIIlIIIlI.get() && lllllllllllllllllllIlIIlIIlIIIll.get() != null) {
-                ((WTextBox)lllllllllllllllllllIlIIlIIlIIIll.get()).setFocused(true);
-                ((WTextBox)lllllllllllllllllllIlIIlIIlIIIll.get()).setCursorMax();
+        if (n == 258) {
+            AtomicReference<Object> atomicReference = new AtomicReference<Object>(null);
+            AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+            AtomicBoolean atomicBoolean2 = new AtomicBoolean(false);
+            this.loopWidgets(this.root, arg_0 -> WidgetScreen.lambda$keyPressed$0(atomicBoolean, atomicBoolean2, atomicReference, arg_0));
+            if (!atomicBoolean.get() && atomicReference.get() != null) {
+                ((WTextBox)atomicReference.get()).setFocused(true);
+                ((WTextBox)atomicReference.get()).setCursorMax();
             }
             return true;
         }
@@ -140,228 +128,220 @@ extends class_437 {
     }
 
     public void method_25419() {
-        WidgetScreen lllllllllllllllllllIlIIIllIlllII;
-        if (!lllllllllllllllllllIlIIIllIlllII.locked) {
-            boolean lllllllllllllllllllIlIIIllIllllI = lllllllllllllllllllIlIIIllIlllII.onClose;
-            lllllllllllllllllllIlIIIllIlllII.onClose = true;
-            if (lllllllllllllllllllIlIIIllIlllII.theme.hideHUD() && !(lllllllllllllllllllIlIIIllIlllII.parent instanceof WidgetScreen)) {
+        if (!this.locked) {
+            boolean bl = this.onClose;
+            this.onClose = true;
+            if (this.theme.hideHUD() && !(this.parent instanceof WidgetScreen)) {
                 Utils.mc.field_1690.field_1842 = false;
             }
-            lllllllllllllllllllIlIIIllIlllII.method_25432();
-            lllllllllllllllllllIlIIIllIlllII.onClose = lllllllllllllllllllIlIIIllIllllI;
+            this.method_25432();
+            this.onClose = bl;
         }
     }
 
     protected void method_25426() {
-        WidgetScreen lllllllllllllllllllIlIIlIlllIlII;
-        MeteorClient.EVENT_BUS.subscribe((Object)lllllllllllllllllllIlIIlIlllIlII);
-        if (lllllllllllllllllllIlIIlIlllIlII.theme.hideHUD()) {
+        MeteorClient.EVENT_BUS.subscribe((Object)this);
+        if (this.theme.hideHUD()) {
             Utils.mc.field_1690.field_1842 = true;
         }
-        lllllllllllllllllllIlIIlIlllIlII.closed = false;
+        this.closed = false;
     }
 
-    public void onClosed(Runnable lllllllllllllllllllIlIIlIlllIIII) {
-        WidgetScreen lllllllllllllllllllIlIIlIllIllll;
-        if (lllllllllllllllllllIlIIlIllIllll.onClosed == null) {
-            lllllllllllllllllllIlIIlIllIllll.onClosed = new ArrayList<Runnable>(2);
+    public void onClosed(Runnable runnable) {
+        if (this.onClosed == null) {
+            this.onClosed = new ArrayList<Runnable>(2);
         }
-        lllllllllllllllllllIlIIlIllIllll.onClosed.add(lllllllllllllllllllIlIIlIlllIIII);
+        this.onClosed.add(runnable);
     }
 
     public boolean method_25421() {
         return false;
     }
 
-    public void method_16014(double lllllllllllllllllllIlIIlIlIIlIlI, double lllllllllllllllllllIlIIlIlIIlIIl) {
-        WidgetScreen lllllllllllllllllllIlIIlIlIIIlll;
-        if (lllllllllllllllllllIlIIlIlIIIlll.locked) {
+    public void method_16014(double d, double d2) {
+        if (this.locked) {
             return;
         }
-        double lllllllllllllllllllIlIIlIlIIlIII = Utils.mc.method_22683().method_4495();
-        lllllllllllllllllllIlIIlIlIIIlll.root.mouseMoved(lllllllllllllllllllIlIIlIlIIlIlI *= lllllllllllllllllllIlIIlIlIIlIII, lllllllllllllllllllIlIIlIlIIlIIl *= lllllllllllllllllllIlIIlIlIIlIII, lllllllllllllllllllIlIIlIlIIIlll.lastMouseX, lllllllllllllllllllIlIIlIlIIIlll.lastMouseY);
-        lllllllllllllllllllIlIIlIlIIIlll.lastMouseX = lllllllllllllllllllIlIIlIlIIlIlI;
-        lllllllllllllllllllIlIIlIlIIIlll.lastMouseY = lllllllllllllllllllIlIIlIlIIlIIl;
+        double d3 = Utils.mc.method_22683().method_4495();
+        this.root.mouseMoved(d *= d3, d2 *= d3, this.lastMouseX, this.lastMouseY);
+        this.lastMouseX = d;
+        this.lastMouseY = d2;
     }
 
-    public void method_25394(class_4587 lllllllllllllllllllIlIIIllllIlII, int lllllllllllllllllllIlIIIlllllIlI, int lllllllllllllllllllIlIIIllllIIlI, float lllllllllllllllllllIlIIIllllIIIl) {
-        WidgetScreen lllllllllllllllllllIlIIIllllllII;
+    public void method_25394(class_4587 class_45872, int n, int n2, float f) {
         if (!Utils.canUpdate()) {
-            lllllllllllllllllllIlIIIllllllII.method_25420(lllllllllllllllllllIlIIIllllIlII);
+            this.method_25420(class_45872);
         }
-        double lllllllllllllllllllIlIIIllllIlll = Utils.mc.method_22683().method_4495();
-        lllllllllllllllllllIlIIIlllllIlI = (int)((double)lllllllllllllllllllIlIIIlllllIlI * lllllllllllllllllllIlIIIllllIlll);
-        lllllllllllllllllllIlIIIllllIIlI = (int)((double)lllllllllllllllllllIlIIIllllIIlI * lllllllllllllllllllIlIIIllllIlll);
-        lllllllllllllllllllIlIIIllllllII.animProgress += (double)(lllllllllllllllllllIlIIIllllIIIl / 20.0f * 14.0f);
-        lllllllllllllllllllIlIIIllllllII.animProgress = Utils.clamp(lllllllllllllllllllIlIIIllllllII.animProgress, 0.0, 1.0);
+        double d = Utils.mc.method_22683().method_4495();
+        n = (int)((double)n * d);
+        n2 = (int)((double)n2 * d);
+        this.animProgress += (double)(f / 20.0f * 14.0f);
+        this.animProgress = Utils.clamp(this.animProgress, 0.0, 1.0);
         GuiKeyEvents.canUseKeys = true;
         Utils.unscaledProjection();
         Matrices.begin(new class_4587());
-        lllllllllllllllllllIlIIIllllllII.onRenderBefore(lllllllllllllllllllIlIIIllllIIIl);
-        WidgetScreen.RENDERER.theme = lllllllllllllllllllIlIIIllllllII.theme;
-        lllllllllllllllllllIlIIIllllllII.theme.beforeRender();
+        this.onRenderBefore(f);
+        WidgetScreen.RENDERER.theme = this.theme;
+        this.theme.beforeRender();
         RENDERER.begin();
-        RENDERER.setAlpha(lllllllllllllllllllIlIIIllllllII.animProgress);
-        lllllllllllllllllllIlIIIllllllII.root.render(RENDERER, lllllllllllllllllllIlIIIlllllIlI, lllllllllllllllllllIlIIIllllIIlI, lllllllllllllllllllIlIIIllllIIIl / 20.0f);
+        RENDERER.setAlpha(this.animProgress);
+        this.root.render(RENDERER, n, n2, f / 20.0f);
         RENDERER.setAlpha(1.0);
         RENDERER.end();
-        boolean lllllllllllllllllllIlIIIllllIllI = RENDERER.renderTooltip(lllllllllllllllllllIlIIIlllllIlI, lllllllllllllllllllIlIIIllllIIlI, lllllllllllllllllllIlIIIllllIIIl / 20.0f);
-        if (lllllllllllllllllllIlIIIllllllII.debug) {
-            DEBUG_RENDERER.render(lllllllllllllllllllIlIIIllllllII.root);
-            if (lllllllllllllllllllIlIIIllllIllI) {
+        boolean bl = RENDERER.renderTooltip(n, n2, f / 20.0f);
+        if (this.debug) {
+            DEBUG_RENDERER.render(this.root);
+            if (bl) {
                 DEBUG_RENDERER.render(WidgetScreen.RENDERER.tooltipWidget);
             }
         }
         Utils.scaledProjection();
-        if (lllllllllllllllllllIlIIIllllllII.taskAfterRender != null) {
-            lllllllllllllllllllIlIIIllllllII.taskAfterRender.run();
-            lllllllllllllllllllIlIIIllllllII.taskAfterRender = null;
+        if (this.taskAfterRender != null) {
+            this.taskAfterRender.run();
+            this.taskAfterRender = null;
         }
     }
 
-    public WidgetScreen(GuiTheme lllllllllllllllllllIlIIllIIIIlll, String lllllllllllllllllllIlIIllIIIIllI) {
-        super((class_2561)new class_2585(lllllllllllllllllllIlIIllIIIIllI));
-        WidgetScreen lllllllllllllllllllIlIIllIIIlIII;
-        lllllllllllllllllllIlIIllIIIlIII.parent = Utils.mc.field_1755;
-        lllllllllllllllllllIlIIllIIIlIII.root = new WFullScreenRoot();
-        lllllllllllllllllllIlIIllIIIlIII.theme = lllllllllllllllllllIlIIllIIIIlll;
-        lllllllllllllllllllIlIIllIIIlIII.root.theme = lllllllllllllllllllIlIIllIIIIlll;
-        if (lllllllllllllllllllIlIIllIIIlIII.parent != null) {
-            lllllllllllllllllllIlIIllIIIlIII.animProgress = 1.0;
-            if (lllllllllllllllllllIlIIllIIIlIII instanceof TabScreen && lllllllllllllllllllIlIIllIIIlIII.parent instanceof TabScreen && !(lllllllllllllllllllIlIIllIIIlIII instanceof HudTab.HudScreen)) {
-                lllllllllllllllllllIlIIllIIIlIII.parent = ((TabScreen)lllllllllllllllllllIlIIllIIIlIII.parent).parent;
+    public WidgetScreen(GuiTheme guiTheme, String string) {
+        super((class_2561)new class_2585(string));
+        this.parent = Utils.mc.field_1755;
+        this.root = new WFullScreenRoot(null);
+        this.theme = guiTheme;
+        this.root.theme = guiTheme;
+        if (this.parent != null) {
+            this.animProgress = 1.0;
+            if (this instanceof TabScreen && this.parent instanceof TabScreen && !(this instanceof HudTab.HudScreen)) {
+                this.parent = ((TabScreen)this.parent).parent;
             }
         }
     }
 
-    protected void onRenderBefore(float lllllllllllllllllllIlIIIlllIllIl) {
+    protected void onRenderBefore(float f) {
     }
 
     public void invalidate() {
-        WidgetScreen lllllllllllllllllllIlIIlIlllIlll;
-        lllllllllllllllllllIlIIlIlllIlll.root.invalidate();
+        this.root.invalidate();
     }
 
     public void clear() {
-        WidgetScreen lllllllllllllllllllIlIIlIllllIll;
-        lllllllllllllllllllIlIIlIllllIll.root.clear();
+        this.root.clear();
     }
 
-    public void keyRepeated(int lllllllllllllllllllIlIIlIIIIllII, int lllllllllllllllllllIlIIlIIIIlllI) {
-        WidgetScreen lllllllllllllllllllIlIIlIIIIllIl;
-        if (lllllllllllllllllllIlIIlIIIIllIl.locked) {
+    public void keyRepeated(int n, int n2) {
+        if (this.locked) {
             return;
         }
-        lllllllllllllllllllIlIIlIIIIllIl.root.keyRepeated(lllllllllllllllllllIlIIlIIIIllII, lllllllllllllllllllIlIIlIIIIlllI);
+        this.root.keyRepeated(n, n2);
     }
 
     protected void onClosed() {
     }
 
-    public boolean method_16803(int lllllllllllllllllllIlIIlIIlIlllI, int lllllllllllllllllllIlIIlIIllIIIl, int lllllllllllllllllllIlIIlIIlIllII) {
-        WidgetScreen lllllllllllllllllllIlIIlIIllIIll;
-        if (lllllllllllllllllllIlIIlIIllIIll.locked) {
+    public boolean method_16803(int n, int n2, int n3) {
+        if (this.locked) {
             return false;
         }
-        if ((lllllllllllllllllllIlIIlIIlIllII == 2 || lllllllllllllllllllIlIIlIIlIllII == 8) && lllllllllllllllllllIlIIlIIlIlllI == 57) {
-            lllllllllllllllllllIlIIlIIllIIll.debug = !lllllllllllllllllllIlIIlIIllIIll.debug;
+        if ((n3 == 2 || n3 == 8) && n == 57) {
+            this.debug = !this.debug;
             return true;
         }
-        if ((lllllllllllllllllllIlIIlIIlIlllI == 257 || lllllllllllllllllllIlIIlIIlIlllI == 335) && lllllllllllllllllllIlIIlIIllIIll.enterAction != null) {
-            lllllllllllllllllllIlIIlIIllIIll.enterAction.run();
+        if ((n == 257 || n == 335) && this.enterAction != null) {
+            this.enterAction.run();
             return true;
         }
-        return super.method_16803(lllllllllllllllllllIlIIlIIlIlllI, lllllllllllllllllllIlIIlIIllIIIl, lllllllllllllllllllIlIIlIIlIllII);
+        return super.method_16803(n, n2, n3);
     }
 
-    public boolean method_25406(double lllllllllllllllllllIlIIlIlIllIII, double lllllllllllllllllllIlIIlIlIlIIlI, int lllllllllllllllllllIlIIlIlIlIIIl) {
-        WidgetScreen lllllllllllllllllllIlIIlIlIlIlII;
-        if (lllllllllllllllllllIlIIlIlIlIlII.locked) {
+    public boolean method_25406(double d, double d2, int n) {
+        if (this.locked) {
             return false;
         }
-        double lllllllllllllllllllIlIIlIlIlIlIl = Utils.mc.method_22683().method_4495();
-        return lllllllllllllllllllIlIIlIlIlIlII.root.mouseReleased(lllllllllllllllllllIlIIlIlIllIII *= lllllllllllllllllllIlIIlIlIlIlIl, lllllllllllllllllllIlIIlIlIlIIlI *= lllllllllllllllllllIlIIlIlIlIlIl, lllllllllllllllllllIlIIlIlIlIIIl);
+        double d3 = Utils.mc.method_22683().method_4495();
+        return this.root.mouseReleased(d *= d3, d2 *= d3, n);
+    }
+
+    private static void lambda$removed$1(WWidget wWidget) {
+        WTextBox wTextBox;
+        if (wWidget instanceof WTextBox && (wTextBox = (WTextBox)wWidget).isFocused()) {
+            wTextBox.setFocused(false);
+        }
     }
 
     public boolean method_25422() {
-        WidgetScreen lllllllllllllllllllIlIIIllIIIIlI;
-        return !lllllllllllllllllllIlIIIllIIIIlI.locked;
+        return !this.locked;
     }
 
-    private void loopWidgets(WWidget lllllllllllllllllllIlIIIllIIlIII, Consumer<WWidget> lllllllllllllllllllIlIIIllIIIlll) {
-        lllllllllllllllllllIlIIIllIIIlll.accept(lllllllllllllllllllIlIIIllIIlIII);
-        if (lllllllllllllllllllIlIIIllIIlIII instanceof WContainer) {
-            for (Cell<?> lllllllllllllllllllIlIIIllIIllIl : ((WContainer)lllllllllllllllllllIlIIIllIIlIII).cells) {
-                WidgetScreen lllllllllllllllllllIlIIIllIIllII;
-                lllllllllllllllllllIlIIIllIIllII.loopWidgets((WWidget)lllllllllllllllllllIlIIIllIIllIl.widget(), lllllllllllllllllllIlIIIllIIIlll);
+    private void loopWidgets(WWidget wWidget, Consumer<WWidget> consumer) {
+        consumer.accept(wWidget);
+        if (wWidget instanceof WContainer) {
+            for (Cell<?> cell : ((WContainer)wWidget).cells) {
+                this.loopWidgets((WWidget)cell.widget(), consumer);
             }
         }
     }
 
-    public boolean method_25402(double lllllllllllllllllllIlIIlIllIIlll, double lllllllllllllllllllIlIIlIllIIIIl, int lllllllllllllllllllIlIIlIllIIIII) {
-        WidgetScreen lllllllllllllllllllIlIIlIllIIIll;
-        if (lllllllllllllllllllIlIIlIllIIIll.locked) {
+    public boolean method_25402(double d, double d2, int n) {
+        if (this.locked) {
             return false;
         }
-        double lllllllllllllllllllIlIIlIllIIlII = Utils.mc.method_22683().method_4495();
-        return lllllllllllllllllllIlIIlIllIIIll.root.mouseClicked(lllllllllllllllllllIlIIlIllIIlll *= lllllllllllllllllllIlIIlIllIIlII, lllllllllllllllllllIlIIlIllIIIIl *= lllllllllllllllllllIlIIlIllIIlII, lllllllllllllllllllIlIIlIllIIIII, false);
+        double d3 = Utils.mc.method_22683().method_4495();
+        return this.root.mouseClicked(d *= d3, d2 *= d3, n, false);
     }
 
-    public boolean method_25401(double lllllllllllllllllllIlIIlIIlllIlI, double lllllllllllllllllllIlIIlIIllllIl, double lllllllllllllllllllIlIIlIIllllII) {
-        WidgetScreen lllllllllllllllllllIlIIlIIllllll;
-        if (lllllllllllllllllllIlIIlIIllllll.locked) {
+    public boolean method_25401(double d, double d2, double d3) {
+        if (this.locked) {
             return false;
         }
-        lllllllllllllllllllIlIIlIIllllll.root.mouseScrolled(lllllllllllllllllllIlIIlIIllllII);
-        return super.method_25401(lllllllllllllllllllIlIIlIIlllIlI, lllllllllllllllllllIlIIlIIllllIl, lllllllllllllllllllIlIIlIIllllII);
+        this.root.mouseScrolled(d3);
+        return super.method_25401(d, d2, d3);
     }
 
-    public <W extends WWidget> Cell<W> add(W lllllllllllllllllllIlIIlIlllllll) {
-        WidgetScreen lllllllllllllllllllIlIIllIIIIIII;
-        return lllllllllllllllllllIlIIllIIIIIII.root.add(lllllllllllllllllllIlIIlIlllllll);
+    public <W extends WWidget> Cell<W> add(W w) {
+        return this.root.add(w);
     }
 
     private static class WFullScreenRoot
     extends WContainer
     implements WRoot {
-        private /* synthetic */ boolean valid;
+        private boolean valid;
 
         @Override
         protected void onCalculateSize() {
-            lllllllllllllllllIllIllIlllIIIIl.width = Utils.getWindowWidth();
-            lllllllllllllllllIllIllIlllIIIIl.height = Utils.getWindowHeight();
+            this.width = Utils.getWindowWidth();
+            this.height = Utils.getWindowHeight();
         }
 
         @Override
-        public boolean render(GuiRenderer lllllllllllllllllIllIllIllIlIIlI, double lllllllllllllllllIllIllIllIlIIIl, double lllllllllllllllllIllIllIllIlIIII, double lllllllllllllllllIllIllIllIIllll) {
-            WFullScreenRoot lllllllllllllllllIllIllIllIlIIll;
-            if (!lllllllllllllllllIllIllIllIlIIll.valid) {
-                lllllllllllllllllIllIllIllIlIIll.calculateSize();
-                lllllllllllllllllIllIllIllIlIIll.calculateWidgetPositions();
-                lllllllllllllllllIllIllIllIlIIll.valid = true;
-                lllllllllllllllllIllIllIllIlIIll.mouseMoved(Utils.mc.field_1729.method_1603(), Utils.mc.field_1729.method_1604(), Utils.mc.field_1729.method_1603(), Utils.mc.field_1729.method_1604());
+        public boolean render(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            if (!this.valid) {
+                this.calculateSize();
+                this.calculateWidgetPositions();
+                this.valid = true;
+                this.mouseMoved(Utils.mc.field_1729.method_1603(), Utils.mc.field_1729.method_1604(), Utils.mc.field_1729.method_1603(), Utils.mc.field_1729.method_1604());
             }
-            return super.render(lllllllllllllllllIllIllIllIlIIlI, lllllllllllllllllIllIllIllIlIIIl, lllllllllllllllllIllIllIllIlIIII, lllllllllllllllllIllIllIllIIllll);
+            return super.render(guiRenderer, d, d2, d3);
         }
 
         private WFullScreenRoot() {
-            WFullScreenRoot lllllllllllllllllIllIllIlllIlIII;
         }
 
         @Override
         public void invalidate() {
-            lllllllllllllllllIllIllIlllIIlIl.valid = false;
+            this.valid = false;
+        }
+
+        WFullScreenRoot(1 var1_1) {
+            this();
         }
 
         @Override
         protected void onCalculateWidgetPositions() {
-            WFullScreenRoot lllllllllllllllllIllIllIllIlllII;
-            for (Cell lllllllllllllllllIllIllIllIlllIl : lllllllllllllllllIllIllIllIlllII.cells) {
-                lllllllllllllllllIllIllIllIlllIl.x = 0.0;
-                lllllllllllllllllIllIllIllIlllIl.y = 0.0;
-                lllllllllllllllllIllIllIllIlllIl.width = lllllllllllllllllIllIllIllIlllII.width;
-                lllllllllllllllllIllIllIllIlllIl.height = lllllllllllllllllIllIllIllIlllII.height;
-                lllllllllllllllllIllIllIllIlllIl.alignWidget();
+            for (Cell cell : this.cells) {
+                cell.x = 0.0;
+                cell.y = 0.0;
+                cell.width = this.width;
+                cell.height = this.height;
+                cell.alignWidget();
             }
         }
     }

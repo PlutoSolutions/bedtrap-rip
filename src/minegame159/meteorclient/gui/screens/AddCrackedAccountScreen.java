@@ -14,22 +14,22 @@ import minegame159.meteorclient.systems.accounts.types.CrackedAccount;
 
 public class AddCrackedAccountScreen
 extends WindowScreen {
-    public AddCrackedAccountScreen(GuiTheme lllllllllllllllllIlIlIllllIlllll) {
-        super(lllllllllllllllllIlIlIllllIlllll, "Add Cracked Account");
-        AddCrackedAccountScreen lllllllllllllllllIlIlIlllllIIIII;
-        WTable lllllllllllllllllIlIlIlllllIIIll = lllllllllllllllllIlIlIlllllIIIII.add(lllllllllllllllllIlIlIllllIlllll.table()).widget();
-        lllllllllllllllllIlIlIlllllIIIll.add(lllllllllllllllllIlIlIllllIlllll.label("Name: "));
-        WTextBox lllllllllllllllllIlIlIlllllIIIlI = lllllllllllllllllIlIlIlllllIIIll.add(lllllllllllllllllIlIlIllllIlllll.textBox("")).minWidth(400.0).expandX().widget();
-        lllllllllllllllllIlIlIlllllIIIlI.setFocused(true);
-        lllllllllllllllllIlIlIlllllIIIll.row();
-        WButton lllllllllllllllllIlIlIlllllIIIIl = lllllllllllllllllIlIlIlllllIIIll.add(lllllllllllllllllIlIlIllllIlllll.button("Add")).expandX().widget();
-        lllllllllllllllllIlIlIlllllIIIII.enterAction = lllllllllllllllllIlIlIlllllIIIIl.action = () -> {
-            CrackedAccount lllllllllllllllllIlIlIllllIlIlII = new CrackedAccount(lllllllllllllllllIlIlIlllllIIIlI.get());
-            if (!lllllllllllllllllIlIlIlllllIIIlI.get().trim().isEmpty() && !Accounts.get().exists(lllllllllllllllllIlIlIllllIlIlII)) {
-                AddCrackedAccountScreen lllllllllllllllllIlIlIllllIlIlll;
-                AccountsScreen.addAccount(lllllllllllllllllIlIlIlllllIIIIl, lllllllllllllllllIlIlIllllIlIlll, lllllllllllllllllIlIlIllllIlIlII);
-            }
-        };
+    private void lambda$new$0(WTextBox wTextBox, WButton wButton) {
+        CrackedAccount crackedAccount = new CrackedAccount(wTextBox.get());
+        if (!wTextBox.get().trim().isEmpty() && !Accounts.get().exists(crackedAccount)) {
+            AccountsScreen.addAccount(wButton, this, crackedAccount);
+        }
+    }
+
+    public AddCrackedAccountScreen(GuiTheme guiTheme) {
+        super(guiTheme, "Add Cracked Account");
+        WTable wTable = this.add(guiTheme.table()).widget();
+        wTable.add(guiTheme.label("Name: "));
+        WTextBox wTextBox = wTable.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        wTextBox.setFocused(true);
+        wTable.row();
+        WButton wButton = wTable.add(guiTheme.button("Add")).expandX().widget();
+        this.enterAction = wButton.action = () -> this.lambda$new$0(wTextBox, wButton);
     }
 }
 

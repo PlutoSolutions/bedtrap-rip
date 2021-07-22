@@ -18,42 +18,38 @@ import net.minecraft.class_2499;
 import net.minecraft.class_2520;
 
 public class NbtUtils {
-    public static <T> List<T> listFromTag(class_2499 lllIIlIlllllIl, ToValue<T> lllIIlIlllllII) {
-        ArrayList<T> lllIIlIllllllI = new ArrayList<T>(lllIIlIlllllIl.size());
-        for (class_2520 lllIIllIIIIIIl : lllIIlIlllllIl) {
-            T lllIIllIIIIIlI = lllIIlIlllllII.toValue(lllIIllIIIIIIl);
-            if (lllIIllIIIIIlI == null) continue;
-            lllIIlIllllllI.add(lllIIllIIIIIlI);
+    public static <T> List<T> listFromTag(class_2499 class_24992, ToValue<T> toValue) {
+        ArrayList<T> arrayList = new ArrayList<T>(class_24992.size());
+        for (class_2520 class_25202 : class_24992) {
+            T t = toValue.toValue(class_25202);
+            if (t == null) continue;
+            arrayList.add(t);
         }
-        return lllIIlIllllllI;
+        return arrayList;
     }
 
-    public NbtUtils() {
-        NbtUtils lllIIllIIlIlII;
+    public static <T extends ISerializable<?>> class_2499 listToTag(Iterable<T> iterable) {
+        class_2499 class_24992 = new class_2499();
+        for (ISerializable iSerializable : iterable) {
+            class_24992.add((Object)iSerializable.toTag());
+        }
+        return class_24992;
     }
 
-    public static <T extends ISerializable<?>> class_2499 listToTag(Iterable<T> lllIIllIIIlllI) {
-        class_2499 lllIIllIIIllIl = new class_2499();
-        for (ISerializable lllIIllIIIllll : lllIIllIIIlllI) {
-            lllIIllIIIllIl.add((Object)lllIIllIIIllll.toTag());
+    public static <K, V extends ISerializable<?>> class_2487 mapToTag(Map<K, V> map) {
+        class_2487 class_24872 = new class_2487();
+        for (K k : map.keySet()) {
+            class_24872.method_10566(k.toString(), (class_2520)((ISerializable)map.get(k)).toTag());
         }
-        return lllIIllIIIllIl;
+        return class_24872;
     }
 
-    public static <K, V extends ISerializable<?>> class_2487 mapToTag(Map<K, V> lllIIlIlllIIlI) {
-        class_2487 lllIIlIlllIIIl = new class_2487();
-        for (K lllIIlIlllIIll : lllIIlIlllIIlI.keySet()) {
-            lllIIlIlllIIIl.method_10566(lllIIlIlllIIll.toString(), (class_2520)((ISerializable)lllIIlIlllIIlI.get(lllIIlIlllIIll)).toTag());
+    public static <K, V> Map<K, V> mapFromTag(class_2487 class_24872, ToKey<K> toKey, ToValue<V> toValue) {
+        HashMap<K, V> hashMap = new HashMap<K, V>(class_24872.method_10546());
+        for (String string : class_24872.method_10541()) {
+            hashMap.put(toKey.toKey(string), toValue.toValue(class_24872.method_10580(string)));
         }
-        return lllIIlIlllIIIl;
-    }
-
-    public static <K, V> Map<K, V> mapFromTag(class_2487 lllIIlIllIIlIl, ToKey<K> lllIIlIllIIIII, ToValue<V> lllIIlIllIIIll) {
-        HashMap<K, V> lllIIlIllIIIlI = new HashMap<K, V>(lllIIlIllIIlIl.method_10546());
-        for (String lllIIlIllIIllI : lllIIlIllIIlIl.method_10541()) {
-            lllIIlIllIIIlI.put(lllIIlIllIIIII.toKey(lllIIlIllIIllI), lllIIlIllIIIll.toValue(lllIIlIllIIlIl.method_10580(lllIIlIllIIllI)));
-        }
-        return lllIIlIllIIIlI;
+        return hashMap;
     }
 
     public static interface ToValue<T> {

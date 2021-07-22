@@ -65,12 +65,12 @@ public abstract class ClientPlayNetworkHandlerMixin {
     private boolean worldNotNull;
 
     @Inject(at={@At(value="HEAD")}, method={"onGameJoin"})
-    private void onGameJoinHead(class_2678 packet, CallbackInfo info) {
+    private void onGameJoinHead(class_2678 class_26782, CallbackInfo callbackInfo) {
         this.worldNotNull = this.field_3699 != null;
     }
 
     @Inject(at={@At(value="TAIL")}, method={"onGameJoin"})
-    private void onGameJoinTail(class_2678 packet, CallbackInfo info) {
+    private void onGameJoinTail(class_2678 class_26782, CallbackInfo callbackInfo) {
         if (this.worldNotNull) {
             MeteorClient.EVENT_BUS.post(GameLeftEvent.get());
         }
@@ -78,43 +78,43 @@ public abstract class ClientPlayNetworkHandlerMixin {
     }
 
     @Inject(at={@At(value="HEAD")}, method={"onPlaySound"})
-    private void onPlaySound(class_2767 packet, CallbackInfo info) {
-        MeteorClient.EVENT_BUS.post(PlaySoundPacketEvent.get(packet));
+    private void onPlaySound(class_2767 class_27672, CallbackInfo callbackInfo) {
+        MeteorClient.EVENT_BUS.post(PlaySoundPacketEvent.get(class_27672));
     }
 
     @Inject(method={"onChunkData"}, at={@At(value="TAIL")})
-    private void onChunkData(class_2672 packet, CallbackInfo info) {
-        class_2818 chunk = this.field_3690.field_1687.method_8497(packet.method_11523(), packet.method_11524());
-        MeteorClient.EVENT_BUS.post(ChunkDataEvent.get(chunk));
+    private void onChunkData(class_2672 class_26722, CallbackInfo callbackInfo) {
+        class_2818 class_28182 = this.field_3690.field_1687.method_8497(class_26722.method_11523(), class_26722.method_11524());
+        MeteorClient.EVENT_BUS.post(ChunkDataEvent.get(class_28182));
     }
 
     @Inject(method={"onScreenHandlerSlotUpdate"}, at={@At(value="TAIL")})
-    private void onContainerSlotUpdate(class_2653 packet, CallbackInfo info) {
-        MeteorClient.EVENT_BUS.post(ContainerSlotUpdateEvent.get(packet));
+    private void onContainerSlotUpdate(class_2653 class_26532, CallbackInfo callbackInfo) {
+        MeteorClient.EVENT_BUS.post(ContainerSlotUpdateEvent.get(class_26532));
     }
 
     @Inject(method={"onEntitiesDestroy"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/world/ClientWorld;removeEntity(I)V")}, locals=LocalCapture.CAPTURE_FAILSOFT)
-    private void onEntityDestroy(class_2716 packet, CallbackInfo info, int i, int j) {
-        MeteorClient.EVENT_BUS.post(EntityDestroyEvent.get(this.field_3690.field_1687.method_8469(j)));
+    private void onEntityDestroy(class_2716 class_27162, CallbackInfo callbackInfo, int n, int n2) {
+        MeteorClient.EVENT_BUS.post(EntityDestroyEvent.get(this.field_3690.field_1687.method_8469(n2)));
     }
 
     @Inject(method={"onExplosion"}, at={@At(value="INVOKE", target="Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/util/thread/ThreadExecutor;)V", shift=At.Shift.AFTER)})
-    private void onExplosionVelocity(class_2664 packet, CallbackInfo ci) {
+    private void onExplosionVelocity(class_2664 class_26642, CallbackInfo callbackInfo) {
         Velocity velocity = Modules.get().get(Velocity.class);
         if (!velocity.explosions.get().booleanValue()) {
             return;
         }
-        ((IExplosionS2CPacket)packet).setVelocityX((float)((double)packet.method_11472() * velocity.getHorizontal(velocity.explosionsHorizontal)));
-        ((IExplosionS2CPacket)packet).setVelocityY((float)((double)packet.method_11473() * velocity.getVertical(velocity.explosionsVertical)));
-        ((IExplosionS2CPacket)packet).setVelocityZ((float)((double)packet.method_11474() * velocity.getHorizontal(velocity.explosionsHorizontal)));
+        ((IExplosionS2CPacket)class_26642).setVelocityX((float)((double)class_26642.method_11472() * velocity.getHorizontal(velocity.explosionsHorizontal)));
+        ((IExplosionS2CPacket)class_26642).setVelocityY((float)((double)class_26642.method_11473() * velocity.getVertical(velocity.explosionsVertical)));
+        ((IExplosionS2CPacket)class_26642).setVelocityZ((float)((double)class_26642.method_11474() * velocity.getHorizontal(velocity.explosionsHorizontal)));
     }
 
     @Inject(method={"onItemPickupAnimation"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/world/ClientWorld;getEntityById(I)Lnet/minecraft/entity/Entity;", ordinal=0)})
-    private void onItemPickupAnimation(class_2775 packet, CallbackInfo info) {
-        class_1297 itemEntity = this.field_3690.field_1687.method_8469(packet.method_11915());
-        class_1297 entity = this.field_3690.field_1687.method_8469(packet.method_11912());
-        if (itemEntity instanceof class_1542 && entity == this.field_3690.field_1724) {
-            MeteorClient.EVENT_BUS.post(PickItemsEvent.get(((class_1542)itemEntity).method_6983(), packet.method_11913()));
+    private void onItemPickupAnimation(class_2775 class_27752, CallbackInfo callbackInfo) {
+        class_1297 class_12972 = this.field_3690.field_1687.method_8469(class_27752.method_11915());
+        class_1297 class_12973 = this.field_3690.field_1687.method_8469(class_27752.method_11912());
+        if (class_12972 instanceof class_1542 && class_12973 == this.field_3690.field_1724) {
+            MeteorClient.EVENT_BUS.post(PickItemsEvent.get(((class_1542)class_12972).method_6983(), class_27752.method_11913()));
         }
     }
 }

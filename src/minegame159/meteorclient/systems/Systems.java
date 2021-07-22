@@ -21,27 +21,27 @@ import minegame159.meteorclient.systems.proxies.Proxies;
 import minegame159.meteorclient.systems.waypoints.Waypoints;
 
 public class Systems {
-    private static final /* synthetic */ List<Runnable> preLoadTasks;
-    private static final /* synthetic */ Map<Class<? extends System>, System<?>> systems;
-    private static /* synthetic */ System<?> config;
+    private static final List<Runnable> preLoadTasks;
+    private static final Map<Class<? extends System>, System<?>> systems;
+    private static System<?> config;
 
-    public static void load(File llllllllllllllllllIlIIlIlIIIlIlI) {
+    public static void load(File file) {
         MeteorClient.LOG.info("Loading");
-        long llllllllllllllllllIlIIlIlIIIlIll = java.lang.System.currentTimeMillis();
-        for (Runnable runnable : preLoadTasks) {
-            runnable.run();
+        long l = java.lang.System.currentTimeMillis();
+        for (Runnable object : preLoadTasks) {
+            object.run();
         }
         for (System system : systems.values()) {
             if (system == config) continue;
-            system.load(llllllllllllllllllIlIIlIlIIIlIlI);
+            system.load(file);
         }
-        MeteorClient.LOG.info("Loaded in {} milliseconds", (Object)(java.lang.System.currentTimeMillis() - llllllllllllllllllIlIIlIlIIIlIll));
+        MeteorClient.LOG.info("Loaded in {} milliseconds", (Object)(java.lang.System.currentTimeMillis() - l));
     }
 
-    private static System<?> add(System<?> llllllllllllllllllIlIIlIlIlIIIlI) {
-        systems.put(llllllllllllllllllIlIIlIlIlIIIlI.getClass(), llllllllllllllllllIlIIlIlIlIIIlI);
-        MeteorClient.EVENT_BUS.subscribe(llllllllllllllllllIlIIlIlIlIIIlI);
-        return llllllllllllllllllIlIIlIlIlIIIlI;
+    private static System<?> add(System<?> system) {
+        systems.put(system.getClass(), system);
+        MeteorClient.EVENT_BUS.subscribe(system);
+        return system;
     }
 
     static {
@@ -49,25 +49,25 @@ public class Systems {
         preLoadTasks = new ArrayList<Runnable>(1);
     }
 
-    public static void addPreLoadTask(Runnable llllllllllllllllllIlIIlIlIIlIlII) {
-        preLoadTasks.add(llllllllllllllllllIlIIlIlIIlIlII);
+    public static void addPreLoadTask(Runnable runnable) {
+        preLoadTasks.add(runnable);
     }
 
     public static void load() {
         Systems.load(null);
     }
 
-    public static <T extends System<?>> T get(Class<T> llllllllllllllllllIlIIlIlIIIIlIl) {
-        return (T)systems.get(llllllllllllllllllIlIIlIlIIIIlIl);
+    public static <T extends System<?>> T get(Class<T> class_) {
+        return (T)systems.get(class_);
     }
 
-    public static void save(File llllllllllllllllllIlIIlIlIIllIll) {
+    public static void save(File file) {
         MeteorClient.LOG.info("Saving");
-        long llllllllllllllllllIlIIlIlIIllIlI = java.lang.System.currentTimeMillis();
-        for (System<?> llllllllllllllllllIlIIlIlIIlllII : systems.values()) {
-            llllllllllllllllllIlIIlIlIIlllII.save(llllllllllllllllllIlIIlIlIIllIll);
+        long l = java.lang.System.currentTimeMillis();
+        for (System<?> system : systems.values()) {
+            system.save(file);
         }
-        MeteorClient.LOG.info("Saved in {} milliseconds.", (Object)(java.lang.System.currentTimeMillis() - llllllllllllllllllIlIIlIlIIllIlI));
+        MeteorClient.LOG.info("Saved in {} milliseconds.", (Object)(java.lang.System.currentTimeMillis() - l));
     }
 
     public static void init() {
@@ -82,18 +82,14 @@ public class Systems {
         Systems.add(new Waypoints());
         Systems.add(new Profiles());
         Systems.add(new Proxies());
-        for (System<?> llllllllllllllllllIlIIlIlIlIIllI : systems.values()) {
-            if (llllllllllllllllllIlIIlIlIlIIllI == config) continue;
-            llllllllllllllllllIlIIlIlIlIIllI.init();
+        for (System<?> system : systems.values()) {
+            if (system == config) continue;
+            system.init();
         }
     }
 
     public static void save() {
         Systems.save(null);
-    }
-
-    public Systems() {
-        Systems llllllllllllllllllIlIIlIlIlIlIlI;
     }
 }
 

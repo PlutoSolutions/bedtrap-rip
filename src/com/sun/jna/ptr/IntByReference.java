@@ -7,25 +7,21 @@ import com.sun.jna.ptr.ByReference;
 
 public class IntByReference
 extends ByReference {
-    public void setValue(int llllllllllllllllIllIIIlIlllIIIIl) {
-        IntByReference llllllllllllllllIllIIIlIlllIIIII;
-        llllllllllllllllIllIIIlIlllIIIII.getPointer().setInt(0L, llllllllllllllllIllIIIlIlllIIIIl);
+    public void setValue(int n) {
+        this.getPointer().setInt(0L, n);
     }
 
-    public IntByReference(int llllllllllllllllIllIIIlIlllIIlIl) {
+    public IntByReference(int n) {
         super(4);
-        IntByReference llllllllllllllllIllIIIlIlllIlIII;
-        llllllllllllllllIllIIIlIlllIlIII.setValue(llllllllllllllllIllIIIlIlllIIlIl);
+        this.setValue(n);
     }
 
     public IntByReference() {
-        llllllllllllllllIllIIIlIlllIllII(0);
-        IntByReference llllllllllllllllIllIIIlIlllIllII;
+        this(0);
     }
 
     public int getValue() {
-        IntByReference llllllllllllllllIllIIIlIllIlllIl;
-        return llllllllllllllllIllIIIlIllIlllIl.getPointer().getInt(0L);
+        return this.getPointer().getInt(0L);
     }
 }
 

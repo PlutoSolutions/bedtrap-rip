@@ -24,81 +24,81 @@ import net.minecraft.class_490;
 
 public class StrictAutoTotem
 extends Module {
-    public /* synthetic */ int DelayTake;
-    private final /* synthetic */ Setting<Integer> TotemTake;
-    public /* synthetic */ int TotemCount;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Integer> TotemPlace;
-    public /* synthetic */ int DelayPlace;
-    public /* synthetic */ int TotemSlot;
+    static final boolean $assertionsDisabled = !StrictAutoTotem.class.desiredAssertionStatus();
+    public int DelayTake;
+    private final Setting<Integer> TotemTake;
+    public int TotemCount;
+    private final SettingGroup sgGeneral;
+    private final Setting<Integer> TotemPlace;
+    public int DelayPlace;
+    public int TotemSlot;
 
     @Override
     public void onActivate() {
-        StrictAutoTotem llllllllllllllllllllIIIIlllIIIlI;
-        llllllllllllllllllllIIIIlllIIIlI.DelayTake = llllllllllllllllllllIIIIlllIIIlI.TotemTake.get();
-        llllllllllllllllllllIIIIlllIIIlI.DelayPlace = llllllllllllllllllllIIIIlllIIIlI.TotemPlace.get();
+        this.DelayTake = this.TotemTake.get();
+        this.DelayPlace = this.TotemPlace.get();
     }
 
     private void FullPlace() {
-        StrictAutoTotem llllllllllllllllllllIIIIllIlIlIl;
-        if (llllllllllllllllllllIIIIllIlIlIl.DelayTake < llllllllllllllllllllIIIIllIlIlIl.TotemTake.get()) {
-            ++llllllllllllllllllllIIIIllIlIlIl.DelayTake;
+        if (this.DelayTake < this.TotemTake.get()) {
+            ++this.DelayTake;
             return;
         }
-        InvUtils.clickSlot(InvUtils.invIndexToSlotId(llllllllllllllllllllIIIIllIlIlIl.TotemSlot), 0, class_1713.field_7790);
-        if (llllllllllllllllllllIIIIllIlIlIl.DelayPlace < llllllllllllllllllllIIIIllIlIlIl.TotemPlace.get()) {
-            ++llllllllllllllllllllIIIIllIlIlIl.DelayPlace;
+        InvUtils.clickSlot(InvUtils.invIndexToSlotId(this.TotemSlot), 0, class_1713.field_7790);
+        if (this.DelayPlace < this.TotemPlace.get()) {
+            ++this.DelayPlace;
             return;
         }
         InvUtils.clickSlot(InvUtils.invIndexToSlotId(45), 0, class_1713.field_7790);
-        llllllllllllllllllllIIIIllIlIlIl.DelayPlace = 0;
-        llllllllllllllllllllIIIIllIlIlIl.DelayTake = 0;
+        this.DelayPlace = 0;
+        this.DelayTake = 0;
     }
 
     public StrictAutoTotem() {
         super(Categories.BedTrap, "strict-auto-totem", "AutoTotem that bypasses Matrix anticheat.");
-        StrictAutoTotem llllllllllllllllllllIIIIlllIIlIl;
-        llllllllllllllllllllIIIIlllIIlIl.sgGeneral = llllllllllllllllllllIIIIlllIIlIl.settings.getDefaultGroup();
-        llllllllllllllllllllIIIIlllIIlIl.TotemTake = llllllllllllllllllllIIIIlllIIlIl.sgGeneral.add(new IntSetting.Builder().name("take-delay").description("Delay ticks between take.").defaultValue(0).min(0).sliderMax(20).build());
-        llllllllllllllllllllIIIIlllIIlIl.TotemPlace = llllllllllllllllllllIIIIlllIIlIl.sgGeneral.add(new IntSetting.Builder().name("place-delay").description("Delay ticks between take.").defaultValue(0).min(0).sliderMax(20).build());
-        llllllllllllllllllllIIIIlllIIlIl.TotemSlot = -1;
-        llllllllllllllllllllIIIIlllIIlIl.DelayTake = 0;
-        llllllllllllllllllllIIIIlllIIlIl.DelayPlace = 0;
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.TotemTake = this.sgGeneral.add(new IntSetting.Builder().name("take-delay").description("Delay ticks between take.").defaultValue(0).min(0).sliderMax(20).build());
+        this.TotemPlace = this.sgGeneral.add(new IntSetting.Builder().name("place-delay").description("Delay ticks between take.").defaultValue(0).min(0).sliderMax(20).build());
+        this.TotemSlot = -1;
+        this.DelayTake = 0;
+        this.DelayPlace = 0;
     }
 
     private void FindTotem() {
-        llllllllllllllllllllIIIIllIllIII.TotemCount = 0;
-        llllllllllllllllllllIIIIllIllIII.TotemSlot = -1;
-        for (int llllllllllllllllllllIIIIllIllIlI = 0; llllllllllllllllllllIIIIllIllIlI < 44; ++llllllllllllllllllllIIIIllIllIlI) {
-            StrictAutoTotem llllllllllllllllllllIIIIllIllIII;
-            assert (llllllllllllllllllllIIIIllIllIII.mc.field_1724 != null);
-            if (llllllllllllllllllllIIIIllIllIII.mc.field_1724.field_7514.method_5438(llllllllllllllllllllIIIIllIllIlI).method_7909() != class_1802.field_8288) continue;
-            ++llllllllllllllllllllIIIIllIllIII.TotemCount;
-            llllllllllllllllllllIIIIllIllIII.TotemSlot = llllllllllllllllllllIIIIllIllIlI;
+        this.TotemCount = 0;
+        this.TotemSlot = -1;
+        for (int i = 0; i < 44; ++i) {
+            if (!$assertionsDisabled && this.mc.field_1724 == null) {
+                throw new AssertionError();
+            }
+            if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_1802.field_8288) continue;
+            ++this.TotemCount;
+            this.TotemSlot = i;
+            if (-1 < 3) continue;
+            return;
         }
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre llllllllllllllllllllIIIIllIllllI) {
-        StrictAutoTotem llllllllllllllllllllIIIIllIlllll;
-        if (llllllllllllllllllllIIIIllIlllll.mc.field_1724 == null) {
+    private void onTick(TickEvent.Pre pre) {
+        if (this.mc.field_1724 == null) {
             return;
         }
-        llllllllllllllllllllIIIIllIlllll.FindTotem();
-        if (llllllllllllllllllllIIIIllIlllll.mc.field_1724.method_6079().method_7909() == class_1802.field_8288) {
+        this.FindTotem();
+        if (this.mc.field_1724.method_6079().method_7909() == class_1802.field_8288) {
             return;
         }
-        if (llllllllllllllllllllIIIIllIlllll.TotemCount == 0 && llllllllllllllllllllIIIIllIlllll.mc.field_1724.field_7514.method_7399().method_7909() == class_1802.field_8288) {
-            ++llllllllllllllllllllIIIIllIlllll.TotemCount;
-            if (llllllllllllllllllllIIIIllIlllll.mc.field_1755 instanceof class_490) {
+        if (this.TotemCount == 0 && this.mc.field_1724.field_7514.method_7399().method_7909() == class_1802.field_8288) {
+            ++this.TotemCount;
+            if (this.mc.field_1755 instanceof class_490) {
                 return;
             }
-            if (!(llllllllllllllllllllIIIIllIlllll.mc.field_1755 instanceof class_465)) {
-                llllllllllllllllllllIIIIllIlllll.FullPlace();
+            if (!(this.mc.field_1755 instanceof class_465)) {
+                this.FullPlace();
                 return;
             }
-        } else if (llllllllllllllllllllIIIIllIlllll.TotemCount > 0 && (llllllllllllllllllllIIIIllIlllll.mc.field_1755 instanceof class_490 || !(llllllllllllllllllllIIIIllIlllll.mc.field_1755 instanceof class_465))) {
-            llllllllllllllllllllIIIIllIlllll.FullPlace();
+        } else if (this.TotemCount > 0 && (this.mc.field_1755 instanceof class_490 || !(this.mc.field_1755 instanceof class_465))) {
+            this.FullPlace();
         }
     }
 }

@@ -20,8 +20,8 @@ implements IHorseBaseEntity {
     protected abstract void method_6769(int var1, boolean var2);
 
     @Override
-    public void setSaddled(boolean saddled) {
-        this.method_6769(4, saddled);
+    public void setSaddled(boolean bl) {
+        this.method_6769(4, bl);
     }
 }
 

@@ -7,25 +7,21 @@ import com.sun.jna.ptr.ByReference;
 
 public class DoubleByReference
 extends ByReference {
-    public void setValue(double llllllllllllllllllIIlIIIIIIIIIll) {
-        DoubleByReference llllllllllllllllllIIlIIIIIIIIllI;
-        llllllllllllllllllIIlIIIIIIIIllI.getPointer().setDouble(0L, llllllllllllllllllIIlIIIIIIIIIll);
+    public void setValue(double d) {
+        this.getPointer().setDouble(0L, d);
     }
 
     public DoubleByReference() {
-        llllllllllllllllllIIlIIIIIIlIIII(0.0);
-        DoubleByReference llllllllllllllllllIIlIIIIIIlIIII;
+        this(0.0);
     }
 
     public double getValue() {
-        DoubleByReference llllllllllllllllllIIlIIIIIIIIIIl;
-        return llllllllllllllllllIIlIIIIIIIIIIl.getPointer().getDouble(0L);
+        return this.getPointer().getDouble(0L);
     }
 
-    public DoubleByReference(double llllllllllllllllllIIlIIIIIIIlIIl) {
+    public DoubleByReference(double d) {
         super(8);
-        DoubleByReference llllllllllllllllllIIlIIIIIIIlIlI;
-        llllllllllllllllllIIlIIIIIIIlIlI.setValue(llllllllllllllllllIIlIIIIIIIlIIl);
+        this.setValue(d);
     }
 }
 

@@ -53,129 +53,142 @@ import net.minecraft.class_290;
 
 public class LightOverlay
 extends Module {
-    private final /* synthetic */ Setting<Integer> horizontalRange;
-    private final /* synthetic */ MeshBuilder mb;
-    private final /* synthetic */ Pool<Cross> crossPool;
-    private final /* synthetic */ SettingGroup sgColors;
-    private final /* synthetic */ Setting<Integer> verticalRange;
-    private final /* synthetic */ class_2338.class_2339 bp;
-    private final /* synthetic */ List<Cross> crosses;
-    private final /* synthetic */ Setting<SettingColor> potentialColor;
-    private final /* synthetic */ Setting<SettingColor> color;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> seeThroughBlocks;
+    private final Setting<Integer> horizontalRange;
+    private final MeshBuilder mb;
+    private final Pool<Cross> crossPool;
+    private final SettingGroup sgColors;
+    private final Setting<Integer> verticalRange;
+    private final class_2338.class_2339 bp;
+    private final List<Cross> crosses;
+    private final Setting<SettingColor> potentialColor;
+    private final Setting<SettingColor> color;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> seeThroughBlocks;
 
-    @EventHandler
-    private void onRender(RenderEvent lllllllllllllllllIIllIllllIIIIll) {
-        LightOverlay lllllllllllllllllIIllIllllIIIllI;
-        if (lllllllllllllllllIIllIllllIIIllI.crosses.isEmpty()) {
-            return;
-        }
-        lllllllllllllllllIIllIllllIIIllI.mb.depthTest = lllllllllllllllllIIllIllllIIIllI.seeThroughBlocks.get() == false;
-        lllllllllllllllllIIllIllllIIIllI.mb.begin(lllllllllllllllllIIllIllllIIIIll, DrawMode.Lines, class_290.field_1576);
-        for (Cross lllllllllllllllllIIllIllllIIIlll : lllllllllllllllllIIllIllllIIIllI.crosses) {
-            lllllllllllllllllIIllIllllIIIlll.render();
-        }
-        lllllllllllllllllIIllIllllIIIllI.mb.end();
+    static Setting access$100(LightOverlay lightOverlay) {
+        return lightOverlay.color;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre lllllllllllllllllIIllIllllIIllll) {
-        LightOverlay lllllllllllllllllIIllIllllIlIIII;
-        for (Cross lllllllllllllllllIIllIllllIlIIIl : lllllllllllllllllIIllIllllIlIIII.crosses) {
-            lllllllllllllllllIIllIllllIlIIII.crossPool.free(lllllllllllllllllIIllIllllIlIIIl);
+    private void onRender(RenderEvent renderEvent) {
+        if (this.crosses.isEmpty()) {
+            return;
         }
-        lllllllllllllllllIIllIllllIlIIII.crosses.clear();
-        BlockIterator.register(lllllllllllllllllIIllIllllIlIIII.horizontalRange.get(), lllllllllllllllllIIllIllllIlIIII.verticalRange.get(), (lllllllllllllllllIIllIlllIlIllll, lllllllllllllllllIIllIlllIlIlIll) -> {
-            LightOverlay lllllllllllllllllIIllIlllIllIIII;
-            switch (lllllllllllllllllIIllIlllIllIIII.validSpawn((class_2338)lllllllllllllllllIIllIlllIlIllll, (class_2680)lllllllllllllllllIIllIlllIlIlIll)) {
-                case Never: {
-                    break;
-                }
-                case Potential: {
-                    lllllllllllllllllIIllIlllIllIIII.crosses.add(lllllllllllllllllIIllIlllIllIIII.crossPool.get().set((class_2338)lllllllllllllllllIIllIlllIlIllll, true));
-                    break;
-                }
-                case Always: {
-                    lllllllllllllllllIIllIlllIllIIII.crosses.add(lllllllllllllllllIIllIlllIllIIII.crossPool.get().set((class_2338)lllllllllllllllllIIllIlllIlIllll, false));
-                }
+        this.mb.depthTest = this.seeThroughBlocks.get() == false;
+        this.mb.begin(renderEvent, DrawMode.Lines, class_290.field_1576);
+        for (Cross cross : this.crosses) {
+            cross.render();
+        }
+        this.mb.end();
+    }
+
+    private Cross lambda$new$0() {
+        return new Cross(this, null);
+    }
+
+    static MeshBuilder access$200(LightOverlay lightOverlay) {
+        return lightOverlay.mb;
+    }
+
+    static Setting access$000(LightOverlay lightOverlay) {
+        return lightOverlay.potentialColor;
+    }
+
+    @EventHandler
+    private void onTick(TickEvent.Pre pre) {
+        for (Cross cross : this.crosses) {
+            this.crossPool.free(cross);
+        }
+        this.crosses.clear();
+        BlockIterator.register(this.horizontalRange.get(), this.verticalRange.get(), (arg_0, arg_1) -> this.lambda$onTick$1(arg_0, arg_1));
+    }
+
+    private void lambda$onTick$1(class_2338 class_23382, class_2680 class_26802) {
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$render$LightOverlay$Spawn[this.validSpawn(class_23382, class_26802).ordinal()]) {
+            case 1: {
+                break;
             }
-        });
+            case 2: {
+                this.crosses.add(this.crossPool.get().set(class_23382, true));
+                break;
+            }
+            case 3: {
+                this.crosses.add(this.crossPool.get().set(class_23382, false));
+            }
+        }
     }
 
     public LightOverlay() {
         super(Categories.Render, "light-overlay", "Shows blocks where mobs can spawn.");
-        LightOverlay lllllllllllllllllIIllIllllIlIllI;
-        lllllllllllllllllIIllIllllIlIllI.sgGeneral = lllllllllllllllllIIllIllllIlIllI.settings.getDefaultGroup();
-        lllllllllllllllllIIllIllllIlIllI.sgColors = lllllllllllllllllIIllIllllIlIllI.settings.createGroup("Colors");
-        lllllllllllllllllIIllIllllIlIllI.horizontalRange = lllllllllllllllllIIllIllllIlIllI.sgGeneral.add(new IntSetting.Builder().name("horizontal-range").description("Horizontal range in blocks.").defaultValue(8).min(0).build());
-        lllllllllllllllllIIllIllllIlIllI.verticalRange = lllllllllllllllllIIllIllllIlIllI.sgGeneral.add(new IntSetting.Builder().name("vertical-range").description("Vertical range in blocks.").defaultValue(4).min(0).build());
-        lllllllllllllllllIIllIllllIlIllI.seeThroughBlocks = lllllllllllllllllIIllIllllIlIllI.sgGeneral.add(new BoolSetting.Builder().name("see-through-blocks").description("Allows you to see the lines through blocks.").defaultValue(false).build());
-        lllllllllllllllllIIllIllllIlIllI.color = lllllllllllllllllIIllIllllIlIllI.sgColors.add(new ColorSetting.Builder().name("color").description("Color of places where mobs can currently spawn.").defaultValue(new SettingColor(225, 25, 25)).build());
-        lllllllllllllllllIIllIllllIlIllI.potentialColor = lllllllllllllllllIIllIllllIlIllI.sgColors.add(new ColorSetting.Builder().name("potential-color").description("Color of places where mobs can potentially spawn (eg at night).").defaultValue(new SettingColor(225, 225, 25)).build());
-        lllllllllllllllllIIllIllllIlIllI.crossPool = new Pool<Cross>(() -> {
-            LightOverlay lllllllllllllllllIIllIlllIlIlIII;
-            return lllllllllllllllllIIllIlllIlIlIII.new Cross();
-        });
-        lllllllllllllllllIIllIllllIlIllI.crosses = new ArrayList<Cross>();
-        lllllllllllllllllIIllIllllIlIllI.bp = new class_2338.class_2339();
-        lllllllllllllllllIIllIllllIlIllI.mb = new MeshBuilder();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgColors = this.settings.createGroup("Colors");
+        this.horizontalRange = this.sgGeneral.add(new IntSetting.Builder().name("horizontal-range").description("Horizontal range in blocks.").defaultValue(8).min(0).build());
+        this.verticalRange = this.sgGeneral.add(new IntSetting.Builder().name("vertical-range").description("Vertical range in blocks.").defaultValue(4).min(0).build());
+        this.seeThroughBlocks = this.sgGeneral.add(new BoolSetting.Builder().name("see-through-blocks").description("Allows you to see the lines through blocks.").defaultValue(false).build());
+        this.color = this.sgColors.add(new ColorSetting.Builder().name("color").description("Color of places where mobs can currently spawn.").defaultValue(new SettingColor(225, 25, 25)).build());
+        this.potentialColor = this.sgColors.add(new ColorSetting.Builder().name("potential-color").description("Color of places where mobs can potentially spawn (eg at night).").defaultValue(new SettingColor(225, 225, 25)).build());
+        this.crossPool = new Pool<Cross>(this::lambda$new$0);
+        this.crosses = new ArrayList<Cross>();
+        this.bp = new class_2338.class_2339();
+        this.mb = new MeshBuilder();
     }
 
-    private boolean topSurface(class_2680 lllllllllllllllllIIllIlllIllIlII) {
-        if (lllllllllllllllllIIllIlllIllIlII.method_26204() instanceof class_2482 && lllllllllllllllllIIllIlllIllIlII.method_11654((class_2769)class_2482.field_11501) == class_2771.field_12679) {
+    private boolean topSurface(class_2680 class_26802) {
+        if (class_26802.method_26204() instanceof class_2482 && class_26802.method_11654((class_2769)class_2482.field_11501) == class_2771.field_12679) {
             return true;
         }
-        return lllllllllllllllllIIllIlllIllIlII.method_26204() instanceof class_2510 && lllllllllllllllllIIllIlllIllIlII.method_11654((class_2769)class_2510.field_11572) == class_2760.field_12619;
+        return class_26802.method_26204() instanceof class_2510 && class_26802.method_11654((class_2769)class_2510.field_11572) == class_2760.field_12619;
     }
 
-    private Spawn validSpawn(class_2338 lllllllllllllllllIIllIlllIlllIIl, class_2680 lllllllllllllllllIIllIlllIlllIll) {
-        LightOverlay lllllllllllllllllIIllIlllIllllIl;
-        if (!(lllllllllllllllllIIllIlllIlllIll.method_26204() instanceof class_2189)) {
+    private Spawn validSpawn(class_2338 class_23382, class_2680 class_26802) {
+        if (!(class_26802.method_26204() instanceof class_2189)) {
             return Spawn.Never;
         }
-        lllllllllllllllllIIllIlllIllllIl.bp.method_10101((class_2382)lllllllllllllllllIIllIlllIlllIIl).method_10100(0, -1, 0);
-        if (!lllllllllllllllllIIllIlllIllllIl.topSurface(lllllllllllllllllIIllIlllIllllIl.mc.field_1687.method_8320((class_2338)lllllllllllllllllIIllIlllIllllIl.bp))) {
-            if (lllllllllllllllllIIllIlllIllllIl.mc.field_1687.method_8320((class_2338)lllllllllllllllllIIllIlllIllllIl.bp).method_26220((class_1922)lllllllllllllllllIIllIlllIllllIl.mc.field_1687, (class_2338)lllllllllllllllllIIllIlllIllllIl.bp) != class_259.method_1077()) {
+        this.bp.method_10101((class_2382)class_23382).method_10100(0, -1, 0);
+        if (!this.topSurface(this.mc.field_1687.method_8320((class_2338)this.bp))) {
+            if (this.mc.field_1687.method_8320((class_2338)this.bp).method_26220((class_1922)this.mc.field_1687, (class_2338)this.bp) != class_259.method_1077()) {
                 return Spawn.Never;
             }
-            if (lllllllllllllllllIIllIlllIllllIl.mc.field_1687.method_8320((class_2338)lllllllllllllllllIIllIlllIllllIl.bp).method_26167((class_1922)lllllllllllllllllIIllIlllIllllIl.mc.field_1687, (class_2338)lllllllllllllllllIIllIlllIllllIl.bp)) {
+            if (this.mc.field_1687.method_8320((class_2338)this.bp).method_26167((class_1922)this.mc.field_1687, (class_2338)this.bp)) {
                 return Spawn.Never;
             }
         }
-        if (lllllllllllllllllIIllIlllIllllIl.mc.field_1687.method_22346(lllllllllllllllllIIllIlllIlllIIl, 0) <= 7) {
+        if (this.mc.field_1687.method_22346(class_23382, 0) <= 7) {
             return Spawn.Potential;
         }
-        if (lllllllllllllllllIIllIlllIllllIl.mc.field_1687.method_8314(class_1944.field_9282, lllllllllllllllllIIllIlllIlllIIl) <= 7) {
+        if (this.mc.field_1687.method_8314(class_1944.field_9282, class_23382) <= 7) {
             return Spawn.Always;
         }
         return Spawn.Never;
     }
 
     private class Cross {
-        private /* synthetic */ double x;
-        private /* synthetic */ boolean potential;
-        private /* synthetic */ double y;
-        private /* synthetic */ double z;
+        private double x;
+        final LightOverlay this$0;
+        private boolean potential;
+        private double y;
+        private double z;
 
-        public Cross set(class_2338 llllllllllllllllIlIlIllIllIIlllI, boolean llllllllllllllllIlIlIllIllIIllIl) {
-            Cross llllllllllllllllIlIlIllIllIIllII;
-            llllllllllllllllIlIlIllIllIIllII.x = llllllllllllllllIlIlIllIllIIlllI.method_10263();
-            llllllllllllllllIlIlIllIllIIllII.y = (double)llllllllllllllllIlIlIllIllIIlllI.method_10264() + 0.0075;
-            llllllllllllllllIlIlIllIllIIllII.z = llllllllllllllllIlIlIllIllIIlllI.method_10260();
-            llllllllllllllllIlIlIllIllIIllII.potential = llllllllllllllllIlIlIllIllIIllIl;
-            return llllllllllllllllIlIlIllIllIIllII;
+        Cross(LightOverlay lightOverlay, 1 var2_2) {
+            this(lightOverlay);
+        }
+
+        public Cross set(class_2338 class_23382, boolean bl) {
+            this.x = class_23382.method_10263();
+            this.y = (double)class_23382.method_10264() + 0.0075;
+            this.z = class_23382.method_10260();
+            this.potential = bl;
+            return this;
         }
 
         public void render() {
-            Cross llllllllllllllllIlIlIllIllIIIlll;
-            Color llllllllllllllllIlIlIllIllIIIllI = llllllllllllllllIlIlIllIllIIIlll.potential ? (Color)llllllllllllllllIlIlIllIllIIIlll.LightOverlay.this.potentialColor.get() : (Color)llllllllllllllllIlIlIllIllIIIlll.LightOverlay.this.color.get();
-            llllllllllllllllIlIlIllIllIIIlll.LightOverlay.this.mb.line(llllllllllllllllIlIlIllIllIIIlll.x, llllllllllllllllIlIlIllIllIIIlll.y, llllllllllllllllIlIlIllIllIIIlll.z, llllllllllllllllIlIlIllIllIIIlll.x + 1.0, llllllllllllllllIlIlIllIllIIIlll.y, llllllllllllllllIlIlIllIllIIIlll.z + 1.0, llllllllllllllllIlIlIllIllIIIllI);
-            llllllllllllllllIlIlIllIllIIIlll.LightOverlay.this.mb.line(llllllllllllllllIlIlIllIllIIIlll.x + 1.0, llllllllllllllllIlIlIllIllIIIlll.y, llllllllllllllllIlIlIllIllIIIlll.z, llllllllllllllllIlIlIllIllIIIlll.x, llllllllllllllllIlIlIllIllIIIlll.y, llllllllllllllllIlIlIllIllIIIlll.z + 1.0, llllllllllllllllIlIlIllIllIIIllI);
+            Color color = this.potential ? (Color)LightOverlay.access$000(this.this$0).get() : (Color)LightOverlay.access$100(this.this$0).get();
+            LightOverlay.access$200(this.this$0).line(this.x, this.y, this.z, this.x + 1.0, this.y, this.z + 1.0, color);
+            LightOverlay.access$200(this.this$0).line(this.x + 1.0, this.y, this.z, this.x, this.y, this.z + 1.0, color);
         }
 
-        private Cross() {
-            Cross llllllllllllllllIlIlIllIllIlIlIl;
+        private Cross(LightOverlay lightOverlay) {
+            this.this$0 = lightOverlay;
         }
     }
 
@@ -184,10 +197,6 @@ extends Module {
         Potential,
         Always;
 
-
-        private Spawn() {
-            Spawn lllllllllllllllllllIlllIIlIllIll;
-        }
     }
 }
 

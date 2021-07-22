@@ -21,26 +21,23 @@ import org.apache.commons.lang3.StringUtils;
 
 public class BiomeHud
 extends DoubleTextHudElement {
-    private final /* synthetic */ class_2338.class_2339 blockPos;
+    private final class_2338.class_2339 blockPos = new class_2338.class_2339();
 
     @Override
     protected String getRight() {
-        BiomeHud lllllllllllllllllllIIllIIlIIlIlI;
-        if (lllllllllllllllllllIIllIIlIIlIlI.isInEditor()) {
+        if (this.isInEditor()) {
             return "Plains";
         }
-        lllllllllllllllllllIIllIIlIIlIlI.blockPos.method_10102(lllllllllllllllllllIIllIIlIIlIlI.mc.field_1724.method_23317(), lllllllllllllllllllIIllIIlIIlIlI.mc.field_1724.method_23318(), lllllllllllllllllllIIllIIlIIlIlI.mc.field_1724.method_23321());
-        class_2960 lllllllllllllllllllIIllIIlIIlIIl = lllllllllllllllllllIIllIIlIIlIlI.mc.field_1687.method_30349().method_30530(class_2378.field_25114).method_10221((Object)lllllllllllllllllllIIllIIlIIlIlI.mc.field_1687.method_23753((class_2338)lllllllllllllllllllIIllIIlIIlIlI.blockPos));
-        if (lllllllllllllllllllIIllIIlIIlIIl == null) {
+        this.blockPos.method_10102(this.mc.field_1724.method_23317(), this.mc.field_1724.method_23318(), this.mc.field_1724.method_23321());
+        class_2960 class_29602 = this.mc.field_1687.method_30349().method_30530(class_2378.field_25114).method_10221((Object)this.mc.field_1687.method_23753((class_2338)this.blockPos));
+        if (class_29602 == null) {
             return "Unknown";
         }
-        return Arrays.stream(lllllllllllllllllllIIllIIlIIlIIl.method_12832().split("_")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+        return Arrays.stream(class_29602.method_12832().split("_")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
     }
 
-    public BiomeHud(HUD lllllllllllllllllllIIllIlllIIIll) {
-        super(lllllllllllllllllllIIllIlllIIIll, "biome", "Displays the biome you are in.", "Biome: ");
-        BiomeHud lllllllllllllllllllIIllIlllIIlII;
-        lllllllllllllllllllIIllIlllIIlII.blockPos = new class_2338.class_2339();
+    public BiomeHud(HUD hUD) {
+        super(hUD, "biome", "Displays the biome you are in.", "Biome: ");
     }
 }
 

@@ -9,17 +9,15 @@ import java.lang.reflect.Method;
 
 public class MethodResultContext
 extends FunctionResultContext {
-    private final /* synthetic */ Method method;
+    private final Method method;
 
-    MethodResultContext(Class<?> lIlIllIlIIlllI, Function lIlIllIlIIlIII, Object[] lIlIllIlIIIlll, Method lIlIllIlIIIllI) {
-        super(lIlIllIlIIlllI, lIlIllIlIIlIII, lIlIllIlIIIlll);
-        MethodResultContext lIlIllIlIIlIlI;
-        lIlIllIlIIlIlI.method = lIlIllIlIIIllI;
+    MethodResultContext(Class<?> class_, Function function, Object[] arrobject, Method method) {
+        super(class_, function, arrobject);
+        this.method = method;
     }
 
     public Method getMethod() {
-        MethodResultContext lIlIllIlIIIIll;
-        return lIlIllIlIIIIll.method;
+        return this.method;
     }
 }
 

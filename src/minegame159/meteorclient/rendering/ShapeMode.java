@@ -8,9 +8,5 @@ public enum ShapeMode {
     Sides,
     Both;
 
-
-    private ShapeMode() {
-        ShapeMode lIIIllIIllIlI;
-    }
 }
 

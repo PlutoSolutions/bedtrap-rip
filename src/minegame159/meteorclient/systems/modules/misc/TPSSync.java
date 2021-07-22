@@ -20,11 +20,10 @@ extends Module {
 
     public TPSSync() {
         super(Categories.Misc, "tps-sync", "Syncs the clients TPS with the server's.");
-        TPSSync lllIllIIIllII;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post lllIllIIIlIIl) {
+    private void onTick(TickEvent.Post post) {
         Modules.get().get(Timer.class).setOverride((TickRate.INSTANCE.getTickRate() >= 1.0f ? TickRate.INSTANCE.getTickRate() : 1.0f) / 20.0f);
     }
 }

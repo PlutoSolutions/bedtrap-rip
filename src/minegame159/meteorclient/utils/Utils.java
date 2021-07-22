@@ -60,6 +60,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.stream.Collectors;
 import minegame159.meteorclient.MeteorClient;
@@ -112,35 +113,35 @@ import org.apache.commons.lang3.SystemUtils;
 import org.lwjgl.glfw.GLFW;
 
 public class Utils {
-    private static final /* synthetic */ DecimalFormat df;
-    public static final /* synthetic */ Color WHITE;
-    public static /* synthetic */ boolean firstTimeTitleScreen;
-    private static final /* synthetic */ Random random;
-    public static /* synthetic */ boolean isReleasingTrident;
-    public static /* synthetic */ class_310 mc;
+    private static final DecimalFormat df;
+    public static final Color WHITE;
+    public static boolean firstTimeTitleScreen;
+    private static final Random random;
+    public static boolean isReleasingTrident;
+    public static class_310 mc;
 
-    private static /* synthetic */ void lambda$createStatusEffectMap$1(Object2IntMap llIIIIIlIlll, class_1291 llIIIIIlIllI) {
-        llIIIIIlIlll.put((Object)llIIIIIlIllI, 0);
+    private static void lambda$createStatusEffectMap$1(Object2IntMap object2IntMap, class_1291 class_12912) {
+        object2IntMap.put((Object)class_12912, 0);
     }
 
-    public static Color getShulkerColor(class_1799 llIIllllIlll) {
-        if (!(llIIllllIlll.method_7909() instanceof class_1747)) {
+    public static Color getShulkerColor(class_1799 class_17992) {
+        if (!(class_17992.method_7909() instanceof class_1747)) {
             return WHITE;
         }
-        class_2248 llIIllllIllI = ((class_1747)llIIllllIlll.method_7909()).method_7711();
-        if (llIIllllIllI == class_2246.field_10443) {
+        class_2248 class_22482 = ((class_1747)class_17992.method_7909()).method_7711();
+        if (class_22482 == class_2246.field_10443) {
             return BetterTooltips.ECHEST_COLOR;
         }
-        if (!(llIIllllIllI instanceof class_2480)) {
+        if (!(class_22482 instanceof class_2480)) {
             return WHITE;
         }
-        class_2480 llIIllllIlIl = (class_2480)class_2480.method_9503((class_1792)llIIllllIlll.method_7909());
-        class_1767 llIIllllIlII = llIIllllIlIl.method_10528();
-        if (llIIllllIlII == null) {
+        class_2480 class_24802 = (class_2480)class_2480.method_9503((class_1792)class_17992.method_7909());
+        class_1767 class_17672 = class_24802.method_10528();
+        if (class_17672 == null) {
             return WHITE;
         }
-        float[] llIIllllIIll = llIIllllIlII.method_7787();
-        return new Color(llIIllllIIll[0], llIIllllIIll[1], llIIllllIIll[2], 1.0f);
+        float[] arrf = class_17672.method_7787();
+        return new Color(arrf[0], arrf[1], arrf[2], 1.0f);
     }
 
     static {
@@ -149,57 +150,55 @@ public class Utils {
         WHITE = new Color(255, 255, 255);
         df = new DecimalFormat("0");
         df.setMaximumFractionDigits(340);
-        DecimalFormatSymbols llIIIIIIlIll = new DecimalFormatSymbols();
-        llIIIIIIlIll.setDecimalSeparator('.');
-        df.setDecimalFormatSymbols(llIIIIIIlIll);
+        DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+        decimalFormatSymbols.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(decimalFormatSymbols);
     }
 
     @SafeVarargs
-    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... llIIIIlIIIIl) {
-        HashMap<T, Boolean> llIIIIlIIIlI = new HashMap<T, Boolean>();
-        for (T llIIIIlIIlII : llIIIIlIIIIl) {
-            llIIIIlIIIlI.put(llIIIIlIIlII, true);
+    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... arrT) {
+        HashMap<T, Boolean> hashMap = new HashMap<T, Boolean>();
+        for (T t : arrT) {
+            hashMap.put(t, true);
+            if (-1 <= 0) continue;
+            return null;
         }
-        return new Object2BooleanOpenHashMap(llIIIIlIIIlI);
+        return new Object2BooleanOpenHashMap(hashMap);
     }
 
-    public static boolean hasItems(class_1799 llIIlllIlIll) {
-        class_2487 llIIlllIlIlI = llIIlllIlIll.method_7941("BlockEntityTag");
-        return llIIlllIlIlI != null && llIIlllIlIlI.method_10573("Items", 9);
+    public static boolean hasItems(class_1799 class_17992) {
+        class_2487 class_24872 = class_17992.method_7941("BlockEntityTag");
+        return class_24872 != null && class_24872.method_10573("Items", 9);
     }
 
     public static int getRenderDistance() {
         return Math.max(Utils.mc.field_1690.field_1870, ((ClientPlayNetworkHandlerAccessor)mc.method_1562()).getChunkLoadDistance());
     }
 
-    public Utils() {
-        Utils llIlIIllIlll;
-    }
-
     public static String getWorldName() {
         if (mc.method_1542()) {
-            File llIIlIIlIIlI = ((MinecraftServerAccessor)mc.method_1576()).getSession().method_27424(Utils.mc.field_1687.method_27983());
-            if (llIIlIIlIIlI.toPath().relativize(Utils.mc.field_1697.toPath()).getNameCount() != 2) {
-                llIIlIIlIIlI = llIIlIIlIIlI.getParentFile();
+            File file = ((MinecraftServerAccessor)mc.method_1576()).getSession().method_27424(Utils.mc.field_1687.method_27983());
+            if (file.toPath().relativize(Utils.mc.field_1697.toPath()).getNameCount() != 2) {
+                file = file.getParentFile();
             }
-            return llIIlIIlIIlI.getName();
+            return file.getName();
         }
         if (mc.method_1558() != null) {
-            String llIIlIIlIIIl;
-            String string = llIIlIIlIIIl = mc.method_1589() ? "realms" : Utils.mc.method_1558().field_3761;
+            String string;
+            String string2 = string = mc.method_1589() ? "realms" : Utils.mc.method_1558().field_3761;
             if (SystemUtils.IS_OS_WINDOWS) {
-                llIIlIIlIIIl = llIIlIIlIIIl.replace(":", "_");
+                string = string.replace(":", "_");
             }
-            return llIIlIIlIIIl;
+            return string;
         }
         return "";
     }
 
-    public static float clamp(float llIIIlIlIlIl, float llIIIlIlIIIl, float llIIIlIlIIII) {
-        if (llIIIlIlIlIl < llIIIlIlIIIl) {
-            return llIIIlIlIIIl;
+    public static float clamp(float f, float f2, float f3) {
+        if (f < f2) {
+            return f2;
         }
-        return Math.min(llIIIlIlIlIl, llIIIlIlIIII);
+        return Math.min(f, f3);
     }
 
     public static void unscaledProjection() {
@@ -211,40 +210,44 @@ public class Utils {
         RenderSystem.translatef((float)0.0f, (float)0.0f, (float)-2000.0f);
     }
 
-    public static void getItemsInContainerItem(class_1799 llIlIIIIIlIl, class_1799[] llIlIIIIIlII) {
-        class_2487 llIlIIIIIllI;
-        if (llIlIIIIIlIl.method_7909() == class_1802.field_8466) {
-            for (int llIlIIIIlIIl = 0; llIlIIIIlIIl < EChestMemory.ITEMS.size(); ++llIlIIIIlIIl) {
-                llIlIIIIIlII[llIlIIIIlIIl] = (class_1799)EChestMemory.ITEMS.get(llIlIIIIlIIl);
+    public static void getItemsInContainerItem(class_1799 class_17992, class_1799[] arrclass_1799) {
+        class_2487 class_24872;
+        if (class_17992.method_7909() == class_1802.field_8466) {
+            for (int i = 0; i < EChestMemory.ITEMS.size(); ++i) {
+                arrclass_1799[i] = (class_1799)EChestMemory.ITEMS.get(i);
+                if (-4 < 0) continue;
+                return;
             }
             return;
         }
-        Arrays.fill((Object[])llIlIIIIIlII, (Object)class_1799.field_8037);
-        class_2487 llIlIIIIIIll = llIlIIIIIlIl.method_7969();
-        if (llIlIIIIIIll != null && llIlIIIIIIll.method_10545("BlockEntityTag") && (llIlIIIIIllI = llIlIIIIIIll.method_10562("BlockEntityTag")).method_10545("Items")) {
-            class_2499 llIlIIIIIlll = (class_2499)llIlIIIIIllI.method_10580("Items");
-            for (int llIlIIIIlIII = 0; llIlIIIIlIII < llIlIIIIIlll.size(); ++llIlIIIIlIII) {
-                llIlIIIIIlII[llIlIIIIIlll.method_10602((int)llIlIIIIlIII).method_10571((String)"Slot")] = class_1799.method_7915((class_2487)llIlIIIIIlll.method_10602(llIlIIIIlIII));
+        Arrays.fill((Object[])arrclass_1799, (Object)class_1799.field_8037);
+        class_2487 class_24873 = class_17992.method_7969();
+        if (class_24873 != null && class_24873.method_10545("BlockEntityTag") && (class_24872 = class_24873.method_10562("BlockEntityTag")).method_10545("Items")) {
+            class_2499 class_24992 = (class_2499)class_24872.method_10580("Items");
+            for (int i = 0; i < class_24992.size(); ++i) {
+                arrclass_1799[class_24992.method_10602((int)i).method_10571((String)"Slot")] = class_1799.method_7915((class_2487)class_24992.method_10602(i));
+                if (1 > 0) continue;
+                return;
             }
         }
     }
 
-    public static double distance(double llIIlIIlllII, double llIIlIIllIlI, double llIIlIIllIIl, double llIIlIIllIII, double llIIlIlIIIIl, double llIIlIIlIllI) {
-        double llIIlIIlllll = llIIlIIllIII - llIIlIIlllII;
-        double llIIlIIllllI = llIIlIlIIIIl - llIIlIIllIlI;
-        double llIIlIIlllIl = llIIlIIlIllI - llIIlIIllIIl;
-        return Math.sqrt(llIIlIIlllll * llIIlIIlllll + llIIlIIllllI * llIIlIIllllI + llIIlIIlllIl * llIIlIIlllIl);
+    public static double distance(double d, double d2, double d3, double d4, double d5, double d6) {
+        double d7 = d4 - d;
+        double d8 = d5 - d2;
+        double d9 = d6 - d3;
+        return Math.sqrt(d7 * d7 + d8 * d8 + d9 * d9);
     }
 
-    public static int clamp(int llIIIlIllIll, int llIIIlIllIlI, int llIIIlIllIIl) {
-        if (llIIIlIllIll < llIIIlIllIlI) {
-            return llIIIlIllIlI;
+    public static int clamp(int n, int n2, int n3) {
+        if (n < n2) {
+            return n2;
         }
-        return Math.min(llIIIlIllIll, llIIIlIllIIl);
+        return Math.min(n, n3);
     }
 
-    public static boolean isShulker(class_1792 llIIIllIIlIl) {
-        return llIIIllIIlIl == class_1802.field_8545 || llIIIllIIlIl == class_1802.field_8722 || llIIIllIIlIl == class_1802.field_8380 || llIIIllIIlIl == class_1802.field_8050 || llIIIllIIlIl == class_1802.field_8829 || llIIIllIIlIl == class_1802.field_8271 || llIIIllIIlIl == class_1802.field_8548 || llIIIllIIlIl == class_1802.field_8520 || llIIIllIIlIl == class_1802.field_8627 || llIIIllIIlIl == class_1802.field_8451 || llIIIllIIlIl == class_1802.field_8213 || llIIIllIIlIl == class_1802.field_8816 || llIIIllIIlIl == class_1802.field_8350 || llIIIllIIlIl == class_1802.field_8584 || llIIIllIIlIl == class_1802.field_8461 || llIIIllIIlIl == class_1802.field_8676 || llIIIllIIlIl == class_1802.field_8268;
+    public static boolean isShulker(class_1792 class_17922) {
+        return class_17922 == class_1802.field_8545 || class_17922 == class_1802.field_8722 || class_17922 == class_1802.field_8380 || class_17922 == class_1802.field_8050 || class_17922 == class_1802.field_8829 || class_17922 == class_1802.field_8271 || class_17922 == class_1802.field_8548 || class_17922 == class_1802.field_8520 || class_17922 == class_1802.field_8627 || class_17922 == class_1802.field_8451 || class_17922 == class_1802.field_8213 || class_17922 == class_1802.field_8816 || class_17922 == class_1802.field_8350 || class_17922 == class_1802.field_8584 || class_17922 == class_1802.field_8461 || class_17922 == class_1802.field_8676 || class_17922 == class_1802.field_8268;
     }
 
     public static boolean isWhitelistedScreen() {
@@ -257,8 +260,8 @@ public class Utils {
         return Utils.mc.field_1755 instanceof class_526;
     }
 
-    public static String getButtonName(int llIIlIIIIlIl) {
-        switch (llIIlIIIIlIl) {
+    public static String getButtonName(int n) {
+        switch (n) {
             case -1: {
                 return "Unknown";
             }
@@ -272,15 +275,15 @@ public class Utils {
                 return "Mouse Middle";
             }
         }
-        return String.valueOf(new StringBuilder().append("Mouse ").append(llIIlIIIIlIl));
+        return String.valueOf(new StringBuilder().append("Mouse ").append(n));
     }
 
     public static int getWindowWidth() {
         return mc.method_22683().method_4489();
     }
 
-    public static String getKeyName(int llIIlIIIlIIl) {
-        switch (llIIlIIIlIIl) {
+    public static String getKeyName(int n) {
+        switch (n) {
             case -1: {
                 return "Unknown";
             }
@@ -456,11 +459,11 @@ public class Utils {
                 return "F25";
             }
         }
-        String llIIlIIIlIlI = GLFW.glfwGetKeyName((int)llIIlIIIlIIl, (int)0);
-        if (llIIlIIIlIlI == null) {
+        String string = GLFW.glfwGetKeyName((int)n, (int)0);
+        if (string == null) {
             return "Unknown";
         }
-        return StringUtils.capitalize((String)llIIlIIIlIlI);
+        return StringUtils.capitalize((String)string);
     }
 
     public static void rightClick() {
@@ -468,9 +471,9 @@ public class Utils {
     }
 
     public static Object2IntMap<class_1291> createStatusEffectMap() {
-        Object2IntArrayMap llIIlllIIllI = new Object2IntArrayMap(class_2378.field_11159.method_10235().size());
-        class_2378.field_11159.forEach(arg_0 -> Utils.lambda$createStatusEffectMap$1((Object2IntMap)llIIlllIIllI, arg_0));
-        return llIIlllIIllI;
+        Object2IntArrayMap object2IntArrayMap = new Object2IntArrayMap(class_2378.field_11159.method_10235().size());
+        class_2378.field_11159.forEach(arg_0 -> Utils.lambda$createStatusEffectMap$1((Object2IntMap)object2IntArrayMap, arg_0));
+        return object2IntArrayMap;
     }
 
     public static void leftClick() {
@@ -479,112 +482,120 @@ public class Utils {
         Utils.mc.field_1690.field_1886.method_23481(false);
     }
 
-    public static void getEnchantments(class_1799 llIlIIlIllII, Object2IntMap<class_1887> llIlIIlIlIll) {
-        llIlIIlIlIll.clear();
-        if (!llIlIIlIllII.method_7960()) {
-            class_2499 llIlIIlIllll = llIlIIlIllII.method_7909() == class_1802.field_8598 ? class_1772.method_7806((class_1799)llIlIIlIllII) : llIlIIlIllII.method_7921();
-            for (int llIlIIllIIII = 0; llIlIIllIIII < llIlIIlIllll.size(); ++llIlIIllIIII) {
-                class_2487 llIlIIllIIIl = llIlIIlIllll.method_10602(llIlIIllIIII);
-                class_2378.field_11160.method_17966(class_2960.method_12829((String)llIlIIllIIIl.method_10558("id"))).ifPresent(llIIIIIlIIII -> llIlIIlIlIll.put(llIIIIIlIIII, llIlIIllIIIl.method_10550("lvl")));
+    public static void getEnchantments(class_1799 class_17992, Object2IntMap<class_1887> object2IntMap) {
+        object2IntMap.clear();
+        if (!class_17992.method_7960()) {
+            class_2499 class_24992 = class_17992.method_7909() == class_1802.field_8598 ? class_1772.method_7806((class_1799)class_17992) : class_17992.method_7921();
+            for (int i = 0; i < class_24992.size(); ++i) {
+                class_2487 class_24872 = class_24992.method_10602(i);
+                class_2378.field_11160.method_17966(class_2960.method_12829((String)class_24872.method_10558("id"))).ifPresent(arg_0 -> Utils.lambda$getEnchantments$0(object2IntMap, class_24872, arg_0));
+                if (true) continue;
+                return;
             }
         }
     }
 
-    public static byte[] readBytes(File llIIIllllIIl) {
+    public static byte[] readBytes(File file) {
         try {
-            int llIIIllllIll;
-            FileInputStream llIIIllllllI = new FileInputStream(llIIIllllIIl);
-            ByteArrayOutputStream llIIIlllllIl = new ByteArrayOutputStream();
-            byte[] llIIIlllllII = new byte[256];
-            while ((llIIIllllIll = ((InputStream)llIIIllllllI).read(llIIIlllllII)) > 0) {
-                llIIIlllllIl.write(llIIIlllllII, 0, llIIIllllIll);
+            int n;
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] arrby = new byte[256];
+            while ((n = ((InputStream)fileInputStream).read(arrby)) > 0) {
+                byteArrayOutputStream.write(arrby, 0, n);
             }
-            ((InputStream)llIIIllllllI).close();
-            return llIIIlllllIl.toByteArray();
+            ((InputStream)fileInputStream).close();
+            return byteArrayOutputStream.toByteArray();
         }
-        catch (IOException llIIIllllIlI) {
-            llIIIllllIlI.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
             return new byte[0];
         }
     }
 
-    public static void addEnchantment(class_1799 llIIIIllIIll, class_1887 llIIIIllIIlI, int llIIIIlllIII) {
-        class_2499 llIIIIllIllI;
-        class_2487 llIIIIllIlll = llIIIIllIIll.method_7948();
-        if (!llIIIIllIlll.method_10573("Enchantments", 9)) {
-            class_2499 llIIIIllllIl = new class_2499();
-            llIIIIllIlll.method_10566("Enchantments", (class_2520)llIIIIllllIl);
+    public static void addEnchantment(class_1799 class_17992, class_1887 class_18872, int n) {
+        class_2499 class_24992;
+        class_2487 class_24872 = class_17992.method_7948();
+        if (!class_24872.method_10573("Enchantments", 9)) {
+            class_24992 = new class_2499();
+            class_24872.method_10566("Enchantments", (class_2520)class_24992);
         } else {
-            llIIIIllIllI = llIIIIllIlll.method_10554("Enchantments", 10);
+            class_24992 = class_24872.method_10554("Enchantments", 10);
         }
-        String llIIIIllIlIl = class_2378.field_11160.method_10221((Object)llIIIIllIIlI).toString();
-        for (class_2520 llIIIIlllIll : llIIIIllIllI) {
-            class_2487 llIIIIllllII = (class_2487)llIIIIlllIll;
-            if (!llIIIIllllII.method_10558("id").equals(llIIIIllIlIl)) continue;
-            llIIIIllllII.method_10575("lvl", (short)llIIIIlllIII);
+        String string = class_2378.field_11160.method_10221((Object)class_18872).toString();
+        for (class_2520 class_25202 : class_24992) {
+            class_2487 class_24873 = (class_2487)class_25202;
+            if (!class_24873.method_10558("id").equals(string)) continue;
+            class_24873.method_10575("lvl", (short)n);
             return;
         }
-        class_2487 llIIIIllIlII = new class_2487();
-        llIIIIllIlII.method_10582("id", llIIIIllIlIl);
-        llIIIIllIlII.method_10575("lvl", (short)llIIIIlllIII);
-        llIIIIllIllI.add((Object)llIIIIllIlII);
+        Iterator iterator = new class_2487();
+        iterator.method_10582("id", string);
+        iterator.method_10575("lvl", (short)n);
+        class_24992.add((Object)iterator);
     }
 
     public static void addMeteorPvpToServerList() {
-        class_641 llIlIIlIIIIl = new class_641(mc);
-        llIlIIlIIIIl.method_2981();
-        boolean llIlIIlIIIII = false;
-        for (int llIlIIlIIIlI = 0; llIlIIlIIIlI < llIlIIlIIIIl.method_2984(); ++llIlIIlIIIlI) {
-            class_642 llIlIIlIIIll = llIlIIlIIIIl.method_2982(llIlIIlIIIlI);
-            if (!llIlIIlIIIll.field_3761.contains("pvp.meteorclient.com")) continue;
-            llIlIIlIIIII = true;
+        class_641 class_6412 = new class_641(mc);
+        class_6412.method_2981();
+        boolean bl = false;
+        for (int i = 0; i < class_6412.method_2984(); ++i) {
+            class_642 class_6422 = class_6412.method_2982(i);
+            if (!class_6422.field_3761.contains("pvp.meteorclient.com")) continue;
+            bl = true;
             break;
         }
-        if (!llIlIIlIIIII) {
-            llIlIIlIIIIl.method_2988(new class_642("Meteor Pvp", "pvp.meteorclient.com", false));
-            llIlIIlIIIIl.method_2987();
+        if (!bl) {
+            class_6412.method_2988(new class_642("Meteor Pvp", "pvp.meteorclient.com", false));
+            class_6412.method_2987();
         }
     }
 
-    public static double squaredDistance(double llIIllIIIIII, double llIIlIllllll, double llIIlIllIlII, double llIIlIllIIll, double llIIlIllIIlI, double llIIlIlllIll) {
-        double llIIlIlllIlI = llIIlIllIIll - llIIllIIIIII;
-        double llIIlIlllIIl = llIIlIllIIlI - llIIlIllllll;
-        double llIIlIlllIII = llIIlIlllIll - llIIlIllIlII;
-        return llIIlIlllIlI * llIIlIlllIlI + llIIlIlllIIl * llIIlIlllIIl + llIIlIlllIII * llIIlIlllIII;
+    public static double squaredDistance(double d, double d2, double d3, double d4, double d5, double d6) {
+        double d7 = d4 - d;
+        double d8 = d5 - d2;
+        double d9 = d6 - d3;
+        return d7 * d7 + d8 * d8 + d9 * d9;
     }
 
-    public static double clamp(double llIIIlIIlIIl, double llIIIlIIlIII, double llIIIlIIlIlI) {
-        if (llIIIlIIlIIl < llIIIlIIlIII) {
-            return llIIIlIIlIII;
+    private static void lambda$getEnchantments$0(Object2IntMap object2IntMap, class_2487 class_24872, class_1887 class_18872) {
+        object2IntMap.put((Object)class_18872, class_24872.method_10550("lvl"));
+    }
+
+    public static double clamp(double d, double d2, double d3) {
+        if (d < d2) {
+            return d2;
         }
-        return Math.min(llIIIlIIlIIl, llIIIlIIlIlI);
+        return Math.min(d, d3);
     }
 
-    public static String nameToTitle(String llIIlIIIllIl) {
-        return Arrays.stream(llIIlIIIllIl.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
+    public static String nameToTitle(String string) {
+        return Arrays.stream(string.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
     }
 
-    public static int search(String llIIllIlIlIl, String llIIllIlIlII) {
-        String[] llIIllIlIIlI;
-        int llIIllIlIIll = 0;
-        for (String llIIllIlIllI : llIIllIlIIlI = llIIllIlIlII.split(" ")) {
-            if (!StringUtils.containsIgnoreCase((CharSequence)llIIllIlIlIl, (CharSequence)llIIllIlIllI)) continue;
-            ++llIIllIlIIll;
+    public static int search(String string, String string2) {
+        String[] arrstring;
+        int n = 0;
+        for (String string3 : arrstring = string2.split(" ")) {
+            if (!StringUtils.containsIgnoreCase((CharSequence)string, (CharSequence)string3)) continue;
+            ++n;
+            if (2 > 1) continue;
+            return 0;
         }
-        return llIIllIlIIll;
+        return n;
     }
 
-    public static class_243 vec3d(class_2338 llIlIIIllIlI) {
-        return new class_243((double)llIlIIIllIlI.method_10263(), (double)llIlIIIllIlI.method_10264(), (double)llIlIIIllIlI.method_10260());
+    public static class_243 vec3d(class_2338 class_23382) {
+        return new class_243((double)class_23382.method_10263(), (double)class_23382.method_10264(), (double)class_23382.method_10260());
     }
 
-    public static boolean openContainer(class_1799 llIlIIIlIIlI, class_1799[] llIlIIIlIIIl, boolean llIlIIIlIIll) {
-        if (Utils.hasItems(llIlIIIlIIlI) || llIlIIIlIIlI.method_7909() == class_1802.field_8466) {
-            Utils.getItemsInContainerItem(llIlIIIlIIlI, llIlIIIlIIIl);
-            if (llIlIIIlIIll) {
-                MeteorClient.INSTANCE.screenToOpen = new PeekScreen(llIlIIIlIIlI, llIlIIIlIIIl);
+    public static boolean openContainer(class_1799 class_17992, class_1799[] arrclass_1799, boolean bl) {
+        if (Utils.hasItems(class_17992) || class_17992.method_7909() == class_1802.field_8466) {
+            Utils.getItemsInContainerItem(class_17992, arrclass_1799);
+            if (bl) {
+                MeteorClient.INSTANCE.screenToOpen = new PeekScreen(class_17992, arrclass_1799);
             } else {
-                mc.method_1507((class_437)new PeekScreen(llIlIIIlIIlI, llIlIIIlIIIl));
+                mc.method_1507((class_437)new PeekScreen(class_17992, arrclass_1799));
             }
             return true;
         }
@@ -595,20 +606,20 @@ public class Utils {
         return mc.method_22683().method_4506();
     }
 
-    public static boolean isThrowable(class_1792 llIIIllIIIlI) {
-        return llIIIllIIIlI instanceof class_1779 || llIIIllIIIlI instanceof class_1753 || llIIIllIIIlI instanceof class_1764 || llIIIllIIIlI instanceof class_1823 || llIIIllIIIlI instanceof class_1771 || llIIIllIIIlI instanceof class_1776 || llIIIllIIIlI instanceof class_1828 || llIIIllIIIlI instanceof class_1803 || llIIIllIIIlI instanceof class_1787 || llIIIllIIIlI instanceof class_1835;
+    public static boolean isThrowable(class_1792 class_17922) {
+        return class_17922 instanceof class_1779 || class_17922 instanceof class_1753 || class_17922 instanceof class_1764 || class_17922 instanceof class_1823 || class_17922 instanceof class_1771 || class_17922 instanceof class_1776 || class_17922 instanceof class_1828 || class_17922 instanceof class_1803 || class_17922 instanceof class_1787 || class_17922 instanceof class_1835;
     }
 
-    public static double random(double llIIIllIlIll, double llIIIllIlIII) {
-        return llIIIllIlIll + (llIIIllIlIII - llIIIllIlIll) * random.nextDouble();
+    public static double random(double d, double d2) {
+        return d + (d2 - d) * random.nextDouble();
     }
 
-    public static int random(int llIIIlllIIIl, int llIIIlllIIII) {
-        return random.nextInt(llIIIlllIIII - llIIIlllIIIl) + llIIIlllIIIl;
+    public static int random(int n, int n2) {
+        return random.nextInt(n2 - n) + n;
     }
 
-    public static String getEnchantSimpleName(class_1887 llIIlllIIIlI, int llIIlllIIIIl) {
-        return llIIlllIIIlI.method_8179(0).getString().substring(0, llIIlllIIIIl);
+    public static String getEnchantSimpleName(class_1887 class_18872, int n) {
+        return class_18872.method_8179(0).getString().substring(0, n);
     }
 
     public static void scaledProjection() {

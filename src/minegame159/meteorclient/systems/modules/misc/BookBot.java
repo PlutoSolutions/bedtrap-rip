@@ -19,7 +19,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.PrimitiveIterator;
 import java.util.Random;
-import java.util.stream.IntStream;
 import meteordevelopment.orbit.EventHandler;
 import minegame159.meteorclient.MeteorClient;
 import minegame159.meteorclient.events.world.TickEvent;
@@ -44,110 +43,111 @@ import net.minecraft.class_465;
 
 public class BookBot
 extends Module {
-    private /* synthetic */ boolean firstTime;
-    private /* synthetic */ PrimitiveIterator.OfInt stream;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Integer> noOfBooks;
-    private static final /* synthetic */ Random RANDOM;
-    private final /* synthetic */ Setting<Mode> mode;
-    private final /* synthetic */ Setting<String> name;
-    private /* synthetic */ class_2499 pages;
-    private final /* synthetic */ Setting<String> fileName;
-    private final /* synthetic */ StringBuilder pageSb;
-    private /* synthetic */ boolean firstChar;
-    private static final /* synthetic */ int LINE_WIDTH;
-    private final /* synthetic */ StringBuilder lineSb;
-    private /* synthetic */ String fileString;
-    private /* synthetic */ int ticksLeft;
-    private final /* synthetic */ Setting<Integer> delay;
-    private /* synthetic */ int nextChar;
-    private final /* synthetic */ Setting<Integer> noOfPages;
-    private /* synthetic */ int booksLeft;
+    private boolean firstTime;
+    private PrimitiveIterator.OfInt stream;
+    private final SettingGroup sgGeneral;
+    private final Setting<Integer> noOfBooks;
+    private static final Random RANDOM;
+    private final Setting<Mode> mode;
+    private final Setting<String> name;
+    private class_2499 pages;
+    private final Setting<String> fileName;
+    private final StringBuilder pageSb;
+    private boolean firstChar;
+    private static final int LINE_WIDTH;
+    private final StringBuilder lineSb;
+    private String fileString;
+    private int ticksLeft;
+    private final Setting<Integer> delay;
+    private int nextChar;
+    private final Setting<Integer> noOfPages;
+    private int booksLeft;
 
     @Override
     public void onActivate() {
-        BookBot llIlIIIlI;
-        llIlIIIlI.booksLeft = llIlIIIlI.noOfBooks.get();
-        llIlIIIlI.firstTime = true;
+        this.booksLeft = this.noOfBooks.get();
+        this.firstTime = true;
+    }
+
+    private static int lambda$onTick$0(int n) {
+        return n < 55296 ? n : n + 2048;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llIIIlllI) {
-        FindItemResult llIIlIlll;
-        BookBot llIIIllII;
-        if (llIIIllII.mc.field_1755 instanceof class_465) {
+    private void onTick(TickEvent.Post post) {
+        Object object;
+        if (this.mc.field_1755 instanceof class_465) {
             return;
         }
-        if (llIIIllII.booksLeft <= 0) {
-            llIIIllII.toggle();
+        if (this.booksLeft <= 0) {
+            this.toggle();
             return;
         }
-        FindItemResult llIIIllIl = InvUtils.find(class_1802.field_8674);
-        if (!llIIIllIl.isHotbar() && !llIIIllIl.isOffhand() && (llIIlIlll = InvUtils.findEmpty()).isHotbar()) {
-            InvUtils.move().from(llIIIllIl.slot).toHotbar(llIIlIlll.slot);
+        FindItemResult findItemResult = InvUtils.find(class_1802.field_8674);
+        if (!findItemResult.isHotbar() && !findItemResult.isOffhand() && ((FindItemResult)(object = InvUtils.findEmpty())).isHotbar()) {
+            InvUtils.move().from(findItemResult.slot).toHotbar(((FindItemResult)object).slot);
         }
-        if (!(llIIIllIl = InvUtils.findInHotbar(class_1802.field_8674)).found()) {
+        if (!(findItemResult = InvUtils.findInHotbar(class_1802.field_8674)).found()) {
             return;
         }
-        InvUtils.swap(llIIIllIl.getSlot());
+        InvUtils.swap(findItemResult.getSlot());
         if (InvUtils.findInHotbar(class_1802.field_8674).getHand() == null) {
             return;
         }
-        if (llIIIllII.ticksLeft > 0) {
-            llIIIllII.ticksLeft -= 50;
+        if (this.ticksLeft > 0) {
+            this.ticksLeft -= 50;
             return;
         }
-        llIIIllII.ticksLeft = llIIIllII.delay.get();
-        if (llIIIllII.mode.get() == Mode.Random) {
-            IntStream llIIlIllI = RANDOM.ints(128, 1112063).map(lIllIllIl -> lIllIllIl < 55296 ? lIllIllIl : lIllIllIl + 2048);
-            llIIIllII.stream = llIIlIllI.limit(23000L).iterator();
-            llIIIllII.firstChar = true;
-            llIIIllII.writeBook();
-        } else if (llIIIllII.mode.get() == Mode.Ascii) {
-            IntStream llIIlIlIl = RANDOM.ints(32, 127);
-            llIIIllII.stream = llIIlIlIl.limit(35000L).iterator();
-            llIIIllII.firstChar = true;
-            llIIIllII.writeBook();
-        } else if (llIIIllII.mode.get() == Mode.File) {
-            if (llIIIllII.firstTime) {
-                File llIIlIIII = new File(MeteorClient.FOLDER, llIIIllII.fileName.get());
-                if (!llIIlIIII.exists()) {
-                    llIIIllII.error("The file you specified doesn't exist in the meteor folder.", new Object[0]);
+        this.ticksLeft = this.delay.get();
+        if (this.mode.get() == Mode.Random) {
+            object = RANDOM.ints(128, 1112063).map(BookBot::lambda$onTick$0);
+            this.stream = object.limit(23000L).iterator();
+            this.firstChar = true;
+            this.writeBook();
+        } else if (this.mode.get() == Mode.Ascii) {
+            object = RANDOM.ints(32, 127);
+            this.stream = object.limit(35000L).iterator();
+            this.firstChar = true;
+            this.writeBook();
+        } else if (this.mode.get() == Mode.File) {
+            if (this.firstTime) {
+                object = new File(MeteorClient.FOLDER, this.fileName.get());
+                if (!((File)object).exists()) {
+                    this.error("The file you specified doesn't exist in the meteor folder.", new Object[0]);
                     return;
                 }
                 try {
-                    String llIIlIIlI;
-                    BufferedReader llIIlIlII = new BufferedReader(new FileReader(llIIlIIII));
-                    StringBuilder llIIlIIll = new StringBuilder();
-                    while ((llIIlIIlI = llIIlIlII.readLine()) != null) {
-                        llIIlIIll.append(llIIlIIlI).append('\n');
+                    String string;
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader((File)object));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    while ((string = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(string).append('\n');
                     }
-                    llIIlIlII.close();
-                    llIIIllII.firstTime = false;
-                    llIIIllII.fileString = String.valueOf(llIIlIIll);
-                    llIIIllII.stream = llIIIllII.fileString.chars().iterator();
-                    llIIIllII.firstChar = true;
-                    llIIIllII.writeBook();
+                    bufferedReader.close();
+                    this.firstTime = false;
+                    this.fileString = String.valueOf(stringBuilder);
+                    this.stream = this.fileString.chars().iterator();
+                    this.firstChar = true;
+                    this.writeBook();
                 }
-                catch (IOException llIIlIIIl) {
-                    llIIIllII.error("Failed to read the file.", new Object[0]);
+                catch (IOException iOException) {
+                    this.error("Failed to read the file.", new Object[0]);
                 }
-            } else if (llIIIllII.stream != null) {
-                llIIIllII.writeBook();
-            } else if (llIIIllII.booksLeft > 0) {
-                llIIIllII.stream = llIIIllII.fileString.chars().iterator();
-                llIIIllII.writeBook();
+            } else if (this.stream != null) {
+                this.writeBook();
+            } else if (this.booksLeft > 0) {
+                this.stream = this.fileString.chars().iterator();
+                this.writeBook();
             }
         }
     }
 
     private boolean readChar() {
-        BookBot lIllIllll;
-        if (!lIllIllll.stream.hasNext()) {
-            lIllIllll.stream = null;
+        if (!this.stream.hasNext()) {
+            this.stream = null;
             return false;
         }
-        lIllIllll.nextChar = lIllIllll.stream.nextInt();
+        this.nextChar = this.stream.nextInt();
         return true;
     }
 
@@ -158,69 +158,69 @@ extends Module {
 
     public BookBot() {
         super(Categories.Misc, "book-bot", "Writes an amount of books full of characters or from a file.");
-        BookBot llIlIIlII;
-        llIlIIlII.sgGeneral = llIlIIlII.settings.getDefaultGroup();
-        llIlIIlII.mode = llIlIIlII.sgGeneral.add(new EnumSetting.Builder().name("mode").description("The mode of the book bot.").defaultValue(Mode.Ascii).build());
-        llIlIIlII.name = llIlIIlII.sgGeneral.add(new StringSetting.Builder().name("name").description("The name you want to give your books.").defaultValue("Meteor on Crack!").build());
-        llIlIIlII.fileName = llIlIIlII.sgGeneral.add(new StringSetting.Builder().name("file-name").description("The name of the text file (.txt NEEDED)").defaultValue("book.txt").build());
-        llIlIIlII.noOfPages = llIlIIlII.sgGeneral.add(new IntSetting.Builder().name("no-of-pages").description("The number of pages to write per book.").defaultValue(100).min(1).max(100).sliderMax(100).build());
-        llIlIIlII.noOfBooks = llIlIIlII.sgGeneral.add(new IntSetting.Builder().name("no-of-books").description("The number of books to make (or until the file runs out).").defaultValue(1).build());
-        llIlIIlII.delay = llIlIIlII.sgGeneral.add(new IntSetting.Builder().name("delay").description("The amount of delay between writing books in milliseconds.").defaultValue(300).min(75).sliderMin(75).sliderMax(600).build());
-        llIlIIlII.pages = new class_2499();
-        llIlIIlII.ticksLeft = 0;
-        llIlIIlII.pageSb = new StringBuilder();
-        llIlIIlII.lineSb = new StringBuilder();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("The mode of the book bot.").defaultValue(Mode.Ascii).build());
+        this.name = this.sgGeneral.add(new StringSetting.Builder().name("name").description("The name you want to give your books.").defaultValue("Meteor on Crack!").build());
+        this.fileName = this.sgGeneral.add(new StringSetting.Builder().name("file-name").description("The name of the text file (.txt NEEDED)").defaultValue("book.txt").build());
+        this.noOfPages = this.sgGeneral.add(new IntSetting.Builder().name("no-of-pages").description("The number of pages to write per book.").defaultValue(100).min(1).max(100).sliderMax(100).build());
+        this.noOfBooks = this.sgGeneral.add(new IntSetting.Builder().name("no-of-books").description("The number of books to make (or until the file runs out).").defaultValue(1).build());
+        this.delay = this.sgGeneral.add(new IntSetting.Builder().name("delay").description("The amount of delay between writing books in milliseconds.").defaultValue(300).min(75).sliderMin(75).sliderMax(600).build());
+        this.pages = new class_2499();
+        this.ticksLeft = 0;
+        this.pageSb = new StringBuilder();
+        this.lineSb = new StringBuilder();
     }
 
     @Override
     public void onDeactivate() {
-        llIIlllll.booksLeft = 0;
-        llIIlllll.pages = new class_2499();
+        this.booksLeft = 0;
+        this.pages = new class_2499();
     }
 
     private void writeBook() {
-        BookBot lIllllIII;
-        lIllllIII.pages.clear();
-        if (lIllllIII.firstChar) {
-            lIllllIII.readChar();
-            lIllllIII.firstChar = false;
+        this.pages.clear();
+        if (this.firstChar) {
+            this.readChar();
+            this.firstChar = false;
         }
-        for (int lIllllIlI = 0; lIllllIlI < lIllllIII.noOfPages.get(); ++lIllllIlI) {
-            lIllllIII.pageSb.setLength(0);
-            boolean lIllllIll = false;
-            for (int lIlllllII = 0; lIlllllII < 13; ++lIlllllII) {
-                boolean lIlllllIl;
+        for (int i = 0; i < this.noOfPages.get(); ++i) {
+            this.pageSb.setLength(0);
+            boolean bl = false;
+            for (int j = 0; j < 13; ++j) {
+                boolean bl2;
                 block6: {
-                    lIllllIII.lineSb.setLength(0);
-                    float lIllllllI = 0.0f;
-                    lIlllllIl = false;
+                    this.lineSb.setLength(0);
+                    float f = 0.0f;
+                    bl2 = false;
                     do {
-                        float lIlllllll = ((TextHandlerAccessor)lIllllIII.mc.field_1772.method_27527()).getWidthRetriever().getWidth(lIllllIII.nextChar, class_2583.field_24360);
-                        if (lIllllIII.nextChar == 10) {
-                            if (!lIllllIII.readChar()) {
-                                lIlllllIl = true;
+                        float f2 = ((TextHandlerAccessor)this.mc.field_1772.method_27527()).getWidthRetriever().getWidth(this.nextChar, class_2583.field_24360);
+                        if (this.nextChar == 10) {
+                            if (!this.readChar()) {
+                                bl2 = true;
                             }
                             break block6;
                         }
-                        if (!(lIllllllI + lIlllllll < 113.0f)) break block6;
-                        lIllllIII.lineSb.appendCodePoint(lIllllIII.nextChar);
-                        lIllllllI += lIlllllll;
-                    } while (lIllllIII.readChar());
-                    lIlllllIl = true;
+                        if (!(f + f2 < 113.0f)) break block6;
+                        this.lineSb.appendCodePoint(this.nextChar);
+                        f += f2;
+                    } while (this.readChar());
+                    bl2 = true;
                 }
-                lIllllIII.pageSb.append((CharSequence)lIllllIII.lineSb).append('\n');
-                if (!lIlllllIl) continue;
-                lIllllIll = true;
+                this.pageSb.append((CharSequence)this.lineSb).append('\n');
+                if (!bl2) continue;
+                bl = true;
                 break;
             }
-            lIllllIII.pages.add((Object)class_2519.method_23256((String)String.valueOf(lIllllIII.pageSb)));
-            if (lIllllIll) break;
+            this.pages.add((Object)class_2519.method_23256((String)String.valueOf(this.pageSb)));
+            if (bl) break;
+            if (3 == 3) continue;
+            return;
         }
-        lIllllIII.mc.field_1724.method_6047().method_7959("pages", (class_2520)lIllllIII.pages);
-        lIllllIII.mc.field_1724.method_6047().method_7959("author", (class_2520)class_2519.method_23256((String)"squidoodly"));
-        lIllllIII.mc.field_1724.method_6047().method_7959("title", (class_2520)class_2519.method_23256((String)lIllllIII.name.get()));
-        lIllllIII.mc.field_1724.field_3944.method_2883((class_2596)new class_2820(lIllllIII.mc.field_1724.method_6047(), true, lIllllIII.mc.field_1724.field_7514.field_7545));
-        --lIllllIII.booksLeft;
+        this.mc.field_1724.method_6047().method_7959("pages", (class_2520)this.pages);
+        this.mc.field_1724.method_6047().method_7959("author", (class_2520)class_2519.method_23256((String)"squidoodly"));
+        this.mc.field_1724.method_6047().method_7959("title", (class_2520)class_2519.method_23256((String)this.name.get()));
+        this.mc.field_1724.field_3944.method_2883((class_2596)new class_2820(this.mc.field_1724.method_6047(), true, this.mc.field_1724.field_7514.field_7545));
+        --this.booksLeft;
     }
 
     public static enum Mode {
@@ -228,10 +228,6 @@ extends Module {
         Random,
         Ascii;
 
-
-        private Mode() {
-            Mode lIllIIIIlIlllIl;
-        }
     }
 }
 

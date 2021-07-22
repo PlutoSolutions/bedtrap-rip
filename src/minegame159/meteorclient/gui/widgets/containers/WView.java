@@ -10,60 +10,47 @@ import minegame159.meteorclient.utils.Utils;
 
 public abstract class WView
 extends WVerticalList {
-    public /* synthetic */ boolean scrollOnlyWhenMouseOver;
-    private /* synthetic */ double targetScroll;
-    protected /* synthetic */ boolean handleMouseOver;
-    private /* synthetic */ double scroll;
-    private /* synthetic */ boolean moveAfterPositionWidgets;
-    public /* synthetic */ boolean hasScrollBar;
-    public /* synthetic */ double maxHeight;
-    private /* synthetic */ double actualHeight;
-    protected /* synthetic */ boolean handlePressed;
-    protected /* synthetic */ boolean canScroll;
+    public boolean scrollOnlyWhenMouseOver = true;
+    private double targetScroll;
+    protected boolean handleMouseOver;
+    private double scroll;
+    private boolean moveAfterPositionWidgets;
+    public boolean hasScrollBar = true;
+    public double maxHeight = Double.MAX_VALUE;
+    private double actualHeight;
+    protected boolean handlePressed;
+    protected boolean canScroll;
 
     protected double handleX() {
-        WView lllllllllllllllllIlllIlIlIllIIIl;
-        return lllllllllllllllllIlllIlIlIllIIIl.x + lllllllllllllllllIlllIlIlIllIIIl.width - lllllllllllllllllIlllIlIlIllIIIl.handleWidth();
+        return this.x + this.width - this.handleWidth();
     }
 
     @Override
-    protected boolean propagateEvents(WWidget lllllllllllllllllIlllIlIlIlllIll) {
-        WView lllllllllllllllllIlllIlIlIlllIlI;
-        return lllllllllllllllllIlllIlIlIlllIll.y >= lllllllllllllllllIlllIlIlIlllIlI.y && lllllllllllllllllIlllIlIlIlllIll.y <= lllllllllllllllllIlllIlIlIlllIlI.y + lllllllllllllllllIlllIlIlIlllIlI.height || lllllllllllllllllIlllIlIlIlllIll.y + lllllllllllllllllIlllIlIlIlllIll.height >= lllllllllllllllllIlllIlIlIlllIlI.y && lllllllllllllllllIlllIlIlIlllIll.y + lllllllllllllllllIlllIlIlIlllIll.height <= lllllllllllllllllIlllIlIlIlllIlI.y + lllllllllllllllllIlllIlIlIlllIlI.height || lllllllllllllllllIlllIlIlIlllIlI.y >= lllllllllllllllllIlllIlIlIlllIll.y && lllllllllllllllllIlllIlIlIlllIlI.y <= lllllllllllllllllIlllIlIlIlllIll.y + lllllllllllllllllIlllIlIlIlllIll.height || lllllllllllllllllIlllIlIlIlllIlI.y + lllllllllllllllllIlllIlIlIlllIlI.height >= lllllllllllllllllIlllIlIlIlllIll.y && lllllllllllllllllIlllIlIlIlllIlI.y + lllllllllllllllllIlllIlIlIlllIlI.height <= lllllllllllllllllIlllIlIlIlllIll.y + lllllllllllllllllIlllIlIlIlllIll.height;
-    }
-
-    public WView() {
-        WView lllllllllllllllllIlllIllIIIllIll;
-        lllllllllllllllllIlllIllIIIllIll.maxHeight = Double.MAX_VALUE;
-        lllllllllllllllllIlllIllIIIllIll.scrollOnlyWhenMouseOver = true;
-        lllllllllllllllllIlllIllIIIllIll.hasScrollBar = true;
+    protected boolean propagateEvents(WWidget wWidget) {
+        return wWidget.y >= this.y && wWidget.y <= this.y + this.height || wWidget.y + wWidget.height >= this.y && wWidget.y + wWidget.height <= this.y + this.height || this.y >= wWidget.y && this.y <= wWidget.y + wWidget.height || this.y + this.height >= wWidget.y && this.y + this.height <= wWidget.y + wWidget.height;
     }
 
     @Override
-    public boolean onMouseReleased(double lllllllllllllllllIlllIllIIIIIIIl, double lllllllllllllllllIlllIllIIIIIIII, int lllllllllllllllllIlllIlIllllllll) {
-        WView lllllllllllllllllIlllIllIIIIIIlI;
-        if (lllllllllllllllllIlllIllIIIIIIlI.handlePressed) {
-            lllllllllllllllllIlllIllIIIIIIlI.handlePressed = false;
+    public boolean onMouseReleased(double d, double d2, int n) {
+        if (this.handlePressed) {
+            this.handlePressed = false;
         }
         return false;
     }
 
     protected double handleY() {
-        WView lllllllllllllllllIlllIlIlIlIllIl;
-        return lllllllllllllllllIlllIlIlIlIllIl.y + (lllllllllllllllllIlllIlIlIlIllIl.height - lllllllllllllllllIlllIlIlIlIllIl.handleHeight()) * (lllllllllllllllllIlllIlIlIlIllIl.scroll / (lllllllllllllllllIlllIlIlIlIllIl.actualHeight - lllllllllllllllllIlllIlIlIlIllIl.height));
+        return this.y + (this.height - this.handleHeight()) * (this.scroll / (this.actualHeight - this.height));
     }
 
     @Override
     public void init() {
-        WView lllllllllllllllllIlllIllIIIllIII;
-        lllllllllllllllllIlllIllIIIllIII.maxHeight = (double)Utils.getWindowHeight() - lllllllllllllllllIlllIllIIIllIII.theme.scale(128.0);
+        this.maxHeight = (double)Utils.getWindowHeight() - this.theme.scale(128.0);
     }
 
     @Override
-    public boolean onMouseClicked(double lllllllllllllllllIlllIllIIIIlIlI, double lllllllllllllllllIlllIllIIIIlIIl, int lllllllllllllllllIlllIllIIIIIlIl, boolean lllllllllllllllllIlllIllIIIIIlll) {
-        WView lllllllllllllllllIlllIllIIIIIllI;
-        if (lllllllllllllllllIlllIllIIIIIllI.handleMouseOver && lllllllllllllllllIlllIllIIIIIlIl == 0 && !lllllllllllllllllIlllIllIIIIIlll) {
-            lllllllllllllllllIlllIllIIIIIllI.handlePressed = true;
+    public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
+        if (this.handleMouseOver && n == 0 && !bl) {
+            this.handlePressed = true;
             return true;
         }
         return false;
@@ -71,118 +58,112 @@ extends WVerticalList {
 
     @Override
     protected void onCalculateSize() {
-        WView lllllllllllllllllIlllIllIIIlIlIl;
-        boolean lllllllllllllllllIlllIllIIIlIlII = lllllllllllllllllIlllIllIIIlIlIl.canScroll;
-        lllllllllllllllllIlllIllIIIlIlIl.canScroll = false;
-        lllllllllllllllllIlllIllIIIlIlIl.widthRemove = 0.0;
+        boolean bl = this.canScroll;
+        this.canScroll = false;
+        this.widthRemove = 0.0;
         super.onCalculateSize();
-        if (lllllllllllllllllIlllIllIIIlIlIl.height > lllllllllllllllllIlllIllIIIlIlIl.maxHeight) {
-            lllllllllllllllllIlllIllIIIlIlIl.actualHeight = lllllllllllllllllIlllIllIIIlIlIl.height;
-            lllllllllllllllllIlllIllIIIlIlIl.height = lllllllllllllllllIlllIllIIIlIlIl.maxHeight;
-            lllllllllllllllllIlllIllIIIlIlIl.canScroll = true;
-            if (lllllllllllllllllIlllIllIIIlIlIl.hasScrollBar) {
-                lllllllllllllllllIlllIllIIIlIlIl.widthRemove = lllllllllllllllllIlllIllIIIlIlIl.handleWidth() * 2.0;
-                lllllllllllllllllIlllIllIIIlIlIl.width += lllllllllllllllllIlllIllIIIlIlIl.widthRemove;
+        if (this.height > this.maxHeight) {
+            this.actualHeight = this.height;
+            this.height = this.maxHeight;
+            this.canScroll = true;
+            if (this.hasScrollBar) {
+                this.widthRemove = this.handleWidth() * 2.0;
+                this.width += this.widthRemove;
             }
-            if (lllllllllllllllllIlllIllIIIlIlII) {
-                lllllllllllllllllIlllIllIIIlIlIl.moveAfterPositionWidgets = true;
+            if (bl) {
+                this.moveAfterPositionWidgets = true;
             }
         } else {
-            lllllllllllllllllIlllIllIIIlIlIl.actualHeight = lllllllllllllllllIlllIllIIIlIlIl.height;
-            lllllllllllllllllIlllIllIIIlIlIl.scroll = 0.0;
-            lllllllllllllllllIlllIllIIIlIlIl.targetScroll = 0.0;
+            this.actualHeight = this.height;
+            this.scroll = 0.0;
+            this.targetScroll = 0.0;
         }
     }
 
     @Override
     protected void onCalculateWidgetPositions() {
-        WView lllllllllllllllllIlllIllIIIlIIII;
         super.onCalculateWidgetPositions();
-        if (lllllllllllllllllIlllIllIIIlIIII.moveAfterPositionWidgets) {
-            lllllllllllllllllIlllIllIIIlIIII.targetScroll = lllllllllllllllllIlllIllIIIlIIII.scroll = Utils.clamp(lllllllllllllllllIlllIllIIIlIIII.scroll, 0.0, lllllllllllllllllIlllIllIIIlIIII.actualHeight - lllllllllllllllllIlllIllIIIlIIII.height);
-            lllllllllllllllllIlllIllIIIlIIII.moveCells(0.0, -lllllllllllllllllIlllIllIIIlIIII.scroll);
-            lllllllllllllllllIlllIllIIIlIIII.moveAfterPositionWidgets = false;
+        if (this.moveAfterPositionWidgets) {
+            this.targetScroll = this.scroll = Utils.clamp(this.scroll, 0.0, this.actualHeight - this.height);
+            this.moveCells(0.0, -this.scroll);
+            this.moveAfterPositionWidgets = false;
         }
     }
 
     protected double handleWidth() {
-        WView lllllllllllllllllIlllIlIlIllIlll;
-        return lllllllllllllllllIlllIlIlIllIlll.theme.scale(6.0);
+        return this.theme.scale(6.0);
     }
 
     @Override
-    public boolean render(GuiRenderer lllllllllllllllllIlllIlIllIllIII, double lllllllllllllllllIlllIlIllIlIIIl, double lllllllllllllllllIlllIlIllIlIIII, double lllllllllllllllllIlllIlIllIIllll) {
-        WView lllllllllllllllllIlllIlIllIllIIl;
-        lllllllllllllllllIlllIlIllIllIIl.updateScroll(lllllllllllllllllIlllIlIllIIllll);
-        if (lllllllllllllllllIlllIlIllIllIIl.canScroll) {
-            lllllllllllllllllIlllIlIllIllIII.scissorStart(lllllllllllllllllIlllIlIllIllIIl.x, lllllllllllllllllIlllIlIllIllIIl.y, lllllllllllllllllIlllIlIllIllIIl.width, lllllllllllllllllIlllIlIllIllIIl.height);
+    public boolean render(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        this.updateScroll(d3);
+        if (this.canScroll) {
+            guiRenderer.scissorStart(this.x, this.y, this.width, this.height);
         }
-        boolean lllllllllllllllllIlllIlIllIlIlII = super.render(lllllllllllllllllIlllIlIllIllIII, lllllllllllllllllIlllIlIllIlIIIl, lllllllllllllllllIlllIlIllIlIIII, lllllllllllllllllIlllIlIllIIllll);
-        if (lllllllllllllllllIlllIlIllIllIIl.canScroll) {
-            lllllllllllllllllIlllIlIllIllIII.scissorEnd();
+        boolean bl = super.render(guiRenderer, d, d2, d3);
+        if (this.canScroll) {
+            guiRenderer.scissorEnd();
         }
-        return lllllllllllllllllIlllIlIllIlIlII;
+        return bl;
     }
 
-    private void updateScroll(double lllllllllllllllllIlllIlIllIIIIlI) {
-        WView lllllllllllllllllIlllIlIllIIlIII;
-        double lllllllllllllllllIlllIlIllIIIllI = lllllllllllllllllIlllIlIllIIlIII.scroll;
-        double lllllllllllllllllIlllIlIllIIIlIl = lllllllllllllllllIlllIlIllIIlIII.actualHeight - lllllllllllllllllIlllIlIllIIlIII.height;
-        if (Math.abs(lllllllllllllllllIlllIlIllIIlIII.targetScroll - lllllllllllllllllIlllIlIllIIlIII.scroll) < 1.0) {
-            lllllllllllllllllIlllIlIllIIlIII.scroll = lllllllllllllllllIlllIlIllIIlIII.targetScroll;
-        } else if (lllllllllllllllllIlllIlIllIIlIII.targetScroll > lllllllllllllllllIlllIlIllIIlIII.scroll) {
-            lllllllllllllllllIlllIlIllIIlIII.scroll += (double)Math.round(lllllllllllllllllIlllIlIllIIlIII.theme.scale(lllllllllllllllllIlllIlIllIIIIlI * 300.0 + lllllllllllllllllIlllIlIllIIIIlI * 100.0 * (Math.abs(lllllllllllllllllIlllIlIllIIlIII.targetScroll - lllllllllllllllllIlllIlIllIIlIII.scroll) / 10.0)));
-            if (lllllllllllllllllIlllIlIllIIlIII.scroll > lllllllllllllllllIlllIlIllIIlIII.targetScroll) {
-                lllllllllllllllllIlllIlIllIIlIII.scroll = lllllllllllllllllIlllIlIllIIlIII.targetScroll;
+    private void updateScroll(double d) {
+        double d2 = this.scroll;
+        double d3 = this.actualHeight - this.height;
+        if (Math.abs(this.targetScroll - this.scroll) < 1.0) {
+            this.scroll = this.targetScroll;
+        } else if (this.targetScroll > this.scroll) {
+            this.scroll += (double)Math.round(this.theme.scale(d * 300.0 + d * 100.0 * (Math.abs(this.targetScroll - this.scroll) / 10.0)));
+            if (this.scroll > this.targetScroll) {
+                this.scroll = this.targetScroll;
             }
-        } else if (lllllllllllllllllIlllIlIllIIlIII.targetScroll < lllllllllllllllllIlllIlIllIIlIII.scroll) {
-            lllllllllllllllllIlllIlIllIIlIII.scroll -= (double)Math.round(lllllllllllllllllIlllIlIllIIlIII.theme.scale(lllllllllllllllllIlllIlIllIIIIlI * 300.0 + lllllllllllllllllIlllIlIllIIIIlI * 100.0 * (Math.abs(lllllllllllllllllIlllIlIllIIlIII.targetScroll - lllllllllllllllllIlllIlIllIIlIII.scroll) / 10.0)));
-            if (lllllllllllllllllIlllIlIllIIlIII.scroll < lllllllllllllllllIlllIlIllIIlIII.targetScroll) {
-                lllllllllllllllllIlllIlIllIIlIII.scroll = lllllllllllllllllIlllIlIllIIlIII.targetScroll;
+        } else if (this.targetScroll < this.scroll) {
+            this.scroll -= (double)Math.round(this.theme.scale(d * 300.0 + d * 100.0 * (Math.abs(this.targetScroll - this.scroll) / 10.0)));
+            if (this.scroll < this.targetScroll) {
+                this.scroll = this.targetScroll;
             }
         }
-        lllllllllllllllllIlllIlIllIIlIII.scroll = Utils.clamp(lllllllllllllllllIlllIlIllIIlIII.scroll, 0.0, lllllllllllllllllIlllIlIllIIIlIl);
-        double lllllllllllllllllIlllIlIllIIIlII = lllllllllllllllllIlllIlIllIIlIII.scroll - lllllllllllllllllIlllIlIllIIIllI;
-        if (lllllllllllllllllIlllIlIllIIIlII != 0.0) {
-            lllllllllllllllllIlllIlIllIIlIII.moveCells(0.0, -lllllllllllllllllIlllIlIllIIIlII);
+        this.scroll = Utils.clamp(this.scroll, 0.0, d3);
+        double d4 = this.scroll - d2;
+        if (d4 != 0.0) {
+            this.moveCells(0.0, -d4);
         }
     }
 
     @Override
-    public void onMouseScrolled(double lllllllllllllllllIlllIlIlllIIIlI) {
-        WView lllllllllllllllllIlllIlIlllIIIll;
-        if (!lllllllllllllllllIlllIlIlllIIIll.scrollOnlyWhenMouseOver || lllllllllllllllllIlllIlIlllIIIll.mouseOver) {
-            lllllllllllllllllIlllIlIlllIIIll.targetScroll -= (double)Math.round(lllllllllllllllllIlllIlIlllIIIll.theme.scale(lllllllllllllllllIlllIlIlllIIIlI * 40.0));
-            lllllllllllllllllIlllIlIlllIIIll.targetScroll = Utils.clamp(lllllllllllllllllIlllIlIlllIIIll.targetScroll, 0.0, lllllllllllllllllIlllIlIlllIIIll.actualHeight - lllllllllllllllllIlllIlIlllIIIll.height);
+    public void onMouseScrolled(double d) {
+        if (!this.scrollOnlyWhenMouseOver || this.mouseOver) {
+            this.targetScroll -= (double)Math.round(this.theme.scale(d * 40.0));
+            this.targetScroll = Utils.clamp(this.targetScroll, 0.0, this.actualHeight - this.height);
         }
     }
 
     @Override
-    public void onMouseMoved(double lllllllllllllllllIlllIlIllllIIII, double lllllllllllllllllIlllIlIlllIllll, double lllllllllllllllllIlllIlIlllIlllI, double lllllllllllllllllIlllIlIlllIllIl) {
-        WView lllllllllllllllllIlllIlIllllIIIl;
-        lllllllllllllllllIlllIlIllllIIIl.handleMouseOver = false;
-        if (lllllllllllllllllIlllIlIllllIIIl.canScroll && lllllllllllllllllIlllIlIllllIIIl.hasScrollBar) {
-            double lllllllllllllllllIlllIlIllllIllI = lllllllllllllllllIlllIlIllllIIIl.handleX();
-            double lllllllllllllllllIlllIlIllllIlIl = lllllllllllllllllIlllIlIllllIIIl.handleY();
-            if (lllllllllllllllllIlllIlIllllIIII >= lllllllllllllllllIlllIlIllllIllI && lllllllllllllllllIlllIlIllllIIII <= lllllllllllllllllIlllIlIllllIllI + lllllllllllllllllIlllIlIllllIIIl.handleWidth() && lllllllllllllllllIlllIlIlllIllll >= lllllllllllllllllIlllIlIllllIlIl && lllllllllllllllllIlllIlIlllIllll <= lllllllllllllllllIlllIlIllllIlIl + lllllllllllllllllIlllIlIllllIIIl.handleHeight()) {
-                lllllllllllllllllIlllIlIllllIIIl.handleMouseOver = true;
+    public void onMouseMoved(double d, double d2, double d3, double d4) {
+        double d5;
+        double d6;
+        this.handleMouseOver = false;
+        if (this.canScroll && this.hasScrollBar) {
+            d6 = this.handleX();
+            d5 = this.handleY();
+            if (d >= d6 && d <= d6 + this.handleWidth() && d2 >= d5 && d2 <= d5 + this.handleHeight()) {
+                this.handleMouseOver = true;
             }
         }
-        if (lllllllllllllllllIlllIlIllllIIIl.handlePressed) {
-            double lllllllllllllllllIlllIlIllllIlII = lllllllllllllllllIlllIlIllllIIIl.scroll;
-            double lllllllllllllllllIlllIlIllllIIll = lllllllllllllllllIlllIlIlllIllll - lllllllllllllllllIlllIlIlllIllIl;
-            lllllllllllllllllIlllIlIllllIIIl.scroll += (double)Math.round(lllllllllllllllllIlllIlIllllIIll * ((lllllllllllllllllIlllIlIllllIIIl.actualHeight - lllllllllllllllllIlllIlIllllIIIl.handleHeight() / 2.0) / lllllllllllllllllIlllIlIllllIIIl.height));
-            lllllllllllllllllIlllIlIllllIIIl.targetScroll = lllllllllllllllllIlllIlIllllIIIl.scroll = Utils.clamp(lllllllllllllllllIlllIlIllllIIIl.scroll, 0.0, lllllllllllllllllIlllIlIllllIIIl.actualHeight - lllllllllllllllllIlllIlIllllIIIl.height);
-            double lllllllllllllllllIlllIlIllllIIlI = lllllllllllllllllIlllIlIllllIIIl.scroll - lllllllllllllllllIlllIlIllllIlII;
-            if (lllllllllllllllllIlllIlIllllIIlI != 0.0) {
-                lllllllllllllllllIlllIlIllllIIIl.moveCells(0.0, -lllllllllllllllllIlllIlIllllIIlI);
+        if (this.handlePressed) {
+            d6 = this.scroll;
+            d5 = d2 - d4;
+            this.scroll += (double)Math.round(d5 * ((this.actualHeight - this.handleHeight() / 2.0) / this.height));
+            this.targetScroll = this.scroll = Utils.clamp(this.scroll, 0.0, this.actualHeight - this.height);
+            double d7 = this.scroll - d6;
+            if (d7 != 0.0) {
+                this.moveCells(0.0, -d7);
             }
         }
     }
 
     protected double handleHeight() {
-        WView lllllllllllllllllIlllIlIlIllIIll;
-        return lllllllllllllllllIlllIlIlIllIIll.height / lllllllllllllllllIlllIlIlIllIIll.actualHeight * lllllllllllllllllIlllIlIlIllIIll.height;
+        return this.height / this.actualHeight * this.height;
     }
 }
 

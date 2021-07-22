@@ -26,300 +26,296 @@ import net.minecraft.class_3417;
 import net.minecraft.class_3614;
 
 public class NotebotUtils {
-    public NotebotUtils() {
-        NotebotUtils lllllllllllllllllllIlIIIIIIIlllI;
-    }
-
-    public static boolean isValidIntrumentTextFile(int lllllllllllllllllllIIllllllIlIIl, InstrumentType lllllllllllllllllllIIllllllIIllI) {
-        switch (lllllllllllllllllllIIllllllIIllI) {
-            case Any: {
+    public static boolean isValidIntrumentTextFile(int n, InstrumentType instrumentType) {
+        switch (1.$SwitchMap$minegame159$meteorclient$utils$notebot$NotebotUtils$InstrumentType[instrumentType.ordinal()]) {
+            case 1: {
                 return true;
             }
-            case NotDrums: {
-                if (lllllllllllllllllllIIllllllIlIIl == 1) {
+            case 2: {
+                if (n == 1) {
                     return false;
                 }
-                if (lllllllllllllllllllIIllllllIlIIl == 2) {
+                if (n == 2) {
                     return false;
                 }
-                if (lllllllllllllllllllIIllllllIlIIl == 3) {
+                if (n == 3) {
                     return false;
                 }
-                if (lllllllllllllllllllIIllllllIlIIl == 11) {
+                if (n == 11) {
                     return false;
                 }
             }
-            case Harp: {
-                return lllllllllllllllllllIIllllllIlIIl == 0;
+            case 3: {
+                return n == 0;
             }
-            case Bass: {
-                return lllllllllllllllllllIIllllllIlIIl == 4;
+            case 5: {
+                return n == 4;
             }
-            case Bells: {
-                return lllllllllllllllllllIIllllllIlIIl == 6;
+            case 6: {
+                return n == 6;
             }
-            case Flute: {
-                return lllllllllllllllllllIIllllllIlIIl == 5;
+            case 11: {
+                return n == 5;
             }
-            case Chimes: {
-                return lllllllllllllllllllIIllllllIlIIl == 8;
+            case 8: {
+                return n == 8;
             }
-            case Guitar: {
-                return lllllllllllllllllllIIllllllIlIIl == 7;
+            case 12: {
+                return n == 7;
             }
-            case Xylophone: {
-                return lllllllllllllllllllIIllllllIlIIl == 9;
+            case 15: {
+                return n == 9;
             }
-            case IronXylophone: {
-                return lllllllllllllllllllIIllllllIlIIl == 10;
+            case 13: {
+                return n == 10;
             }
-            case CowBell: {
-                return lllllllllllllllllllIIllllllIlIIl == 11;
+            case 9: {
+                return n == 11;
             }
-            case Didgeridoo: {
-                return lllllllllllllllllllIIllllllIlIIl == 12;
+            case 10: {
+                return n == 12;
             }
-            case Bit: {
-                return lllllllllllllllllllIIllllllIlIIl == 13;
+            case 7: {
+                return n == 13;
             }
-            case Banjo: {
-                return lllllllllllllllllllIIllllllIlIIl == 14;
+            case 4: {
+                return n == 14;
             }
-            case Pling: {
-                return lllllllllllllllllllIIllllllIlIIl == 15;
+            case 14: {
+                return n == 15;
             }
         }
         return true;
     }
 
-    public static boolean isValidInstrument(class_2338 lllllllllllllllllllIIlllllllIlIl, InstrumentType lllllllllllllllllllIIlllllllIlII) {
-        switch (lllllllllllllllllllIIlllllllIlII) {
-            case Any: {
+    public static boolean isValidInstrument(class_2338 class_23382, InstrumentType instrumentType) {
+        switch (1.$SwitchMap$minegame159$meteorclient$utils$notebot$NotebotUtils$InstrumentType[instrumentType.ordinal()]) {
+            case 1: {
                 return true;
             }
-            case NotDrums: {
-                class_2680 lllllllllllllllllllIlIIIIIIIIllI = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl);
-                if (lllllllllllllllllllIlIIIIIIIIllI.method_26204() == class_2246.field_10179) {
-                    class_2766 lllllllllllllllllllIlIIIIIIIlIII = (class_2766)lllllllllllllllllllIlIIIIIIIIllI.method_11654((class_2769)class_2428.field_11325);
-                    if (lllllllllllllllllllIlIIIIIIIlIII == class_2766.field_12653) {
+            case 2: {
+                class_2680 class_26802 = Utils.mc.field_1687.method_8320(class_23382);
+                if (class_26802.method_26204() == class_2246.field_10179) {
+                    class_2766 class_27662 = (class_2766)class_26802.method_11654((class_2769)class_2428.field_11325);
+                    if (class_27662 == class_2766.field_12653) {
                         return false;
                     }
-                    if (lllllllllllllllllllIlIIIIIIIlIII == class_2766.field_12645) {
+                    if (class_27662 == class_2766.field_12645) {
                         return false;
                     }
-                    if (lllllllllllllllllllIlIIIIIIIlIII == class_2766.field_12643) {
+                    if (class_27662 == class_2766.field_12643) {
                         return false;
                     }
-                    return lllllllllllllllllllIlIIIIIIIlIII != class_2766.field_18285;
+                    return class_27662 != class_2766.field_18285;
                 }
-                class_2680 lllllllllllllllllllIlIIIIIIIIlll = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                if (lllllllllllllllllllIlIIIIIIIIlll.method_26207() == class_3614.field_15916) {
+                class_2680 class_26803 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                if (class_26803.method_26207() == class_3614.field_15916) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlll.method_26207() == class_3614.field_15942) {
+                if (class_26803.method_26207() == class_3614.field_15942) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlll.method_26207() == class_3614.field_15914) {
+                if (class_26803.method_26207() == class_3614.field_15914) {
                     return false;
                 }
-                return lllllllllllllllllllIlIIIIIIIIlll.method_26204() != class_2246.field_10085;
+                return class_26803.method_26204() != class_2246.field_10085;
             }
-            case Harp: {
-                class_2680 lllllllllllllllllllIlIIIIIIIIlII = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl);
-                if (lllllllllllllllllllIlIIIIIIIIlII.method_26204() == class_2246.field_10179) {
-                    return lllllllllllllllllllIlIIIIIIIIlII.method_11654((class_2769)class_2428.field_11325) == class_2766.field_12648;
+            case 3: {
+                class_2680 class_26804 = Utils.mc.field_1687.method_8320(class_23382);
+                if (class_26804.method_26204() == class_2246.field_10179) {
+                    return class_26804.method_11654((class_2769)class_2428.field_11325) == class_2766.field_12648;
                 }
-                class_2680 lllllllllllllllllllIlIIIIIIIIlIl = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26207() == class_3614.field_15932) {
+                class_2680 class_26805 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                if (class_26805.method_26207() == class_3614.field_15932) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26207() == class_3614.field_15916) {
+                if (class_26805.method_26207() == class_3614.field_15916) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26207() == class_3614.field_15942) {
+                if (class_26805.method_26207() == class_3614.field_15942) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26207() == class_3614.field_15914) {
+                if (class_26805.method_26207() == class_3614.field_15914) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10205) {
+                if (class_26805.method_26204() == class_2246.field_10205) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10460) {
+                if (class_26805.method_26204() == class_2246.field_10460) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10225) {
+                if (class_26805.method_26204() == class_2246.field_10225) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26207() == class_3614.field_15931) {
+                if (class_26805.method_26207() == class_3614.field_15931) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10166) {
+                if (class_26805.method_26204() == class_2246.field_10166) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10085) {
+                if (class_26805.method_26204() == class_2246.field_10085) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10114) {
+                if (class_26805.method_26204() == class_2246.field_10114) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10261) {
+                if (class_26805.method_26204() == class_2246.field_10261) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10234) {
+                if (class_26805.method_26204() == class_2246.field_10234) {
                     return false;
                 }
-                if (lllllllllllllllllllIlIIIIIIIIlIl.method_26204() == class_2246.field_10359) {
+                if (class_26805.method_26204() == class_2246.field_10359) {
                     return false;
                 }
-                return lllllllllllllllllllIlIIIIIIIIlIl.method_26204() != class_2246.field_10171;
+                return class_26805.method_26204() != class_2246.field_10171;
             }
-            case Banjo: {
-                class_2680 lllllllllllllllllllIlIIIIIIIIIll = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIlIIIIIIIIIll.method_26204() == class_2246.field_10359;
+            case 4: {
+                class_2680 class_26806 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_26806.method_26204() == class_2246.field_10359;
             }
-            case Bass: {
-                class_2680 lllllllllllllllllllIlIIIIIIIIIlI = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIlIIIIIIIIIlI.method_26207() == class_3614.field_15932;
+            case 5: {
+                class_2680 class_26807 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_26807.method_26207() == class_3614.field_15932;
             }
-            case Bells: {
-                class_2680 lllllllllllllllllllIlIIIIIIIIIIl = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIlIIIIIIIIIIl.method_26204() == class_2246.field_10205;
+            case 6: {
+                class_2680 class_26808 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_26808.method_26204() == class_2246.field_10205;
             }
-            case Bit: {
-                class_2680 lllllllllllllllllllIlIIIIIIIIIII = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIlIIIIIIIIIII.method_26204() == class_2246.field_10234;
+            case 7: {
+                class_2680 class_26809 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_26809.method_26204() == class_2246.field_10234;
             }
-            case Chimes: {
-                class_2680 lllllllllllllllllllIIlllllllllll = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIlllllllllll.method_26204() == class_2246.field_10225;
+            case 8: {
+                class_2680 class_268010 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268010.method_26204() == class_2246.field_10225;
             }
-            case CowBell: {
-                class_2680 lllllllllllllllllllIIllllllllllI = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIllllllllllI.method_26204() == class_2246.field_10114;
+            case 9: {
+                class_2680 class_268011 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268011.method_26204() == class_2246.field_10114;
             }
-            case Didgeridoo: {
-                class_2680 lllllllllllllllllllIIlllllllllIl = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIlllllllllIl.method_26204() == class_2246.field_10261;
+            case 10: {
+                class_2680 class_268012 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268012.method_26204() == class_2246.field_10261;
             }
-            case Flute: {
-                class_2680 lllllllllllllllllllIIlllllllllII = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIlllllllllII.method_26204() == class_2246.field_10460;
+            case 11: {
+                class_2680 class_268013 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268013.method_26204() == class_2246.field_10460;
             }
-            case Guitar: {
-                class_2680 lllllllllllllllllllIIllllllllIll = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIllllllllIll.method_26207() == class_3614.field_15931;
+            case 12: {
+                class_2680 class_268014 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268014.method_26207() == class_3614.field_15931;
             }
-            case IronXylophone: {
-                class_2680 lllllllllllllllllllIIllllllllIlI = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIllllllllIlI.method_26204() == class_2246.field_10085;
+            case 13: {
+                class_2680 class_268015 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268015.method_26204() == class_2246.field_10085;
             }
-            case Pling: {
-                class_2680 lllllllllllllllllllIIllllllllIIl = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIllllllllIIl.method_26204() == class_2246.field_10171;
+            case 14: {
+                class_2680 class_268016 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268016.method_26204() == class_2246.field_10171;
             }
-            case Xylophone: {
-                class_2680 lllllllllllllllllllIIllllllllIII = Utils.mc.field_1687.method_8320(lllllllllllllllllllIIlllllllIlIl.method_10074());
-                return lllllllllllllllllllIIllllllllIII.method_26204() == class_2246.field_10166;
+            case 15: {
+                class_2680 class_268017 = Utils.mc.field_1687.method_8320(class_23382.method_10074());
+                return class_268017.method_26204() == class_2246.field_10166;
             }
         }
         return false;
     }
 
-    public static class_3414 getInstrumentSound(InstrumentType lllllllllllllllllllIIllllllIIlII) {
-        switch (lllllllllllllllllllIIllllllIIlII) {
-            case Bass: {
+    public static class_3414 getInstrumentSound(InstrumentType instrumentType) {
+        switch (1.$SwitchMap$minegame159$meteorclient$utils$notebot$NotebotUtils$InstrumentType[instrumentType.ordinal()]) {
+            case 5: {
                 return class_3417.field_14624;
             }
-            case Bells: {
+            case 6: {
                 return class_3417.field_14793;
             }
-            case Flute: {
+            case 11: {
                 return class_3417.field_14989;
             }
-            case Chimes: {
+            case 8: {
                 return class_3417.field_14725;
             }
-            case Guitar: {
+            case 12: {
                 return class_3417.field_14903;
             }
-            case Xylophone: {
+            case 15: {
                 return class_3417.field_14776;
             }
-            case IronXylophone: {
+            case 13: {
                 return class_3417.field_18308;
             }
-            case CowBell: {
+            case 9: {
                 return class_3417.field_18309;
             }
-            case Didgeridoo: {
+            case 10: {
                 return class_3417.field_18310;
             }
-            case Bit: {
+            case 7: {
                 return class_3417.field_18311;
             }
-            case Banjo: {
+            case 4: {
                 return class_3417.field_18312;
             }
-            case Pling: {
+            case 14: {
                 return class_3417.field_14622;
             }
         }
         return class_3417.field_15114;
     }
 
-    public static boolean isValidInstrumentNbsFile(byte lllllllllllllllllllIIllllllIllll, InstrumentType lllllllllllllllllllIIllllllIllII) {
-        switch (lllllllllllllllllllIIllllllIllII) {
-            case Any: {
+    public static boolean isValidInstrumentNbsFile(byte by, InstrumentType instrumentType) {
+        switch (1.$SwitchMap$minegame159$meteorclient$utils$notebot$NotebotUtils$InstrumentType[instrumentType.ordinal()]) {
+            case 1: {
                 return true;
             }
-            case NotDrums: {
-                if (lllllllllllllllllllIIllllllIllll == 2) {
+            case 2: {
+                if (by == 2) {
                     return false;
                 }
-                if (lllllllllllllllllllIIllllllIllll == 3) {
+                if (by == 3) {
                     return false;
                 }
-                return lllllllllllllllllllIIllllllIllll != 4;
+                return by != 4;
             }
-            case Harp: {
-                return lllllllllllllllllllIIllllllIllll == 0;
+            case 3: {
+                return by == 0;
             }
-            case Bass: {
-                return lllllllllllllllllllIIllllllIllll == 1;
+            case 5: {
+                return by == 1;
             }
-            case Bells: {
-                return lllllllllllllllllllIIllllllIllll == 7;
+            case 6: {
+                return by == 7;
             }
-            case Flute: {
-                return lllllllllllllllllllIIllllllIllll == 6;
+            case 11: {
+                return by == 6;
             }
-            case Chimes: {
-                return lllllllllllllllllllIIllllllIllll == 8;
+            case 8: {
+                return by == 8;
             }
-            case Guitar: {
-                return lllllllllllllllllllIIllllllIllll == 5;
+            case 12: {
+                return by == 5;
             }
-            case Xylophone: {
-                return lllllllllllllllllllIIllllllIllll == 9;
+            case 15: {
+                return by == 9;
             }
-            case IronXylophone: {
-                return lllllllllllllllllllIIllllllIllll == 10;
+            case 13: {
+                return by == 10;
             }
-            case CowBell: {
-                return lllllllllllllllllllIIllllllIllll == 11;
+            case 9: {
+                return by == 11;
             }
-            case Didgeridoo: {
-                return lllllllllllllllllllIIllllllIllll == 12;
+            case 10: {
+                return by == 12;
             }
-            case Bit: {
-                return lllllllllllllllllllIIllllllIllll == 13;
+            case 7: {
+                return by == 13;
             }
-            case Banjo: {
-                return lllllllllllllllllllIIllllllIllll == 14;
+            case 4: {
+                return by == 14;
             }
-            case Pling: {
-                return lllllllllllllllllllIIllllllIllll == 15;
+            case 14: {
+                return by == 15;
             }
         }
         return true;
@@ -342,10 +338,6 @@ public class NotebotUtils {
         Banjo,
         Pling;
 
-
-        private InstrumentType() {
-            InstrumentType lIIlIlllIlII;
-        }
     }
 }
 

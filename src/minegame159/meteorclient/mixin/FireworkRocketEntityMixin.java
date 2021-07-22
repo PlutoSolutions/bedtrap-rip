@@ -35,25 +35,25 @@ public abstract class FireworkRocketEntityMixin {
     protected abstract void method_16830();
 
     @Inject(method={"tick"}, at={@At(value="TAIL")})
-    private void onTick(CallbackInfo info) {
+    private void onTick(CallbackInfo callbackInfo) {
         if (Modules.get().get(ElytraBoost.class).isFirework((class_1671)this) && this.field_7613 > this.field_7612) {
             this.method_16830();
         }
     }
 
     @Inject(method={"onEntityHit"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onEntityHit(class_3966 entityHitResult, CallbackInfo info) {
+    private void onEntityHit(class_3966 class_39662, CallbackInfo callbackInfo) {
         if (Modules.get().get(ElytraBoost.class).isFirework((class_1671)this)) {
             this.method_16830();
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"onBlockHit"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onBlockHit(class_3965 blockHitResult, CallbackInfo info) {
+    private void onBlockHit(class_3965 class_39652, CallbackInfo callbackInfo) {
         if (Modules.get().get(ElytraBoost.class).isFirework((class_1671)this)) {
             this.method_16830();
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 }

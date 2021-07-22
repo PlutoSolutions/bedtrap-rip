@@ -8,26 +8,19 @@ import com.sun.jna.Native;
 
 public class NativeLong
 extends IntegerType {
-    public static final /* synthetic */ int SIZE;
-    private static final /* synthetic */ long serialVersionUID = 1L;
+    public static final int SIZE = Native.LONG_SIZE;
+    private static final long serialVersionUID = 1L;
 
     public NativeLong() {
-        llllllllllllllllIlllllIlIIIIllIl(0L);
-        NativeLong llllllllllllllllIlllllIlIIIIllIl;
+        this(0L);
     }
 
-    public NativeLong(long llllllllllllllllIlllllIlIIIIIlll) {
-        llllllllllllllllIlllllIlIIIIlIII(llllllllllllllllIlllllIlIIIIIlll, false);
-        NativeLong llllllllllllllllIlllllIlIIIIlIII;
+    public NativeLong(long l) {
+        this(l, false);
     }
 
-    public NativeLong(long llllllllllllllllIlllllIlIIIIIIlI, boolean llllllllllllllllIlllllIIlllllllI) {
-        super(SIZE, llllllllllllllllIlllllIlIIIIIIlI, llllllllllllllllIlllllIIlllllllI);
-        NativeLong llllllllllllllllIlllllIlIIIIIIII;
-    }
-
-    static {
-        SIZE = Native.LONG_SIZE;
+    public NativeLong(long l, boolean bl) {
+        super(SIZE, l, bl);
     }
 }
 

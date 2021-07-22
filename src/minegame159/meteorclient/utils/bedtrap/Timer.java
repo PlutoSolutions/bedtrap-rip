@@ -4,60 +4,47 @@
 package minegame159.meteorclient.utils.bedtrap;
 
 public class Timer {
-    private /* synthetic */ long time;
+    private long time = -1L;
 
-    public Timer() {
-        Timer llllllllllllllllllIIlIlIIIlllIII;
-        llllllllllllllllllIIlIlIIIlllIII.time = -1L;
+    public boolean passedDs(double d) {
+        return this.passedMs((long)d * 100L);
     }
 
-    public boolean passedDs(double llllllllllllllllllIIlIlIIIlIIlll) {
-        Timer llllllllllllllllllIIlIlIIIlIIllI;
-        return llllllllllllllllllIIlIlIIIlIIllI.passedMs((long)llllllllllllllllllIIlIlIIIlIIlll * 100L);
+    public long convertToNS(long l) {
+        return l * 1000000L;
     }
 
-    public long convertToNS(long llllllllllllllllllIIlIlIIIIIIlIl) {
-        return llllllllllllllllllIIlIlIIIIIIlIl * 1000000L;
+    public void setMs(long l) {
+        this.time = System.nanoTime() - this.convertToNS(l);
     }
 
-    public void setMs(long llllllllllllllllllIIlIlIIIIllIll) {
-        Timer llllllllllllllllllIIlIlIIIIlllII;
-        llllllllllllllllllIIlIlIIIIlllII.time = System.nanoTime() - llllllllllllllllllIIlIlIIIIlllII.convertToNS(llllllllllllllllllIIlIlIIIIllIll);
-    }
-
-    public boolean passedMs(long llllllllllllllllllIIlIlIIIIlllll) {
-        Timer llllllllllllllllllIIlIlIIIlIIIlI;
-        return llllllllllllllllllIIlIlIIIlIIIlI.passedNS(llllllllllllllllllIIlIlIIIlIIIlI.convertToNS(llllllllllllllllllIIlIlIIIIlllll));
+    public boolean passedMs(long l) {
+        return this.passedNS(this.convertToNS(l));
     }
 
     public long getPassedTimeMs() {
-        Timer llllllllllllllllllIIlIlIIIIlIIIl;
-        return llllllllllllllllllIIlIlIIIIlIIIl.getMs(System.nanoTime() - llllllllllllllllllIIlIlIIIIlIIIl.time);
+        return this.getMs(System.nanoTime() - this.time);
     }
 
-    public boolean passedNS(long llllllllllllllllllIIlIlIIIIlIIll) {
-        Timer llllllllllllllllllIIlIlIIIIlIlII;
-        return System.nanoTime() - llllllllllllllllllIIlIlIIIIlIlII.time >= llllllllllllllllllIIlIlIIIIlIIll;
+    public boolean passedNS(long l) {
+        return System.nanoTime() - this.time >= l;
     }
 
     public Timer reset() {
-        Timer llllllllllllllllllIIlIlIIIIIlllI;
-        llllllllllllllllllIIlIlIIIIIlllI.time = System.nanoTime();
-        return llllllllllllllllllIIlIlIIIIIlllI;
+        this.time = System.nanoTime();
+        return this;
     }
 
-    public boolean passedDms(double llllllllllllllllllIIlIlIIIlIllIl) {
-        Timer llllllllllllllllllIIlIlIIIlIlllI;
-        return llllllllllllllllllIIlIlIIIlIlllI.passedMs((long)llllllllllllllllllIIlIlIIIlIllIl * 10L);
+    public boolean passedDms(double d) {
+        return this.passedMs((long)d * 10L);
     }
 
-    public long getMs(long llllllllllllllllllIIlIlIIIIIlIIl) {
-        return llllllllllllllllllIIlIlIIIIIlIIl / 1000000L;
+    public long getMs(long l) {
+        return l / 1000000L;
     }
 
-    public boolean passedS(double llllllllllllllllllIIlIlIIIllIIIl) {
-        Timer llllllllllllllllllIIlIlIIIllIIlI;
-        return llllllllllllllllllIIlIlIIIllIIlI.passedMs((long)llllllllllllllllllIIlIlIIIllIIIl * 1000L);
+    public boolean passedS(double d) {
+        return this.passedMs((long)d * 1000L);
     }
 }
 

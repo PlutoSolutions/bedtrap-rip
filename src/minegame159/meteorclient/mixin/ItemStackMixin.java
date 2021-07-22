@@ -39,22 +39,22 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(value={class_1799.class})
 public abstract class ItemStackMixin {
     @Inject(method={"getTooltip"}, at={@At(value="TAIL")}, locals=LocalCapture.CAPTURE_FAILSOFT)
-    private void onGetTooltip(class_1657 player, class_1836 context, CallbackInfoReturnable<List<class_2561>> info, List<class_2561> list) {
+    private void onGetTooltip(class_1657 class_16572, class_1836 class_18362, CallbackInfoReturnable<List<class_2561>> callbackInfoReturnable, List<class_2561> list) {
         if (Utils.canUpdate()) {
             MeteorClient.EVENT_BUS.post(GetTooltipEvent.Append.get((class_1799)this, list));
         }
     }
 
     @Inject(method={"finishUsing"}, at={@At(value="HEAD")})
-    private void onFinishUsing(class_1937 world, class_1309 user, CallbackInfoReturnable<class_1799> info) {
-        if (user == Utils.mc.field_1724) {
+    private void onFinishUsing(class_1937 class_19372, class_1309 class_13092, CallbackInfoReturnable<class_1799> callbackInfoReturnable) {
+        if (class_13092 == Utils.mc.field_1724) {
             MeteorClient.EVENT_BUS.post(FinishUsingItem.get((class_1799)this));
         }
     }
 
     @Inject(method={"onStoppedUsing"}, at={@At(value="HEAD")})
-    private void onStoppedUsing(class_1937 world, class_1309 user, int remainingUseTicks, CallbackInfo info) {
-        if (user == Utils.mc.field_1724) {
+    private void onStoppedUsing(class_1937 class_19372, class_1309 class_13092, int n, CallbackInfo callbackInfo) {
+        if (class_13092 == Utils.mc.field_1724) {
             MeteorClient.EVENT_BUS.post(StoppedUsingItemEvent.get((class_1799)this));
         }
     }

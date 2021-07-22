@@ -29,10 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={BlockOcclusionCache.class}, remap=false)
 public class SodiumBlockOcculsionCacheMixin {
     @Inject(method={"shouldDrawSide"}, at={@At(value="RETURN")}, cancellable=true)
-    private void shouldDrawSide(class_2680 state, class_1922 view, class_2338 pos, class_2350 facing, CallbackInfoReturnable<Boolean> info) {
+    private void shouldDrawSide(class_2680 class_26802, class_1922 class_19222, class_2338 class_23382, class_2350 class_23502, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         Xray xray = Modules.get().get(Xray.class);
         if (xray.isActive()) {
-            info.setReturnValue((Object)xray.modifyDrawSide(state, view, pos, facing, info.getReturnValueZ()));
+            callbackInfoReturnable.setReturnValue((Object)xray.modifyDrawSide(class_26802, class_19222, class_23382, class_23502, callbackInfoReturnable.getReturnValueZ()));
         }
     }
 }

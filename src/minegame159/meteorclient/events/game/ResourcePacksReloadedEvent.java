@@ -4,18 +4,10 @@
 package minegame159.meteorclient.events.game;
 
 public class ResourcePacksReloadedEvent {
-    private static final /* synthetic */ ResourcePacksReloadedEvent INSTANCE;
+    private static final ResourcePacksReloadedEvent INSTANCE = new ResourcePacksReloadedEvent();
 
     public static ResourcePacksReloadedEvent get() {
         return INSTANCE;
-    }
-
-    public ResourcePacksReloadedEvent() {
-        ResourcePacksReloadedEvent lIlIIIIIlIIlIlI;
-    }
-
-    static {
-        INSTANCE = new ResourcePacksReloadedEvent();
     }
 }
 

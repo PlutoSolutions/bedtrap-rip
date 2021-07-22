@@ -12,90 +12,89 @@ import minegame159.meteorclient.utils.player.ChatUtils;
 
 public class SwarmHost
 extends Thread {
-    private final /* synthetic */ SwarmConnection[] clientConnections;
-    private /* synthetic */ ServerSocket socket;
+    private final SwarmConnection[] clientConnections = new SwarmConnection[50];
+    private ServerSocket socket;
 
-    public void sendMessage(String llllllllllllllllIlllIIIIlllIllII) {
-        SwarmHost llllllllllllllllIlllIIIIlllIlIll;
-        MeteorExecutor.execute(() -> {
-            SwarmHost llllllllllllllllIlllIIIIllIIlllI;
-            for (SwarmConnection llllllllllllllllIlllIIIIllIlIIIl : llllllllllllllllIlllIIIIllIIlllI.clientConnections) {
-                if (llllllllllllllllIlllIIIIllIlIIIl == null) continue;
-                llllllllllllllllIlllIIIIllIlIIIl.messageToSend = llllllllllllllllIlllIIIIlllIllII;
-            }
-        });
+    public void sendMessage(String string) {
+        MeteorExecutor.execute(() -> this.lambda$sendMessage$0(string));
     }
 
-    public void assignConnectionToSubServer(Socket llllllllllllllllIlllIIIlIIIIIIII) {
-        SwarmHost llllllllllllllllIlllIIIIllllllll;
-        for (int llllllllllllllllIlllIIIlIIIIIIlI = 0; llllllllllllllllIlllIIIlIIIIIIlI < llllllllllllllllIlllIIIIllllllll.clientConnections.length; ++llllllllllllllllIlllIIIlIIIIIIlI) {
-            if (llllllllllllllllIlllIIIIllllllll.clientConnections[llllllllllllllllIlllIIIlIIIIIIlI] != null) continue;
-            llllllllllllllllIlllIIIIllllllll.clientConnections[llllllllllllllllIlllIIIlIIIIIIlI] = new SwarmConnection(llllllllllllllllIlllIIIlIIIIIIII);
+    public void assignConnectionToSubServer(Socket socket) {
+        for (int i = 0; i < this.clientConnections.length; ++i) {
+            if (this.clientConnections[i] != null) continue;
+            this.clientConnections[i] = new SwarmConnection(socket);
             break;
         }
     }
 
     public SwarmConnection[] getConnections() {
-        SwarmHost llllllllllllllllIlllIIIIlllIlIII;
-        return llllllllllllllllIlllIIIIlllIlIII.clientConnections;
+        return this.clientConnections;
     }
 
-    public SwarmHost(int llllllllllllllllIlllIIIlIIIlIIII) {
-        SwarmHost llllllllllllllllIlllIIIlIIIIllll;
-        llllllllllllllllIlllIIIlIIIIllll.clientConnections = new SwarmConnection[50];
+    public SwarmHost(int n) {
         try {
-            llllllllllllllllIlllIIIlIIIIllll.socket = new ServerSocket(llllllllllllllllIlllIIIlIIIlIIII);
+            this.socket = new ServerSocket(n);
         }
-        catch (IOException llllllllllllllllIlllIIIlIIIlIIlI) {
-            llllllllllllllllIlllIIIlIIIIllll.socket = null;
-            ChatUtils.error("Swarm", "Couldn't start a server on port %s.", llllllllllllllllIlllIIIlIIIlIIII);
-            llllllllllllllllIlllIIIlIIIlIIlI.printStackTrace();
+        catch (IOException iOException) {
+            this.socket = null;
+            ChatUtils.error("Swarm", "Couldn't start a server on port %s.", n);
+            iOException.printStackTrace();
         }
-        if (llllllllllllllllIlllIIIlIIIIllll.socket != null) {
-            llllllllllllllllIlllIIIlIIIIllll.start();
+        if (this.socket != null) {
+            this.start();
+        }
+    }
+
+    private void lambda$sendMessage$0(String string) {
+        for (SwarmConnection swarmConnection : this.clientConnections) {
+            if (swarmConnection == null) continue;
+            swarmConnection.messageToSend = string;
+            if (2 >= 0) continue;
+            return;
         }
     }
 
     @Override
     public void run() {
-        SwarmHost llllllllllllllllIlllIIIlIIIIlIII;
-        ChatUtils.info("Swarm", "Listening for incoming connections on port %s.", llllllllllllllllIlllIIIlIIIIlIII.socket.getLocalPort());
-        while (!llllllllllllllllIlllIIIlIIIIlIII.isInterrupted()) {
+        ChatUtils.info("Swarm", "Listening for incoming connections on port %s.", this.socket.getLocalPort());
+        while (!this.isInterrupted()) {
             try {
-                Socket llllllllllllllllIlllIIIlIIIIlIlI = llllllllllllllllIlllIIIlIIIIlIII.socket.accept();
-                llllllllllllllllIlllIIIlIIIIlIII.assignConnectionToSubServer(llllllllllllllllIlllIIIlIIIIlIlI);
+                Socket socket = this.socket.accept();
+                this.assignConnectionToSubServer(socket);
             }
-            catch (IOException llllllllllllllllIlllIIIlIIIIlIIl) {
+            catch (IOException iOException) {
                 ChatUtils.error("Swarm", "Error making a connection to worker.", new Object[0]);
-                llllllllllllllllIlllIIIlIIIIlIIl.printStackTrace();
+                iOException.printStackTrace();
             }
         }
     }
 
     public int getConnectionCount() {
-        SwarmHost llllllllllllllllIlllIIIIllIlllll;
-        int llllllllllllllllIlllIIIIllIllllI = 0;
-        for (SwarmConnection llllllllllllllllIlllIIIIlllIIIII : llllllllllllllllIlllIIIIllIlllll.clientConnections) {
-            if (llllllllllllllllIlllIIIIlllIIIII == null) continue;
-            ++llllllllllllllllIlllIIIIllIllllI;
+        int n = 0;
+        for (SwarmConnection swarmConnection : this.clientConnections) {
+            if (swarmConnection == null) continue;
+            ++n;
+            if (-4 <= 0) continue;
+            return 0;
         }
-        return llllllllllllllllIlllIIIIllIllllI;
+        return n;
     }
 
     public void disconnect() {
-        SwarmHost llllllllllllllllIlllIIIIllllIlII;
-        for (SwarmConnection llllllllllllllllIlllIIIIllllIlll : llllllllllllllllIlllIIIIllllIlII.clientConnections) {
-            if (llllllllllllllllIlllIIIIllllIlll == null) continue;
-            llllllllllllllllIlllIIIIllllIlll.disconnect();
+        for (SwarmConnection swarmConnection : this.clientConnections) {
+            if (swarmConnection == null) continue;
+            swarmConnection.disconnect();
+            if (null == null) continue;
+            return;
         }
         try {
-            llllllllllllllllIlllIIIIllllIlII.socket.close();
+            this.socket.close();
         }
-        catch (IOException llllllllllllllllIlllIIIIllllIllI) {
-            llllllllllllllllIlllIIIIllllIllI.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
-        ChatUtils.info("Swarm", "Server closed on port %s.", llllllllllllllllIlllIIIIllllIlII.socket.getLocalPort());
-        llllllllllllllllIlllIIIIllllIlII.interrupt();
+        ChatUtils.info("Swarm", "Server closed on port %s.", this.socket.getLocalPort());
+        this.interrupt();
     }
 }
 

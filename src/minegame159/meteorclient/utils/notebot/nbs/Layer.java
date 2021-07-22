@@ -7,52 +7,40 @@ import java.util.HashMap;
 import minegame159.meteorclient.utils.notebot.nbs.Note;
 
 public class Layer {
-    private /* synthetic */ HashMap<Integer, Note> hashMap;
-    private /* synthetic */ String name;
-    private /* synthetic */ byte volume;
+    private HashMap<Integer, Note> hashMap = new HashMap();
+    private String name = "";
+    private byte volume = (byte)100;
 
-    public Note getNote(int lIIlIllllIllI) {
-        Layer lIIlIllllIlll;
-        return lIIlIllllIlll.hashMap.get(lIIlIllllIllI);
+    public Note getNote(int n) {
+        return this.hashMap.get(n);
     }
 
-    public void setHashMap(HashMap<Integer, Note> lIIllIIIIIIll) {
-        lIIllIIIIIllI.hashMap = lIIllIIIIIIll;
+    public void setHashMap(HashMap<Integer, Note> hashMap) {
+        this.hashMap = hashMap;
     }
 
     public byte getVolume() {
-        Layer lIIlIlllIlIII;
-        return lIIlIlllIlIII.volume;
+        return this.volume;
     }
 
-    public void setNote(int lIIlIlllIllII, Note lIIlIlllIlllI) {
-        Layer lIIlIllllIIII;
-        lIIlIllllIIII.hashMap.put(lIIlIlllIllII, lIIlIlllIlllI);
+    public void setNote(int n, Note note) {
+        this.hashMap.put(n, note);
     }
 
-    public void setName(String lIIlIllllllII) {
-        lIIlIllllllIl.name = lIIlIllllllII;
+    public void setName(String string) {
+        this.name = string;
     }
 
-    public void setVolume(byte lIIlIlllIIlII) {
-        lIIlIlllIIIll.volume = lIIlIlllIIlII;
+    public void setVolume(byte by) {
+        this.volume = by;
     }
 
     public String getName() {
-        Layer lIIllIIIIIIIl;
-        return lIIllIIIIIIIl.name;
+        return this.name;
     }
 
     public HashMap<Integer, Note> getHashMap() {
-        Layer lIIllIIIIlIIl;
-        return lIIllIIIIlIIl.hashMap;
-    }
-
-    public Layer() {
-        Layer lIIllIIIIllIl;
-        lIIllIIIIllIl.hashMap = new HashMap();
-        lIIllIIIIllIl.volume = (byte)100;
-        lIIllIIIIllIl.name = "";
+        return this.hashMap;
     }
 }
 

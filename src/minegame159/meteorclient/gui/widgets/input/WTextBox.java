@@ -17,77 +17,75 @@ import minegame159.meteorclient.utils.Utils;
 
 public abstract class WTextBox
 extends WWidget {
-    public /* synthetic */ Runnable action;
-    public /* synthetic */ Runnable actionOnUnfocused;
-    protected /* synthetic */ DoubleList textWidths;
-    protected /* synthetic */ CharFilter filter;
-    protected /* synthetic */ double textStart;
-    protected /* synthetic */ String text;
-    protected /* synthetic */ boolean focused;
-    protected /* synthetic */ int cursor;
+    public Runnable action;
+    public Runnable actionOnUnfocused;
+    protected DoubleList textWidths = new DoubleArrayList();
+    protected CharFilter filter;
+    protected double textStart;
+    protected String text;
+    protected boolean focused;
+    protected int cursor;
 
     @Override
-    public boolean onMouseClicked(double llllllllllllllllIllllIIIlIllIIll, double llllllllllllllllIllllIIIlIlllIII, int llllllllllllllllIllllIIIlIllIIlI, boolean llllllllllllllllIllllIIIlIllIIIl) {
-        WTextBox llllllllllllllllIllllIIIlIllIlIl;
-        if (llllllllllllllllIllllIIIlIllIlIl.mouseOver && !llllllllllllllllIllllIIIlIllIIIl) {
-            if (llllllllllllllllIllllIIIlIllIIlI == 1) {
-                if (!llllllllllllllllIllllIIIlIllIlIl.text.isEmpty()) {
-                    llllllllllllllllIllllIIIlIllIlIl.text = "";
-                    llllllllllllllllIllllIIIlIllIlIl.cursor = 0;
-                    llllllllllllllllIllllIIIlIllIlIl.runAction();
+    public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
+        if (this.mouseOver && !bl) {
+            if (n == 1) {
+                if (!this.text.isEmpty()) {
+                    this.text = "";
+                    this.cursor = 0;
+                    this.runAction();
                 }
             } else {
-                double llllllllllllllllIllllIIIlIlllllI = llllllllllllllllIllllIIIlIllIlIl.getOverflowWidthForRender();
-                double llllllllllllllllIllllIIIlIllllIl = llllllllllllllllIllllIIIlIllIIll - llllllllllllllllIllllIIIlIllIlIl.x + llllllllllllllllIllllIIIlIlllllI;
-                double llllllllllllllllIllllIIIlIllllII = llllllllllllllllIllllIIIlIllIlIl.pad();
-                double llllllllllllllllIllllIIIlIlllIll = Double.MAX_VALUE;
-                llllllllllllllllIllllIIIlIllIlIl.cursor = 0;
-                for (int llllllllllllllllIllllIIIlIllllll = 0; llllllllllllllllIllllIIIlIllllll < llllllllllllllllIllllIIIlIllIlIl.textWidths.size(); ++llllllllllllllllIllllIIIlIllllll) {
-                    double llllllllllllllllIllllIIIllIIIIII = Math.abs(llllllllllllllllIllllIIIlIllIlIl.textWidths.getDouble(llllllllllllllllIllllIIIlIllllll) + llllllllllllllllIllllIIIlIllllII - llllllllllllllllIllllIIIlIllllIl);
-                    if (!(llllllllllllllllIllllIIIllIIIIII < llllllllllllllllIllllIIIlIlllIll)) continue;
-                    llllllllllllllllIllllIIIlIlllIll = llllllllllllllllIllllIIIllIIIIII;
-                    llllllllllllllllIllllIIIlIllIlIl.cursor = llllllllllllllllIllllIIIlIllllll;
+                double d3 = this.getOverflowWidthForRender();
+                double d4 = d - this.x + d3;
+                double d5 = this.pad();
+                double d6 = Double.MAX_VALUE;
+                this.cursor = 0;
+                for (int i = 0; i < this.textWidths.size(); ++i) {
+                    double d7 = Math.abs(this.textWidths.getDouble(i) + d5 - d4);
+                    if (!(d7 < d6)) continue;
+                    d6 = d7;
+                    this.cursor = i;
+                    if (3 > 0) continue;
+                    return false;
                 }
-                llllllllllllllllIllllIIIlIllIlIl.cursorChanged();
+                this.cursorChanged();
             }
-            llllllllllllllllIllllIIIlIllIlIl.setFocused(true);
+            this.setFocused(true);
             return true;
         }
-        if (llllllllllllllllIllllIIIlIllIlIl.focused) {
-            llllllllllllllllIllllIIIlIllIlIl.setFocused(false);
+        if (this.focused) {
+            this.setFocused(false);
         }
         return false;
     }
 
-    protected double getCursorTextWidth(int llllllllllllllllIllllIIIIIllIlll) {
-        WTextBox llllllllllllllllIllllIIIIIlllIII;
-        if (llllllllllllllllIllllIIIIIlllIII.textWidths.isEmpty()) {
+    protected double getCursorTextWidth(int n) {
+        if (this.textWidths.isEmpty()) {
             return 0.0;
         }
-        int llllllllllllllllIllllIIIIIllIllI = llllllllllllllllIllllIIIIIlllIII.cursor + llllllllllllllllIllllIIIIIllIlll;
-        if (llllllllllllllllIllllIIIIIllIllI < 0) {
-            llllllllllllllllIllllIIIIIllIllI = 0;
-        } else if (llllllllllllllllIllllIIIIIllIllI >= llllllllllllllllIllllIIIIIlllIII.textWidths.size()) {
-            llllllllllllllllIllllIIIIIllIllI = llllllllllllllllIllllIIIIIlllIII.textWidths.size() - 1;
+        int n2 = this.cursor + n;
+        if (n2 < 0) {
+            n2 = 0;
+        } else if (n2 >= this.textWidths.size()) {
+            n2 = this.textWidths.size() - 1;
         }
-        return llllllllllllllllIllllIIIIIlllIII.textWidths.getDouble(llllllllllllllllIllllIIIIIllIllI);
+        return this.textWidths.getDouble(n2);
     }
 
     public String get() {
-        WTextBox llllllllllllllllIllllIIIIIlIlIll;
-        return llllllllllllllllIllllIIIIIlIlIll.text;
+        return this.text;
     }
 
     @Override
-    public boolean onCharTyped(char llllllllllllllllIllllIIIIlllIIII) {
-        WTextBox llllllllllllllllIllllIIIIlllIIIl;
-        if (!llllllllllllllllIllllIIIIlllIIIl.focused) {
+    public boolean onCharTyped(char c) {
+        if (!this.focused) {
             return false;
         }
-        if (llllllllllllllllIllllIIIIlllIIIl.filter.filter(llllllllllllllllIllllIIIIlllIIIl.text, llllllllllllllllIllllIIIIlllIIII)) {
-            llllllllllllllllIllllIIIIlllIIIl.text = String.valueOf(new StringBuilder().append(llllllllllllllllIllllIIIIlllIIIl.text.substring(0, llllllllllllllllIllllIIIIlllIIIl.cursor)).append(llllllllllllllllIllllIIIIlllIIII).append(llllllllllllllllIllllIIIIlllIIIl.text.substring(llllllllllllllllIllllIIIIlllIIIl.cursor)));
-            ++llllllllllllllllIllllIIIIlllIIIl.cursor;
-            llllllllllllllllIllllIIIIlllIIIl.runAction();
+        if (this.filter.filter(this.text, c)) {
+            this.text = String.valueOf(new StringBuilder().append(this.text.substring(0, this.cursor)).append(c).append(this.text.substring(this.cursor)));
+            ++this.cursor;
+            this.runAction();
             return true;
         }
         return false;
@@ -97,84 +95,80 @@ extends WWidget {
     }
 
     protected double getOverflowWidthForRender() {
-        WTextBox llllllllllllllllIllllIIIIIlIllIl;
-        return llllllllllllllllIllllIIIIIlIllIl.textStart;
+        return this.textStart;
     }
 
     private void calculateTextWidths() {
-        WTextBox llllllllllllllllIllllIIIIlIIlIll;
-        llllllllllllllllIllllIIIIlIIlIll.textWidths.clear();
-        for (int llllllllllllllllIllllIIIIlIIllII = 0; llllllllllllllllIllllIIIIlIIllII <= llllllllllllllllIllllIIIIlIIlIll.text.length(); ++llllllllllllllllIllllIIIIlIIllII) {
-            llllllllllllllllIllllIIIIlIIlIll.textWidths.add(llllllllllllllllIllllIIIIlIIlIll.theme.textWidth(llllllllllllllllIllllIIIIlIIlIll.text, llllllllllllllllIllllIIIIlIIllII, false));
+        this.textWidths.clear();
+        for (int i = 0; i <= this.text.length(); ++i) {
+            this.textWidths.add(this.theme.textWidth(this.text, i, false));
+            if (-5 < 0) continue;
+            return;
         }
     }
 
     public void setCursorMax() {
-        WTextBox llllllllllllllllIllllIIIIIIlIlIl;
-        llllllllllllllllIllllIIIIIIlIlIl.cursor = llllllllllllllllIllllIIIIIIlIlIl.text.length();
+        this.cursor = this.text.length();
     }
 
     private void cursorChanged() {
-        WTextBox llllllllllllllllIllllIIIIIlllllI;
-        double llllllllllllllllIllllIIIIIllllll = llllllllllllllllIllllIIIIIlllllI.getCursorTextWidth(-2);
-        if (llllllllllllllllIllllIIIIIllllll < llllllllllllllllIllllIIIIIlllllI.textStart) {
-            llllllllllllllllIllllIIIIIlllllI.textStart -= llllllllllllllllIllllIIIIIlllllI.textStart - llllllllllllllllIllllIIIIIllllll;
+        double d = this.getCursorTextWidth(-2);
+        if (d < this.textStart) {
+            this.textStart -= this.textStart - d;
         }
-        if ((llllllllllllllllIllllIIIIIllllll = llllllllllllllllIllllIIIIIlllllI.getCursorTextWidth(2)) > llllllllllllllllIllllIIIIIlllllI.textStart + llllllllllllllllIllllIIIIIlllllI.maxTextWidth()) {
-            llllllllllllllllIllllIIIIIlllllI.textStart += llllllllllllllllIllllIIIIIllllll - (llllllllllllllllIllllIIIIIlllllI.textStart + llllllllllllllllIllllIIIIIlllllI.maxTextWidth());
+        if ((d = this.getCursorTextWidth(2)) > this.textStart + this.maxTextWidth()) {
+            this.textStart += d - (this.textStart + this.maxTextWidth());
         }
-        llllllllllllllllIllllIIIIIlllllI.textStart = Utils.clamp(llllllllllllllllIllllIIIIIlllllI.textStart, 0.0, Math.max(llllllllllllllllIllllIIIIIlllllI.textWidth() - llllllllllllllllIllllIIIIIlllllI.maxTextWidth(), 0.0));
-        llllllllllllllllIllllIIIIIlllllI.onCursorChanged();
+        this.textStart = Utils.clamp(this.textStart, 0.0, Math.max(this.textWidth() - this.maxTextWidth(), 0.0));
+        this.onCursorChanged();
     }
 
     private double textWidth() {
-        WTextBox llllllllllllllllIllllIIIIlIIIIll;
-        return llllllllllllllllIllllIIIIlIIIIll.textWidths.isEmpty() ? 0.0 : llllllllllllllllIllllIIIIlIIIIll.textWidths.getDouble(llllllllllllllllIllllIIIIlIIIIll.textWidths.size() - 1);
+        return this.textWidths.isEmpty() ? 0.0 : this.textWidths.getDouble(this.textWidths.size() - 1);
     }
 
     @Override
-    public boolean onKeyRepeated(int llllllllllllllllIllllIIIIllllIll, int llllllllllllllllIllllIIIIllllIlI) {
-        boolean llllllllllllllllIllllIIIIlllllIl;
-        WTextBox llllllllllllllllIllllIIIlIIIIIIl;
-        if (!llllllllllllllllIllllIIIlIIIIIIl.focused) {
+    public boolean onKeyRepeated(int n, int n2) {
+        boolean bl;
+        if (!this.focused) {
             return false;
         }
-        boolean llllllllllllllllIllllIIIIllllllI = llllllllllllllllIllllIIIIllllIlI == 2 || llllllllllllllllIllllIIIIllllIlI == 8;
-        boolean bl = llllllllllllllllIllllIIIIlllllIl = llllllllllllllllIllllIIIIllllIlI == 1;
-        if (llllllllllllllllIllllIIIIllllIll == 259) {
-            if (llllllllllllllllIllllIIIlIIIIIIl.cursor > 0) {
-                String llllllllllllllllIllllIIIlIIIIlIl = llllllllllllllllIllllIIIlIIIIIIl.text;
-                int llllllllllllllllIllllIIIlIIIIlII = llllllllllllllllIllllIIIIllllllI ? llllllllllllllllIllllIIIlIIIIIIl.countToNextSpace(true) : 1;
-                llllllllllllllllIllllIIIlIIIIIIl.text = String.valueOf(new StringBuilder().append(llllllllllllllllIllllIIIlIIIIIIl.text.substring(0, llllllllllllllllIllllIIIlIIIIIIl.cursor - llllllllllllllllIllllIIIlIIIIlII)).append(llllllllllllllllIllllIIIlIIIIIIl.text.substring(llllllllllllllllIllllIIIlIIIIIIl.cursor)));
-                llllllllllllllllIllllIIIlIIIIIIl.cursor -= llllllllllllllllIllllIIIlIIIIlII;
-                if (!llllllllllllllllIllllIIIlIIIIIIl.text.equals(llllllllllllllllIllllIIIlIIIIlIl)) {
-                    llllllllllllllllIllllIIIlIIIIIIl.runAction();
+        boolean bl2 = n2 == 2 || n2 == 8;
+        boolean bl3 = bl = n2 == 1;
+        if (n == 259) {
+            if (this.cursor > 0) {
+                String string = this.text;
+                int n3 = bl2 ? this.countToNextSpace(true) : 1;
+                this.text = String.valueOf(new StringBuilder().append(this.text.substring(0, this.cursor - n3)).append(this.text.substring(this.cursor)));
+                this.cursor -= n3;
+                if (!this.text.equals(string)) {
+                    this.runAction();
                 }
             }
             return true;
         }
-        if (llllllllllllllllIllllIIIIllllIll == 261) {
-            if (llllllllllllllllIllllIIIlIIIIIIl.cursor < llllllllllllllllIllllIIIlIIIIIIl.text.length()) {
-                String llllllllllllllllIllllIIIlIIIIIll = llllllllllllllllIllllIIIlIIIIIIl.text;
-                int llllllllllllllllIllllIIIlIIIIIlI = llllllllllllllllIllllIIIIllllllI ? llllllllllllllllIllllIIIlIIIIIIl.countToNextSpace(false) : 1;
-                llllllllllllllllIllllIIIlIIIIIIl.text = String.valueOf(new StringBuilder().append(llllllllllllllllIllllIIIlIIIIIIl.text.substring(0, llllllllllllllllIllllIIIlIIIIIIl.cursor)).append(llllllllllllllllIllllIIIlIIIIIIl.text.substring(llllllllllllllllIllllIIIlIIIIIIl.cursor + llllllllllllllllIllllIIIlIIIIIlI)));
-                if (!llllllllllllllllIllllIIIlIIIIIIl.text.equals(llllllllllllllllIllllIIIlIIIIIll)) {
-                    llllllllllllllllIllllIIIlIIIIIIl.runAction();
+        if (n == 261) {
+            if (this.cursor < this.text.length()) {
+                String string = this.text;
+                int n4 = bl2 ? this.countToNextSpace(false) : 1;
+                this.text = String.valueOf(new StringBuilder().append(this.text.substring(0, this.cursor)).append(this.text.substring(this.cursor + n4)));
+                if (!this.text.equals(string)) {
+                    this.runAction();
                 }
             }
             return true;
         }
-        if (llllllllllllllllIllllIIIIllllIll == 263 || llllllllllllllllIllllIIIIlllllIl && llllllllllllllllIllllIIIIllllIll == 324) {
-            if (llllllllllllllllIllllIIIlIIIIIIl.cursor > 0) {
-                llllllllllllllllIllllIIIlIIIIIIl.cursor -= llllllllllllllllIllllIIIIllllllI ? llllllllllllllllIllllIIIlIIIIIIl.countToNextSpace(true) : 1;
-                llllllllllllllllIllllIIIlIIIIIIl.cursorChanged();
+        if (n == 263 || bl && n == 324) {
+            if (this.cursor > 0) {
+                this.cursor -= bl2 ? this.countToNextSpace(true) : 1;
+                this.cursorChanged();
             }
             return true;
         }
-        if (llllllllllllllllIllllIIIIllllIll == 262 || llllllllllllllllIllllIIIIlllllIl && llllllllllllllllIllllIIIIllllIll == 326) {
-            if (llllllllllllllllIllllIIIlIIIIIIl.cursor < llllllllllllllllIllllIIIlIIIIIIl.text.length()) {
-                llllllllllllllllIllllIIIlIIIIIIl.cursor += llllllllllllllllIllllIIIIllllllI ? llllllllllllllllIllllIIIlIIIIIIl.countToNextSpace(false) : 1;
-                llllllllllllllllIllllIIIlIIIIIIl.cursorChanged();
+        if (n == 262 || bl && n == 326) {
+            if (this.cursor < this.text.length()) {
+                this.cursor += bl2 ? this.countToNextSpace(false) : 1;
+                this.cursorChanged();
             }
             return true;
         }
@@ -182,147 +176,137 @@ extends WWidget {
     }
 
     private void runAction() {
-        WTextBox llllllllllllllllIllllIIIIlIIIllI;
-        llllllllllllllllIllllIIIIlIIIllI.calculateTextWidths();
-        llllllllllllllllIllllIIIIlIIIllI.cursorChanged();
-        if (llllllllllllllllIllllIIIIlIIIllI.action != null) {
-            llllllllllllllllIllllIIIIlIIIllI.action.run();
+        this.calculateTextWidths();
+        this.cursorChanged();
+        if (this.action != null) {
+            this.action.run();
         }
     }
 
     public boolean isFocused() {
-        WTextBox llllllllllllllllIllllIIIIIlIIIlI;
-        return llllllllllllllllIllllIIIIIlIIIlI.focused;
+        return this.focused;
     }
 
     protected double getCursorTextWidth() {
-        WTextBox llllllllllllllllIllllIIIIIllIIIl;
-        return llllllllllllllllIllllIIIIIllIIIl.getCursorTextWidth(0);
+        return this.getCursorTextWidth(0);
     }
 
     @Override
     protected void onCalculateSize() {
-        WTextBox llllllllllllllllIllllIIIllIlIIII;
-        double llllllllllllllllIllllIIIllIlIIlI = llllllllllllllllIllllIIIllIlIIII.pad();
-        double llllllllllllllllIllllIIIllIlIIIl = llllllllllllllllIllllIIIllIlIIII.theme.textHeight();
-        llllllllllllllllIllllIIIllIlIIII.width = llllllllllllllllIllllIIIllIlIIlI + llllllllllllllllIllllIIIllIlIIIl + llllllllllllllllIllllIIIllIlIIlI;
-        llllllllllllllllIllllIIIllIlIIII.height = llllllllllllllllIllllIIIllIlIIlI + llllllllllllllllIllllIIIllIlIIIl + llllllllllllllllIllllIIIllIlIIlI;
-        llllllllllllllllIllllIIIllIlIIII.calculateTextWidths();
+        double d = this.pad();
+        double d2 = this.theme.textHeight();
+        this.width = d + d2 + d;
+        this.height = d + d2 + d;
+        this.calculateTextWidths();
     }
 
-    public WTextBox(String llllllllllllllllIllllIIIllIllIll, CharFilter llllllllllllllllIllllIIIllIlIlll) {
-        WTextBox llllllllllllllllIllllIIIllIlllII;
-        llllllllllllllllIllllIIIllIlllII.textWidths = new DoubleArrayList();
-        llllllllllllllllIllllIIIllIlllII.text = llllllllllllllllIllllIIIllIllIll;
-        llllllllllllllllIllllIIIllIlllII.filter = llllllllllllllllIllllIIIllIlIlll;
+    public WTextBox(String string, CharFilter charFilter) {
+        this.text = string;
+        this.filter = charFilter;
     }
 
-    private int countToNextSpace(boolean llllllllllllllllIllllIIIIlIlIlll) {
-        WTextBox llllllllllllllllIllllIIIIlIlIlII;
-        int llllllllllllllllIllllIIIIlIlIllI = 0;
-        boolean llllllllllllllllIllllIIIIlIlIlIl = false;
-        int llllllllllllllllIllllIIIIlIllIIl = llllllllllllllllIllllIIIIlIlIlII.cursor;
-        while (llllllllllllllllIllllIIIIlIlIlll ? llllllllllllllllIllllIIIIlIllIIl >= 0 : llllllllllllllllIllllIIIIlIllIIl < llllllllllllllllIllllIIIIlIlIlII.text.length()) {
-            int llllllllllllllllIllllIIIIlIllIlI = llllllllllllllllIllllIIIIlIllIIl;
-            if (llllllllllllllllIllllIIIIlIlIlll) {
-                --llllllllllllllllIllllIIIIlIllIlI;
+    private int countToNextSpace(boolean bl) {
+        int n = 0;
+        boolean bl2 = false;
+        int n2 = this.cursor;
+        while (bl ? n2 >= 0 : n2 < this.text.length()) {
+            int n3 = n2;
+            if (bl) {
+                --n3;
             }
-            if (llllllllllllllllIllllIIIIlIllIlI < llllllllllllllllIllllIIIIlIlIlII.text.length()) {
-                if (llllllllllllllllIllllIIIIlIllIlI < 0 || llllllllllllllllIllllIIIIlIlIlIl && llllllllllllllllIllllIIIIlIlIlII.text.charAt(llllllllllllllllIllllIIIIlIllIlI) == ' ') break;
-                if (llllllllllllllllIllllIIIIlIlIlII.text.charAt(llllllllllllllllIllllIIIIlIllIlI) != ' ') {
-                    llllllllllllllllIllllIIIIlIlIlIl = true;
+            if (n3 < this.text.length()) {
+                if (n3 < 0 || bl2 && this.text.charAt(n3) == ' ') break;
+                if (this.text.charAt(n3) != ' ') {
+                    bl2 = true;
                 }
-                ++llllllllllllllllIllllIIIIlIlIllI;
+                ++n;
             }
-            llllllllllllllllIllllIIIIlIllIIl += llllllllllllllllIllllIIIIlIlIlll ? -1 : 1;
+            n2 += bl ? -1 : 1;
         }
-        return llllllllllllllllIllllIIIIlIlIllI;
+        return n;
     }
 
     @Override
-    public boolean render(GuiRenderer llllllllllllllllIllllIIIIllIIlII, double llllllllllllllllIllllIIIIllIlIII, double llllllllllllllllIllllIIIIllIIlll, double llllllllllllllllIllllIIIIllIIllI) {
-        WTextBox llllllllllllllllIllllIIIIllIlIlI;
-        if (llllllllllllllllIllllIIIIllIlIlI.isFocused()) {
+    public boolean render(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (this.isFocused()) {
             GuiKeyEvents.canUseKeys = false;
         }
-        return super.render(llllllllllllllllIllllIIIIllIIlII, llllllllllllllllIllllIIIIllIlIII, llllllllllllllllIllllIIIIllIIlll, llllllllllllllllIllllIIIIllIIllI);
+        return super.render(guiRenderer, d, d2, d3);
     }
 
-    public void setFocused(boolean llllllllllllllllIllllIIIIIIlllII) {
-        WTextBox llllllllllllllllIllllIIIIIIlllIl;
-        if (llllllllllllllllIllllIIIIIIlllIl.focused && !llllllllllllllllIllllIIIIIIlllII && llllllllllllllllIllllIIIIIIlllIl.actionOnUnfocused != null) {
-            llllllllllllllllIllllIIIIIIlllIl.actionOnUnfocused.run();
+    public void setFocused(boolean bl) {
+        if (this.focused && !bl && this.actionOnUnfocused != null) {
+            this.actionOnUnfocused.run();
         }
-        boolean llllllllllllllllIllllIIIIIIllIll = llllllllllllllllIllllIIIIIIlllII && !llllllllllllllllIllllIIIIIIlllIl.focused;
-        llllllllllllllllIllllIIIIIIlllIl.focused = llllllllllllllllIllllIIIIIIlllII;
-        if (llllllllllllllllIllllIIIIIIllIll) {
-            llllllllllllllllIllllIIIIIIlllIl.onCursorChanged();
+        boolean bl2 = bl && !this.focused;
+        this.focused = bl;
+        if (bl2) {
+            this.onCursorChanged();
         }
     }
 
     @Override
-    public boolean onKeyPressed(int llllllllllllllllIllllIIIlIIllIIl, int llllllllllllllllIllllIIIlIIlIlII) {
-        boolean llllllllllllllllIllllIIIlIIlIlll;
-        WTextBox llllllllllllllllIllllIIIlIIlIllI;
-        if (!llllllllllllllllIllllIIIlIIlIllI.focused) {
+    public boolean onKeyPressed(int n, int n2) {
+        boolean bl;
+        if (!this.focused) {
             return false;
         }
-        boolean bl = llllllllllllllllIllllIIIlIIlIlll = llllllllllllllllIllllIIIlIIlIlII == 2 || llllllllllllllllIllllIIIlIIlIlII == 8;
-        if (llllllllllllllllIllllIIIlIIllIIl == 86 && llllllllllllllllIllllIIIlIIlIlll) {
-            String llllllllllllllllIllllIIIlIIlllll = llllllllllllllllIllllIIIlIIlIllI.text;
-            String llllllllllllllllIllllIIIlIIllllI = Utils.mc.field_1774.method_1460();
-            int llllllllllllllllIllllIIIlIIlllIl = 0;
-            StringBuilder llllllllllllllllIllllIIIlIIlllII = new StringBuilder(llllllllllllllllIllllIIIlIIlIllI.text.length() + llllllllllllllllIllllIIIlIIllllI.length());
-            llllllllllllllllIllllIIIlIIlllII.append(llllllllllllllllIllllIIIlIIlIllI.text, 0, llllllllllllllllIllllIIIlIIlIllI.cursor);
-            for (int llllllllllllllllIllllIIIlIlIIIII = 0; llllllllllllllllIllllIIIlIlIIIII < llllllllllllllllIllllIIIlIIllllI.length(); ++llllllllllllllllIllllIIIlIlIIIII) {
-                char llllllllllllllllIllllIIIlIlIIIIl = llllllllllllllllIllllIIIlIIllllI.charAt(llllllllllllllllIllllIIIlIlIIIII);
-                if (!llllllllllllllllIllllIIIlIIlIllI.filter.filter(llllllllllllllllIllllIIIlIIlIllI.text, llllllllllllllllIllllIIIlIlIIIIl)) continue;
-                llllllllllllllllIllllIIIlIIlllII.append(llllllllllllllllIllllIIIlIlIIIIl);
-                ++llllllllllllllllIllllIIIlIIlllIl;
+        boolean bl2 = bl = n2 == 2 || n2 == 8;
+        if (n == 86 && bl) {
+            String string = this.text;
+            String string2 = Utils.mc.field_1774.method_1460();
+            int n3 = 0;
+            StringBuilder stringBuilder = new StringBuilder(this.text.length() + string2.length());
+            stringBuilder.append(this.text, 0, this.cursor);
+            for (int i = 0; i < string2.length(); ++i) {
+                char c = string2.charAt(i);
+                if (!this.filter.filter(this.text, c)) continue;
+                stringBuilder.append(c);
+                ++n3;
+                if (-1 != 2) continue;
+                return false;
             }
-            llllllllllllllllIllllIIIlIIlllII.append(llllllllllllllllIllllIIIlIIlIllI.text, llllllllllllllllIllllIIIlIIlIllI.cursor, llllllllllllllllIllllIIIlIIlIllI.text.length());
-            llllllllllllllllIllllIIIlIIlIllI.text = String.valueOf(llllllllllllllllIllllIIIlIIlllII);
-            llllllllllllllllIllllIIIlIIlIllI.cursor += llllllllllllllllIllllIIIlIIlllIl;
-            if (!llllllllllllllllIllllIIIlIIlIllI.text.equals(llllllllllllllllIllllIIIlIIlllll)) {
-                llllllllllllllllIllllIIIlIIlIllI.runAction();
-            }
-            return true;
-        }
-        if (llllllllllllllllIllllIIIlIIllIIl == 67 && llllllllllllllllIllllIIIlIIlIlll) {
-            Utils.mc.field_1774.method_1455(llllllllllllllllIllllIIIlIIlIllI.text);
-            return true;
-        }
-        if (llllllllllllllllIllllIIIlIIllIIl == 88 && llllllllllllllllIllllIIIlIIlIlll) {
-            String llllllllllllllllIllllIIIlIIllIll = llllllllllllllllIllllIIIlIIlIllI.text;
-            Utils.mc.field_1774.method_1455(llllllllllllllllIllllIIIlIIlIllI.text);
-            llllllllllllllllIllllIIIlIIlIllI.text = "";
-            llllllllllllllllIllllIIIlIIlIllI.cursor = 0;
-            if (!llllllllllllllllIllllIIIlIIlIllI.text.equals(llllllllllllllllIllllIIIlIIllIll)) {
-                llllllllllllllllIllllIIIlIIlIllI.runAction();
+            stringBuilder.append(this.text, this.cursor, this.text.length());
+            this.text = String.valueOf(stringBuilder);
+            this.cursor += n3;
+            if (!this.text.equals(string)) {
+                this.runAction();
             }
             return true;
         }
-        if (llllllllllllllllIllllIIIlIIllIIl == 257 || llllllllllllllllIllllIIIlIIllIIl == 335) {
-            llllllllllllllllIllllIIIlIIlIllI.setFocused(false);
-            if (llllllllllllllllIllllIIIlIIlIllI.actionOnUnfocused != null) {
-                llllllllllllllllIllllIIIlIIlIllI.actionOnUnfocused.run();
+        if (n == 67 && bl) {
+            Utils.mc.field_1774.method_1455(this.text);
+            return true;
+        }
+        if (n == 88 && bl) {
+            String string = this.text;
+            Utils.mc.field_1774.method_1455(this.text);
+            this.text = "";
+            this.cursor = 0;
+            if (!this.text.equals(string)) {
+                this.runAction();
             }
             return true;
         }
-        return llllllllllllllllIllllIIIlIIlIllI.onKeyRepeated(llllllllllllllllIllllIIIlIIllIIl, llllllllllllllllIllllIIIlIIlIlII);
+        if (n == 257 || n == 335) {
+            this.setFocused(false);
+            if (this.actionOnUnfocused != null) {
+                this.actionOnUnfocused.run();
+            }
+            return true;
+        }
+        return this.onKeyRepeated(n, n2);
     }
 
     protected double maxTextWidth() {
-        WTextBox llllllllllllllllIllllIIIllIIlIll;
-        return llllllllllllllllIllllIIIllIIlIll.width - llllllllllllllllIllllIIIllIIlIll.pad() * 2.0;
+        return this.width - this.pad() * 2.0;
     }
 
-    public void set(String llllllllllllllllIllllIIIIIlIIllI) {
-        WTextBox llllllllllllllllIllllIIIIIlIIlIl;
-        llllllllllllllllIllllIIIIIlIIlIl.text = llllllllllllllllIllllIIIIIlIIllI;
-        llllllllllllllllIllllIIIIIlIIlIl.cursor = Utils.clamp(llllllllllllllllIllllIIIIIlIIlIl.cursor, 0, llllllllllllllllIllllIIIIIlIIllI.length());
-        llllllllllllllllIllllIIIIIlIIlIl.calculateTextWidths();
-        llllllllllllllllIllllIIIIIlIIlIl.cursorChanged();
+    public void set(String string) {
+        this.text = string;
+        this.cursor = Utils.clamp(this.cursor, 0, string.length());
+        this.calculateTextWidths();
+        this.cursorChanged();
     }
 }
 

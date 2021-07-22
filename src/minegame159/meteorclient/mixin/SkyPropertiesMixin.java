@@ -21,10 +21,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_5294.class})
 public class SkyPropertiesMixin {
     @Inject(method={"shouldBrightenLighting"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onShouldBrightenLighting(CallbackInfoReturnable<Boolean> cir) {
+    private void onShouldBrightenLighting(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         Fullbright fullbright = Modules.get().get(Fullbright.class);
         if (fullbright.mode.get() == Fullbright.Mode.Luminance && Fullbright.isEnabled()) {
-            cir.setReturnValue((Object)true);
+            callbackInfoReturnable.setReturnValue((Object)true);
         }
     }
 }

@@ -10,6 +10,7 @@
  *  net.minecraft.class_243
  *  net.minecraft.class_2561
  *  net.minecraft.class_2585
+ *  net.minecraft.class_310
  *  net.minecraft.class_418
  *  net.minecraft.class_437
  */
@@ -53,345 +54,385 @@ import minegame159.meteorclient.utils.Utils;
 import minegame159.meteorclient.utils.player.ChatUtils;
 import minegame159.meteorclient.utils.player.PlayerUtils;
 import minegame159.meteorclient.utils.render.color.Color;
+import minegame159.meteorclient.utils.render.color.SettingColor;
 import minegame159.meteorclient.utils.world.Dimension;
 import net.minecraft.class_2338;
 import net.minecraft.class_243;
 import net.minecraft.class_2561;
 import net.minecraft.class_2585;
+import net.minecraft.class_310;
 import net.minecraft.class_418;
 import net.minecraft.class_437;
 
 public class WaypointsModule
 extends Module {
-    private final /* synthetic */ SettingGroup sgDeathPosition;
-    private final /* synthetic */ SimpleDateFormat dateFormat;
-    private final /* synthetic */ Setting<Boolean> dpChat;
-    private static final /* synthetic */ Color GRAY;
-    private final /* synthetic */ Setting<Integer> maxDeathPositions;
+    private final SettingGroup sgDeathPosition;
+    private final SimpleDateFormat dateFormat;
+    private final Setting<Boolean> dpChat;
+    private static final Color GRAY = new Color(200, 200, 200);
+    private final Setting<Integer> maxDeathPositions;
 
-    private void cleanDeathWPs(int llllllllllllllllllllIIIlllIlllII) {
-        int llllllllllllllllllllIIIlllIllllI = 0;
-        ListIterator<Waypoint> llllllllllllllllllllIIIlllIlllIl = Waypoints.get().iteratorReverse();
-        while (llllllllllllllllllllIIIlllIlllIl.hasPrevious()) {
-            Waypoint llllllllllllllllllllIIIllllIIIIl = llllllllllllllllllllIIIlllIlllIl.previous();
-            if (!llllllllllllllllllllIIIllllIIIIl.name.startsWith("Death ") || !"skull".equals(llllllllllllllllllllIIIllllIIIIl.icon) || ++llllllllllllllllllllIIIlllIllllI <= llllllllllllllllllllIIIlllIlllII) continue;
-            Waypoints.get().remove(llllllllllllllllllllIIIllllIIIIl);
+    static class_310 access$200(WaypointsModule waypointsModule) {
+        return waypointsModule.mc;
+    }
+
+    private static void lambda$fillTable$2(Waypoint waypoint, WCheckbox wCheckbox) {
+        waypoint.visible = wCheckbox.checked;
+        Waypoints.get().save();
+    }
+
+    static class_310 access$300(WaypointsModule waypointsModule) {
+        return waypointsModule.mc;
+    }
+
+    static class_310 access$100(WaypointsModule waypointsModule) {
+        return waypointsModule.mc;
+    }
+
+    static class_310 access$000(WaypointsModule waypointsModule) {
+        return waypointsModule.mc;
+    }
+
+    private void lambda$fillTable$4(Waypoint waypoint, WTable wTable, GuiTheme guiTheme) {
+        Waypoints.get().remove(waypoint);
+        wTable.clear();
+        this.fillTable(guiTheme, wTable);
+    }
+
+    private void lambda$fillTable$5(Waypoint waypoint) {
+        if (this.mc.field_1724 == null || this.mc.field_1687 == null) {
+            return;
+        }
+        IBaritone iBaritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+        if (iBaritone.getPathingBehavior().isPathing()) {
+            iBaritone.getPathingBehavior().cancelEverything();
+        }
+        class_243 class_2432 = Waypoints.get().getCoords(waypoint);
+        class_2338 class_23382 = new class_2338(class_2432.field_1352, class_2432.field_1351, class_2432.field_1350);
+        iBaritone.getCustomGoalProcess().setGoalAndPath((Goal)new GoalGetToBlock(class_23382));
+    }
+
+    private void lambda$fillTable$3(GuiTheme guiTheme, Waypoint waypoint) {
+        this.mc.method_1507((class_437)new EditWaypointScreen(this, guiTheme, waypoint, null));
+    }
+
+    private void cleanDeathWPs(int n) {
+        int n2 = 0;
+        ListIterator<Waypoint> listIterator = Waypoints.get().iteratorReverse();
+        while (listIterator.hasPrevious()) {
+            Waypoint waypoint = listIterator.previous();
+            if (!waypoint.name.startsWith("Death ") || !"skull".equals(waypoint.icon) || ++n2 <= n) continue;
+            Waypoints.get().remove(waypoint);
         }
     }
 
     @EventHandler
-    private void onOpenScreen(OpenScreenEvent llllllllllllllllllllIIIllllIllIl) {
-        WaypointsModule llllllllllllllllllllIIIllllIlIlI;
-        if (!(llllllllllllllllllllIIIllllIllIl.screen instanceof class_418)) {
+    private void onOpenScreen(OpenScreenEvent openScreenEvent) {
+        Object object;
+        if (!(openScreenEvent.screen instanceof class_418)) {
             return;
         }
-        if (llllllllllllllllllllIIIllllIlIlI.mc.field_1724 == null) {
+        if (this.mc.field_1724 == null) {
             return;
         }
-        class_243 llllllllllllllllllllIIIllllIllII = llllllllllllllllllllIIIllllIlIlI.mc.field_1724.method_19538();
-        String llllllllllllllllllllIIIllllIlIll = llllllllllllllllllllIIIllllIlIlI.dateFormat.format(new Date());
-        if (llllllllllllllllllllIIIllllIlIlI.dpChat.get().booleanValue()) {
-            class_2585 llllllllllllllllllllIIIlllllIIII = new class_2585("Died at ");
-            llllllllllllllllllllIIIlllllIIII.method_10852((class_2561)ChatUtils.formatCoords(llllllllllllllllllllIIIllllIllII));
-            llllllllllllllllllllIIIlllllIIII.method_27693(String.format(" on %s.", llllllllllllllllllllIIIllllIlIll));
-            llllllllllllllllllllIIIllllIlIlI.info((class_2561)llllllllllllllllllllIIIlllllIIII);
+        class_243 class_2432 = this.mc.field_1724.method_19538();
+        String string = this.dateFormat.format(new Date());
+        if (this.dpChat.get().booleanValue()) {
+            object = new class_2585("Died at ");
+            object.method_10852((class_2561)ChatUtils.formatCoords(class_2432));
+            object.method_27693(String.format(" on %s.", string));
+            this.info((class_2561)object);
         }
-        if (llllllllllllllllllllIIIllllIlIlI.maxDeathPositions.get() > 0) {
-            Waypoint llllllllllllllllllllIIIllllIllll = new Waypoint();
-            llllllllllllllllllllIIIllllIllll.name = String.valueOf(new StringBuilder().append("Death ").append(llllllllllllllllllllIIIllllIlIll));
-            llllllllllllllllllllIIIllllIllll.icon = "skull";
-            llllllllllllllllllllIIIllllIllll.x = (int)llllllllllllllllllllIIIllllIllII.field_1352;
-            llllllllllllllllllllIIIllllIllll.y = (int)llllllllllllllllllllIIIllllIllII.field_1351 + 2;
-            llllllllllllllllllllIIIllllIllll.z = (int)llllllllllllllllllllIIIllllIllII.field_1350;
-            llllllllllllllllllllIIIllllIllll.maxVisibleDistance = Integer.MAX_VALUE;
-            llllllllllllllllllllIIIllllIllll.actualDimension = PlayerUtils.getDimension();
-            switch (llllllllllllllllllllIIIllllIllll.actualDimension) {
-                case Overworld: {
-                    llllllllllllllllllllIIIllllIllll.overworld = true;
+        if (this.maxDeathPositions.get() > 0) {
+            object = new Waypoint();
+            object.name = String.valueOf(new StringBuilder().append("Death ").append(string));
+            object.icon = "skull";
+            object.x = (int)class_2432.field_1352;
+            object.y = (int)class_2432.field_1351 + 2;
+            object.z = (int)class_2432.field_1350;
+            object.maxVisibleDistance = Integer.MAX_VALUE;
+            object.actualDimension = PlayerUtils.getDimension();
+            switch (1.$SwitchMap$minegame159$meteorclient$utils$world$Dimension[object.actualDimension.ordinal()]) {
+                case 1: {
+                    object.overworld = true;
                     break;
                 }
-                case Nether: {
-                    llllllllllllllllllllIIIllllIllll.nether = true;
+                case 2: {
+                    object.nether = true;
                     break;
                 }
-                case End: {
-                    llllllllllllllllllllIIIllllIllll.end = true;
+                case 3: {
+                    object.end = true;
                 }
             }
-            Waypoints.get().add(llllllllllllllllllllIIIllllIllll);
+            Waypoints.get().add((Waypoint)object);
         }
-        llllllllllllllllllllIIIllllIlIlI.cleanDeathWPs(llllllllllllllllllllIIIllllIlIlI.maxDeathPositions.get());
+        this.cleanDeathWPs(this.maxDeathPositions.get());
+    }
+
+    private void lambda$fillTable$1(GuiTheme guiTheme, WTable wTable) {
+        this.mc.method_1507((class_437)new EditWaypointScreen(this, guiTheme, null, () -> this.lambda$fillTable$0(wTable, guiTheme)));
+    }
+
+    private void lambda$fillTable$0(WTable wTable, GuiTheme guiTheme) {
+        wTable.clear();
+        this.fillTable(guiTheme, wTable);
     }
 
     public WaypointsModule() {
         super(Categories.Render, "waypoints", "Allows you to create waypoints.");
-        WaypointsModule llllllllllllllllllllIIIlllllIllI;
-        llllllllllllllllllllIIIlllllIllI.sgDeathPosition = llllllllllllllllllllIIIlllllIllI.settings.createGroup("Death Position");
-        llllllllllllllllllllIIIlllllIllI.maxDeathPositions = llllllllllllllllllllIIIlllllIllI.sgDeathPosition.add(new IntSetting.Builder().name("max-death-positions").description("The amount of death positions to save, 0 to disable").min(0).sliderMin(0).sliderMax(20).defaultValue(0).onChanged(llllllllllllllllllllIIIlllllIllI::cleanDeathWPs).build());
-        llllllllllllllllllllIIIlllllIllI.dpChat = llllllllllllllllllllIIIlllllIllI.sgDeathPosition.add(new BoolSetting.Builder().name("chat").description("Send a chat message with your position once you die").defaultValue(false).build());
-        llllllllllllllllllllIIIlllllIllI.dateFormat = new SimpleDateFormat("HH:mm:ss");
-    }
-
-    static {
-        GRAY = new Color(200, 200, 200);
+        this.sgDeathPosition = this.settings.createGroup("Death Position");
+        this.maxDeathPositions = this.sgDeathPosition.add(new IntSetting.Builder().name("max-death-positions").description("The amount of death positions to save, 0 to disable").min(0).sliderMin(0).sliderMax(20).defaultValue(0).onChanged(this::cleanDeathWPs).build());
+        this.dpChat = this.sgDeathPosition.add(new BoolSetting.Builder().name("chat").description("Send a chat message with your position once you die").defaultValue(false).build());
+        this.dateFormat = new SimpleDateFormat("HH:mm:ss");
     }
 
     @Override
-    public WWidget getWidget(GuiTheme llllllllllllllllllllIIIlllIlIlII) {
-        WaypointsModule llllllllllllllllllllIIIlllIlIIlI;
+    public WWidget getWidget(GuiTheme guiTheme) {
         if (!Utils.canUpdate()) {
-            return llllllllllllllllllllIIIlllIlIlII.label("You need to be in a world.");
+            return guiTheme.label("You need to be in a world.");
         }
-        WTable llllllllllllllllllllIIIlllIlIIll = llllllllllllllllllllIIIlllIlIlII.table();
-        llllllllllllllllllllIIIlllIlIIlI.fillTable(llllllllllllllllllllIIIlllIlIlII, llllllllllllllllllllIIIlllIlIIll);
-        return llllllllllllllllllllIIIlllIlIIll;
+        WTable wTable = guiTheme.table();
+        this.fillTable(guiTheme, wTable);
+        return wTable;
     }
 
-    private void fillTable(GuiTheme llllllllllllllllllllIIIllIlllIIl, WTable llllllllllllllllllllIIIllIllIlII) {
-        WaypointsModule llllllllllllllllllllIIIllIlllIlI;
-        WButton llllllllllllllllllllIIIllIllIlll = llllllllllllllllllllIIIllIllIlII.add(llllllllllllllllllllIIIllIlllIIl.button("Create")).expandX().widget();
-        llllllllllllllllllllIIIllIllIlll.action = () -> {
-            WaypointsModule llllllllllllllllllllIIIlIlllllII;
-            llllllllllllllllllllIIIlIlllllII.mc.method_1507((class_437)llllllllllllllllllllIIIlIlllllII.new EditWaypointScreen(llllllllllllllllllllIIIllIlllIIl, null, () -> {
-                WaypointsModule llllllllllllllllllllIIIlIlllIIII;
-                llllllllllllllllllllIIIllIllIlII.clear();
-                llllllllllllllllllllIIIlIlllIIII.fillTable(llllllllllllllllllllIIIllIlllIIl, llllllllllllllllllllIIIllIllIlII);
-            }));
-        };
-        llllllllllllllllllllIIIllIllIlII.row();
-        for (Waypoint llllllllllllllllllllIIIllIlllIll : Waypoints.get()) {
-            llllllllllllllllllllIIIllIllIlII.add(new WIcon(llllllllllllllllllllIIIllIlllIll));
-            WLabel llllllllllllllllllllIIIlllIIIIIl = llllllllllllllllllllIIIllIllIlII.add(llllllllllllllllllllIIIllIlllIIl.label(llllllllllllllllllllIIIllIlllIll.name)).expandCellX().widget();
-            boolean llllllllllllllllllllIIIlllIIIIII = false;
-            Dimension llllllllllllllllllllIIIllIllllll = PlayerUtils.getDimension();
-            if (llllllllllllllllllllIIIllIlllIll.overworld && llllllllllllllllllllIIIllIllllll == Dimension.Overworld) {
-                llllllllllllllllllllIIIlllIIIIII = true;
-            } else if (llllllllllllllllllllIIIllIlllIll.nether && llllllllllllllllllllIIIllIllllll == Dimension.Nether) {
-                llllllllllllllllllllIIIlllIIIIII = true;
-            } else if (llllllllllllllllllllIIIllIlllIll.end && llllllllllllllllllllIIIllIllllll == Dimension.End) {
-                llllllllllllllllllllIIIlllIIIIII = true;
+    private void fillTable(GuiTheme guiTheme, WTable wTable) {
+        WButton wButton = wTable.add(guiTheme.button("Create")).expandX().widget();
+        wButton.action = () -> this.lambda$fillTable$1(guiTheme, wTable);
+        wTable.row();
+        for (Waypoint waypoint : Waypoints.get()) {
+            wTable.add(new WIcon(waypoint));
+            WLabel wLabel = wTable.add(guiTheme.label(waypoint.name)).expandCellX().widget();
+            boolean bl = false;
+            Dimension dimension = PlayerUtils.getDimension();
+            if (waypoint.overworld && dimension == Dimension.Overworld) {
+                bl = true;
+            } else if (waypoint.nether && dimension == Dimension.Nether) {
+                bl = true;
+            } else if (waypoint.end && dimension == Dimension.End) {
+                bl = true;
             }
-            if (!llllllllllllllllllllIIIlllIIIIII) {
-                llllllllllllllllllllIIIlllIIIIIl.color = GRAY;
+            if (!bl) {
+                wLabel.color = GRAY;
             }
-            WCheckbox llllllllllllllllllllIIIllIlllllI = llllllllllllllllllllIIIllIllIlII.add(llllllllllllllllllllIIIllIlllIIl.checkbox(llllllllllllllllllllIIIllIlllIll.visible)).widget();
-            llllllllllllllllllllIIIllIlllllI.action = () -> {
-                llllllllllllllllllllIIIllIIIIIll.visible = llllllllllllllllllllIIIllIIIIIII.checked;
-                Waypoints.get().save();
-            };
-            WButton llllllllllllllllllllIIIllIllllIl = llllllllllllllllllllIIIllIllIlII.add(llllllllllllllllllllIIIllIlllIIl.button(GuiRenderer.EDIT)).widget();
-            llllllllllllllllllllIIIllIllllIl.action = () -> {
-                WaypointsModule llllllllllllllllllllIIIllIIIlIII;
-                llllllllllllllllllllIIIllIIIlIII.mc.method_1507((class_437)llllllllllllllllllllIIIllIIIlIII.new EditWaypointScreen(llllllllllllllllllllIIIllIlllIIl, llllllllllllllllllllIIIllIlllIll, null));
-            };
-            WMinus llllllllllllllllllllIIIllIllllII = llllllllllllllllllllIIIllIllIlII.add(llllllllllllllllllllIIIllIlllIIl.minus()).widget();
-            llllllllllllllllllllIIIllIllllII.action = () -> {
-                WaypointsModule llllllllllllllllllllIIIllIIlIIlI;
-                Waypoints.get().remove(llllllllllllllllllllIIIllIlllIll);
-                llllllllllllllllllllIIIllIllIlII.clear();
-                llllllllllllllllllllIIIllIIlIIlI.fillTable(llllllllllllllllllllIIIllIlllIIl, llllllllllllllllllllIIIllIllIlII);
-            };
-            if (llllllllllllllllllllIIIllIlllIll.actualDimension == llllllllllllllllllllIIIllIllllll) {
-                WButton llllllllllllllllllllIIIlllIIIIlI = llllllllllllllllllllIIIllIllIlII.add(llllllllllllllllllllIIIllIlllIIl.button("Goto")).widget();
-                llllllllllllllllllllIIIlllIIIIlI.action = () -> {
-                    WaypointsModule llllllllllllllllllllIIIllIlIIlII;
-                    if (llllllllllllllllllllIIIllIlIIlII.mc.field_1724 == null || llllllllllllllllllllIIIllIlIIlII.mc.field_1687 == null) {
-                        return;
-                    }
-                    IBaritone llllllllllllllllllllIIIllIlIIIlI = BaritoneAPI.getProvider().getPrimaryBaritone();
-                    if (llllllllllllllllllllIIIllIlIIIlI.getPathingBehavior().isPathing()) {
-                        llllllllllllllllllllIIIllIlIIIlI.getPathingBehavior().cancelEverything();
-                    }
-                    class_243 llllllllllllllllllllIIIllIlIIIIl = Waypoints.get().getCoords(llllllllllllllllllllIIIllIlllIll);
-                    class_2338 llllllllllllllllllllIIIllIlIIIII = new class_2338(llllllllllllllllllllIIIllIlIIIIl.field_1352, llllllllllllllllllllIIIllIlIIIIl.field_1351, llllllllllllllllllllIIIllIlIIIIl.field_1350);
-                    llllllllllllllllllllIIIllIlIIIlI.getCustomGoalProcess().setGoalAndPath((Goal)new GoalGetToBlock(llllllllllllllllllllIIIllIlIIIII));
-                };
+            WCheckbox wCheckbox = wTable.add(guiTheme.checkbox(waypoint.visible)).widget();
+            wCheckbox.action = () -> WaypointsModule.lambda$fillTable$2(waypoint, wCheckbox);
+            WButton wButton2 = wTable.add(guiTheme.button(GuiRenderer.EDIT)).widget();
+            wButton2.action = () -> this.lambda$fillTable$3(guiTheme, waypoint);
+            WMinus wMinus = wTable.add(guiTheme.minus()).widget();
+            wMinus.action = () -> this.lambda$fillTable$4(waypoint, wTable, guiTheme);
+            if (waypoint.actualDimension == dimension) {
+                WButton wButton3 = wTable.add(guiTheme.button("Goto")).widget();
+                wButton3.action = () -> this.lambda$fillTable$5(waypoint);
             }
-            llllllllllllllllllllIIIllIllIlII.row();
+            wTable.row();
         }
     }
 
     private class EditWaypointScreen
     extends WindowScreen {
-        private final /* synthetic */ boolean newWaypoint;
-        private final /* synthetic */ Waypoint waypoint;
-        private final /* synthetic */ Runnable action;
+        final WaypointsModule this$0;
+        private final boolean newWaypoint;
+        private final Waypoint waypoint;
+        private final Runnable action;
+
+        private void lambda$initWidgets$10(WCheckbox wCheckbox) {
+            this.waypoint.overworld = wCheckbox.checked;
+        }
 
         @Override
         protected void onClosed() {
-            EditWaypointScreen lllllllllllllllllIllIIIlllIlIlIl;
-            if (lllllllllllllllllIllIIIlllIlIlIl.action != null) {
-                lllllllllllllllllIllIIIlllIlIlIl.action.run();
+            if (this.action != null) {
+                this.action.run();
             }
         }
 
-        public EditWaypointScreen(GuiTheme lllllllllllllllllIllIIlIIIIIlIll, Waypoint lllllllllllllllllIllIIlIIIIIIlIl, Runnable lllllllllllllllllIllIIlIIIIIlIIl) {
-            EditWaypointScreen lllllllllllllllllIllIIlIIIIIlIII;
-            super(lllllllllllllllllIllIIlIIIIIlIll, lllllllllllllllllIllIIlIIIIIIlIl == null ? "New Waypoint" : "Edit Waypoint");
-            lllllllllllllllllIllIIlIIIIIlIII.newWaypoint = lllllllllllllllllIllIIlIIIIIIlIl == null;
-            lllllllllllllllllIllIIlIIIIIlIII.waypoint = lllllllllllllllllIllIIlIIIIIlIII.newWaypoint ? new Waypoint() : lllllllllllllllllIllIIlIIIIIIlIl;
-            lllllllllllllllllIllIIlIIIIIlIII.action = lllllllllllllllllIllIIlIIIIIlIIl;
-            lllllllllllllllllIllIIlIIIIIlIII.waypoint.validateIcon();
-            if (lllllllllllllllllIllIIlIIIIIlIII.newWaypoint) {
-                lllllllllllllllllIllIIlIIIIIlIII.waypoint.x = (int)((WaypointsModule)lllllllllllllllllIllIIlIIIIIlIII.WaypointsModule.this).mc.field_1724.method_23317();
-                lllllllllllllllllIllIIlIIIIIlIII.waypoint.y = (int)((WaypointsModule)lllllllllllllllllIllIIlIIIIIlIII.WaypointsModule.this).mc.field_1724.method_23318() + 2;
-                lllllllllllllllllIllIIlIIIIIlIII.waypoint.z = (int)((WaypointsModule)lllllllllllllllllIllIIlIIIIIlIII.WaypointsModule.this).mc.field_1724.method_23321();
-                lllllllllllllllllIllIIlIIIIIlIII.waypoint.actualDimension = PlayerUtils.getDimension();
+        private void lambda$initWidgets$12(WCheckbox wCheckbox) {
+            this.waypoint.end = wCheckbox.checked;
+        }
+
+        public EditWaypointScreen(WaypointsModule waypointsModule, GuiTheme guiTheme, Waypoint waypoint, Runnable runnable) {
+            this.this$0 = waypointsModule;
+            super(guiTheme, waypoint == null ? "New Waypoint" : "Edit Waypoint");
+            this.newWaypoint = waypoint == null;
+            this.waypoint = this.newWaypoint ? new Waypoint() : waypoint;
+            this.action = runnable;
+            this.waypoint.validateIcon();
+            if (this.newWaypoint) {
+                this.waypoint.x = (int)WaypointsModule.access$000((WaypointsModule)waypointsModule).field_1724.method_23317();
+                this.waypoint.y = (int)WaypointsModule.access$100((WaypointsModule)waypointsModule).field_1724.method_23318() + 2;
+                this.waypoint.z = (int)WaypointsModule.access$200((WaypointsModule)waypointsModule).field_1724.method_23321();
+                this.waypoint.actualDimension = PlayerUtils.getDimension();
                 switch (PlayerUtils.getDimension()) {
                     case Overworld: {
-                        lllllllllllllllllIllIIlIIIIIlIII.waypoint.overworld = true;
+                        this.waypoint.overworld = true;
                         break;
                     }
                     case Nether: {
-                        lllllllllllllllllIllIIlIIIIIlIII.waypoint.nether = true;
+                        this.waypoint.nether = true;
                         break;
                     }
                     case End: {
-                        lllllllllllllllllIllIIlIIIIIlIII.waypoint.end = true;
+                        this.waypoint.end = true;
                     }
                 }
             }
-            lllllllllllllllllIllIIlIIIIIlIII.initWidgets();
+            this.initWidgets();
         }
 
         private void initWidgets() {
-            EditWaypointScreen lllllllllllllllllIllIIIllllIIlIl;
-            WTable lllllllllllllllllIllIIIlllllIIll = lllllllllllllllllIllIIIllllIIlIl.add(lllllllllllllllllIllIIIllllIIlIl.theme.table()).expandX().widget();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Name:"));
-            WTextBox lllllllllllllllllIllIIIlllllIIlI = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.textBox(lllllllllllllllllIllIIIllllIIlIl.waypoint.name)).minWidth(400.0).expandX().widget();
-            lllllllllllllllllIllIIIlllllIIlI.action = () -> {
-                lllllllllllllllllIllIIIllIIIlIIl.waypoint.name = lllllllllllllllllIllIIIlllllIIlI.get().trim();
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Icon:"));
-            WHorizontalList lllllllllllllllllIllIIIlllllIIIl = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.horizontalList()).widget();
-            lllllllllllllllllIllIIIlllllIIIl.add(lllllllllllllllllIllIIIllllIIlIl.theme.button((String)"<")).widget().action = lllllllllllllllllIllIIIllllIIlIl.waypoint::prevIcon;
-            lllllllllllllllllIllIIIlllllIIIl.add(new WIcon(lllllllllllllllllIllIIIllllIIlIl.waypoint));
-            lllllllllllllllllIllIIIlllllIIIl.add(lllllllllllllllllIllIIIllllIIlIl.theme.button((String)">")).widget().action = lllllllllllllllllIllIIIllllIIlIl.waypoint::nextIcon;
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Color:"));
-            lllllllllllllllllIllIIIlllllIIIl = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.horizontalList()).widget();
-            lllllllllllllllllIllIIIlllllIIIl.add(lllllllllllllllllIllIIIllllIIlIl.theme.quad(lllllllllllllllllIllIIIllllIIlIl.waypoint.color));
-            lllllllllllllllllIllIIIlllllIIIl.add(lllllllllllllllllIllIIIllllIIlIl.theme.button((GuiTexture)GuiRenderer.EDIT)).widget().action = () -> {
-                EditWaypointScreen lllllllllllllllllIllIIIllIIlIIll;
-                lllllllllllllllllIllIIIllIIlIIll.WaypointsModule.this.mc.method_1507((class_437)new ColorSettingScreen(lllllllllllllllllIllIIIllIIlIIll.theme, new ColorSetting("", "", lllllllllllllllllIllIIIllIIlIIll.waypoint.color, lllllllllllllllllIllIIIllIIIllII -> {
-                    EditWaypointScreen lllllllllllllllllIllIIIllIIIllIl;
-                    lllllllllllllllllIllIIIllIIIllIl.waypoint.color.set((Color)lllllllllllllllllIllIIIllIIIllII);
-                }, null, null)));
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.horizontalSeparator()).expandX();
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("X:"));
-            WIntEdit lllllllllllllllllIllIIIlllllIIII = lllllllllllllllllIllIIIllllIIlIl.theme.intEdit(lllllllllllllllllIllIIIllllIIlIl.waypoint.x, 0, 0);
-            lllllllllllllllllIllIIIlllllIIII.hasSlider = false;
-            lllllllllllllllllIllIIIlllllIIII.action = () -> {
-                lllllllllllllllllIllIIIllIIlIllI.waypoint.x = lllllllllllllllllIllIIIlllllIIII.get();
-            };
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIlllllIIII).expandX();
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Y:"));
-            WIntEdit lllllllllllllllllIllIIIllllIllll = lllllllllllllllllIllIIIllllIIlIl.theme.intEdit(lllllllllllllllllIllIIIllllIIlIl.waypoint.y, 0, 0);
-            lllllllllllllllllIllIIIllllIllll.hasSlider = false;
-            lllllllllllllllllIllIIIllllIllll.actionOnRelease = () -> {
-                if (lllllllllllllllllIllIIIllllIllll.get() < 0) {
-                    lllllllllllllllllIllIIIllllIllll.set(0);
-                } else if (lllllllllllllllllIllIIIllllIllll.get() > 255) {
-                    lllllllllllllllllIllIIIllllIllll.set(255);
-                }
-                lllllllllllllllllIllIIIllIIllllI.waypoint.y = lllllllllllllllllIllIIIllllIllll.get();
-            };
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIllll).expandX();
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Z:"));
-            WIntEdit lllllllllllllllllIllIIIllllIlllI = lllllllllllllllllIllIIIllllIIlIl.theme.intEdit(lllllllllllllllllIllIIIllllIIlIl.waypoint.z, 0, 0);
-            lllllllllllllllllIllIIIllllIlllI.action = () -> {
-                lllllllllllllllllIllIIIllIlIIIlI.waypoint.z = lllllllllllllllllIllIIIllllIlllI.get();
-            };
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIlllI).expandX();
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.horizontalSeparator()).expandX();
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Visible:"));
-            WCheckbox lllllllllllllllllIllIIIllllIllIl = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.checkbox(lllllllllllllllllIllIIIllllIIlIl.waypoint.visible)).widget();
-            lllllllllllllllllIllIIIllllIllIl.action = () -> {
-                lllllllllllllllllIllIIIllIlIlIII.waypoint.visible = lllllllllllllllllIllIIIllIlIIlll.checked;
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Max Visible Distance"));
-            WIntEdit lllllllllllllllllIllIIIllllIllII = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.intEdit(lllllllllllllllllIllIIIllllIIlIl.waypoint.maxVisibleDistance, 0, 10000)).expandX().widget();
-            lllllllllllllllllIllIIIllllIllII.action = () -> {
-                lllllllllllllllllIllIIIllIlIlllI.waypoint.maxVisibleDistance = lllllllllllllllllIllIIIllllIllII.get();
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Scale:"));
-            WDoubleEdit lllllllllllllllllIllIIIllllIlIll = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.doubleEdit(lllllllllllllllllIllIIIllllIIlIl.waypoint.scale, 0.0, 4.0)).expandX().widget();
-            lllllllllllllllllIllIIIllllIlIll.action = () -> {
-                lllllllllllllllllIllIIIllIllIlII.waypoint.scale = lllllllllllllllllIllIIIllllIlIll.get();
-            };
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.horizontalSeparator()).expandX();
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Actual Dimension:"));
-            WDropdown<Dimension> lllllllllllllllllIllIIIllllIlIlI = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.dropdown(lllllllllllllllllIllIIIllllIIlIl.waypoint.actualDimension)).widget();
-            lllllllllllllllllIllIIIllllIlIlI.action = () -> {
-                lllllllllllllllllIllIIIllIllllII.waypoint.actualDimension = (Dimension)((Object)((Object)lllllllllllllllllIllIIIllllIlIlI.get()));
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Visible in Overworld:"));
-            WCheckbox lllllllllllllllllIllIIIllllIlIIl = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.checkbox(lllllllllllllllllIllIIIllllIIlIl.waypoint.overworld)).widget();
-            lllllllllllllllllIllIIIllllIlIIl.action = () -> {
-                lllllllllllllllllIllIIIlllIIIIlI.waypoint.overworld = lllllllllllllllllIllIIIlllIIIIIl.checked;
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Visible in Nether:"));
-            WCheckbox lllllllllllllllllIllIIIllllIlIII = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.checkbox(lllllllllllllllllIllIIIllllIIlIl.waypoint.nether)).widget();
-            lllllllllllllllllIllIIIllllIlIII.action = () -> {
-                lllllllllllllllllIllIIIlllIIlIII.waypoint.nether = lllllllllllllllllIllIIIlllIIIlll.checked;
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.label("Visible in End:"));
-            WCheckbox lllllllllllllllllIllIIIllllIIlll = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.checkbox(lllllllllllllllllIllIIIllllIIlIl.waypoint.end)).widget();
-            lllllllllllllllllIllIIIllllIIlll.action = () -> {
-                lllllllllllllllllIllIIIlllIIllII.waypoint.end = lllllllllllllllllIllIIIlllIIllIl.checked;
-            };
-            lllllllllllllllllIllIIIlllllIIll.row();
-            WButton lllllllllllllllllIllIIIllllIIllI = lllllllllllllllllIllIIIlllllIIll.add(lllllllllllllllllIllIIIllllIIlIl.theme.button("Save")).expandX().widget();
-            lllllllllllllllllIllIIIllllIIlIl.enterAction = lllllllllllllllllIllIIIllllIIllI.action = () -> {
-                EditWaypointScreen lllllllllllllllllIllIIIlllIlIIIl;
-                if (lllllllllllllllllIllIIIlllIlIIIl.newWaypoint) {
-                    Waypoints.get().add(lllllllllllllllllIllIIIlllIlIIIl.waypoint);
-                } else {
-                    Waypoints.get().save();
-                }
-                lllllllllllllllllIllIIIlllIlIIIl.method_25419();
-            };
+            WTable wTable = this.add(this.theme.table()).expandX().widget();
+            wTable.add(this.theme.label("Name:"));
+            WTextBox wTextBox = wTable.add(this.theme.textBox(this.waypoint.name)).minWidth(400.0).expandX().widget();
+            wTextBox.action = () -> this.lambda$initWidgets$0(wTextBox);
+            wTable.row();
+            wTable.add(this.theme.label("Icon:"));
+            WHorizontalList wHorizontalList = wTable.add(this.theme.horizontalList()).widget();
+            wHorizontalList.add(this.theme.button((String)"<")).widget().action = this.waypoint::prevIcon;
+            wHorizontalList.add(new WIcon(this.waypoint));
+            wHorizontalList.add(this.theme.button((String)">")).widget().action = this.waypoint::nextIcon;
+            wTable.row();
+            wTable.add(this.theme.label("Color:"));
+            wHorizontalList = wTable.add(this.theme.horizontalList()).widget();
+            wHorizontalList.add(this.theme.quad(this.waypoint.color));
+            wHorizontalList.add(this.theme.button((GuiTexture)GuiRenderer.EDIT)).widget().action = this::lambda$initWidgets$2;
+            wTable.row();
+            wTable.add(this.theme.horizontalSeparator()).expandX();
+            wTable.row();
+            wTable.add(this.theme.label("X:"));
+            WIntEdit wIntEdit = this.theme.intEdit(this.waypoint.x, 0, 0);
+            wIntEdit.hasSlider = false;
+            wIntEdit.action = () -> this.lambda$initWidgets$3(wIntEdit);
+            wTable.add(wIntEdit).expandX();
+            wTable.row();
+            wTable.add(this.theme.label("Y:"));
+            WIntEdit wIntEdit2 = this.theme.intEdit(this.waypoint.y, 0, 0);
+            wIntEdit2.hasSlider = false;
+            wIntEdit2.actionOnRelease = () -> this.lambda$initWidgets$4(wIntEdit2);
+            wTable.add(wIntEdit2).expandX();
+            wTable.row();
+            wTable.add(this.theme.label("Z:"));
+            WIntEdit wIntEdit3 = this.theme.intEdit(this.waypoint.z, 0, 0);
+            wIntEdit3.action = () -> this.lambda$initWidgets$5(wIntEdit3);
+            wTable.add(wIntEdit3).expandX();
+            wTable.row();
+            wTable.add(this.theme.horizontalSeparator()).expandX();
+            wTable.row();
+            wTable.add(this.theme.label("Visible:"));
+            WCheckbox wCheckbox = wTable.add(this.theme.checkbox(this.waypoint.visible)).widget();
+            wCheckbox.action = () -> this.lambda$initWidgets$6(wCheckbox);
+            wTable.row();
+            wTable.add(this.theme.label("Max Visible Distance"));
+            WIntEdit wIntEdit4 = wTable.add(this.theme.intEdit(this.waypoint.maxVisibleDistance, 0, 10000)).expandX().widget();
+            wIntEdit4.action = () -> this.lambda$initWidgets$7(wIntEdit4);
+            wTable.row();
+            wTable.add(this.theme.label("Scale:"));
+            WDoubleEdit wDoubleEdit = wTable.add(this.theme.doubleEdit(this.waypoint.scale, 0.0, 4.0)).expandX().widget();
+            wDoubleEdit.action = () -> this.lambda$initWidgets$8(wDoubleEdit);
+            wTable.add(this.theme.horizontalSeparator()).expandX();
+            wTable.row();
+            wTable.add(this.theme.label("Actual Dimension:"));
+            WDropdown<Dimension> wDropdown = wTable.add(this.theme.dropdown(this.waypoint.actualDimension)).widget();
+            wDropdown.action = () -> this.lambda$initWidgets$9(wDropdown);
+            wTable.row();
+            wTable.add(this.theme.label("Visible in Overworld:"));
+            WCheckbox wCheckbox2 = wTable.add(this.theme.checkbox(this.waypoint.overworld)).widget();
+            wCheckbox2.action = () -> this.lambda$initWidgets$10(wCheckbox2);
+            wTable.row();
+            wTable.add(this.theme.label("Visible in Nether:"));
+            WCheckbox wCheckbox3 = wTable.add(this.theme.checkbox(this.waypoint.nether)).widget();
+            wCheckbox3.action = () -> this.lambda$initWidgets$11(wCheckbox3);
+            wTable.row();
+            wTable.add(this.theme.label("Visible in End:"));
+            WCheckbox wCheckbox4 = wTable.add(this.theme.checkbox(this.waypoint.end)).widget();
+            wCheckbox4.action = () -> this.lambda$initWidgets$12(wCheckbox4);
+            wTable.row();
+            WButton wButton = wTable.add(this.theme.button("Save")).expandX().widget();
+            this.enterAction = wButton.action = this::lambda$initWidgets$13;
+        }
+
+        private void lambda$initWidgets$0(WTextBox wTextBox) {
+            this.waypoint.name = wTextBox.get().trim();
+        }
+
+        private void lambda$initWidgets$5(WIntEdit wIntEdit) {
+            this.waypoint.z = wIntEdit.get();
+        }
+
+        private void lambda$initWidgets$13() {
+            if (this.newWaypoint) {
+                Waypoints.get().add(this.waypoint);
+            } else {
+                Waypoints.get().save();
+            }
+            this.method_25419();
+        }
+
+        private void lambda$initWidgets$11(WCheckbox wCheckbox) {
+            this.waypoint.nether = wCheckbox.checked;
+        }
+
+        private void lambda$initWidgets$2() {
+            WaypointsModule.access$300(this.this$0).method_1507((class_437)new ColorSettingScreen(this.theme, new ColorSetting("", "", this.waypoint.color, this::lambda$initWidgets$1, null, null)));
+        }
+
+        private void lambda$initWidgets$1(SettingColor settingColor) {
+            this.waypoint.color.set(settingColor);
+        }
+
+        private void lambda$initWidgets$6(WCheckbox wCheckbox) {
+            this.waypoint.visible = wCheckbox.checked;
+        }
+
+        private void lambda$initWidgets$4(WIntEdit wIntEdit) {
+            if (wIntEdit.get() < 0) {
+                wIntEdit.set(0);
+            } else if (wIntEdit.get() > 255) {
+                wIntEdit.set(255);
+            }
+            this.waypoint.y = wIntEdit.get();
+        }
+
+        private void lambda$initWidgets$9(WDropdown wDropdown) {
+            this.waypoint.actualDimension = (Dimension)((Object)wDropdown.get());
+        }
+
+        private void lambda$initWidgets$3(WIntEdit wIntEdit) {
+            this.waypoint.x = wIntEdit.get();
+        }
+
+        private void lambda$initWidgets$8(WDoubleEdit wDoubleEdit) {
+            this.waypoint.scale = wDoubleEdit.get();
+        }
+
+        private void lambda$initWidgets$7(WIntEdit wIntEdit) {
+            this.waypoint.maxVisibleDistance = wIntEdit.get();
         }
     }
 
     private static class WIcon
     extends WWidget {
-        private final /* synthetic */ Waypoint waypoint;
+        private final Waypoint waypoint;
 
-        public WIcon(Waypoint llIIllIlIIIIIll) {
-            WIcon llIIllIlIIIIlII;
-            llIIllIlIIIIlII.waypoint = llIIllIlIIIIIll;
+        public WIcon(Waypoint waypoint) {
+            this.waypoint = waypoint;
         }
 
         @Override
-        protected void onRender(GuiRenderer llIIllIIlllIlII, double llIIllIIllllIII, double llIIllIIlllIlll, double llIIllIIlllIllI) {
-            WIcon llIIllIIllllIlI;
-            llIIllIIlllIlII.post(() -> {
-                WIcon llIIllIIlllIIlI;
-                llIIllIIlllIIlI.waypoint.renderIcon(llIIllIIlllIIlI.x, llIIllIIlllIIlI.y, 0.0, 1.0, llIIllIIlllIIlI.width);
-            });
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            guiRenderer.post(this::lambda$onRender$0);
         }
 
         @Override
         protected void onCalculateSize() {
-            WIcon llIIllIlIIIIIII;
-            double llIIllIIlllllll;
-            llIIllIlIIIIIII.width = llIIllIIlllllll = llIIllIlIIIIIII.theme.scale(32.0);
-            llIIllIlIIIIIII.height = llIIllIIlllllll;
+            double d;
+            this.width = d = this.theme.scale(32.0);
+            this.height = d;
+        }
+
+        private void lambda$onRender$0() {
+            this.waypoint.renderIcon(this.x, this.y, 0.0, 1.0, this.width);
         }
     }
 }

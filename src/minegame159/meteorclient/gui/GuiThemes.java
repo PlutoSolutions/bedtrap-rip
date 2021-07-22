@@ -19,18 +19,20 @@ import net.minecraft.class_2487;
 import net.minecraft.class_2507;
 
 public class GuiThemes {
-    private static final /* synthetic */ File FILE;
-    private static final /* synthetic */ File FOLDER;
-    private static /* synthetic */ GuiTheme theme;
-    private static final /* synthetic */ List<GuiTheme> themes;
-    private static final /* synthetic */ File THEMES_FOLDER;
+    private static final File FILE;
+    private static final File FOLDER;
+    private static GuiTheme theme;
+    private static final List<GuiTheme> themes;
+    private static final File THEMES_FOLDER;
 
     public static String[] getNames() {
-        String[] lIIIIIIllIlII = new String[themes.size()];
-        for (int lIIIIIIllIlIl = 0; lIIIIIIllIlIl < themes.size(); ++lIIIIIIllIlIl) {
-            lIIIIIIllIlII[lIIIIIIllIlIl] = GuiThemes.themes.get((int)lIIIIIIllIlIl).name;
+        String[] arrstring = new String[themes.size()];
+        for (int i = 0; i < themes.size(); ++i) {
+            arrstring[i] = GuiThemes.themes.get((int)i).name;
+            if (0 >= 0) continue;
+            return null;
         }
-        return lIIIIIIllIlII;
+        return arrstring;
     }
 
     static {
@@ -40,51 +42,51 @@ public class GuiThemes {
         themes = new ArrayList<GuiTheme>();
     }
 
-    public static void select(String lIIIIIIllllIl) {
-        GuiTheme lIIIIIIllllII = null;
-        for (GuiTheme lIIIIIlIIIIIl : themes) {
-            if (!lIIIIIlIIIIIl.name.equals(lIIIIIIllllIl)) continue;
-            lIIIIIIllllII = lIIIIIlIIIIIl;
+    public static void select(String string) {
+        GuiTheme guiTheme = null;
+        for (GuiTheme guiTheme2 : themes) {
+            if (!guiTheme2.name.equals(string)) continue;
+            guiTheme = guiTheme2;
             break;
         }
-        if (lIIIIIIllllII != null) {
+        if (guiTheme != null) {
             GuiThemes.saveTheme();
-            theme = lIIIIIIllllII;
+            theme = guiTheme;
             try {
-                class_2487 lIIIIIlIIIIII;
-                File lIIIIIIllllll = new File(THEMES_FOLDER, String.valueOf(new StringBuilder().append(GuiThemes.get().name).append(".nbt")));
-                if (lIIIIIIllllll.exists() && (lIIIIIlIIIIII = class_2507.method_10633((File)lIIIIIIllllll)) != null) {
-                    GuiThemes.get().fromTag(lIIIIIlIIIIII);
+                GuiTheme guiTheme2;
+                File file = new File(THEMES_FOLDER, String.valueOf(new StringBuilder().append(GuiThemes.get().name).append(".nbt")));
+                if (file.exists() && (guiTheme2 = class_2507.method_10633((File)file)) != null) {
+                    GuiThemes.get().fromTag((class_2487)guiTheme2);
                 }
             }
-            catch (IOException lIIIIIIlllllI) {
-                lIIIIIIlllllI.printStackTrace();
+            catch (IOException iOException) {
+                iOException.printStackTrace();
             }
             GuiThemes.saveGlobal();
         }
     }
 
-    public static void add(GuiTheme lIIIIIlIIIlll) {
-        Iterator<GuiTheme> lIIIIIlIIlIIl = themes.iterator();
-        while (lIIIIIlIIlIIl.hasNext()) {
-            if (!lIIIIIlIIlIIl.next().name.equals(lIIIIIlIIIlll.name)) continue;
-            lIIIIIlIIlIIl.remove();
-            MeteorClient.LOG.error("Theme with the name '{}' has already been added.", (Object)lIIIIIlIIIlll.name);
+    public static void add(GuiTheme guiTheme) {
+        Iterator<GuiTheme> iterator = themes.iterator();
+        while (iterator.hasNext()) {
+            if (!iterator.next().name.equals(guiTheme.name)) continue;
+            iterator.remove();
+            MeteorClient.LOG.error("Theme with the name '{}' has already been added.", (Object)guiTheme.name);
             break;
         }
-        themes.add(lIIIIIlIIIlll);
+        themes.add(guiTheme);
     }
 
     public static void postInit() {
         if (FILE.exists()) {
             try {
-                class_2487 lIIIIIlIIlllI = class_2507.method_10633((File)FILE);
-                if (lIIIIIlIIlllI != null) {
-                    GuiThemes.select(lIIIIIlIIlllI.method_10558("currentTheme"));
+                class_2487 class_24872 = class_2507.method_10633((File)FILE);
+                if (class_24872 != null) {
+                    GuiThemes.select(class_24872.method_10558("currentTheme"));
                 }
             }
-            catch (IOException lIIIIIlIIllIl) {
-                lIIIIIlIIllIl.printStackTrace();
+            catch (IOException iOException) {
+                iOException.printStackTrace();
             }
         }
         if (theme == null) {
@@ -94,13 +96,13 @@ public class GuiThemes {
 
     private static void saveGlobal() {
         try {
-            class_2487 lIIIIIIlIllII = new class_2487();
-            lIIIIIIlIllII.method_10582("currentTheme", GuiThemes.get().name);
+            class_2487 class_24872 = new class_2487();
+            class_24872.method_10582("currentTheme", GuiThemes.get().name);
             FOLDER.mkdirs();
-            class_2507.method_10630((class_2487)lIIIIIIlIllII, (File)FILE);
+            class_2507.method_10630((class_2487)class_24872, (File)FILE);
         }
-        catch (IOException lIIIIIIlIlIll) {
-            lIIIIIIlIlIll.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
     }
 
@@ -111,12 +113,12 @@ public class GuiThemes {
     private static void saveTheme() {
         if (GuiThemes.get() != null) {
             try {
-                class_2487 lIIIIIIllIIII = GuiThemes.get().toTag();
+                class_2487 class_24872 = GuiThemes.get().toTag();
                 THEMES_FOLDER.mkdirs();
-                class_2507.method_10630((class_2487)lIIIIIIllIIII, (File)new File(THEMES_FOLDER, String.valueOf(new StringBuilder().append(GuiThemes.get().name).append(".nbt"))));
+                class_2507.method_10630((class_2487)class_24872, (File)new File(THEMES_FOLDER, String.valueOf(new StringBuilder().append(GuiThemes.get().name).append(".nbt"))));
             }
-            catch (IOException lIIIIIIlIllll) {
-                lIIIIIIlIllll.printStackTrace();
+            catch (IOException iOException) {
+                iOException.printStackTrace();
             }
         }
     }
@@ -124,10 +126,6 @@ public class GuiThemes {
     public static void save() {
         GuiThemes.saveTheme();
         GuiThemes.saveGlobal();
-    }
-
-    public GuiThemes() {
-        GuiThemes lIIIIIlIlIIII;
     }
 
     public static GuiTheme get() {

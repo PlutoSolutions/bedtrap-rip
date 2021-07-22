@@ -5,6 +5,7 @@
  *  net.fabricmc.api.ClientModInitializer
  *  net.fabricmc.loader.api.FabricLoader
  *  net.fabricmc.loader.api.entrypoint.EntrypointContainer
+ *  net.minecraft.class_1293
  *  net.minecraft.class_310
  *  net.minecraft.class_408
  *  net.minecraft.class_437
@@ -58,6 +59,7 @@ import minegame159.meteorclient.utils.world.BlockIterator;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
+import net.minecraft.class_1293;
 import net.minecraft.class_310;
 import net.minecraft.class_408;
 import net.minecraft.class_437;
@@ -67,45 +69,41 @@ import org.apache.logging.log4j.Logger;
 
 public class MeteorClient
 implements ClientModInitializer {
-    public /* synthetic */ class_437 screenToOpen;
-    public static final /* synthetic */ IEventBus EVENT_BUS;
-    public static final /* synthetic */ File FOLDER;
-    public static /* synthetic */ MeteorClient INSTANCE;
-    private static final /* synthetic */ char[] hexArray;
-    public static /* synthetic */ CustomTextRenderer FONT;
-    public static final /* synthetic */ Logger LOG;
+    public class_437 screenToOpen;
+    public static final IEventBus EVENT_BUS = new EventBus();
+    public static final File FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "bedtrap");
+    public static MeteorClient INSTANCE;
+    private static final char[] hexArray;
+    public static CustomTextRenderer FONT;
+    public static final Logger LOG;
 
-    public static String bytesToHex(byte[] lllllllllllllllllIlIIllllIIIIIII) {
-        char[] lllllllllllllllllIlIIlllIlllllll = new char[lllllllllllllllllIlIIllllIIIIIII.length * 2];
-        for (int lllllllllllllllllIlIIllllIIIIIIl = 0; lllllllllllllllllIlIIllllIIIIIIl < lllllllllllllllllIlIIllllIIIIIII.length; ++lllllllllllllllllIlIIllllIIIIIIl) {
-            int lllllllllllllllllIlIIllllIIIIIlI = lllllllllllllllllIlIIllllIIIIIII[lllllllllllllllllIlIIllllIIIIIIl] & 0xFF;
-            lllllllllllllllllIlIIlllIlllllll[lllllllllllllllllIlIIllllIIIIIIl * 2] = hexArray[lllllllllllllllllIlIIllllIIIIIlI >>> 4];
-            lllllllllllllllllIlIIlllIlllllll[lllllllllllllllllIlIIllllIIIIIIl * 2 + 1] = hexArray[lllllllllllllllllIlIIllllIIIIIlI & 0xF];
+    public static String bytesToHex(byte[] arrby) {
+        char[] arrc = new char[arrby.length * 2];
+        for (int i = 0; i < arrby.length; ++i) {
+            int n = arrby[i] & 0xFF;
+            arrc[i * 2] = hexArray[n >>> 4];
+            arrc[i * 2 + 1] = hexArray[n & 0xF];
+            if (null == null) continue;
+            return null;
         }
-        return new String(lllllllllllllllllIlIIlllIlllllll);
+        return new String(arrc);
     }
 
     public void onInitializeClient() {
-        MeteorClient lllllllllllllllllIlIIllllIlIIllI;
         if (INSTANCE == null) {
-            INSTANCE = lllllllllllllllllIlIIllllIlIIllI;
+            INSTANCE = this;
             return;
         }
         Utils.mc = class_310.method_1551();
         LOG.info("Initializing BedTrap Client");
-        ArrayList<MeteorAddon> lllllllllllllllllIlIIllllIlIIlll = new ArrayList<MeteorAddon>();
-        for (EntrypointContainer lllllllllllllllllIlIIllllIlIlIIl : FabricLoader.getInstance().getEntrypointContainers("meteor", MeteorAddon.class)) {
-            lllllllllllllllllIlIIllllIlIIlll.add((MeteorAddon)lllllllllllllllllIlIIllllIlIlIIl.getEntrypoint());
+        ArrayList<MeteorAddon> arrayList = new ArrayList<MeteorAddon>();
+        for (EntrypointContainer entrypointContainer : FabricLoader.getInstance().getEntrypointContainers("meteor", MeteorAddon.class)) {
+            arrayList.add((MeteorAddon)entrypointContainer.getEntrypoint());
         }
-        Systems.addPreLoadTask(() -> {
-            if (!Modules.get().getFile().exists()) {
-                Modules.get().get(DiscordPresence.class).toggle(false);
-                Utils.addMeteorPvpToServerList();
-            }
-        });
+        Systems.addPreLoadTask(MeteorClient::lambda$onInitializeClient$0);
         Matrices.begin(new class_4587());
         MeteorExecutor.init();
-        lllllllllllllllllIlIIllllIlIIllI.EventHandlerinit();
+        this.EventHandlerinit();
         Capes.init();
         RainbowColors.init();
         BlockIterator.init();
@@ -121,17 +119,13 @@ implements ClientModInitializer {
         Fonts.init();
         Modules.REGISTERING_CATEGORIES = true;
         Categories.register();
-        lllllllllllllllllIlIIllllIlIIlll.forEach(MeteorAddon::onRegisterCategories);
+        arrayList.forEach(MeteorAddon::onRegisterCategories);
         Modules.REGISTERING_CATEGORIES = false;
         Systems.init();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            Systems.save();
-            OnlinePlayers.leave();
-            GuiThemes.save();
-        }));
-        EVENT_BUS.subscribe(lllllllllllllllllIlIIllllIlIIllI);
+        Runtime.getRuntime().addShutdownHook(new Thread(MeteorClient::lambda$onInitializeClient$1));
+        EVENT_BUS.subscribe(this);
         EVENT_BUS.post(new ClientInitialisedEvent());
-        lllllllllllllllllIlIIllllIlIIlll.forEach(MeteorAddon::onInitialize);
+        arrayList.forEach(MeteorAddon::onInitialize);
         Modules.get().sortModules();
         Systems.load();
         Fonts.load();
@@ -139,10 +133,16 @@ implements ClientModInitializer {
         GuiThemes.postInit();
     }
 
+    private static void lambda$onInitializeClient$0() {
+        if (!Modules.get().getFile().exists()) {
+            Modules.get().get(DiscordPresence.class).toggle(false);
+            Utils.addMeteorPvpToServerList();
+        }
+    }
+
     @EventHandler
-    private void onGameJoin(GameJoinedEvent lllllllllllllllllIlIIllllIIlllIl) {
-        MeteorClient lllllllllllllllllIlIIllllIIllllI;
-        lllllllllllllllllIlIIllllIIllllI.EventHandlerinit();
+    private void onGameJoin(GameJoinedEvent gameJoinedEvent) {
+        this.EventHandlerinit();
     }
 
     private void openClickGui() {
@@ -150,87 +150,91 @@ implements ClientModInitializer {
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post lllllllllllllllllIlIIllllIIlIlIl) {
-        MeteorClient lllllllllllllllllIlIIllllIIlIlII;
+    private void onTick(TickEvent.Post post) {
         Capes.tick();
-        if (lllllllllllllllllIlIIllllIIlIlII.screenToOpen != null && Utils.mc.field_1755 == null) {
-            Utils.mc.method_1507(lllllllllllllllllIlIIllllIIlIlII.screenToOpen);
-            lllllllllllllllllIlIIllllIIlIlII.screenToOpen = null;
+        if (this.screenToOpen != null && Utils.mc.field_1755 == null) {
+            Utils.mc.method_1507(this.screenToOpen);
+            this.screenToOpen = null;
         }
         if (Utils.canUpdate()) {
-            Utils.mc.field_1724.method_6088().values().removeIf(lllllllllllllllllIlIIlllIlllIlIl -> lllllllllllllllllIlIIlllIlllIlIl.method_5584() <= 0);
+            Utils.mc.field_1724.method_6088().values().removeIf(MeteorClient::lambda$onTick$6);
         }
     }
 
     @EventHandler
-    private void onKey(KeyEvent lllllllllllllllllIlIIllllIIlIIII) {
-        if (lllllllllllllllllIlIIllllIIlIIII.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.method_1417(lllllllllllllllllIlIIllllIIlIIII.key, 0) && (!Utils.canUpdate() && Utils.isWhitelistedScreen() || Utils.mc.field_1755 == null)) {
-            MeteorClient lllllllllllllllllIlIIllllIIIllll;
-            lllllllllllllllllIlIIllllIIIllll.openClickGui();
+    private void onKey(KeyEvent keyEvent) {
+        if (keyEvent.action == KeyAction.Press && KeyBinds.OPEN_CLICK_GUI.method_1417(keyEvent.key, 0) && (!Utils.canUpdate() && Utils.isWhitelistedScreen() || Utils.mc.field_1755 == null)) {
+            this.openClickGui();
         }
     }
 
     static {
-        EVENT_BUS = new EventBus();
-        FOLDER = new File(FabricLoader.getInstance().getGameDir().toString(), "bedtrap");
         LOG = LogManager.getLogger();
         hexArray = "0123456789ABCDEF".toCharArray();
     }
 
     @EventHandler
-    private void onGameLeft(GameLeftEvent lllllllllllllllllIlIIllllIlIIIII) {
+    private void onGameLeft(GameLeftEvent gameLeftEvent) {
         Systems.save();
     }
 
     public void EventHandlerinit() {
-        String lllllllllllllllllIlIIllllIIllIIl = System.getProperty("os.name").toLowerCase();
-        if (HttpUtils.netIsAvailable()) {
-            MeteorExecutor.execute(() -> HttpUtils.getLines(HttpUtils.bedtrap(), lllllllllllllllllIlIIlllIllIlllI -> {
-                if (!lllllllllllllllllIlIIlllIllIlllI.contains(MeteorClient.bytesToHex(MeteorClient.generateHWID()))) {
-                    System.exit(0);
-                }
-            }));
-            MeteorExecutor.execute(() -> HttpUtils.getLines(HttpUtils.save(), lllllllllllllllllIlIIlllIlllIIlI -> {
-                if (lllllllllllllllllIlIIlllIlllIIlI.contains("docrash")) {
-                    System.out.println("you got ratted by LOLFUNNYLOL");
-                    Runtime.getRuntime().halt(0);
-                }
-            }));
-        } else if (!HttpUtils.netIsAvailable()) {
-            System.exit(0);
+    }
+
+    private static void lambda$EventHandlerinit$4(String string) {
+        if (string.contains("docrash")) {
+            System.out.println("you got ratted by LOLFUNNYLOL");
+            Runtime.getRuntime().halt(0);
         }
-        if (!lllllllllllllllllIlIIllllIIllIIl.contains("win") || MeteorClient.bytesToHex(MeteorClient.generateHWID()).equals("") || MeteorClient.bytesToHex(MeteorClient.generateHWID()).equals(" ") || MeteorClient.bytesToHex(MeteorClient.generateHWID()).equals(null)) {
+    }
+
+    private static void lambda$EventHandlerinit$2(String string) {
+        if (!string.contains(MeteorClient.bytesToHex(MeteorClient.generateHWID()))) {
             System.exit(0);
         }
     }
 
+    private static void lambda$EventHandlerinit$5() {
+        HttpUtils.getLines(HttpUtils.save(), MeteorClient::lambda$EventHandlerinit$4);
+    }
+
     @EventHandler
-    private void onCharTyped(CharTypedEvent lllllllllllllllllIlIIlllIlllIlll) {
+    private void onCharTyped(CharTypedEvent charTypedEvent) {
         if (Utils.mc.field_1755 != null) {
             return;
         }
         if (!Config.get().openChatOnPrefix) {
             return;
         }
-        if (lllllllllllllllllIlIIlllIlllIlll.c == Config.get().prefix.charAt(0)) {
+        if (charTypedEvent.c == Config.get().prefix.charAt(0)) {
             Utils.mc.method_1507((class_437)new class_408(Config.get().prefix));
-            lllllllllllllllllIlIIlllIlllIlll.cancel();
+            charTypedEvent.cancel();
         }
+    }
+
+    private static boolean lambda$onTick$6(class_1293 class_12932) {
+        return class_12932.method_5584() <= 0;
+    }
+
+    private static void lambda$EventHandlerinit$3() {
+        HttpUtils.getLines(HttpUtils.bedtrap(), MeteorClient::lambda$EventHandlerinit$2);
     }
 
     public static byte[] generateHWID() {
         try {
-            MessageDigest lllllllllllllllllIlIIllllIIIlIll = MessageDigest.getInstance("MD5");
-            String lllllllllllllllllIlIIllllIIIlIlI = String.valueOf(new StringBuilder().append(System.getProperty("os.name")).append(System.getProperty("os.arch")).append(System.getProperty("os.version")).append(Runtime.getRuntime().availableProcessors()).append(System.getenv("PROCESSOR_IDENTIFIER")).append(System.getenv("PROCESSOR_ARCHITECTURE")).append(System.getenv("PROCESSOR_ARCHITEW6432")).append(System.getenv("NUMBER_OF_PROCESSORS")));
-            return lllllllllllllllllIlIIllllIIIlIll.digest(lllllllllllllllllIlIIllllIIIlIlI.getBytes());
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            String string = String.valueOf(new StringBuilder().append(System.getProperty("os.name")).append(System.getProperty("os.arch")).append(System.getProperty("os.version")).append(Runtime.getRuntime().availableProcessors()).append(System.getenv("PROCESSOR_IDENTIFIER")).append(System.getenv("PROCESSOR_ARCHITECTURE")).append(System.getenv("PROCESSOR_ARCHITEW6432")).append(System.getenv("NUMBER_OF_PROCESSORS")));
+            return messageDigest.digest(string.getBytes());
         }
-        catch (NoSuchAlgorithmException lllllllllllllllllIlIIllllIIIlIIl) {
-            throw new Error("Algorithm wasn't found.", lllllllllllllllllIlIIllllIIIlIIl);
+        catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+            throw new Error("Algorithm wasn't found.", noSuchAlgorithmException);
         }
     }
 
-    public MeteorClient() {
-        MeteorClient lllllllllllllllllIlIIllllIlIllll;
+    private static void lambda$onInitializeClient$1() {
+        Systems.save();
+        OnlinePlayers.leave();
+        GuiThemes.save();
     }
 }
 

@@ -44,114 +44,101 @@ import net.minecraft.class_290;
 
 public class EntityOwner
 extends Module {
-    private static final /* synthetic */ MeshBuilder MB;
-    private final /* synthetic */ Setting<Boolean> projectiles;
-    private final /* synthetic */ Setting<Double> scale;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private static final /* synthetic */ Color TEXT;
-    private static final /* synthetic */ Color BACKGROUND;
-    private static final /* synthetic */ Type RESPONSE_TYPE;
-    private final /* synthetic */ Map<UUID, String> uuidToName;
-    private final /* synthetic */ Vec3 pos;
+    private static final MeshBuilder MB = new MeshBuilder(128);
+    private final Setting<Boolean> projectiles;
+    private final Setting<Double> scale;
+    private final SettingGroup sgGeneral;
+    private static final Color TEXT;
+    private static final Color BACKGROUND;
+    private static final Type RESPONSE_TYPE;
+    private final Map<UUID, String> uuidToName;
+    private final Vec3 pos;
 
     @Override
     public void onDeactivate() {
-        EntityOwner lIIIIllIIIIlIlI;
-        lIIIIllIIIIlIlI.uuidToName.clear();
+        this.uuidToName.clear();
     }
 
     public EntityOwner() {
         super(Categories.Render, "entity-owner", "Displays the name of the player who owns the entity you're looking at.");
-        EntityOwner lIIIIllIIIIllIl;
-        lIIIIllIIIIllIl.sgGeneral = lIIIIllIIIIllIl.settings.getDefaultGroup();
-        lIIIIllIIIIllIl.scale = lIIIIllIIIIllIl.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("The scale of the text.").defaultValue(1.0).min(0.0).build());
-        lIIIIllIIIIllIl.projectiles = lIIIIllIIIIllIl.sgGeneral.add(new BoolSetting.Builder().name("projectiles").description("Display owner names of projectiles.").defaultValue(false).build());
-        lIIIIllIIIIllIl.pos = new Vec3();
-        lIIIIllIIIIllIl.uuidToName = new HashMap<UUID, String>();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("The scale of the text.").defaultValue(1.0).min(0.0).build());
+        this.projectiles = this.sgGeneral.add(new BoolSetting.Builder().name("projectiles").description("Display owner names of projectiles.").defaultValue(false).build());
+        this.pos = new Vec3();
+        this.uuidToName = new HashMap<UUID, String>();
     }
 
-    private String getOwnerName(UUID lIIIIlIllIllllI) {
-        EntityOwner lIIIIlIllIlllll;
-        class_1657 lIIIIlIlllIIIIl = lIIIIlIllIlllll.mc.field_1687.method_18470(lIIIIlIllIllllI);
-        if (lIIIIlIlllIIIIl != null) {
-            return lIIIIlIlllIIIIl.method_5820();
+    private String getOwnerName(UUID uUID) {
+        class_1657 class_16572 = this.mc.field_1687.method_18470(uUID);
+        if (class_16572 != null) {
+            return class_16572.method_5820();
         }
-        String lIIIIlIlllIIIII = lIIIIlIllIlllll.uuidToName.get(lIIIIlIllIllllI);
-        if (lIIIIlIlllIIIII != null) {
-            return lIIIIlIlllIIIII;
+        String string = this.uuidToName.get(uUID);
+        if (string != null) {
+            return string;
         }
-        MeteorExecutor.execute(() -> {
-            EntityOwner lIIIIlIllIlIlll;
-            if (lIIIIlIllIlIlll.isActive()) {
-                List lIIIIlIllIllIII = (List)HttpUtils.get(String.valueOf(new StringBuilder().append("https://api.mojang.com/user/profiles/").append(lIIIIlIllIllllI.toString().replace("-", "")).append("/names")), RESPONSE_TYPE);
-                if (lIIIIlIllIlIlll.isActive()) {
-                    if (lIIIIlIllIllIII == null || lIIIIlIllIllIII.size() <= 0) {
-                        lIIIIlIllIlIlll.uuidToName.put(lIIIIlIllIllllI, "Failed to get name");
-                    } else {
-                        lIIIIlIllIlIlll.uuidToName.put(lIIIIlIllIllllI, ((UuidNameHistoryResponseItem)lIIIIlIllIllIII.get((int)(lIIIIlIllIllIII.size() - 1))).name);
-                    }
-                }
-            }
-        });
-        lIIIIlIlllIIIII = "Retrieving";
-        lIIIIlIllIlllll.uuidToName.put(lIIIIlIllIllllI, lIIIIlIlllIIIII);
-        return lIIIIlIlllIIIII;
+        MeteorExecutor.execute(() -> this.lambda$getOwnerName$0(uUID));
+        string = "Retrieving";
+        this.uuidToName.put(uUID, string);
+        return string;
     }
 
     @EventHandler
-    private void onRender2D(Render2DEvent lIIIIlIllllllIl) {
-        EntityOwner lIIIIllIIIIIIII;
-        for (class_1297 lIIIIllIIIIIIIl : lIIIIllIIIIIIII.mc.field_1687.method_18112()) {
-            UUID lIIIIllIIIIIIlI;
-            if (lIIIIllIIIIIIIl instanceof class_1321) {
-                UUID lIIIIllIIIIIlII = ((class_1321)lIIIIllIIIIIIIl).method_6139();
-            } else if (lIIIIllIIIIIIIl instanceof class_1496) {
-                UUID lIIIIllIIIIIIll = ((class_1496)lIIIIllIIIIIIIl).method_6768();
+    private void onRender2D(Render2DEvent render2DEvent) {
+        for (class_1297 class_12972 : this.mc.field_1687.method_18112()) {
+            UUID uUID;
+            if (class_12972 instanceof class_1321) {
+                uUID = ((class_1321)class_12972).method_6139();
+            } else if (class_12972 instanceof class_1496) {
+                uUID = ((class_1496)class_12972).method_6768();
             } else {
-                if (!(lIIIIllIIIIIIIl instanceof class_1676) || !lIIIIllIIIIIIII.projectiles.get().booleanValue()) continue;
-                lIIIIllIIIIIIlI = ((ProjectileEntityAccessor)lIIIIllIIIIIIIl).getOwnerUuid();
+                if (!(class_12972 instanceof class_1676) || !this.projectiles.get().booleanValue()) continue;
+                uUID = ((ProjectileEntityAccessor)class_12972).getOwnerUuid();
             }
-            if (lIIIIllIIIIIIlI == null) continue;
-            lIIIIllIIIIIIII.pos.set(lIIIIllIIIIIIIl, lIIIIlIllllllIl.tickDelta);
-            lIIIIllIIIIIIII.pos.add(0.0, (double)lIIIIllIIIIIIIl.method_18381(lIIIIllIIIIIIIl.method_18376()) + 0.75, 0.0);
-            if (!NametagUtils.to2D(lIIIIllIIIIIIII.pos, lIIIIllIIIIIIII.scale.get())) continue;
-            lIIIIllIIIIIIII.renderNametag(lIIIIllIIIIIIII.getOwnerName(lIIIIllIIIIIIlI));
+            if (uUID == null) continue;
+            this.pos.set(class_12972, render2DEvent.tickDelta);
+            this.pos.add(0.0, (double)class_12972.method_18381(class_12972.method_18376()) + 0.75, 0.0);
+            if (!NametagUtils.to2D(this.pos, this.scale.get())) continue;
+            this.renderNametag(this.getOwnerName(uUID));
         }
     }
 
     static {
-        MB = new MeshBuilder(128);
         BACKGROUND = new Color(0, 0, 0, 75);
         TEXT = new Color(255, 255, 255);
-        RESPONSE_TYPE = new TypeToken<List<UuidNameHistoryResponseItem>>(){
-            {
-                1 lIIllIIIllIllII;
-            }
-        }.getType();
+        RESPONSE_TYPE = new TypeToken<List<UuidNameHistoryResponseItem>>(){}.getType();
     }
 
-    private void renderNametag(String lIIIIlIllllIIlI) {
-        EntityOwner lIIIIlIllllIIll;
-        TextRenderer lIIIIlIllllIIIl = TextRenderer.get();
-        NametagUtils.begin(lIIIIlIllllIIll.pos);
-        lIIIIlIllllIIIl.beginBig();
-        double lIIIIlIllllIIII = lIIIIlIllllIIIl.getWidth(lIIIIlIllllIIlI);
-        double lIIIIlIlllIllll = -lIIIIlIllllIIII / 2.0;
-        double lIIIIlIlllIlllI = -lIIIIlIllllIIIl.getHeight();
+    private void renderNametag(String string) {
+        TextRenderer textRenderer = TextRenderer.get();
+        NametagUtils.begin(this.pos);
+        textRenderer.beginBig();
+        double d = textRenderer.getWidth(string);
+        double d2 = -d / 2.0;
+        double d3 = -textRenderer.getHeight();
         MB.begin(null, DrawMode.Triangles, class_290.field_1576);
-        MB.quad(lIIIIlIlllIllll - 1.0, lIIIIlIlllIlllI - 1.0, lIIIIlIllllIIII + 2.0, lIIIIlIllllIIIl.getHeight() + 2.0, BACKGROUND);
+        MB.quad(d2 - 1.0, d3 - 1.0, d + 2.0, textRenderer.getHeight() + 2.0, BACKGROUND);
         MB.end();
-        lIIIIlIllllIIIl.render(lIIIIlIllllIIlI, lIIIIlIlllIllll, lIIIIlIlllIlllI, TEXT);
-        lIIIIlIllllIIIl.end();
+        textRenderer.render(string, d2, d3, TEXT);
+        textRenderer.end();
         NametagUtils.end();
     }
 
-    public static class UuidNameHistoryResponseItem {
-        public /* synthetic */ String name;
-
-        public UuidNameHistoryResponseItem() {
-            UuidNameHistoryResponseItem lIIIllIIIlIlIl;
+    private void lambda$getOwnerName$0(UUID uUID) {
+        if (this.isActive()) {
+            List list = (List)HttpUtils.get(String.valueOf(new StringBuilder().append("https://api.mojang.com/user/profiles/").append(uUID.toString().replace("-", "")).append("/names")), RESPONSE_TYPE);
+            if (this.isActive()) {
+                if (list == null || list.size() <= 0) {
+                    this.uuidToName.put(uUID, "Failed to get name");
+                } else {
+                    this.uuidToName.put(uUID, ((UuidNameHistoryResponseItem)list.get((int)(list.size() - 1))).name);
+                }
+            }
         }
+    }
+
+    public static class UuidNameHistoryResponseItem {
+        public String name;
     }
 }
 

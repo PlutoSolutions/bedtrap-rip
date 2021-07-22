@@ -11,22 +11,14 @@ import net.minecraft.class_1309;
 import net.minecraft.class_243;
 
 public class LivingEntityMoveEvent {
-    public /* synthetic */ class_243 movement;
-    public /* synthetic */ class_1309 entity;
-    private static final /* synthetic */ LivingEntityMoveEvent INSTANCE;
+    public class_243 movement;
+    public class_1309 entity;
+    private static final LivingEntityMoveEvent INSTANCE = new LivingEntityMoveEvent();
 
-    public LivingEntityMoveEvent() {
-        LivingEntityMoveEvent lllllllllllllllllllIIlllllIIlllI;
-    }
-
-    public static LivingEntityMoveEvent get(class_1309 lllllllllllllllllllIIlllllIIlIIl, class_243 lllllllllllllllllllIIlllllIIlIII) {
-        LivingEntityMoveEvent.INSTANCE.entity = lllllllllllllllllllIIlllllIIlIIl;
-        LivingEntityMoveEvent.INSTANCE.movement = lllllllllllllllllllIIlllllIIlIII;
+    public static LivingEntityMoveEvent get(class_1309 class_13092, class_243 class_2432) {
+        LivingEntityMoveEvent.INSTANCE.entity = class_13092;
+        LivingEntityMoveEvent.INSTANCE.movement = class_2432;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new LivingEntityMoveEvent();
     }
 }
 

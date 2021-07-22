@@ -20,31 +20,34 @@ import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.class_2487;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Config
 extends System<Config> {
-    public /* synthetic */ boolean useTeamColor;
-    public /* synthetic */ String prefix;
-    public /* synthetic */ boolean titleScreenCredits;
-    public /* synthetic */ int rotationHoldTicks;
-    public /* synthetic */ boolean openChatOnPrefix;
-    public /* synthetic */ boolean deleteChatCommandsInfo;
-    public /* synthetic */ String font;
-    public /* synthetic */ boolean customFont;
-    public /* synthetic */ boolean sendDataToApi;
-    public /* synthetic */ boolean customWindowTitle;
-    public /* synthetic */ boolean rainbowPrefix;
-    public /* synthetic */ String customWindowTitleText;
-    public final /* synthetic */ String devBuild;
-    public /* synthetic */ boolean chatCommandsInfo;
-    public final /* synthetic */ Version version;
-    public /* synthetic */ boolean titleScreenSplashes;
+    public boolean useTeamColor;
+    public String prefix;
+    public boolean titleScreenCredits;
+    public int rotationHoldTicks;
+    public boolean openChatOnPrefix;
+    public boolean deleteChatCommandsInfo;
+    public String font = ConfigTab.font.get();
+    public boolean customFont = ConfigTab.customFont.get();
+    public boolean sendDataToApi = ConfigTab.sendDataToApi.get();
+    public boolean customWindowTitle;
+    public boolean rainbowPrefix;
+    public String customWindowTitleText;
+    public final String devBuild;
+    public boolean chatCommandsInfo;
+    public final Version version;
+    public boolean titleScreenSplashes;
 
-    private String getString(class_2487 lllIIIllIIIlIII, String lllIIIllIIIIlII, Setting<String> lllIIIllIIIIllI) {
-        return lllIIIllIIIlIII.method_10545(lllIIIllIIIIlII) ? lllIIIllIIIlIII.method_10558(lllIIIllIIIIlII) : lllIIIllIIIIllI.get();
+    private String getString(class_2487 class_24872, String string, Setting<String> setting) {
+        return class_24872.method_10545(string) ? class_24872.method_10558(string) : setting.get();
     }
 
-    private double getDouble(class_2487 lllIIIlIllllllI, String lllIIIlIllllIlI, Setting<Double> lllIIIlIlllllII) {
-        return lllIIIlIllllllI.method_10545(lllIIIlIllllIlI) ? lllIIIlIllllllI.method_10574(lllIIIlIllllIlI) : lllIIIlIlllllII.get().doubleValue();
+    private double getDouble(class_2487 class_24872, String string, Setting<Double> setting) {
+        return class_24872.method_10545(string) ? class_24872.method_10574(string) : setting.get().doubleValue();
     }
 
     public static Config get() {
@@ -53,80 +56,79 @@ extends System<Config> {
 
     public Config() {
         super("config");
-        Config lllIIIllIlIlIII;
-        lllIIIllIlIlIII.font = ConfigTab.font.get();
-        lllIIIllIlIlIII.customFont = ConfigTab.customFont.get();
-        lllIIIllIlIlIII.sendDataToApi = ConfigTab.sendDataToApi.get();
-        lllIIIllIlIlIII.rotationHoldTicks = ConfigTab.rotationHoldTicks.get();
-        lllIIIllIlIlIII.prefix = ConfigTab.prefix.get();
-        lllIIIllIlIlIII.openChatOnPrefix = ConfigTab.openChatOnPrefix.get();
-        lllIIIllIlIlIII.chatCommandsInfo = ConfigTab.chatCommandsInfo.get();
-        lllIIIllIlIlIII.deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
-        lllIIIllIlIlIII.rainbowPrefix = ConfigTab.rainbowPrefix.get();
-        lllIIIllIlIlIII.titleScreenCredits = ConfigTab.titleScreenCredits.get();
-        lllIIIllIlIlIII.titleScreenSplashes = ConfigTab.titleScreenSplashes.get();
-        lllIIIllIlIlIII.customWindowTitle = ConfigTab.customWindowTitle.get();
-        lllIIIllIlIlIII.customWindowTitleText = ConfigTab.customWindowTitleText.get();
-        lllIIIllIlIlIII.useTeamColor = ConfigTab.useTeamColor.get();
-        ModMetadata lllIIIllIlIIlll = ((ModContainer)FabricLoader.getInstance().getModContainer("meteor-client").get()).getMetadata();
-        String lllIIIllIlIIllI = lllIIIllIlIIlll.getVersion().getFriendlyString();
-        if (lllIIIllIlIIllI.contains("-")) {
-            lllIIIllIlIIllI = lllIIIllIlIIllI.split("-")[0];
+        this.rotationHoldTicks = ConfigTab.rotationHoldTicks.get();
+        this.prefix = ConfigTab.prefix.get();
+        this.openChatOnPrefix = ConfigTab.openChatOnPrefix.get();
+        this.chatCommandsInfo = ConfigTab.chatCommandsInfo.get();
+        this.deleteChatCommandsInfo = ConfigTab.deleteChatCommandsInfo.get();
+        this.rainbowPrefix = ConfigTab.rainbowPrefix.get();
+        this.titleScreenCredits = ConfigTab.titleScreenCredits.get();
+        this.titleScreenSplashes = ConfigTab.titleScreenSplashes.get();
+        this.customWindowTitle = ConfigTab.customWindowTitle.get();
+        this.customWindowTitleText = ConfigTab.customWindowTitleText.get();
+        this.useTeamColor = ConfigTab.useTeamColor.get();
+        ModMetadata modMetadata = ((ModContainer)FabricLoader.getInstance().getModContainer("meteor-client").get()).getMetadata();
+        String string = modMetadata.getVersion().getFriendlyString();
+        if (string.contains("-")) {
+            string = string.split("-")[0];
         }
-        lllIIIllIlIlIII.version = new Version(lllIIIllIlIIllI);
-        lllIIIllIlIlIII.devBuild = lllIIIllIlIIlll.getCustomValue("meteor-client:devbuild").getAsString();
+        this.version = new Version(string);
+        this.devBuild = modMetadata.getCustomValue("meteor-client:devbuild").getAsString();
     }
 
     @Override
     public class_2487 toTag() {
-        Config lllIIIllIlIIIII;
-        class_2487 lllIIIllIIlllll = new class_2487();
-        lllIIIllIIlllll.method_10582("version", lllIIIllIlIIIII.version.getOriginalString());
-        lllIIIllIIlllll.method_10582("font", lllIIIllIlIIIII.font);
-        lllIIIllIIlllll.method_10556("customFont", lllIIIllIlIIIII.customFont);
-        lllIIIllIIlllll.method_10549("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
-        lllIIIllIIlllll.method_10556("sendDataToApi", lllIIIllIlIIIII.sendDataToApi);
-        lllIIIllIIlllll.method_10569("rotationHoldTicks", lllIIIllIlIIIII.rotationHoldTicks);
-        lllIIIllIIlllll.method_10582("prefix", lllIIIllIlIIIII.prefix);
-        lllIIIllIIlllll.method_10556("openChatOnPrefix", lllIIIllIlIIIII.openChatOnPrefix);
-        lllIIIllIIlllll.method_10556("chatCommandsInfo", lllIIIllIlIIIII.chatCommandsInfo);
-        lllIIIllIIlllll.method_10556("deleteChatCommandsInfo", lllIIIllIlIIIII.deleteChatCommandsInfo);
-        lllIIIllIIlllll.method_10556("rainbowPrefix", lllIIIllIlIIIII.rainbowPrefix);
-        lllIIIllIIlllll.method_10556("titleScreenCredits", lllIIIllIlIIIII.titleScreenCredits);
-        lllIIIllIIlllll.method_10556("titleScreenSplashes", lllIIIllIlIIIII.titleScreenSplashes);
-        lllIIIllIIlllll.method_10556("customWindowTitle", lllIIIllIlIIIII.customWindowTitle);
-        lllIIIllIIlllll.method_10582("customWindowTitleText", lllIIIllIlIIIII.customWindowTitleText);
-        lllIIIllIIlllll.method_10556("useTeamColor", lllIIIllIlIIIII.useTeamColor);
-        return lllIIIllIIlllll;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("version", this.version.getOriginalString());
+        class_24872.method_10582("font", this.font);
+        class_24872.method_10556("customFont", this.customFont);
+        class_24872.method_10549("rainbowSpeed", RainbowColors.GLOBAL.getSpeed());
+        class_24872.method_10556("sendDataToApi", this.sendDataToApi);
+        class_24872.method_10569("rotationHoldTicks", this.rotationHoldTicks);
+        class_24872.method_10582("prefix", this.prefix);
+        class_24872.method_10556("openChatOnPrefix", this.openChatOnPrefix);
+        class_24872.method_10556("chatCommandsInfo", this.chatCommandsInfo);
+        class_24872.method_10556("deleteChatCommandsInfo", this.deleteChatCommandsInfo);
+        class_24872.method_10556("rainbowPrefix", this.rainbowPrefix);
+        class_24872.method_10556("titleScreenCredits", this.titleScreenCredits);
+        class_24872.method_10556("titleScreenSplashes", this.titleScreenSplashes);
+        class_24872.method_10556("customWindowTitle", this.customWindowTitle);
+        class_24872.method_10582("customWindowTitleText", this.customWindowTitleText);
+        class_24872.method_10556("useTeamColor", this.useTeamColor);
+        return class_24872;
     }
 
-    private int getInt(class_2487 lllIIIlIlllIIIl, String lllIIIlIlllIIII, Setting<Integer> lllIIIlIllIllll) {
-        return lllIIIlIlllIIIl.method_10545(lllIIIlIlllIIII) ? lllIIIlIlllIIIl.method_10550(lllIIIlIlllIIII) : lllIIIlIllIllll.get().intValue();
+    private int getInt(class_2487 class_24872, String string, Setting<Integer> setting) {
+        return class_24872.method_10545(string) ? class_24872.method_10550(string) : setting.get().intValue();
     }
 
     @Override
-    public Config fromTag(class_2487 lllIIIllIIllIIl) {
-        Config lllIIIllIIllIII;
-        lllIIIllIIllIII.font = lllIIIllIIllIII.getString(lllIIIllIIllIIl, "font", ConfigTab.font);
-        lllIIIllIIllIII.customFont = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "customFont", ConfigTab.customFont);
-        RainbowColors.GLOBAL.setSpeed(lllIIIllIIllIIl.method_10545("rainbowSpeed") ? lllIIIllIIllIIl.method_10574("rainbowSpeed") : ConfigTab.rainbowSpeed.getDefaultValue() / 100.0);
-        lllIIIllIIllIII.sendDataToApi = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "sendDataToApi", ConfigTab.sendDataToApi);
-        lllIIIllIIllIII.rotationHoldTicks = lllIIIllIIllIII.getInt(lllIIIllIIllIIl, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
-        lllIIIllIIllIII.prefix = lllIIIllIIllIII.getString(lllIIIllIIllIIl, "prefix", ConfigTab.prefix);
-        lllIIIllIIllIII.openChatOnPrefix = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "openChatOnPrefix", ConfigTab.openChatOnPrefix);
-        lllIIIllIIllIII.chatCommandsInfo = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
-        lllIIIllIIllIII.deleteChatCommandsInfo = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
-        lllIIIllIIllIII.rainbowPrefix = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "rainbowPrefix", ConfigTab.rainbowPrefix);
-        lllIIIllIIllIII.titleScreenCredits = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "titleScreenCredits", ConfigTab.titleScreenCredits);
-        lllIIIllIIllIII.titleScreenSplashes = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "titleScreenSplashes", ConfigTab.titleScreenSplashes);
-        lllIIIllIIllIII.customWindowTitle = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "customWindowTitle", ConfigTab.customWindowTitle);
-        lllIIIllIIllIII.customWindowTitleText = lllIIIllIIllIII.getString(lllIIIllIIllIIl, "customWindowTitleText", ConfigTab.customWindowTitleText);
-        lllIIIllIIllIII.useTeamColor = lllIIIllIIllIII.getBoolean(lllIIIllIIllIIl, "useTeamColor", ConfigTab.useTeamColor);
-        return lllIIIllIIllIII;
+    public Config fromTag(class_2487 class_24872) {
+        this.font = this.getString(class_24872, "font", ConfigTab.font);
+        this.customFont = this.getBoolean(class_24872, "customFont", ConfigTab.customFont);
+        RainbowColors.GLOBAL.setSpeed(class_24872.method_10545("rainbowSpeed") ? class_24872.method_10574("rainbowSpeed") : ConfigTab.rainbowSpeed.getDefaultValue() / 100.0);
+        this.sendDataToApi = this.getBoolean(class_24872, "sendDataToApi", ConfigTab.sendDataToApi);
+        this.rotationHoldTicks = this.getInt(class_24872, "rotationHoldTicks", ConfigTab.rotationHoldTicks);
+        this.prefix = this.getString(class_24872, "prefix", ConfigTab.prefix);
+        this.openChatOnPrefix = this.getBoolean(class_24872, "openChatOnPrefix", ConfigTab.openChatOnPrefix);
+        this.chatCommandsInfo = this.getBoolean(class_24872, "chatCommandsInfo", ConfigTab.chatCommandsInfo);
+        this.deleteChatCommandsInfo = this.getBoolean(class_24872, "deleteChatCommandsInfo", ConfigTab.deleteChatCommandsInfo);
+        this.rainbowPrefix = this.getBoolean(class_24872, "rainbowPrefix", ConfigTab.rainbowPrefix);
+        this.titleScreenCredits = this.getBoolean(class_24872, "titleScreenCredits", ConfigTab.titleScreenCredits);
+        this.titleScreenSplashes = this.getBoolean(class_24872, "titleScreenSplashes", ConfigTab.titleScreenSplashes);
+        this.customWindowTitle = this.getBoolean(class_24872, "customWindowTitle", ConfigTab.customWindowTitle);
+        this.customWindowTitleText = this.getString(class_24872, "customWindowTitleText", ConfigTab.customWindowTitleText);
+        this.useTeamColor = this.getBoolean(class_24872, "useTeamColor", ConfigTab.useTeamColor);
+        return this;
     }
 
-    private boolean getBoolean(class_2487 lllIIIllIIlIIlI, String lllIIIllIIlIIIl, Setting<Boolean> lllIIIllIIIllIl) {
-        return lllIIIllIIlIIlI.method_10545(lllIIIllIIlIIIl) ? lllIIIllIIlIIlI.method_10577(lllIIIllIIlIIIl) : lllIIIllIIIllIl.get().booleanValue();
+    private boolean getBoolean(class_2487 class_24872, String string, Setting<Boolean> setting) {
+        return class_24872.method_10545(string) ? class_24872.method_10577(string) : setting.get().booleanValue();
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 }
 

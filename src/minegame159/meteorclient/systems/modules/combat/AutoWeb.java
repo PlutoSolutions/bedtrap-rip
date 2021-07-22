@@ -25,36 +25,34 @@ import net.minecraft.class_1802;
 
 public class AutoWeb
 extends Module {
-    private /* synthetic */ class_1657 target;
-    private final /* synthetic */ Setting<Boolean> doubles;
-    private final /* synthetic */ Setting<Boolean> rotate;
-    private final /* synthetic */ Setting<SortPriority> priority;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Double> range;
+    private class_1657 target;
+    private final Setting<Boolean> doubles;
+    private final Setting<Boolean> rotate;
+    private final Setting<SortPriority> priority;
+    private final SettingGroup sgGeneral;
+    private final Setting<Double> range;
 
     public AutoWeb() {
         super(Categories.Combat, "auto-web", "Automatically places webs on other players.");
-        AutoWeb llllllllllllllllIlIllllIIIIIlIII;
-        llllllllllllllllIlIllllIIIIIlIII.sgGeneral = llllllllllllllllIlIllllIIIIIlIII.settings.getDefaultGroup();
-        llllllllllllllllIlIllllIIIIIlIII.range = llllllllllllllllIlIllllIIIIIlIII.sgGeneral.add(new DoubleSetting.Builder().name("target-range").description("The maximum distance to target players.").defaultValue(4.0).min(0.0).build());
-        llllllllllllllllIlIllllIIIIIlIII.priority = llllllllllllllllIlIllllIIIIIlIII.sgGeneral.add(new EnumSetting.Builder().name("target-priority").description("How to select the player to target.").defaultValue(SortPriority.LowestDistance).build());
-        llllllllllllllllIlIllllIIIIIlIII.doubles = llllllllllllllllIlIllllIIIIIlIII.sgGeneral.add(new BoolSetting.Builder().name("doubles").description("Places webs in the target's upper hitbox as well as the lower hitbox.").defaultValue(false).build());
-        llllllllllllllllIlIllllIIIIIlIII.rotate = llllllllllllllllIlIllllIIIIIlIII.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Rotates towards the webs when placing.").defaultValue(true).build());
-        llllllllllllllllIlIllllIIIIIlIII.target = null;
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.range = this.sgGeneral.add(new DoubleSetting.Builder().name("target-range").description("The maximum distance to target players.").defaultValue(4.0).min(0.0).build());
+        this.priority = this.sgGeneral.add(new EnumSetting.Builder().name("target-priority").description("How to select the player to target.").defaultValue(SortPriority.LowestDistance).build());
+        this.doubles = this.sgGeneral.add(new BoolSetting.Builder().name("doubles").description("Places webs in the target's upper hitbox as well as the lower hitbox.").defaultValue(false).build());
+        this.rotate = this.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Rotates towards the webs when placing.").defaultValue(true).build());
+        this.target = null;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre llllllllllllllllIlIllllIIIIIIlII) {
-        AutoWeb llllllllllllllllIlIllllIIIIIIIll;
-        if (TargetUtils.isBadTarget(llllllllllllllllIlIllllIIIIIIIll.target, llllllllllllllllIlIllllIIIIIIIll.range.get())) {
-            llllllllllllllllIlIllllIIIIIIIll.target = TargetUtils.getPlayerTarget(llllllllllllllllIlIllllIIIIIIIll.range.get(), llllllllllllllllIlIllllIIIIIIIll.priority.get());
+    private void onTick(TickEvent.Pre pre) {
+        if (TargetUtils.isBadTarget(this.target, this.range.get())) {
+            this.target = TargetUtils.getPlayerTarget(this.range.get(), this.priority.get());
         }
-        if (TargetUtils.isBadTarget(llllllllllllllllIlIllllIIIIIIIll.target, llllllllllllllllIlIllllIIIIIIIll.range.get())) {
+        if (TargetUtils.isBadTarget(this.target, this.range.get())) {
             return;
         }
-        BlockUtils.place(llllllllllllllllIlIllllIIIIIIIll.target.method_24515(), InvUtils.findInHotbar(class_1802.field_8786), llllllllllllllllIlIllllIIIIIIIll.rotate.get(), 0, false);
-        if (llllllllllllllllIlIllllIIIIIIIll.doubles.get().booleanValue()) {
-            BlockUtils.place(llllllllllllllllIlIllllIIIIIIIll.target.method_24515().method_10069(0, 1, 0), InvUtils.findInHotbar(class_1802.field_8786), llllllllllllllllIlIllllIIIIIIIll.rotate.get(), 0, false);
+        BlockUtils.place(this.target.method_24515(), InvUtils.findInHotbar(class_1802.field_8786), this.rotate.get(), 0, false);
+        if (this.doubles.get().booleanValue()) {
+            BlockUtils.place(this.target.method_24515().method_10069(0, 1, 0), InvUtils.findInHotbar(class_1802.field_8786), this.rotate.get(), 0, false);
         }
     }
 }

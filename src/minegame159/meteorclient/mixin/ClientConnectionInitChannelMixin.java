@@ -29,17 +29,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(targets={"net.minecraft.network.ClientConnection$1"})
 public class ClientConnectionInitChannelMixin {
     @Inject(method={"initChannel"}, at={@At(value="HEAD")})
-    private void onInitChannel(Channel channel, CallbackInfo info) {
+    private void onInitChannel(Channel channel, CallbackInfo callbackInfo) {
         Proxy proxy = Proxies.get().getEnabled();
         if (proxy == null) {
             return;
         }
-        switch (proxy.type) {
-            case Socks4: {
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$proxies$ProxyType[proxy.type.ordinal()]) {
+            case 1: {
                 channel.pipeline().addFirst(new ChannelHandler[]{new Socks4ProxyHandler((SocketAddress)new InetSocketAddress(proxy.ip, proxy.port), proxy.username)});
                 break;
             }
-            case Socks5: {
+            case 2: {
                 channel.pipeline().addFirst(new ChannelHandler[]{new Socks5ProxyHandler((SocketAddress)new InetSocketAddress(proxy.ip, proxy.port), proxy.username, proxy.password)});
             }
         }

@@ -4,20 +4,12 @@
 package minegame159.meteorclient.events.render;
 
 public class GetFovEvent {
-    private static final /* synthetic */ GetFovEvent INSTANCE;
-    public /* synthetic */ double fov;
+    private static final GetFovEvent INSTANCE = new GetFovEvent();
+    public double fov;
 
-    public GetFovEvent() {
-        GetFovEvent llllllllllllllllllllIlIIIIIlIlll;
-    }
-
-    public static GetFovEvent get(double llllllllllllllllllllIlIIIIIlIIll) {
-        GetFovEvent.INSTANCE.fov = llllllllllllllllllllIlIIIIIlIIll;
+    public static GetFovEvent get(double d) {
+        GetFovEvent.INSTANCE.fov = d;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new GetFovEvent();
     }
 }
 

@@ -16,22 +16,21 @@ import minegame159.meteorclient.utils.misc.Placeholders;
 
 public class DiscordPresence
 extends Module {
-    private final /* synthetic */ Setting<String> line2;
-    private /* synthetic */ int ticks;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private static final /* synthetic */ DiscordRPC instance;
-    private static final /* synthetic */ DiscordRichPresence rpc;
+    private final Setting<String> line2;
+    private int ticks;
+    private final SettingGroup sgGeneral;
+    private static final DiscordRPC instance;
+    private static final DiscordRichPresence rpc;
 
     @Override
     public void onActivate() {
-        DiscordPresence llllllllllllllllllllllIllIllIIII;
-        String llllllllllllllllllllllIllIlIlllI;
-        DiscordEventHandlers llllllllllllllllllllllIllIlIllll = new DiscordEventHandlers();
-        instance.Discord_Initialize("853721983241551873", llllllllllllllllllllllIllIlIllll, true, null);
+        String string;
+        DiscordEventHandlers discordEventHandlers = new DiscordEventHandlers();
+        instance.Discord_Initialize("853721983241551873", discordEventHandlers, true, null);
         DiscordPresence.rpc.startTimestamp = System.currentTimeMillis() / 1000L;
         DiscordPresence.rpc.largeImageKey = "btpng";
-        DiscordPresence.rpc.largeImageText = llllllllllllllllllllllIllIlIlllI = "BedTrap 0.3.1";
-        llllllllllllllllllllllIllIllIIII.updateDetails();
+        DiscordPresence.rpc.largeImageText = string = "BedTrap 0.3.1";
+        this.updateDetails();
         instance.Discord_UpdatePresence(rpc);
         instance.Discord_RunCallbacks();
     }
@@ -48,23 +47,22 @@ extends Module {
     }
 
     private void updateDetails() {
-        DiscordPresence llllllllllllllllllllllIllIlIIlll;
-        String llllllllllllllllllllllIllIlIIllI = "discord.gg/4cupzRkP29";
-        if (llllllllllllllllllllllIllIlIIlll.isActive() && Utils.canUpdate()) {
-            DiscordPresence.rpc.details = Placeholders.apply(llllllllllllllllllllllIllIlIIllI);
-            DiscordPresence.rpc.state = Placeholders.apply(llllllllllllllllllllllIllIlIIlll.line2.get());
+        String string = "discord.gg/4cupzRkP29";
+        if (this.isActive() && Utils.canUpdate()) {
+            DiscordPresence.rpc.details = Placeholders.apply(string);
+            DiscordPresence.rpc.state = Placeholders.apply(this.line2.get());
             instance.Discord_UpdatePresence(rpc);
         }
     }
 
+    private void lambda$new$0(String string) {
+        this.updateDetails();
+    }
+
     public DiscordPresence() {
         super(Categories.Misc, "discord-presence", "Displays a RPC for you on Discord to show that you're playing BedTrap Addon!");
-        DiscordPresence llllllllllllllllllllllIllIllIlIl;
-        llllllllllllllllllllllIllIllIlIl.sgGeneral = llllllllllllllllllllllIllIllIlIl.settings.getDefaultGroup();
-        llllllllllllllllllllllIllIllIlIl.line2 = llllllllllllllllllllllIllIllIlIl.sgGeneral.add(new StringSetting.Builder().name("line").description("The text it displays line of the RPC.").defaultValue("BedTrap on Top!").onChanged(llllllllllllllllllllllIllIlIIIIl -> {
-            DiscordPresence llllllllllllllllllllllIllIlIIIlI;
-            llllllllllllllllllllllIllIlIIIlI.updateDetails();
-        }).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.line2 = this.sgGeneral.add(new StringSetting.Builder().name("line").description("The text it displays line of the RPC.").defaultValue("BedTrap on Top!").onChanged(this::lambda$new$0).build());
     }
 }
 

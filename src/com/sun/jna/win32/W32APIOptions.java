@@ -12,25 +12,23 @@ import java.util.Map;
 
 public interface W32APIOptions
 extends StdCallLibrary {
-    public static final /* synthetic */ Map<String, Object> DEFAULT_OPTIONS;
-    public static final /* synthetic */ Map<String, Object> ASCII_OPTIONS;
-    public static final /* synthetic */ Map<String, Object> UNICODE_OPTIONS;
+    public static final Map<String, Object> DEFAULT_OPTIONS;
+    public static final Map<String, Object> ASCII_OPTIONS;
+    public static final Map<String, Object> UNICODE_OPTIONS;
 
     static {
         UNICODE_OPTIONS = Collections.unmodifiableMap(new HashMap<String, Object>(){
-            private static final /* synthetic */ long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
             {
-                1 lIIIlIIlllIIII;
-                lIIIlIIlllIIII.put("type-mapper", W32APITypeMapper.UNICODE);
-                lIIIlIIlllIIII.put("function-mapper", W32APIFunctionMapper.UNICODE);
+                this.put("type-mapper", W32APITypeMapper.UNICODE);
+                this.put("function-mapper", W32APIFunctionMapper.UNICODE);
             }
         });
         ASCII_OPTIONS = Collections.unmodifiableMap(new HashMap<String, Object>(){
-            private static final /* synthetic */ long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
             {
-                2 lllllllllllllllllllllllllIlIllll;
-                lllllllllllllllllllllllllIlIllll.put("type-mapper", W32APITypeMapper.ASCII);
-                lllllllllllllllllllllllllIlIllll.put("function-mapper", W32APIFunctionMapper.ASCII);
+                this.put("type-mapper", W32APITypeMapper.ASCII);
+                this.put("function-mapper", W32APIFunctionMapper.ASCII);
             }
         });
         DEFAULT_OPTIONS = Boolean.getBoolean("w32.ascii") ? ASCII_OPTIONS : UNICODE_OPTIONS;

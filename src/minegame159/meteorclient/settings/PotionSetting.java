@@ -11,21 +11,15 @@ import minegame159.meteorclient.utils.misc.MyPotion;
 
 public class PotionSetting
 extends EnumSetting<MyPotion> {
-    public PotionSetting(String llIIIIIllIllIII, String llIIIIIllIlIlll, MyPotion llIIIIIllIIllll, Consumer<MyPotion> llIIIIIllIlIlIl, Consumer<Setting<MyPotion>> llIIIIIllIIllIl, IVisible llIIIIIllIIllII) {
-        super(llIIIIIllIllIII, llIIIIIllIlIlll, llIIIIIllIIllll, llIIIIIllIlIlIl, llIIIIIllIIllIl, llIIIIIllIIllII);
-        PotionSetting llIIIIIllIllIIl;
+    public PotionSetting(String string, String string2, MyPotion myPotion, Consumer<MyPotion> consumer, Consumer<Setting<MyPotion>> consumer2, IVisible iVisible) {
+        super(string, string2, myPotion, consumer, consumer2, iVisible);
     }
 
     public static class Builder
     extends EnumSetting.Builder<MyPotion> {
-        public Builder() {
-            Builder llIIlIIIIIIIllI;
-        }
-
         @Override
         public EnumSetting<MyPotion> build() {
-            Builder llIIlIIIIIIIIll;
-            return new PotionSetting(llIIlIIIIIIIIll.name, llIIlIIIIIIIIll.description, (MyPotion)llIIlIIIIIIIIll.defaultValue, llIIlIIIIIIIIll.onChanged, llIIlIIIIIIIIll.onModuleActivated, llIIlIIIIIIIIll.visible);
+            return new PotionSetting(this.name, this.description, (MyPotion)this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
     }
 }

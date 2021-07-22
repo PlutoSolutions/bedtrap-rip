@@ -11,9 +11,9 @@
  *  net.minecraft.class_2561
  *  net.minecraft.class_2568
  *  net.minecraft.class_2568$class_5247
+ *  net.minecraft.class_2583
  *  net.minecraft.class_2585
  *  net.minecraft.class_303
- *  net.minecraft.class_5250
  *  net.minecraft.class_5481
  */
 package minegame159.meteorclient.systems.modules.misc;
@@ -46,239 +46,251 @@ import net.minecraft.class_2554;
 import net.minecraft.class_2558;
 import net.minecraft.class_2561;
 import net.minecraft.class_2568;
+import net.minecraft.class_2583;
 import net.minecraft.class_2585;
 import net.minecraft.class_303;
-import net.minecraft.class_5250;
 import net.minecraft.class_5481;
 
 public class BetterChat
 extends Module {
-    private final /* synthetic */ Setting<Boolean> antiSpam;
-    private final /* synthetic */ Setting<Integer> antiSpamDepth;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> suffixSmallCaps;
-    private final /* synthetic */ SimpleDateFormat dateFormat;
-    private final /* synthetic */ Setting<Boolean> longerChatHistory;
-    private final /* synthetic */ Setting<Boolean> annoy;
-    private final /* synthetic */ Char2CharMap SMALL_CAPS;
-    private final /* synthetic */ SettingGroup sgPrefix;
-    private final /* synthetic */ Setting<String> suffixText;
-    private final /* synthetic */ Setting<Boolean> infiniteChatBox;
-    private final /* synthetic */ Setting<Boolean> prefixRandom;
-    private final /* synthetic */ Setting<Boolean> prefixSmallCaps;
-    private final /* synthetic */ Setting<Boolean> coordsProtection;
-    private final /* synthetic */ Setting<Boolean> suffix;
-    private final /* synthetic */ Setting<Boolean> timestamps;
-    private final /* synthetic */ Setting<Boolean> fancy;
-    private final /* synthetic */ SettingGroup sgSuffix;
-    private final /* synthetic */ Setting<Boolean> suffixRandom;
-    private final /* synthetic */ Setting<Integer> longerChatLines;
-    private final /* synthetic */ Setting<Boolean> prefix;
-    private final /* synthetic */ Setting<String> prefixText;
+    private final Setting<Boolean> antiSpam;
+    private final Setting<Integer> antiSpamDepth;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> suffixSmallCaps;
+    private final SimpleDateFormat dateFormat;
+    private final Setting<Boolean> longerChatHistory;
+    private final Setting<Boolean> annoy;
+    private final Char2CharMap SMALL_CAPS;
+    private final SettingGroup sgPrefix;
+    private final Setting<String> suffixText;
+    private final Setting<Boolean> infiniteChatBox;
+    private final Setting<Boolean> prefixRandom;
+    private final Setting<Boolean> prefixSmallCaps;
+    private final Setting<Boolean> coordsProtection;
+    private final Setting<Boolean> suffix;
+    private final Setting<Boolean> timestamps;
+    private final Setting<Boolean> fancy;
+    private final SettingGroup sgSuffix;
+    private final Setting<Boolean> suffixRandom;
+    private final Setting<Integer> longerChatLines;
+    private final Setting<Boolean> prefix;
+    private final Setting<String> prefixText;
 
-    private String applyFancy(String llllllllllllllllIlllIllIlllIlIlI) {
-        StringBuilder llllllllllllllllIlllIllIlllIlIIl = new StringBuilder();
-        for (char llllllllllllllllIlllIllIlllIllII : llllllllllllllllIlllIllIlllIlIlI.toCharArray()) {
-            BetterChat llllllllllllllllIlllIllIlllIlIII;
-            if (llllllllllllllllIlllIllIlllIlIII.SMALL_CAPS.containsKey(llllllllllllllllIlllIllIlllIllII)) {
-                llllllllllllllllIlllIllIlllIlIIl.append(llllllllllllllllIlllIllIlllIlIII.SMALL_CAPS.get(llllllllllllllllIlllIllIlllIllII));
+    private boolean lambda$new$0() {
+        return this.prefixRandom.get() == false;
+    }
+
+    private static boolean lambda$onMessageRecieve$5(ReceiveMessageEvent receiveMessageEvent, class_303 class_3032) {
+        return class_3032.method_1413() == receiveMessageEvent.id && receiveMessageEvent.id != 0;
+    }
+
+    private String applyFancy(String string) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char c : string.toCharArray()) {
+            if (this.SMALL_CAPS.containsKey(c)) {
+                stringBuilder.append(this.SMALL_CAPS.get(c));
                 continue;
             }
-            llllllllllllllllIlllIllIlllIlIIl.append(llllllllllllllllIlllIllIlllIllII);
+            stringBuilder.append(c);
+            if (!false) continue;
+            return null;
         }
-        return String.valueOf(llllllllllllllllIlllIllIlllIlIIl);
+        return String.valueOf(stringBuilder);
+    }
+
+    private boolean lambda$new$1() {
+        return this.prefixRandom.get() == false;
     }
 
     private String getSuffix() {
-        BetterChat llllllllllllllllIlllIllIllIlllII;
-        return llllllllllllllllIlllIllIllIlllII.suffix.get() != false ? llllllllllllllllIlllIllIllIlllII.getAffix(llllllllllllllllIlllIllIllIlllII.suffixText.get(), llllllllllllllllIlllIllIllIlllII.suffixSmallCaps.get(), llllllllllllllllIlllIllIllIlllII.suffixRandom.get()) : "";
+        return this.suffix.get() != false ? this.getAffix(this.suffixText.get(), this.suffixSmallCaps.get(), this.suffixRandom.get()) : "";
     }
 
-    private String applyAnnoy(String llllllllllllllllIlllIllIllllllIl) {
-        StringBuilder llllllllllllllllIlllIllIllllllII = new StringBuilder(llllllllllllllllIlllIllIllllllIl.length());
-        boolean llllllllllllllllIlllIllIlllllIll = true;
-        for (int llllllllllllllllIlllIllIllllllll : llllllllllllllllIlllIllIllllllIl.codePoints().toArray()) {
-            if (llllllllllllllllIlllIllIlllllIll) {
-                llllllllllllllllIlllIllIllllllII.appendCodePoint(Character.toUpperCase(llllllllllllllllIlllIllIllllllll));
+    private String applyAnnoy(String string) {
+        StringBuilder stringBuilder = new StringBuilder(string.length());
+        boolean bl = true;
+        for (int n : string.codePoints().toArray()) {
+            if (bl) {
+                stringBuilder.appendCodePoint(Character.toUpperCase(n));
             } else {
-                llllllllllllllllIlllIllIllllllII.appendCodePoint(Character.toLowerCase(llllllllllllllllIlllIllIllllllll));
+                stringBuilder.appendCodePoint(Character.toLowerCase(n));
             }
-            llllllllllllllllIlllIllIlllllIll = !llllllllllllllllIlllIllIlllllIll;
+            bl = !bl;
+            if (true) continue;
+            return null;
         }
-        llllllllllllllllIlllIllIllllllIl = String.valueOf(llllllllllllllllIlllIllIllllllII);
-        return llllllllllllllllIlllIllIllllllIl;
+        string = String.valueOf(stringBuilder);
+        return string;
     }
 
-    private class_2554 getSendButton(String llllllllllllllllIlllIllIllIIIIII, String llllllllllllllllIlllIllIlIllllll) {
-        class_2585 llllllllllllllllIlllIllIllIIIIll = new class_2585("[SEND ANYWAY]");
-        class_2585 llllllllllllllllIlllIllIllIIIIlI = new class_2585("");
-        class_2585 llllllllllllllllIlllIllIllIIIIIl = new class_2585(llllllllllllllllIlllIllIlIllllll);
-        llllllllllllllllIlllIllIllIIIIIl.method_10862(llllllllllllllllIlllIllIllIIIIlI.method_10866().method_27706(class_124.field_1080));
-        llllllllllllllllIlllIllIllIIIIlI.method_10852((class_2561)llllllllllllllllIlllIllIllIIIIIl);
-        llllllllllllllllIlllIllIllIIIIlI.method_10852((class_2561)new class_2585(String.valueOf(new StringBuilder().append('\n').append(llllllllllllllllIlllIllIllIIIIII))));
-        llllllllllllllllIlllIllIllIIIIll.method_10862(llllllllllllllllIlllIllIllIIIIll.method_10866().method_27706(class_124.field_1079).method_10958(new class_2558(class_2558.class_2559.field_11750, Commands.get().get(SayCommand.class).toString(llllllllllllllllIlllIllIllIIIIII))).method_10949(new class_2568(class_2568.class_5247.field_24342, (Object)llllllllllllllllIlllIllIllIIIIlI)));
-        return llllllllllllllllIlllIllIllIIIIll;
+    private class_2554 getSendButton(String string, String string2) {
+        class_2585 class_25852 = new class_2585("[SEND ANYWAY]");
+        class_2585 class_25853 = new class_2585("");
+        class_2585 class_25854 = new class_2585(string2);
+        class_25854.method_10862(class_25853.method_10866().method_27706(class_124.field_1080));
+        class_25853.method_10852((class_2561)class_25854);
+        class_25853.method_10852((class_2561)new class_2585(String.valueOf(new StringBuilder().append('\n').append(string))));
+        class_25852.method_10862(class_25852.method_10866().method_27706(class_124.field_1079).method_10958(new class_2558(class_2558.class_2559.field_11750, Commands.get().get(SayCommand.class).toString(string))).method_10949(new class_2568(class_2568.class_5247.field_24342, (Object)class_25853)));
+        return class_25852;
     }
 
     @EventHandler
-    private void onMessageRecieve(ReceiveMessageEvent llllllllllllllllIlllIlllIlIIlIIl) {
-        BetterChat llllllllllllllllIlllIlllIlIIlIlI;
-        ((ChatHudAccessor)llllllllllllllllIlllIlllIlIIlIlI.mc.field_1705.method_1743()).getVisibleMessages().removeIf(llllllllllllllllIlllIllIlIlIlIII -> llllllllllllllllIlllIllIlIlIlIII.method_1413() == llllllllllllllllIlllIllIlIlIIlll.id && llllllllllllllllIlllIllIlIlIIlll.id != 0);
-        ((ChatHudAccessor)llllllllllllllllIlllIlllIlIIlIlI.mc.field_1705.method_1743()).getMessages().removeIf(llllllllllllllllIlllIllIlIlIlllI -> llllllllllllllllIlllIllIlIlIlllI.method_1413() == llllllllllllllllIlllIllIlIlIllll.id && llllllllllllllllIlllIllIlIlIllll.id != 0);
-        class_2561 llllllllllllllllIlllIlllIlIIlIll = llllllllllllllllIlllIlllIlIIlIIl.message;
-        if (llllllllllllllllIlllIlllIlIIlIlI.timestamps.get().booleanValue()) {
-            Matcher llllllllllllllllIlllIlllIlIlIIIl = Pattern.compile("^(<[0-9]{2}:[0-9]{2}>\\s)").matcher(llllllllllllllllIlllIlllIlIIlIll.getString());
-            if (llllllllllllllllIlllIlllIlIlIIIl.matches()) {
-                llllllllllllllllIlllIlllIlIIlIll.method_10855().subList(0, 8).clear();
+    private void onMessageRecieve(ReceiveMessageEvent receiveMessageEvent) {
+        class_2561 class_25612;
+        ((ChatHudAccessor)this.mc.field_1705.method_1743()).getVisibleMessages().removeIf(arg_0 -> BetterChat.lambda$onMessageRecieve$4(receiveMessageEvent, arg_0));
+        ((ChatHudAccessor)this.mc.field_1705.method_1743()).getMessages().removeIf(arg_0 -> BetterChat.lambda$onMessageRecieve$5(receiveMessageEvent, arg_0));
+        class_2561 class_25613 = receiveMessageEvent.message;
+        if (this.timestamps.get().booleanValue()) {
+            Matcher matcher = Pattern.compile("^(<[0-9]{2}:[0-9]{2}>\\s)").matcher(class_25613.getString());
+            if (matcher.matches()) {
+                class_25613.method_10855().subList(0, 8).clear();
             }
-            class_5250 llllllllllllllllIlllIlllIlIlIIII = new class_2585(String.valueOf(new StringBuilder().append("<").append(llllllllllllllllIlllIlllIlIIlIlI.dateFormat.format(new Date())).append("> "))).method_27692(class_124.field_1080);
-            llllllllllllllllIlllIlllIlIIlIll = new class_2585("").method_10852((class_2561)llllllllllllllllIlllIlllIlIlIIII).method_10852(llllllllllllllllIlllIlllIlIIlIll);
+            class_25612 = new class_2585(String.valueOf(new StringBuilder().append("<").append(this.dateFormat.format(new Date())).append("> "))).method_27692(class_124.field_1080);
+            class_25613 = new class_2585("").method_10852(class_25612).method_10852(class_25613);
         }
-        if (llllllllllllllllIlllIlllIlIIlIlI.antiSpam.get().booleanValue()) {
-            for (int llllllllllllllllIlllIlllIlIIlllI = 0; llllllllllllllllIlllIlllIlIIlllI < llllllllllllllllIlllIlllIlIIlIlI.antiSpamDepth.get(); ++llllllllllllllllIlllIlllIlIIlllI) {
-                class_2561 llllllllllllllllIlllIlllIlIIllll = llllllllllllllllIlllIlllIlIIlIlI.appendAntiSpam(llllllllllllllllIlllIlllIlIIlIll, llllllllllllllllIlllIlllIlIIlllI);
-                if (llllllllllllllllIlllIlllIlIIllll == null) continue;
-                llllllllllllllllIlllIlllIlIIlIll = llllllllllllllllIlllIlllIlIIllll;
-                ((ChatHudAccessor)llllllllllllllllIlllIlllIlIIlIlI.mc.field_1705.method_1743()).getMessages().remove(llllllllllllllllIlllIlllIlIIlllI);
-                ((ChatHudAccessor)llllllllllllllllIlllIlllIlIIlIlI.mc.field_1705.method_1743()).getVisibleMessages().remove(llllllllllllllllIlllIlllIlIIlllI);
+        if (this.antiSpam.get().booleanValue()) {
+            for (int i = 0; i < this.antiSpamDepth.get(); ++i) {
+                class_25612 = this.appendAntiSpam(class_25613, i);
+                if (class_25612 == null) continue;
+                class_25613 = class_25612;
+                ((ChatHudAccessor)this.mc.field_1705.method_1743()).getMessages().remove(i);
+                ((ChatHudAccessor)this.mc.field_1705.method_1743()).getVisibleMessages().remove(i);
+                if (3 != -1) continue;
+                return;
             }
         }
-        llllllllllllllllIlllIlllIlIIlIIl.cancel();
-        ((IChatHud)llllllllllllllllIlllIlllIlIIlIlI.mc.field_1705.method_1743()).add(llllllllllllllllIlllIlllIlIIlIll, llllllllllllllllIlllIlllIlIIlIIl.id, llllllllllllllllIlllIlllIlIIlIlI.mc.field_1705.method_1738(), false);
+        receiveMessageEvent.cancel();
+        ((IChatHud)this.mc.field_1705.method_1743()).add(class_25613, receiveMessageEvent.id, this.mc.field_1705.method_1738(), false);
+    }
+
+    private static boolean lambda$onMessageRecieve$4(ReceiveMessageEvent receiveMessageEvent, class_303 class_3032) {
+        return class_3032.method_1413() == receiveMessageEvent.id && receiveMessageEvent.id != 0;
     }
 
     public int getChatLength() {
-        BetterChat llllllllllllllllIlllIlllIIIIlIII;
-        return llllllllllllllllIlllIlllIIIIlIII.longerChatLines.get();
+        return this.longerChatLines.get();
+    }
+
+    private static boolean lambda$appendAntiSpam$6(class_2585 class_25852, int n, class_2583 class_25832, int n2) {
+        class_25852.method_10852((class_2561)new class_2585(new String(Character.toChars(n2))).method_10862(class_25832));
+        return true;
     }
 
     public BetterChat() {
         super(Categories.Misc, "better-chat", "Improves your chat experience in various ways.");
-        BetterChat llllllllllllllllIlllIlllIlIllIlI;
-        llllllllllllllllIlllIlllIlIllIlI.sgGeneral = llllllllllllllllIlllIlllIlIllIlI.settings.getDefaultGroup();
-        llllllllllllllllIlllIlllIlIllIlI.sgPrefix = llllllllllllllllIlllIlllIlIllIlI.settings.createGroup("Prefix");
-        llllllllllllllllIlllIlllIlIllIlI.sgSuffix = llllllllllllllllIlllIlllIlIllIlI.settings.createGroup("Suffix");
-        llllllllllllllllIlllIlllIlIllIlI.annoy = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new BoolSetting.Builder().name("annoy").description("Makes your messages aNnOyInG.").defaultValue(false).build());
-        llllllllllllllllIlllIlllIlIllIlI.fancy = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new BoolSetting.Builder().name("fancy-chat").description("Makes your messages \u0493\u1d00\u0274\u1d04\u028f!").defaultValue(false).build());
-        llllllllllllllllIlllIlllIlIllIlI.timestamps = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new BoolSetting.Builder().name("timestamps").description("Adds client side time stamps to the beginning of chat messages.").defaultValue(false).build());
-        llllllllllllllllIlllIlllIlIllIlI.antiSpam = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new BoolSetting.Builder().name("anti-spam").description("Blocks duplicate messages from filling your chat.").defaultValue(true).build());
-        llllllllllllllllIlllIlllIlIllIlI.antiSpamDepth = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new IntSetting.Builder().name("depth").description("How many messages to check for duplicate messages.").defaultValue(20).min(1).sliderMin(1).visible(llllllllllllllllIlllIlllIlIllIlI.antiSpam::get).build());
-        llllllllllllllllIlllIlllIlIllIlI.coordsProtection = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new BoolSetting.Builder().name("coords-protection").description("Prevents you from sending messages in chat that may contain coordinates.").defaultValue(true).build());
-        llllllllllllllllIlllIlllIlIllIlI.infiniteChatBox = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new BoolSetting.Builder().name("infinite-chat-box").description("Lets you type infinitely long messages.").defaultValue(true).build());
-        llllllllllllllllIlllIlllIlIllIlI.longerChatHistory = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new BoolSetting.Builder().name("longer-chat-history").description("Extends chat length.").defaultValue(true).build());
-        llllllllllllllllIlllIlllIlIllIlI.longerChatLines = llllllllllllllllIlllIlllIlIllIlI.sgGeneral.add(new IntSetting.Builder().name("extra-lines").description("The amount of extra chat lines.").defaultValue(1000).min(100).sliderMax(1000).visible(llllllllllllllllIlllIlllIlIllIlI.longerChatHistory::get).build());
-        llllllllllllllllIlllIlllIlIllIlI.prefix = llllllllllllllllIlllIlllIlIllIlI.sgPrefix.add(new BoolSetting.Builder().name("prefix").description("Adds a prefix to your chat messages.").defaultValue(false).build());
-        llllllllllllllllIlllIlllIlIllIlI.prefixRandom = llllllllllllllllIlllIlllIlIllIlI.sgPrefix.add(new BoolSetting.Builder().name("random").description("Uses a random number as your prefix.").defaultValue(false).build());
-        llllllllllllllllIlllIlllIlIllIlI.prefixText = llllllllllllllllIlllIlllIlIllIlI.sgPrefix.add(new StringSetting.Builder().name("text").description("The text to add as your prefix.").defaultValue("> ").visible(() -> {
-            BetterChat llllllllllllllllIlllIllIlIIllIll;
-            return llllllllllllllllIlllIllIlIIllIll.prefixRandom.get() == false;
-        }).build());
-        llllllllllllllllIlllIlllIlIllIlI.prefixSmallCaps = llllllllllllllllIlllIlllIlIllIlI.sgPrefix.add(new BoolSetting.Builder().name("small-caps").description("Uses small caps in the prefix.").defaultValue(false).visible(() -> {
-            BetterChat llllllllllllllllIlllIllIlIIllllI;
-            return llllllllllllllllIlllIllIlIIllllI.prefixRandom.get() == false;
-        }).build());
-        llllllllllllllllIlllIlllIlIllIlI.suffix = llllllllllllllllIlllIlllIlIllIlI.sgSuffix.add(new BoolSetting.Builder().name("suffix").description("Adds a suffix to your chat messages.").defaultValue(false).build());
-        llllllllllllllllIlllIlllIlIllIlI.suffixRandom = llllllllllllllllIlllIlllIlIllIlI.sgSuffix.add(new BoolSetting.Builder().name("random").description("Uses a random number as your suffix.").defaultValue(false).build());
-        llllllllllllllllIlllIlllIlIllIlI.suffixText = llllllllllllllllIlllIlllIlIllIlI.sgSuffix.add(new StringSetting.Builder().name("text").description("The text to add as your suffix.").defaultValue(" | meteor on crack!").visible(() -> {
-            BetterChat llllllllllllllllIlllIllIlIlIIIII;
-            return llllllllllllllllIlllIllIlIlIIIII.suffixRandom.get() == false;
-        }).build());
-        llllllllllllllllIlllIlllIlIllIlI.suffixSmallCaps = llllllllllllllllIlllIlllIlIllIlI.sgSuffix.add(new BoolSetting.Builder().name("small-caps").description("Uses small caps in the suffix.").defaultValue(true).visible(() -> {
-            BetterChat llllllllllllllllIlllIllIlIlIIlII;
-            return llllllllllllllllIlllIllIlIlIIlII.suffixRandom.get() == false;
-        }).build());
-        llllllllllllllllIlllIlllIlIllIlI.SMALL_CAPS = new Char2CharArrayMap();
-        llllllllllllllllIlllIlllIlIllIlI.dateFormat = new SimpleDateFormat("HH:mm");
-        String[] llllllllllllllllIlllIlllIlIlllII = "abcdefghijklmnopqrstuvwxyz".split("");
-        String[] llllllllllllllllIlllIlllIlIllIll = "\u1d00\u0299\u1d04\u1d05\u1d07\ua730\u0262\u029c\u026a\u1d0a\u1d0b\u029f\u1d0d\u0274\u1d0f\u1d29q\u0280\ua731\u1d1b\u1d1c\u1d20\u1d21xy\u1d22".split("");
-        for (int llllllllllllllllIlllIlllIlIllllI = 0; llllllllllllllllIlllIlllIlIllllI < llllllllllllllllIlllIlllIlIlllII.length; ++llllllllllllllllIlllIlllIlIllllI) {
-            llllllllllllllllIlllIlllIlIllIlI.SMALL_CAPS.put(llllllllllllllllIlllIlllIlIlllII[llllllllllllllllIlllIlllIlIllllI].charAt(0), llllllllllllllllIlllIlllIlIllIll[llllllllllllllllIlllIlllIlIllllI].charAt(0));
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgPrefix = this.settings.createGroup("Prefix");
+        this.sgSuffix = this.settings.createGroup("Suffix");
+        this.annoy = this.sgGeneral.add(new BoolSetting.Builder().name("annoy").description("Makes your messages aNnOyInG.").defaultValue(false).build());
+        this.fancy = this.sgGeneral.add(new BoolSetting.Builder().name("fancy-chat").description("Makes your messages \u0493\u1d00\u0274\u1d04\u028f!").defaultValue(false).build());
+        this.timestamps = this.sgGeneral.add(new BoolSetting.Builder().name("timestamps").description("Adds client side time stamps to the beginning of chat messages.").defaultValue(false).build());
+        this.antiSpam = this.sgGeneral.add(new BoolSetting.Builder().name("anti-spam").description("Blocks duplicate messages from filling your chat.").defaultValue(true).build());
+        this.antiSpamDepth = this.sgGeneral.add(new IntSetting.Builder().name("depth").description("How many messages to check for duplicate messages.").defaultValue(20).min(1).sliderMin(1).visible(this.antiSpam::get).build());
+        this.coordsProtection = this.sgGeneral.add(new BoolSetting.Builder().name("coords-protection").description("Prevents you from sending messages in chat that may contain coordinates.").defaultValue(true).build());
+        this.infiniteChatBox = this.sgGeneral.add(new BoolSetting.Builder().name("infinite-chat-box").description("Lets you type infinitely long messages.").defaultValue(true).build());
+        this.longerChatHistory = this.sgGeneral.add(new BoolSetting.Builder().name("longer-chat-history").description("Extends chat length.").defaultValue(true).build());
+        this.longerChatLines = this.sgGeneral.add(new IntSetting.Builder().name("extra-lines").description("The amount of extra chat lines.").defaultValue(1000).min(100).sliderMax(1000).visible(this.longerChatHistory::get).build());
+        this.prefix = this.sgPrefix.add(new BoolSetting.Builder().name("prefix").description("Adds a prefix to your chat messages.").defaultValue(false).build());
+        this.prefixRandom = this.sgPrefix.add(new BoolSetting.Builder().name("random").description("Uses a random number as your prefix.").defaultValue(false).build());
+        this.prefixText = this.sgPrefix.add(new StringSetting.Builder().name("text").description("The text to add as your prefix.").defaultValue("> ").visible(this::lambda$new$0).build());
+        this.prefixSmallCaps = this.sgPrefix.add(new BoolSetting.Builder().name("small-caps").description("Uses small caps in the prefix.").defaultValue(false).visible(this::lambda$new$1).build());
+        this.suffix = this.sgSuffix.add(new BoolSetting.Builder().name("suffix").description("Adds a suffix to your chat messages.").defaultValue(false).build());
+        this.suffixRandom = this.sgSuffix.add(new BoolSetting.Builder().name("random").description("Uses a random number as your suffix.").defaultValue(false).build());
+        this.suffixText = this.sgSuffix.add(new StringSetting.Builder().name("text").description("The text to add as your suffix.").defaultValue(" | meteor on crack!").visible(this::lambda$new$2).build());
+        this.suffixSmallCaps = this.sgSuffix.add(new BoolSetting.Builder().name("small-caps").description("Uses small caps in the suffix.").defaultValue(true).visible(this::lambda$new$3).build());
+        this.SMALL_CAPS = new Char2CharArrayMap();
+        this.dateFormat = new SimpleDateFormat("HH:mm");
+        String[] arrstring = "abcdefghijklmnopqrstuvwxyz".split("");
+        String[] arrstring2 = "\u1d00\u0299\u1d04\u1d05\u1d07\ua730\u0262\u029c\u026a\u1d0a\u1d0b\u029f\u1d0d\u0274\u1d0f\u1d29q\u0280\ua731\u1d1b\u1d1c\u1d20\u1d21xy\u1d22".split("");
+        for (int i = 0; i < arrstring.length; ++i) {
+            this.SMALL_CAPS.put(arrstring[i].charAt(0), arrstring2[i].charAt(0));
         }
+    }
+
+    private boolean lambda$new$3() {
+        return this.suffixRandom.get() == false;
     }
 
     public boolean isInfiniteChatBox() {
-        BetterChat llllllllllllllllIlllIlllIIIIlllI;
-        return llllllllllllllllIlllIlllIIIIlllI.isActive() && llllllllllllllllIlllIlllIIIIlllI.infiniteChatBox.get() != false;
+        return this.isActive() && this.infiniteChatBox.get() != false;
     }
 
     @EventHandler
-    private void onMessageSend(SendMessageEvent llllllllllllllllIlllIlllIIIlIIll) {
-        BetterChat llllllllllllllllIlllIlllIIIlIlII;
-        String llllllllllllllllIlllIlllIIIlIlIl = llllllllllllllllIlllIlllIIIlIIll.message;
-        if (llllllllllllllllIlllIlllIIIlIlII.annoy.get().booleanValue()) {
-            llllllllllllllllIlllIlllIIIlIlIl = llllllllllllllllIlllIlllIIIlIlII.applyAnnoy(llllllllllllllllIlllIlllIIIlIlIl);
+    private void onMessageSend(SendMessageEvent sendMessageEvent) {
+        String string = sendMessageEvent.message;
+        if (this.annoy.get().booleanValue()) {
+            string = this.applyAnnoy(string);
         }
-        if (llllllllllllllllIlllIlllIIIlIlII.fancy.get().booleanValue()) {
-            llllllllllllllllIlllIlllIIIlIlIl = llllllllllllllllIlllIlllIIIlIlII.applyFancy(llllllllllllllllIlllIlllIIIlIlIl);
+        if (this.fancy.get().booleanValue()) {
+            string = this.applyFancy(string);
         }
-        llllllllllllllllIlllIlllIIIlIlIl = String.valueOf(new StringBuilder().append(llllllllllllllllIlllIlllIIIlIlII.getPrefix()).append(llllllllllllllllIlllIlllIIIlIlIl).append(llllllllllllllllIlllIlllIIIlIlII.getSuffix()));
-        if (llllllllllllllllIlllIlllIIIlIlII.coordsProtection.get().booleanValue() && llllllllllllllllIlllIlllIIIlIlII.containsCoordinates(llllllllllllllllIlllIlllIIIlIlIl)) {
-            class_2585 llllllllllllllllIlllIlllIIIllIIl = new class_2585("It looks like there are coordinates in your message! ");
-            class_2554 llllllllllllllllIlllIlllIIIllIII = llllllllllllllllIlllIlllIIIlIlII.getSendButton(llllllllllllllllIlllIlllIIIlIlIl, "Send your message to the global chat even if there are coordinates:");
-            llllllllllllllllIlllIlllIIIllIIl.method_10852((class_2561)llllllllllllllllIlllIlllIIIllIII);
-            ChatUtils.sendMsg((class_2561)llllllllllllllllIlllIlllIIIllIIl);
-            llllllllllllllllIlllIlllIIIlIIll.cancel();
+        string = String.valueOf(new StringBuilder().append(this.getPrefix()).append(string).append(this.getSuffix()));
+        if (this.coordsProtection.get().booleanValue() && this.containsCoordinates(string)) {
+            class_2585 class_25852 = new class_2585("It looks like there are coordinates in your message! ");
+            class_2554 class_25542 = this.getSendButton(string, "Send your message to the global chat even if there are coordinates:");
+            class_25852.method_10852((class_2561)class_25542);
+            ChatUtils.sendMsg((class_2561)class_25852);
+            sendMessageEvent.cancel();
             return;
         }
-        llllllllllllllllIlllIlllIIIlIIll.message = llllllllllllllllIlllIlllIIIlIlIl;
+        sendMessageEvent.message = string;
     }
 
-    private boolean containsCoordinates(String llllllllllllllllIlllIllIllIIllIl) {
-        return llllllllllllllllIlllIllIllIIllIl.matches(".*(?<x>-?\\d{3,}(?:\\.\\d*)?)(?:\\s+(?<y>\\d{1,3}(?:\\.\\d*)?))?\\s+(?<z>-?\\d{3,}(?:\\.\\d*)?).*");
+    private boolean containsCoordinates(String string) {
+        return string.matches(".*(?<x>-?\\d{3,}(?:\\.\\d*)?)(?:\\s+(?<y>\\d{1,3}(?:\\.\\d*)?))?\\s+(?<z>-?\\d{3,}(?:\\.\\d*)?).*");
     }
 
-    private String getAffix(String llllllllllllllllIlllIllIllIlIIlI, boolean llllllllllllllllIlllIllIllIlIIIl, boolean llllllllllllllllIlllIllIllIlIIII) {
-        if (llllllllllllllllIlllIllIllIlIIII) {
+    private boolean lambda$new$2() {
+        return this.suffixRandom.get() == false;
+    }
+
+    private String getAffix(String string, boolean bl, boolean bl2) {
+        if (bl2) {
             return String.format("(%03d) ", Utils.random(0, 1000));
         }
-        if (llllllllllllllllIlllIllIllIlIIIl) {
-            BetterChat llllllllllllllllIlllIllIllIlIIll;
-            return llllllllllllllllIlllIllIllIlIIll.applyFancy(llllllllllllllllIlllIllIllIlIIlI);
+        if (bl) {
+            return this.applyFancy(string);
         }
-        return llllllllllllllllIlllIllIllIlIIlI;
+        return string;
     }
 
     public boolean isLongerChat() {
-        BetterChat llllllllllllllllIlllIlllIIIIlIll;
-        return llllllllllllllllIlllIlllIIIIlIll.isActive() && llllllllllllllllIlllIlllIIIIlIll.longerChatHistory.get() != false;
+        return this.isActive() && this.longerChatHistory.get() != false;
     }
 
-    private class_2561 appendAntiSpam(class_2561 llllllllllllllllIlllIlllIIllIIlI, int llllllllllllllllIlllIlllIIlIlIIl) {
-        BetterChat llllllllllllllllIlllIlllIIllIIll;
-        List<class_303<class_5481>> llllllllllllllllIlllIlllIIllIIII = ((ChatHudAccessor)llllllllllllllllIlllIlllIIllIIll.mc.field_1705.method_1743()).getVisibleMessages();
-        if (llllllllllllllllIlllIlllIIllIIII.isEmpty() || llllllllllllllllIlllIlllIIlIlIIl < 0 || llllllllllllllllIlllIlllIIlIlIIl > llllllllllllllllIlllIlllIIllIIII.size() - 1) {
+    private class_2561 appendAntiSpam(class_2561 class_25612, int n) {
+        List<class_303<class_5481>> list = ((ChatHudAccessor)this.mc.field_1705.method_1743()).getVisibleMessages();
+        if (list.isEmpty() || n < 0 || n > list.size() - 1) {
             return null;
         }
-        class_303<class_5481> llllllllllllllllIlllIlllIIlIllll = llllllllllllllllIlllIlllIIllIIII.get(llllllllllllllllIlllIlllIIlIlIIl);
-        class_2585 llllllllllllllllIlllIlllIIlIlllI = new class_2585("");
-        ((class_5481)llllllllllllllllIlllIlllIIlIllll.method_1412()).accept((llllllllllllllllIlllIllIlIllIlll, llllllllllllllllIlllIllIlIllIIll, llllllllllllllllIlllIllIlIllIlIl) -> {
-            llllllllllllllllIlllIlllIIlIlllI.method_10852((class_2561)new class_2585(new String(Character.toChars(llllllllllllllllIlllIllIlIllIlIl))).method_10862(llllllllllllllllIlllIllIlIllIIll));
-            return true;
-        });
-        String llllllllllllllllIlllIlllIIlIllIl = llllllllllllllllIlllIlllIIlIlllI.getString();
-        String llllllllllllllllIlllIlllIIlIllII = llllllllllllllllIlllIlllIIllIIlI.getString();
-        if (llllllllllllllllIlllIlllIIlIllIl.equals(llllllllllllllllIlllIlllIIlIllII)) {
-            return llllllllllllllllIlllIlllIIlIlllI.method_10852((class_2561)new class_2585(" (2)").method_27692(class_124.field_1080));
+        class_303<class_5481> class_3032 = list.get(n);
+        class_2585 class_25852 = new class_2585("");
+        ((class_5481)class_3032.method_1412()).accept((arg_0, arg_1, arg_2) -> BetterChat.lambda$appendAntiSpam$6(class_25852, arg_0, arg_1, arg_2));
+        String string = class_25852.getString();
+        String string2 = class_25612.getString();
+        if (string.equals(string2)) {
+            return class_25852.method_10852((class_2561)new class_2585(" (2)").method_27692(class_124.field_1080));
         }
-        Matcher llllllllllllllllIlllIlllIIllIlll = Pattern.compile(".*(\\([0-9]+\\)$)").matcher(llllllllllllllllIlllIlllIIlIllIl);
-        if (!llllllllllllllllIlllIlllIIllIlll.matches()) {
+        Matcher matcher = Pattern.compile(".*(\\([0-9]+\\)$)").matcher(string);
+        if (!matcher.matches()) {
             return null;
         }
-        String llllllllllllllllIlllIlllIIllIllI = llllllllllllllllIlllIlllIIllIlll.group(llllllllllllllllIlllIlllIIllIlll.groupCount());
-        int llllllllllllllllIlllIlllIIllIlIl = Integer.parseInt(llllllllllllllllIlllIlllIIllIllI.substring(1, llllllllllllllllIlllIlllIIllIllI.length() - 1));
-        String llllllllllllllllIlllIlllIIllIlII = String.valueOf(new StringBuilder().append(" (").append(llllllllllllllllIlllIlllIIllIlIl).append(")"));
-        if (llllllllllllllllIlllIlllIIlIllIl.substring(0, llllllllllllllllIlllIlllIIlIllIl.length() - llllllllllllllllIlllIlllIIllIlII.length()).equals(llllllllllllllllIlllIlllIIlIllII)) {
-            for (int llllllllllllllllIlllIlllIIlllIII = 0; llllllllllllllllIlllIlllIIlllIII < llllllllllllllllIlllIlllIIllIlII.length(); ++llllllllllllllllIlllIlllIIlllIII) {
-                llllllllllllllllIlllIlllIIlIlllI.method_10855().remove(llllllllllllllllIlllIlllIIlIlllI.method_10855().size() - 1);
+        String string3 = matcher.group(matcher.groupCount());
+        int n2 = Integer.parseInt(string3.substring(1, string3.length() - 1));
+        String string4 = String.valueOf(new StringBuilder().append(" (").append(n2).append(")"));
+        if (string.substring(0, string.length() - string4.length()).equals(string2)) {
+            for (int i = 0; i < string4.length(); ++i) {
+                class_25852.method_10855().remove(class_25852.method_10855().size() - 1);
+                if (-1 < 4) continue;
+                return null;
             }
-            return llllllllllllllllIlllIlllIIlIlllI.method_10852((class_2561)new class_2585(String.valueOf(new StringBuilder().append(" (").append(llllllllllllllllIlllIlllIIllIlIl + 1).append(")"))).method_27692(class_124.field_1080));
+            return class_25852.method_10852((class_2561)new class_2585(String.valueOf(new StringBuilder().append(" (").append(n2 + 1).append(")"))).method_27692(class_124.field_1080));
         }
         return null;
     }
 
     private String getPrefix() {
-        BetterChat llllllllllllllllIlllIllIlllIIIII;
-        return llllllllllllllllIlllIllIlllIIIII.prefix.get() != false ? llllllllllllllllIlllIllIlllIIIII.getAffix(llllllllllllllllIlllIllIlllIIIII.prefixText.get(), llllllllllllllllIlllIllIlllIIIII.prefixSmallCaps.get(), llllllllllllllllIlllIllIlllIIIII.prefixRandom.get()) : "";
+        return this.prefix.get() != false ? this.getAffix(this.prefixText.get(), this.prefixSmallCaps.get(), this.prefixRandom.get()) : "";
     }
 }
 

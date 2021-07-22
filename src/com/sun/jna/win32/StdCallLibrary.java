@@ -12,8 +12,8 @@ import com.sun.jna.win32.StdCallFunctionMapper;
 public interface StdCallLibrary
 extends Library,
 StdCall {
-    public static final /* synthetic */ FunctionMapper FUNCTION_MAPPER;
-    public static final /* synthetic */ int STDCALL_CONVENTION;
+    public static final FunctionMapper FUNCTION_MAPPER;
+    public static final int STDCALL_CONVENTION;
 
     static {
         STDCALL_CONVENTION = 63;

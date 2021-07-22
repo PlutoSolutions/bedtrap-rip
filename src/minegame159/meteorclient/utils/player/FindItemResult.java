@@ -10,64 +10,54 @@ import minegame159.meteorclient.utils.Utils;
 import net.minecraft.class_1268;
 
 public class FindItemResult {
-    public final /* synthetic */ int slot;
-    public final /* synthetic */ int count;
+    public final int slot;
+    public final int count;
 
-    public FindItemResult(int lllllllllllllllllIllIIIIlllIIIlI, int lllllllllllllllllIllIIIIlllIIIIl) {
-        FindItemResult lllllllllllllllllIllIIIIlllIIIII;
-        lllllllllllllllllIllIIIIlllIIIII.slot = lllllllllllllllllIllIIIIlllIIIlI;
-        lllllllllllllllllIllIIIIlllIIIII.count = lllllllllllllllllIllIIIIlllIIIIl;
+    public FindItemResult(int n, int n2) {
+        this.slot = n;
+        this.count = n2;
     }
 
     public boolean isHotbar() {
-        FindItemResult lllllllllllllllllIllIIIIllIIlIIl;
-        return lllllllllllllllllIllIIIIllIIlIIl.slot >= 0 && lllllllllllllllllIllIIIIllIIlIIl.slot <= 8;
+        return this.slot >= 0 && this.slot <= 8;
     }
 
     public int getSlot() {
-        FindItemResult lllllllllllllllllIllIIIIllIllIll;
-        return lllllllllllllllllIllIIIIllIllIll.slot;
+        return this.slot;
     }
 
     public class_1268 getHand() {
-        FindItemResult lllllllllllllllllIllIIIIllIlIIll;
-        if (lllllllllllllllllIllIIIIllIlIIll.slot == 45) {
+        if (this.slot == 45) {
             return class_1268.field_5810;
         }
-        if (lllllllllllllllllIllIIIIllIlIIll.slot == Utils.mc.field_1724.field_7514.field_7545) {
+        if (this.slot == Utils.mc.field_1724.field_7514.field_7545) {
             return class_1268.field_5808;
         }
         return null;
     }
 
     public boolean isMain() {
-        FindItemResult lllllllllllllllllIllIIIIllIIIllI;
-        return lllllllllllllllllIllIIIIllIIIllI.slot >= 9 && lllllllllllllllllIllIIIIllIIIllI.slot <= 35;
+        return this.slot >= 9 && this.slot <= 35;
     }
 
     public boolean isOffhand() {
-        FindItemResult lllllllllllllllllIllIIIIllIIllIl;
-        return lllllllllllllllllIllIIIIllIIllIl.getHand() == class_1268.field_5810;
+        return this.getHand() == class_1268.field_5810;
     }
 
     public boolean isMainHand() {
-        FindItemResult lllllllllllllllllIllIIIIllIlIIII;
-        return lllllllllllllllllIllIIIIllIlIIII.getHand() == class_1268.field_5808;
+        return this.getHand() == class_1268.field_5808;
     }
 
     public boolean isArmor() {
-        FindItemResult lllllllllllllllllIllIIIIllIIIlII;
-        return lllllllllllllllllIllIIIIllIIIlII.slot >= 36 && lllllllllllllllllIllIIIIllIIIlII.slot <= 39;
+        return this.slot >= 36 && this.slot <= 39;
     }
 
     public boolean found() {
-        FindItemResult lllllllllllllllllIllIIIIllIlIllI;
-        return lllllllllllllllllIllIIIIllIlIllI.slot != -1;
+        return this.slot != -1;
     }
 
     public int getCount() {
-        FindItemResult lllllllllllllllllIllIIIIllIllIII;
-        return lllllllllllllllllIllIIIIllIllIII.count;
+        return this.count;
     }
 }
 

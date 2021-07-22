@@ -26,15 +26,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_919.class})
 public class LightningEntityRendererMixin {
     @Inject(method={"method_23183"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onSetLightningVertex(class_1159 matrix4f, class_4588 vertexConsumer, float f, float g, int i, float h, float j, float k, float l, float m, float n, float o, boolean bl, boolean bl2, boolean bl3, boolean bl4, CallbackInfo ci) {
+    private static void onSetLightningVertex(class_1159 class_11592, class_4588 class_45882, float f, float f2, int n, float f3, float f4, float f5, float f6, float f7, float f8, float f9, boolean bl, boolean bl2, boolean bl3, boolean bl4, CallbackInfo callbackInfo) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeLightningColor.get().booleanValue()) {
             Color color = ambience.lightningColor.get();
-            vertexConsumer.method_22918(matrix4f, f + (bl ? o : -o), (float)(i * 16), g + (bl2 ? o : -o)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
-            vertexConsumer.method_22918(matrix4f, h + (bl ? n : -n), (float)((i + 1) * 16), j + (bl2 ? n : -n)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
-            vertexConsumer.method_22918(matrix4f, h + (bl3 ? n : -n), (float)((i + 1) * 16), j + (bl4 ? n : -n)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
-            vertexConsumer.method_22918(matrix4f, f + (bl3 ? o : -o), (float)(i * 16), g + (bl4 ? o : -o)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
-            ci.cancel();
+            class_45882.method_22918(class_11592, f + (bl ? f9 : -f9), (float)(n * 16), f2 + (bl2 ? f9 : -f9)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
+            class_45882.method_22918(class_11592, f3 + (bl ? f8 : -f8), (float)((n + 1) * 16), f4 + (bl2 ? f8 : -f8)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
+            class_45882.method_22918(class_11592, f3 + (bl3 ? f8 : -f8), (float)((n + 1) * 16), f4 + (bl4 ? f8 : -f8)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
+            class_45882.method_22918(class_11592, f + (bl3 ? f9 : -f9), (float)(n * 16), f2 + (bl4 ? f9 : -f9)).method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, 0.3f).method_1344();
+            callbackInfo.cancel();
         }
     }
 }

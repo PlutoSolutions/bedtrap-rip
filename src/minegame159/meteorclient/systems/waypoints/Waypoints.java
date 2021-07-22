@@ -48,32 +48,37 @@ import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 import net.minecraft.class_4184;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Waypoints
 extends System<Waypoints>
 implements Iterable<Waypoint> {
-    public final /* synthetic */ Map<String, class_1044> icons;
-    private static final /* synthetic */ Color TEXT;
-    private static final /* synthetic */ String[] BUILTIN_ICONS;
-    private static final /* synthetic */ Color BACKGROUND;
-    private /* synthetic */ List<Waypoint> waypoints;
+    public final Map<String, class_1044> icons = new HashMap<String, class_1044>();
+    private static final Color TEXT;
+    private static final String[] BUILTIN_ICONS;
+    private static final Color BACKGROUND;
+    private List<Waypoint> waypoints = new ArrayList<Waypoint>();
 
-    public void add(Waypoint lIlIIlIIlIllIIl) {
-        Waypoints lIlIIlIIlIlllII;
-        lIlIIlIIlIlllII.waypoints.add(lIlIIlIIlIllIIl);
-        lIlIIlIIlIlllII.save();
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public void add(Waypoint waypoint) {
+        this.waypoints.add(waypoint);
+        this.save();
     }
 
     @Override
-    public Waypoints fromTag(class_2487 lIlIIIllllIllIl) {
-        Waypoints lIlIIIllllIllII;
-        lIlIIIllllIllII.waypoints = NbtUtils.listFromTag(lIlIIIllllIllIl.method_10554("waypoints", 10), lIlIIIlllIllIIl -> new Waypoint().fromTag((class_2487)lIlIIIlllIllIIl));
-        return lIlIIIllllIllII;
+    public Waypoints fromTag(class_2487 class_24872) {
+        this.waypoints = NbtUtils.listFromTag(class_24872.method_10554("waypoints", 10), Waypoints::lambda$fromTag$0);
+        return this;
     }
 
-    public void remove(Waypoint lIlIIlIIlIlIIll) {
-        Waypoints lIlIIlIIlIlIlII;
-        if (lIlIIlIIlIlIlII.waypoints.remove(lIlIIlIIlIlIIll)) {
-            lIlIIlIIlIlIlII.save();
+    public void remove(Waypoint waypoint) {
+        if (this.waypoints.remove(waypoint)) {
+            this.save();
         }
     }
 
@@ -85,45 +90,43 @@ implements Iterable<Waypoint> {
 
     public Waypoints() {
         super(null);
-        Waypoints lIlIIlIIllllIlI;
-        lIlIIlIIllllIlI.icons = new HashMap<String, class_1044>();
-        lIlIIlIIllllIlI.waypoints = new ArrayList<Waypoint>();
     }
 
     public static Waypoints get() {
         return Systems.get(Waypoints.class);
     }
 
-    private void copyIcon(File lIlIIIllllIIIlI) {
-        StreamUtils.copy(Waypoints.class.getResourceAsStream(String.valueOf(new StringBuilder().append("/assets/meteor-client/textures/icons/waypoints/").append(lIlIIIllllIIIlI.getName()))), lIlIIIllllIIIlI);
+    private void copyIcon(File file) {
+        StreamUtils.copy(Waypoints.class.getResourceAsStream(String.valueOf(new StringBuilder().append("/assets/meteor-client/textures/icons/waypoints/").append(file.getName()))), file);
     }
 
-    private boolean checkDimension(Waypoint lIlIIlIIlIIIlll) {
-        Dimension lIlIIlIIlIIIllI = PlayerUtils.getDimension();
-        if (lIlIIlIIlIIIlll.overworld && lIlIIlIIlIIIllI == Dimension.Overworld) {
+    private boolean checkDimension(Waypoint waypoint) {
+        Dimension dimension = PlayerUtils.getDimension();
+        if (waypoint.overworld && dimension == Dimension.Overworld) {
             return true;
         }
-        if (lIlIIlIIlIIIlll.nether && lIlIIlIIlIIIllI == Dimension.Nether) {
+        if (waypoint.nether && dimension == Dimension.Nether) {
             return true;
         }
-        return lIlIIlIIlIIIlll.end && lIlIIlIIlIIIllI == Dimension.End;
+        return waypoint.end && dimension == Dimension.End;
     }
 
     public ListIterator<Waypoint> iteratorReverse() {
-        Waypoints lIlIIIllllIIllI;
-        return lIlIIIllllIIllI.waypoints.listIterator(lIlIIIllllIIllI.waypoints.size());
+        return this.waypoints.listIterator(this.waypoints.size());
     }
 
     @Override
     public Iterator<Waypoint> iterator() {
-        Waypoints lIlIIIllllIlIIl;
-        return lIlIIIllllIlIIl.waypoints.iterator();
+        return this.waypoints.iterator();
+    }
+
+    private static Waypoint lambda$fromTag$0(class_2520 class_25202) {
+        return new Waypoint().fromTag((class_2487)class_25202);
     }
 
     @EventHandler(priority=-200)
-    private void onGameDisconnected(GameLeftEvent lIlIIlIIlIIllII) {
-        Waypoints lIlIIlIIlIIllIl;
-        lIlIIlIIlIIllIl.waypoints.clear();
+    private void onGameDisconnected(GameLeftEvent gameLeftEvent) {
+        this.waypoints.clear();
     }
 
     @Override
@@ -136,114 +139,117 @@ implements Iterable<Waypoint> {
 
     @Override
     public void init() {
-        File[] lIlIIlIIllIlIII;
-        Waypoints lIlIIlIIllIIlll;
-        File lIlIIlIIllIlIIl = new File(new File(MeteorClient.FOLDER, "waypoints"), "icons");
-        lIlIIlIIllIlIIl.mkdirs();
-        for (String lIlIIlIIllIllll : BUILTIN_ICONS) {
-            File lIlIIlIIlllIIII = new File(lIlIIlIIllIlIIl, String.valueOf(new StringBuilder().append(lIlIIlIIllIllll).append(".png")));
-            if (lIlIIlIIlllIIII.exists()) continue;
-            lIlIIlIIllIIlll.copyIcon(lIlIIlIIlllIIII);
+        File file = new File(new File(MeteorClient.FOLDER, "waypoints"), "icons");
+        file.mkdirs();
+        Object[] arrobject = BUILTIN_ICONS;
+        int n = arrobject.length;
+        for (int i = 0; i < n; ++i) {
+            String string = arrobject[i];
+            Object object = new File(file, String.valueOf(new StringBuilder().append(string).append(".png")));
+            if (((File)object).exists()) continue;
+            this.copyIcon((File)object);
+            if (3 >= 0) continue;
+            return;
         }
-        for (File lIlIIlIIllIlIll : lIlIIlIIllIlIII = lIlIIlIIllIlIIl.listFiles()) {
-            if (!lIlIIlIIllIlIll.getName().endsWith(".png")) continue;
+        for (Object object : arrobject = file.listFiles()) {
+            if (!((File)object).getName().endsWith(".png")) continue;
             try {
-                String lIlIIlIIllIlllI = lIlIIlIIllIlIll.getName().replace(".png", "");
-                class_1043 lIlIIlIIllIllIl = new class_1043(class_1011.method_4309((InputStream)new FileInputStream(lIlIIlIIllIlIll)));
-                lIlIIlIIllIIlll.icons.put(lIlIIlIIllIlllI, (class_1044)lIlIIlIIllIllIl);
+                String string = ((File)object).getName().replace(".png", "");
+                class_1043 class_10432 = new class_1043(class_1011.method_4309((InputStream)new FileInputStream((File)object)));
+                this.icons.put(string, (class_1044)class_10432);
+                continue;
             }
-            catch (IOException lIlIIlIIllIllII) {
-                lIlIIlIIllIllII.printStackTrace();
+            catch (IOException iOException) {
+                iOException.printStackTrace();
             }
+            if (4 > -1) continue;
+            return;
         }
     }
 
     @Override
     public class_2487 toTag() {
-        Waypoints lIlIIIlllllIIlI;
-        class_2487 lIlIIIlllllIIll = new class_2487();
-        lIlIIIlllllIIll.method_10566("waypoints", (class_2520)NbtUtils.listToTag(lIlIIIlllllIIlI.waypoints));
-        return lIlIIIlllllIIll;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10566("waypoints", (class_2520)NbtUtils.listToTag(this.waypoints));
+        return class_24872;
     }
 
-    public class_243 getCoords(Waypoint lIlIIlIIIlllllI) {
-        double lIlIIlIIIllllIl = lIlIIlIIIlllllI.x;
-        double lIlIIlIIIllllII = lIlIIlIIIlllllI.y;
-        double lIlIIlIIIlllIll = lIlIIlIIIlllllI.z;
-        if (lIlIIlIIIlllllI.actualDimension == Dimension.Overworld && PlayerUtils.getDimension() == Dimension.Nether) {
-            lIlIIlIIIllllIl = (float)lIlIIlIIIlllllI.x / 8.0f;
-            lIlIIlIIIlllIll = (float)lIlIIlIIIlllllI.z / 8.0f;
-        } else if (lIlIIlIIIlllllI.actualDimension == Dimension.Nether && PlayerUtils.getDimension() == Dimension.Overworld) {
-            lIlIIlIIIllllIl = lIlIIlIIIlllllI.x * 8;
-            lIlIIlIIIlllIll = lIlIIlIIIlllllI.z * 8;
+    public class_243 getCoords(Waypoint waypoint) {
+        double d = waypoint.x;
+        double d2 = waypoint.y;
+        double d3 = waypoint.z;
+        if (waypoint.actualDimension == Dimension.Overworld && PlayerUtils.getDimension() == Dimension.Nether) {
+            d = (float)waypoint.x / 8.0f;
+            d3 = (float)waypoint.z / 8.0f;
+        } else if (waypoint.actualDimension == Dimension.Nether && PlayerUtils.getDimension() == Dimension.Overworld) {
+            d = waypoint.x * 8;
+            d3 = waypoint.z * 8;
         }
-        return new class_243(lIlIIlIIIllllIl, lIlIIlIIIllllII, lIlIIlIIIlllIll);
+        return new class_243(d, d2, d3);
     }
 
     @EventHandler
-    private void onGameJoined(GameJoinedEvent lIlIIlIIlIlIIII) {
-        Waypoints lIlIIlIIlIlIIIl;
-        lIlIIlIIlIlIIIl.load();
+    private void onGameJoined(GameJoinedEvent gameJoinedEvent) {
+        this.load();
     }
 
     @EventHandler
-    private void onRender(RenderEvent lIlIIlIIIIIllIl) {
-        Waypoints lIlIIlIIIIIlllI;
+    private void onRender(RenderEvent renderEvent) {
         if (!Modules.get().isActive(WaypointsModule.class)) {
             return;
         }
-        for (Waypoint lIlIIlIIIIIllll : lIlIIlIIIIIlllI) {
-            if (!lIlIIlIIIIIllll.visible || !lIlIIlIIIIIlllI.checkDimension(lIlIIlIIIIIllll)) continue;
-            class_4184 lIlIIlIIIIlllIl = Utils.mc.field_1773.method_19418();
-            double lIlIIlIIIIlllII = lIlIIlIIIIIlllI.getCoords((Waypoint)lIlIIlIIIIIllll).field_1352;
-            double lIlIIlIIIIllIll = lIlIIlIIIIIlllI.getCoords((Waypoint)lIlIIlIIIIIllll).field_1351;
-            double lIlIIlIIIIllIlI = lIlIIlIIIIIlllI.getCoords((Waypoint)lIlIIlIIIIIllll).field_1350;
-            double lIlIIlIIIIllIIl = PlayerUtils.distanceToCamera(lIlIIlIIIIlllII, lIlIIlIIIIllIll, lIlIIlIIIIllIlI);
-            if (lIlIIlIIIIllIIl > (double)lIlIIlIIIIIllll.maxVisibleDistance) continue;
-            double lIlIIlIIIIllIII = 0.01 * lIlIIlIIIIIllll.scale;
-            if (lIlIIlIIIIllIIl > 8.0) {
-                lIlIIlIIIIllIII *= lIlIIlIIIIllIIl / 8.0;
+        for (Waypoint waypoint : this) {
+            if (!waypoint.visible || !this.checkDimension(waypoint)) continue;
+            class_4184 class_41842 = Utils.mc.field_1773.method_19418();
+            double d = this.getCoords((Waypoint)waypoint).field_1352;
+            double d2 = this.getCoords((Waypoint)waypoint).field_1351;
+            double d3 = this.getCoords((Waypoint)waypoint).field_1350;
+            double d4 = PlayerUtils.distanceToCamera(d, d2, d3);
+            if (d4 > (double)waypoint.maxVisibleDistance) continue;
+            double d5 = 0.01 * waypoint.scale;
+            if (d4 > 8.0) {
+                d5 *= d4 / 8.0;
             }
-            double lIlIIlIIIIlIlll = 1.0;
-            if (lIlIIlIIIIllIIl < 10.0 && (lIlIIlIIIIlIlll = lIlIIlIIIIllIIl / 10.0) < 0.1) continue;
-            int lIlIIlIIIIlIllI = Waypoints.BACKGROUND.a;
-            int lIlIIlIIIIlIlIl = Waypoints.TEXT.a;
-            Waypoints.BACKGROUND.a = (int)((double)Waypoints.BACKGROUND.a * lIlIIlIIIIlIlll);
-            Waypoints.TEXT.a = (int)((double)Waypoints.TEXT.a * lIlIIlIIIIlIlll);
-            double lIlIIlIIIIlIlII = Utils.mc.field_1690.field_1870 * 16;
-            if (lIlIIlIIIIllIIl > lIlIIlIIIIlIlII) {
-                double lIlIIlIIIlIIIIl = lIlIIlIIIIlllII - lIlIIlIIIIlllIl.method_19326().field_1352;
-                double lIlIIlIIIlIIIII = lIlIIlIIIIllIll - lIlIIlIIIIlllIl.method_19326().field_1351;
-                double lIlIIlIIIIlllll = lIlIIlIIIIllIlI - lIlIIlIIIIlllIl.method_19326().field_1350;
-                double lIlIIlIIIIllllI = Math.sqrt(lIlIIlIIIlIIIIl * lIlIIlIIIlIIIIl + lIlIIlIIIlIIIII * lIlIIlIIIlIIIII + lIlIIlIIIIlllll * lIlIIlIIIIlllll);
-                lIlIIlIIIlIIIIl /= lIlIIlIIIIllllI;
-                lIlIIlIIIlIIIII /= lIlIIlIIIIllllI;
-                lIlIIlIIIIlllll /= lIlIIlIIIIllllI;
-                lIlIIlIIIIlllII = lIlIIlIIIIlllIl.method_19326().field_1352 + (lIlIIlIIIlIIIIl *= lIlIIlIIIIlIlII);
-                lIlIIlIIIIllIll = lIlIIlIIIIlllIl.method_19326().field_1351 + (lIlIIlIIIlIIIII *= lIlIIlIIIIlIlII);
-                lIlIIlIIIIllIlI = lIlIIlIIIIlllIl.method_19326().field_1350 + (lIlIIlIIIIlllll *= lIlIIlIIIIlIlII);
-                lIlIIlIIIIllIII /= lIlIIlIIIIllIIl / 15.0;
-                lIlIIlIIIIllIII *= lIlIIlIIIIlIlII / 15.0;
+            double d6 = 1.0;
+            if (d4 < 10.0 && (d6 = d4 / 10.0) < 0.1) continue;
+            int n = Waypoints.BACKGROUND.a;
+            int n2 = Waypoints.TEXT.a;
+            Waypoints.BACKGROUND.a = (int)((double)Waypoints.BACKGROUND.a * d6);
+            Waypoints.TEXT.a = (int)((double)Waypoints.TEXT.a * d6);
+            double d7 = Utils.mc.field_1690.field_1870 * 16;
+            if (d4 > d7) {
+                double d8 = d - class_41842.method_19326().field_1352;
+                double d9 = d2 - class_41842.method_19326().field_1351;
+                double d10 = d3 - class_41842.method_19326().field_1350;
+                double d11 = Math.sqrt(d8 * d8 + d9 * d9 + d10 * d10);
+                d8 /= d11;
+                d9 /= d11;
+                d10 /= d11;
+                d = class_41842.method_19326().field_1352 + (d8 *= d7);
+                d2 = class_41842.method_19326().field_1351 + (d9 *= d7);
+                d3 = class_41842.method_19326().field_1350 + (d10 *= d7);
+                d5 /= d4 / 15.0;
+                d5 *= d7 / 15.0;
             }
             Matrices.push();
-            Matrices.translate(lIlIIlIIIIlllII + 0.5 - lIlIIlIIIIIllIl.offsetX, lIlIIlIIIIllIll - lIlIIlIIIIIllIl.offsetY, lIlIIlIIIIllIlI + 0.5 - lIlIIlIIIIIllIl.offsetZ);
-            Matrices.translate(0.0, -0.5 + lIlIIlIIIIIllll.scale - 1.0, 0.0);
-            Matrices.rotate(-lIlIIlIIIIlllIl.method_19330(), 0.0, 1.0, 0.0);
-            Matrices.rotate(lIlIIlIIIIlllIl.method_19329(), 1.0, 0.0, 0.0);
+            Matrices.translate(d + 0.5 - renderEvent.offsetX, d2 - renderEvent.offsetY, d3 + 0.5 - renderEvent.offsetZ);
+            Matrices.translate(0.0, -0.5 + waypoint.scale - 1.0, 0.0);
+            Matrices.rotate(-class_41842.method_19330(), 0.0, 1.0, 0.0);
+            Matrices.rotate(class_41842.method_19329(), 1.0, 0.0, 0.0);
             Matrices.translate(0.0, 0.5, 0.0);
-            Matrices.scale(-lIlIIlIIIIllIII, -lIlIIlIIIIllIII, lIlIIlIIIIllIII);
-            String lIlIIlIIIIlIIll = String.valueOf(new StringBuilder().append(Math.round(lIlIIlIIIIllIIl)).append(" blocks"));
+            Matrices.scale(-d5, -d5, d5);
+            String string = String.valueOf(new StringBuilder().append(Math.round(d4)).append(" blocks"));
             TextRenderer.get().begin(1.0, false, true);
-            double lIlIIlIIIIlIIlI = TextRenderer.get().getWidth(lIlIIlIIIIIllll.name) / 2.0;
-            double lIlIIlIIIIlIIIl = TextRenderer.get().getWidth(lIlIIlIIIIlIIll) / 2.0;
-            double lIlIIlIIIIlIIII = TextRenderer.get().getHeight();
-            lIlIIlIIIIIllll.renderIcon(-8.0, lIlIIlIIIIlIIII, 0.0, lIlIIlIIIIlIlll, 16.0);
-            TextRenderer.get().render(lIlIIlIIIIIllll.name, -lIlIIlIIIIlIIlI, -lIlIIlIIIIlIIII + 1.0, TEXT);
-            TextRenderer.get().render(lIlIIlIIIIlIIll, -lIlIIlIIIIlIIIl, 0.0, TEXT);
+            double d12 = TextRenderer.get().getWidth(waypoint.name) / 2.0;
+            double d13 = TextRenderer.get().getWidth(string) / 2.0;
+            double d14 = TextRenderer.get().getHeight();
+            waypoint.renderIcon(-8.0, d14, 0.0, d6, 16.0);
+            TextRenderer.get().render(waypoint.name, -d12, -d14 + 1.0, TEXT);
+            TextRenderer.get().render(string, -d13, 0.0, TEXT);
             TextRenderer.get().end();
             Matrices.pop();
-            Waypoints.BACKGROUND.a = lIlIIlIIIIlIllI;
-            Waypoints.TEXT.a = lIlIIlIIIIlIlIl;
+            Waypoints.BACKGROUND.a = n;
+            Waypoints.TEXT.a = n2;
         }
     }
 }

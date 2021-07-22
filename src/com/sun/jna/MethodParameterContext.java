@@ -9,17 +9,15 @@ import java.lang.reflect.Method;
 
 public class MethodParameterContext
 extends FunctionParameterContext {
-    private /* synthetic */ Method method;
+    private Method method;
 
     public Method getMethod() {
-        MethodParameterContext llllllllllllllllllIlIlIlIIlIllll;
-        return llllllllllllllllllIlIlIlIIlIllll.method;
+        return this.method;
     }
 
-    MethodParameterContext(Function llllllllllllllllllIlIlIlIIlllIIl, Object[] llllllllllllllllllIlIlIlIIlllIII, int llllllllllllllllllIlIlIlIIllIlll, Method llllllllllllllllllIlIlIlIIllIIIl) {
-        super(llllllllllllllllllIlIlIlIIlllIIl, llllllllllllllllllIlIlIlIIlllIII, llllllllllllllllllIlIlIlIIllIlll);
-        MethodParameterContext llllllllllllllllllIlIlIlIIllIlIl;
-        llllllllllllllllllIlIlIlIIllIlIl.method = llllllllllllllllllIlIlIlIIllIIIl;
+    MethodParameterContext(Function function, Object[] arrobject, int n, Method method) {
+        super(function, arrobject, n);
+        this.method = method;
     }
 }
 

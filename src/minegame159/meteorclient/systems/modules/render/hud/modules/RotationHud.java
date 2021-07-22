@@ -10,48 +10,27 @@ public class RotationHud
 extends DoubleTextHudElement {
     @Override
     protected String getRight() {
-        Direction lllllllllllllllllIlIIlIIIlIIllll;
-        RotationHud lllllllllllllllllIlIIlIIIlIIllII;
-        float lllllllllllllllllIlIIlIIIlIIlllI = lllllllllllllllllIlIIlIIIlIIllII.mc.field_1773.method_19418().method_19330() % 360.0f;
-        float lllllllllllllllllIlIIlIIIlIIllIl = lllllllllllllllllIlIIlIIIlIIllII.mc.field_1773.method_19418().method_19329() % 360.0f;
-        if (lllllllllllllllllIlIIlIIIlIIlllI < 0.0f) {
-            lllllllllllllllllIlIIlIIIlIIlllI += 360.0f;
+        float f = this.mc.field_1773.method_19418().method_19330() % 360.0f;
+        float f2 = this.mc.field_1773.method_19418().method_19329() % 360.0f;
+        if (f < 0.0f) {
+            f += 360.0f;
         }
-        if (lllllllllllllllllIlIIlIIIlIIllIl < 0.0f) {
-            lllllllllllllllllIlIIlIIIlIIllIl += 360.0f;
+        if (f2 < 0.0f) {
+            f2 += 360.0f;
         }
-        if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 337.5 || (double)lllllllllllllllllIlIIlIIIlIIlllI < 22.5) {
-            Direction lllllllllllllllllIlIIlIIIlIllIII = Direction.South;
-        } else if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 22.5 && (double)lllllllllllllllllIlIIlIIIlIIlllI < 67.5) {
-            Direction lllllllllllllllllIlIIlIIIlIlIlll = Direction.SouthWest;
-        } else if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 67.5 && (double)lllllllllllllllllIlIIlIIIlIIlllI < 112.5) {
-            Direction lllllllllllllllllIlIIlIIIlIlIllI = Direction.West;
-        } else if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 112.5 && (double)lllllllllllllllllIlIIlIIIlIIlllI < 157.5) {
-            Direction lllllllllllllllllIlIIlIIIlIlIlIl = Direction.NorthWest;
-        } else if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 157.5 && (double)lllllllllllllllllIlIIlIIIlIIlllI < 202.5) {
-            Direction lllllllllllllllllIlIIlIIIlIlIlII = Direction.North;
-        } else if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 202.5 && (double)lllllllllllllllllIlIIlIIIlIIlllI < 247.5) {
-            Direction lllllllllllllllllIlIIlIIIlIlIIll = Direction.NorthEast;
-        } else if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 247.5 && (double)lllllllllllllllllIlIIlIIIlIIlllI < 292.5) {
-            Direction lllllllllllllllllIlIIlIIIlIlIIlI = Direction.East;
-        } else if ((double)lllllllllllllllllIlIIlIIIlIIlllI >= 292.5 && (double)lllllllllllllllllIlIIlIIIlIIlllI < 337.5) {
-            Direction lllllllllllllllllIlIIlIIIlIlIIIl = Direction.SouthEast;
-        } else {
-            lllllllllllllllllIlIIlIIIlIIllll = Direction.NaN;
+        Direction direction = (double)f >= 337.5 || (double)f < 22.5 ? Direction.South : ((double)f >= 22.5 && (double)f < 67.5 ? Direction.SouthWest : ((double)f >= 67.5 && (double)f < 112.5 ? Direction.West : ((double)f >= 112.5 && (double)f < 157.5 ? Direction.NorthWest : ((double)f >= 157.5 && (double)f < 202.5 ? Direction.North : ((double)f >= 202.5 && (double)f < 247.5 ? Direction.NorthEast : ((double)f >= 247.5 && (double)f < 292.5 ? Direction.East : ((double)f >= 292.5 && (double)f < 337.5 ? Direction.SouthEast : Direction.NaN)))))));
+        if (f > 180.0f) {
+            f -= 360.0f;
         }
-        if (lllllllllllllllllIlIIlIIIlIIlllI > 180.0f) {
-            lllllllllllllllllIlIIlIIIlIIlllI -= 360.0f;
+        if (f2 > 180.0f) {
+            f2 -= 360.0f;
         }
-        if (lllllllllllllllllIlIIlIIIlIIllIl > 180.0f) {
-            lllllllllllllllllIlIIlIIIlIIllIl -= 360.0f;
-        }
-        lllllllllllllllllIlIIlIIIlIIllII.setLeft(String.format("%s %s ", lllllllllllllllllIlIIlIIIlIIllll.name, lllllllllllllllllIlIIlIIIlIIllll.axis));
-        return String.format("(%.1f, %.1f)", Float.valueOf(lllllllllllllllllIlIIlIIIlIIlllI), Float.valueOf(lllllllllllllllllIlIIlIIIlIIllIl));
+        this.setLeft(String.format("%s %s ", direction.name, direction.axis));
+        return String.format("(%.1f, %.1f)", Float.valueOf(f), Float.valueOf(f2));
     }
 
-    public RotationHud(HUD lllllllllllllllllIlIIlIIIlIlllll) {
-        super(lllllllllllllllllIlIIlIIIlIlllll, "rotation", "Displays your rotation.", "");
-        RotationHud lllllllllllllllllIlIIlIIIlIllllI;
+    public RotationHud(HUD hUD) {
+        super(hUD, "rotation", "Displays your rotation.", "");
     }
 
     private static enum Direction {
@@ -65,13 +44,12 @@ extends DoubleTextHudElement {
         SouthWest("South West", "Z+ X-"),
         NaN("NaN", "NaN");
 
-        public /* synthetic */ String name;
-        public /* synthetic */ String axis;
+        public String name;
+        public String axis;
 
-        private Direction(String llllIIlIlIlIIII, String llllIIlIlIIllll) {
-            Direction llllIIlIlIlIllI;
-            llllIIlIlIlIllI.axis = llllIIlIlIIllll;
-            llllIIlIlIlIllI.name = llllIIlIlIlIIII;
+        private Direction(String string2, String string3) {
+            this.axis = string3;
+            this.name = string2;
         }
     }
 }

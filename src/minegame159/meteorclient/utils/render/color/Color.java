@@ -12,271 +12,268 @@ import minegame159.meteorclient.utils.misc.ISerializable;
 import net.minecraft.class_243;
 import net.minecraft.class_2487;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Color
 implements ICopyable<Color>,
 ISerializable<Color> {
-    public /* synthetic */ int b;
-    public /* synthetic */ int g;
-    public /* synthetic */ int a;
-    public /* synthetic */ int r;
+    public int b;
+    public int g;
+    public int a;
+    public int r;
 
-    public Color(Color llllllllllllllllllIIlIllIIllIIIl) {
-        Color llllllllllllllllllIIlIllIIllIIII;
-        llllllllllllllllllIIlIllIIllIIII.r = llllllllllllllllllIIlIllIIllIIIl.r;
-        llllllllllllllllllIIlIllIIllIIII.g = llllllllllllllllllIIlIllIIllIIIl.g;
-        llllllllllllllllllIIlIllIIllIIII.b = llllllllllllllllllIIlIllIIllIIIl.b;
-        llllllllllllllllllIIlIllIIllIIII.a = llllllllllllllllllIIlIllIIllIIIl.a;
+    public Color(Color color) {
+        this.r = color.r;
+        this.g = color.g;
+        this.b = color.b;
+        this.a = color.a;
     }
 
     @Override
-    public Color fromTag(class_2487 llllllllllllllllllIIlIlIlIIllIII) {
-        Color llllllllllllllllllIIlIlIlIIlIlll;
-        llllllllllllllllllIIlIlIlIIlIlll.r = llllllllllllllllllIIlIlIlIIllIII.method_10550("r");
-        llllllllllllllllllIIlIlIlIIlIlll.g = llllllllllllllllllIIlIlIlIIllIII.method_10550("g");
-        llllllllllllllllllIIlIlIlIIlIlll.b = llllllllllllllllllIIlIlIlIIllIII.method_10550("b");
-        llllllllllllllllllIIlIlIlIIlIlll.a = llllllllllllllllllIIlIlIlIIllIII.method_10550("a");
-        llllllllllllllllllIIlIlIlIIlIlll.validate();
-        return llllllllllllllllllIIlIlIlIIlIlll;
+    public Color fromTag(class_2487 class_24872) {
+        this.r = class_24872.method_10550("r");
+        this.g = class_24872.method_10550("g");
+        this.b = class_24872.method_10550("b");
+        this.a = class_24872.method_10550("a");
+        this.validate();
+        return this;
     }
 
-    public Color g(int llllllllllllllllllIIlIlIllIIIIII) {
-        Color llllllllllllllllllIIlIlIllIIIIll;
-        llllllllllllllllllIIlIlIllIIIIll.g = llllllllllllllllllIIlIlIllIIIIII;
-        llllllllllllllllllIIlIlIllIIIIll.validate();
-        return llllllllllllllllllIIlIlIllIIIIll;
+    public Color g(int n) {
+        this.g = n;
+        this.validate();
+        return this;
     }
 
-    public Color(int llllllllllllllllllIIlIllIlIllIll, int llllllllllllllllllIIlIllIlIllIlI, int llllllllllllllllllIIlIllIlIlllIl) {
-        Color llllllllllllllllllIIlIllIlIlllII;
-        llllllllllllllllllIIlIllIlIlllII.r = llllllllllllllllllIIlIllIlIllIll;
-        llllllllllllllllllIIlIllIlIlllII.g = llllllllllllllllllIIlIllIlIllIlI;
-        llllllllllllllllllIIlIllIlIlllII.b = llllllllllllllllllIIlIllIlIlllIl;
-        llllllllllllllllllIIlIllIlIlllII.a = 255;
-        llllllllllllllllllIIlIllIlIlllII.validate();
+    public Color(int n, int n2, int n3) {
+        this.r = n;
+        this.g = n2;
+        this.b = n3;
+        this.a = 255;
+        this.validate();
     }
 
     public int getPacked() {
-        Color llllllllllllllllllIIlIlIlIlIIIll;
-        return Color.fromRGBA(llllllllllllllllllIIlIlIlIlIIIll.r, llllllllllllllllllIIlIlIlIlIIIll.g, llllllllllllllllllIIlIlIlIlIIIll.b, llllllllllllllllllIIlIlIlIlIIIll.a);
+        return Color.fromRGBA(this.r, this.g, this.b, this.a);
     }
 
-    public static int toRGBAB(int llllllllllllllllllIIlIllIIIlIlIl) {
-        return llllllllllllllllllIIlIllIIIlIlIl & 0xFF;
+    public static int toRGBAB(int n) {
+        return n & 0xFF;
     }
 
     @Override
     public Color copy() {
-        Color llllllllllllllllllIIlIlIlIlIllII;
-        return new Color(llllllllllllllllllIIlIlIlIlIllII.r, llllllllllllllllllIIlIlIlIlIllII.g, llllllllllllllllllIIlIlIlIlIllII.b, llllllllllllllllllIIlIlIlIlIllII.a);
+        return new Color(this.r, this.g, this.b, this.a);
     }
 
     public String toString() {
-        Color llllllllllllllllllIIlIlIlIIlIlII;
-        return String.valueOf(new StringBuilder().append(llllllllllllllllllIIlIlIlIIlIlII.r).append(" ").append(llllllllllllllllllIIlIlIlIIlIlII.g).append(" ").append(llllllllllllllllllIIlIlIlIIlIlII.b).append(" ").append(llllllllllllllllllIIlIlIlIIlIlII.a));
+        return String.valueOf(new StringBuilder().append(this.r).append(" ").append(this.g).append(" ").append(this.b).append(" ").append(this.a));
     }
 
-    public Color a(int llllllllllllllllllIIlIlIlIllIlII) {
-        Color llllllllllllllllllIIlIlIlIllIlll;
-        llllllllllllllllllIIlIlIlIllIlll.a = llllllllllllllllllIIlIlIlIllIlII;
-        llllllllllllllllllIIlIlIlIllIlll.validate();
-        return llllllllllllllllllIIlIlIlIllIlll;
+    public Color a(int n) {
+        this.a = n;
+        this.validate();
+        return this;
     }
 
-    public static int toRGBAR(int llllllllllllllllllIIlIllIIIllIll) {
-        return llllllllllllllllllIIlIllIIIllIll >> 16 & 0xFF;
+    public static int toRGBAR(int n) {
+        return n >> 16 & 0xFF;
     }
 
-    public Color(int llllllllllllllllllIIlIllIIllIlll) {
-        Color llllllllllllllllllIIlIllIIlllIII;
-        llllllllllllllllllIIlIllIIlllIII.r = Color.toRGBAR(llllllllllllllllllIIlIllIIllIlll);
-        llllllllllllllllllIIlIllIIlllIII.g = Color.toRGBAG(llllllllllllllllllIIlIllIIllIlll);
-        llllllllllllllllllIIlIllIIlllIII.b = Color.toRGBAB(llllllllllllllllllIIlIllIIllIlll);
-        llllllllllllllllllIIlIllIIlllIII.a = Color.toRGBAA(llllllllllllllllllIIlIllIIllIlll);
+    public Color(int n) {
+        this.r = Color.toRGBAR(n);
+        this.g = Color.toRGBAG(n);
+        this.b = Color.toRGBAB(n);
+        this.a = Color.toRGBAA(n);
     }
 
-    public Color(java.awt.Color llllllllllllllllllIIlIllIIlIlIIl) {
-        Color llllllllllllllllllIIlIllIIlIlIlI;
-        llllllllllllllllllIIlIllIIlIlIlI.r = llllllllllllllllllIIlIllIIlIlIIl.getRed();
-        llllllllllllllllllIIlIllIIlIlIlI.g = llllllllllllllllllIIlIllIIlIlIIl.getGreen();
-        llllllllllllllllllIIlIllIIlIlIlI.b = llllllllllllllllllIIlIllIIlIlIIl.getBlue();
-        llllllllllllllllllIIlIllIIlIlIlI.a = llllllllllllllllllIIlIllIIlIlIIl.getAlpha();
+    public Color(java.awt.Color color) {
+        this.r = color.getRed();
+        this.g = color.getGreen();
+        this.b = color.getBlue();
+        this.a = color.getAlpha();
     }
 
-    public static int toRGBAA(int llllllllllllllllllIIlIllIIIlIIIl) {
-        return llllllllllllllllllIIlIllIIIlIIIl >> 24 & 0xFF;
+    public static int toRGBAA(int n) {
+        return n >> 24 & 0xFF;
     }
 
-    public static int fromRGBA(int llllllllllllllllllIIlIllIIlIIIII, int llllllllllllllllllIIlIllIIIlllll, int llllllllllllllllllIIlIllIIIllllI, int llllllllllllllllllIIlIllIIIlllIl) {
-        return (llllllllllllllllllIIlIllIIlIIIII << 16) + (llllllllllllllllllIIlIllIIIlllll << 8) + llllllllllllllllllIIlIllIIIllllI + (llllllllllllllllllIIlIllIIIlllIl << 24);
+    public static int fromRGBA(int n, int n2, int n3, int n4) {
+        return (n << 16) + (n2 << 8) + n3 + (n4 << 24);
     }
 
-    public boolean equals(Color llllllllllllllllllIIlIlIlIIIllIl) {
-        Color llllllllllllllllllIIlIlIlIIlIIII;
-        if (llllllllllllllllllIIlIlIlIIIllIl == null) {
+    public boolean equals(Color color) {
+        if (color == null) {
             return false;
         }
-        return llllllllllllllllllIIlIlIlIIlIIII.r == llllllllllllllllllIIlIlIlIIIllIl.r && llllllllllllllllllIIlIlIlIIlIIII.g == llllllllllllllllllIIlIlIlIIIllIl.g && llllllllllllllllllIIlIlIlIIlIIII.b == llllllllllllllllllIIlIlIlIIIllIl.b && llllllllllllllllllIIlIlIlIIlIIII.a == llllllllllllllllllIIlIlIlIIIllIl.a;
+        return this.r == color.r && this.g == color.g && this.b == color.b && this.a == color.a;
     }
 
     @Override
-    public Color set(Color llllllllllllllllllIIlIlIlIlIlllI) {
-        Color llllllllllllllllllIIlIlIlIlIllll;
-        llllllllllllllllllIIlIlIlIlIllll.r = llllllllllllllllllIIlIlIlIlIlllI.r;
-        llllllllllllllllllIIlIlIlIlIllll.g = llllllllllllllllllIIlIlIlIlIlllI.g;
-        llllllllllllllllllIIlIlIlIlIllll.b = llllllllllllllllllIIlIlIlIlIlllI.b;
-        llllllllllllllllllIIlIlIlIlIllll.a = llllllllllllllllllIIlIlIlIlIlllI.a;
-        llllllllllllllllllIIlIlIlIlIllll.validate();
-        return llllllllllllllllllIIlIlIlIlIllll;
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
-    public Color b(int llllllllllllllllllIIlIlIlIllllII) {
-        Color llllllllllllllllllIIlIlIlIlllIll;
-        llllllllllllllllllIIlIlIlIlllIll.b = llllllllllllllllllIIlIlIlIllllII;
-        llllllllllllllllllIIlIlIlIlllIll.validate();
-        return llllllllllllllllllIIlIlIlIlllIll;
+    @Override
+    public Color set(Color color) {
+        this.r = color.r;
+        this.g = color.g;
+        this.b = color.b;
+        this.a = color.a;
+        this.validate();
+        return this;
+    }
+
+    public Color b(int n) {
+        this.b = n;
+        this.validate();
+        return this;
     }
 
     public class_243 getVec3d() {
-        Color llllllllllllllllllIIlIlIlIlIIlIl;
-        return new class_243((double)llllllllllllllllllIIlIlIlIlIIlIl.r / 255.0, (double)llllllllllllllllllIIlIlIlIlIIlIl.g / 255.0, (double)llllllllllllllllllIIlIlIlIlIIlIl.b / 255.0);
+        return new class_243((double)this.r / 255.0, (double)this.g / 255.0, (double)this.b / 255.0);
     }
 
-    public Color r(int llllllllllllllllllIIlIlIllIIlIII) {
-        Color llllllllllllllllllIIlIlIllIIlIIl;
-        llllllllllllllllllIIlIlIllIIlIIl.r = llllllllllllllllllIIlIlIllIIlIII;
-        llllllllllllllllllIIlIlIllIIlIIl.validate();
-        return llllllllllllllllllIIlIlIllIIlIIl;
+    public Color r(int n) {
+        this.r = n;
+        this.validate();
+        return this;
     }
 
-    public Color(float llllllllllllllllllIIlIllIIlllllI, float llllllllllllllllllIIlIllIlIIIIlI, float llllllllllllllllllIIlIllIIllllII, float llllllllllllllllllIIlIllIlIIIIII) {
-        Color llllllllllllllllllIIlIllIlIIIlII;
-        llllllllllllllllllIIlIllIlIIIlII.r = (int)(llllllllllllllllllIIlIllIIlllllI * 255.0f);
-        llllllllllllllllllIIlIllIlIIIlII.g = (int)(llllllllllllllllllIIlIllIlIIIIlI * 255.0f);
-        llllllllllllllllllIIlIllIlIIIlII.b = (int)(llllllllllllllllllIIlIllIIllllII * 255.0f);
-        llllllllllllllllllIIlIllIlIIIlII.a = (int)(llllllllllllllllllIIlIllIlIIIIII * 255.0f);
-        llllllllllllllllllIIlIllIlIIIlII.validate();
+    public Color(float f, float f2, float f3, float f4) {
+        this.r = (int)(f * 255.0f);
+        this.g = (int)(f2 * 255.0f);
+        this.b = (int)(f3 * 255.0f);
+        this.a = (int)(f4 * 255.0f);
+        this.validate();
     }
 
     public void validate() {
-        Color llllllllllllllllllIIlIlIlIlIlIIl;
-        if (llllllllllllllllllIIlIlIlIlIlIIl.r < 0) {
-            llllllllllllllllllIIlIlIlIlIlIIl.r = 0;
-        } else if (llllllllllllllllllIIlIlIlIlIlIIl.r > 255) {
-            llllllllllllllllllIIlIlIlIlIlIIl.r = 255;
+        if (this.r < 0) {
+            this.r = 0;
+        } else if (this.r > 255) {
+            this.r = 255;
         }
-        if (llllllllllllllllllIIlIlIlIlIlIIl.g < 0) {
-            llllllllllllllllllIIlIlIlIlIlIIl.g = 0;
-        } else if (llllllllllllllllllIIlIlIlIlIlIIl.g > 255) {
-            llllllllllllllllllIIlIlIlIlIlIIl.g = 255;
+        if (this.g < 0) {
+            this.g = 0;
+        } else if (this.g > 255) {
+            this.g = 255;
         }
-        if (llllllllllllllllllIIlIlIlIlIlIIl.b < 0) {
-            llllllllllllllllllIIlIlIlIlIlIIl.b = 0;
-        } else if (llllllllllllllllllIIlIlIlIlIlIIl.b > 255) {
-            llllllllllllllllllIIlIlIlIlIlIIl.b = 255;
+        if (this.b < 0) {
+            this.b = 0;
+        } else if (this.b > 255) {
+            this.b = 255;
         }
-        if (llllllllllllllllllIIlIlIlIlIlIIl.a < 0) {
-            llllllllllllllllllIIlIlIlIlIlIIl.a = 0;
-        } else if (llllllllllllllllllIIlIlIlIlIlIIl.a > 255) {
-            llllllllllllllllllIIlIlIlIlIlIIl.a = 255;
+        if (this.a < 0) {
+            this.a = 0;
+        } else if (this.a > 255) {
+            this.a = 255;
         }
     }
 
-    public static int toRGBAG(int llllllllllllllllllIIlIllIIIllIII) {
-        return llllllllllllllllllIIlIllIIIllIII >> 8 & 0xFF;
+    public static int toRGBAG(int n) {
+        return n >> 8 & 0xFF;
     }
 
-    public Color(int llllllllllllllllllIIlIllIlIIllIl, int llllllllllllllllllIIlIllIlIlIIIl, int llllllllllllllllllIIlIllIlIlIIII, int llllllllllllllllllIIlIllIlIIlIlI) {
-        Color llllllllllllllllllIIlIllIlIIlllI;
-        llllllllllllllllllIIlIllIlIIlllI.r = llllllllllllllllllIIlIllIlIIllIl;
-        llllllllllllllllllIIlIllIlIIlllI.g = llllllllllllllllllIIlIllIlIlIIIl;
-        llllllllllllllllllIIlIllIlIIlllI.b = llllllllllllllllllIIlIllIlIlIIII;
-        llllllllllllllllllIIlIllIlIIlllI.a = llllllllllllllllllIIlIllIlIIlIlI;
-        llllllllllllllllllIIlIllIlIIlllI.validate();
+    @Override
+    public ICopyable copy() {
+        return this.copy();
+    }
+
+    public Color(int n, int n2, int n3, int n4) {
+        this.r = n;
+        this.g = n2;
+        this.b = n3;
+        this.a = n4;
+        this.validate();
     }
 
     @Override
     public class_2487 toTag() {
-        Color llllllllllllllllllIIlIlIlIIlllIl;
-        class_2487 llllllllllllllllllIIlIlIlIIllllI = new class_2487();
-        llllllllllllllllllIIlIlIlIIllllI.method_10569("r", llllllllllllllllllIIlIlIlIIlllIl.r);
-        llllllllllllllllllIIlIlIlIIllllI.method_10569("g", llllllllllllllllllIIlIlIlIIlllIl.g);
-        llllllllllllllllllIIlIlIlIIllllI.method_10569("b", llllllllllllllllllIIlIlIlIIlllIl.b);
-        llllllllllllllllllIIlIlIlIIllllI.method_10569("a", llllllllllllllllllIIlIlIlIIlllIl.a);
-        return llllllllllllllllllIIlIlIlIIllllI;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10569("r", this.r);
+        class_24872.method_10569("g", this.g);
+        class_24872.method_10569("b", this.b);
+        class_24872.method_10569("a", this.a);
+        return class_24872;
     }
 
-    public static Color fromHsv(double llllllllllllllllllIIlIlIllllIIlI, double llllllllllllllllllIIlIlIllllIIIl, double llllllllllllllllllIIlIlIlllIIIIl) {
-        double llllllllllllllllllIIlIlIlllIIlll;
-        double llllllllllllllllllIIlIlIlllIlIII;
-        double llllllllllllllllllIIlIlIlllIlIIl;
-        if (llllllllllllllllllIIlIlIllllIIIl <= 0.0) {
-            double llllllllllllllllllIIlIllIIIIIlII = llllllllllllllllllIIlIlIlllIIIIl;
-            double llllllllllllllllllIIlIllIIIIIIll = llllllllllllllllllIIlIlIlllIIIIl;
-            double llllllllllllllllllIIlIllIIIIIIlI = llllllllllllllllllIIlIlIlllIIIIl;
-            return new Color((int)(llllllllllllllllllIIlIllIIIIIlII * 255.0), (int)(llllllllllllllllllIIlIllIIIIIIll * 255.0), (int)(llllllllllllllllllIIlIllIIIIIIlI * 255.0), 255);
+    public static Color fromHsv(double d, double d2, double d3) {
+        double d4;
+        double d5;
+        double d6;
+        if (d2 <= 0.0) {
+            double d7 = d3;
+            double d8 = d3;
+            double d9 = d3;
+            return new Color((int)(d7 * 255.0), (int)(d8 * 255.0), (int)(d9 * 255.0), 255);
         }
-        double llllllllllllllllllIIlIlIlllIllll = llllllllllllllllllIIlIlIllllIIlI;
-        if (llllllllllllllllllIIlIlIlllIllll >= 360.0) {
-            llllllllllllllllllIIlIlIlllIllll = 0.0;
+        double d10 = d;
+        if (d10 >= 360.0) {
+            d10 = 0.0;
         }
-        int llllllllllllllllllIIlIlIlllIlIlI = (int)(llllllllllllllllllIIlIlIlllIllll /= 60.0);
-        double llllllllllllllllllIIlIlIlllIlIll = llllllllllllllllllIIlIlIlllIllll - (double)llllllllllllllllllIIlIlIlllIlIlI;
-        double llllllllllllllllllIIlIlIlllIlllI = llllllllllllllllllIIlIlIlllIIIIl * (1.0 - llllllllllllllllllIIlIlIllllIIIl);
-        double llllllllllllllllllIIlIlIlllIllIl = llllllllllllllllllIIlIlIlllIIIIl * (1.0 - llllllllllllllllllIIlIlIllllIIIl * llllllllllllllllllIIlIlIlllIlIll);
-        double llllllllllllllllllIIlIlIlllIllII = llllllllllllllllllIIlIlIlllIIIIl * (1.0 - llllllllllllllllllIIlIlIllllIIIl * (1.0 - llllllllllllllllllIIlIlIlllIlIll));
-        switch (llllllllllllllllllIIlIlIlllIlIlI) {
+        int n = (int)(d10 /= 60.0);
+        double d11 = d10 - (double)n;
+        double d12 = d3 * (1.0 - d2);
+        double d13 = d3 * (1.0 - d2 * d11);
+        double d14 = d3 * (1.0 - d2 * (1.0 - d11));
+        switch (n) {
             case 0: {
-                double llllllllllllllllllIIlIllIIIIIIIl = llllllllllllllllllIIlIlIlllIIIIl;
-                double llllllllllllllllllIIlIllIIIIIIII = llllllllllllllllllIIlIlIlllIllII;
-                double llllllllllllllllllIIlIlIllllllll = llllllllllllllllllIIlIlIlllIlllI;
+                d6 = d3;
+                d5 = d14;
+                d4 = d12;
                 break;
             }
             case 1: {
-                double llllllllllllllllllIIlIlIlllllllI = llllllllllllllllllIIlIlIlllIllIl;
-                double llllllllllllllllllIIlIlIllllllIl = llllllllllllllllllIIlIlIlllIIIIl;
-                double llllllllllllllllllIIlIlIllllllII = llllllllllllllllllIIlIlIlllIlllI;
+                d6 = d13;
+                d5 = d3;
+                d4 = d12;
                 break;
             }
             case 2: {
-                double llllllllllllllllllIIlIlIlllllIll = llllllllllllllllllIIlIlIlllIlllI;
-                double llllllllllllllllllIIlIlIlllllIlI = llllllllllllllllllIIlIlIlllIIIIl;
-                double llllllllllllllllllIIlIlIlllllIIl = llllllllllllllllllIIlIlIlllIllII;
+                d6 = d12;
+                d5 = d3;
+                d4 = d14;
                 break;
             }
             case 3: {
-                double llllllllllllllllllIIlIlIlllllIII = llllllllllllllllllIIlIlIlllIlllI;
-                double llllllllllllllllllIIlIlIllllIlll = llllllllllllllllllIIlIlIlllIllIl;
-                double llllllllllllllllllIIlIlIllllIllI = llllllllllllllllllIIlIlIlllIIIIl;
+                d6 = d12;
+                d5 = d13;
+                d4 = d3;
                 break;
             }
             case 4: {
-                double llllllllllllllllllIIlIlIllllIlIl = llllllllllllllllllIIlIlIlllIllII;
-                double llllllllllllllllllIIlIlIllllIlII = llllllllllllllllllIIlIlIlllIlllI;
-                double llllllllllllllllllIIlIlIllllIIll = llllllllllllllllllIIlIlIlllIIIIl;
+                d6 = d14;
+                d5 = d12;
+                d4 = d3;
                 break;
             }
             default: {
-                llllllllllllllllllIIlIlIlllIlIIl = llllllllllllllllllIIlIlIlllIIIIl;
-                llllllllllllllllllIIlIlIlllIlIII = llllllllllllllllllIIlIlIlllIlllI;
-                llllllllllllllllllIIlIlIlllIIlll = llllllllllllllllllIIlIlIlllIllIl;
+                d6 = d3;
+                d5 = d12;
+                d4 = d13;
             }
         }
-        return new Color((int)(llllllllllllllllllIIlIlIlllIlIIl * 255.0), (int)(llllllllllllllllllIIlIlIlllIlIII * 255.0), (int)(llllllllllllllllllIIlIlIlllIIlll * 255.0), 255);
+        return new Color((int)(d6 * 255.0), (int)(d5 * 255.0), (int)(d4 * 255.0), 255);
     }
 
-    public Color set(int llllllllllllllllllIIlIlIllIIllll, int llllllllllllllllllIIlIlIllIlIIll, int llllllllllllllllllIIlIlIllIlIIlI, int llllllllllllllllllIIlIlIllIIllII) {
-        Color llllllllllllllllllIIlIlIllIlIIII;
-        llllllllllllllllllIIlIlIllIlIIII.r = llllllllllllllllllIIlIlIllIIllll;
-        llllllllllllllllllIIlIlIllIlIIII.g = llllllllllllllllllIIlIlIllIlIIll;
-        llllllllllllllllllIIlIlIllIlIIII.b = llllllllllllllllllIIlIlIllIlIIlI;
-        llllllllllllllllllIIlIlIllIlIIII.a = llllllllllllllllllIIlIlIllIIllII;
-        llllllllllllllllllIIlIlIllIlIIII.validate();
-        return llllllllllllllllllIIlIlIllIlIIII;
+    public Color set(int n, int n2, int n3, int n4) {
+        this.r = n;
+        this.g = n2;
+        this.b = n3;
+        this.a = n4;
+        this.validate();
+        return this;
     }
 
     public Color() {
-        llllllllllllllllllIIlIllIllIIllI(255, 255, 255, 255);
-        Color llllllllllllllllllIIlIllIllIIllI;
+        this(255, 255, 255, 255);
+    }
+
+    @Override
+    public ICopyable set(ICopyable iCopyable) {
+        return this.set((Color)iCopyable);
     }
 }
 

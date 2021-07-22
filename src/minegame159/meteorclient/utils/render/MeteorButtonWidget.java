@@ -23,57 +23,54 @@ import net.minecraft.class_4587;
 
 public class MeteorButtonWidget
 extends class_4264 {
-    public static final /* synthetic */ TooltipSupplier EMPTY;
-    protected final /* synthetic */ TooltipSupplier tooltipSupplier;
-    protected final /* synthetic */ PressAction onPress;
-    public static final /* synthetic */ class_2960 BUTTON_TEXTURE;
+    public static final TooltipSupplier EMPTY;
+    protected final TooltipSupplier tooltipSupplier;
+    protected final PressAction onPress;
+    public static final class_2960 BUTTON_TEXTURE;
 
     public void method_25306() {
-        MeteorButtonWidget lllllllllllllllllIlIllIllIIlIIll;
-        lllllllllllllllllIlIllIllIIlIIll.onPress.onPress(lllllllllllllllllIlIllIllIIlIIll);
+        this.onPress.onPress(this);
     }
 
-    public void method_25352(class_4587 lllllllllllllllllIlIllIlIllIIlll, int lllllllllllllllllIlIllIlIllIIllI, int lllllllllllllllllIlIllIlIllIlIIl) {
-        MeteorButtonWidget lllllllllllllllllIlIllIlIllIlIII;
-        lllllllllllllllllIlIllIlIllIlIII.tooltipSupplier.onTooltip(lllllllllllllllllIlIllIlIllIlIII, lllllllllllllllllIlIllIlIllIIlll, lllllllllllllllllIlIllIlIllIIllI, lllllllllllllllllIlIllIlIllIlIIl);
+    public void method_25352(class_4587 class_45872, int n, int n2) {
+        this.tooltipSupplier.onTooltip(this, class_45872, n, n2);
     }
 
-    public void method_25359(class_4587 lllllllllllllllllIlIllIllIIIIlll, int lllllllllllllllllIlIllIllIIIIIll, int lllllllllllllllllIlIllIllIIIIIlI, float lllllllllllllllllIlIllIllIIIIIIl) {
-        MeteorButtonWidget lllllllllllllllllIlIllIllIIIIIII;
-        lllllllllllllllllIlIllIllIIIIIII.customRender(lllllllllllllllllIlIllIllIIIIlll);
-        if (lllllllllllllllllIlIllIllIIIIIII.method_25367()) {
-            lllllllllllllllllIlIllIllIIIIIII.method_25352(lllllllllllllllllIlIllIllIIIIlll, lllllllllllllllllIlIllIllIIIIIll, lllllllllllllllllIlIllIllIIIIIlI);
+    public void method_25359(class_4587 class_45872, int n, int n2, float f) {
+        this.customRender(class_45872);
+        if (this.method_25367()) {
+            this.method_25352(class_45872, n, n2);
         }
     }
 
-    public MeteorButtonWidget(int lllllllllllllllllIlIllIllIllIIll, int lllllllllllllllllIlIllIllIlllIIl, int lllllllllllllllllIlIllIllIllIIIl, int lllllllllllllllllIlIllIllIllIIII, class_2561 lllllllllllllllllIlIllIllIlIllll, PressAction lllllllllllllllllIlIllIllIlIlllI) {
-        lllllllllllllllllIlIllIllIlllIll(lllllllllllllllllIlIllIllIllIIll, lllllllllllllllllIlIllIllIlllIIl, lllllllllllllllllIlIllIllIllIIIl, lllllllllllllllllIlIllIllIllIIII, lllllllllllllllllIlIllIllIlIllll, lllllllllllllllllIlIllIllIlIlllI, EMPTY);
-        MeteorButtonWidget lllllllllllllllllIlIllIllIlllIll;
+    public MeteorButtonWidget(int n, int n2, int n3, int n4, class_2561 class_25612, PressAction pressAction) {
+        this(n, n2, n3, n4, class_25612, pressAction, EMPTY);
     }
 
     static {
         BUTTON_TEXTURE = new class_2960("meteor-client", "textures/button.png");
-        EMPTY = (lllllllllllllllllIlIllIlIllIIlII, lllllllllllllllllIlIllIlIllIIIll, lllllllllllllllllIlIllIlIllIIIlI, lllllllllllllllllIlIllIlIllIIIIl) -> {};
+        EMPTY = MeteorButtonWidget::lambda$static$0;
     }
 
-    public void customRender(class_4587 lllllllllllllllllIlIllIlIlllIlll) {
-        MeteorButtonWidget lllllllllllllllllIlIllIlIlllIlII;
-        class_327 lllllllllllllllllIlIllIlIlllIllI = Utils.mc.field_1772;
+    public void customRender(class_4587 class_45872) {
+        class_327 class_3272 = Utils.mc.field_1772;
         Utils.mc.method_1531().method_22813(BUTTON_TEXTURE);
-        int lllllllllllllllllIlIllIlIlllIlIl = lllllllllllllllllIlIllIlIlllIlII.field_22763 ? 0xFFFFFF : 0xA0A0A0;
+        int n = this.field_22763 ? 0xFFFFFF : 0xA0A0A0;
         RenderSystem.color4f((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        MeteorButtonWidget.method_25290((class_4587)lllllllllllllllllIlIllIlIlllIlll, (int)lllllllllllllllllIlIllIlIlllIlII.field_22760, (int)lllllllllllllllllIlIllIlIlllIlII.field_22761, (float)0.0f, (float)(lllllllllllllllllIlIllIlIlllIlII.method_25367() ? 12.0f : 0.0f), (int)lllllllllllllllllIlIllIlIlllIlII.field_22758, (int)lllllllllllllllllIlIllIlIlllIlII.field_22759, (int)40, (int)24);
-        MeteorButtonWidget.method_27534((class_4587)lllllllllllllllllIlIllIlIlllIlll, (class_327)lllllllllllllllllIlIllIlIlllIllI, (class_2561)lllllllllllllllllIlIllIlIlllIlII.method_25369(), (int)(lllllllllllllllllIlIllIlIlllIlII.field_22760 + lllllllllllllllllIlIllIlIlllIlII.field_22758 / 2), (int)(lllllllllllllllllIlIllIlIlllIlII.field_22761 + (lllllllllllllllllIlIllIlIlllIlII.field_22759 - 8) / 2), (int)(lllllllllllllllllIlIllIlIlllIlIl | class_3532.method_15386((float)(lllllllllllllllllIlIllIlIlllIlII.field_22765 * 255.0f)) << 24));
+        MeteorButtonWidget.method_25290((class_4587)class_45872, (int)this.field_22760, (int)this.field_22761, (float)0.0f, (float)(this.method_25367() ? 12.0f : 0.0f), (int)this.field_22758, (int)this.field_22759, (int)40, (int)24);
+        MeteorButtonWidget.method_27534((class_4587)class_45872, (class_327)class_3272, (class_2561)this.method_25369(), (int)(this.field_22760 + this.field_22758 / 2), (int)(this.field_22761 + (this.field_22759 - 8) / 2), (int)(n | class_3532.method_15386((float)(this.field_22765 * 255.0f)) << 24));
     }
 
-    public MeteorButtonWidget(int lllllllllllllllllIlIllIllIIlllII, int lllllllllllllllllIlIllIllIlIIIll, int lllllllllllllllllIlIllIllIlIIIlI, int lllllllllllllllllIlIllIllIlIIIIl, class_2561 lllllllllllllllllIlIllIllIIllIII, PressAction lllllllllllllllllIlIllIllIIlIlll, TooltipSupplier lllllllllllllllllIlIllIllIIlIllI) {
-        super(lllllllllllllllllIlIllIllIIlllII, lllllllllllllllllIlIllIllIlIIIll, lllllllllllllllllIlIllIllIlIIIlI, lllllllllllllllllIlIllIllIlIIIIl, lllllllllllllllllIlIllIllIIllIII);
-        MeteorButtonWidget lllllllllllllllllIlIllIllIlIIlIl;
-        lllllllllllllllllIlIllIllIlIIlIl.onPress = lllllllllllllllllIlIllIllIIlIlll;
-        lllllllllllllllllIlIllIllIlIIlIl.tooltipSupplier = lllllllllllllllllIlIllIllIIlIllI;
+    private static void lambda$static$0(MeteorButtonWidget meteorButtonWidget, class_4587 class_45872, int n, int n2) {
+    }
+
+    public MeteorButtonWidget(int n, int n2, int n3, int n4, class_2561 class_25612, PressAction pressAction, TooltipSupplier tooltipSupplier) {
+        super(n, n2, n3, n4, class_25612);
+        this.onPress = pressAction;
+        this.tooltipSupplier = tooltipSupplier;
     }
 
     public static interface PressAction {

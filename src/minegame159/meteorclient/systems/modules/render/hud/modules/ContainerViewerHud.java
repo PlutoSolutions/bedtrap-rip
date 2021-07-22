@@ -37,83 +37,76 @@ import net.minecraft.class_4739;
 
 public class ContainerViewerHud
 extends HudElement {
-    private static final /* synthetic */ class_2960 TEXTURE;
-    private final /* synthetic */ Setting<Boolean> echestNoItem;
-    private final /* synthetic */ Setting<Double> scale;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ class_1799[] inventory;
+    private static final class_2960 TEXTURE = new class_2960("meteor-client", "textures/container.png");
+    private final Setting<Boolean> echestNoItem;
+    private final Setting<Double> scale;
+    private final SettingGroup sgGeneral;
+    private final class_1799[] inventory;
 
     @Override
-    public void render(HudRenderer lIlllIIlIlIlIl) {
-        ContainerViewerHud lIlllIIlIlIllI;
-        double lIlllIIlIlIlII = lIlllIIlIlIllI.box.getX();
-        double lIlllIIlIlIIll = lIlllIIlIlIllI.box.getY();
-        class_1799 lIlllIIlIlIIlI = lIlllIIlIlIllI.getContainer();
-        if (lIlllIIlIlIIlI == null) {
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX();
+        double d2 = this.box.getY();
+        class_1799 class_17992 = this.getContainer();
+        if (class_17992 == null) {
             return;
         }
-        lIlllIIlIlIllI.drawBackground((int)lIlllIIlIlIlII, (int)lIlllIIlIlIIll, lIlllIIlIlIIlI);
-        Utils.getItemsInContainerItem(lIlllIIlIlIIlI, lIlllIIlIlIllI.inventory);
-        for (int lIlllIIlIlIlll = 0; lIlllIIlIlIlll < 3; ++lIlllIIlIlIlll) {
-            for (int lIlllIIlIllIII = 0; lIlllIIlIllIII < 9; ++lIlllIIlIllIII) {
-                class_1799 lIlllIIlIllIIl = lIlllIIlIlIllI.inventory[lIlllIIlIlIlll * 9 + lIlllIIlIllIII];
-                if (lIlllIIlIllIIl == null) continue;
-                RenderUtils.drawItem(lIlllIIlIllIIl, (int)(lIlllIIlIlIlII + (double)(8 + lIlllIIlIllIII * 18) * lIlllIIlIlIllI.scale.get()), (int)(lIlllIIlIlIIll + (double)(7 + lIlllIIlIlIlll * 18) * lIlllIIlIlIllI.scale.get()), lIlllIIlIlIllI.scale.get(), true);
+        this.drawBackground((int)d, (int)d2, class_17992);
+        Utils.getItemsInContainerItem(class_17992, this.inventory);
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                class_1799 class_17993 = this.inventory[i * 9 + j];
+                if (class_17993 == null) continue;
+                RenderUtils.drawItem(class_17993, (int)(d + (double)(8 + j * 18) * this.scale.get()), (int)(d2 + (double)(7 + i * 18) * this.scale.get()), this.scale.get(), true);
+                if (0 >= 0) continue;
+                return;
             }
         }
     }
 
     private class_1799 getContainer() {
-        ContainerViewerHud lIlllIIlIIIllI;
-        if (lIlllIIlIIIllI.isInEditor()) {
+        if (this.isInEditor()) {
             return class_1802.field_8466.method_7854();
         }
-        class_1799 lIlllIIlIIIlll = lIlllIIlIIIllI.mc.field_1724.field_7514.method_7391();
-        if (!(lIlllIIlIIIlll.method_7909() instanceof class_1747)) {
-            lIlllIIlIIIlll = lIlllIIlIIIllI.mc.field_1724.method_6079();
+        class_1799 class_17992 = this.mc.field_1724.field_7514.method_7391();
+        if (!(class_17992.method_7909() instanceof class_1747)) {
+            class_17992 = this.mc.field_1724.method_6079();
         }
-        if (lIlllIIlIIIlll.method_7909() == class_1802.field_8466) {
-            return lIlllIIlIIIlll;
+        if (class_17992.method_7909() == class_1802.field_8466) {
+            return class_17992;
         }
-        if (!(lIlllIIlIIIlll.method_7909() instanceof class_1747)) {
-            return lIlllIIlIIIllI.echestNoItem.get() != false ? class_1802.field_8466.method_7854() : null;
+        if (!(class_17992.method_7909() instanceof class_1747)) {
+            return this.echestNoItem.get() != false ? class_1802.field_8466.method_7854() : null;
         }
-        if (((class_1747)lIlllIIlIIIlll.method_7909()).method_7711() instanceof class_2480) {
-            return lIlllIIlIIIlll;
+        if (((class_1747)class_17992.method_7909()).method_7711() instanceof class_2480) {
+            return class_17992;
         }
-        if (((class_1747)lIlllIIlIIIlll.method_7909()).method_7711() instanceof class_4739) {
-            return lIlllIIlIIIlll;
+        if (((class_1747)class_17992.method_7909()).method_7711() instanceof class_4739) {
+            return class_17992;
         }
-        return lIlllIIlIIIllI.echestNoItem.get() != false ? class_1802.field_8466.method_7854() : null;
+        return this.echestNoItem.get() != false ? class_1802.field_8466.method_7854() : null;
     }
 
     @Override
-    public void update(HudRenderer lIlllIIllIIIlI) {
-        ContainerViewerHud lIlllIIllIIIIl;
-        lIlllIIllIIIIl.box.setSize(176.0 * lIlllIIllIIIIl.scale.get(), 67.0 * lIlllIIllIIIIl.scale.get());
+    public void update(HudRenderer hudRenderer) {
+        this.box.setSize(176.0 * this.scale.get(), 67.0 * this.scale.get());
     }
 
-    static {
-        TEXTURE = new class_2960("meteor-client", "textures/container.png");
+    private void drawBackground(int n, int n2, class_1799 class_17992) {
+        int n3 = (int)this.box.width;
+        int n4 = (int)this.box.height;
+        Color color = Utils.getShulkerColor(class_17992);
+        RenderSystem.color4f((float)((float)color.r / 255.0f), (float)((float)color.g / 255.0f), (float)((float)color.b / 255.0f), (float)((float)color.a / 255.0f));
+        this.mc.method_1531().method_22813(TEXTURE);
+        class_332.method_25291((class_4587)Matrices.getMatrixStack(), (int)n, (int)n2, (int)0, (float)0.0f, (float)0.0f, (int)n3, (int)n4, (int)n4, (int)n3);
     }
 
-    private void drawBackground(int lIlllIIIllIlIl, int lIlllIIIlllIll, class_1799 lIlllIIIlllIlI) {
-        ContainerViewerHud lIlllIIIllllIl;
-        int lIlllIIIlllIIl = (int)lIlllIIIllllIl.box.width;
-        int lIlllIIIlllIII = (int)lIlllIIIllllIl.box.height;
-        Color lIlllIIIllIlll = Utils.getShulkerColor(lIlllIIIlllIlI);
-        RenderSystem.color4f((float)((float)lIlllIIIllIlll.r / 255.0f), (float)((float)lIlllIIIllIlll.g / 255.0f), (float)((float)lIlllIIIllIlll.b / 255.0f), (float)((float)lIlllIIIllIlll.a / 255.0f));
-        lIlllIIIllllIl.mc.method_1531().method_22813(TEXTURE);
-        class_332.method_25291((class_4587)Matrices.getMatrixStack(), (int)lIlllIIIllIlIl, (int)lIlllIIIlllIll, (int)0, (float)0.0f, (float)0.0f, (int)lIlllIIIlllIIl, (int)lIlllIIIlllIII, (int)lIlllIIIlllIII, (int)lIlllIIIlllIIl);
-    }
-
-    public ContainerViewerHud(HUD lIlllIIllIIlll) {
-        super(lIlllIIllIIlll, "container-viewer", "Displays held containers.", false);
-        ContainerViewerHud lIlllIIllIlIII;
-        lIlllIIllIlIII.sgGeneral = lIlllIIllIlIII.settings.getDefaultGroup();
-        lIlllIIllIlIII.scale = lIlllIIllIlIII.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of container viewer.").defaultValue(3.0).min(0.1).sliderMin(0.1).max(10.0).build());
-        lIlllIIllIlIII.echestNoItem = lIlllIIllIlIII.sgGeneral.add(new BoolSetting.Builder().name("echest-when-empty").description("Display contents of ender chest if not holding any other container.").defaultValue(false).build());
-        lIlllIIllIlIII.inventory = new class_1799[27];
+    public ContainerViewerHud(HUD hUD) {
+        super(hUD, "container-viewer", "Displays held containers.", false);
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of container viewer.").defaultValue(3.0).min(0.1).sliderMin(0.1).max(10.0).build());
+        this.echestNoItem = this.sgGeneral.add(new BoolSetting.Builder().name("echest-when-empty").description("Display contents of ender chest if not holding any other container.").defaultValue(false).build());
+        this.inventory = new class_1799[27];
     }
 }
 

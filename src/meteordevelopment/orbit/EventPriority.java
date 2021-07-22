@@ -4,11 +4,11 @@
 package meteordevelopment.orbit;
 
 public class EventPriority {
-    public static final /* synthetic */ int LOW;
-    public static final /* synthetic */ int HIGH;
-    public static final /* synthetic */ int HIGHEST;
-    public static final /* synthetic */ int MEDIUM;
-    public static final /* synthetic */ int LOWEST;
+    public static final int LOW;
+    public static final int HIGH;
+    public static final int HIGHEST;
+    public static final int MEDIUM;
+    public static final int LOWEST;
 
     static {
         HIGHEST = 200;
@@ -16,10 +16,6 @@ public class EventPriority {
         MEDIUM = 0;
         HIGH = 100;
         LOW = -100;
-    }
-
-    public EventPriority() {
-        EventPriority lIIllIIlIlIlllI;
     }
 }
 

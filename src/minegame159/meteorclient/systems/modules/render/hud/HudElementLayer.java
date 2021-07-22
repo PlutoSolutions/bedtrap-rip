@@ -11,47 +11,44 @@ import minegame159.meteorclient.utils.render.AlignmentX;
 import minegame159.meteorclient.utils.render.AlignmentY;
 
 public class HudElementLayer {
-    private final /* synthetic */ int yOffset;
-    private final /* synthetic */ int xOffset;
-    private final /* synthetic */ AlignmentY yAlign;
-    private final /* synthetic */ List<HudElement> elements;
-    private final /* synthetic */ AlignmentX xAlign;
-    private final /* synthetic */ List<HudElement> allElements;
-    private final /* synthetic */ HudRenderer renderer;
+    private final int yOffset;
+    private final int xOffset;
+    private final AlignmentY yAlign;
+    private final List<HudElement> elements;
+    private final AlignmentX xAlign;
+    private final List<HudElement> allElements;
+    private final HudRenderer renderer;
 
-    public HudElementLayer(HudRenderer llIIlIIIIlIllll, List<HudElement> llIIlIIIIlIlllI, AlignmentX llIIlIIIIlIllIl, AlignmentY llIIlIIIIlIllII, int llIIlIIIIlIlIll, int llIIlIIIIlIlIlI) {
-        HudElementLayer llIIlIIIIlIlIIl;
-        llIIlIIIIlIlIIl.renderer = llIIlIIIIlIllll;
-        llIIlIIIIlIlIIl.allElements = llIIlIIIIlIlllI;
-        llIIlIIIIlIlIIl.elements = new ArrayList<HudElement>();
-        llIIlIIIIlIlIIl.xAlign = llIIlIIIIlIllIl;
-        llIIlIIIIlIlIIl.yAlign = llIIlIIIIlIllII;
-        llIIlIIIIlIlIIl.xOffset = llIIlIIIIlIlIll;
-        llIIlIIIIlIlIIl.yOffset = llIIlIIIIlIlIlI;
+    public HudElementLayer(HudRenderer hudRenderer, List<HudElement> list, AlignmentX alignmentX, AlignmentY alignmentY, int n, int n2) {
+        this.renderer = hudRenderer;
+        this.allElements = list;
+        this.elements = new ArrayList<HudElement>();
+        this.xAlign = alignmentX;
+        this.yAlign = alignmentY;
+        this.xOffset = n;
+        this.yOffset = n2;
     }
 
-    public void add(HudElement llIIlIIIIIlllIl) {
-        HudElementLayer llIIlIIIIIllllI;
-        llIIlIIIIIllllI.allElements.add(llIIlIIIIIlllIl);
-        llIIlIIIIIllllI.elements.add(llIIlIIIIIlllIl);
-        llIIlIIIIIlllIl.settings.registerColorSettings(null);
+    public void add(HudElement hudElement) {
+        this.allElements.add(hudElement);
+        this.elements.add(hudElement);
+        hudElement.settings.registerColorSettings(null);
     }
 
     public void align() {
-        HudElementLayer llIIlIIIIIlIllI;
-        double llIIlIIIIIlIlIl = llIIlIIIIIlIllI.xOffset * (llIIlIIIIIlIllI.xAlign == AlignmentX.Right ? -1 : 1);
-        double llIIlIIIIIlIlII = llIIlIIIIIlIllI.yOffset * (llIIlIIIIIlIllI.yAlign == AlignmentY.Bottom ? -1 : 1);
-        for (HudElement llIIlIIIIIlIlll : llIIlIIIIIlIllI.elements) {
-            llIIlIIIIIlIlll.update(llIIlIIIIIlIllI.renderer);
-            llIIlIIIIIlIlll.box.x = llIIlIIIIIlIllI.xAlign;
-            llIIlIIIIIlIlll.box.y = llIIlIIIIIlIllI.yAlign;
-            llIIlIIIIIlIlll.box.xOffset = (int)Math.round(llIIlIIIIIlIlIl);
-            llIIlIIIIIlIlll.box.yOffset = (int)Math.round(llIIlIIIIIlIlII);
-            if (llIIlIIIIIlIllI.yAlign == AlignmentY.Bottom) {
-                llIIlIIIIIlIlII -= llIIlIIIIIlIlll.box.height;
+        double d = this.xOffset * (this.xAlign == AlignmentX.Right ? -1 : 1);
+        double d2 = this.yOffset * (this.yAlign == AlignmentY.Bottom ? -1 : 1);
+        for (HudElement hudElement : this.elements) {
+            hudElement.update(this.renderer);
+            hudElement.box.x = this.xAlign;
+            hudElement.box.y = this.yAlign;
+            hudElement.box.xOffset = (int)Math.round(d);
+            hudElement.box.yOffset = (int)Math.round(d2);
+            if (this.yAlign == AlignmentY.Bottom) {
+                d2 -= hudElement.box.height;
                 continue;
             }
-            llIIlIIIIIlIlII += llIIlIIIIIlIlll.box.height;
+            d2 += hudElement.box.height;
         }
     }
 }

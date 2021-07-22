@@ -7,25 +7,21 @@ import com.sun.jna.ptr.ByReference;
 
 public class ByteByReference
 extends ByReference {
-    public void setValue(byte lllllllllllllllllIllIIIIIllIllll) {
-        ByteByReference lllllllllllllllllIllIIIIIlllIIII;
-        lllllllllllllllllIllIIIIIlllIIII.getPointer().setByte(0L, lllllllllllllllllIllIIIIIllIllll);
+    public void setValue(byte by) {
+        this.getPointer().setByte(0L, by);
     }
 
     public ByteByReference() {
-        lllllllllllllllllIllIIIIIllllIll(0);
-        ByteByReference lllllllllllllllllIllIIIIIllllIll;
+        this(0);
     }
 
     public byte getValue() {
-        ByteByReference lllllllllllllllllIllIIIIIllIllIl;
-        return lllllllllllllllllIllIIIIIllIllIl.getPointer().getByte(0L);
+        return this.getPointer().getByte(0L);
     }
 
-    public ByteByReference(byte lllllllllllllllllIllIIIIIlllIlIl) {
+    public ByteByReference(byte by) {
         super(1);
-        ByteByReference lllllllllllllllllIllIIIIIlllIllI;
-        lllllllllllllllllIllIIIIIlllIllI.setValue(lllllllllllllllllIllIIIIIlllIlIl);
+        this.setValue(by);
     }
 }
 

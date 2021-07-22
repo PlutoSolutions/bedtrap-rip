@@ -4,31 +4,28 @@
 package minegame159.meteorclient.utils.notebot.nbs;
 
 public class Note {
-    private /* synthetic */ byte instrument;
-    private /* synthetic */ byte key;
+    private byte instrument;
+    private byte key;
 
-    public void setInstrument(byte llllIIIIlIIlllI) {
-        llllIIIIlIIllll.instrument = llllIIIIlIIlllI;
+    public void setInstrument(byte by) {
+        this.instrument = by;
     }
 
     public byte getKey() {
-        Note llllIIIIlIIlIIl;
-        return llllIIIIlIIlIIl.key;
+        return this.key;
     }
 
     public byte getInstrument() {
-        Note llllIIIIlIlIIll;
-        return llllIIIIlIlIIll.instrument;
+        return this.instrument;
     }
 
-    public void setKey(byte llllIIIIlIIIlIl) {
-        llllIIIIlIIIlII.key = llllIIIIlIIIlIl;
+    public void setKey(byte by) {
+        this.key = by;
     }
 
-    public Note(byte llllIIIIlIllIIl, byte llllIIIIlIllIII) {
-        Note llllIIIIlIllIlI;
-        llllIIIIlIllIlI.instrument = llllIIIIlIllIIl;
-        llllIIIIlIllIlI.key = llllIIIIlIllIII;
+    public Note(byte by, byte by2) {
+        this.instrument = by;
+        this.key = by2;
     }
 }
 

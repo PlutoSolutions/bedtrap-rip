@@ -10,33 +10,25 @@ import minegame159.meteorclient.utils.world.TickRate;
 
 public class LagNotifierHud
 extends DoubleTextHudElement {
-    private static final /* synthetic */ Color RED;
-    private static final /* synthetic */ Color AMBER;
-    private static final /* synthetic */ Color YELLOW;
+    private static final Color RED = new Color(225, 45, 45);
+    private static final Color AMBER = new Color(235, 158, 52);
+    private static final Color YELLOW = new Color(255, 255, 5);
 
-    public LagNotifierHud(HUD llllllllllllllllllIlIlIlIIlIlIlI) {
-        super(llllllllllllllllllIlIlIlIIlIlIlI, "lag-notifier", "Displays if the server is lagging in ticks.", "Time since last tick ");
-        LagNotifierHud llllllllllllllllllIlIlIlIIlIlIIl;
-    }
-
-    static {
-        RED = new Color(225, 45, 45);
-        AMBER = new Color(235, 158, 52);
-        YELLOW = new Color(255, 255, 5);
+    public LagNotifierHud(HUD hUD) {
+        super(hUD, "lag-notifier", "Displays if the server is lagging in ticks.", "Time since last tick ");
     }
 
     @Override
     protected String getRight() {
-        LagNotifierHud llllllllllllllllllIlIlIlIIlIIlIl;
-        if (llllllllllllllllllIlIlIlIIlIIlIl.isInEditor()) {
-            llllllllllllllllllIlIlIlIIlIIlIl.rightColor = RED;
-            llllllllllllllllllIlIlIlIIlIIlIl.visible = true;
+        if (this.isInEditor()) {
+            this.rightColor = RED;
+            this.visible = true;
             return "4,3";
         }
-        float llllllllllllllllllIlIlIlIIlIIlII = TickRate.INSTANCE.getTimeSinceLastTick();
-        llllllllllllllllllIlIlIlIIlIIlIl.rightColor = llllllllllllllllllIlIlIlIIlIIlII > 10.0f ? RED : (llllllllllllllllllIlIlIlIIlIIlII > 3.0f ? AMBER : YELLOW);
-        llllllllllllllllllIlIlIlIIlIIlIl.visible = llllllllllllllllllIlIlIlIIlIIlII >= 1.0f;
-        return String.format("%.1f", Float.valueOf(llllllllllllllllllIlIlIlIIlIIlII));
+        float f = TickRate.INSTANCE.getTimeSinceLastTick();
+        this.rightColor = f > 10.0f ? RED : (f > 3.0f ? AMBER : YELLOW);
+        this.visible = f >= 1.0f;
+        return String.format("%.1f", Float.valueOf(f));
     }
 }
 

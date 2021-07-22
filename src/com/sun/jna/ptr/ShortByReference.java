@@ -7,25 +7,21 @@ import com.sun.jna.ptr.ByReference;
 
 public class ShortByReference
 extends ByReference {
-    public ShortByReference(short lIlIlllIllIllIl) {
+    public ShortByReference(short s) {
         super(2);
-        ShortByReference lIlIlllIlllIIII;
-        lIlIlllIlllIIII.setValue(lIlIlllIllIllIl);
+        this.setValue(s);
     }
 
     public ShortByReference() {
-        lIlIlllIlllIIll(0);
-        ShortByReference lIlIlllIlllIIll;
+        this(0);
     }
 
-    public void setValue(short lIlIlllIllIlIIl) {
-        ShortByReference lIlIlllIllIlIlI;
-        lIlIlllIllIlIlI.getPointer().setShort(0L, lIlIlllIllIlIIl);
+    public void setValue(short s) {
+        this.getPointer().setShort(0L, s);
     }
 
     public short getValue() {
-        ShortByReference lIlIlllIllIIlII;
-        return lIlIlllIllIIlII.getPointer().getShort(0L);
+        return this.getPointer().getShort(0L);
     }
 }
 

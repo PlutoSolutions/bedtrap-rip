@@ -22,150 +22,144 @@ import minegame159.meteorclient.gui.widgets.containers.WContainer;
 
 public class WTable
 extends WContainer {
-    private final /* synthetic */ List<List<Cell<?>>> rows;
-    private final /* synthetic */ DoubleList rowHeights;
-    public /* synthetic */ double spacing;
-    private final /* synthetic */ DoubleList rowWidths;
-    private /* synthetic */ int rowI;
-    private final /* synthetic */ IntList rowExpandCellXCounts;
-    private final /* synthetic */ DoubleList columnWidths;
+    private final List<List<Cell<?>>> rows = new ArrayList();
+    private final DoubleList rowHeights = new DoubleArrayList();
+    public double spacing = 3.0;
+    private final DoubleList rowWidths;
+    private int rowI;
+    private final IntList rowExpandCellXCounts;
+    private final DoubleList columnWidths = new DoubleArrayList();
 
     @Override
     protected void onCalculateSize() {
-        WTable lllllllllllllllllIIlIIIlIllllIlI;
-        lllllllllllllllllIIlIIIlIllllIlI.calculateInfo();
-        lllllllllllllllllIIlIIIlIllllIlI.rowWidths.clear();
-        lllllllllllllllllIIlIIIlIllllIlI.width = 0.0;
-        lllllllllllllllllIIlIIIlIllllIlI.height = 0.0;
-        for (int lllllllllllllllllIIlIIIlIllllIll = 0; lllllllllllllllllIIlIIIlIllllIll < lllllllllllllllllIIlIIIlIllllIlI.rows.size(); ++lllllllllllllllllIIlIIIlIllllIll) {
-            List<Cell<?>> lllllllllllllllllIIlIIIlIlllllIl = lllllllllllllllllIIlIIIlIllllIlI.rows.get(lllllllllllllllllIIlIIIlIllllIll);
-            double lllllllllllllllllIIlIIIlIlllllII = 0.0;
-            for (int lllllllllllllllllIIlIIIlIllllllI = 0; lllllllllllllllllIIlIIIlIllllllI < lllllllllllllllllIIlIIIlIlllllIl.size(); ++lllllllllllllllllIIlIIIlIllllllI) {
-                if (lllllllllllllllllIIlIIIlIllllllI > 0) {
-                    lllllllllllllllllIIlIIIlIlllllII += lllllllllllllllllIIlIIIlIllllIlI.spacing();
+        this.calculateInfo();
+        this.rowWidths.clear();
+        this.width = 0.0;
+        this.height = 0.0;
+        for (int i = 0; i < this.rows.size(); ++i) {
+            List<Cell<?>> list = this.rows.get(i);
+            double d = 0.0;
+            for (int j = 0; j < list.size(); ++j) {
+                if (j > 0) {
+                    d += this.spacing();
                 }
-                lllllllllllllllllIIlIIIlIlllllII += lllllllllllllllllIIlIIIlIllllIlI.columnWidths.getDouble(lllllllllllllllllIIlIIIlIllllllI);
+                d += this.columnWidths.getDouble(j);
+                if (true) continue;
+                return;
             }
-            lllllllllllllllllIIlIIIlIllllIlI.rowWidths.add(lllllllllllllllllIIlIIIlIlllllII);
-            lllllllllllllllllIIlIIIlIllllIlI.width = Math.max(lllllllllllllllllIIlIIIlIllllIlI.width, lllllllllllllllllIIlIIIlIlllllII);
-            if (lllllllllllllllllIIlIIIlIllllIll > 0) {
-                lllllllllllllllllIIlIIIlIllllIlI.height += lllllllllllllllllIIlIIIlIllllIlI.spacing();
+            this.rowWidths.add(d);
+            this.width = Math.max(this.width, d);
+            if (i > 0) {
+                this.height += this.spacing();
             }
-            lllllllllllllllllIIlIIIlIllllIlI.height += lllllllllllllllllIIlIIIlIllllIlI.rowHeights.getDouble(lllllllllllllllllIIlIIIlIllllIll);
+            this.height += this.rowHeights.getDouble(i);
+            if (4 > 2) continue;
+            return;
         }
     }
 
     public int rowI() {
-        WTable lllllllllllllllllIIlIIIllIIllIII;
-        return lllllllllllllllllIIlIIIllIIllIII.rowI;
+        return this.rowI;
     }
 
     public WTable() {
-        WTable lllllllllllllllllIIlIIIllIlIlIll;
-        lllllllllllllllllIIlIIIllIlIlIll.spacing = 3.0;
-        lllllllllllllllllIIlIIIllIlIlIll.rows = new ArrayList();
-        lllllllllllllllllIIlIIIllIlIlIll.rowHeights = new DoubleArrayList();
-        lllllllllllllllllIIlIIIllIlIlIll.columnWidths = new DoubleArrayList();
-        lllllllllllllllllIIlIIIllIlIlIll.rowWidths = new DoubleArrayList();
-        lllllllllllllllllIIlIIIllIlIlIll.rowExpandCellXCounts = new IntArrayList();
+        this.rowWidths = new DoubleArrayList();
+        this.rowExpandCellXCounts = new IntArrayList();
     }
 
     @Override
-    public <T extends WWidget> Cell<T> add(T lllllllllllllllllIIlIIIllIlIIIll) {
-        WTable lllllllllllllllllIIlIIIllIlIIIIl;
-        Cell<T> lllllllllllllllllIIlIIIllIlIIIlI = super.add(lllllllllllllllllIIlIIIllIlIIIll);
-        if (lllllllllllllllllIIlIIIllIlIIIIl.rows.size() <= lllllllllllllllllIIlIIIllIlIIIIl.rowI) {
-            ArrayList<Cell<T>> lllllllllllllllllIIlIIIllIlIIlIl = new ArrayList<Cell<T>>();
-            lllllllllllllllllIIlIIIllIlIIlIl.add(lllllllllllllllllIIlIIIllIlIIIlI);
-            lllllllllllllllllIIlIIIllIlIIIIl.rows.add(lllllllllllllllllIIlIIIllIlIIlIl);
+    public <T extends WWidget> Cell<T> add(T t) {
+        Cell<T> cell = super.add(t);
+        if (this.rows.size() <= this.rowI) {
+            ArrayList<Cell<T>> arrayList = new ArrayList<Cell<T>>();
+            arrayList.add(cell);
+            this.rows.add(arrayList);
         } else {
-            lllllllllllllllllIIlIIIllIlIIIIl.rows.get(lllllllllllllllllIIlIIIllIlIIIIl.rowI).add(lllllllllllllllllIIlIIIllIlIIIlI);
+            this.rows.get(this.rowI).add(cell);
         }
-        return lllllllllllllllllIIlIIIllIlIIIlI;
+        return cell;
     }
 
-    public void removeRow(int lllllllllllllllllIIlIIIllIIIllll) {
-        WTable lllllllllllllllllIIlIIIllIIIlllI;
-        block0: for (Cell<?> lllllllllllllllllIIlIIIllIIlIIIl : lllllllllllllllllIIlIIIllIIIlllI.rows.remove(lllllllllllllllllIIlIIIllIIIllll)) {
-            Iterator lllllllllllllllllIIlIIIllIIlIIlI = lllllllllllllllllIIlIIIllIIIlllI.cells.iterator();
-            while (lllllllllllllllllIIlIIIllIIlIIlI.hasNext()) {
-                if (lllllllllllllllllIIlIIIllIIlIIlI.next() != lllllllllllllllllIIlIIIllIIlIIIl) continue;
-                lllllllllllllllllIIlIIIllIIlIIlI.remove();
+    public void removeRow(int n) {
+        block0: for (Cell<?> cell : this.rows.remove(n)) {
+            Iterator iterator = this.cells.iterator();
+            while (iterator.hasNext()) {
+                if (iterator.next() != cell) continue;
+                iterator.remove();
                 continue block0;
             }
         }
-        --lllllllllllllllllIIlIIIllIIIlllI.rowI;
+        --this.rowI;
     }
 
     protected double spacing() {
-        WTable lllllllllllllllllIIlIIIllIIIIlII;
-        return lllllllllllllllllIIlIIIllIIIIlII.theme.scale(lllllllllllllllllIIlIIIllIIIIlII.spacing);
+        return this.theme.scale(this.spacing);
     }
 
     @Override
     public void clear() {
-        WTable lllllllllllllllllIIlIIIllIIIIlll;
         super.clear();
-        lllllllllllllllllIIlIIIllIIIIlll.rows.clear();
-        lllllllllllllllllIIlIIIllIIIIlll.rowI = 0;
+        this.rows.clear();
+        this.rowI = 0;
     }
 
     public void row() {
-        WTable lllllllllllllllllIIlIIIllIIlllII;
-        ++lllllllllllllllllIIlIIIllIIlllII.rowI;
+        ++this.rowI;
     }
 
     private void calculateInfo() {
-        WTable lllllllllllllllllIIlIIIlIlIIlIII;
-        lllllllllllllllllIIlIIIlIlIIlIII.rowHeights.clear();
-        lllllllllllllllllIIlIIIlIlIIlIII.columnWidths.clear();
-        lllllllllllllllllIIlIIIlIlIIlIII.rowExpandCellXCounts.clear();
-        for (List<Cell<?>> lllllllllllllllllIIlIIIlIlIIlIIl : lllllllllllllllllIIlIIIlIlIIlIII.rows) {
-            double lllllllllllllllllIIlIIIlIlIIlIll = 0.0;
-            int lllllllllllllllllIIlIIIlIlIIlIlI = 0;
-            for (int lllllllllllllllllIIlIIIlIlIIllII = 0; lllllllllllllllllIIlIIIlIlIIllII < lllllllllllllllllIIlIIIlIlIIlIIl.size(); ++lllllllllllllllllIIlIIIlIlIIllII) {
-                Cell<?> lllllllllllllllllIIlIIIlIlIIlllI = lllllllllllllllllIIlIIIlIlIIlIIl.get(lllllllllllllllllIIlIIIlIlIIllII);
-                lllllllllllllllllIIlIIIlIlIIlIll = Math.max(lllllllllllllllllIIlIIIlIlIIlIll, lllllllllllllllllIIlIIIlIlIIlllI.padTop() + ((WWidget)lllllllllllllllllIIlIIIlIlIIlllI.widget()).height + lllllllllllllllllIIlIIIlIlIIlllI.padBottom());
-                double lllllllllllllllllIIlIIIlIlIIllIl = lllllllllllllllllIIlIIIlIlIIlllI.padLeft() + ((WWidget)lllllllllllllllllIIlIIIlIlIIlllI.widget()).width + lllllllllllllllllIIlIIIlIlIIlllI.padRight();
-                if (lllllllllllllllllIIlIIIlIlIIlIII.columnWidths.size() <= lllllllllllllllllIIlIIIlIlIIllII) {
-                    lllllllllllllllllIIlIIIlIlIIlIII.columnWidths.add(lllllllllllllllllIIlIIIlIlIIllIl);
+        this.rowHeights.clear();
+        this.columnWidths.clear();
+        this.rowExpandCellXCounts.clear();
+        for (List<Cell<?>> list : this.rows) {
+            double d = 0.0;
+            int n = 0;
+            for (int i = 0; i < list.size(); ++i) {
+                Cell<?> cell = list.get(i);
+                d = Math.max(d, cell.padTop() + ((WWidget)cell.widget()).height + cell.padBottom());
+                double d2 = cell.padLeft() + ((WWidget)cell.widget()).width + cell.padRight();
+                if (this.columnWidths.size() <= i) {
+                    this.columnWidths.add(d2);
                 } else {
-                    lllllllllllllllllIIlIIIlIlIIlIII.columnWidths.set(lllllllllllllllllIIlIIIlIlIIllII, Math.max(lllllllllllllllllIIlIIIlIlIIlIII.columnWidths.getDouble(lllllllllllllllllIIlIIIlIlIIllII), lllllllllllllllllIIlIIIlIlIIllIl));
+                    this.columnWidths.set(i, Math.max(this.columnWidths.getDouble(i), d2));
                 }
-                if (!lllllllllllllllllIIlIIIlIlIIlllI.expandCellX) continue;
-                ++lllllllllllllllllIIlIIIlIlIIlIlI;
+                if (!cell.expandCellX) continue;
+                ++n;
             }
-            lllllllllllllllllIIlIIIlIlIIlIII.rowHeights.add(lllllllllllllllllIIlIIIlIlIIlIll);
-            lllllllllllllllllIIlIIIlIlIIlIII.rowExpandCellXCounts.add(lllllllllllllllllIIlIIIlIlIIlIlI);
+            this.rowHeights.add(d);
+            this.rowExpandCellXCounts.add(n);
         }
     }
 
     @Override
     protected void onCalculateWidgetPositions() {
-        WTable lllllllllllllllllIIlIIIlIllIIIlI;
-        double lllllllllllllllllIIlIIIlIllIIIIl = lllllllllllllllllIIlIIIlIllIIIlI.y;
-        for (int lllllllllllllllllIIlIIIlIllIIIll = 0; lllllllllllllllllIIlIIIlIllIIIll < lllllllllllllllllIIlIIIlIllIIIlI.rows.size(); ++lllllllllllllllllIIlIIIlIllIIIll) {
-            List<Cell<?>> lllllllllllllllllIIlIIIlIllIIlll = lllllllllllllllllIIlIIIlIllIIIlI.rows.get(lllllllllllllllllIIlIIIlIllIIIll);
-            if (lllllllllllllllllIIlIIIlIllIIIll > 0) {
-                lllllllllllllllllIIlIIIlIllIIIIl += lllllllllllllllllIIlIIIlIllIIIlI.spacing();
+        double d = this.y;
+        for (int i = 0; i < this.rows.size(); ++i) {
+            List<Cell<?>> list = this.rows.get(i);
+            if (i > 0) {
+                d += this.spacing();
             }
-            double lllllllllllllllllIIlIIIlIllIIllI = lllllllllllllllllIIlIIIlIllIIIlI.x;
-            double lllllllllllllllllIIlIIIlIllIIlIl = lllllllllllllllllIIlIIIlIllIIIlI.rowHeights.getDouble(lllllllllllllllllIIlIIIlIllIIIll);
-            double lllllllllllllllllIIlIIIlIllIIlII = lllllllllllllllllIIlIIIlIllIIIlI.rowExpandCellXCounts.getInt(lllllllllllllllllIIlIIIlIllIIIll) > 0 ? (lllllllllllllllllIIlIIIlIllIIIlI.width - lllllllllllllllllIIlIIIlIllIIIlI.rowWidths.getDouble(lllllllllllllllllIIlIIIlIllIIIll)) / (double)lllllllllllllllllIIlIIIlIllIIIlI.rowExpandCellXCounts.getInt(lllllllllllllllllIIlIIIlIllIIIll) : 0.0;
-            for (int lllllllllllllllllIIlIIIlIllIlIII = 0; lllllllllllllllllIIlIIIlIllIlIII < lllllllllllllllllIIlIIIlIllIIlll.size(); ++lllllllllllllllllIIlIIIlIllIlIII) {
-                Cell<?> lllllllllllllllllIIlIIIlIllIlIlI = lllllllllllllllllIIlIIIlIllIIlll.get(lllllllllllllllllIIlIIIlIllIlIII);
-                if (lllllllllllllllllIIlIIIlIllIlIII > 0) {
-                    lllllllllllllllllIIlIIIlIllIIllI += lllllllllllllllllIIlIIIlIllIIIlI.spacing();
+            double d2 = this.x;
+            double d3 = this.rowHeights.getDouble(i);
+            double d4 = this.rowExpandCellXCounts.getInt(i) > 0 ? (this.width - this.rowWidths.getDouble(i)) / (double)this.rowExpandCellXCounts.getInt(i) : 0.0;
+            for (int j = 0; j < list.size(); ++j) {
+                Cell<?> cell = list.get(j);
+                if (j > 0) {
+                    d2 += this.spacing();
                 }
-                double lllllllllllllllllIIlIIIlIllIlIIl = lllllllllllllllllIIlIIIlIllIIIlI.columnWidths.getDouble(lllllllllllllllllIIlIIIlIllIlIII);
-                lllllllllllllllllIIlIIIlIllIlIlI.x = lllllllllllllllllIIlIIIlIllIIllI;
-                lllllllllllllllllIIlIIIlIllIlIlI.y = lllllllllllllllllIIlIIIlIllIIIIl;
-                lllllllllllllllllIIlIIIlIllIlIlI.width = lllllllllllllllllIIlIIIlIllIlIIl + (lllllllllllllllllIIlIIIlIllIlIlI.expandCellX ? lllllllllllllllllIIlIIIlIllIIlII : 0.0);
-                lllllllllllllllllIIlIIIlIllIlIlI.height = lllllllllllllllllIIlIIIlIllIIlIl;
-                lllllllllllllllllIIlIIIlIllIlIlI.alignWidget();
-                lllllllllllllllllIIlIIIlIllIIllI += lllllllllllllllllIIlIIIlIllIlIIl + (lllllllllllllllllIIlIIIlIllIlIlI.expandCellX ? lllllllllllllllllIIlIIIlIllIIlII : 0.0);
+                double d5 = this.columnWidths.getDouble(j);
+                cell.x = d2;
+                cell.y = d;
+                cell.width = d5 + (cell.expandCellX ? d4 : 0.0);
+                cell.height = d3;
+                cell.alignWidget();
+                d2 += d5 + (cell.expandCellX ? d4 : 0.0);
+                if (null == null) continue;
+                return;
             }
-            lllllllllllllllllIIlIIIlIllIIIIl += lllllllllllllllllIIlIIIlIllIIlIl;
+            d += d3;
+            if (0 >= -1) continue;
+            return;
         }
     }
 }

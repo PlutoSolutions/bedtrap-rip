@@ -8,16 +8,14 @@ import java.lang.reflect.Method;
 
 public class CallbackResultContext
 extends ToNativeContext {
-    private /* synthetic */ Method method;
+    private Method method;
 
-    CallbackResultContext(Method lIlllIlllIIIlII) {
-        CallbackResultContext lIlllIlllIIIIll;
-        lIlllIlllIIIIll.method = lIlllIlllIIIlII;
+    CallbackResultContext(Method method) {
+        this.method = method;
     }
 
     public Method getMethod() {
-        CallbackResultContext lIlllIllIllllll;
-        return lIlllIllIllllll.method;
+        return this.method;
     }
 }
 

@@ -16,21 +16,24 @@ import net.minecraft.class_156;
 
 public class NewUpdateScreen
 extends WindowScreen {
-    public NewUpdateScreen(GuiTheme llIIlIIIIllII, Version llIIlIIIlIIII) {
-        super(llIIlIIIIllII, "New Update");
-        NewUpdateScreen llIIlIIIIllIl;
-        llIIlIIIIllIl.add(llIIlIIIIllII.label("A new version of Meteor has been released."));
-        llIIlIIIIllIl.add(llIIlIIIIllII.horizontalSeparator()).expandX();
-        WTable llIIlIIIIllll = llIIlIIIIllIl.add(llIIlIIIIllII.table()).widget();
-        llIIlIIIIllll.add(llIIlIIIIllII.label("Your version:"));
-        llIIlIIIIllll.add(llIIlIIIIllII.label(Config.get().version.getOriginalString()));
-        llIIlIIIIllll.row();
-        llIIlIIIIllll.add(llIIlIIIIllII.label("Latest version"));
-        llIIlIIIIllll.add(llIIlIIIIllII.label(llIIlIIIlIIII.getOriginalString()));
-        llIIlIIIIllIl.add(llIIlIIIIllII.horizontalSeparator()).expandX();
-        WHorizontalList llIIlIIIIlllI = llIIlIIIIllIl.add(llIIlIIIIllII.horizontalList()).widget();
-        llIIlIIIIlllI.add(llIIlIIIIllII.button((String)String.valueOf((Object)new StringBuilder().append((String)"Download ").append((String)llIIlIIIlIIII.getOriginalString())))).expandX().widget().action = () -> class_156.method_668().method_670("http://meteorclient.com/");
-        llIIlIIIIlllI.add(llIIlIIIIllII.button((String)"OK")).expandX().widget().action = llIIlIIIIllIl::method_25419;
+    public NewUpdateScreen(GuiTheme guiTheme, Version version) {
+        super(guiTheme, "New Update");
+        this.add(guiTheme.label("A new version of Meteor has been released."));
+        this.add(guiTheme.horizontalSeparator()).expandX();
+        WTable wTable = this.add(guiTheme.table()).widget();
+        wTable.add(guiTheme.label("Your version:"));
+        wTable.add(guiTheme.label(Config.get().version.getOriginalString()));
+        wTable.row();
+        wTable.add(guiTheme.label("Latest version"));
+        wTable.add(guiTheme.label(version.getOriginalString()));
+        this.add(guiTheme.horizontalSeparator()).expandX();
+        WHorizontalList wHorizontalList = this.add(guiTheme.horizontalList()).widget();
+        wHorizontalList.add(guiTheme.button((String)String.valueOf((Object)new StringBuilder().append((String)"Download ").append((String)version.getOriginalString())))).expandX().widget().action = NewUpdateScreen::lambda$new$0;
+        wHorizontalList.add(guiTheme.button((String)"OK")).expandX().widget().action = this::method_25419;
+    }
+
+    private static void lambda$new$0() {
+        class_156.method_668().method_670("http://meteorclient.com/");
     }
 }
 

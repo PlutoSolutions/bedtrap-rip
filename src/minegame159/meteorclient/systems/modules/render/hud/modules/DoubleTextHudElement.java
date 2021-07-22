@@ -10,53 +10,47 @@ import minegame159.meteorclient.utils.render.color.Color;
 
 public abstract class DoubleTextHudElement
 extends HudElement {
-    protected /* synthetic */ Color rightColor;
-    protected /* synthetic */ boolean visible;
-    private /* synthetic */ double leftWidth;
-    private /* synthetic */ String right;
-    private /* synthetic */ String left;
+    protected Color rightColor;
+    protected boolean visible = true;
+    private double leftWidth;
+    private String right;
+    private String left;
 
-    protected void setLeft(String lllllllllllllllllIIllIIlllIIIlIl) {
-        lllllllllllllllllIIllIIlllIIIllI.left = lllllllllllllllllIIllIIlllIIIlIl;
-        lllllllllllllllllIIllIIlllIIIllI.leftWidth = 0.0;
+    protected void setLeft(String string) {
+        this.left = string;
+        this.leftWidth = 0.0;
     }
 
-    public DoubleTextHudElement(HUD lllllllllllllllllIIllIIllllIIIII, String lllllllllllllllllIIllIIlllIlllll, String lllllllllllllllllIIllIIllllIIIll, String lllllllllllllllllIIllIIlllIlllIl) {
-        super(lllllllllllllllllIIllIIllllIIIII, lllllllllllllllllIIllIIlllIlllll, lllllllllllllllllIIllIIllllIIIll, true);
-        DoubleTextHudElement lllllllllllllllllIIllIIllllIIllI;
-        lllllllllllllllllIIllIIllllIIllI.visible = true;
-        lllllllllllllllllIIllIIllllIIllI.rightColor = lllllllllllllllllIIllIIllllIIIII.secondaryColor.get();
-        lllllllllllllllllIIllIIllllIIllI.left = lllllllllllllllllIIllIIlllIlllIl;
+    public DoubleTextHudElement(HUD hUD, String string, String string2, String string3) {
+        super(hUD, string, string2, true);
+        this.rightColor = hUD.secondaryColor.get();
+        this.left = string3;
     }
 
     @Override
-    public void render(HudRenderer lllllllllllllllllIIllIIlllIIllIl) {
-        DoubleTextHudElement lllllllllllllllllIIllIIlllIIlllI;
-        if (!lllllllllllllllllIIllIIlllIIlllI.visible) {
+    public void render(HudRenderer hudRenderer) {
+        if (!this.visible) {
             return;
         }
-        double lllllllllllllllllIIllIIlllIlIIII = lllllllllllllllllIIllIIlllIIlllI.box.getX();
-        double lllllllllllllllllIIllIIlllIIllll = lllllllllllllllllIIllIIlllIIlllI.box.getY();
-        lllllllllllllllllIIllIIlllIIllIl.text(lllllllllllllllllIIllIIlllIIlllI.left, lllllllllllllllllIIllIIlllIlIIII, lllllllllllllllllIIllIIlllIIllll, lllllllllllllllllIIllIIlllIIlllI.hud.primaryColor.get());
-        lllllllllllllllllIIllIIlllIIllIl.text(lllllllllllllllllIIllIIlllIIlllI.right, lllllllllllllllllIIllIIlllIlIIII + lllllllllllllllllIIllIIlllIIlllI.leftWidth, lllllllllllllllllIIllIIlllIIllll, lllllllllllllllllIIllIIlllIIlllI.rightColor);
+        double d = this.box.getX();
+        double d2 = this.box.getY();
+        hudRenderer.text(this.left, d, d2, this.hud.primaryColor.get());
+        hudRenderer.text(this.right, d + this.leftWidth, d2, this.rightColor);
     }
 
     protected abstract String getRight();
 
-    public DoubleTextHudElement(HUD lllllllllllllllllIIllIIlllllIIII, String lllllllllllllllllIIllIIllllIllll, String lllllllllllllllllIIllIIllllIlllI, String lllllllllllllllllIIllIIlllllIIll, boolean lllllllllllllllllIIllIIllllIllII) {
-        super(lllllllllllllllllIIllIIlllllIIII, lllllllllllllllllIIllIIllllIllll, lllllllllllllllllIIllIIllllIlllI, lllllllllllllllllIIllIIllllIllII);
-        DoubleTextHudElement lllllllllllllllllIIllIIlllllIIIl;
-        lllllllllllllllllIIllIIlllllIIIl.visible = true;
-        lllllllllllllllllIIllIIlllllIIIl.rightColor = lllllllllllllllllIIllIIlllllIIII.secondaryColor.get();
-        lllllllllllllllllIIllIIlllllIIIl.left = lllllllllllllllllIIllIIlllllIIll;
+    public DoubleTextHudElement(HUD hUD, String string, String string2, String string3, boolean bl) {
+        super(hUD, string, string2, bl);
+        this.rightColor = hUD.secondaryColor.get();
+        this.left = string3;
     }
 
     @Override
-    public void update(HudRenderer lllllllllllllllllIIllIIlllIllIIl) {
-        DoubleTextHudElement lllllllllllllllllIIllIIlllIllIlI;
-        lllllllllllllllllIIllIIlllIllIlI.right = lllllllllllllllllIIllIIlllIllIlI.getRight();
-        lllllllllllllllllIIllIIlllIllIlI.leftWidth = lllllllllllllllllIIllIIlllIllIIl.textWidth(lllllllllllllllllIIllIIlllIllIlI.left);
-        lllllllllllllllllIIllIIlllIllIlI.box.setSize(lllllllllllllllllIIllIIlllIllIlI.leftWidth + lllllllllllllllllIIllIIlllIllIIl.textWidth(lllllllllllllllllIIllIIlllIllIlI.right), lllllllllllllllllIIllIIlllIllIIl.textHeight());
+    public void update(HudRenderer hudRenderer) {
+        this.right = this.getRight();
+        this.leftWidth = hudRenderer.textWidth(this.left);
+        this.box.setSize(this.leftWidth + hudRenderer.textWidth(this.right), hudRenderer.textHeight());
     }
 }
 

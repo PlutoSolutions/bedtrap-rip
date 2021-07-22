@@ -27,42 +27,40 @@ import net.minecraft.class_3966;
 
 public class LookingAtHud
 extends DoubleTextHudElement {
-    private final /* synthetic */ Setting<Boolean> blockPosition;
-    private final /* synthetic */ Setting<Boolean> entityPosition;
-    private final /* synthetic */ Setting<Boolean> waterLogged;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Boolean> blockPosition;
+    private final Setting<Boolean> entityPosition;
+    private final Setting<Boolean> waterLogged;
+    private final SettingGroup sgGeneral;
 
     @Override
     protected String getRight() {
-        LookingAtHud lllllllllllllllllllIIlIIlIIlIlII;
-        if (lllllllllllllllllllIIlIIlIIlIlII.isInEditor()) {
-            return lllllllllllllllllllIIlIIlIIlIlII.blockPosition.get() != false ? "Obsidian [0, 0, 0]" : "Obsidian";
+        if (this.isInEditor()) {
+            return this.blockPosition.get() != false ? "Obsidian [0, 0, 0]" : "Obsidian";
         }
-        if (lllllllllllllllllllIIlIIlIIlIlII.mc.field_1765.method_17783() == class_239.class_240.field_1332) {
-            String lllllllllllllllllllIIlIIlIIlIlll;
-            String lllllllllllllllllllIIlIIlIIllIIl = lllllllllllllllllllIIlIIlIIlIlII.mc.field_1687.method_8320(((class_3965)lllllllllllllllllllIIlIIlIIlIlII.mc.field_1765).method_17777()).method_26204().method_9518().getString();
-            class_2338 lllllllllllllllllllIIlIIlIIllIII = ((class_3965)lllllllllllllllllllIIlIIlIIlIlII.mc.field_1765).method_17777();
-            String string = lllllllllllllllllllIIlIIlIIlIlII.blockPosition.get().booleanValue() ? String.format("%s [%d, %d, %d]", lllllllllllllllllllIIlIIlIIllIIl, lllllllllllllllllllIIlIIlIIllIII.method_10263(), lllllllllllllllllllIIlIIlIIllIII.method_10264(), lllllllllllllllllllIIlIIlIIllIII.method_10260()) : (lllllllllllllllllllIIlIIlIIlIlll = lllllllllllllllllllIIlIIlIIllIIl);
-            if (lllllllllllllllllllIIlIIlIIlIlII.waterLogged.get().booleanValue()) {
-                lllllllllllllllllllIIlIIlIIlIlll = lllllllllllllllllllIIlIIlIIlIlII.blockPosition.get().booleanValue() ? String.format("%s %s[%d, %d, %d]", lllllllllllllllllllIIlIIlIIllIIl, lllllllllllllllllllIIlIIlIIlIlII.mc.field_1687.method_8316(lllllllllllllllllllIIlIIlIIllIII).method_15767((class_3494)class_3486.field_15517) ? "(Waterlogged) " : "", lllllllllllllllllllIIlIIlIIllIII.method_10263(), lllllllllllllllllllIIlIIlIIllIII.method_10264(), lllllllllllllllllllIIlIIlIIllIII.method_10260()) : lllllllllllllllllllIIlIIlIIllIIl;
+        if (this.mc.field_1765.method_17783() == class_239.class_240.field_1332) {
+            String string;
+            String string2 = this.mc.field_1687.method_8320(((class_3965)this.mc.field_1765).method_17777()).method_26204().method_9518().getString();
+            class_2338 class_23382 = ((class_3965)this.mc.field_1765).method_17777();
+            String string3 = this.blockPosition.get().booleanValue() ? String.format("%s [%d, %d, %d]", string2, class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) : (string = string2);
+            if (this.waterLogged.get().booleanValue()) {
+                string = this.blockPosition.get().booleanValue() ? String.format("%s %s[%d, %d, %d]", string2, this.mc.field_1687.method_8316(class_23382).method_15767((class_3494)class_3486.field_15517) ? "(Waterlogged) " : "", class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) : string2;
             }
-            return lllllllllllllllllllIIlIIlIIlIlll;
+            return string;
         }
-        if (lllllllllllllllllllIIlIIlIIlIlII.mc.field_1765.method_17783() == class_239.class_240.field_1331) {
-            String lllllllllllllllllllIIlIIlIIlIllI = ((class_3966)lllllllllllllllllllIIlIIlIIlIlII.mc.field_1765).method_17782().method_5476().getString();
-            class_243 lllllllllllllllllllIIlIIlIIlIlIl = lllllllllllllllllllIIlIIlIIlIlII.mc.field_1765.method_17784();
-            return lllllllllllllllllllIIlIIlIIlIlII.entityPosition.get().booleanValue() ? String.format("%s [%d, %d, %d]", lllllllllllllllllllIIlIIlIIlIllI, (int)lllllllllllllllllllIIlIIlIIlIlIl.field_1352, (int)lllllllllllllllllllIIlIIlIIlIlIl.field_1351, (int)lllllllllllllllllllIIlIIlIIlIlIl.field_1350) : lllllllllllllllllllIIlIIlIIlIllI;
+        if (this.mc.field_1765.method_17783() == class_239.class_240.field_1331) {
+            String string = ((class_3966)this.mc.field_1765).method_17782().method_5476().getString();
+            class_243 class_2432 = this.mc.field_1765.method_17784();
+            return this.entityPosition.get().booleanValue() ? String.format("%s [%d, %d, %d]", string, (int)class_2432.field_1352, (int)class_2432.field_1351, (int)class_2432.field_1350) : string;
         }
         return "";
     }
 
-    public LookingAtHud(HUD lllllllllllllllllllIIlIIlIlIIIII) {
-        super(lllllllllllllllllllIIlIIlIlIIIII, "looking-at", "Displays what entity or block you are looking at.", "Looking At: ");
-        LookingAtHud lllllllllllllllllllIIlIIlIlIIIIl;
-        lllllllllllllllllllIIlIIlIlIIIIl.sgGeneral = lllllllllllllllllllIIlIIlIlIIIIl.settings.getDefaultGroup();
-        lllllllllllllllllllIIlIIlIlIIIIl.blockPosition = lllllllllllllllllllIIlIIlIlIIIIl.sgGeneral.add(new BoolSetting.Builder().name("block-position").description("Displays block's position.").defaultValue(true).build());
-        lllllllllllllllllllIIlIIlIlIIIIl.entityPosition = lllllllllllllllllllIIlIIlIlIIIIl.sgGeneral.add(new BoolSetting.Builder().name("entity-position").description("Displays entity's position.").defaultValue(true).build());
-        lllllllllllllllllllIIlIIlIlIIIIl.waterLogged = lllllllllllllllllllIIlIIlIlIIIIl.sgGeneral.add(new BoolSetting.Builder().name("show-waterlogged-status").description("Displays if a block is waterlogged or not").defaultValue(true).build());
+    public LookingAtHud(HUD hUD) {
+        super(hUD, "looking-at", "Displays what entity or block you are looking at.", "Looking At: ");
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.blockPosition = this.sgGeneral.add(new BoolSetting.Builder().name("block-position").description("Displays block's position.").defaultValue(true).build());
+        this.entityPosition = this.sgGeneral.add(new BoolSetting.Builder().name("entity-position").description("Displays entity's position.").defaultValue(true).build());
+        this.waterLogged = this.sgGeneral.add(new BoolSetting.Builder().name("show-waterlogged-status").description("Displays if a block is waterlogged or not").defaultValue(true).build());
     }
 }
 

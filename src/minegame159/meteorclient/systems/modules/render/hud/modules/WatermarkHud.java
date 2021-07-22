@@ -8,9 +8,8 @@ import minegame159.meteorclient.systems.modules.render.hud.modules.DoubleTextHud
 
 public class WatermarkHud
 extends DoubleTextHudElement {
-    public WatermarkHud(HUD llIIllIIllIlIll) {
-        super(llIIllIIllIlIll, "watermark", "Displays a BedTrap watermark.", "BedTrap ");
-        WatermarkHud llIIllIIllIlllI;
+    public WatermarkHud(HUD hUD) {
+        super(hUD, "watermark", "Displays a BedTrap watermark.", "BedTrap ");
     }
 
     @Override

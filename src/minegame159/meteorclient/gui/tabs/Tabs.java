@@ -16,7 +16,7 @@ import minegame159.meteorclient.gui.tabs.builtin.ModulesTab;
 import minegame159.meteorclient.gui.tabs.builtin.ProfilesTab;
 
 public class Tabs {
-    private static final /* synthetic */ List<Tab> tabs;
+    private static final List<Tab> tabs = new ArrayList<Tab>();
 
     public static void init() {
         Tabs.add(new ModulesTab());
@@ -29,20 +29,12 @@ public class Tabs {
         Tabs.add(new BaritoneTab());
     }
 
-    public Tabs() {
-        Tabs lllllllllllllllllllIIIIlIIlIlIlI;
-    }
-
     public static List<Tab> get() {
         return tabs;
     }
 
-    static {
-        tabs = new ArrayList<Tab>();
-    }
-
-    public static void add(Tab lllllllllllllllllllIIIIlIIlIIlll) {
-        tabs.add(lllllllllllllllllllIIIIlIIlIIlll);
+    public static void add(Tab tab) {
+        tabs.add(tab);
     }
 }
 

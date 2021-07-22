@@ -24,22 +24,21 @@ import net.minecraft.class_2520;
 
 public class ModuleListSetting
 extends Setting<List<Module>> {
-    private static /* synthetic */ List<String> suggestions;
+    private static List<String> suggestions;
 
     @Override
     public class_2487 toTag() {
-        ModuleListSetting lIllIlIllllIlIl;
-        class_2487 lIllIlIllllIlII = lIllIlIllllIlIl.saveGeneral();
-        class_2499 lIllIlIllllIIll = new class_2499();
-        for (Module lIllIlIllllIllI : (List)lIllIlIllllIlIl.get()) {
-            lIllIlIllllIIll.add((Object)class_2519.method_23256((String)lIllIlIllllIllI.name));
+        class_2487 class_24872 = this.saveGeneral();
+        class_2499 class_24992 = new class_2499();
+        for (Module module : (List)this.get()) {
+            class_24992.add((Object)class_2519.method_23256((String)module.name));
         }
-        lIllIlIllllIlII.method_10566("modules", (class_2520)lIllIlIllllIIll);
-        return lIllIlIllllIlII;
+        class_24872.method_10566("modules", (class_2520)class_24992);
+        return class_24872;
     }
 
     @Override
-    protected boolean isValueValid(List<Module> lIllIllIIIIIIlI) {
+    protected boolean isValueValid(List<Module> list) {
         return true;
     }
 
@@ -47,112 +46,113 @@ extends Setting<List<Module>> {
     public List<String> getSuggestions() {
         if (suggestions == null) {
             suggestions = new ArrayList<String>(Modules.get().getAll().size());
-            for (Module lIllIlIllllllll : Modules.get().getAll()) {
-                suggestions.add(lIllIlIllllllll.name);
+            for (Module module : Modules.get().getAll()) {
+                suggestions.add(module.name);
             }
         }
         return suggestions;
     }
 
     @Override
-    protected List<Module> parseImpl(String lIllIllIIIIlIll) {
-        String[] lIllIllIIIIllIl = lIllIllIIIIlIll.split(",");
-        ArrayList<Module> lIllIllIIIIllII = new ArrayList<Module>(lIllIllIIIIllIl.length);
+    protected List<Module> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        ArrayList<Module> arrayList = new ArrayList<Module>(arrstring.length);
         try {
-            for (String lIllIllIIIlIIII : lIllIllIIIIllIl) {
-                Module lIllIllIIIlIIIl = Modules.get().get(lIllIllIIIlIIII.trim());
-                if (lIllIllIIIlIIIl == null) continue;
-                lIllIllIIIIllII.add(lIllIllIIIlIIIl);
+            for (String string2 : arrstring) {
+                Module module = Modules.get().get(string2.trim());
+                if (module == null) continue;
+                arrayList.add(module);
+                if (!false) continue;
+                return null;
             }
         }
-        catch (Exception lIllIllIIIIlIII) {
+        catch (Exception exception) {
             // empty catch block
         }
-        return lIllIllIIIIllII;
+        return arrayList;
     }
 
     @Override
-    public List<Module> fromTag(class_2487 lIllIlIlllIIIIl) {
-        ModuleListSetting lIllIlIlllIIlIl;
-        ((List)lIllIlIlllIIlIl.get()).clear();
-        class_2499 lIllIlIlllIIIll = lIllIlIlllIIIIl.method_10554("modules", 8);
-        for (class_2520 lIllIlIlllIIllI : lIllIlIlllIIIll) {
-            Module lIllIlIlllIIlll = Modules.get().get(lIllIlIlllIIllI.method_10714());
-            if (lIllIlIlllIIlll == null) continue;
-            ((List)lIllIlIlllIIlIl.get()).add(lIllIlIlllIIlll);
-        }
-        lIllIlIlllIIlIl.changed();
-        return (List)lIllIlIlllIIlIl.get();
-    }
-
-    public ModuleListSetting(String lIllIllIIlIllII, String lIllIllIIlIIlII, List<Module> lIllIllIIlIIIll, Consumer<List<Module>> lIllIllIIlIIIlI, Consumer<Setting<List<Module>>> lIllIllIIlIlIII, IVisible lIllIllIIlIIIII) {
-        super(lIllIllIIlIllII, lIllIllIIlIIlII, lIllIllIIlIIIll, lIllIllIIlIIIlI, lIllIllIIlIlIII, lIllIllIIlIIIII);
-        ModuleListSetting lIllIllIIlIIllI;
-        lIllIllIIlIIllI.value = new ArrayList<Module>(lIllIllIIlIIIll);
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
     }
 
     @Override
-    public void reset(boolean lIllIllIIIlllII) {
-        ModuleListSetting lIllIllIIIllIll;
-        lIllIllIIIllIll.value = new ArrayList((Collection)lIllIllIIIllIll.defaultValue);
-        if (lIllIllIIIlllII) {
-            lIllIllIIIllIll.changed();
+    public List<Module> fromTag(class_2487 class_24872) {
+        ((List)this.get()).clear();
+        class_2499 class_24992 = class_24872.method_10554("modules", 8);
+        for (class_2520 class_25202 : class_24992) {
+            Module module = Modules.get().get(class_25202.method_10714());
+            if (module == null) continue;
+            ((List)this.get()).add(module);
         }
+        this.changed();
+        return (List)this.get();
+    }
+
+    public ModuleListSetting(String string, String string2, List<Module> list, Consumer<List<Module>> consumer, Consumer<Setting<List<Module>>> consumer2, IVisible iVisible) {
+        super(string, string2, list, consumer, consumer2, iVisible);
+        this.value = new ArrayList<Module>(list);
+    }
+
+    @Override
+    public void reset(boolean bl) {
+        this.value = new ArrayList((Collection)this.defaultValue);
+        if (bl) {
+            this.changed();
+        }
+    }
+
+    @Override
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((List)object);
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     public static class Builder {
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ Consumer<List<Module>> onChanged;
-        private /* synthetic */ String description;
-        private /* synthetic */ List<Module> defaultValue;
-        private /* synthetic */ String name;
-        private /* synthetic */ Consumer<Setting<List<Module>>> onModuleActivated;
+        private IVisible visible;
+        private Consumer<List<Module>> onChanged;
+        private String description = "";
+        private List<Module> defaultValue;
+        private String name = "undefined";
+        private Consumer<Setting<List<Module>>> onModuleActivated;
 
-        public Builder defaultValue(List<Module> lllIIIIIllllIll) {
-            Builder lllIIIIIlllllII;
-            lllIIIIIlllllII.defaultValue = lllIIIIIllllIll;
-            return lllIIIIIlllllII;
+        public Builder defaultValue(List<Module> list) {
+            this.defaultValue = list;
+            return this;
         }
 
-        public Builder name(String lllIIIIlIIIlIIl) {
-            Builder lllIIIIlIIIlIlI;
-            lllIIIIlIIIlIlI.name = lllIIIIlIIIlIIl;
-            return lllIIIIlIIIlIlI;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder onChanged(Consumer<List<Module>> lllIIIIIlllIlIl) {
-            Builder lllIIIIIlllIllI;
-            lllIIIIIlllIllI.onChanged = lllIIIIIlllIlIl;
-            return lllIIIIIlllIllI;
+        public Builder onChanged(Consumer<List<Module>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<List<Module>>> lllIIIIIlllIIIl) {
-            Builder lllIIIIIlllIIII;
-            lllIIIIIlllIIII.onModuleActivated = lllIIIIIlllIIIl;
-            return lllIIIIIlllIIII;
+        public Builder onModuleActivated(Consumer<Setting<List<Module>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder description(String lllIIIIlIIIIIIl) {
-            Builder lllIIIIlIIIIIlI;
-            lllIIIIlIIIIIlI.description = lllIIIIlIIIIIIl;
-            return lllIIIIlIIIIIlI;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder visible(IVisible lllIIIIIllIlIll) {
-            Builder lllIIIIIllIlIlI;
-            lllIIIIIllIlIlI.visible = lllIIIIIllIlIll;
-            return lllIIIIIllIlIlI;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
         public ModuleListSetting build() {
-            Builder lllIIIIIllIIllI;
-            return new ModuleListSetting(lllIIIIIllIIllI.name, lllIIIIIllIIllI.description, lllIIIIIllIIllI.defaultValue, lllIIIIIllIIllI.onChanged, lllIIIIIllIIllI.onModuleActivated, lllIIIIIllIIllI.visible);
-        }
-
-        public Builder() {
-            Builder lllIIIIlIIIllIl;
-            lllIIIIlIIIllIl.name = "undefined";
-            lllIIIIlIIIllIl.description = "";
+            return new ModuleListSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
     }
 }

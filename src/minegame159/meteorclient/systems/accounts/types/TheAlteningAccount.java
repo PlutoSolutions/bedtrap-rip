@@ -30,62 +30,57 @@ import net.minecraft.class_320;
 
 public class TheAlteningAccount
 extends Account<TheAlteningAccount> {
-    private static final /* synthetic */ String AUTH;
-    private static final /* synthetic */ Gson GSON;
-    private static final /* synthetic */ String ACCOUNT;
-    private static final /* synthetic */ String SERVICES;
-    private static final /* synthetic */ String SESSION;
+    private static final String AUTH = "http://authserver.thealtening.com";
+    private static final Gson GSON;
+    private static final String ACCOUNT;
+    private static final String SERVICES;
+    private static final String SESSION;
 
     private YggdrasilUserAuthentication getAuth() {
-        TheAlteningAccount llllIIIlllIIll;
-        YggdrasilUserAuthentication llllIIIlllIlIl = (YggdrasilUserAuthentication)new YggdrasilAuthenticationService(((MinecraftClientAccessor)Utils.mc).getProxy(), "", Environment.create((String)"http://authserver.thealtening.com", (String)"https://api.mojang.com", (String)"http://sessionserver.thealtening.com", (String)"https://api.minecraftservices.com", (String)"The Altening")).createUserAuthentication(Agent.MINECRAFT);
-        llllIIIlllIlIl.setUsername(llllIIIlllIIll.name);
-        llllIIIlllIlIl.setPassword("Meteor on Crack!");
-        return llllIIIlllIlIl;
+        YggdrasilUserAuthentication yggdrasilUserAuthentication = (YggdrasilUserAuthentication)new YggdrasilAuthenticationService(((MinecraftClientAccessor)Utils.mc).getProxy(), "", Environment.create((String)"http://authserver.thealtening.com", (String)"https://api.mojang.com", (String)"http://sessionserver.thealtening.com", (String)"https://api.minecraftservices.com", (String)"The Altening")).createUserAuthentication(Agent.MINECRAFT);
+        yggdrasilUserAuthentication.setUsername(this.name);
+        yggdrasilUserAuthentication.setPassword("Meteor on Crack!");
+        return yggdrasilUserAuthentication;
     }
 
-    public TheAlteningAccount(String llllIIlIlIIIlI) {
-        super(AccountType.TheAltening, llllIIlIlIIIlI);
-        TheAlteningAccount llllIIlIlIIIIl;
+    public TheAlteningAccount(String string) {
+        super(AccountType.TheAltening, string);
     }
 
     @Override
     public boolean fetchInfo() {
-        TheAlteningAccount llllIIlIIllIll;
-        YggdrasilUserAuthentication llllIIlIIllIlI = llllIIlIIllIll.getAuth();
+        YggdrasilUserAuthentication yggdrasilUserAuthentication = this.getAuth();
         try {
-            llllIIlIIllIlI.logIn();
-            llllIIlIIllIll.cache.username = llllIIlIIllIlI.getSelectedProfile().getName();
-            llllIIlIIllIll.cache.uuid = llllIIlIIllIlI.getSelectedProfile().getId().toString();
+            yggdrasilUserAuthentication.logIn();
+            this.cache.username = yggdrasilUserAuthentication.getSelectedProfile().getName();
+            this.cache.uuid = yggdrasilUserAuthentication.getSelectedProfile().getId().toString();
             return true;
         }
-        catch (AuthenticationException llllIIlIIlllII) {
+        catch (AuthenticationException authenticationException) {
             return false;
         }
     }
 
     @Override
     public boolean login() {
-        TheAlteningAccount llllIIIllllllI;
-        YggdrasilMinecraftSessionService llllIIlIIIIIlI = (YggdrasilMinecraftSessionService)Utils.mc.method_1495();
-        AccountUtils.setBaseUrl(llllIIlIIIIIlI, "http://sessionserver.thealtening.com/session/minecraft/");
-        AccountUtils.setJoinUrl(llllIIlIIIIIlI, "http://sessionserver.thealtening.com/session/minecraft/join");
-        AccountUtils.setCheckUrl(llllIIlIIIIIlI, "http://sessionserver.thealtening.com/session/minecraft/hasJoined");
-        YggdrasilUserAuthentication llllIIlIIIIIII = llllIIIllllllI.getAuth();
+        YggdrasilMinecraftSessionService yggdrasilMinecraftSessionService = (YggdrasilMinecraftSessionService)Utils.mc.method_1495();
+        AccountUtils.setBaseUrl(yggdrasilMinecraftSessionService, "http://sessionserver.thealtening.com/session/minecraft/");
+        AccountUtils.setJoinUrl(yggdrasilMinecraftSessionService, "http://sessionserver.thealtening.com/session/minecraft/join");
+        AccountUtils.setCheckUrl(yggdrasilMinecraftSessionService, "http://sessionserver.thealtening.com/session/minecraft/hasJoined");
+        YggdrasilUserAuthentication yggdrasilUserAuthentication = this.getAuth();
         try {
-            llllIIlIIIIIII.logIn();
-            llllIIIllllllI.setSession(new class_320(llllIIlIIIIIII.getSelectedProfile().getName(), llllIIlIIIIIII.getSelectedProfile().getId().toString(), llllIIlIIIIIII.getAuthenticatedToken(), "mojang"));
-            llllIIIllllllI.cache.username = llllIIlIIIIIII.getSelectedProfile().getName();
+            yggdrasilUserAuthentication.logIn();
+            this.setSession(new class_320(yggdrasilUserAuthentication.getSelectedProfile().getName(), yggdrasilUserAuthentication.getSelectedProfile().getId().toString(), yggdrasilUserAuthentication.getAuthenticatedToken(), "mojang"));
+            this.cache.username = yggdrasilUserAuthentication.getSelectedProfile().getName();
             return true;
         }
-        catch (AuthenticationException llllIIlIIIIllI) {
+        catch (AuthenticationException authenticationException) {
             MeteorClient.LOG.error("Failed to login with TheAltening.");
             return false;
         }
     }
 
     static {
-        AUTH = "http://authserver.thealtening.com";
         ACCOUNT = "https://api.mojang.com";
         SERVICES = "https://api.minecraftservices.com";
         SESSION = "http://sessionserver.thealtening.com";
@@ -95,10 +90,9 @@ extends Account<TheAlteningAccount> {
     @Override
     public boolean fetchHead() {
         try {
-            TheAlteningAccount llllIIlIIlIIlI;
-            return llllIIlIIlIIlI.cache.makeHead(String.valueOf(new StringBuilder().append("https://www.mc-heads.net/avatar/").append(llllIIlIIlIIlI.cache.uuid).append("/8")));
+            return this.cache.makeHead(String.valueOf(new StringBuilder().append("https://www.mc-heads.net/avatar/").append(this.cache.uuid).append("/8")));
         }
-        catch (Exception llllIIlIIlIlII) {
+        catch (Exception exception) {
             return false;
         }
     }

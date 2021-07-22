@@ -20,19 +20,27 @@ import net.minecraft.class_3414;
 public class SoundEventListSettingScreen
 extends LeftRightListSettingScreen<class_3414> {
     @Override
-    protected WWidget getValueWidget(class_3414 llllllllllllllllllIIlllIIlllllIl) {
-        SoundEventListSettingScreen llllllllllllllllllIIlllIIlllllII;
-        return llllllllllllllllllIIlllIIlllllII.theme.label(llllllllllllllllllIIlllIIlllllII.getValueName(llllllllllllllllllIIlllIIlllllIl));
+    protected WWidget getValueWidget(Object object) {
+        return this.getValueWidget((class_3414)object);
     }
 
     @Override
-    protected String getValueName(class_3414 llllllllllllllllllIIlllIIllllIII) {
-        return Names.getSoundName(llllllllllllllllllIIlllIIllllIII.method_14833());
+    protected String getValueName(Object object) {
+        return this.getValueName((class_3414)object);
     }
 
-    public SoundEventListSettingScreen(GuiTheme llllllllllllllllllIIlllIlIIIIIlI, Setting<List<class_3414>> llllllllllllllllllIIlllIlIIIIIIl) {
-        super(llllllllllllllllllIIlllIlIIIIIlI, "Select sounds", llllllllllllllllllIIlllIlIIIIIIl, (Collection)llllllllllllllllllIIlllIlIIIIIIl.get(), class_2378.field_11156);
-        SoundEventListSettingScreen llllllllllllllllllIIlllIlIIIIllI;
+    @Override
+    protected WWidget getValueWidget(class_3414 class_34142) {
+        return this.theme.label(this.getValueName(class_34142));
+    }
+
+    @Override
+    protected String getValueName(class_3414 class_34142) {
+        return Names.getSoundName(class_34142.method_14833());
+    }
+
+    public SoundEventListSettingScreen(GuiTheme guiTheme, Setting<List<class_3414>> setting) {
+        super(guiTheme, "Select sounds", setting, (Collection)setting.get(), class_2378.field_11156);
     }
 }
 

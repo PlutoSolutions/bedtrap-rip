@@ -34,7 +34,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
@@ -46,7 +45,6 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
@@ -57,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -64,524 +63,530 @@ import java.util.WeakHashMap;
 
 public final class Native
 implements Version {
-    private static final /* synthetic */ int CVT_BOOLEAN;
-    private static final /* synthetic */ int TYPE_SIZE_T;
-    private static final /* synthetic */ ThreadLocal<Memory> nativeThreadTerminationFlag;
-    private static final /* synthetic */ int CVT_CALLBACK;
-    static final /* synthetic */ int CB_OPTION_DIRECT;
-    private static final /* synthetic */ int CVT_POINTER;
-    private static final /* synthetic */ Object finalizer;
-    private static final /* synthetic */ int TYPE_VOIDP;
-    static final /* synthetic */ int MAX_ALIGNMENT;
-    private static final /* synthetic */ int CVT_DEFAULT;
-    private static final /* synthetic */ int CVT_UNSUPPORTED;
-    private static final /* synthetic */ int TYPE_BOOL;
-    private static final /* synthetic */ int CVT_NATIVE_MAPPED_WSTRING;
-    private static final /* synthetic */ int CVT_NATIVE_MAPPED_STRING;
-    private static final /* synthetic */ int CVT_FLOAT;
-    private static final /* synthetic */ int CVT_TYPE_MAPPER;
-    public static /* synthetic */ boolean DEBUG_LOAD;
-    private static final /* synthetic */ Map<Class<?>, Reference<?>> libraries;
-    private static final /* synthetic */ int TYPE_WCHAR_T;
-    private static final /* synthetic */ int CVT_BUFFER;
-    public static final /* synthetic */ int BOOL_SIZE;
-    private static final /* synthetic */ int CVT_WSTRING;
-    private static final /* synthetic */ int CVT_INTEGER_TYPE;
-    static final /* synthetic */ int MAX_PADDING;
-    private static final /* synthetic */ String _OPTION_ENCLOSING_LIBRARY;
-    private static final /* synthetic */ int CVT_TYPE_MAPPER_WSTRING;
-    private static final /* synthetic */ Callback.UncaughtExceptionHandler DEFAULT_HANDLER;
-    private static final /* synthetic */ int CVT_ARRAY_INT;
-    private static final /* synthetic */ int CVT_STRUCTURE_BYVAL;
-    private static final /* synthetic */ Map<Class<?>, Map<String, Object>> typeOptions;
-    public static final /* synthetic */ String DEFAULT_ENCODING;
-    private static final /* synthetic */ Map<Thread, Pointer> nativeThreads;
-    private static final /* synthetic */ int CVT_ARRAY_CHAR;
-    public static final /* synthetic */ int POINTER_SIZE;
-    static final /* synthetic */ int CB_HAS_INITIALIZER;
-    private static final /* synthetic */ int CVT_ARRAY_BOOLEAN;
-    private static final /* synthetic */ int CVT_NATIVE_MAPPED;
-    public static /* synthetic */ boolean DEBUG_JNA_LOAD;
-    private static final /* synthetic */ int CVT_ARRAY_BYTE;
-    public static final /* synthetic */ int SIZE_T_SIZE;
-    static /* synthetic */ String jnidispatchPath;
-    static final /* synthetic */ String JNA_TMPLIB_PREFIX;
-    private static /* synthetic */ Callback.UncaughtExceptionHandler callbackExceptionHandler;
-    public static final /* synthetic */ int LONG_SIZE;
-    private static /* synthetic */ Map<Class<?>, long[]> registeredClasses;
-    private static final /* synthetic */ int CVT_STRING;
-    private static final /* synthetic */ int CVT_ARRAY_LONG;
-    private static /* synthetic */ Map<Class<?>, NativeLibrary> registeredLibraries;
-    private static final /* synthetic */ int CVT_STRUCTURE;
-    private static final /* synthetic */ int CVT_ARRAY_FLOAT;
-    public static final /* synthetic */ int WCHAR_SIZE;
-    private static final /* synthetic */ int CVT_ARRAY_SHORT;
-    private static final /* synthetic */ int CVT_POINTER_TYPE;
-    private static final /* synthetic */ int TYPE_LONG;
-    private static final /* synthetic */ int CVT_TYPE_MAPPER_STRING;
-    static final /* synthetic */ int CB_OPTION_IN_DLL;
-    private static final /* synthetic */ int CVT_ARRAY_DOUBLE;
+    private static final int CVT_BOOLEAN;
+    private static final int TYPE_SIZE_T;
+    private static final ThreadLocal<Memory> nativeThreadTerminationFlag;
+    private static final int CVT_CALLBACK;
+    static final int CB_OPTION_DIRECT;
+    private static final int CVT_POINTER;
+    private static final Object finalizer;
+    private static final int TYPE_VOIDP;
+    static final int MAX_ALIGNMENT;
+    private static final int CVT_DEFAULT;
+    private static final int CVT_UNSUPPORTED;
+    private static final int TYPE_BOOL;
+    private static final int CVT_NATIVE_MAPPED_WSTRING;
+    private static final int CVT_NATIVE_MAPPED_STRING;
+    private static final int CVT_FLOAT;
+    private static final int CVT_TYPE_MAPPER;
+    public static boolean DEBUG_LOAD;
+    private static final Map<Class<?>, Reference<?>> libraries;
+    private static final int TYPE_WCHAR_T;
+    private static final int CVT_BUFFER;
+    public static final int BOOL_SIZE;
+    private static final int CVT_WSTRING;
+    private static final int CVT_INTEGER_TYPE;
+    static final int MAX_PADDING;
+    private static final String _OPTION_ENCLOSING_LIBRARY;
+    private static final int CVT_TYPE_MAPPER_WSTRING;
+    private static final Callback.UncaughtExceptionHandler DEFAULT_HANDLER;
+    private static final int CVT_ARRAY_INT;
+    private static final int CVT_STRUCTURE_BYVAL;
+    private static final Map<Class<?>, Map<String, Object>> typeOptions;
+    public static final String DEFAULT_ENCODING;
+    private static final Map<Thread, Pointer> nativeThreads;
+    private static final int CVT_ARRAY_CHAR;
+    public static final int POINTER_SIZE;
+    static final int CB_HAS_INITIALIZER;
+    private static final int CVT_ARRAY_BOOLEAN;
+    private static final int CVT_NATIVE_MAPPED;
+    public static boolean DEBUG_JNA_LOAD;
+    private static final int CVT_ARRAY_BYTE;
+    public static final int SIZE_T_SIZE;
+    static String jnidispatchPath;
+    static final String JNA_TMPLIB_PREFIX;
+    private static Callback.UncaughtExceptionHandler callbackExceptionHandler;
+    public static final int LONG_SIZE;
+    private static Map<Class<?>, long[]> registeredClasses;
+    private static final int CVT_STRING;
+    private static final int CVT_ARRAY_LONG;
+    private static Map<Class<?>, NativeLibrary> registeredLibraries;
+    private static final int CVT_STRUCTURE;
+    private static final int CVT_ARRAY_FLOAT;
+    public static final int WCHAR_SIZE;
+    private static final int CVT_ARRAY_SHORT;
+    private static final int CVT_POINTER_TYPE;
+    private static final int TYPE_LONG;
+    private static final int CVT_TYPE_MAPPER_STRING;
+    static final int CB_OPTION_IN_DLL;
+    private static final int CVT_ARRAY_DOUBLE;
 
-    static void markTemporaryFile(File llllllllllllllllIlIllIllIIllIIII) {
+    static void markTemporaryFile(File file) {
         try {
-            File llllllllllllllllIlIllIllIIllIIll = new File(llllllllllllllllIlIllIllIIllIIII.getParentFile(), String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIllIIllIIII.getName()).append(".x")));
-            llllllllllllllllIlIllIllIIllIIll.createNewFile();
+            File file2 = new File(file.getParentFile(), String.valueOf(new StringBuilder().append(file.getName()).append(".x")));
+            file2.createNewFile();
         }
-        catch (IOException llllllllllllllllIlIllIllIIllIIlI) {
-            llllllllllllllllIlIllIllIIllIIlI.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
     }
 
-    static /* bridge */ native /* synthetic */ byte[] getStringBytes(Pointer var0, long var1, long var3);
+    static native byte[] getStringBytes(Pointer var0, long var1, long var3);
 
-    public static long getWindowID(Window llllllllllllllllIlIlllIIlIIIlIII) throws HeadlessException {
-        return AWT.getWindowID(llllllllllllllllIlIlllIIlIIIlIII);
+    public static long getWindowID(Window window) throws HeadlessException {
+        return AWT.getWindowID(window);
     }
 
-    static String getSignature(Class<?> llllllllllllllllIlIllIlIlIlllIll) {
-        if (llllllllllllllllIlIllIlIlIlllIll.isArray()) {
-            return String.valueOf(new StringBuilder().append("[").append(Native.getSignature(llllllllllllllllIlIllIlIlIlllIll.getComponentType())));
+    static String getSignature(Class<?> class_) {
+        if (class_.isArray()) {
+            return String.valueOf(new StringBuilder().append("[").append(Native.getSignature(class_.getComponentType())));
         }
-        if (llllllllllllllllIlIllIlIlIlllIll.isPrimitive()) {
-            if (llllllllllllllllIlIllIlIlIlllIll == Void.TYPE) {
+        if (class_.isPrimitive()) {
+            if (class_ == Void.TYPE) {
                 return "V";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Boolean.TYPE) {
+            if (class_ == Boolean.TYPE) {
                 return "Z";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Byte.TYPE) {
+            if (class_ == Byte.TYPE) {
                 return "B";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Short.TYPE) {
+            if (class_ == Short.TYPE) {
                 return "S";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Character.TYPE) {
+            if (class_ == Character.TYPE) {
                 return "C";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Integer.TYPE) {
+            if (class_ == Integer.TYPE) {
                 return "I";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Long.TYPE) {
+            if (class_ == Long.TYPE) {
                 return "J";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Float.TYPE) {
+            if (class_ == Float.TYPE) {
                 return "F";
             }
-            if (llllllllllllllllIlIllIlIlIlllIll == Double.TYPE) {
+            if (class_ == Double.TYPE) {
                 return "D";
             }
         }
-        return String.valueOf(new StringBuilder().append("L").append(Native.replace(".", "/", llllllllllllllllIlIllIlIlIlllIll.getName())).append(";"));
+        return String.valueOf(new StringBuilder().append("L").append(Native.replace(".", "/", class_.getName())).append(";"));
     }
 
-    private static /* bridge */ native /* synthetic */ void setDetachState(boolean var0, long var1);
+    private static native void setDetachState(boolean var0, long var1);
 
     public static String getDefaultStringEncoding() {
         return System.getProperty("jna.encoding", DEFAULT_ENCODING);
     }
 
-    static /* bridge */ native /* synthetic */ int initialize_ffi_type(long var0);
+    static native int initialize_ffi_type(long var0);
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
     private static void unregisterAll() {
-        Map<Class<?>, long[]> llllllllllllllllIlIllIlIllIlIIIl = registeredClasses;
-        synchronized (llllllllllllllllIlIllIlIllIlIIIl) {
-            for (Map.Entry<Class<?>, long[]> llllllllllllllllIlIllIlIllIlIIlI : registeredClasses.entrySet()) {
-                Native.unregister(llllllllllllllllIlIllIlIllIlIIlI.getKey(), llllllllllllllllIlIllIlIllIlIIlI.getValue());
+        Map<Class<?>, long[]> map = registeredClasses;
+        synchronized (map) {
+            Iterator<Map.Entry<Class<?>, long[]>> iterator = registeredClasses.entrySet().iterator();
+            while (true) {
+                if (!iterator.hasNext()) {
+                    registeredClasses.clear();
+                    return;
+                }
+                Map.Entry<Class<?>, long[]> entry = iterator.next();
+                Native.unregister(entry.getKey(), entry.getValue());
             }
-            registeredClasses.clear();
         }
     }
 
-    public static /* bridge */ native /* synthetic */ void free(long var0);
+    public static native void free(long var0);
 
-    private static Class<?> nativeType(Class<?> llllllllllllllllIlIllIIlIIIIllIl) {
-        return NativeMappedConverter.getInstance(llllllllllllllllIlIllIIlIIIIllIl).nativeType();
+    private static Class<?> nativeType(Class<?> class_) {
+        return NativeMappedConverter.getInstance(class_).nativeType();
     }
 
-    public static Pointer getWindowPointer(Window llllllllllllllllIlIlllIIlIIIIIlI) throws HeadlessException {
-        return new Pointer(AWT.getWindowID(llllllllllllllllIlIlllIIlIIIIIlI));
+    public static Pointer getWindowPointer(Window window) throws HeadlessException {
+        return new Pointer(AWT.getWindowID(window));
     }
 
     static Class<?> getCallingClass() {
-        Class<?>[] llllllllllllllllIlIllIlIllIllllI = new SecurityManager(){
+        Class<?>[] arrclass = new SecurityManager(){
 
             @Override
             public Class<?>[] getClassContext() {
-                6 llIIllIIIllIlIl;
                 return super.getClassContext();
             }
-            {
-                6 llIIllIIIlllIII;
-            }
         }.getClassContext();
-        if (llllllllllllllllIlIllIlIllIllllI == null) {
+        if (arrclass == null) {
             throw new IllegalStateException("The SecurityManager implementation on this platform is broken; you must explicitly provide the class to register");
         }
-        if (llllllllllllllllIlIllIlIllIllllI.length < 4) {
+        if (arrclass.length < 4) {
             throw new IllegalStateException("This method must be called from the static initializer of a class");
         }
-        return llllllllllllllllIlIllIlIllIllllI[3];
+        return arrclass[3];
     }
 
-    static /* bridge */ native /* synthetic */ long invokeLong(Function var0, long var1, int var3, Object[] var4);
+    static native long invokeLong(Function var0, long var1, int var3, Object[] var4);
 
-    public static Pointer getDirectBufferPointer(Buffer llllllllllllllllIlIlllIIIllllIIl) {
-        long llllllllllllllllIlIlllIIIllllIlI = Native._getDirectBufferPointer(llllllllllllllllIlIlllIIIllllIIl);
-        return llllllllllllllllIlIlllIIIllllIlI == 0L ? null : new Pointer(llllllllllllllllIlIlllIIIllllIlI);
+    public static Pointer getDirectBufferPointer(Buffer buffer) {
+        long l = Native._getDirectBufferPointer(buffer);
+        return l == 0L ? null : new Pointer(l);
     }
 
-    static /* bridge */ native /* synthetic */ void setWideString(Pointer var0, long var1, long var3, String var5);
+    static native void setWideString(Pointer var0, long var1, long var3, String var5);
 
-    private static /* bridge */ native /* synthetic */ void initIDs();
+    private static native void initIDs();
 
-    public static String getWebStartLibraryPath(String llllllllllllllllIlIllIllIIlllIIl) {
+    public static String getWebStartLibraryPath(String string) {
         if (System.getProperty("javawebstart.version") == null) {
             return null;
         }
         try {
-            ClassLoader llllllllllllllllIlIllIllIIlllllI = Native.class.getClassLoader();
-            Method llllllllllllllllIlIllIllIIllllIl = AccessController.doPrivileged(new PrivilegedAction<Method>(){
+            ClassLoader classLoader = Native.class.getClassLoader();
+            Method method = AccessController.doPrivileged(new PrivilegedAction<Method>(){
+
+                @Override
+                public Object run() {
+                    return this.run();
+                }
 
                 @Override
                 public Method run() {
                     try {
-                        Method lllllllllllllllllllIIlIIIIlllllI = ClassLoader.class.getDeclaredMethod("findLibrary", String.class);
-                        lllllllllllllllllllIIlIIIIlllllI.setAccessible(true);
-                        return lllllllllllllllllllIIlIIIIlllllI;
+                        Method method = ClassLoader.class.getDeclaredMethod("findLibrary", String.class);
+                        method.setAccessible(true);
+                        return method;
                     }
-                    catch (Exception lllllllllllllllllllIIlIIIIllllIl) {
+                    catch (Exception exception) {
                         return null;
                     }
                 }
-                {
-                    4 lllllllllllllllllllIIlIIIlIIIIIl;
-                }
             });
-            String llllllllllllllllIlIllIllIIllllII = (String)llllllllllllllllIlIllIllIIllllIl.invoke(llllllllllllllllIlIllIllIIlllllI, llllllllllllllllIlIllIllIIlllIIl);
-            if (llllllllllllllllIlIllIllIIllllII != null) {
-                return new File(llllllllllllllllIlIllIllIIllllII).getParent();
+            String string2 = (String)method.invoke(classLoader, string);
+            if (string2 != null) {
+                return new File(string2).getParent();
             }
             return null;
         }
-        catch (Exception llllllllllllllllIlIllIllIIlllIll) {
+        catch (Exception exception) {
             return null;
         }
     }
 
-    public static synchronized /* bridge */ native /* synthetic */ boolean isProtected();
+    public static synchronized native boolean isProtected();
 
-    static /* bridge */ native /* synthetic */ double getDouble(Pointer var0, long var1, long var3);
+    static native double getDouble(Pointer var0, long var1, long var3);
 
-    /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     */
-    private static void loadLibraryInstance(Class<?> llllllllllllllllIlIlllIIIIIlIlll) {
-        Map<Class<?>, Reference<?>> llllllllllllllllIlIlllIIIIIlIlIl = libraries;
-        synchronized (llllllllllllllllIlIlllIIIIIlIlIl) {
-            if (llllllllllllllllIlIlllIIIIIlIlll != null && !libraries.containsKey(llllllllllllllllIlIlllIIIIIlIlll)) {
+    private static void loadLibraryInstance(Class<?> class_) {
+        Map<Class<?>, Reference<?>> map = libraries;
+        synchronized (map) {
+            block5: {
+                if (class_ == null || libraries.containsKey(class_)) break block5;
                 try {
-                    Field[] llllllllllllllllIlIlllIIIIIllIIl = llllllllllllllllIlIlllIIIIIlIlll.getFields();
-                    for (int llllllllllllllllIlIlllIIIIIllIlI = 0; llllllllllllllllIlIlllIIIIIllIlI < llllllllllllllllIlIlllIIIIIllIIl.length; ++llllllllllllllllIlIlllIIIIIllIlI) {
-                        Field llllllllllllllllIlIlllIIIIIllIll = llllllllllllllllIlIlllIIIIIllIIl[llllllllllllllllIlIlllIIIIIllIlI];
-                        if (llllllllllllllllIlIlllIIIIIllIll.getType() != llllllllllllllllIlIlllIIIIIlIlll || !Modifier.isStatic(llllllllllllllllIlIlllIIIIIllIll.getModifiers())) continue;
-                        libraries.put(llllllllllllllllIlIlllIIIIIlIlll, new WeakReference<Object>(llllllllllllllllIlIlllIIIIIllIll.get(null)));
+                    Field[] arrfield = class_.getFields();
+                    for (int i = 0; i < arrfield.length; ++i) {
+                        Field field = arrfield[i];
+                        if (field.getType() != class_ || !Modifier.isStatic(field.getModifiers())) continue;
+                        libraries.put(class_, new WeakReference<Object>(field.get(null)));
                         break;
                     }
                 }
-                catch (Exception llllllllllllllllIlIlllIIIIIllIII) {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Could not access instance of ").append(llllllllllllllllIlIlllIIIIIlIlll).append(" (").append(llllllllllllllllIlIlllIIIIIllIII).append(")")));
+                catch (Exception | Throwable throwable) {
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Could not access instance of ").append(class_).append(" (").append(throwable).append(")")));
                 }
             }
         }
     }
 
-    public static List<String> toStringList(char[] llllllllllllllllIlIlllIIIlIlIIII, int llllllllllllllllIlIlllIIIlIIlIIl, int llllllllllllllllIlIlllIIIlIIlIII) {
-        ArrayList<String> llllllllllllllllIlIlllIIIlIIllIl = new ArrayList<String>();
-        int llllllllllllllllIlIlllIIIlIIllII = llllllllllllllllIlIlllIIIlIIlIIl;
-        int llllllllllllllllIlIlllIIIlIIlIll = llllllllllllllllIlIlllIIIlIIlIIl + llllllllllllllllIlIlllIIIlIIlIII;
-        for (int llllllllllllllllIlIlllIIIlIlIIlI = llllllllllllllllIlIlllIIIlIIlIIl; llllllllllllllllIlIlllIIIlIlIIlI < llllllllllllllllIlIlllIIIlIIlIll; ++llllllllllllllllIlIlllIIIlIlIIlI) {
-            if (llllllllllllllllIlIlllIIIlIlIIII[llllllllllllllllIlIlllIIIlIlIIlI] != '\u0000') continue;
-            if (llllllllllllllllIlIlllIIIlIIllII == llllllllllllllllIlIlllIIIlIlIIlI) {
-                return llllllllllllllllIlIlllIIIlIIllIl;
+    public static List<String> toStringList(char[] arrc, int n, int n2) {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        int n3 = n;
+        int n4 = n + n2;
+        for (int i = n; i < n4; ++i) {
+            if (arrc[i] != '\u0000') continue;
+            if (n3 == i) {
+                return arrayList;
             }
-            String llllllllllllllllIlIlllIIIlIlIIll = new String(llllllllllllllllIlIlllIIIlIlIIII, llllllllllllllllIlIlllIIIlIIllII, llllllllllllllllIlIlllIIIlIlIIlI - llllllllllllllllIlIlllIIIlIIllII);
-            llllllllllllllllIlIlllIIIlIIllIl.add(llllllllllllllllIlIlllIIIlIlIIll);
-            llllllllllllllllIlIlllIIIlIIllII = llllllllllllllllIlIlllIIIlIlIIlI + 1;
+            String string = new String(arrc, n3, i - n3);
+            arrayList.add(string);
+            n3 = i + 1;
+            if (null == null) continue;
+            return null;
         }
-        if (llllllllllllllllIlIlllIIIlIIllII < llllllllllllllllIlIlllIIIlIIlIll) {
-            String llllllllllllllllIlIlllIIIlIlIIIl = new String(llllllllllllllllIlIlllIIIlIlIIII, llllllllllllllllIlIlllIIIlIIllII, llllllllllllllllIlIlllIIIlIIlIll - llllllllllllllllIlIlllIIIlIIllII);
-            llllllllllllllllIlIlllIIIlIIllIl.add(llllllllllllllllIlIlllIIIlIlIIIl);
+        if (n3 < n4) {
+            String string = new String(arrc, n3, n4 - n3);
+            arrayList.add(string);
         }
-        return llllllllllllllllIlIlllIIIlIIllIl;
+        return arrayList;
     }
 
-    static /* bridge */ native /* synthetic */ void setByte(Pointer var0, long var1, long var3, byte var5);
+    static native void setByte(Pointer var0, long var1, long var3, byte var5);
 
-    static Structure invokeStructure(Function llllllllllllllllIlIllIIIllIlllll, long llllllllllllllllIlIllIIIlllIIIll, int llllllllllllllllIlIllIIIlllIIIlI, Object[] llllllllllllllllIlIllIIIllIlllII, Structure llllllllllllllllIlIllIIIllIllIll) {
-        Native.invokeStructure(llllllllllllllllIlIllIIIllIlllll, llllllllllllllllIlIllIIIlllIIIll, llllllllllllllllIlIllIIIlllIIIlI, llllllllllllllllIlIllIIIllIlllII, llllllllllllllllIlIllIIIllIllIll.getPointer().peer, llllllllllllllllIlIllIIIllIllIll.getTypeInfo().peer);
-        return llllllllllllllllIlIllIIIllIllIll;
+    static Structure invokeStructure(Function function, long l, int n, Object[] arrobject, Structure structure) {
+        Native.invokeStructure(function, l, n, arrobject, structure.getPointer().peer, structure.getTypeInfo().peer);
+        return structure;
     }
 
-    static /* bridge */ native /* synthetic */ long findSymbol(long var0, String var2);
+    static native long findSymbol(long var0, String var2);
 
-    static boolean isUnpacked(File llllllllllllllllIlIllIlllIIIIIIl) {
-        return llllllllllllllllIlIllIlllIIIIIIl.getName().startsWith("jna");
+    static boolean isUnpacked(File file) {
+        return file.getName().startsWith("jna");
     }
 
-    private static /* bridge */ native /* synthetic */ String getAPIChecksum();
+    private static native String getAPIChecksum();
 
-    public static void register(String llllllllllllllllIlIllIlIllllIlII) {
-        Native.register(Native.findDirectMappedClass(Native.getCallingClass()), llllllllllllllllIlIllIlIllllIlII);
+    public static void register(String string) {
+        Native.register(Native.findDirectMappedClass(Native.getCallingClass()), string);
     }
 
-    public static String getStringEncoding(Class<?> llllllllllllllllIlIllIllllIlIlII) {
-        Map<String, Object> llllllllllllllllIlIllIllllIlIllI = Native.getLibraryOptions(llllllllllllllllIlIllIllllIlIlII);
-        String llllllllllllllllIlIllIllllIlIlIl = (String)llllllllllllllllIlIllIllllIlIllI.get("string-encoding");
-        return llllllllllllllllIlIllIllllIlIlIl != null ? llllllllllllllllIlIllIllllIlIlIl : Native.getDefaultStringEncoding();
+    public static String getStringEncoding(Class<?> class_) {
+        Map<String, Object> map = Native.getLibraryOptions(class_);
+        String string = (String)map.get("string-encoding");
+        return string != null ? string : Native.getDefaultStringEncoding();
     }
 
     private static void loadNativeDispatchLibraryFromClasspath() {
         try {
-            String llllllllllllllllIlIllIlllIIIIlll = String.valueOf(new StringBuilder().append("/com/sun/jna/").append(Platform.RESOURCE_PREFIX).append("/").append(System.mapLibraryName("jnidispatch").replace(".dylib", ".jnilib")));
-            File llllllllllllllllIlIllIlllIIIIllI = Native.extractFromResourcePath(llllllllllllllllIlIllIlllIIIIlll, Native.class.getClassLoader());
-            if (llllllllllllllllIlIllIlllIIIIllI == null && llllllllllllllllIlIllIlllIIIIllI == null) {
+            String string = String.valueOf(new StringBuilder().append("/com/sun/jna/").append(Platform.RESOURCE_PREFIX).append("/").append(System.mapLibraryName("jnidispatch").replace(".dylib", ".jnilib")));
+            File file = Native.extractFromResourcePath(string, Native.class.getClassLoader());
+            if (file == null && file == null) {
                 throw new UnsatisfiedLinkError("Could not find JNA native support");
             }
             if (DEBUG_JNA_LOAD) {
-                System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIlIllIlllIIIIllI.getAbsolutePath())));
+                System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(file.getAbsolutePath())));
             }
-            System.setProperty("jnidispatch.path", llllllllllllllllIlIllIlllIIIIllI.getAbsolutePath());
-            System.load(llllllllllllllllIlIllIlllIIIIllI.getAbsolutePath());
-            jnidispatchPath = llllllllllllllllIlIllIlllIIIIllI.getAbsolutePath();
+            System.setProperty("jnidispatch.path", file.getAbsolutePath());
+            System.load(file.getAbsolutePath());
+            jnidispatchPath = file.getAbsolutePath();
             if (DEBUG_JNA_LOAD) {
                 System.out.println(String.valueOf(new StringBuilder().append("Found jnidispatch at ").append(jnidispatchPath)));
             }
-            if (Native.isUnpacked(llllllllllllllllIlIllIlllIIIIllI) && !Boolean.getBoolean("jnidispatch.preserve")) {
-                Native.deleteLibrary(llllllllllllllllIlIllIlllIIIIllI);
+            if (Native.isUnpacked(file) && !Boolean.getBoolean("jnidispatch.preserve")) {
+                Native.deleteLibrary(file);
             }
         }
-        catch (IOException llllllllllllllllIlIllIlllIIIIlIl) {
-            throw new UnsatisfiedLinkError(llllllllllllllllIlIllIlllIIIIlIl.getMessage());
+        catch (IOException iOException) {
+            throw new UnsatisfiedLinkError(iOException.getMessage());
         }
     }
 
-    public static int getNativeSize(Class<?> llllllllllllllllIlIllIllIIIIIIII) {
-        if (NativeMapped.class.isAssignableFrom(llllllllllllllllIlIllIllIIIIIIII)) {
-            llllllllllllllllIlIllIllIIIIIIII = NativeMappedConverter.getInstance(llllllllllllllllIlIllIllIIIIIIII).nativeType();
+    public static int getNativeSize(Class<?> class_) {
+        if (NativeMapped.class.isAssignableFrom(class_)) {
+            class_ = NativeMappedConverter.getInstance(class_).nativeType();
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Boolean.TYPE || llllllllllllllllIlIllIllIIIIIIII == Boolean.class) {
+        if (class_ == Boolean.TYPE || class_ == Boolean.class) {
             return 4;
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Byte.TYPE || llllllllllllllllIlIllIllIIIIIIII == Byte.class) {
+        if (class_ == Byte.TYPE || class_ == Byte.class) {
             return 1;
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Short.TYPE || llllllllllllllllIlIllIllIIIIIIII == Short.class) {
+        if (class_ == Short.TYPE || class_ == Short.class) {
             return 2;
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Character.TYPE || llllllllllllllllIlIllIllIIIIIIII == Character.class) {
+        if (class_ == Character.TYPE || class_ == Character.class) {
             return WCHAR_SIZE;
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Integer.TYPE || llllllllllllllllIlIllIllIIIIIIII == Integer.class) {
+        if (class_ == Integer.TYPE || class_ == Integer.class) {
             return 4;
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Long.TYPE || llllllllllllllllIlIllIllIIIIIIII == Long.class) {
+        if (class_ == Long.TYPE || class_ == Long.class) {
             return 8;
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Float.TYPE || llllllllllllllllIlIllIllIIIIIIII == Float.class) {
+        if (class_ == Float.TYPE || class_ == Float.class) {
             return 4;
         }
-        if (llllllllllllllllIlIllIllIIIIIIII == Double.TYPE || llllllllllllllllIlIllIllIIIIIIII == Double.class) {
+        if (class_ == Double.TYPE || class_ == Double.class) {
             return 8;
         }
-        if (Structure.class.isAssignableFrom(llllllllllllllllIlIllIllIIIIIIII)) {
-            if (Structure.ByValue.class.isAssignableFrom(llllllllllllllllIlIllIllIIIIIIII)) {
-                return Structure.size(llllllllllllllllIlIllIllIIIIIIII);
+        if (Structure.class.isAssignableFrom(class_)) {
+            if (Structure.ByValue.class.isAssignableFrom(class_)) {
+                return Structure.size(class_);
             }
             return POINTER_SIZE;
         }
-        if (Pointer.class.isAssignableFrom(llllllllllllllllIlIllIllIIIIIIII) || Platform.HAS_BUFFERS && Buffers.isBuffer(llllllllllllllllIlIllIllIIIIIIII) || Callback.class.isAssignableFrom(llllllllllllllllIlIllIllIIIIIIII) || String.class == llllllllllllllllIlIllIllIIIIIIII || WString.class == llllllllllllllllIlIllIllIIIIIIII) {
+        if (Pointer.class.isAssignableFrom(class_) || Platform.HAS_BUFFERS && Buffers.isBuffer(class_) || Callback.class.isAssignableFrom(class_) || String.class == class_ || WString.class == class_) {
             return POINTER_SIZE;
         }
-        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Native size for type \"").append(llllllllllllllllIlIllIllIIIIIIII.getName()).append("\" is unknown")));
+        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Native size for type \"").append(class_.getName()).append("\" is unknown")));
     }
 
-    public static void detach(boolean llllllllllllllllIlIllIIIlIlllIII) {
-        Thread llllllllllllllllIlIllIIIlIllIlll = Thread.currentThread();
-        if (llllllllllllllllIlIllIIIlIlllIII) {
-            nativeThreads.remove(llllllllllllllllIlIllIIIlIllIlll);
-            Pointer llllllllllllllllIlIllIIIlIlllIlI = nativeThreadTerminationFlag.get();
+    public static void detach(boolean bl) {
+        Thread thread = Thread.currentThread();
+        if (bl) {
+            nativeThreads.remove(thread);
+            Pointer pointer = nativeThreadTerminationFlag.get();
             Native.setDetachState(true, 0L);
-        } else if (!nativeThreads.containsKey(llllllllllllllllIlIllIIIlIllIlll)) {
-            Pointer llllllllllllllllIlIllIIIlIlllIIl = nativeThreadTerminationFlag.get();
-            nativeThreads.put(llllllllllllllllIlIllIIIlIllIlll, llllllllllllllllIlIllIIIlIlllIIl);
-            Native.setDetachState(false, llllllllllllllllIlIllIIIlIlllIIl.peer);
+        } else if (!nativeThreads.containsKey(thread)) {
+            Pointer pointer = nativeThreadTerminationFlag.get();
+            nativeThreads.put(thread, pointer);
+            Native.setDetachState(false, pointer.peer);
         }
     }
 
-    public static TypeMapper getTypeMapper(Class<?> llllllllllllllllIlIllIllllIlllII) {
-        Map<String, Object> llllllllllllllllIlIllIllllIlllIl = Native.getLibraryOptions(llllllllllllllllIlIllIllllIlllII);
-        return (TypeMapper)llllllllllllllllIlIllIllllIlllIl.get("type-mapper");
+    public static TypeMapper getTypeMapper(Class<?> class_) {
+        Map<String, Object> map = Native.getLibraryOptions(class_);
+        return (TypeMapper)map.get("type-mapper");
     }
 
-    public static /* bridge */ native /* synthetic */ long ffi_prep_cif(int var0, int var1, long var2, long var4);
+    public static native long ffi_prep_cif(int var0, int var1, long var2, long var4);
 
-    public static <T> T loadLibrary(String llllllllllllllllIlIlllIIIIllIlIl, Class<T> llllllllllllllllIlIlllIIIIllIllI) {
-        return Native.loadLibrary(llllllllllllllllIlIlllIIIIllIlIl, llllllllllllllllIlIlllIIIIllIllI, Collections.emptyMap());
+    public static <T> T loadLibrary(String string, Class<T> class_) {
+        return Native.loadLibrary(string, class_, Collections.emptyMap());
     }
 
     @Deprecated
-    public static void setPreserveLastError(boolean llllllllllllllllIlIlllIIlIIIlIlI) {
+    public static void setPreserveLastError(boolean bl) {
     }
 
-    static /* bridge */ native /* synthetic */ void read(Pointer var0, long var1, long var3, float[] var5, int var6, int var7);
+    static native void read(Pointer var0, long var1, long var3, float[] var5, int var6, int var7);
 
-    private static /* bridge */ native /* synthetic */ void unregister(Class<?> var0, long[] var1);
+    private static native void unregister(Class<?> var0, long[] var1);
 
-    private static /* bridge */ native /* synthetic */ int sizeof(int var0);
+    private static native int sizeof(int var0);
 
-    public static boolean isSupportedNativeType(Class<?> llllllllllllllllIlIllIlIllllllII) {
-        if (Structure.class.isAssignableFrom(llllllllllllllllIlIllIlIllllllII)) {
+    public static boolean isSupportedNativeType(Class<?> class_) {
+        if (Structure.class.isAssignableFrom(class_)) {
             return true;
         }
         try {
-            return Native.getNativeSize(llllllllllllllllIlIllIlIllllllII) != 0;
+            return Native.getNativeSize(class_) != 0;
         }
-        catch (IllegalArgumentException llllllllllllllllIlIllIlIllllllIl) {
+        catch (IllegalArgumentException illegalArgumentException) {
             return false;
         }
     }
 
-    static /* bridge */ native /* synthetic */ void write(Pointer var0, long var1, long var3, long[] var5, int var6, int var7);
+    static native void write(Pointer var0, long var1, long var3, long[] var5, int var6, int var7);
 
-    public static char[] toCharArray(String llllllllllllllllIlIllIlllIlIllIl) {
-        char[] llllllllllllllllIlIllIlllIlIllII = llllllllllllllllIlIllIlllIlIllIl.toCharArray();
-        char[] llllllllllllllllIlIllIlllIlIlIll = new char[llllllllllllllllIlIllIlllIlIllII.length + 1];
-        System.arraycopy(llllllllllllllllIlIllIlllIlIllII, 0, llllllllllllllllIlIllIlllIlIlIll, 0, llllllllllllllllIlIllIlllIlIllII.length);
-        return llllllllllllllllIlIllIlllIlIlIll;
+    public static char[] toCharArray(String string) {
+        char[] arrc = string.toCharArray();
+        char[] arrc2 = new char[arrc.length + 1];
+        System.arraycopy(arrc, 0, arrc2, 0, arrc.length);
+        return arrc2;
     }
 
-    static /* bridge */ native /* synthetic */ float getFloat(Pointer var0, long var1, long var3);
+    static native float getFloat(Pointer var0, long var1, long var3);
 
-    private static /* bridge */ native /* synthetic */ long registerMethod(Class<?> var0, String var1, String var2, int[] var3, long[] var4, long[] var5, int var6, long var7, long var9, Method var11, long var12, int var14, boolean var15, ToNativeConverter[] var16, FromNativeConverter var17, String var18);
+    private static native long registerMethod(Class<?> var0, String var1, String var2, int[] var3, long[] var4, long[] var5, int var6, long var7, long var9, Method var11, long var12, int var14, boolean var15, ToNativeConverter[] var16, FromNativeConverter var17, String var18);
 
-    static /* bridge */ native /* synthetic */ void read(Pointer var0, long var1, long var3, short[] var5, int var6, int var7);
+    static native void read(Pointer var0, long var1, long var3, short[] var5, int var6, int var7);
 
-    public static void main(String[] llllllllllllllllIlIllIIIllllIllI) {
-        String llllllllllllllllIlIllIIIllllIIII;
-        String llllllllllllllllIlIllIIIllllIIIl;
-        String llllllllllllllllIlIllIIIllllIlIl = "Java Native Access (JNA)";
-        String llllllllllllllllIlIllIIIllllIlII = "4.4.0";
-        String llllllllllllllllIlIllIIIllllIIll = "4.4.0 (package information missing)";
-        Package llllllllllllllllIlIllIIIllllIIlI = Native.class.getPackage();
-        String string = llllllllllllllllIlIllIIIllllIIIl = llllllllllllllllIlIllIIIllllIIlI != null ? llllllllllllllllIlIllIIIllllIIlI.getSpecificationTitle() : "Java Native Access (JNA)";
-        if (llllllllllllllllIlIllIIIllllIIIl == null) {
-            llllllllllllllllIlIllIIIllllIIIl = "Java Native Access (JNA)";
+    public static void main(String[] arrstring) {
+        String string;
+        String string2;
+        String string3 = "Java Native Access (JNA)";
+        String string4 = "4.4.0";
+        String string5 = "4.4.0 (package information missing)";
+        Package package_ = Native.class.getPackage();
+        String string6 = string2 = package_ != null ? package_.getSpecificationTitle() : "Java Native Access (JNA)";
+        if (string2 == null) {
+            string2 = "Java Native Access (JNA)";
         }
-        String string2 = llllllllllllllllIlIllIIIllllIIII = llllllllllllllllIlIllIIIllllIIlI != null ? llllllllllllllllIlIllIIIllllIIlI.getSpecificationVersion() : "4.4.0";
-        if (llllllllllllllllIlIllIIIllllIIII == null) {
-            llllllllllllllllIlIllIIIllllIIII = "4.4.0";
+        String string7 = string = package_ != null ? package_.getSpecificationVersion() : "4.4.0";
+        if (string == null) {
+            string = "4.4.0";
         }
-        llllllllllllllllIlIllIIIllllIIIl = String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIIIllllIIIl).append(" API Version ").append(llllllllllllllllIlIllIIIllllIIII));
-        System.out.println(llllllllllllllllIlIllIIIllllIIIl);
-        String string3 = llllllllllllllllIlIllIIIllllIIII = llllllllllllllllIlIllIIIllllIIlI != null ? llllllllllllllllIlIllIIIllllIIlI.getImplementationVersion() : "4.4.0 (package information missing)";
-        if (llllllllllllllllIlIllIIIllllIIII == null) {
-            llllllllllllllllIlIllIIIllllIIII = "4.4.0 (package information missing)";
+        string2 = String.valueOf(new StringBuilder().append(string2).append(" API Version ").append(string));
+        System.out.println(string2);
+        String string8 = string = package_ != null ? package_.getImplementationVersion() : "4.4.0 (package information missing)";
+        if (string == null) {
+            string = "4.4.0 (package information missing)";
         }
-        System.out.println(String.valueOf(new StringBuilder().append("Version: ").append(llllllllllllllllIlIllIIIllllIIII)));
+        System.out.println(String.valueOf(new StringBuilder().append("Version: ").append(string)));
         System.out.println(String.valueOf(new StringBuilder().append(" Native: ").append(Native.getNativeVersion()).append(" (").append(Native.getAPIChecksum()).append(")")));
         System.out.println(String.valueOf(new StringBuilder().append(" Prefix: ").append(Platform.RESOURCE_PREFIX)));
     }
 
-    static /* bridge */ native /* synthetic */ char getChar(Pointer var0, long var1, long var3);
+    static native char getChar(Pointer var0, long var1, long var3);
 
-    static /* bridge */ native /* synthetic */ void invokeVoid(Function var0, long var1, int var3, Object[] var4);
+    static native void invokeVoid(Function var0, long var1, int var3, Object[] var4);
 
-    public static /* bridge */ native /* synthetic */ void ffi_call(long var0, long var2, long var4, long var6);
+    public static native void ffi_call(long var0, long var2, long var4, long var6);
 
-    public static String toString(char[] llllllllllllllllIlIlllIIIllIIIIl) {
-        int llllllllllllllllIlIlllIIIllIIIlI = llllllllllllllllIlIlllIIIllIIIIl.length;
-        for (int llllllllllllllllIlIlllIIIllIIlII = 0; llllllllllllllllIlIlllIIIllIIlII < llllllllllllllllIlIlllIIIllIIIlI; ++llllllllllllllllIlIlllIIIllIIlII) {
-            if (llllllllllllllllIlIlllIIIllIIIIl[llllllllllllllllIlIlllIIIllIIlII] != '\u0000') continue;
-            llllllllllllllllIlIlllIIIllIIIlI = llllllllllllllllIlIlllIIIllIIlII;
+    public static String toString(char[] arrc) {
+        int n = arrc.length;
+        for (int i = 0; i < n; ++i) {
+            if (arrc[i] != '\u0000') continue;
+            n = i;
             break;
         }
-        if (llllllllllllllllIlIlllIIIllIIIlI == 0) {
+        if (n == 0) {
             return "";
         }
-        return new String(llllllllllllllllIlIlllIIIllIIIIl, 0, llllllllllllllllIlIlllIIIllIIIlI);
+        return new String(arrc, 0, n);
     }
 
-    static long open(String llllllllllllllllIlIllIIIllIllIII) {
-        return Native.open(llllllllllllllllIlIllIIIllIllIII, -1);
+    static long open(String string) {
+        return Native.open(string, -1);
     }
 
-    static /* bridge */ native /* synthetic */ float invokeFloat(Function var0, long var1, int var3, Object[] var4);
+    static native float invokeFloat(Function var0, long var1, int var3, Object[] var4);
 
-    public static void setCallbackThreadInitializer(Callback llllllllllllllllIlIllIlIllIllIlI, CallbackThreadInitializer llllllllllllllllIlIllIlIllIlIlll) {
-        CallbackReference.setCallbackThreadInitializer(llllllllllllllllIlIllIlIllIllIlI, llllllllllllllllIlIllIlIllIlIlll);
+    public static void setCallbackThreadInitializer(Callback callback, CallbackThreadInitializer callbackThreadInitializer) {
+        CallbackReference.setCallbackThreadInitializer(callback, callbackThreadInitializer);
     }
 
-    private static NativeMapped fromNative(Method llllllllllllllllIlIllIIlIIIlIlII, Object llllllllllllllllIlIllIIlIIIlIIII) {
-        Class<?> llllllllllllllllIlIllIIlIIIlIIlI = llllllllllllllllIlIllIIlIIIlIlII.getReturnType();
-        return (NativeMapped)NativeMappedConverter.getInstance(llllllllllllllllIlIllIIlIIIlIIlI).fromNative(llllllllllllllllIlIllIIlIIIlIIII, new MethodResultContext(llllllllllllllllIlIllIIlIIIlIIlI, null, null, llllllllllllllllIlIllIIlIIIlIlII));
+    private static NativeMapped fromNative(Method method, Object object) {
+        Class<?> class_ = method.getReturnType();
+        return (NativeMapped)NativeMappedConverter.getInstance(class_).fromNative(object, new MethodResultContext(class_, null, null, method));
     }
 
-    static /* bridge */ native /* synthetic */ void read(Pointer var0, long var1, long var3, byte[] var5, int var6, int var7);
+    static native void read(Pointer var0, long var1, long var3, byte[] var5, int var6, int var7);
 
-    static synchronized /* bridge */ native /* synthetic */ void freeNativeCallback(long var0);
+    static synchronized native void freeNativeCallback(long var0);
 
-    static /* bridge */ native /* synthetic */ void setMemory(Pointer var0, long var1, long var3, long var5, byte var7);
+    static native void setMemory(Pointer var0, long var1, long var3, long var5, byte var7);
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     * Converted monitor instructions to comments
+     * Lifted jumps to return sites
      */
-    public static boolean registered(Class<?> llllllllllllllllIlIllIlIllIIIIII) {
-        Map<Class<?>, long[]> llllllllllllllllIlIllIlIlIlllllI = registeredClasses;
-        synchronized (llllllllllllllllIlIllIlIlIlllllI) {
-            return registeredClasses.containsKey(llllllllllllllllIlIllIlIllIIIIII);
-        }
+    public static boolean registered(Class<?> class_) {
+        Map<Class<?>, long[]> map = registeredClasses;
+        // MONITORENTER : map
+        // MONITOREXIT : map
+        return registeredClasses.containsKey(class_);
     }
 
-    static byte[] getBytes(String llllllllllllllllIlIllIllllIIIIlI, String llllllllllllllllIlIllIllllIIIIIl) {
-        if (llllllllllllllllIlIllIllllIIIIIl != null) {
+    static byte[] getBytes(String string, String string2) {
+        if (string2 != null) {
             try {
-                return llllllllllllllllIlIllIllllIIIIlI.getBytes(llllllllllllllllIlIllIllllIIIIIl);
+                return string.getBytes(string2);
             }
-            catch (UnsupportedEncodingException llllllllllllllllIlIllIllllIIIlIl) {
-                System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Encoding '").append(llllllllllllllllIlIllIllllIIIIIl).append("' is unsupported")));
+            catch (UnsupportedEncodingException unsupportedEncodingException) {
+                System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Encoding '").append(string2).append("' is unsupported")));
             }
         }
         System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Encoding with fallback ").append(System.getProperty("file.encoding"))));
-        return llllllllllllllllIlIllIllllIIIIlI.getBytes();
+        return string.getBytes();
     }
 
-    public static synchronized /* bridge */ native /* synthetic */ void setProtected(boolean var0);
+    public static synchronized native void setProtected(boolean var0);
 
-    public static int getStructureAlignment(Class<?> llllllllllllllllIlIllIllllIIllll) {
-        Integer llllllllllllllllIlIllIllllIIlllI = (Integer)Native.getLibraryOptions(llllllllllllllllIlIllIllllIIllll).get("structure-alignment");
-        return llllllllllllllllIlIllIllllIIlllI == null ? 0 : llllllllllllllllIlIllIllllIIlllI;
+    public static int getStructureAlignment(Class<?> class_) {
+        Integer n = (Integer)Native.getLibraryOptions(class_).get("structure-alignment");
+        return n == null ? 0 : n;
     }
 
-    static /* bridge */ native /* synthetic */ byte getByte(Pointer var0, long var1, long var3);
+    static native byte getByte(Pointer var0, long var1, long var3);
 
-    private static Object fromNative(FromNativeConverter llllllllllllllllIlIllIIIllllllll, Object llllllllllllllllIlIllIIIlllllllI, Method llllllllllllllllIlIllIIlIIIIIIII) {
-        return llllllllllllllllIlIllIIIllllllll.fromNative(llllllllllllllllIlIllIIIlllllllI, new MethodResultContext(llllllllllllllllIlIllIIlIIIIIIII.getReturnType(), null, null, llllllllllllllllIlIllIIlIIIIIIII));
+    private static Object fromNative(FromNativeConverter fromNativeConverter, Object object, Method method) {
+        return fromNativeConverter.fromNative(object, new MethodResultContext(method.getReturnType(), null, null, method));
     }
 
-    private static Object lookupField(Class<?> llllllllllllllllIlIllIlllllIIlll, String llllllllllllllllIlIllIlllllIIllI, Class<?> llllllllllllllllIlIllIlllllIIIlI) {
+    private static Object lookupField(Class<?> class_, String string, Class<?> class_2) {
         try {
-            Field llllllllllllllllIlIllIlllllIlIlI = llllllllllllllllIlIllIlllllIIlll.getField(llllllllllllllllIlIllIlllllIIllI);
-            llllllllllllllllIlIllIlllllIlIlI.setAccessible(true);
-            return llllllllllllllllIlIllIlllllIlIlI.get(null);
+            Field field = class_.getField(string);
+            field.setAccessible(true);
+            return field.get(null);
         }
-        catch (NoSuchFieldException llllllllllllllllIlIllIlllllIlIIl) {
+        catch (Exception | NoSuchFieldException exception) {
             return null;
-        }
-        catch (Exception llllllllllllllllIlIllIlllllIlIII) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIlllllIIllI).append(" must be a public field of type ").append(llllllllllllllllIlIllIlllllIIIlI.getName()).append(" (").append(llllllllllllllllIlIllIlllllIlIII).append("): ").append(llllllllllllllllIlIllIlllllIIlll)));
         }
     }
 
@@ -590,76 +595,76 @@ implements Version {
             try {
                 Native.removeTemporaryFiles();
             }
-            catch (IOException llllllllllllllllIlIllIlllIIllllI) {
-                System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: IOException removing temporary files: ").append(llllllllllllllllIlIllIlllIIllllI.getMessage())));
+            catch (IOException iOException) {
+                System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: IOException removing temporary files: ").append(iOException.getMessage())));
             }
         }
-        String llllllllllllllllIlIllIlllIIlIlII = System.getProperty("jna.boot.library.name", "jnidispatch");
-        String llllllllllllllllIlIllIlllIIlIIll = System.getProperty("jna.boot.library.path");
-        if (llllllllllllllllIlIllIlllIIlIIll != null) {
-            StringTokenizer llllllllllllllllIlIllIlllIIlIlIl = new StringTokenizer(llllllllllllllllIlIllIlllIIlIIll, File.pathSeparator);
-            while (llllllllllllllllIlIllIlllIIlIlIl.hasMoreTokens()) {
-                String llllllllllllllllIlIllIlllIIllIIl;
-                String llllllllllllllllIlIllIlllIIllIlI;
-                String llllllllllllllllIlIllIlllIIllIII = llllllllllllllllIlIllIlllIIlIlIl.nextToken();
-                File llllllllllllllllIlIllIlllIIlIlll = new File(new File(llllllllllllllllIlIllIlllIIllIII), System.mapLibraryName(llllllllllllllllIlIllIlllIIlIlII).replace(".dylib", ".jnilib"));
-                String llllllllllllllllIlIllIlllIIlIllI = llllllllllllllllIlIllIlllIIlIlll.getAbsolutePath();
+        String string = System.getProperty("jna.boot.library.name", "jnidispatch");
+        String string2 = System.getProperty("jna.boot.library.path");
+        if (string2 != null) {
+            StringTokenizer stringTokenizer = new StringTokenizer(string2, File.pathSeparator);
+            while (stringTokenizer.hasMoreTokens()) {
+                String string3;
+                String string4;
+                String string5 = stringTokenizer.nextToken();
+                File file = new File(new File(string5), System.mapLibraryName(string).replace(".dylib", ".jnilib"));
+                String string6 = file.getAbsolutePath();
                 if (DEBUG_JNA_LOAD) {
-                    System.out.println(String.valueOf(new StringBuilder().append("Looking in ").append(llllllllllllllllIlIllIlllIIlIllI)));
+                    System.out.println(String.valueOf(new StringBuilder().append("Looking in ").append(string6)));
                 }
-                if (llllllllllllllllIlIllIlllIIlIlll.exists()) {
+                if (file.exists()) {
                     try {
                         if (DEBUG_JNA_LOAD) {
-                            System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIlIllIlllIIlIllI)));
+                            System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(string6)));
                         }
-                        System.setProperty("jnidispatch.path", llllllllllllllllIlIllIlllIIlIllI);
-                        System.load(llllllllllllllllIlIllIlllIIlIllI);
-                        jnidispatchPath = llllllllllllllllIlIllIlllIIlIllI;
+                        System.setProperty("jnidispatch.path", string6);
+                        System.load(string6);
+                        jnidispatchPath = string6;
                         if (DEBUG_JNA_LOAD) {
-                            System.out.println(String.valueOf(new StringBuilder().append("Found jnidispatch at ").append(llllllllllllllllIlIllIlllIIlIllI)));
+                            System.out.println(String.valueOf(new StringBuilder().append("Found jnidispatch at ").append(string6)));
                         }
                         return;
                     }
-                    catch (UnsatisfiedLinkError llllllllllllllllIlIllIlllIIIllII) {
+                    catch (UnsatisfiedLinkError unsatisfiedLinkError) {
                         // empty catch block
                     }
                 }
                 if (!Platform.isMac()) continue;
-                if (llllllllllllllllIlIllIlllIIlIllI.endsWith("dylib")) {
-                    String llllllllllllllllIlIllIlllIIlllIl = "dylib";
-                    String llllllllllllllllIlIllIlllIIlllII = "jnilib";
+                if (string6.endsWith("dylib")) {
+                    string4 = "dylib";
+                    string3 = "jnilib";
                 } else {
-                    llllllllllllllllIlIllIlllIIllIlI = "jnilib";
-                    llllllllllllllllIlIllIlllIIllIIl = "dylib";
+                    string4 = "jnilib";
+                    string3 = "dylib";
                 }
-                llllllllllllllllIlIllIlllIIlIllI = String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIlllIIlIllI.substring(0, llllllllllllllllIlIllIlllIIlIllI.lastIndexOf(llllllllllllllllIlIllIlllIIllIlI))).append(llllllllllllllllIlIllIlllIIllIIl));
+                string6 = String.valueOf(new StringBuilder().append(string6.substring(0, string6.lastIndexOf(string4))).append(string3));
                 if (DEBUG_JNA_LOAD) {
-                    System.out.println(String.valueOf(new StringBuilder().append("Looking in ").append(llllllllllllllllIlIllIlllIIlIllI)));
+                    System.out.println(String.valueOf(new StringBuilder().append("Looking in ").append(string6)));
                 }
-                if (!new File(llllllllllllllllIlIllIlllIIlIllI).exists()) continue;
+                if (!new File(string6).exists()) continue;
                 try {
                     if (DEBUG_JNA_LOAD) {
-                        System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIlIllIlllIIlIllI)));
+                        System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(string6)));
                     }
-                    System.setProperty("jnidispatch.path", llllllllllllllllIlIllIlllIIlIllI);
-                    System.load(llllllllllllllllIlIllIlllIIlIllI);
-                    jnidispatchPath = llllllllllllllllIlIllIlllIIlIllI;
+                    System.setProperty("jnidispatch.path", string6);
+                    System.load(string6);
+                    jnidispatchPath = string6;
                     if (DEBUG_JNA_LOAD) {
-                        System.out.println(String.valueOf(new StringBuilder().append("Found jnidispatch at ").append(llllllllllllllllIlIllIlllIIlIllI)));
+                        System.out.println(String.valueOf(new StringBuilder().append("Found jnidispatch at ").append(string6)));
                     }
                     return;
                 }
-                catch (UnsatisfiedLinkError llllllllllllllllIlIllIlllIIllIll) {
-                    System.err.println(String.valueOf(new StringBuilder().append("File found at ").append(llllllllllllllllIlIllIlllIIlIllI).append(" but not loadable: ").append(llllllllllllllllIlIllIlllIIllIll.getMessage())));
+                catch (UnsatisfiedLinkError unsatisfiedLinkError) {
+                    System.err.println(String.valueOf(new StringBuilder().append("File found at ").append(string6).append(" but not loadable: ").append(unsatisfiedLinkError.getMessage())));
                 }
             }
         }
         if (!Boolean.getBoolean("jna.nosys")) {
             try {
                 if (DEBUG_JNA_LOAD) {
-                    System.out.println(String.valueOf(new StringBuilder().append("Trying (via loadLibrary) ").append(llllllllllllllllIlIllIlllIIlIlII)));
+                    System.out.println(String.valueOf(new StringBuilder().append("Trying (via loadLibrary) ").append(string)));
                 }
-                System.loadLibrary(llllllllllllllllIlIllIlllIIlIlII);
+                System.loadLibrary(string);
                 if (DEBUG_JNA_LOAD) {
                     System.out.println("Found jnidispatch on system path");
                 }
@@ -675,8 +680,8 @@ implements Version {
         Native.loadNativeDispatchLibraryFromClasspath();
     }
 
-    static Pointer getTerminationFlag(Thread llllllllllllllllIlIllIIIlIllIIIl) {
-        return nativeThreads.get(llllllllllllllllIlIllIIIlIllIIIl);
+    static Pointer getTerminationFlag(Thread thread) {
+        return nativeThreads.get(thread);
     }
 
     private static void dispose() {
@@ -688,383 +693,396 @@ implements Version {
         System.setProperty("jna.loaded", "false");
     }
 
-    static /* bridge */ native /* synthetic */ void write(Pointer var0, long var1, long var3, short[] var5, int var6, int var7);
+    static native void write(Pointer var0, long var1, long var3, short[] var5, int var6, int var7);
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * WARNING - Removed back jump from a try to a catch block - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    public static Map<String, Object> getLibraryOptions(Class<?> llllllllllllllllIlIllIllllllIlII) {
-        Map<Class<?>, Reference<?>> llllllllllllllllIlIllIllllllIIlI = libraries;
-        synchronized (llllllllllllllllIlIllIllllllIIlI) {
-            Map<String, Object> llllllllllllllllIlIllIlllllllIll = typeOptions.get(llllllllllllllllIlIllIllllllIlII);
-            if (llllllllllllllllIlIllIlllllllIll != null) {
-                return llllllllllllllllIlIllIlllllllIll;
+    public static Map<String, Object> getLibraryOptions(Class<?> class_) {
+        Map<String, Object> map;
+        Class<?> class_2 = libraries;
+        synchronized (class_2) {
+            map = typeOptions.get(class_);
+            if (map != null) {
+                return map;
             }
         }
-        Class<?> llllllllllllllllIlIllIllllllIlIl = Native.findEnclosingLibraryClass(llllllllllllllllIlIllIllllllIlII);
-        if (llllllllllllllllIlIllIllllllIlIl != null) {
-            Native.loadLibraryInstance(llllllllllllllllIlIllIllllllIlIl);
+        class_2 = Native.findEnclosingLibraryClass(class_);
+        if (class_2 != null) {
+            Native.loadLibraryInstance(class_2);
         } else {
-            llllllllllllllllIlIllIllllllIlIl = llllllllllllllllIlIllIllllllIlII;
+            class_2 = class_;
         }
-        Map<Class<?>, Reference<?>> llllllllllllllllIlIllIllllllIIIl = libraries;
-        synchronized (llllllllllllllllIlIllIllllllIIIl) {
-            Map<String, Object> llllllllllllllllIlIllIllllllIllI = typeOptions.get(llllllllllllllllIlIllIllllllIlIl);
-            if (llllllllllllllllIlIllIllllllIllI != null) {
-                typeOptions.put(llllllllllllllllIlIllIllllllIlII, llllllllllllllllIlIllIllllllIllI);
-                return llllllllllllllllIlIllIllllllIllI;
-            }
-            try {
-                Field llllllllllllllllIlIllIlllllllIlI = llllllllllllllllIlIllIllllllIlIl.getField("OPTIONS");
-                llllllllllllllllIlIllIlllllllIlI.setAccessible(true);
-                llllllllllllllllIlIllIllllllIllI = (Map<String, Object>)llllllllllllllllIlIllIlllllllIlI.get(null);
-                if (llllllllllllllllIlIllIllllllIllI == null) {
+        Map<Class<?>, Reference<?>> map2 = libraries;
+        synchronized (map2) {
+            block16: {
+                Class<?> class_3;
+                map = typeOptions.get(class_2);
+                if (map != null) {
+                    typeOptions.put(class_, map);
+                    return map;
+                }
+                try {
+                    class_3 = class_2;
+                }
+                catch (NoSuchFieldException noSuchFieldException) {
+                    map = Collections.emptyMap();
+                    break block16;
+                }
+                {
+                    Field field = class_3.getField("OPTIONS");
+                    field.setAccessible(true);
+                    map = (Map<String, Object>)field.get(null);
+                    if (map != null) break block16;
                     throw new IllegalStateException("Null options field");
                 }
             }
-            catch (NoSuchFieldException llllllllllllllllIlIllIlllllllIIl) {
-                llllllllllllllllIlIllIllllllIllI = Collections.emptyMap();
+            map = new HashMap<String, Object>(map);
+            if (!map.containsKey("type-mapper")) {
+                map.put("type-mapper", Native.lookupField(class_2, "TYPE_MAPPER", TypeMapper.class));
             }
-            catch (Exception llllllllllllllllIlIllIlllllllIII) {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("OPTIONS must be a public field of type java.util.Map (").append(llllllllllllllllIlIllIlllllllIII).append("): ").append(llllllllllllllllIlIllIllllllIlIl)));
+            if (!map.containsKey("structure-alignment")) {
+                map.put("structure-alignment", Native.lookupField(class_2, "STRUCTURE_ALIGNMENT", Integer.class));
             }
-            llllllllllllllllIlIllIllllllIllI = new HashMap<String, Object>(llllllllllllllllIlIllIllllllIllI);
-            if (!llllllllllllllllIlIllIllllllIllI.containsKey("type-mapper")) {
-                llllllllllllllllIlIllIllllllIllI.put("type-mapper", Native.lookupField(llllllllllllllllIlIllIllllllIlIl, "TYPE_MAPPER", TypeMapper.class));
+            if (!map.containsKey("string-encoding")) {
+                map.put("string-encoding", Native.lookupField(class_2, "STRING_ENCODING", String.class));
             }
-            if (!llllllllllllllllIlIllIllllllIllI.containsKey("structure-alignment")) {
-                llllllllllllllllIlIllIllllllIllI.put("structure-alignment", Native.lookupField(llllllllllllllllIlIllIllllllIlIl, "STRUCTURE_ALIGNMENT", Integer.class));
+            map = Native.cacheOptions(class_2, map, null);
+            if (class_ != class_2) {
+                typeOptions.put(class_, map);
             }
-            if (!llllllllllllllllIlIllIllllllIllI.containsKey("string-encoding")) {
-                llllllllllllllllIlIllIllllllIllI.put("string-encoding", Native.lookupField(llllllllllllllllIlIllIllllllIlIl, "STRING_ENCODING", String.class));
-            }
-            llllllllllllllllIlIllIllllllIllI = Native.cacheOptions(llllllllllllllllIlIllIllllllIlIl, llllllllllllllllIlIllIllllllIllI, null);
-            if (llllllllllllllllIlIllIllllllIlII != llllllllllllllllIlIllIllllllIlIl) {
-                typeOptions.put(llllllllllllllllIlIllIllllllIlII, llllllllllllllllIlIllIllllllIllI);
-            }
-            return llllllllllllllllIlIllIllllllIllI;
+            return map;
         }
     }
 
-    static /* bridge */ native /* synthetic */ void setLong(Pointer var0, long var1, long var3, long var5);
+    static native void setLong(Pointer var0, long var1, long var3, long var5);
 
-    public static void setCallbackExceptionHandler(Callback.UncaughtExceptionHandler llllllllllllllllIlIllIlIllllIlll) {
-        callbackExceptionHandler = llllllllllllllllIlIllIlIllllIlll == null ? DEFAULT_HANDLER : llllllllllllllllIlIllIlIllllIlll;
+    public static void setCallbackExceptionHandler(Callback.UncaughtExceptionHandler uncaughtExceptionHandler) {
+        callbackExceptionHandler = uncaughtExceptionHandler == null ? DEFAULT_HANDLER : uncaughtExceptionHandler;
     }
 
-    static synchronized /* bridge */ native /* synthetic */ long createNativeCallback(Callback var0, Method var1, Class<?>[] var2, Class<?> var3, int var4, int var5, String var6);
+    static synchronized native long createNativeCallback(Callback var0, Method var1, Class<?>[] var2, Class<?> var3, int var4, int var5, String var6);
 
-    public static File extractFromResourcePath(String llllllllllllllllIlIllIllIlIlllll, ClassLoader llllllllllllllllIlIllIllIlIllllI) throws IOException {
-        URL llllllllllllllllIlIllIllIllIIIIl;
-        String llllllllllllllllIlIllIllIllIIIlI;
-        boolean llllllllllllllllIlIllIllIllIIlII;
-        boolean bl = llllllllllllllllIlIllIllIllIIlII = DEBUG_LOAD || DEBUG_JNA_LOAD && llllllllllllllllIlIllIllIlIlllll.indexOf("jnidispatch") != -1;
-        if (llllllllllllllllIlIllIllIlIllllI == null && (llllllllllllllllIlIllIllIlIllllI = Thread.currentThread().getContextClassLoader()) == null) {
-            llllllllllllllllIlIllIllIlIllllI = Native.class.getClassLoader();
+    /*
+     * Unable to fully structure code
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     * Lifted jumps to return sites
+     */
+    public static File extractFromResourcePath(String var0, ClassLoader var1_1) throws IOException {
+        v0 = var2_2 = Native.DEBUG_LOAD != false || Native.DEBUG_JNA_LOAD != false && var0.indexOf("jnidispatch") != -1;
+        if (var1_1 == null && (var1_1 = Thread.currentThread().getContextClassLoader()) == null) {
+            var1_1 = Native.class.getClassLoader();
         }
-        if (llllllllllllllllIlIllIllIllIIlII) {
-            System.out.println(String.valueOf(new StringBuilder().append("Looking in classpath from ").append(llllllllllllllllIlIllIllIlIllllI).append(" for ").append(llllllllllllllllIlIllIllIlIlllll)));
+        if (var2_2) {
+            System.out.println(String.valueOf(new StringBuilder().append("Looking in classpath from ").append(var1_1).append(" for ").append(var0)));
         }
-        String llllllllllllllllIlIllIllIllIIIll = llllllllllllllllIlIllIllIlIlllll.startsWith("/") ? llllllllllllllllIlIllIllIlIlllll : NativeLibrary.mapSharedLibraryName(llllllllllllllllIlIllIllIlIlllll);
-        String string = llllllllllllllllIlIllIllIllIIIlI = llllllllllllllllIlIllIllIlIlllll.startsWith("/") ? llllllllllllllllIlIllIllIlIlllll : String.valueOf(new StringBuilder().append(Platform.RESOURCE_PREFIX).append("/").append(llllllllllllllllIlIllIllIllIIIll));
-        if (llllllllllllllllIlIllIllIllIIIlI.startsWith("/")) {
-            llllllllllllllllIlIllIllIllIIIlI = llllllllllllllllIlIllIllIllIIIlI.substring(1);
+        var3_3 = var0.startsWith("/") != false ? var0 : NativeLibrary.mapSharedLibraryName(var0);
+        v1 = var4_4 = var0.startsWith("/") != false ? var0 : String.valueOf(new StringBuilder().append(Platform.RESOURCE_PREFIX).append("/").append(var3_3));
+        if (var4_4.startsWith("/")) {
+            var4_4 = var4_4.substring(1);
         }
-        if ((llllllllllllllllIlIllIllIllIIIIl = llllllllllllllllIlIllIllIlIllllI.getResource(llllllllllllllllIlIllIllIllIIIlI)) == null && llllllllllllllllIlIllIllIllIIIlI.startsWith(Platform.RESOURCE_PREFIX)) {
-            llllllllllllllllIlIllIllIllIIIIl = llllllllllllllllIlIllIllIlIllllI.getResource(llllllllllllllllIlIllIllIllIIIll);
+        if ((var5_5 = var1_1.getResource(var4_4)) == null && var4_4.startsWith(Platform.RESOURCE_PREFIX)) {
+            var5_5 = var1_1.getResource(var3_3);
         }
-        if (llllllllllllllllIlIllIllIllIIIIl == null) {
-            String llllllllllllllllIlIllIllIllIlllI = System.getProperty("java.class.path");
-            if (llllllllllllllllIlIllIllIlIllllI instanceof URLClassLoader) {
-                llllllllllllllllIlIllIllIllIlllI = Arrays.asList(((URLClassLoader)llllllllllllllllIlIllIllIlIllllI).getURLs()).toString();
-            }
-            throw new IOException(String.valueOf(new StringBuilder().append("Native library (").append(llllllllllllllllIlIllIllIllIIIlI).append(") not found in resource path (").append(llllllllllllllllIlIllIllIllIlllI).append(")")));
+        if (var5_5 == null) {
+            var6_6 = System.getProperty("java.class.path");
+            if (var1_1 instanceof URLClassLoader == false) throw new IOException(String.valueOf(new StringBuilder().append("Native library (").append(var4_4).append(") not found in resource path (").append(var6_6).append(")")));
+            var6_6 = Arrays.asList(((URLClassLoader)var1_1).getURLs()).toString();
+            throw new IOException(String.valueOf(new StringBuilder().append("Native library (").append(var4_4).append(") not found in resource path (").append(var6_6).append(")")));
         }
-        if (llllllllllllllllIlIllIllIllIIlII) {
-            System.out.println(String.valueOf(new StringBuilder().append("Found library resource at ").append(llllllllllllllllIlIllIllIllIIIIl)));
+        if (var2_2) {
+            System.out.println(String.valueOf(new StringBuilder().append("Found library resource at ").append(var5_5)));
         }
-        File llllllllllllllllIlIllIllIllIIIII = null;
-        if (llllllllllllllllIlIllIllIllIIIIl.getProtocol().toLowerCase().equals("file")) {
+        var6_7 = null;
+        if (var5_5.getProtocol().toLowerCase().equals("file")) {
             try {
-                llllllllllllllllIlIllIllIllIIIII = new File(new URI(llllllllllllllllIlIllIllIllIIIIl.toString()));
+                var6_7 = new File(new URI(var5_5.toString()));
             }
-            catch (URISyntaxException llllllllllllllllIlIllIllIllIllIl) {
-                llllllllllllllllIlIllIllIllIIIII = new File(llllllllllllllllIlIllIllIllIIIIl.getPath());
+            catch (URISyntaxException var7_8) {
+                var6_7 = new File(var5_5.getPath());
             }
-            if (llllllllllllllllIlIllIllIllIIlII) {
-                System.out.println(String.valueOf(new StringBuilder().append("Looking in ").append(llllllllllllllllIlIllIllIllIIIII.getAbsolutePath())));
+            if (var2_2) {
+                System.out.println(String.valueOf(new StringBuilder().append("Looking in ").append(var6_7.getAbsolutePath())));
             }
-            if (!llllllllllllllllIlIllIllIllIIIII.exists()) {
-                throw new IOException(String.valueOf(new StringBuilder().append("File URL ").append(llllllllllllllllIlIllIllIllIIIIl).append(" could not be properly decoded")));
+            if (var6_7.exists() != false) return var6_7;
+            throw new IOException(String.valueOf(new StringBuilder().append("File URL ").append(var5_5).append(" could not be properly decoded")));
+        }
+        if (Boolean.getBoolean("jna.nounpack") != false) return var6_7;
+        var7_9 = var1_1.getResourceAsStream(var4_4);
+        if (var7_9 == null) {
+            throw new IOException(String.valueOf(new StringBuilder().append("Can't obtain InputStream for ").append(var4_4)));
+        }
+        var8_10 = null;
+        try {
+            var9_11 = Native.getTempDir();
+            var6_7 = File.createTempFile("jna", Platform.isWindows() != false ? ".dll" : null, var9_11);
+            if (!Boolean.getBoolean("jnidispatch.preserve")) {
+                var6_7.deleteOnExit();
             }
-        } else if (!Boolean.getBoolean("jna.nounpack")) {
-            InputStream llllllllllllllllIlIllIllIllIlIII = llllllllllllllllIlIllIllIlIllllI.getResourceAsStream(llllllllllllllllIlIllIllIllIIIlI);
-            if (llllllllllllllllIlIllIllIllIlIII == null) {
-                throw new IOException(String.valueOf(new StringBuilder().append("Can't obtain InputStream for ").append(llllllllllllllllIlIllIllIllIIIlI)));
+            var8_10 = new FileOutputStream(var6_7);
+            var11_15 = new byte[1024];
+            while ((var10_16 = var7_9.read(var11_15, 0, var11_15.length)) > 0) {
+                var8_10.write(var11_15, 0, var10_16);
             }
-            FileOutputStream llllllllllllllllIlIllIllIllIIlll = null;
+            return var6_7;
+        }
+        catch (IOException var9_14) {}
+        throw new IOException(String.valueOf(new StringBuilder().append("Failed to create temporary file for ").append(var0).append(" library: ").append(var9_14.getMessage())));
+        finally {
             try {
-                int llllllllllllllllIlIllIllIllIlIll;
-                File llllllllllllllllIlIllIllIllIllII = Native.getTempDir();
-                llllllllllllllllIlIllIllIllIIIII = File.createTempFile("jna", Platform.isWindows() ? ".dll" : null, llllllllllllllllIlIllIllIllIllII);
-                if (!Boolean.getBoolean("jnidispatch.preserve")) {
-                    llllllllllllllllIlIllIllIllIIIII.deleteOnExit();
-                }
-                llllllllllllllllIlIllIllIllIIlll = new FileOutputStream(llllllllllllllllIlIllIllIllIIIII);
-                byte[] llllllllllllllllIlIllIllIllIlIlI = new byte[1024];
-                while ((llllllllllllllllIlIllIllIllIlIll = llllllllllllllllIlIllIllIllIlIII.read(llllllllllllllllIlIllIllIllIlIlI, 0, llllllllllllllllIlIllIllIllIlIlI.length)) > 0) {
-                    llllllllllllllllIlIllIllIllIIlll.write(llllllllllllllllIlIllIllIllIlIlI, 0, llllllllllllllllIlIllIllIllIlIll);
-                }
+                var7_9.close();
             }
-            catch (IOException llllllllllllllllIlIllIllIllIlIIl) {
-                throw new IOException(String.valueOf(new StringBuilder().append("Failed to create temporary file for ").append(llllllllllllllllIlIllIllIlIlllll).append(" library: ").append(llllllllllllllllIlIllIllIllIlIIl.getMessage())));
-            }
-            finally {
-                try {
-                    llllllllllllllllIlIllIllIllIlIII.close();
-                }
-                catch (IOException llllllllllllllllIlIllIllIlIlIIlI) {}
-                if (llllllllllllllllIlIllIllIllIIlll != null) {
-                    try {
-                        llllllllllllllllIlIllIllIllIIlll.close();
-                    }
-                    catch (IOException llllllllllllllllIlIllIllIlIlIIlI) {}
-                }
+            catch (IOException var13_18) {}
+            if (var8_10 != null) {
+                ** try [egrp 6[TRYBLOCK] [6 : 682->685)] { 
+lbl56:
+                // 1 sources
+
+                var8_10.close();
             }
         }
-        return llllllllllllllllIlIllIllIllIIIII;
     }
 
-    static /* bridge */ native /* synthetic */ void read(Pointer var0, long var1, long var3, int[] var5, int var6, int var7);
+    static native void read(Pointer var0, long var1, long var3, int[] var5, int var6, int var7);
 
     @Deprecated
-    public static float parseVersion(String llllllllllllllllIlIlllIIlIlIlIIl) {
-        return Float.parseFloat(llllllllllllllllIlIlllIIlIlIlIIl.substring(0, llllllllllllllllIlIlllIIlIlIlIIl.lastIndexOf(".")));
+    public static float parseVersion(String string) {
+        return Float.parseFloat(string.substring(0, string.lastIndexOf(".")));
     }
 
-    static /* bridge */ native /* synthetic */ long invokePointer(Function var0, long var1, int var3, Object[] var4);
+    static native long invokePointer(Function var0, long var1, int var3, Object[] var4);
 
-    static /* bridge */ native /* synthetic */ int invokeInt(Function var0, long var1, int var3, Object[] var4);
+    static native int invokeInt(Function var0, long var1, int var3, Object[] var4);
 
-    public static Pointer getComponentPointer(Component llllllllllllllllIlIlllIIIlllllll) throws HeadlessException {
-        return new Pointer(AWT.getComponentID(llllllllllllllllIlIlllIIIlllllll));
+    public static Pointer getComponentPointer(Component component) throws HeadlessException {
+        return new Pointer(AWT.getComponentID(component));
     }
 
-    public static byte[] toByteArray(String llllllllllllllllIlIllIlllIllIlII, String llllllllllllllllIlIllIlllIllIlll) {
-        byte[] llllllllllllllllIlIllIlllIllIllI = Native.getBytes(llllllllllllllllIlIllIlllIllIlII, llllllllllllllllIlIllIlllIllIlll);
-        byte[] llllllllllllllllIlIllIlllIllIlIl = new byte[llllllllllllllllIlIllIlllIllIllI.length + 1];
-        System.arraycopy(llllllllllllllllIlIllIlllIllIllI, 0, llllllllllllllllIlIllIlllIllIlIl, 0, llllllllllllllllIlIllIlllIllIllI.length);
-        return llllllllllllllllIlIllIlllIllIlIl;
+    public static byte[] toByteArray(String string, String string2) {
+        byte[] arrby = Native.getBytes(string, string2);
+        byte[] arrby2 = new byte[arrby.length + 1];
+        System.arraycopy(arrby, 0, arrby2, 0, arrby.length);
+        return arrby2;
     }
 
-    public static /* bridge */ native /* synthetic */ long ffi_prep_closure(long var0, ffi_callback var2);
+    public static native long ffi_prep_closure(long var0, ffi_callback var2);
 
-    public static void register(Class<?> llllllllllllllllIlIllIlIlIIlIllI, String llllllllllllllllIlIllIlIlIIlIlIl) {
-        NativeLibrary llllllllllllllllIlIllIlIlIIlIlII = NativeLibrary.getInstance(llllllllllllllllIlIllIlIlIIlIlIl, Collections.singletonMap("classloader", llllllllllllllllIlIllIlIlIIlIllI.getClassLoader()));
-        Native.register(llllllllllllllllIlIllIlIlIIlIllI, llllllllllllllllIlIllIlIlIIlIlII);
+    public static void register(Class<?> class_, String string) {
+        NativeLibrary nativeLibrary = NativeLibrary.getInstance(string, Collections.singletonMap("classloader", class_.getClassLoader()));
+        Native.register(class_, nativeLibrary);
     }
 
-    static /* bridge */ native /* synthetic */ void setChar(Pointer var0, long var1, long var3, char var5);
+    static native void setChar(Pointer var0, long var1, long var3, char var5);
 
-    static /* bridge */ native /* synthetic */ long open(String var0, int var1);
+    static native long open(String var0, int var1);
 
-    static /* bridge */ native /* synthetic */ Object invokeObject(Function var0, long var1, int var3, Object[] var4);
+    static native Object invokeObject(Function var0, long var1, int var3, Object[] var4);
 
     @Deprecated
     public static boolean getPreserveLastError() {
         return true;
     }
 
-    static String getString(Pointer llllllllllllllllIlIllIIIllIIIllI, long llllllllllllllllIlIllIIIllIIIIIl, String llllllllllllllllIlIllIIIllIIIlII) {
-        byte[] llllllllllllllllIlIllIIIllIIIIll = Native.getStringBytes(llllllllllllllllIlIllIIIllIIIllI, llllllllllllllllIlIllIIIllIIIllI.peer, llllllllllllllllIlIllIIIllIIIIIl);
-        if (llllllllllllllllIlIllIIIllIIIlII != null) {
+    static String getString(Pointer pointer, long l, String string) {
+        byte[] arrby = Native.getStringBytes(pointer, pointer.peer, l);
+        if (string != null) {
             try {
-                return new String(llllllllllllllllIlIllIIIllIIIIll, llllllllllllllllIlIllIIIllIIIlII);
+                return new String(arrby, string);
             }
-            catch (UnsupportedEncodingException llllllllllllllllIlIllIIIlIlllllI) {
+            catch (UnsupportedEncodingException unsupportedEncodingException) {
                 // empty catch block
             }
         }
-        return new String(llllllllllllllllIlIllIIIllIIIIll);
+        return new String(arrby);
     }
 
-    static /* bridge */ native /* synthetic */ void setInt(Pointer var0, long var1, long var3, int var5);
+    static native void setInt(Pointer var0, long var1, long var3, int var5);
 
-    public static List<String> toStringList(char[] llllllllllllllllIlIlllIIIlIlllIl) {
-        return Native.toStringList(llllllllllllllllIlIlllIIIlIlllIl, 0, llllllllllllllllIlIlllIIIlIlllIl.length);
+    public static List<String> toStringList(char[] arrc) {
+        return Native.toStringList(arrc, 0, arrc.length);
     }
 
-    public static String toString(byte[] llllllllllllllllIlIlllIIIllIlIll, String llllllllllllllllIlIlllIIIllIlIlI) {
-        int llllllllllllllllIlIlllIIIllIllII = llllllllllllllllIlIlllIIIllIlIll.length;
-        for (int llllllllllllllllIlIlllIIIlllIIII = 0; llllllllllllllllIlIlllIIIlllIIII < llllllllllllllllIlIlllIIIllIllII; ++llllllllllllllllIlIlllIIIlllIIII) {
-            if (llllllllllllllllIlIlllIIIllIlIll[llllllllllllllllIlIlllIIIlllIIII] != 0) continue;
-            llllllllllllllllIlIlllIIIllIllII = llllllllllllllllIlIlllIIIlllIIII;
+    public static String toString(byte[] arrby, String string) {
+        int n = arrby.length;
+        for (int i = 0; i < n; ++i) {
+            if (arrby[i] != 0) continue;
+            n = i;
             break;
         }
-        if (llllllllllllllllIlIlllIIIllIllII == 0) {
+        if (n == 0) {
             return "";
         }
-        if (llllllllllllllllIlIlllIIIllIlIlI != null) {
+        if (string != null) {
             try {
-                return new String(llllllllllllllllIlIlllIIIllIlIll, 0, llllllllllllllllIlIlllIIIllIllII, llllllllllllllllIlIlllIIIllIlIlI);
+                return new String(arrby, 0, n, string);
             }
-            catch (UnsupportedEncodingException llllllllllllllllIlIlllIIIllIllll) {
-                System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Encoding '").append(llllllllllllllllIlIlllIIIllIlIlI).append("' is unsupported")));
+            catch (UnsupportedEncodingException unsupportedEncodingException) {
+                System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Encoding '").append(string).append("' is unsupported")));
             }
         }
         System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Decoding with fallback ").append(System.getProperty("file.encoding"))));
-        return new String(llllllllllllllllIlIlllIIIllIlIll, 0, llllllllllllllllIlIlllIIIllIllII);
+        return new String(arrby, 0, n);
     }
 
     @Deprecated
-    public static /* bridge */ native /* synthetic */ ByteBuffer getDirectByteBuffer(long var0, long var2);
+    public static native ByteBuffer getDirectByteBuffer(long var0, long var2);
 
-    static /* bridge */ native /* synthetic */ void setShort(Pointer var0, long var1, long var3, short var5);
+    static native void setShort(Pointer var0, long var1, long var3, short var5);
 
-    public static /* bridge */ native /* synthetic */ void ffi_free_closure(long var0);
+    public static native void ffi_free_closure(long var0);
 
-    private static /* bridge */ native /* synthetic */ long _getDirectBufferPointer(Buffer var0);
+    private static native long _getDirectBufferPointer(Buffer var0);
 
-    public static Library synchronizedLibrary(final Library llllllllllllllllIlIllIllIlIIIlll) {
-        Class<?> llllllllllllllllIlIllIllIlIIlIll = llllllllllllllllIlIllIllIlIIIlll.getClass();
-        if (!Proxy.isProxyClass(llllllllllllllllIlIllIllIlIIlIll)) {
+    public static Library synchronizedLibrary(Library library) {
+        Class<?> class_ = library.getClass();
+        if (!Proxy.isProxyClass(class_)) {
             throw new IllegalArgumentException("Library must be a proxy class");
         }
-        InvocationHandler llllllllllllllllIlIllIllIlIIlIlI = Proxy.getInvocationHandler(llllllllllllllllIlIllIllIlIIIlll);
-        if (!(llllllllllllllllIlIllIllIlIIlIlI instanceof Library.Handler)) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unrecognized proxy handler: ").append(llllllllllllllllIlIllIllIlIIlIlI)));
+        InvocationHandler invocationHandler = Proxy.getInvocationHandler(library);
+        if (!(invocationHandler instanceof Library.Handler)) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unrecognized proxy handler: ").append(invocationHandler)));
         }
-        final Library.Handler llllllllllllllllIlIllIllIlIIlIIl = (Library.Handler)llllllllllllllllIlIllIllIlIIlIlI;
-        InvocationHandler llllllllllllllllIlIllIllIlIIlIII = new InvocationHandler(){
+        Library.Handler handler = (Library.Handler)invocationHandler;
+        InvocationHandler invocationHandler2 = new InvocationHandler(handler, library){
+            final Library val$library;
+            final Library.Handler val$handler;
 
             /*
-             * WARNING - Removed try catching itself - possible behaviour change.
+             * Enabled aggressive block sorting
+             * Enabled unnecessary exception pruning
+             * Enabled aggressive exception aggregation
+             * Converted monitor instructions to comments
+             * Lifted jumps to return sites
              */
             @Override
-            public Object invoke(Object lllllllllllllllllIIIIlIlIIlIIIll, Method lllllllllllllllllIIIIlIlIIlIIIlI, Object[] lllllllllllllllllIIIIlIlIIlIIIIl) throws Throwable {
-                3 lllllllllllllllllIIIIlIlIIlIIlII;
-                NativeLibrary lllllllllllllllllIIIIlIlIIIlllIl = lllllllllllllllllIIIIlIlIIlIIlII.llllllllllllllllIlIllIllIlIIlIIl.getNativeLibrary();
-                synchronized (lllllllllllllllllIIIIlIlIIIlllIl) {
-                    return lllllllllllllllllIIIIlIlIIlIIlII.llllllllllllllllIlIllIllIlIIlIIl.invoke(lllllllllllllllllIIIIlIlIIlIIlII.llllllllllllllllIlIllIllIlIIIlll, lllllllllllllllllIIIIlIlIIlIIIlI, lllllllllllllllllIIIIlIlIIlIIIIl);
-                }
+            public Object invoke(Object object, Method method, Object[] arrobject) throws Throwable {
+                NativeLibrary nativeLibrary = this.val$handler.getNativeLibrary();
+                // MONITORENTER : nativeLibrary
+                // MONITOREXIT : nativeLibrary
+                return this.val$handler.invoke(this.val$library, method, arrobject);
             }
             {
-                3 lllllllllllllllllIIIIlIlIIlIllIl;
+                this.val$handler = handler;
+                this.val$library = library;
             }
         };
-        return (Library)Proxy.newProxyInstance(llllllllllllllllIlIllIllIlIIlIll.getClassLoader(), llllllllllllllllIlIllIllIlIIlIll.getInterfaces(), llllllllllllllllIlIllIllIlIIlIII);
+        return (Library)Proxy.newProxyInstance(class_.getClassLoader(), class_.getInterfaces(), invocationHandler2);
     }
 
-    public static byte[] toByteArray(String llllllllllllllllIlIllIlllIlllllI) {
-        return Native.toByteArray(llllllllllllllllIlIllIlllIlllllI, Native.getDefaultStringEncoding());
+    public static byte[] toByteArray(String string) {
+        return Native.toByteArray(string, Native.getDefaultStringEncoding());
     }
 
-    private static NativeMapped fromNative(Class<?> llllllllllllllllIlIllIIlIIIllIIl, Object llllllllllllllllIlIllIIlIIIllIII) {
-        return (NativeMapped)NativeMappedConverter.getInstance(llllllllllllllllIlIllIIlIIIllIIl).fromNative(llllllllllllllllIlIllIIlIIIllIII, new FromNativeContext(llllllllllllllllIlIllIIlIIIllIIl));
+    private static NativeMapped fromNative(Class<?> class_, Object object) {
+        return (NativeMapped)NativeMappedConverter.getInstance(class_).fromNative(object, new FromNativeContext(class_));
     }
 
-    static Class<?> findDirectMappedClass(Class<?> llllllllllllllllIlIllIlIlllIIlIl) {
-        Method[] llllllllllllllllIlIllIlIlllIIlll;
-        for (Method llllllllllllllllIlIllIlIlllIlIlI : llllllllllllllllIlIllIlIlllIIlll = llllllllllllllllIlIllIlIlllIIlIl.getDeclaredMethods()) {
-            if ((llllllllllllllllIlIllIlIlllIlIlI.getModifiers() & 0x100) == 0) continue;
-            return llllllllllllllllIlIllIlIlllIIlIl;
+    static Class<?> findDirectMappedClass(Class<?> class_) {
+        Method[] arrmethod;
+        for (Method method : arrmethod = class_.getDeclaredMethods()) {
+            if ((method.getModifiers() & 0x100) == 0) continue;
+            return class_;
         }
-        int llllllllllllllllIlIllIlIlllIIllI = llllllllllllllllIlIllIlIlllIIlIl.getName().lastIndexOf("$");
-        if (llllllllllllllllIlIllIlIlllIIllI != -1) {
-            String llllllllllllllllIlIllIlIlllIlIIl = llllllllllllllllIlIllIlIlllIIlIl.getName().substring(0, llllllllllllllllIlIllIlIlllIIllI);
+        int n = class_.getName().lastIndexOf("$");
+        if (n != -1) {
+            String string = class_.getName().substring(0, n);
             try {
-                return Native.findDirectMappedClass(Class.forName(llllllllllllllllIlIllIlIlllIlIIl, true, llllllllllllllllIlIllIlIlllIIlIl.getClassLoader()));
+                return Native.findDirectMappedClass(Class.forName(string, true, class_.getClassLoader()));
             }
-            catch (ClassNotFoundException llllllllllllllllIlIllIlIlllIIIIl) {
+            catch (ClassNotFoundException classNotFoundException) {
                 // empty catch block
             }
         }
-        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't determine class with native methods from the current context (").append(llllllllllllllllIlIllIlIlllIIlIl).append(")")));
+        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't determine class with native methods from the current context (").append(class_).append(")")));
     }
 
-    static /* bridge */ native /* synthetic */ void write(Pointer var0, long var1, long var3, double[] var5, int var6, int var7);
+    static native void write(Pointer var0, long var1, long var3, double[] var5, int var6, int var7);
 
-    static boolean isCompatibleVersion(String llllllllllllllllIlIlllIIlIlIIIII, String llllllllllllllllIlIlllIIlIIlIlll) {
-        String[] llllllllllllllllIlIlllIIlIIllllI = llllllllllllllllIlIlllIIlIlIIIII.split("\\.");
-        String[] llllllllllllllllIlIlllIIlIIlllIl = llllllllllllllllIlIlllIIlIIlIlll.split("\\.");
-        if (llllllllllllllllIlIlllIIlIIllllI.length < 3 || llllllllllllllllIlIlllIIlIIlllIl.length < 3) {
+    static boolean isCompatibleVersion(String string, String string2) {
+        String[] arrstring = string.split("\\.");
+        String[] arrstring2 = string2.split("\\.");
+        if (arrstring.length < 3 || arrstring2.length < 3) {
             return false;
         }
-        int llllllllllllllllIlIlllIIlIIlllII = Integer.parseInt(llllllllllllllllIlIlllIIlIIllllI[0]);
-        int llllllllllllllllIlIlllIIlIIllIll = Integer.parseInt(llllllllllllllllIlIlllIIlIIlllIl[0]);
-        int llllllllllllllllIlIlllIIlIIllIlI = Integer.parseInt(llllllllllllllllIlIlllIIlIIllllI[1]);
-        int llllllllllllllllIlIlllIIlIIllIIl = Integer.parseInt(llllllllllllllllIlIlllIIlIIlllIl[1]);
-        if (llllllllllllllllIlIlllIIlIIlllII != llllllllllllllllIlIlllIIlIIllIll) {
+        int n = Integer.parseInt(arrstring[0]);
+        int n2 = Integer.parseInt(arrstring2[0]);
+        int n3 = Integer.parseInt(arrstring[1]);
+        int n4 = Integer.parseInt(arrstring2[1]);
+        if (n != n2) {
             return false;
         }
-        return llllllllllllllllIlIlllIIlIIllIlI <= llllllllllllllllIlIlllIIlIIllIIl;
+        return n3 <= n4;
     }
 
-    public static /* bridge */ native /* synthetic */ long malloc(long var0);
+    public static native long malloc(long var0);
 
-    private static /* bridge */ native /* synthetic */ long _getPointer(long var0);
+    private static native long _getPointer(long var0);
 
-    static /* bridge */ native /* synthetic */ void setDouble(Pointer var0, long var1, long var3, double var5);
+    static native void setDouble(Pointer var0, long var1, long var3, double var5);
 
-    private static /* bridge */ native /* synthetic */ String getNativeVersion();
+    private static native String getNativeVersion();
 
-    static /* bridge */ native /* synthetic */ void close(long var0);
+    static native void close(long var0);
 
-    static /* bridge */ native /* synthetic */ void read(Pointer var0, long var1, long var3, long[] var5, int var6, int var7);
+    static native void read(Pointer var0, long var1, long var3, long[] var5, int var6, int var7);
 
-    static /* bridge */ native /* synthetic */ void setFloat(Pointer var0, long var1, long var3, float var5);
+    static native void setFloat(Pointer var0, long var1, long var3, float var5);
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    public static void unregister(Class<?> llllllllllllllllIlIllIlIllIIIlll) {
-        Map<Class<?>, long[]> llllllllllllllllIlIllIlIllIIIllI = registeredClasses;
-        synchronized (llllllllllllllllIlIllIlIllIIIllI) {
-            long[] llllllllllllllllIlIllIlIllIIlIIl = registeredClasses.get(llllllllllllllllIlIllIlIllIIIlll);
-            if (llllllllllllllllIlIllIlIllIIlIIl != null) {
-                Native.unregister(llllllllllllllllIlIllIlIllIIIlll, llllllllllllllllIlIllIlIllIIlIIl);
-                registeredClasses.remove(llllllllllllllllIlIllIlIllIIIlll);
-                registeredLibraries.remove(llllllllllllllllIlIllIlIllIIIlll);
-            }
+    public static void unregister(Class<?> class_) {
+        Map<Class<?>, long[]> map = registeredClasses;
+        synchronized (map) {
+            long[] arrl = registeredClasses.get(class_);
+            if (arrl == null) return;
+            Native.unregister(class_, arrl);
+            registeredClasses.remove(class_);
+            registeredLibraries.remove(class_);
+            return;
         }
     }
 
-    public static <T> T loadLibrary(Class<T> llllllllllllllllIlIlllIIIIlllIll, Map<String, ?> llllllllllllllllIlIlllIIIIllllII) {
-        return Native.loadLibrary(null, llllllllllllllllIlIlllIIIIlllIll, llllllllllllllllIlIlllIIIIllllII);
+    public static <T> T loadLibrary(Class<T> class_, Map<String, ?> map) {
+        return Native.loadLibrary(null, class_, map);
     }
 
-    private static /* bridge */ native /* synthetic */ void invokeStructure(Function var0, long var1, int var3, Object[] var4, long var5, long var7);
+    private static native void invokeStructure(Function var0, long var1, int var3, Object[] var4, long var5, long var7);
 
     static void removeTemporaryFiles() throws IOException {
-        File llllllllllllllllIlIllIllIIIllIIl = Native.getTempDir();
-        FilenameFilter llllllllllllllllIlIllIllIIIllIII = new FilenameFilter(){
+        File file = Native.getTempDir();
+        FilenameFilter filenameFilter = new FilenameFilter(){
 
             @Override
-            public boolean accept(File llllllllllllllllIlllllIIlllllIII, String llllllllllllllllIlllllIIllllIlll) {
-                return llllllllllllllllIlllllIIllllIlll.endsWith(".x") && llllllllllllllllIlllllIIllllIlll.startsWith("jna");
-            }
-            {
-                5 llllllllllllllllIlllllIIllllllII;
+            public boolean accept(File file, String string) {
+                return string.endsWith(".x") && string.startsWith("jna");
             }
         };
-        File[] llllllllllllllllIlIllIllIIIlIlll = llllllllllllllllIlIllIllIIIllIIl.listFiles(llllllllllllllllIlIllIllIIIllIII);
-        for (int llllllllllllllllIlIllIllIIIllIlI = 0; llllllllllllllllIlIllIllIIIlIlll != null && llllllllllllllllIlIllIllIIIllIlI < llllllllllllllllIlIllIllIIIlIlll.length; ++llllllllllllllllIlIllIllIIIllIlI) {
-            File llllllllllllllllIlIllIllIIIlllIl = llllllllllllllllIlIllIllIIIlIlll[llllllllllllllllIlIllIllIIIllIlI];
-            String llllllllllllllllIlIllIllIIIlllII = llllllllllllllllIlIllIllIIIlllIl.getName();
-            llllllllllllllllIlIllIllIIIlllII = llllllllllllllllIlIllIllIIIlllII.substring(0, llllllllllllllllIlIllIllIIIlllII.length() - 2);
-            File llllllllllllllllIlIllIllIIIllIll = new File(llllllllllllllllIlIllIllIIIlllIl.getParentFile(), llllllllllllllllIlIllIllIIIlllII);
-            if (llllllllllllllllIlIllIllIIIllIll.exists() && !llllllllllllllllIlIllIllIIIllIll.delete()) continue;
-            llllllllllllllllIlIllIllIIIlllIl.delete();
+        File[] arrfile = file.listFiles(filenameFilter);
+        for (int i = 0; arrfile != null && i < arrfile.length; ++i) {
+            File file2 = arrfile[i];
+            String string = file2.getName();
+            string = string.substring(0, string.length() - 2);
+            File file3 = new File(file2.getParentFile(), string);
+            if (file3.exists() && !file3.delete()) continue;
+            file2.delete();
         }
     }
 
-    static /* bridge */ native /* synthetic */ long indexOf(Pointer var0, long var1, long var3, byte var5);
+    static native long indexOf(Pointer var0, long var1, long var3, byte var5);
 
-    public static String toString(byte[] llllllllllllllllIlIlllIIIlllIlIl) {
-        return Native.toString(llllllllllllllllIlIlllIIIlllIlIl, Native.getDefaultStringEncoding());
+    public static String toString(byte[] arrby) {
+        return Native.toString(arrby, Native.getDefaultStringEncoding());
     }
 
-    static /* bridge */ native /* synthetic */ short getShort(Pointer var0, long var1, long var3);
+    static native short getShort(Pointer var0, long var1, long var3);
 
     public static Callback.UncaughtExceptionHandler getCallbackExceptionHandler() {
         return callbackExceptionHandler;
@@ -1117,18 +1135,15 @@ implements Version {
         callbackExceptionHandler = DEFAULT_HANDLER = new Callback.UncaughtExceptionHandler(){
 
             @Override
-            public void uncaughtException(Callback lIIlIlIllIllIll, Throwable lIIlIlIllIllIlI) {
-                System.err.println(String.valueOf(new StringBuilder().append("JNA: Callback ").append(lIIlIlIllIllIll).append(" threw the following exception:")));
-                lIIlIlIllIllIlI.printStackTrace();
-            }
-            {
-                1 lIIlIlIlllIIIIl;
+            public void uncaughtException(Callback callback, Throwable throwable) {
+                System.err.println(String.valueOf(new StringBuilder().append("JNA: Callback ").append(callback).append(" threw the following exception:")));
+                throwable.printStackTrace();
             }
         };
         Native.loadNativeDispatchLibrary();
         if (!Native.isCompatibleVersion("5.1.0", Native.getNativeVersion())) {
-            String llllllllllllllllIlIllIIIlIlIllll = System.getProperty("line.separator");
-            throw new Error(String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIIIlIlIllll).append(llllllllllllllllIlIllIIIlIlIllll).append("There is an incompatible JNA native library installed on this system").append(llllllllllllllllIlIllIIIlIlIllll).append("Expected: ").append("5.1.0").append(llllllllllllllllIlIllIIIlIlIllll).append("Found:    ").append(Native.getNativeVersion()).append(llllllllllllllllIlIllIIIlIlIllll).append(jnidispatchPath != null ? String.valueOf(new StringBuilder().append("(at ").append(jnidispatchPath).append(")")) : System.getProperty("java.library.path")).append(".").append(llllllllllllllllIlIllIIIlIlIllll).append("To resolve this issue you may do one of the following:").append(llllllllllllllllIlIllIIIlIlIllll).append(" - remove or uninstall the offending library").append(llllllllllllllllIlIllIIIlIlIllll).append(" - set the system property jna.nosys=true").append(llllllllllllllllIlIllIIIlIlIllll).append(" - set jna.boot.library.path to include the path to the version of the ").append(llllllllllllllllIlIllIIIlIlIllll).append("   jnidispatch library included with the JNA jar file you are using").append(llllllllllllllllIlIllIIIlIlIllll)));
+            String string = System.getProperty("line.separator");
+            throw new Error(String.valueOf(new StringBuilder().append(string).append(string).append("There is an incompatible JNA native library installed on this system").append(string).append("Expected: ").append("5.1.0").append(string).append("Found:    ").append(Native.getNativeVersion()).append(string).append(jnidispatchPath != null ? String.valueOf(new StringBuilder().append("(at ").append(jnidispatchPath).append(")")) : System.getProperty("java.library.path")).append(".").append(string).append("To resolve this issue you may do one of the following:").append(string).append(" - remove or uninstall the offending library").append(string).append(" - set the system property jna.nosys=true").append(string).append(" - set jna.boot.library.path to include the path to the version of the ").append(string).append("   jnidispatch library included with the JNA jar file you are using").append(string)));
         }
         POINTER_SIZE = Native.sizeof(0);
         LONG_SIZE = Native.sizeof(1);
@@ -1143,12 +1158,9 @@ implements Version {
         MAX_PADDING = Platform.isMac() && Platform.isPPC() ? 8 : MAX_ALIGNMENT;
         System.setProperty("jna.loaded", "true");
         finalizer = new Object(){
-            {
-                2 lIIllIIIlIlllII;
-            }
 
             protected void finalize() {
-                Native.dispose();
+                Native.access$000();
             }
         };
         registeredClasses = new WeakHashMap();
@@ -1157,106 +1169,109 @@ implements Version {
 
             @Override
             protected Memory initialValue() {
-                Memory llllllllllllllllIlllIlIlllIIIlll = new Memory(4L);
-                llllllllllllllllIlllIlIlllIIIlll.clear();
-                return llllllllllllllllIlllIlIlllIIIlll;
+                Memory memory = new Memory(4L);
+                memory.clear();
+                return memory;
             }
-            {
-                7 llllllllllllllllIlllIlIlllIIlIlI;
+
+            @Override
+            protected Object initialValue() {
+                return this.initialValue();
             }
         };
         nativeThreads = Collections.synchronizedMap(new WeakHashMap());
     }
 
-    public static int getNativeSize(Class<?> llllllllllllllllIlIllIllIIIIIllI, Object llllllllllllllllIlIllIllIIIIIlll) {
-        if (llllllllllllllllIlIllIllIIIIIllI.isArray()) {
-            int llllllllllllllllIlIllIllIIIIlIlI = Array.getLength(llllllllllllllllIlIllIllIIIIIlll);
-            if (llllllllllllllllIlIllIllIIIIlIlI > 0) {
-                Object llllllllllllllllIlIllIllIIIIlIll = Array.get(llllllllllllllllIlIllIllIIIIIlll, 0);
-                return llllllllllllllllIlIllIllIIIIlIlI * Native.getNativeSize(llllllllllllllllIlIllIllIIIIIllI.getComponentType(), llllllllllllllllIlIllIllIIIIlIll);
+    public static int getNativeSize(Class<?> class_, Object object) {
+        if (class_.isArray()) {
+            int n = Array.getLength(object);
+            if (n > 0) {
+                Object object2 = Array.get(object, 0);
+                return n * Native.getNativeSize(class_.getComponentType(), object2);
             }
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Arrays of length zero not allowed: ").append(llllllllllllllllIlIllIllIIIIIllI)));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Arrays of length zero not allowed: ").append(class_)));
         }
-        if (Structure.class.isAssignableFrom(llllllllllllllllIlIllIllIIIIIllI) && !Structure.ByReference.class.isAssignableFrom(llllllllllllllllIlIllIllIIIIIllI)) {
-            return Structure.size(llllllllllllllllIlIllIllIIIIIllI, (Structure)llllllllllllllllIlIllIllIIIIIlll);
+        if (Structure.class.isAssignableFrom(class_) && !Structure.ByReference.class.isAssignableFrom(class_)) {
+            return Structure.size(class_, (Structure)object);
         }
         try {
-            return Native.getNativeSize(llllllllllllllllIlIllIllIIIIIllI);
+            return Native.getNativeSize(class_);
         }
-        catch (IllegalArgumentException llllllllllllllllIlIllIllIIIIlIIl) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("The type \"").append(llllllllllllllllIlIllIllIIIIIllI.getName()).append("\" is not supported: ").append(llllllllllllllllIlIllIllIIIIlIIl.getMessage())));
+        catch (IllegalArgumentException illegalArgumentException) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("The type \"").append(class_.getName()).append("\" is not supported: ").append(illegalArgumentException.getMessage())));
         }
     }
 
-    static Pointer getPointer(long llllllllllllllllIlIllIIIllIlIlIl) {
-        long llllllllllllllllIlIllIIIllIlIlII = Native._getPointer(llllllllllllllllIlIllIIIllIlIlIl);
-        return llllllllllllllllIlIllIIIllIlIlII == 0L ? null : new Pointer(llllllllllllllllIlIllIIIllIlIlII);
+    static Pointer getPointer(long l) {
+        long l2 = Native._getPointer(l);
+        return l2 == 0L ? null : new Pointer(l2);
     }
 
-    private static int getConversion(Class<?> llllllllllllllllIlIllIlIlIIllllI, TypeMapper llllllllllllllllIlIllIlIlIIlllIl) {
-        if (llllllllllllllllIlIllIlIlIIllllI == Boolean.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Boolean.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Byte.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Byte.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Short.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Short.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Character.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Character.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Integer.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Integer.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Long.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Long.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Float.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Float.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Double.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Double.TYPE;
-        } else if (llllllllllllllllIlIllIlIlIIllllI == Void.class) {
-            llllllllllllllllIlIllIlIlIIllllI = Void.TYPE;
+    private static int getConversion(Class<?> class_, TypeMapper typeMapper) {
+        Class<?> class_2;
+        if (class_ == Boolean.class) {
+            class_ = Boolean.TYPE;
+        } else if (class_ == Byte.class) {
+            class_ = Byte.TYPE;
+        } else if (class_ == Short.class) {
+            class_ = Short.TYPE;
+        } else if (class_ == Character.class) {
+            class_ = Character.TYPE;
+        } else if (class_ == Integer.class) {
+            class_ = Integer.TYPE;
+        } else if (class_ == Long.class) {
+            class_ = Long.TYPE;
+        } else if (class_ == Float.class) {
+            class_ = Float.TYPE;
+        } else if (class_ == Double.class) {
+            class_ = Double.TYPE;
+        } else if (class_ == Void.class) {
+            class_ = Void.TYPE;
         }
-        if (llllllllllllllllIlIllIlIlIIlllIl != null) {
-            FromNativeConverter llllllllllllllllIlIllIlIlIlIIIll = llllllllllllllllIlIllIlIlIIlllIl.getFromNativeConverter(llllllllllllllllIlIllIlIlIIllllI);
-            ToNativeConverter llllllllllllllllIlIllIlIlIlIIIlI = llllllllllllllllIlIllIlIlIIlllIl.getToNativeConverter(llllllllllllllllIlIllIlIlIIllllI);
-            if (llllllllllllllllIlIllIlIlIlIIIll != null) {
-                Class<?> llllllllllllllllIlIllIlIlIlIIlIl = llllllllllllllllIlIllIlIlIlIIIll.nativeType();
-                if (llllllllllllllllIlIllIlIlIlIIlIl == String.class) {
+        if (typeMapper != null) {
+            class_2 = typeMapper.getFromNativeConverter(class_);
+            ToNativeConverter toNativeConverter = typeMapper.getToNativeConverter(class_);
+            if (class_2 != null) {
+                Class<?> class_3 = class_2.nativeType();
+                if (class_3 == String.class) {
                     return 24;
                 }
-                if (llllllllllllllllIlIllIlIlIlIIlIl == WString.class) {
+                if (class_3 == WString.class) {
                     return 25;
                 }
                 return 23;
             }
-            if (llllllllllllllllIlIllIlIlIlIIIlI != null) {
-                Class<?> llllllllllllllllIlIllIlIlIlIIlII = llllllllllllllllIlIllIlIlIlIIIlI.nativeType();
-                if (llllllllllllllllIlIllIlIlIlIIlII == String.class) {
+            if (toNativeConverter != null) {
+                Class<?> class_4 = toNativeConverter.nativeType();
+                if (class_4 == String.class) {
                     return 24;
                 }
-                if (llllllllllllllllIlIllIlIlIlIIlII == WString.class) {
+                if (class_4 == WString.class) {
                     return 25;
                 }
                 return 23;
             }
         }
-        if (Pointer.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
+        if (Pointer.class.isAssignableFrom(class_)) {
             return 1;
         }
-        if (String.class == llllllllllllllllIlIllIlIlIIllllI) {
+        if (String.class == class_) {
             return 2;
         }
-        if (WString.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
+        if (WString.class.isAssignableFrom(class_)) {
             return 20;
         }
-        if (Platform.HAS_BUFFERS && Buffers.isBuffer(llllllllllllllllIlIllIlIlIIllllI)) {
+        if (Platform.HAS_BUFFERS && Buffers.isBuffer(class_)) {
             return 5;
         }
-        if (Structure.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
-            if (Structure.ByValue.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
+        if (Structure.class.isAssignableFrom(class_)) {
+            if (Structure.ByValue.class.isAssignableFrom(class_)) {
                 return 4;
             }
             return 3;
         }
-        if (llllllllllllllllIlIllIlIlIIllllI.isArray()) {
-            switch (llllllllllllllllIlIllIlIlIIllllI.getName().charAt(1)) {
+        if (class_.isArray()) {
+            switch (class_.getName().charAt(1)) {
                 case 'Z': {
                     return 13;
                 }
@@ -1283,24 +1298,24 @@ implements Version {
                 }
             }
         }
-        if (llllllllllllllllIlIllIlIlIIllllI.isPrimitive()) {
-            return llllllllllllllllIlIllIlIlIIllllI == Boolean.TYPE ? 14 : 0;
+        if (class_.isPrimitive()) {
+            return class_ == Boolean.TYPE ? 14 : 0;
         }
-        if (Callback.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
+        if (Callback.class.isAssignableFrom(class_)) {
             return 15;
         }
-        if (IntegerType.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
+        if (IntegerType.class.isAssignableFrom(class_)) {
             return 21;
         }
-        if (PointerType.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
+        if (PointerType.class.isAssignableFrom(class_)) {
             return 22;
         }
-        if (NativeMapped.class.isAssignableFrom(llllllllllllllllIlIllIlIlIIllllI)) {
-            Class<?> llllllllllllllllIlIllIlIlIlIIIIl = NativeMappedConverter.getInstance(llllllllllllllllIlIllIlIlIIllllI).nativeType();
-            if (llllllllllllllllIlIllIlIlIlIIIIl == String.class) {
+        if (NativeMapped.class.isAssignableFrom(class_)) {
+            class_2 = NativeMappedConverter.getInstance(class_).nativeType();
+            if (class_2 == String.class) {
                 return 18;
             }
-            if (llllllllllllllllIlIllIlIlIlIIIIl == WString.class) {
+            if (class_2 == WString.class) {
                 return 19;
             }
             return 17;
@@ -1308,344 +1323,380 @@ implements Version {
         return -1;
     }
 
-    public static long getComponentID(Component llllllllllllllllIlIlllIIlIIIIlIl) throws HeadlessException {
-        return AWT.getComponentID(llllllllllllllllIlIlllIIlIIIIlIl);
+    public static long getComponentID(Component component) throws HeadlessException {
+        return AWT.getComponentID(component);
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * WARNING - Removed back jump from a try to a catch block - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    public static void register(Class<?> llllllllllllllllIlIllIIlIlIllIIl, NativeLibrary llllllllllllllllIlIllIIlIlIlIIIl) {
-        Method[] llllllllllllllllIlIllIIlIlIlIlll = llllllllllllllllIlIllIIlIlIllIIl.getDeclaredMethods();
-        ArrayList<Method> llllllllllllllllIlIllIIlIlIlIllI = new ArrayList<Method>();
-        Map<String, Object> llllllllllllllllIlIllIIlIlIlIlIl = llllllllllllllllIlIllIIlIlIlIIIl.getOptions();
-        TypeMapper llllllllllllllllIlIllIIlIlIlIlII = (TypeMapper)llllllllllllllllIlIllIIlIlIlIlIl.get("type-mapper");
-        llllllllllllllllIlIllIIlIlIlIlIl = Native.cacheOptions(llllllllllllllllIlIllIIlIlIllIIl, llllllllllllllllIlIllIIlIlIlIlIl, null);
-        for (Method llllllllllllllllIlIllIIlIlllIlll : llllllllllllllllIlIllIIlIlIlIlll) {
-            if ((llllllllllllllllIlIllIIlIlllIlll.getModifiers() & 0x100) == 0) continue;
-            llllllllllllllllIlIllIIlIlIlIllI.add(llllllllllllllllIlIllIIlIlllIlll);
+    public static void register(Class<?> class_, NativeLibrary nativeLibrary) {
+        Method[] arrmethod = class_.getDeclaredMethods();
+        ArrayList<Method> arrayList = new ArrayList<Method>();
+        Map<String, Object> map = nativeLibrary.getOptions();
+        TypeMapper typeMapper = (TypeMapper)map.get("type-mapper");
+        map = Native.cacheOptions(class_, map, null);
+        for (Object object : arrmethod) {
+            if ((((Method)object).getModifiers() & 0x100) == 0) continue;
+            arrayList.add((Method)object);
         }
-        long[] llllllllllllllllIlIllIIlIlIlIIll = new long[llllllllllllllllIlIllIIlIlIlIllI.size()];
-        for (int llllllllllllllllIlIllIIlIlIllIlI = 0; llllllllllllllllIlIllIIlIlIllIlI < llllllllllllllllIlIllIIlIlIlIIll.length; ++llllllllllllllllIlIllIIlIlIllIlI) {
-            long llllllllllllllllIlIllIIlIllIIlIl;
-            long llllllllllllllllIlIllIIlIllIIllI;
-            Method llllllllllllllllIlIllIIlIllIlIIl = (Method)llllllllllllllllIlIllIIlIlIlIllI.get(llllllllllllllllIlIllIIlIlIllIlI);
-            String llllllllllllllllIlIllIIlIllIlIII = "(";
-            Class<?> llllllllllllllllIlIllIIlIllIIlll = llllllllllllllllIlIllIIlIllIlIIl.getReturnType();
-            Class<?>[] llllllllllllllllIlIllIIlIllIIlII = llllllllllllllllIlIllIIlIllIlIIl.getParameterTypes();
-            long[] llllllllllllllllIlIllIIlIllIIIll = new long[llllllllllllllllIlIllIIlIllIIlII.length];
-            long[] llllllllllllllllIlIllIIlIllIIIlI = new long[llllllllllllllllIlIllIIlIllIIlII.length];
-            int[] llllllllllllllllIlIllIIlIllIIIIl = new int[llllllllllllllllIlIllIIlIllIIlII.length];
-            ToNativeConverter[] llllllllllllllllIlIllIIlIllIIIII = new ToNativeConverter[llllllllllllllllIlIllIIlIllIIlII.length];
-            FromNativeConverter llllllllllllllllIlIllIIlIlIlllll = null;
-            int llllllllllllllllIlIllIIlIlIllllI = Native.getConversion(llllllllllllllllIlIllIIlIllIIlll, llllllllllllllllIlIllIIlIlIlIlII);
-            boolean llllllllllllllllIlIllIIlIlIlllIl = false;
-            switch (llllllllllllllllIlIllIIlIlIllllI) {
-                case -1: {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIIlIllIIlll).append(" is not a supported return type (in method ").append(llllllllllllllllIlIllIIlIllIlIIl.getName()).append(" in ").append(llllllllllllllllIlIllIIlIlIllIIl).append(")")));
+        Object[] arrobject = new long[arrayList.size()];
+        int n = 0;
+        while (true) {
+            Class<Pointer> class_2;
+            long l;
+            long l2;
+            boolean bl;
+            int n2;
+            FromNativeConverter fromNativeConverter;
+            ToNativeConverter[] arrtoNativeConverter;
+            int[] arrn;
+            long[] arrl;
+            long[] arrl2;
+            Class<?>[] arrclass;
+            Class<?> class_3;
+            Method method;
+            Object object;
+            if (n < arrobject.length) {
+                method = (Method)arrayList.get(n);
+                object = "(";
+                class_3 = method.getReturnType();
+                arrclass = method.getParameterTypes();
+                arrl2 = new long[arrclass.length];
+                arrl = new long[arrclass.length];
+                arrn = new int[arrclass.length];
+                arrtoNativeConverter = new ToNativeConverter[arrclass.length];
+                fromNativeConverter = null;
+                n2 = Native.getConversion(class_3, typeMapper);
+                bl = false;
+                switch (n2) {
+                    case -1: {
+                        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(class_3).append(" is not a supported return type (in method ").append(method.getName()).append(" in ").append(class_).append(")")));
+                    }
+                    case 23: 
+                    case 24: 
+                    case 25: {
+                        fromNativeConverter = typeMapper.getFromNativeConverter(class_3);
+                        l2 = Structure.FFIType.get(class_3.isPrimitive() ? class_3 : Pointer.class).peer;
+                        l = Structure.FFIType.get(fromNativeConverter.nativeType()).peer;
+                        break;
+                    }
+                    case 17: 
+                    case 18: 
+                    case 19: 
+                    case 21: 
+                    case 22: {
+                        l2 = Structure.FFIType.get(Pointer.class).peer;
+                        l = Structure.FFIType.get(NativeMappedConverter.getInstance(class_3).nativeType()).peer;
+                        break;
+                    }
+                    case 3: {
+                        l2 = l = Structure.FFIType.get(Pointer.class).peer;
+                        break;
+                    }
+                    case 4: {
+                        l2 = Structure.FFIType.get(Pointer.class).peer;
+                        l = Structure.FFIType.get(class_3).peer;
+                        break;
+                    }
+                    default: {
+                        l2 = l = Structure.FFIType.get(class_3).peer;
+                    }
                 }
-                case 23: 
-                case 24: 
-                case 25: {
-                    llllllllllllllllIlIllIIlIlIlllll = llllllllllllllllIlIllIIlIlIlIlII.getFromNativeConverter(llllllllllllllllIlIllIIlIllIIlll);
-                    long llllllllllllllllIlIllIIlIlllIlIl = Structure.FFIType.get(llllllllllllllllIlIllIIlIllIIlll.isPrimitive() ? llllllllllllllllIlIllIIlIllIIlll : Pointer.class).peer;
-                    long llllllllllllllllIlIllIIlIlllIllI = Structure.FFIType.get(llllllllllllllllIlIllIIlIlIlllll.nativeType()).peer;
+            } else {
+                Map<Class<?>, long[]> map2 = registeredClasses;
+                synchronized (map2) {
+                    try {}
+                    catch (Throwable throwable) {
+                        int n3;
+                        throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("No method ").append(n3.getName()).append(" with signature ").append((String)object).append(" in ").append(class_)));
+                    }
                     break;
-                }
-                case 17: 
-                case 18: 
-                case 19: 
-                case 21: 
-                case 22: {
-                    long llllllllllllllllIlIllIIlIlllIIll = Structure.FFIType.get(Pointer.class).peer;
-                    long llllllllllllllllIlIllIIlIlllIlII = Structure.FFIType.get(NativeMappedConverter.getInstance(llllllllllllllllIlIllIIlIllIIlll).nativeType()).peer;
-                    break;
-                }
-                case 3: {
-                    long llllllllllllllllIlIllIIlIlllIIlI;
-                    long llllllllllllllllIlIllIIlIlllIIIl = llllllllllllllllIlIllIIlIlllIIlI = Structure.FFIType.get(Pointer.class).peer;
-                    break;
-                }
-                case 4: {
-                    long llllllllllllllllIlIllIIlIllIllll = Structure.FFIType.get(Pointer.class).peer;
-                    long llllllllllllllllIlIllIIlIlllIIII = Structure.FFIType.get(llllllllllllllllIlIllIIlIllIIlll).peer;
-                    break;
-                }
-                default: {
-                    llllllllllllllllIlIllIIlIllIIlIl = llllllllllllllllIlIllIIlIllIIllI = Structure.FFIType.get(llllllllllllllllIlIllIIlIllIIlll).peer;
                 }
             }
-            block19: for (int llllllllllllllllIlIllIIlIllIllII = 0; llllllllllllllllIlIllIIlIllIllII < llllllllllllllllIlIllIIlIllIIlII.length; ++llllllllllllllllIlIllIIlIllIllII) {
-                int llllllllllllllllIlIllIIlIllIllIl;
-                Class<?> llllllllllllllllIlIllIIlIllIlllI = llllllllllllllllIlIllIIlIllIIlII[llllllllllllllllIlIllIIlIllIllII];
-                llllllllllllllllIlIllIIlIllIlIII = String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIIlIllIlIII).append(Native.getSignature(llllllllllllllllIlIllIIlIllIlllI)));
-                llllllllllllllllIlIllIIlIllIIIIl[llllllllllllllllIlIllIIlIllIllII] = llllllllllllllllIlIllIIlIllIllIl = Native.getConversion(llllllllllllllllIlIllIIlIllIlllI, llllllllllllllllIlIllIIlIlIlIlII);
-                if (llllllllllllllllIlIllIIlIllIllIl == -1) {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIIlIllIlllI).append(" is not a supported argument type (in method ").append(llllllllllllllllIlIllIIlIllIlIIl.getName()).append(" in ").append(llllllllllllllllIlIllIIlIlIllIIl).append(")")));
+            block18: for (int i = 0; i < arrclass.length; ++i) {
+                int n4;
+                class_2 = arrclass[i];
+                object = String.valueOf(new StringBuilder().append((String)object).append(Native.getSignature(class_2)));
+                arrn[i] = n4 = Native.getConversion(class_2, typeMapper);
+                if (n4 == -1) {
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(class_2).append(" is not a supported argument type (in method ").append(method.getName()).append(" in ").append(class_).append(")")));
                 }
-                if (llllllllllllllllIlIllIIlIllIllIl == 17 || llllllllllllllllIlIllIIlIllIllIl == 18 || llllllllllllllllIlIllIIlIllIllIl == 19 || llllllllllllllllIlIllIIlIllIllIl == 21) {
-                    llllllllllllllllIlIllIIlIllIlllI = NativeMappedConverter.getInstance(llllllllllllllllIlIllIIlIllIlllI).nativeType();
-                } else if (llllllllllllllllIlIllIIlIllIllIl == 23 || llllllllllllllllIlIllIIlIllIllIl == 24 || llllllllllllllllIlIllIIlIllIllIl == 25) {
-                    llllllllllllllllIlIllIIlIllIIIII[llllllllllllllllIlIllIIlIllIllII] = llllllllllllllllIlIllIIlIlIlIlII.getToNativeConverter(llllllllllllllllIlIllIIlIllIlllI);
+                if (n4 == 17 || n4 == 18 || n4 == 19 || n4 == 21) {
+                    class_2 = NativeMappedConverter.getInstance(class_2).nativeType();
+                } else if (n4 == 23 || n4 == 24 || n4 == 25) {
+                    arrtoNativeConverter[i] = typeMapper.getToNativeConverter(class_2);
                 }
-                switch (llllllllllllllllIlIllIIlIllIllIl) {
+                switch (n4) {
                     case 4: 
                     case 17: 
                     case 18: 
                     case 19: 
                     case 21: 
                     case 22: {
-                        llllllllllllllllIlIllIIlIllIIIll[llllllllllllllllIlIllIIlIllIllII] = Structure.FFIType.get(llllllllllllllllIlIllIIlIllIlllI).peer;
-                        llllllllllllllllIlIllIIlIllIIIlI[llllllllllllllllIlIllIIlIllIllII] = Structure.FFIType.get(Pointer.class).peer;
-                        continue block19;
+                        arrl2[i] = Structure.FFIType.get((Object)class_2).peer;
+                        arrl[i] = Structure.FFIType.get(Pointer.class).peer;
+                        continue block18;
                     }
                     case 23: 
                     case 24: 
                     case 25: {
-                        llllllllllllllllIlIllIIlIllIIIlI[llllllllllllllllIlIllIIlIllIllII] = Structure.FFIType.get(llllllllllllllllIlIllIIlIllIlllI.isPrimitive() ? llllllllllllllllIlIllIIlIllIlllI : Pointer.class).peer;
-                        llllllllllllllllIlIllIIlIllIIIll[llllllllllllllllIlIllIIlIllIllII] = Structure.FFIType.get(llllllllllllllllIlIllIIlIllIIIII[llllllllllllllllIlIllIIlIllIllII].nativeType()).peer;
-                        continue block19;
+                        arrl[i] = Structure.FFIType.get(class_2.isPrimitive() ? class_2 : Pointer.class).peer;
+                        arrl2[i] = Structure.FFIType.get(arrtoNativeConverter[i].nativeType()).peer;
+                        continue block18;
                     }
                     case 0: {
-                        llllllllllllllllIlIllIIlIllIIIlI[llllllllllllllllIlIllIIlIllIllII] = llllllllllllllllIlIllIIlIllIIIll[llllllllllllllllIlIllIIlIllIllII] = Structure.FFIType.get(llllllllllllllllIlIllIIlIllIlllI).peer;
-                        continue block19;
+                        arrl[i] = arrl2[i] = Structure.FFIType.get(class_2).peer;
+                        continue block18;
                     }
                     default: {
-                        llllllllllllllllIlIllIIlIllIIIlI[llllllllllllllllIlIllIIlIllIllII] = llllllllllllllllIlIllIIlIllIIIll[llllllllllllllllIlIllIIlIllIllII] = Structure.FFIType.get(Pointer.class).peer;
+                        arrl[i] = arrl2[i] = Structure.FFIType.get(Pointer.class).peer;
                     }
                 }
             }
-            llllllllllllllllIlIllIIlIllIlIII = String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIIlIllIlIII).append(")"));
-            llllllllllllllllIlIllIIlIllIlIII = String.valueOf(new StringBuilder().append(llllllllllllllllIlIllIIlIllIlIII).append(Native.getSignature(llllllllllllllllIlIllIIlIllIIlll)));
-            Class<?>[] llllllllllllllllIlIllIIlIlIlllII = llllllllllllllllIlIllIIlIllIlIIl.getExceptionTypes();
-            for (int llllllllllllllllIlIllIIlIllIlIll = 0; llllllllllllllllIlIllIIlIllIlIll < llllllllllllllllIlIllIIlIlIlllII.length; ++llllllllllllllllIlIllIIlIllIlIll) {
-                if (!LastErrorException.class.isAssignableFrom(llllllllllllllllIlIllIIlIlIlllII[llllllllllllllllIlIllIIlIllIlIll])) continue;
-                llllllllllllllllIlIllIIlIlIlllIl = true;
+            object = String.valueOf(new StringBuilder().append((String)object).append(")"));
+            object = String.valueOf(new StringBuilder().append((String)object).append(Native.getSignature(class_3)));
+            Class<?>[] arrclass2 = method.getExceptionTypes();
+            for (int i = 0; i < arrclass2.length; ++i) {
+                if (!LastErrorException.class.isAssignableFrom(arrclass2[i])) continue;
+                bl = true;
                 break;
             }
-            Function llllllllllllllllIlIllIIlIlIllIll = llllllllllllllllIlIllIIlIlIlIIIl.getFunction(llllllllllllllllIlIllIIlIllIlIIl.getName(), llllllllllllllllIlIllIIlIllIlIIl);
-            try {
-                llllllllllllllllIlIllIIlIlIlIIll[llllllllllllllllIlIllIIlIlIllIlI] = Native.registerMethod(llllllllllllllllIlIllIIlIlIllIIl, llllllllllllllllIlIllIIlIllIlIIl.getName(), llllllllllllllllIlIllIIlIllIlIII, llllllllllllllllIlIllIIlIllIIIIl, llllllllllllllllIlIllIIlIllIIIlI, llllllllllllllllIlIllIIlIllIIIll, llllllllllllllllIlIllIIlIlIllllI, llllllllllllllllIlIllIIlIllIIlIl, llllllllllllllllIlIllIIlIllIIllI, llllllllllllllllIlIllIIlIllIlIIl, llllllllllllllllIlIllIIlIlIllIll.peer, llllllllllllllllIlIllIIlIlIllIll.getCallingConvention(), llllllllllllllllIlIllIIlIlIlllIl, llllllllllllllllIlIllIIlIllIIIII, llllllllllllllllIlIllIIlIlIlllll, llllllllllllllllIlIllIIlIlIllIll.encoding);
-                continue;
+            class_2 = nativeLibrary.getFunction(method.getName(), method);
+            {
+                arrobject[n] = (Method)Native.registerMethod(class_, method.getName(), (String)object, arrn, arrl, arrl2, n2, l2, l, method, ((Function)class_2).peer, ((Function)((Object)class_2)).getCallingConvention(), bl, arrtoNativeConverter, fromNativeConverter, ((Function)class_2).encoding);
             }
-            catch (NoSuchMethodError llllllllllllllllIlIllIIlIllIlIlI) {
-                throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("No method ").append(llllllllllllllllIlIllIIlIllIlIIl.getName()).append(" with signature ").append(llllllllllllllllIlIllIIlIllIlIII).append(" in ").append(llllllllllllllllIlIllIIlIlIllIIl)));
-            }
+            ++n;
         }
-        Map<Class<?>, long[]> map = registeredClasses;
-        synchronized (map) {
-            registeredClasses.put(llllllllllllllllIlIllIIlIlIllIIl, llllllllllllllllIlIllIIlIlIlIIll);
-            registeredLibraries.put(llllllllllllllllIlIllIIlIlIllIIl, llllllllllllllllIlIllIIlIlIlIIIl);
+        {
+            registeredClasses.put(class_, (long[])arrobject);
+            registeredLibraries.put(class_, nativeLibrary);
+            return;
         }
     }
 
-    static /* bridge */ native /* synthetic */ void write(Pointer var0, long var1, long var3, int[] var5, int var6, int var7);
+    static native void write(Pointer var0, long var1, long var3, int[] var5, int var6, int var7);
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     * Converted monitor instructions to comments
+     * Lifted jumps to return sites
      */
-    static Class<?> findEnclosingLibraryClass(Class<?> llllllllllllllllIlIlllIIIIIIIllI) {
-        Class<?> llllllllllllllllIlIlllIIIIIIlIII;
-        Class<?> llllllllllllllllIlIlllIIIIIIIlll;
-        if (llllllllllllllllIlIlllIIIIIIIllI == null) {
+    static Class<?> findEnclosingLibraryClass(Class<?> class_) {
+        Class<?> class_2;
+        if (class_ == null) {
             return null;
         }
-        Map<Class<?>, Reference<?>> llllllllllllllllIlIlllIIIIIIIlIl = libraries;
-        synchronized (llllllllllllllllIlIlllIIIIIIIlIl) {
-            if (typeOptions.containsKey(llllllllllllllllIlIlllIIIIIIIllI)) {
-                Map<String, Object> llllllllllllllllIlIlllIIIIIIlIll = typeOptions.get(llllllllllllllllIlIlllIIIIIIIllI);
-                Class llllllllllllllllIlIlllIIIIIIlIlI = (Class)llllllllllllllllIlIlllIIIIIIlIll.get("enclosing-library");
-                if (llllllllllllllllIlIlllIIIIIIlIlI != null) {
-                    return llllllllllllllllIlIlllIIIIIIlIlI;
-                }
-                return llllllllllllllllIlIlllIIIIIIIllI;
+        Object object = libraries;
+        // MONITORENTER : object
+        if (typeOptions.containsKey(class_)) {
+            Map<String, Object> map = typeOptions.get(class_);
+            Class class_3 = (Class)map.get("enclosing-library");
+            if (class_3 != null) {
+                // MONITOREXIT : object
+                return class_3;
             }
+            // MONITOREXIT : object
+            return class_;
         }
-        if (Library.class.isAssignableFrom(llllllllllllllllIlIlllIIIIIIIllI)) {
-            return llllllllllllllllIlIlllIIIIIIIllI;
+        // MONITOREXIT : object
+        if (Library.class.isAssignableFrom(class_)) {
+            return class_;
         }
-        if (Callback.class.isAssignableFrom(llllllllllllllllIlIlllIIIIIIIllI)) {
-            llllllllllllllllIlIlllIIIIIIIllI = CallbackReference.findCallbackClass(llllllllllllllllIlIlllIIIIIIIllI);
+        if (Callback.class.isAssignableFrom(class_)) {
+            class_ = CallbackReference.findCallbackClass(class_);
         }
-        if ((llllllllllllllllIlIlllIIIIIIIlll = Native.findEnclosingLibraryClass(llllllllllllllllIlIlllIIIIIIlIII = llllllllllllllllIlIlllIIIIIIIllI.getDeclaringClass())) != null) {
-            return llllllllllllllllIlIlllIIIIIIIlll;
-        }
-        return Native.findEnclosingLibraryClass(llllllllllllllllIlIlllIIIIIIIllI.getSuperclass());
+        if ((class_2 = Native.findEnclosingLibraryClass(object = class_.getDeclaringClass())) == null) return Native.findEnclosingLibraryClass(class_.getSuperclass());
+        return class_2;
     }
 
-    static String getString(Pointer llllllllllllllllIlIllIIIllIIllIl, long llllllllllllllllIlIllIIIllIIlllI) {
-        return Native.getString(llllllllllllllllIlIllIIIllIIllIl, llllllllllllllllIlIllIIIllIIlllI, Native.getDefaultStringEncoding());
+    static String getString(Pointer pointer, long l) {
+        return Native.getString(pointer, l, Native.getDefaultStringEncoding());
     }
 
-    public static void register(NativeLibrary llllllllllllllllIlIllIlIllllIIIl) {
-        Native.register(Native.findDirectMappedClass(Native.getCallingClass()), llllllllllllllllIlIllIlIllllIIIl);
+    public static void register(NativeLibrary nativeLibrary) {
+        Native.register(Native.findDirectMappedClass(Native.getCallingClass()), nativeLibrary);
     }
 
-    static /* bridge */ native /* synthetic */ void read(Pointer var0, long var1, long var3, double[] var5, int var6, int var7);
+    static native void read(Pointer var0, long var1, long var3, double[] var5, int var6, int var7);
 
-    static /* bridge */ native /* synthetic */ ByteBuffer getDirectByteBuffer(Pointer var0, long var1, long var3, long var5);
+    static native ByteBuffer getDirectByteBuffer(Pointer var0, long var1, long var3, long var5);
 
     public static void unregister() {
         Native.unregister(Native.findDirectMappedClass(Native.getCallingClass()));
     }
 
-    static byte[] getBytes(String llllllllllllllllIlIllIllllIIlIlI) {
-        return Native.getBytes(llllllllllllllllIlIllIllllIIlIlI, Native.getDefaultStringEncoding());
+    static byte[] getBytes(String string) {
+        return Native.getBytes(string, Native.getDefaultStringEncoding());
     }
 
-    static /* bridge */ native /* synthetic */ long getWindowHandle0(Component var0);
+    static native long getWindowHandle0(Component var0);
 
     static File getTempDir() throws IOException {
-        File llllllllllllllllIlIllIllIIlIlIIl;
-        String llllllllllllllllIlIllIllIIlIlIII = System.getProperty("jna.tmpdir");
-        if (llllllllllllllllIlIllIllIIlIlIII != null) {
-            File llllllllllllllllIlIllIllIIlIlIll = new File(llllllllllllllllIlIllIllIIlIlIII);
-            llllllllllllllllIlIllIllIIlIlIll.mkdirs();
+        File file;
+        String string = System.getProperty("jna.tmpdir");
+        if (string != null) {
+            file = new File(string);
+            file.mkdirs();
         } else {
-            File llllllllllllllllIlIllIllIIlIlIlI = new File(System.getProperty("java.io.tmpdir"));
-            llllllllllllllllIlIllIllIIlIlIIl = new File(llllllllllllllllIlIllIllIIlIlIlI, String.valueOf(new StringBuilder().append("jna-").append(System.getProperty("user.name").hashCode())));
-            llllllllllllllllIlIllIllIIlIlIIl.mkdirs();
-            if (!llllllllllllllllIlIllIllIIlIlIIl.exists() || !llllllllllllllllIlIllIllIIlIlIIl.canWrite()) {
-                llllllllllllllllIlIllIllIIlIlIIl = llllllllllllllllIlIllIllIIlIlIlI;
+            File file2 = new File(System.getProperty("java.io.tmpdir"));
+            file = new File(file2, String.valueOf(new StringBuilder().append("jna-").append(System.getProperty("user.name").hashCode())));
+            file.mkdirs();
+            if (!file.exists() || !file.canWrite()) {
+                file = file2;
             }
         }
-        if (!llllllllllllllllIlIllIllIIlIlIIl.exists()) {
-            throw new IOException(String.valueOf(new StringBuilder().append("JNA temporary directory '").append(llllllllllllllllIlIllIllIIlIlIIl).append("' does not exist")));
+        if (!file.exists()) {
+            throw new IOException(String.valueOf(new StringBuilder().append("JNA temporary directory '").append(file).append("' does not exist")));
         }
-        if (!llllllllllllllllIlIllIllIIlIlIIl.canWrite()) {
-            throw new IOException(String.valueOf(new StringBuilder().append("JNA temporary directory '").append(llllllllllllllllIlIllIllIIlIlIIl).append("' is not writable")));
+        if (!file.canWrite()) {
+            throw new IOException(String.valueOf(new StringBuilder().append("JNA temporary directory '").append(file).append("' is not writable")));
         }
-        return llllllllllllllllIlIllIllIIlIlIIl;
+        return file;
     }
 
-    static boolean deleteLibrary(File llllllllllllllllIlIlllIIlIIIllll) {
-        if (llllllllllllllllIlIlllIIlIIIllll.delete()) {
+    static boolean deleteLibrary(File file) {
+        if (file.delete()) {
             return true;
         }
-        Native.markTemporaryFile(llllllllllllllllIlIlllIIlIIIllll);
+        Native.markTemporaryFile(file);
         return false;
     }
 
-    public static /* bridge */ native /* synthetic */ int getLastError();
+    public static native int getLastError();
 
-    public static <T> T loadLibrary(String llllllllllllllllIlIlllIIIIlIIlll, Class<T> llllllllllllllllIlIlllIIIIlIIllI, Map<String, ?> llllllllllllllllIlIlllIIIIlIIlIl) {
-        if (!Library.class.isAssignableFrom(llllllllllllllllIlIlllIIIIlIIllI)) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Interface (").append(llllllllllllllllIlIlllIIIIlIIllI.getSimpleName()).append(") of library=").append(llllllllllllllllIlIlllIIIIlIIlll).append(" does not extend ").append(Library.class.getSimpleName())));
+    public static <T> T loadLibrary(String string, Class<T> class_, Map<String, ?> map) {
+        if (!Library.class.isAssignableFrom(class_)) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Interface (").append(class_.getSimpleName()).append(") of library=").append(string).append(" does not extend ").append(Library.class.getSimpleName())));
         }
-        Library.Handler llllllllllllllllIlIlllIIIIlIlIlI = new Library.Handler(llllllllllllllllIlIlllIIIIlIIlll, llllllllllllllllIlIlllIIIIlIIllI, llllllllllllllllIlIlllIIIIlIIlIl);
-        ClassLoader llllllllllllllllIlIlllIIIIlIlIIl = llllllllllllllllIlIlllIIIIlIIllI.getClassLoader();
-        Object llllllllllllllllIlIlllIIIIlIlIII = Proxy.newProxyInstance(llllllllllllllllIlIlllIIIIlIlIIl, new Class[]{llllllllllllllllIlIlllIIIIlIIllI}, (InvocationHandler)llllllllllllllllIlIlllIIIIlIlIlI);
-        Native.cacheOptions(llllllllllllllllIlIlllIIIIlIIllI, llllllllllllllllIlIlllIIIIlIIlIl, llllllllllllllllIlIlllIIIIlIlIII);
-        return llllllllllllllllIlIlllIIIIlIIllI.cast(llllllllllllllllIlIlllIIIIlIlIII);
+        Library.Handler handler = new Library.Handler(string, class_, map);
+        ClassLoader classLoader = class_.getClassLoader();
+        Object object = Proxy.newProxyInstance(classLoader, new Class[]{class_}, (InvocationHandler)handler);
+        Native.cacheOptions(class_, map, object);
+        return class_.cast(object);
     }
 
-    static /* bridge */ native /* synthetic */ void read(Pointer var0, long var1, long var3, char[] var5, int var6, int var7);
+    static native void read(Pointer var0, long var1, long var3, char[] var5, int var6, int var7);
 
-    static /* bridge */ native /* synthetic */ int getInt(Pointer var0, long var1, long var3);
+    static native int getInt(Pointer var0, long var1, long var3);
 
-    static /* bridge */ native /* synthetic */ double invokeDouble(Function var0, long var1, int var3, Object[] var4);
+    static native double invokeDouble(Function var0, long var1, int var3, Object[] var4);
 
-    static /* bridge */ native /* synthetic */ void write(Pointer var0, long var1, long var3, float[] var5, int var6, int var7);
+    static native void write(Pointer var0, long var1, long var3, float[] var5, int var6, int var7);
 
-    public static /* bridge */ native /* synthetic */ void setLastError(int var0);
+    public static native void setLastError(int var0);
 
-    private static Object toNative(ToNativeConverter llllllllllllllllIlIllIIlIIIIIlll, Object llllllllllllllllIlIllIIlIIIIlIII) {
-        return llllllllllllllllIlIllIIlIIIIIlll.toNative(llllllllllllllllIlIllIIlIIIIlIII, new ToNativeContext());
+    private static Object toNative(ToNativeConverter toNativeConverter, Object object) {
+        return toNativeConverter.toNative(object, new ToNativeContext());
     }
 
-    static /* bridge */ native /* synthetic */ long getLong(Pointer var0, long var1, long var3);
+    static native long getLong(Pointer var0, long var1, long var3);
 
-    public static <T> T loadLibrary(Class<T> llllllllllllllllIlIlllIIIlIIIIIl) {
-        return Native.loadLibrary(null, llllllllllllllllIlIlllIIIlIIIIIl);
+    public static <T> T loadLibrary(Class<T> class_) {
+        return Native.loadLibrary(null, class_);
     }
 
-    static /* bridge */ native /* synthetic */ String getWideString(Pointer var0, long var1, long var3);
+    static native String getWideString(Pointer var0, long var1, long var3);
+
+    static void access$000() {
+        Native.dispose();
+    }
 
     private Native() {
-        Native llllllllllllllllIlIlllIIlIIIllII;
     }
 
-    static /* bridge */ native /* synthetic */ void write(Pointer var0, long var1, long var3, char[] var5, int var6, int var7);
+    static native void write(Pointer var0, long var1, long var3, char[] var5, int var6, int var7);
 
-    static String replace(String llllllllllllllllIlIllIlIlIlIllll, String llllllllllllllllIlIllIlIlIllIIlI, String llllllllllllllllIlIllIlIlIllIIIl) {
-        StringBuilder llllllllllllllllIlIllIlIlIllIIII = new StringBuilder();
+    static String replace(String string, String string2, String string3) {
+        StringBuilder stringBuilder = new StringBuilder();
         while (true) {
-            int llllllllllllllllIlIllIlIlIllIlII;
-            if ((llllllllllllllllIlIllIlIlIllIlII = llllllllllllllllIlIllIlIlIllIIIl.indexOf(llllllllllllllllIlIllIlIlIlIllll)) == -1) break;
-            llllllllllllllllIlIllIlIlIllIIII.append(llllllllllllllllIlIllIlIlIllIIIl.substring(0, llllllllllllllllIlIllIlIlIllIlII));
-            llllllllllllllllIlIllIlIlIllIIII.append(llllllllllllllllIlIllIlIlIllIIlI);
-            llllllllllllllllIlIllIlIlIllIIIl = llllllllllllllllIlIllIlIlIllIIIl.substring(llllllllllllllllIlIllIlIlIllIlII + llllllllllllllllIlIllIlIlIlIllll.length());
+            int n;
+            if ((n = string3.indexOf(string)) == -1) break;
+            stringBuilder.append(string3.substring(0, n));
+            stringBuilder.append(string2);
+            string3 = string3.substring(n + string.length());
         }
-        llllllllllllllllIlIllIlIlIllIIII.append(llllllllllllllllIlIllIlIlIllIIIl);
-        return String.valueOf(llllllllllllllllIlIllIlIlIllIIII);
+        stringBuilder.append(string3);
+        return String.valueOf(stringBuilder);
     }
 
-    static /* bridge */ native /* synthetic */ void write(Pointer var0, long var1, long var3, byte[] var5, int var6, int var7);
+    static native void write(Pointer var0, long var1, long var3, byte[] var5, int var6, int var7);
 
-    public static File extractFromResourcePath(String llllllllllllllllIlIllIllIllllllI) throws IOException {
-        return Native.extractFromResourcePath(llllllllllllllllIlIllIllIllllllI, null);
+    public static File extractFromResourcePath(String string) throws IOException {
+        return Native.extractFromResourcePath(string, null);
     }
 
-    static /* bridge */ native /* synthetic */ void setPointer(Pointer var0, long var1, long var3, long var5);
+    static native void setPointer(Pointer var0, long var1, long var3, long var5);
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    private static Map<String, Object> cacheOptions(Class<?> llllllllllllllllIlIllIIlIIlIllII, Map<String, ?> llllllllllllllllIlIllIIlIIlIIlll, Object llllllllllllllllIlIllIIlIIlIIllI) {
-        HashMap<String, Object> llllllllllllllllIlIllIIlIIlIlIIl = new HashMap<String, Object>(llllllllllllllllIlIllIIlIIlIIlll);
-        llllllllllllllllIlIllIIlIIlIlIIl.put("enclosing-library", llllllllllllllllIlIllIIlIIlIllII);
-        Map<Class<?>, Reference<?>> llllllllllllllllIlIllIIlIIlIIlII = libraries;
-        synchronized (llllllllllllllllIlIllIIlIIlIIlII) {
-            typeOptions.put(llllllllllllllllIlIllIIlIIlIllII, llllllllllllllllIlIllIIlIIlIlIIl);
-            if (llllllllllllllllIlIllIIlIIlIIllI != null) {
-                libraries.put(llllllllllllllllIlIllIIlIIlIllII, new WeakReference<Object>(llllllllllllllllIlIllIIlIIlIIllI));
+    private static Map<String, Object> cacheOptions(Class<?> class_, Map<String, ?> map, Object object) {
+        HashMap<String, Object> hashMap = new HashMap<String, Object>(map);
+        hashMap.put("enclosing-library", class_);
+        Map<Class<?>, Reference<?>> map2 = libraries;
+        synchronized (map2) {
+            Class<?>[] arrclass;
+            typeOptions.put(class_, hashMap);
+            if (object != null) {
+                libraries.put(class_, new WeakReference<Object>(object));
             }
-            if (!llllllllllllllllIlIllIIlIIlIllII.isInterface() && Library.class.isAssignableFrom(llllllllllllllllIlIllIIlIIlIllII)) {
-                Class<?>[] llllllllllllllllIlIllIIlIIlIllIl;
-                for (Class<?> llllllllllllllllIlIllIIlIIlIlllI : llllllllllllllllIlIllIIlIIlIllIl = llllllllllllllllIlIllIIlIIlIllII.getInterfaces()) {
-                    if (!Library.class.isAssignableFrom(llllllllllllllllIlIllIIlIIlIlllI)) continue;
-                    Native.cacheOptions(llllllllllllllllIlIllIIlIIlIlllI, llllllllllllllllIlIllIIlIIlIlIIl, llllllllllllllllIlIllIIlIIlIIllI);
-                    break;
+            if (class_.isInterface()) return hashMap;
+            if (!Library.class.isAssignableFrom(class_)) return hashMap;
+            Class<?>[] arrclass2 = arrclass = class_.getInterfaces();
+            int n = arrclass2.length;
+            int n2 = 0;
+            while (n2 < n) {
+                Class<?> class_2 = arrclass2[n2];
+                if (Library.class.isAssignableFrom(class_2)) {
+                    Native.cacheOptions(class_2, hashMap, object);
+                    return hashMap;
                 }
+                ++n2;
             }
+            return hashMap;
         }
-        return llllllllllllllllIlIllIIlIIlIlIIl;
     }
 
     private static class AWT {
-        static long getWindowID(Window llllllllllllllllIlIlIllIIllllllI) throws HeadlessException {
-            return AWT.getComponentID(llllllllllllllllIlIlIllIIllllllI);
+        static long getWindowID(Window window) throws HeadlessException {
+            return AWT.getComponentID(window);
         }
 
-        static long getComponentID(Object llllllllllllllllIlIlIllIIllllIII) throws HeadlessException {
+        static long getComponentID(Object object) throws HeadlessException {
             if (GraphicsEnvironment.isHeadless()) {
                 throw new HeadlessException("No native windows when headless");
             }
-            Component llllllllllllllllIlIlIllIIllllIIl = (Component)llllllllllllllllIlIlIllIIllllIII;
-            if (llllllllllllllllIlIlIllIIllllIIl.isLightweight()) {
+            Component component = (Component)object;
+            if (component.isLightweight()) {
                 throw new IllegalArgumentException("Component must be heavyweight");
             }
-            if (!llllllllllllllllIlIlIllIIllllIIl.isDisplayable()) {
+            if (!component.isDisplayable()) {
                 throw new IllegalStateException("Component must be displayable");
             }
-            if (Platform.isX11() && System.getProperty("java.version").startsWith("1.4") && !llllllllllllllllIlIlIllIIllllIIl.isVisible()) {
+            if (Platform.isX11() && System.getProperty("java.version").startsWith("1.4") && !component.isVisible()) {
                 throw new IllegalStateException("Component must be visible");
             }
-            return Native.getWindowHandle0(llllllllllllllllIlIlIllIIllllIIl);
+            return Native.getWindowHandle0(component);
         }
 
         private AWT() {
-            AWT llllllllllllllllIlIlIllIlIIIIIIl;
         }
     }
 
     private static class Buffers {
         private Buffers() {
-            Buffers lllllllllllllllllllIIIIIIlllIlIl;
         }
 
-        static boolean isBuffer(Class<?> lllllllllllllllllllIIIIIIlllIIlI) {
-            return Buffer.class.isAssignableFrom(lllllllllllllllllllIIIIIIlllIIlI);
+        static boolean isBuffer(Class<?> class_) {
+            return Buffer.class.isAssignableFrom(class_);
         }
     }
 

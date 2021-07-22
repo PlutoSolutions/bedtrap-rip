@@ -9,29 +9,31 @@ import minegame159.meteorclient.utils.network.HttpUtils;
 import minegame159.meteorclient.utils.network.MeteorExecutor;
 
 public class OnlinePlayers {
-    private static /* synthetic */ long lastPingTime;
+    private static long lastPingTime;
+
+    private static void lambda$leave$1() {
+        HttpUtils.post("http://meteorclient.com/api/online/leave");
+    }
 
     public static void update() {
-        long llllllllllllllllIllllIlIlIlIIIlI = System.currentTimeMillis();
-        if (llllllllllllllllIllllIlIlIlIIIlI - lastPingTime > 300000L) {
-            MeteorExecutor.execute(() -> {
-                String llllllllllllllllIllllIlIlIIllllI = "http://meteorclient.com/api/online/ping";
-                String llllllllllllllllIllllIlIlIIlllIl = Utils.mc.method_1548().method_1673();
-                if (llllllllllllllllIllllIlIlIIlllIl != null && !llllllllllllllllIllllIlIlIIlllIl.isEmpty() && Config.get().sendDataToApi) {
-                    llllllllllllllllIllllIlIlIIllllI = String.valueOf(new StringBuilder().append(llllllllllllllllIllllIlIlIIllllI).append("?uuid=").append(llllllllllllllllIllllIlIlIIlllIl));
-                }
-                HttpUtils.post(llllllllllllllllIllllIlIlIIllllI);
-            });
-            lastPingTime = llllllllllllllllIllllIlIlIlIIIlI;
+        long l = System.currentTimeMillis();
+        if (l - lastPingTime > 300000L) {
+            MeteorExecutor.execute(OnlinePlayers::lambda$update$0);
+            lastPingTime = l;
         }
     }
 
     public static void leave() {
-        MeteorExecutor.execute(() -> HttpUtils.post("http://meteorclient.com/api/online/leave"));
+        MeteorExecutor.execute(OnlinePlayers::lambda$leave$1);
     }
 
-    public OnlinePlayers() {
-        OnlinePlayers llllllllllllllllIllllIlIlIlIIlIl;
+    private static void lambda$update$0() {
+        String string = "http://meteorclient.com/api/online/ping";
+        String string2 = Utils.mc.method_1548().method_1673();
+        if (string2 != null && !string2.isEmpty() && Config.get().sendDataToApi) {
+            string = String.valueOf(new StringBuilder().append(string).append("?uuid=").append(string2));
+        }
+        HttpUtils.post(string);
     }
 
     public static void forcePing() {

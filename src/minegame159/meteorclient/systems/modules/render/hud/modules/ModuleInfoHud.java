@@ -25,92 +25,86 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 
 public class ModuleInfoHud
 extends HudElement {
-    private final /* synthetic */ Setting<Boolean> info;
-    private final /* synthetic */ Setting<SettingColor> offColor;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<SettingColor> onColor;
-    private final /* synthetic */ Setting<List<Module>> modules;
+    private final Setting<Boolean> info;
+    private final Setting<SettingColor> offColor;
+    private final SettingGroup sgGeneral;
+    private final Setting<SettingColor> onColor;
+    private final Setting<List<Module>> modules;
 
-    public ModuleInfoHud(HUD lllllllllllllllllIIIllIllllIlIII) {
-        super(lllllllllllllllllIIIllIllllIlIII, "module-info", "Displays if selected modules are enabled or disabled.", false);
-        ModuleInfoHud lllllllllllllllllIIIllIllllIIlll;
-        lllllllllllllllllIIIllIllllIIlll.sgGeneral = lllllllllllllllllIIIllIllllIIlll.settings.getDefaultGroup();
-        lllllllllllllllllIIIllIllllIIlll.modules = lllllllllllllllllIIIllIllllIIlll.sgGeneral.add(new ModuleListSetting.Builder().name("modules").description("Which modules to display").defaultValue(ModuleInfoHud.getDefaultModules()).build());
-        lllllllllllllllllIIIllIllllIIlll.info = lllllllllllllllllIIIllIllllIIlll.sgGeneral.add(new BoolSetting.Builder().name("additional-info").description("Shows additional info from the module next to the name in the module info list.").defaultValue(true).build());
-        lllllllllllllllllIIIllIllllIIlll.onColor = lllllllllllllllllIIIllIllllIIlll.sgGeneral.add(new ColorSetting.Builder().name("on-color").description("Color when module is on.").defaultValue(new SettingColor(25, 225, 25)).build());
-        lllllllllllllllllIIIllIllllIIlll.offColor = lllllllllllllllllIIIllIllllIIlll.sgGeneral.add(new ColorSetting.Builder().name("off-color").description("Color when module is off.").defaultValue(new SettingColor(225, 25, 25)).build());
+    public ModuleInfoHud(HUD hUD) {
+        super(hUD, "module-info", "Displays if selected modules are enabled or disabled.", false);
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.modules = this.sgGeneral.add(new ModuleListSetting.Builder().name("modules").description("Which modules to display").defaultValue(ModuleInfoHud.getDefaultModules()).build());
+        this.info = this.sgGeneral.add(new BoolSetting.Builder().name("additional-info").description("Shows additional info from the module next to the name in the module info list.").defaultValue(true).build());
+        this.onColor = this.sgGeneral.add(new ColorSetting.Builder().name("on-color").description("Color when module is on.").defaultValue(new SettingColor(25, 225, 25)).build());
+        this.offColor = this.sgGeneral.add(new ColorSetting.Builder().name("off-color").description("Color when module is off.").defaultValue(new SettingColor(225, 25, 25)).build());
     }
 
-    private void renderModule(HudRenderer lllllllllllllllllIIIllIllIllIIll, Module lllllllllllllllllIIIllIllIllIIlI, double lllllllllllllllllIIIllIllIllIIIl, double lllllllllllllllllIIIllIllIllIllI) {
-        ModuleInfoHud lllllllllllllllllIIIllIllIlllIlI;
-        lllllllllllllllllIIIllIllIllIIll.text(lllllllllllllllllIIIllIllIllIIlI.title, lllllllllllllllllIIIllIllIllIIIl, lllllllllllllllllIIIllIllIllIllI, lllllllllllllllllIIIllIllIlllIlI.hud.primaryColor.get());
-        String lllllllllllllllllIIIllIllIllIlIl = lllllllllllllllllIIIllIllIlllIlI.getModuleInfo(lllllllllllllllllIIIllIllIllIIlI);
-        lllllllllllllllllIIIllIllIllIIll.text(lllllllllllllllllIIIllIllIllIlIl, lllllllllllllllllIIIllIllIllIIIl + lllllllllllllllllIIIllIllIllIIll.textWidth(lllllllllllllllllIIIllIllIllIIlI.title) + lllllllllllllllllIIIllIllIllIIll.textWidth(" "), lllllllllllllllllIIIllIllIllIllI, lllllllllllllllllIIIllIllIllIIlI.isActive() ? (Color)lllllllllllllllllIIIllIllIlllIlI.onColor.get() : (Color)lllllllllllllllllIIIllIllIlllIlI.offColor.get());
+    private void renderModule(HudRenderer hudRenderer, Module module, double d, double d2) {
+        hudRenderer.text(module.title, d, d2, this.hud.primaryColor.get());
+        String string = this.getModuleInfo(module);
+        hudRenderer.text(string, d + hudRenderer.textWidth(module.title) + hudRenderer.textWidth(" "), d2, module.isActive() ? (Color)this.onColor.get() : (Color)this.offColor.get());
     }
 
     private static List<Module> getDefaultModules() {
-        ArrayList<Module> lllllllllllllllllIIIllIllIIllIll = new ArrayList<Module>(5);
-        lllllllllllllllllIIIllIllIIllIll.add(Modules.get().get(KillAura.class));
-        lllllllllllllllllIIIllIllIIllIll.add(Modules.get().get(CrystalAura.class));
-        lllllllllllllllllIIIllIllIIllIll.add(Modules.get().get(AnchorAura.class));
-        lllllllllllllllllIIIllIllIIllIll.add(Modules.get().get(BedAura.class));
-        lllllllllllllllllIIIllIllIIllIll.add(Modules.get().get(Surround.class));
-        return lllllllllllllllllIIIllIllIIllIll;
+        ArrayList<Module> arrayList = new ArrayList<Module>(5);
+        arrayList.add(Modules.get().get(KillAura.class));
+        arrayList.add(Modules.get().get(CrystalAura.class));
+        arrayList.add(Modules.get().get(AnchorAura.class));
+        arrayList.add(Modules.get().get(BedAura.class));
+        arrayList.add(Modules.get().get(Surround.class));
+        return arrayList;
     }
 
-    private double getModuleWidth(HudRenderer lllllllllllllllllIIIllIllIlIIlIl, Module lllllllllllllllllIIIllIllIlIIlII) {
-        ModuleInfoHud lllllllllllllllllIIIllIllIlIIllI;
-        double lllllllllllllllllIIIllIllIlIIlll = lllllllllllllllllIIIllIllIlIIlIl.textWidth(lllllllllllllllllIIIllIllIlIIlII.title);
-        if (lllllllllllllllllIIIllIllIlIIllI.info.get().booleanValue()) {
-            lllllllllllllllllIIIllIllIlIIlll += lllllllllllllllllIIIllIllIlIIlIl.textWidth(" ") + lllllllllllllllllIIIllIllIlIIlIl.textWidth(lllllllllllllllllIIIllIllIlIIllI.getModuleInfo(lllllllllllllllllIIIllIllIlIIlII));
+    private double getModuleWidth(HudRenderer hudRenderer, Module module) {
+        double d = hudRenderer.textWidth(module.title);
+        if (this.info.get().booleanValue()) {
+            d += hudRenderer.textWidth(" ") + hudRenderer.textWidth(this.getModuleInfo(module));
         }
-        return lllllllllllllllllIIIllIllIlIIlll;
+        return d;
     }
 
-    private String getModuleInfo(Module lllllllllllllllllIIIllIllIIlllIl) {
-        ModuleInfoHud lllllllllllllllllIIIllIllIlIIIII;
-        if (lllllllllllllllllIIIllIllIIlllIl.getInfoString() != null && lllllllllllllllllIIIllIllIIlllIl.isActive() && lllllllllllllllllIIIllIllIlIIIII.info.get().booleanValue()) {
-            return lllllllllllllllllIIIllIllIIlllIl.getInfoString();
+    private String getModuleInfo(Module module) {
+        if (module.getInfoString() != null && module.isActive() && this.info.get().booleanValue()) {
+            return module.getInfoString();
         }
-        if (lllllllllllllllllIIIllIllIIlllIl.isActive()) {
+        if (module.isActive()) {
             return "ON";
         }
         return "OFF";
     }
 
     @Override
-    public void update(HudRenderer lllllllllllllllllIIIllIlllIlIlll) {
-        ModuleInfoHud lllllllllllllllllIIIllIlllIllIII;
-        if (Modules.get() == null || lllllllllllllllllIIIllIlllIllIII.modules.get().isEmpty()) {
-            lllllllllllllllllIIIllIlllIllIII.box.setSize(lllllllllllllllllIIIllIlllIlIlll.textWidth("Module Info"), lllllllllllllllllIIIllIlllIlIlll.textHeight());
+    public void update(HudRenderer hudRenderer) {
+        if (Modules.get() == null || this.modules.get().isEmpty()) {
+            this.box.setSize(hudRenderer.textWidth("Module Info"), hudRenderer.textHeight());
             return;
         }
-        double lllllllllllllllllIIIllIlllIllIll = 0.0;
-        double lllllllllllllllllIIIllIlllIllIlI = 0.0;
-        int lllllllllllllllllIIIllIlllIllIIl = 0;
-        for (Module lllllllllllllllllIIIllIlllIllllI : lllllllllllllllllIIIllIlllIllIII.modules.get()) {
-            lllllllllllllllllIIIllIlllIllIll = Math.max(lllllllllllllllllIIIllIlllIllIll, lllllllllllllllllIIIllIlllIllIII.getModuleWidth(lllllllllllllllllIIIllIlllIlIlll, lllllllllllllllllIIIllIlllIllllI));
-            lllllllllllllllllIIIllIlllIllIlI += lllllllllllllllllIIIllIlllIlIlll.textHeight();
-            if (lllllllllllllllllIIIllIlllIllIIl > 0) {
-                lllllllllllllllllIIIllIlllIllIlI += 2.0;
+        double d = 0.0;
+        double d2 = 0.0;
+        int n = 0;
+        for (Module module : this.modules.get()) {
+            d = Math.max(d, this.getModuleWidth(hudRenderer, module));
+            d2 += hudRenderer.textHeight();
+            if (n > 0) {
+                d2 += 2.0;
             }
-            ++lllllllllllllllllIIIllIlllIllIIl;
+            ++n;
         }
-        lllllllllllllllllIIIllIlllIllIII.box.setSize(lllllllllllllllllIIIllIlllIllIll, lllllllllllllllllIIIllIlllIllIlI);
+        this.box.setSize(d, d2);
     }
 
     @Override
-    public void render(HudRenderer lllllllllllllllllIIIllIlllIIIlIl) {
-        ModuleInfoHud lllllllllllllllllIIIllIlllIIlIlI;
-        double lllllllllllllllllIIIllIlllIIlIII = lllllllllllllllllIIIllIlllIIlIlI.box.getX();
-        double lllllllllllllllllIIIllIlllIIIlll = lllllllllllllllllIIIllIlllIIlIlI.box.getY();
-        if (Modules.get() == null || lllllllllllllllllIIIllIlllIIlIlI.modules.get().isEmpty()) {
-            lllllllllllllllllIIIllIlllIIIlIl.text("Module Info", lllllllllllllllllIIIllIlllIIlIII, lllllllllllllllllIIIllIlllIIIlll, lllllllllllllllllIIIllIlllIIlIlI.hud.primaryColor.get());
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX();
+        double d2 = this.box.getY();
+        if (Modules.get() == null || this.modules.get().isEmpty()) {
+            hudRenderer.text("Module Info", d, d2, this.hud.primaryColor.get());
             return;
         }
-        for (Module lllllllllllllllllIIIllIlllIIlIll : lllllllllllllllllIIIllIlllIIlIlI.modules.get()) {
-            lllllllllllllllllIIIllIlllIIlIlI.renderModule(lllllllllllllllllIIIllIlllIIIlIl, lllllllllllllllllIIIllIlllIIlIll, lllllllllllllllllIIIllIlllIIlIII + lllllllllllllllllIIIllIlllIIlIlI.box.alignX(lllllllllllllllllIIIllIlllIIlIlI.getModuleWidth(lllllllllllllllllIIIllIlllIIIlIl, lllllllllllllllllIIIllIlllIIlIll)), lllllllllllllllllIIIllIlllIIIlll);
-            lllllllllllllllllIIIllIlllIIIlll += 2.0 + lllllllllllllllllIIIllIlllIIIlIl.textHeight();
+        for (Module module : this.modules.get()) {
+            this.renderModule(hudRenderer, module, d + this.box.alignX(this.getModuleWidth(hudRenderer, module)), d2);
+            d2 += 2.0 + hudRenderer.textHeight();
         }
     }
 }

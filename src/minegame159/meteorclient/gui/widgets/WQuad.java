@@ -8,19 +8,17 @@ import minegame159.meteorclient.utils.render.color.Color;
 
 public abstract class WQuad
 extends WWidget {
-    public /* synthetic */ Color color;
+    public Color color;
 
-    public WQuad(Color lllllllllllllllllIIIlllIIlIllIlI) {
-        WQuad lllllllllllllllllIIIlllIIlIlllIl;
-        lllllllllllllllllIIIlllIIlIlllIl.color = lllllllllllllllllIIIlllIIlIllIlI;
+    public WQuad(Color color) {
+        this.color = color;
     }
 
     @Override
     protected void onCalculateSize() {
-        WQuad lllllllllllllllllIIIlllIIlIlIlll;
-        double lllllllllllllllllIIIlllIIlIlIllI;
-        lllllllllllllllllIIIlllIIlIlIlll.width = lllllllllllllllllIIIlllIIlIlIllI = lllllllllllllllllIIIlllIIlIlIlll.theme.scale(32.0);
-        lllllllllllllllllIIIlllIIlIlIlll.height = lllllllllllllllllIIIlllIIlIlIllI;
+        double d;
+        this.width = d = this.theme.scale(32.0);
+        this.height = d;
     }
 }
 

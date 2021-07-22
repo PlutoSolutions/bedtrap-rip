@@ -49,11 +49,11 @@ extends ScreenMixin {
     }
 
     @Inject(method={"init"}, at={@At(value="TAIL")})
-    private void onRenderBackground(CallbackInfo info) {
+    private void onRenderBackground(CallbackInfo callbackInfo) {
         if (Modules.get().get(AutoReconnect.class).lastServerInfo != null) {
-            int x = this.field_22789 / 2 - 100;
-            int y = Math.min(this.field_22790 / 2 + this.field_2454 / 2 + 32, this.field_22790 - 30);
-            this.reconnectBtn = this.method_25411(new class_4185(x, y, 200, 20, (class_2561)new class_2585(this.getText()), button -> this.field_22787.method_1507((class_437)new class_412((class_437)new class_500((class_437)new class_442()), this.field_22787, Modules.get().get(AutoReconnect.class).lastServerInfo))));
+            int n = this.field_22789 / 2 - 100;
+            int n2 = Math.min(this.field_22790 / 2 + this.field_2454 / 2 + 32, this.field_22790 - 30);
+            this.reconnectBtn = this.method_25411(new class_4185(n, n2, 200, 20, (class_2561)new class_2585(this.getText()), this::lambda$onRenderBackground$0));
         }
     }
 
@@ -73,11 +73,15 @@ extends ScreenMixin {
     }
 
     private String getText() {
-        String reconnectText = "Reconnect";
+        String string = "Reconnect";
         if (Modules.get().isActive(AutoReconnect.class)) {
-            reconnectText = reconnectText + " " + String.format("(%.1f)", this.time / 20.0);
+            string = string + " " + String.format("(%.1f)", this.time / 20.0);
         }
-        return reconnectText;
+        return string;
+    }
+
+    private void lambda$onRenderBackground$0(class_4185 class_41852) {
+        this.field_22787.method_1507((class_437)new class_412((class_437)new class_500((class_437)new class_442()), this.field_22787, Modules.get().get(AutoReconnect.class).lastServerInfo));
     }
 }
 

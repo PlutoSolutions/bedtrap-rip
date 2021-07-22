@@ -8,87 +8,74 @@ import java.util.HashMap;
 import minegame159.meteorclient.utils.notebot.nbs.Layer;
 
 public class Song {
-    private final /* synthetic */ short songHeight;
-    private final /* synthetic */ File path;
-    private final /* synthetic */ short length;
-    private final /* synthetic */ String title;
-    private final /* synthetic */ String author;
-    private final /* synthetic */ float speed;
-    private /* synthetic */ HashMap<Integer, Layer> layerHashMap;
-    private final /* synthetic */ String description;
-    private final /* synthetic */ float delay;
+    private final short songHeight;
+    private final File path;
+    private final short length;
+    private final String title;
+    private final String author;
+    private final float speed;
+    private HashMap<Integer, Layer> layerHashMap = new HashMap();
+    private final String description;
+    private final float delay;
 
-    public Song(Song llllllllllllllllIllIlIllIllIllII) {
-        Song llllllllllllllllIllIlIllIllIlIll;
-        llllllllllllllllIllIlIllIllIlIll.layerHashMap = new HashMap();
-        llllllllllllllllIllIlIllIllIlIll.speed = llllllllllllllllIllIlIllIllIllII.getSpeed();
-        llllllllllllllllIllIlIllIllIlIll.delay = 20.0f / llllllllllllllllIllIlIllIllIlIll.speed;
-        llllllllllllllllIllIlIllIllIlIll.layerHashMap = llllllllllllllllIllIlIllIllIllII.getLayerHashMap();
-        llllllllllllllllIllIlIllIllIlIll.songHeight = llllllllllllllllIllIlIllIllIllII.getSongHeight();
-        llllllllllllllllIllIlIllIllIlIll.length = llllllllllllllllIllIlIllIllIllII.getLength();
-        llllllllllllllllIllIlIllIllIlIll.title = llllllllllllllllIllIlIllIllIllII.getTitle();
-        llllllllllllllllIllIlIllIllIlIll.author = llllllllllllllllIllIlIllIllIllII.getAuthor();
-        llllllllllllllllIllIlIllIllIlIll.description = llllllllllllllllIllIlIllIllIllII.getDescription();
-        llllllllllllllllIllIlIllIllIlIll.path = llllllllllllllllIllIlIllIllIllII.getPath();
+    public Song(Song song) {
+        this.speed = song.getSpeed();
+        this.delay = 20.0f / this.speed;
+        this.layerHashMap = song.getLayerHashMap();
+        this.songHeight = song.getSongHeight();
+        this.length = song.getLength();
+        this.title = song.getTitle();
+        this.author = song.getAuthor();
+        this.description = song.getDescription();
+        this.path = song.getPath();
     }
 
     public HashMap<Integer, Layer> getLayerHashMap() {
-        Song llllllllllllllllIllIlIllIlIIllIl;
-        return llllllllllllllllIllIlIllIlIIllIl.layerHashMap;
+        return this.layerHashMap;
     }
 
     public File getPath() {
-        Song llllllllllllllllIllIlIllIIlllllI;
-        return llllllllllllllllIllIlIllIIlllllI.path;
+        return this.path;
     }
 
-    public Song(float llllllllllllllllIllIlIllIlIlIllI, HashMap<Integer, Layer> llllllllllllllllIllIlIllIlIllllI, short llllllllllllllllIllIlIllIlIlIlII, short llllllllllllllllIllIlIllIlIlllII, String llllllllllllllllIllIlIllIlIlIIlI, String llllllllllllllllIllIlIllIlIlIIIl, String llllllllllllllllIllIlIllIlIllIIl, File llllllllllllllllIllIlIllIlIIllll) {
-        Song llllllllllllllllIllIlIllIlIlIlll;
-        llllllllllllllllIllIlIllIlIlIlll.layerHashMap = new HashMap();
-        llllllllllllllllIllIlIllIlIlIlll.speed = llllllllllllllllIllIlIllIlIlIllI;
-        llllllllllllllllIllIlIllIlIlIlll.delay = 20.0f / llllllllllllllllIllIlIllIlIlIllI;
-        llllllllllllllllIllIlIllIlIlIlll.layerHashMap = llllllllllllllllIllIlIllIlIllllI;
-        llllllllllllllllIllIlIllIlIlIlll.songHeight = llllllllllllllllIllIlIllIlIlIlII;
-        llllllllllllllllIllIlIllIlIlIlll.length = llllllllllllllllIllIlIllIlIlllII;
-        llllllllllllllllIllIlIllIlIlIlll.title = llllllllllllllllIllIlIllIlIlIIlI;
-        llllllllllllllllIllIlIllIlIlIlll.author = llllllllllllllllIllIlIllIlIlIIIl;
-        llllllllllllllllIllIlIllIlIlIlll.description = llllllllllllllllIllIlIllIlIllIIl;
-        llllllllllllllllIllIlIllIlIlIlll.path = llllllllllllllllIllIlIllIlIIllll;
+    public Song(float f, HashMap<Integer, Layer> hashMap, short s, short s2, String string, String string2, String string3, File file) {
+        this.speed = f;
+        this.delay = 20.0f / f;
+        this.layerHashMap = hashMap;
+        this.songHeight = s;
+        this.length = s2;
+        this.title = string;
+        this.author = string2;
+        this.description = string3;
+        this.path = file;
     }
 
     public short getLength() {
-        Song llllllllllllllllIllIlIllIlIIIllI;
-        return llllllllllllllllIllIlIllIlIIIllI.length;
+        return this.length;
     }
 
     public float getDelay() {
-        Song llllllllllllllllIllIlIllIIllIlII;
-        return llllllllllllllllIllIlIllIIllIlII.delay;
+        return this.delay;
     }
 
     public String getDescription() {
-        Song llllllllllllllllIllIlIllIIlllIll;
-        return llllllllllllllllIllIlIllIIlllIll.description;
+        return this.description;
     }
 
     public float getSpeed() {
-        Song llllllllllllllllIllIlIllIIllIlll;
-        return llllllllllllllllIllIlIllIIllIlll.speed;
+        return this.speed;
     }
 
     public String getAuthor() {
-        Song llllllllllllllllIllIlIllIlIIIIII;
-        return llllllllllllllllIllIlIllIlIIIIII.author;
+        return this.author;
     }
 
     public String getTitle() {
-        Song llllllllllllllllIllIlIllIlIIIIll;
-        return llllllllllllllllIllIlIllIlIIIIll.title;
+        return this.title;
     }
 
     public short getSongHeight() {
-        Song llllllllllllllllIllIlIllIlIIlIIl;
-        return llllllllllllllllIllIlIllIlIIlIIl.songHeight;
+        return this.songHeight;
     }
 }
 

@@ -37,256 +37,241 @@ import net.minecraft.class_5498;
 
 public class Freecam
 extends Module {
-    private /* synthetic */ boolean left;
-    private final /* synthetic */ Setting<Double> speed;
-    public /* synthetic */ float yaw;
-    private /* synthetic */ boolean forward;
-    private final /* synthetic */ Setting<Boolean> autoDisableOnDamage;
-    public final /* synthetic */ Vec3 pos;
-    public /* synthetic */ float prevYaw;
-    private /* synthetic */ boolean backward;
-    public final /* synthetic */ Vec3 prevPos;
-    public /* synthetic */ float prevPitch;
-    private final /* synthetic */ Setting<Boolean> renderHands;
-    private final /* synthetic */ Setting<Boolean> autoDisableOnDeath;
-    private /* synthetic */ boolean right;
-    private /* synthetic */ boolean up;
-    public /* synthetic */ float pitch;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ class_5498 perspective;
-    private final /* synthetic */ Setting<Boolean> rotate;
-    private final /* synthetic */ Setting<Boolean> autoDisableOnLog;
-    private /* synthetic */ boolean down;
-    private final /* synthetic */ Setting<Boolean> reloadChunks;
+    private boolean left;
+    private final Setting<Double> speed;
+    public float yaw;
+    private boolean forward;
+    private final Setting<Boolean> autoDisableOnDamage;
+    public final Vec3 pos;
+    public float prevYaw;
+    private boolean backward;
+    public final Vec3 prevPos;
+    public float prevPitch;
+    private final Setting<Boolean> renderHands;
+    private final Setting<Boolean> autoDisableOnDeath;
+    private boolean right;
+    private boolean up;
+    public float pitch;
+    private final SettingGroup sgGeneral;
+    private class_5498 perspective;
+    private final Setting<Boolean> rotate;
+    private final Setting<Boolean> autoDisableOnLog;
+    private boolean down;
+    private final Setting<Boolean> reloadChunks;
 
     @EventHandler
-    private void onTick(TickEvent.Post llllllllllllllllIlIlIlIIIIIIIIlI) {
-        Freecam llllllllllllllllIlIlIIlllllllIIl;
-        if (llllllllllllllllIlIlIIlllllllIIl.mc.field_1719.method_5757()) {
-            llllllllllllllllIlIlIIlllllllIIl.mc.method_1560().field_5960 = true;
+    private void onTick(TickEvent.Post post) {
+        if (this.mc.field_1719.method_5757()) {
+            this.mc.method_1560().field_5960 = true;
         }
-        if (!llllllllllllllllIlIlIIlllllllIIl.perspective.method_31034()) {
-            llllllllllllllllIlIlIIlllllllIIl.mc.field_1690.method_31043(class_5498.field_26664);
+        if (!this.perspective.method_31034()) {
+            this.mc.field_1690.method_31043(class_5498.field_26664);
         }
-        if (llllllllllllllllIlIlIIlllllllIIl.mc.field_1755 != null) {
+        if (this.mc.field_1755 != null) {
             return;
         }
-        class_243 llllllllllllllllIlIlIlIIIIIIIIIl = class_243.method_1030((float)0.0f, (float)llllllllllllllllIlIlIIlllllllIIl.yaw);
-        class_243 llllllllllllllllIlIlIlIIIIIIIIII = class_243.method_1030((float)0.0f, (float)(llllllllllllllllIlIlIIlllllllIIl.yaw + 90.0f));
-        double llllllllllllllllIlIlIIllllllllll = 0.0;
-        double llllllllllllllllIlIlIIlllllllllI = 0.0;
-        double llllllllllllllllIlIlIIllllllllIl = 0.0;
-        if (llllllllllllllllIlIlIIlllllllIIl.rotate.get().booleanValue()) {
-            if (llllllllllllllllIlIlIIlllllllIIl.mc.field_1765 instanceof class_3966) {
-                class_2338 llllllllllllllllIlIlIlIIIIIIIlll = ((class_3966)llllllllllllllllIlIlIIlllllllIIl.mc.field_1765).method_17782().method_24515();
-                Rotations.rotate(Rotations.getYaw(llllllllllllllllIlIlIlIIIIIIIlll), Rotations.getPitch(llllllllllllllllIlIlIlIIIIIIIlll), 0, null);
+        class_243 class_2432 = class_243.method_1030((float)0.0f, (float)this.yaw);
+        class_243 class_2433 = class_243.method_1030((float)0.0f, (float)(this.yaw + 90.0f));
+        double d = 0.0;
+        double d2 = 0.0;
+        double d3 = 0.0;
+        if (this.rotate.get().booleanValue()) {
+            class_2338 class_23382;
+            if (this.mc.field_1765 instanceof class_3966) {
+                class_23382 = ((class_3966)this.mc.field_1765).method_17782().method_24515();
+                Rotations.rotate(Rotations.getYaw(class_23382), Rotations.getPitch(class_23382), 0, null);
             } else {
-                class_243 llllllllllllllllIlIlIlIIIIIIIlIl = llllllllllllllllIlIlIIlllllllIIl.mc.field_1765.method_17784();
-                class_2338 llllllllllllllllIlIlIlIIIIIIIllI = ((class_3965)llllllllllllllllIlIlIIlllllllIIl.mc.field_1765).method_17777();
-                if (!llllllllllllllllIlIlIIlllllllIIl.mc.field_1687.method_8320(llllllllllllllllIlIlIlIIIIIIIllI).method_26215()) {
-                    Rotations.rotate(Rotations.getYaw(llllllllllllllllIlIlIlIIIIIIIlIl), Rotations.getPitch(llllllllllllllllIlIlIlIIIIIIIlIl), 0, null);
+                class_243 class_2434 = this.mc.field_1765.method_17784();
+                class_23382 = ((class_3965)this.mc.field_1765).method_17777();
+                if (!this.mc.field_1687.method_8320(class_23382).method_26215()) {
+                    Rotations.rotate(Rotations.getYaw(class_2434), Rotations.getPitch(class_2434), 0, null);
                 }
             }
         }
-        double llllllllllllllllIlIlIIllllllllII = 0.5;
-        if (llllllllllllllllIlIlIIlllllllIIl.mc.field_1690.field_1867.method_1434()) {
-            llllllllllllllllIlIlIIllllllllII = 1.0;
+        double d4 = 0.5;
+        if (this.mc.field_1690.field_1867.method_1434()) {
+            d4 = 1.0;
         }
-        boolean llllllllllllllllIlIlIIlllllllIll = false;
-        if (llllllllllllllllIlIlIIlllllllIIl.forward) {
-            llllllllllllllllIlIlIIllllllllll += llllllllllllllllIlIlIlIIIIIIIIIl.field_1352 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIllllllllIl += llllllllllllllllIlIlIlIIIIIIIIIl.field_1350 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIlllllllIll = true;
+        boolean bl = false;
+        if (this.forward) {
+            d += class_2432.field_1352 * d4 * this.speed.get();
+            d3 += class_2432.field_1350 * d4 * this.speed.get();
+            bl = true;
         }
-        if (llllllllllllllllIlIlIIlllllllIIl.backward) {
-            llllllllllllllllIlIlIIllllllllll -= llllllllllllllllIlIlIlIIIIIIIIIl.field_1352 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIllllllllIl -= llllllllllllllllIlIlIlIIIIIIIIIl.field_1350 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIlllllllIll = true;
+        if (this.backward) {
+            d -= class_2432.field_1352 * d4 * this.speed.get();
+            d3 -= class_2432.field_1350 * d4 * this.speed.get();
+            bl = true;
         }
-        boolean llllllllllllllllIlIlIIlllllllIlI = false;
-        if (llllllllllllllllIlIlIIlllllllIIl.right) {
-            llllllllllllllllIlIlIIllllllllll += llllllllllllllllIlIlIlIIIIIIIIII.field_1352 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIllllllllIl += llllllllllllllllIlIlIlIIIIIIIIII.field_1350 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIlllllllIlI = true;
+        boolean bl2 = false;
+        if (this.right) {
+            d += class_2433.field_1352 * d4 * this.speed.get();
+            d3 += class_2433.field_1350 * d4 * this.speed.get();
+            bl2 = true;
         }
-        if (llllllllllllllllIlIlIIlllllllIIl.left) {
-            llllllllllllllllIlIlIIllllllllll -= llllllllllllllllIlIlIlIIIIIIIIII.field_1352 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIllllllllIl -= llllllllllllllllIlIlIlIIIIIIIIII.field_1350 * llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
-            llllllllllllllllIlIlIIlllllllIlI = true;
+        if (this.left) {
+            d -= class_2433.field_1352 * d4 * this.speed.get();
+            d3 -= class_2433.field_1350 * d4 * this.speed.get();
+            bl2 = true;
         }
-        if (llllllllllllllllIlIlIIlllllllIll && llllllllllllllllIlIlIIlllllllIlI) {
-            double llllllllllllllllIlIlIlIIIIIIIlII = 1.0 / Math.sqrt(2.0);
-            llllllllllllllllIlIlIIllllllllll *= llllllllllllllllIlIlIlIIIIIIIlII;
-            llllllllllllllllIlIlIIllllllllIl *= llllllllllllllllIlIlIlIIIIIIIlII;
+        if (bl && bl2) {
+            double d5 = 1.0 / Math.sqrt(2.0);
+            d *= d5;
+            d3 *= d5;
         }
-        if (llllllllllllllllIlIlIIlllllllIIl.up) {
-            llllllllllllllllIlIlIIlllllllllI += llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
+        if (this.up) {
+            d2 += d4 * this.speed.get();
         }
-        if (llllllllllllllllIlIlIIlllllllIIl.down) {
-            llllllllllllllllIlIlIIlllllllllI -= llllllllllllllllIlIlIIllllllllII * llllllllllllllllIlIlIIlllllllIIl.speed.get();
+        if (this.down) {
+            d2 -= d4 * this.speed.get();
         }
-        llllllllllllllllIlIlIIlllllllIIl.prevPos.set(llllllllllllllllIlIlIIlllllllIIl.pos);
-        llllllllllllllllIlIlIIlllllllIIl.pos.set(llllllllllllllllIlIlIIlllllllIIl.pos.x + llllllllllllllllIlIlIIllllllllll, llllllllllllllllIlIlIIlllllllIIl.pos.y + llllllllllllllllIlIlIIlllllllllI, llllllllllllllllIlIlIIlllllllIIl.pos.z + llllllllllllllllIlIlIIllllllllIl);
+        this.prevPos.set(this.pos);
+        this.pos.set(this.pos.x + d, this.pos.y + d2, this.pos.z + d3);
     }
 
     @EventHandler
-    private void onOpenScreen(OpenScreenEvent llllllllllllllllIlIlIlIIIIIlIlll) {
-        Freecam llllllllllllllllIlIlIlIIIIIlIllI;
-        llllllllllllllllIlIlIlIIIIIlIllI.unpress();
-        llllllllllllllllIlIlIlIIIIIlIllI.prevPos.set(llllllllllllllllIlIlIlIIIIIlIllI.pos);
-        llllllllllllllllIlIlIlIIIIIlIllI.prevYaw = llllllllllllllllIlIlIlIIIIIlIllI.yaw;
-        llllllllllllllllIlIlIlIIIIIlIllI.prevPitch = llllllllllllllllIlIlIlIIIIIlIllI.pitch;
+    private void onOpenScreen(OpenScreenEvent openScreenEvent) {
+        this.unpress();
+        this.prevPos.set(this.pos);
+        this.prevYaw = this.yaw;
+        this.prevPitch = this.pitch;
     }
 
-    public void changeLookDirection(double llllllllllllllllIlIlIIllllIlIIll, double llllllllllllllllIlIlIIllllIIllll) {
-        Freecam llllllllllllllllIlIlIIllllIlIIIl;
-        llllllllllllllllIlIlIIllllIlIIIl.prevYaw = llllllllllllllllIlIlIIllllIlIIIl.yaw;
-        llllllllllllllllIlIlIIllllIlIIIl.prevPitch = llllllllllllllllIlIlIIllllIlIIIl.pitch;
-        llllllllllllllllIlIlIIllllIlIIIl.yaw = (float)((double)llllllllllllllllIlIlIIllllIlIIIl.yaw + llllllllllllllllIlIlIIllllIlIIll);
-        llllllllllllllllIlIlIIllllIlIIIl.pitch = (float)((double)llllllllllllllllIlIlIIllllIlIIIl.pitch + llllllllllllllllIlIlIIllllIIllll);
-        llllllllllllllllIlIlIIllllIlIIIl.pitch = class_3532.method_15363((float)llllllllllllllllIlIlIIllllIlIIIl.pitch, (float)-90.0f, (float)90.0f);
+    public void changeLookDirection(double d, double d2) {
+        this.prevYaw = this.yaw;
+        this.prevPitch = this.pitch;
+        this.yaw = (float)((double)this.yaw + d);
+        this.pitch = (float)((double)this.pitch + d2);
+        this.pitch = class_3532.method_15363((float)this.pitch, (float)-90.0f, (float)90.0f);
     }
 
     @EventHandler
-    private void onChunkOcclusion(ChunkOcclusionEvent llllllllllllllllIlIlIIlllllIIIll) {
-        llllllllllllllllIlIlIIlllllIIIll.cancel();
+    private void onChunkOcclusion(ChunkOcclusionEvent chunkOcclusionEvent) {
+        chunkOcclusionEvent.cancel();
     }
 
-    public double getZ(float llllllllllllllllIlIlIIlllIllllII) {
-        Freecam llllllllllllllllIlIlIIlllIlllIll;
-        return class_3532.method_16436((double)llllllllllllllllIlIlIIlllIllllII, (double)llllllllllllllllIlIlIIlllIlllIll.prevPos.z, (double)llllllllllllllllIlIlIIlllIlllIll.pos.z);
+    public double getZ(float f) {
+        return class_3532.method_16436((double)f, (double)this.prevPos.z, (double)this.pos.z);
     }
 
     private void unpress() {
-        Freecam llllllllllllllllIlIlIlIIIIIlIlII;
-        llllllllllllllllIlIlIlIIIIIlIlII.mc.field_1690.field_1894.method_23481(false);
-        llllllllllllllllIlIlIlIIIIIlIlII.mc.field_1690.field_1881.method_23481(false);
-        llllllllllllllllIlIlIlIIIIIlIlII.mc.field_1690.field_1849.method_23481(false);
-        llllllllllllllllIlIlIlIIIIIlIlII.mc.field_1690.field_1913.method_23481(false);
-        llllllllllllllllIlIlIlIIIIIlIlII.mc.field_1690.field_1903.method_23481(false);
-        llllllllllllllllIlIlIlIIIIIlIlII.mc.field_1690.field_1832.method_23481(false);
+        this.mc.field_1690.field_1894.method_23481(false);
+        this.mc.field_1690.field_1881.method_23481(false);
+        this.mc.field_1690.field_1849.method_23481(false);
+        this.mc.field_1690.field_1913.method_23481(false);
+        this.mc.field_1690.field_1903.method_23481(false);
+        this.mc.field_1690.field_1832.method_23481(false);
     }
 
-    public double getYaw(float llllllllllllllllIlIlIIlllIllIllI) {
-        Freecam llllllllllllllllIlIlIIlllIllIlIl;
-        return class_3532.method_16439((float)llllllllllllllllIlIlIIlllIllIllI, (float)llllllllllllllllIlIlIIlllIllIlIl.prevYaw, (float)llllllllllllllllIlIlIIlllIllIlIl.yaw);
+    public double getYaw(float f) {
+        return class_3532.method_16439((float)f, (float)this.prevYaw, (float)this.yaw);
     }
 
-    public double getX(float llllllllllllllllIlIlIIllllIIIllI) {
-        Freecam llllllllllllllllIlIlIIllllIIIlll;
-        return class_3532.method_16436((double)llllllllllllllllIlIlIIllllIIIllI, (double)llllllllllllllllIlIlIIllllIIIlll.prevPos.x, (double)llllllllllllllllIlIlIIllllIIIlll.pos.x);
+    public double getX(float f) {
+        return class_3532.method_16436((double)f, (double)this.prevPos.x, (double)this.pos.x);
     }
 
     @EventHandler
-    private void onKey(KeyEvent llllllllllllllllIlIlIIlllllIlIlI) {
-        Freecam llllllllllllllllIlIlIIlllllIlIII;
+    private void onKey(KeyEvent keyEvent) {
         if (Input.isKeyPressed(292)) {
             return;
         }
-        boolean llllllllllllllllIlIlIIlllllIlIIl = true;
-        if (llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1894.method_1417(llllllllllllllllIlIlIIlllllIlIlI.key, 0) || llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1894.method_1433(llllllllllllllllIlIlIIlllllIlIlI.key)) {
-            llllllllllllllllIlIlIIlllllIlIII.forward = llllllllllllllllIlIlIIlllllIlIlI.action != KeyAction.Release;
-        } else if (llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1881.method_1417(llllllllllllllllIlIlIIlllllIlIlI.key, 0) || llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1881.method_1433(llllllllllllllllIlIlIIlllllIlIlI.key)) {
-            llllllllllllllllIlIlIIlllllIlIII.backward = llllllllllllllllIlIlIIlllllIlIlI.action != KeyAction.Release;
-        } else if (llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1849.method_1417(llllllllllllllllIlIlIIlllllIlIlI.key, 0) || llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1849.method_1433(llllllllllllllllIlIlIIlllllIlIlI.key)) {
-            llllllllllllllllIlIlIIlllllIlIII.right = llllllllllllllllIlIlIIlllllIlIlI.action != KeyAction.Release;
-        } else if (llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1913.method_1417(llllllllllllllllIlIlIIlllllIlIlI.key, 0) || llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1913.method_1433(llllllllllllllllIlIlIIlllllIlIlI.key)) {
-            llllllllllllllllIlIlIIlllllIlIII.left = llllllllllllllllIlIlIIlllllIlIlI.action != KeyAction.Release;
-        } else if (llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1903.method_1417(llllllllllllllllIlIlIIlllllIlIlI.key, 0) || llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1903.method_1433(llllllllllllllllIlIlIIlllllIlIlI.key)) {
-            llllllllllllllllIlIlIIlllllIlIII.up = llllllllllllllllIlIlIIlllllIlIlI.action != KeyAction.Release;
-        } else if (llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1832.method_1417(llllllllllllllllIlIlIIlllllIlIlI.key, 0) || llllllllllllllllIlIlIIlllllIlIII.mc.field_1690.field_1832.method_1433(llllllllllllllllIlIlIIlllllIlIlI.key)) {
-            llllllllllllllllIlIlIIlllllIlIII.down = llllllllllllllllIlIlIIlllllIlIlI.action != KeyAction.Release;
+        boolean bl = true;
+        if (this.mc.field_1690.field_1894.method_1417(keyEvent.key, 0) || this.mc.field_1690.field_1894.method_1433(keyEvent.key)) {
+            this.forward = keyEvent.action != KeyAction.Release;
+        } else if (this.mc.field_1690.field_1881.method_1417(keyEvent.key, 0) || this.mc.field_1690.field_1881.method_1433(keyEvent.key)) {
+            this.backward = keyEvent.action != KeyAction.Release;
+        } else if (this.mc.field_1690.field_1849.method_1417(keyEvent.key, 0) || this.mc.field_1690.field_1849.method_1433(keyEvent.key)) {
+            this.right = keyEvent.action != KeyAction.Release;
+        } else if (this.mc.field_1690.field_1913.method_1417(keyEvent.key, 0) || this.mc.field_1690.field_1913.method_1433(keyEvent.key)) {
+            this.left = keyEvent.action != KeyAction.Release;
+        } else if (this.mc.field_1690.field_1903.method_1417(keyEvent.key, 0) || this.mc.field_1690.field_1903.method_1433(keyEvent.key)) {
+            this.up = keyEvent.action != KeyAction.Release;
+        } else if (this.mc.field_1690.field_1832.method_1417(keyEvent.key, 0) || this.mc.field_1690.field_1832.method_1433(keyEvent.key)) {
+            this.down = keyEvent.action != KeyAction.Release;
         } else {
-            llllllllllllllllIlIlIIlllllIlIIl = false;
+            bl = false;
         }
-        if (llllllllllllllllIlIlIIlllllIlIIl) {
-            llllllllllllllllIlIlIIlllllIlIlI.cancel();
+        if (bl) {
+            keyEvent.cancel();
         }
     }
 
     @EventHandler
-    private void onTookDamage(TookDamageEvent llllllllllllllllIlIlIIllllIllllI) {
-        Freecam llllllllllllllllIlIlIIllllIlllll;
-        if (llllllllllllllllIlIlIIllllIllllI.entity.method_5667() == null) {
+    private void onTookDamage(TookDamageEvent tookDamageEvent) {
+        if (tookDamageEvent.entity.method_5667() == null) {
             return;
         }
-        if (!llllllllllllllllIlIlIIllllIllllI.entity.method_5667().equals(llllllllllllllllIlIlIIllllIlllll.mc.field_1724.method_5667())) {
+        if (!tookDamageEvent.entity.method_5667().equals(this.mc.field_1724.method_5667())) {
             return;
         }
-        if (llllllllllllllllIlIlIIllllIlllll.autoDisableOnDamage.get().booleanValue() || llllllllllllllllIlIlIIllllIlllll.autoDisableOnDeath.get().booleanValue() && llllllllllllllllIlIlIIllllIllllI.entity.method_6032() <= 0.0f) {
-            llllllllllllllllIlIlIIllllIlllll.toggle();
-            llllllllllllllllIlIlIIllllIlllll.info("Auto toggled because you took damage or died.", new Object[0]);
+        if (this.autoDisableOnDamage.get().booleanValue() || this.autoDisableOnDeath.get().booleanValue() && tookDamageEvent.entity.method_6032() <= 0.0f) {
+            this.toggle();
+            this.info("Auto toggled because you took damage or died.", new Object[0]);
         }
     }
 
-    public double getPitch(float llllllllllllllllIlIlIIlllIlIlllI) {
-        Freecam llllllllllllllllIlIlIIlllIlIllll;
-        return class_3532.method_16439((float)llllllllllllllllIlIlIIlllIlIlllI, (float)llllllllllllllllIlIlIIlllIlIllll.prevPitch, (float)llllllllllllllllIlIlIIlllIlIllll.pitch);
+    public double getPitch(float f) {
+        return class_3532.method_16439((float)f, (float)this.prevPitch, (float)this.pitch);
     }
 
     @EventHandler
-    private void onGameLeft(GameLeftEvent llllllllllllllllIlIlIIllllIllIIl) {
-        Freecam llllllllllllllllIlIlIIllllIllIII;
-        if (!llllllllllllllllIlIlIIllllIllIII.autoDisableOnLog.get().booleanValue()) {
+    private void onGameLeft(GameLeftEvent gameLeftEvent) {
+        if (!this.autoDisableOnLog.get().booleanValue()) {
             return;
         }
-        llllllllllllllllIlIlIIllllIllIII.toggle();
+        this.toggle();
     }
 
     public Freecam() {
         super(Categories.Render, "freecam", "Allows the camera to move away from the player.");
-        Freecam llllllllllllllllIlIlIlIIIIlIIIII;
-        llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral = llllllllllllllllIlIlIlIIIIlIIIII.settings.getDefaultGroup();
-        llllllllllllllllIlIlIlIIIIlIIIII.speed = llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral.add(new DoubleSetting.Builder().name("speed").description("Your speed while in freecam.").defaultValue(1.0).min(0.0).build());
-        llllllllllllllllIlIlIlIIIIlIIIII.autoDisableOnDamage = llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral.add(new BoolSetting.Builder().name("toggle-on-damage").description("Disables freecam when you take damage.").defaultValue(false).build());
-        llllllllllllllllIlIlIlIIIIlIIIII.autoDisableOnDeath = llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral.add(new BoolSetting.Builder().name("toggle-on-death").description("Disables freecam when you die.").defaultValue(false).build());
-        llllllllllllllllIlIlIlIIIIlIIIII.autoDisableOnLog = llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral.add(new BoolSetting.Builder().name("toggle-on-log").description("Disables freecam when you disconnect from a server.").defaultValue(true).build());
-        llllllllllllllllIlIlIlIIIIlIIIII.reloadChunks = llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral.add(new BoolSetting.Builder().name("reload-chunks").description("Disables cave culling.").defaultValue(true).build());
-        llllllllllllllllIlIlIlIIIIlIIIII.renderHands = llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral.add(new BoolSetting.Builder().name("show-hands").description("Whether or not to render your hands in greecam.").defaultValue(true).build());
-        llllllllllllllllIlIlIlIIIIlIIIII.rotate = llllllllllllllllIlIlIlIIIIlIIIII.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Rotates to the block or entity you are looking at.").defaultValue(false).build());
-        llllllllllllllllIlIlIlIIIIlIIIII.pos = new Vec3();
-        llllllllllllllllIlIlIlIIIIlIIIII.prevPos = new Vec3();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.speed = this.sgGeneral.add(new DoubleSetting.Builder().name("speed").description("Your speed while in freecam.").defaultValue(1.0).min(0.0).build());
+        this.autoDisableOnDamage = this.sgGeneral.add(new BoolSetting.Builder().name("toggle-on-damage").description("Disables freecam when you take damage.").defaultValue(false).build());
+        this.autoDisableOnDeath = this.sgGeneral.add(new BoolSetting.Builder().name("toggle-on-death").description("Disables freecam when you die.").defaultValue(false).build());
+        this.autoDisableOnLog = this.sgGeneral.add(new BoolSetting.Builder().name("toggle-on-log").description("Disables freecam when you disconnect from a server.").defaultValue(true).build());
+        this.reloadChunks = this.sgGeneral.add(new BoolSetting.Builder().name("reload-chunks").description("Disables cave culling.").defaultValue(true).build());
+        this.renderHands = this.sgGeneral.add(new BoolSetting.Builder().name("show-hands").description("Whether or not to render your hands in greecam.").defaultValue(true).build());
+        this.rotate = this.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Rotates to the block or entity you are looking at.").defaultValue(false).build());
+        this.pos = new Vec3();
+        this.prevPos = new Vec3();
     }
 
-    public double getY(float llllllllllllllllIlIlIIllllIIIIlI) {
-        Freecam llllllllllllllllIlIlIIllllIIIIIl;
-        return class_3532.method_16436((double)llllllllllllllllIlIlIIllllIIIIlI, (double)llllllllllllllllIlIlIIllllIIIIIl.prevPos.y, (double)llllllllllllllllIlIlIIllllIIIIIl.pos.y);
+    public double getY(float f) {
+        return class_3532.method_16436((double)f, (double)this.prevPos.y, (double)this.pos.y);
     }
 
     public boolean renderHands() {
-        Freecam llllllllllllllllIlIlIIllllIIllIl;
-        return !llllllllllllllllIlIlIIllllIIllIl.isActive() || llllllllllllllllIlIlIIllllIIllIl.renderHands.get() != false;
+        return !this.isActive() || this.renderHands.get() != false;
     }
 
     @Override
     public void onActivate() {
-        Freecam llllllllllllllllIlIlIlIIIIIlllIl;
-        llllllllllllllllIlIlIlIIIIIlllIl.yaw = llllllllllllllllIlIlIlIIIIIlllIl.mc.field_1724.field_6031;
-        llllllllllllllllIlIlIlIIIIIlllIl.pitch = llllllllllllllllIlIlIlIIIIIlllIl.mc.field_1724.field_5965;
-        llllllllllllllllIlIlIlIIIIIlllIl.perspective = llllllllllllllllIlIlIlIIIIIlllIl.mc.field_1690.method_31044();
-        llllllllllllllllIlIlIlIIIIIlllIl.pos.set(llllllllllllllllIlIlIlIIIIIlllIl.mc.field_1773.method_19418().method_19326());
-        llllllllllllllllIlIlIlIIIIIlllIl.prevPos.set(llllllllllllllllIlIlIlIIIIIlllIl.mc.field_1773.method_19418().method_19326());
-        llllllllllllllllIlIlIlIIIIIlllIl.prevYaw = llllllllllllllllIlIlIlIIIIIlllIl.yaw;
-        llllllllllllllllIlIlIlIIIIIlllIl.prevPitch = llllllllllllllllIlIlIlIIIIIlllIl.pitch;
-        llllllllllllllllIlIlIlIIIIIlllIl.forward = false;
-        llllllllllllllllIlIlIlIIIIIlllIl.backward = false;
-        llllllllllllllllIlIlIlIIIIIlllIl.right = false;
-        llllllllllllllllIlIlIlIIIIIlllIl.left = false;
-        llllllllllllllllIlIlIlIIIIIlllIl.up = false;
-        llllllllllllllllIlIlIlIIIIIlllIl.down = false;
-        llllllllllllllllIlIlIlIIIIIlllIl.unpress();
-        if (llllllllllllllllIlIlIlIIIIIlllIl.reloadChunks.get().booleanValue()) {
-            llllllllllllllllIlIlIlIIIIIlllIl.mc.field_1769.method_3279();
+        this.yaw = this.mc.field_1724.field_6031;
+        this.pitch = this.mc.field_1724.field_5965;
+        this.perspective = this.mc.field_1690.method_31044();
+        this.pos.set(this.mc.field_1773.method_19418().method_19326());
+        this.prevPos.set(this.mc.field_1773.method_19418().method_19326());
+        this.prevYaw = this.yaw;
+        this.prevPitch = this.pitch;
+        this.forward = false;
+        this.backward = false;
+        this.right = false;
+        this.left = false;
+        this.up = false;
+        this.down = false;
+        this.unpress();
+        if (this.reloadChunks.get().booleanValue()) {
+            this.mc.field_1769.method_3279();
         }
     }
 
     @Override
     public void onDeactivate() {
-        Freecam llllllllllllllllIlIlIlIIIIIllIlI;
-        if (llllllllllllllllIlIlIlIIIIIllIlI.reloadChunks.get().booleanValue()) {
-            llllllllllllllllIlIlIlIIIIIllIlI.mc.field_1769.method_3279();
+        if (this.reloadChunks.get().booleanValue()) {
+            this.mc.field_1769.method_3279();
         }
-        llllllllllllllllIlIlIlIIIIIllIlI.mc.field_1690.method_31043(llllllllllllllllIlIlIlIIIIIllIlI.perspective);
+        this.mc.field_1690.method_31043(this.perspective);
     }
 }
 

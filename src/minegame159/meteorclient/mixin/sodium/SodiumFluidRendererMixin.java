@@ -42,9 +42,9 @@ public class SodiumFluidRendererMixin {
     private int[] quadColors;
 
     @Inject(method={"calculateQuadColors"}, at={@At(value="TAIL")}, cancellable=true, remap=false)
-    private void onCalculateQuadColors(ModelQuadView quad, class_1920 world, class_2338 pos, LightPipeline lighter, class_2350 dir, float brightness, boolean colorized, CallbackInfo info) {
+    private void onCalculateQuadColors(ModelQuadView modelQuadView, class_1920 class_19202, class_2338 class_23382, LightPipeline lightPipeline, class_2350 class_23502, float f, boolean bl, CallbackInfo callbackInfo) {
         Ambience ambience = Modules.get().get(Ambience.class);
-        if (ambience.isActive() && ambience.changeLavaColor.get().booleanValue() && !colorized) {
+        if (ambience.isActive() && ambience.changeLavaColor.get().booleanValue() && !bl) {
             Arrays.fill(this.quadColors, ColorARGB.toABGR((int)ambience.lavaColor.get().getPacked()));
         }
     }

@@ -21,68 +21,76 @@ import net.minecraft.class_2591;
 
 public class StorageBlockListSettingScreen
 extends LeftRightListSettingScreen<class_2591<?>> {
-    public StorageBlockListSettingScreen(GuiTheme lIIIlIIlIIIIlI, Setting<List<class_2591<?>>> lIIIlIIlIIIIIl) {
-        super(lIIIlIIlIIIIlI, "Select storage blocks", lIIIlIIlIIIIIl, (Collection)lIIIlIIlIIIIIl.get(), StorageBlockListSetting.REGISTRY);
-        StorageBlockListSettingScreen lIIIlIIlIIIIII;
+    @Override
+    protected String getValueName(Object object) {
+        return this.getValueName((class_2591)object);
+    }
+
+    public StorageBlockListSettingScreen(GuiTheme guiTheme, Setting<List<class_2591<?>>> setting) {
+        super(guiTheme, "Select storage blocks", setting, (Collection)setting.get(), StorageBlockListSetting.REGISTRY);
     }
 
     @Override
-    protected String getValueName(class_2591<?> lIIIlIIIllIIIl) {
-        String lIIIlIIIllIIII = "Unknown";
-        if (lIIIlIIIllIIIl == class_2591.field_11903) {
-            lIIIlIIIllIIII = "Furnace";
-        } else if (lIIIlIIIllIIIl == class_2591.field_11914) {
-            lIIIlIIIllIIII = "Chest";
-        } else if (lIIIlIIIllIIIl == class_2591.field_11891) {
-            lIIIlIIIllIIII = "Trapped Chest";
-        } else if (lIIIlIIIllIIIl == class_2591.field_11901) {
-            lIIIlIIIllIIII = "Ender Chest";
-        } else if (lIIIlIIIllIIIl == class_2591.field_11887) {
-            lIIIlIIIllIIII = "Dispenser";
-        } else if (lIIIlIIIllIIIl == class_2591.field_11899) {
-            lIIIlIIIllIIII = "Dropper";
-        } else if (lIIIlIIIllIIIl == class_2591.field_11888) {
-            lIIIlIIIllIIII = "Hopper";
-        } else if (lIIIlIIIllIIIl == class_2591.field_11896) {
-            lIIIlIIIllIIII = "Shulker Box";
-        } else if (lIIIlIIIllIIIl == class_2591.field_16411) {
-            lIIIlIIIllIIII = "Barrel";
-        } else if (lIIIlIIIllIIIl == class_2591.field_16414) {
-            lIIIlIIIllIIII = "Smoker";
-        } else if (lIIIlIIIllIIIl == class_2591.field_16415) {
-            lIIIlIIIllIIII = "Blast Furnace";
+    protected String getValueName(class_2591<?> class_25912) {
+        String string = "Unknown";
+        if (class_25912 == class_2591.field_11903) {
+            string = "Furnace";
+        } else if (class_25912 == class_2591.field_11914) {
+            string = "Chest";
+        } else if (class_25912 == class_2591.field_11891) {
+            string = "Trapped Chest";
+        } else if (class_25912 == class_2591.field_11901) {
+            string = "Ender Chest";
+        } else if (class_25912 == class_2591.field_11887) {
+            string = "Dispenser";
+        } else if (class_25912 == class_2591.field_11899) {
+            string = "Dropper";
+        } else if (class_25912 == class_2591.field_11888) {
+            string = "Hopper";
+        } else if (class_25912 == class_2591.field_11896) {
+            string = "Shulker Box";
+        } else if (class_25912 == class_2591.field_16411) {
+            string = "Barrel";
+        } else if (class_25912 == class_2591.field_16414) {
+            string = "Smoker";
+        } else if (class_25912 == class_2591.field_16415) {
+            string = "Blast Furnace";
         }
-        return lIIIlIIIllIIII;
+        return string;
     }
 
     @Override
-    protected WWidget getValueWidget(class_2591<?> lIIIlIIIllIllI) {
-        StorageBlockListSettingScreen lIIIlIIIlllIlI;
-        class_1792 lIIIlIIIlllIII = class_1802.field_8077;
-        if (lIIIlIIIllIllI == class_2591.field_11903) {
-            lIIIlIIIlllIII = class_1802.field_8732;
-        } else if (lIIIlIIIllIllI == class_2591.field_11914) {
-            lIIIlIIIlllIII = class_1802.field_8106;
-        } else if (lIIIlIIIllIllI == class_2591.field_11891) {
-            lIIIlIIIlllIII = class_1802.field_8247;
-        } else if (lIIIlIIIllIllI == class_2591.field_11901) {
-            lIIIlIIIlllIII = class_1802.field_8466;
-        } else if (lIIIlIIIllIllI == class_2591.field_11887) {
-            lIIIlIIIlllIII = class_1802.field_8357;
-        } else if (lIIIlIIIllIllI == class_2591.field_11899) {
-            lIIIlIIIlllIII = class_1802.field_8878;
-        } else if (lIIIlIIIllIllI == class_2591.field_11888) {
-            lIIIlIIIlllIII = class_1802.field_8239;
-        } else if (lIIIlIIIllIllI == class_2591.field_11896) {
-            lIIIlIIIlllIII = class_1802.field_8545;
-        } else if (lIIIlIIIllIllI == class_2591.field_16411) {
-            lIIIlIIIlllIII = class_1802.field_16307;
-        } else if (lIIIlIIIllIllI == class_2591.field_16414) {
-            lIIIlIIIlllIII = class_1802.field_16309;
-        } else if (lIIIlIIIllIllI == class_2591.field_16415) {
-            lIIIlIIIlllIII = class_1802.field_16306;
+    protected WWidget getValueWidget(Object object) {
+        return this.getValueWidget((class_2591)object);
+    }
+
+    @Override
+    protected WWidget getValueWidget(class_2591<?> class_25912) {
+        class_1792 class_17922 = class_1802.field_8077;
+        if (class_25912 == class_2591.field_11903) {
+            class_17922 = class_1802.field_8732;
+        } else if (class_25912 == class_2591.field_11914) {
+            class_17922 = class_1802.field_8106;
+        } else if (class_25912 == class_2591.field_11891) {
+            class_17922 = class_1802.field_8247;
+        } else if (class_25912 == class_2591.field_11901) {
+            class_17922 = class_1802.field_8466;
+        } else if (class_25912 == class_2591.field_11887) {
+            class_17922 = class_1802.field_8357;
+        } else if (class_25912 == class_2591.field_11899) {
+            class_17922 = class_1802.field_8878;
+        } else if (class_25912 == class_2591.field_11888) {
+            class_17922 = class_1802.field_8239;
+        } else if (class_25912 == class_2591.field_11896) {
+            class_17922 = class_1802.field_8545;
+        } else if (class_25912 == class_2591.field_16411) {
+            class_17922 = class_1802.field_16307;
+        } else if (class_25912 == class_2591.field_16414) {
+            class_17922 = class_1802.field_16309;
+        } else if (class_25912 == class_2591.field_16415) {
+            class_17922 = class_1802.field_16306;
         }
-        return lIIIlIIIlllIlI.theme.itemWithLabel(lIIIlIIIlllIII.method_7854(), lIIIlIIIlllIlI.getValueName(lIIIlIIIllIllI));
+        return this.theme.itemWithLabel(class_17922.method_7854(), this.getValueName(class_25912));
     }
 }
 

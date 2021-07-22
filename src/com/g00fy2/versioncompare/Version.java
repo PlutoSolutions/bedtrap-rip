@@ -16,203 +16,184 @@ import javax.annotation.Nullable;
 public class Version
 implements Comparable<Version> {
     @Nonnull
-    private final /* synthetic */ List<Integer> subversionNumbersWithoutTrailingZeros;
+    private final List<Integer> subversionNumbersWithoutTrailingZeros;
     @Nonnull
-    private /* synthetic */ String suffix;
+    private String suffix = "";
     @Nonnull
-    private final /* synthetic */ List<Integer> subversionNumbers;
+    private final List<Integer> subversionNumbers = new ArrayList<Integer>();
     @Nullable
-    private final /* synthetic */ String originalString;
+    private final String originalString;
 
-    public boolean isLowerThan(Version llllllllllllllllIllIllllllIIIIII) {
-        Version llllllllllllllllIllIlllllIlllllI;
-        int llllllllllllllllIllIlllllIllllll = VersionComparator.compareSubversionNumbers(llllllllllllllllIllIlllllIlllllI.subversionNumbersWithoutTrailingZeros, llllllllllllllllIllIllllllIIIIII.subversionNumbersWithoutTrailingZeros);
-        if (llllllllllllllllIllIlllllIllllll != 0) {
-            return llllllllllllllllIllIlllllIllllll < 0;
+    public boolean isLowerThan(Version version) {
+        int n = VersionComparator.compareSubversionNumbers(this.subversionNumbersWithoutTrailingZeros, version.subversionNumbersWithoutTrailingZeros);
+        if (n != 0) {
+            return n < 0;
         }
-        return VersionComparator.compareSuffix(llllllllllllllllIllIlllllIlllllI.suffix, llllllllllllllllIllIllllllIIIIII.suffix) < 0;
+        return VersionComparator.compareSuffix(this.suffix, version.suffix) < 0;
     }
 
-    public boolean isAtLeast(String llllllllllllllllIllIlllllIIlllll, boolean llllllllllllllllIllIlllllIIllllI) {
-        Version llllllllllllllllIllIlllllIlIIIII;
-        return llllllllllllllllIllIlllllIlIIIII.isAtLeast(new Version(llllllllllllllllIllIlllllIIlllll), llllllllllllllllIllIlllllIIllllI);
+    public boolean isAtLeast(String string, boolean bl) {
+        return this.isAtLeast(new Version(string), bl);
     }
 
-    public boolean isEqual(String llllllllllllllllIllIlllllIlllIII) {
-        Version llllllllllllllllIllIlllllIllIlll;
-        return llllllllllllllllIllIlllllIllIlll.isEqual(new Version(llllllllllllllllIllIlllllIlllIII));
+    public boolean isEqual(String string) {
+        return this.isEqual(new Version(string));
     }
 
     private void initVersion() {
-        Version llllllllllllllllIllIlllllIIIIIII;
-        if (llllllllllllllllIllIlllllIIIIIII.originalString != null && VersionComparator.startsNumeric(llllllllllllllllIllIlllllIIIIIII.originalString)) {
-            String[] llllllllllllllllIllIlllllIIIIIll = llllllllllllllllIllIlllllIIIIIII.originalString.replaceAll("\\s", "").split("\\.");
-            boolean llllllllllllllllIllIlllllIIIIIlI = false;
-            StringBuilder llllllllllllllllIllIlllllIIIIIIl = null;
-            block0: for (String llllllllllllllllIllIlllllIIIIlII : llllllllllllllllIllIlllllIIIIIll) {
-                if (llllllllllllllllIllIlllllIIIIIlI) {
-                    llllllllllllllllIllIlllllIIIIIIl.append(".");
-                    llllllllllllllllIllIlllllIIIIIIl.append(llllllllllllllllIllIlllllIIIIlII);
+        if (this.originalString != null && VersionComparator.startsNumeric(this.originalString)) {
+            String[] arrstring = this.originalString.replaceAll("\\s", "").split("\\.");
+            boolean bl = false;
+            StringBuilder stringBuilder = null;
+            for (String string : arrstring) {
+                if (bl) {
+                    stringBuilder.append(".");
+                    stringBuilder.append(string);
                     continue;
                 }
-                if (VersionComparator.isNumeric(llllllllllllllllIllIlllllIIIIlII)) {
-                    llllllllllllllllIllIlllllIIIIIII.subversionNumbers.add(VersionComparator.safeParseInt(llllllllllllllllIllIlllllIIIIlII));
+                if (VersionComparator.isNumeric(string)) {
+                    this.subversionNumbers.add(VersionComparator.safeParseInt(string));
                     continue;
                 }
-                for (int llllllllllllllllIllIlllllIIIIlIl = 0; llllllllllllllllIllIlllllIIIIlIl < llllllllllllllllIllIlllllIIIIlII.length(); ++llllllllllllllllIllIlllllIIIIlIl) {
-                    if (Character.isDigit(llllllllllllllllIllIlllllIIIIlII.charAt(llllllllllllllllIllIlllllIIIIlIl))) continue;
-                    llllllllllllllllIllIlllllIIIIIIl = new StringBuilder();
-                    if (llllllllllllllllIllIlllllIIIIlIl > 0) {
-                        llllllllllllllllIllIlllllIIIIIII.subversionNumbers.add(VersionComparator.safeParseInt(llllllllllllllllIllIlllllIIIIlII.substring(0, llllllllllllllllIllIlllllIIIIlIl)));
-                        llllllllllllllllIllIlllllIIIIIIl.append(llllllllllllllllIllIlllllIIIIlII.substring(llllllllllllllllIllIlllllIIIIlIl));
+                for (int i = 0; i < string.length(); ++i) {
+                    if (Character.isDigit(string.charAt(i))) continue;
+                    stringBuilder = new StringBuilder();
+                    if (i > 0) {
+                        this.subversionNumbers.add(VersionComparator.safeParseInt(string.substring(0, i)));
+                        stringBuilder.append(string.substring(i));
                     } else {
-                        llllllllllllllllIllIlllllIIIIIIl.append(llllllllllllllllIllIlllllIIIIlII);
+                        stringBuilder.append(string);
                     }
-                    llllllllllllllllIllIlllllIIIIIlI = true;
-                    continue block0;
+                    bl = true;
+                    break;
                 }
             }
-            llllllllllllllllIllIlllllIIIIIII.subversionNumbersWithoutTrailingZeros.addAll(llllllllllllllllIllIlllllIIIIIII.subversionNumbers);
-            while (!llllllllllllllllIllIlllllIIIIIII.subversionNumbersWithoutTrailingZeros.isEmpty() && llllllllllllllllIllIlllllIIIIIII.subversionNumbersWithoutTrailingZeros.lastIndexOf(0) == llllllllllllllllIllIlllllIIIIIII.subversionNumbersWithoutTrailingZeros.size() - 1) {
-                llllllllllllllllIllIlllllIIIIIII.subversionNumbersWithoutTrailingZeros.remove(llllllllllllllllIllIlllllIIIIIII.subversionNumbersWithoutTrailingZeros.lastIndexOf(0));
+            this.subversionNumbersWithoutTrailingZeros.addAll(this.subversionNumbers);
+            while (!this.subversionNumbersWithoutTrailingZeros.isEmpty() && this.subversionNumbersWithoutTrailingZeros.lastIndexOf(0) == this.subversionNumbersWithoutTrailingZeros.size() - 1) {
+                this.subversionNumbersWithoutTrailingZeros.remove(this.subversionNumbersWithoutTrailingZeros.lastIndexOf(0));
             }
-            if (llllllllllllllllIllIlllllIIIIIIl != null) {
-                llllllllllllllllIllIlllllIIIIIII.suffix = String.valueOf(llllllllllllllllIllIlllllIIIIIIl);
+            if (stringBuilder != null) {
+                this.suffix = String.valueOf(stringBuilder);
             }
         }
     }
 
     public int getPatch() {
-        Version llllllllllllllllIllIlllllllIIlII;
-        return llllllllllllllllIllIlllllllIIlII.subversionNumbers.size() > 2 ? llllllllllllllllIllIlllllllIIlII.subversionNumbers.get(2) : 0;
+        return this.subversionNumbers.size() > 2 ? this.subversionNumbers.get(2) : 0;
     }
 
-    public boolean isHigherThan(String llllllllllllllllIllIllllllIlIlII) {
-        Version llllllllllllllllIllIllllllIlIlll;
-        return llllllllllllllllIllIllllllIlIlll.isHigherThan(new Version(llllllllllllllllIllIllllllIlIlII));
+    public boolean isHigherThan(String string) {
+        return this.isHigherThan(new Version(string));
     }
 
-    public Version(@Nullable String llllllllllllllllIllIllllllllIlll) {
-        llllllllllllllllIllIllllllllIllI(llllllllllllllllIllIllllllllIlll, false);
-        Version llllllllllllllllIllIllllllllIllI;
+    public Version(@Nullable String string) {
+        this(string, false);
     }
 
-    public boolean isAtLeast(String llllllllllllllllIllIlllllIlIlIlI) {
-        Version llllllllllllllllIllIlllllIlIllIl;
-        return llllllllllllllllIllIlllllIlIllIl.isAtLeast(new Version(llllllllllllllllIllIlllllIlIlIlI));
+    public boolean isAtLeast(String string) {
+        return this.isAtLeast(new Version(string));
     }
 
-    public boolean isEqual(Version llllllllllllllllIllIlllllIllIIII) {
-        Version llllllllllllllllIllIlllllIllIIll;
-        return VersionComparator.compareSubversionNumbers(llllllllllllllllIllIlllllIllIIll.subversionNumbersWithoutTrailingZeros, llllllllllllllllIllIlllllIllIIII.subversionNumbersWithoutTrailingZeros) == 0 && VersionComparator.compareSuffix(llllllllllllllllIllIlllllIllIIll.suffix, llllllllllllllllIllIlllllIllIIII.suffix) == 0;
+    public boolean isEqual(Version version) {
+        return VersionComparator.compareSubversionNumbers(this.subversionNumbersWithoutTrailingZeros, version.subversionNumbersWithoutTrailingZeros) == 0 && VersionComparator.compareSuffix(this.suffix, version.suffix) == 0;
     }
 
-    public final boolean equals(Object llllllllllllllllIllIllllIllIllIl) {
-        Version llllllllllllllllIllIllllIllIlllI;
-        if (llllllllllllllllIllIllllIllIllIl instanceof Version && llllllllllllllllIllIllllIllIlllI.isEqual((Version)llllllllllllllllIllIllllIllIllIl)) {
+    public final boolean equals(Object object) {
+        if (object instanceof Version && this.isEqual((Version)object)) {
             return true;
         }
-        return super.equals(llllllllllllllllIllIllllIllIllIl);
+        return super.equals(object);
     }
 
-    public Version(@Nullable String llllllllllllllllIllIlllllllIllIl, boolean llllllllllllllllIllIlllllllIllll) {
-        Version llllllllllllllllIllIllllllllIIIl;
-        llllllllllllllllIllIllllllllIIIl.subversionNumbers = new ArrayList<Integer>();
-        llllllllllllllllIllIllllllllIIIl.subversionNumbersWithoutTrailingZeros = new ArrayList<Integer>();
-        llllllllllllllllIllIllllllllIIIl.suffix = "";
-        if (llllllllllllllllIllIlllllllIllll) {
-            if (llllllllllllllllIllIlllllllIllIl == null) {
+    @Override
+    public int compareTo(@Nonnull Object object) {
+        return this.compareTo((Version)object);
+    }
+
+    public Version(@Nullable String string, boolean bl) {
+        this.subversionNumbersWithoutTrailingZeros = new ArrayList<Integer>();
+        if (bl) {
+            if (string == null) {
                 throw new NullPointerException("Argument versionString is null");
             }
-            if (!VersionComparator.startsNumeric(llllllllllllllllIllIlllllllIllIl)) {
+            if (!VersionComparator.startsNumeric(string)) {
                 throw new IllegalArgumentException("Argument versionString is no valid version");
             }
         }
-        llllllllllllllllIllIllllllllIIIl.originalString = llllllllllllllllIllIlllllllIllIl;
-        llllllllllllllllIllIllllllllIIIl.initVersion();
+        this.originalString = string;
+        this.initVersion();
     }
 
-    public boolean isAtLeast(Version llllllllllllllllIllIlllllIIlIlIl, boolean llllllllllllllllIllIlllllIIlIlII) {
-        Version llllllllllllllllIllIlllllIIlIllI;
-        int llllllllllllllllIllIlllllIIlIIll = VersionComparator.compareSubversionNumbers(llllllllllllllllIllIlllllIIlIllI.subversionNumbersWithoutTrailingZeros, llllllllllllllllIllIlllllIIlIlIl.subversionNumbersWithoutTrailingZeros);
-        if (llllllllllllllllIllIlllllIIlIIll == 0 && !llllllllllllllllIllIlllllIIlIlII) {
-            return VersionComparator.compareSuffix(llllllllllllllllIllIlllllIIlIllI.suffix, llllllllllllllllIllIlllllIIlIlIl.suffix) >= 0;
+    public boolean isAtLeast(Version version, boolean bl) {
+        int n = VersionComparator.compareSubversionNumbers(this.subversionNumbersWithoutTrailingZeros, version.subversionNumbersWithoutTrailingZeros);
+        if (n == 0 && !bl) {
+            return VersionComparator.compareSuffix(this.suffix, version.suffix) >= 0;
         }
-        return llllllllllllllllIllIlllllIIlIIll >= 0;
+        return n >= 0;
     }
 
-    public boolean isLowerThan(String llllllllllllllllIllIllllllIIIlll) {
-        Version llllllllllllllllIllIllllllIIIllI;
-        return llllllllllllllllIllIllllllIIIllI.isLowerThan(new Version(llllllllllllllllIllIllllllIIIlll));
+    public boolean isLowerThan(String string) {
+        return this.isLowerThan(new Version(string));
     }
 
     @Nonnull
     public String getSuffix() {
-        Version llllllllllllllllIllIllllllIlllIl;
-        return llllllllllllllllIllIllllllIlllIl.suffix;
+        return this.suffix;
     }
 
     public int getMinor() {
-        Version llllllllllllllllIllIlllllllIIllI;
-        return llllllllllllllllIllIlllllllIIllI.subversionNumbers.size() > 1 ? llllllllllllllllIllIlllllllIIllI.subversionNumbers.get(1) : 0;
+        return this.subversionNumbers.size() > 1 ? this.subversionNumbers.get(1) : 0;
     }
 
-    public boolean isHigherThan(Version llllllllllllllllIllIllllllIIllII) {
-        Version llllllllllllllllIllIllllllIIllIl;
-        int llllllllllllllllIllIllllllIIlllI = VersionComparator.compareSubversionNumbers(llllllllllllllllIllIllllllIIllIl.subversionNumbersWithoutTrailingZeros, llllllllllllllllIllIllllllIIllII.subversionNumbersWithoutTrailingZeros);
-        if (llllllllllllllllIllIllllllIIlllI != 0) {
-            return llllllllllllllllIllIllllllIIlllI > 0;
+    public boolean isHigherThan(Version version) {
+        int n = VersionComparator.compareSubversionNumbers(this.subversionNumbersWithoutTrailingZeros, version.subversionNumbersWithoutTrailingZeros);
+        if (n != 0) {
+            return n > 0;
         }
-        return VersionComparator.compareSuffix(llllllllllllllllIllIllllllIIllIl.suffix, llllllllllllllllIllIllllllIIllII.suffix) > 0;
+        return VersionComparator.compareSuffix(this.suffix, version.suffix) > 0;
     }
 
-    public boolean isAtLeast(Version llllllllllllllllIllIlllllIlIIllI) {
-        Version llllllllllllllllIllIlllllIlIIlll;
-        return llllllllllllllllIllIlllllIlIIlll.isAtLeast(llllllllllllllllIllIlllllIlIIllI, false);
+    public boolean isAtLeast(Version version) {
+        return this.isAtLeast(version, false);
     }
 
     @Nonnull
     public List<Integer> getSubversionNumbers() {
-        Version llllllllllllllllIllIlllllllIIIIl;
-        return llllllllllllllllIllIlllllllIIIIl.subversionNumbers;
+        return this.subversionNumbers;
     }
 
     @Override
-    public final int compareTo(@Nonnull Version llllllllllllllllIllIllllIlllIIll) {
-        Version llllllllllllllllIllIllllIlllIIlI;
-        if (llllllllllllllllIllIllllIlllIIlI.isEqual(llllllllllllllllIllIllllIlllIIll)) {
+    public final int compareTo(@Nonnull Version version) {
+        if (this.isEqual(version)) {
             return 0;
         }
-        if (llllllllllllllllIllIllllIlllIIlI.isLowerThan(llllllllllllllllIllIllllIlllIIll)) {
+        if (this.isLowerThan(version)) {
             return -1;
         }
         return 1;
     }
 
     public final int hashCode() {
-        Version llllllllllllllllIllIllllIllIIIII;
-        int llllllllllllllllIllIllllIllIIlII = 31;
-        int llllllllllllllllIllIllllIllIIIll = 1;
-        llllllllllllllllIllIllllIllIIIll = 31 * llllllllllllllllIllIllllIllIIIll + llllllllllllllllIllIllllIllIIIII.subversionNumbersWithoutTrailingZeros.hashCode();
-        if (llllllllllllllllIllIllllIllIIIII.suffix.isEmpty()) {
-            return llllllllllllllllIllIllllIllIIIll;
+        int n = 31;
+        int n2 = 1;
+        n2 = 31 * n2 + this.subversionNumbersWithoutTrailingZeros.hashCode();
+        if (this.suffix.isEmpty()) {
+            return n2;
         }
-        int llllllllllllllllIllIllllIllIIIlI = VersionComparator.qualifierToNumber(llllllllllllllllIllIllllIllIIIII.suffix);
-        int llllllllllllllllIllIllllIllIIIIl = VersionComparator.preReleaseVersion(llllllllllllllllIllIllllIllIIIII.suffix, llllllllllllllllIllIllllIllIIIlI);
-        llllllllllllllllIllIllllIllIIIll = 31 * llllllllllllllllIllIllllIllIIIll + llllllllllllllllIllIllllIllIIIlI;
-        llllllllllllllllIllIllllIllIIIll = 31 * llllllllllllllllIllIllllIllIIIll + llllllllllllllllIllIllllIllIIIIl;
-        return llllllllllllllllIllIllllIllIIIll;
+        int n3 = VersionComparator.qualifierToNumber(this.suffix);
+        int n4 = VersionComparator.preReleaseVersion(this.suffix, n3);
+        n2 = 31 * n2 + n3;
+        n2 = 31 * n2 + n4;
+        return n2;
     }
 
     @Nullable
     public String getOriginalString() {
-        Version llllllllllllllllIllIllllllIllIlI;
-        return llllllllllllllllIllIllllllIllIlI.originalString;
+        return this.originalString;
     }
 
     public int getMajor() {
-        Version llllllllllllllllIllIlllllllIlIlI;
-        return llllllllllllllllIllIlllllllIlIlI.subversionNumbers.size() > 0 ? llllllllllllllllIllIlllllllIlIlI.subversionNumbers.get(0) : 0;
+        return this.subversionNumbers.size() > 0 ? this.subversionNumbers.get(0) : 0;
     }
 }
 

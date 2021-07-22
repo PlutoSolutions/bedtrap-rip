@@ -14,67 +14,62 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class Rotation
 extends Module {
-    private final /* synthetic */ SettingGroup sgYaw;
-    private final /* synthetic */ Setting<LockMode> yawLockMode;
-    private final /* synthetic */ SettingGroup sgPitch;
-    private final /* synthetic */ Setting<Double> pitchAngle;
-    private final /* synthetic */ Setting<Double> yawAngle;
-    private final /* synthetic */ Setting<LockMode> pitchLockMode;
+    private final SettingGroup sgYaw;
+    private final Setting<LockMode> yawLockMode;
+    private final SettingGroup sgPitch;
+    private final Setting<Double> pitchAngle;
+    private final Setting<Double> yawAngle;
+    private final Setting<LockMode> pitchLockMode;
 
     private float getSmartPitchDirection() {
-        Rotation llIIlIlIIIIlIII;
-        return (float)Math.round((llIIlIlIIIIlIII.mc.field_1724.field_5965 + 1.0f) / 30.0f) * 30.0f;
+        return (float)Math.round((this.mc.field_1724.field_5965 + 1.0f) / 30.0f) * 30.0f;
     }
 
     private float getSmartYawDirection() {
-        Rotation llIIlIlIIIIlIll;
-        return (float)Math.round((llIIlIlIIIIlIll.mc.field_1724.field_6031 + 1.0f) / 45.0f) * 45.0f;
+        return (float)Math.round((this.mc.field_1724.field_6031 + 1.0f) / 45.0f) * 45.0f;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llIIlIlIIIIlllI) {
-        Rotation llIIlIlIIIIllIl;
-        switch (llIIlIlIIIIllIl.yawLockMode.get()) {
-            case Simple: {
-                llIIlIlIIIIllIl.setYawAngle(llIIlIlIIIIllIl.yawAngle.get().floatValue());
+    private void onTick(TickEvent.Post post) {
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$player$Rotation$LockMode[this.yawLockMode.get().ordinal()]) {
+            case 1: {
+                this.setYawAngle(this.yawAngle.get().floatValue());
                 break;
             }
-            case Smart: {
-                llIIlIlIIIIllIl.setYawAngle(llIIlIlIIIIllIl.getSmartYawDirection());
+            case 2: {
+                this.setYawAngle(this.getSmartYawDirection());
             }
         }
-        switch (llIIlIlIIIIllIl.pitchLockMode.get()) {
-            case Simple: {
-                llIIlIlIIIIllIl.mc.field_1724.field_5965 = llIIlIlIIIIllIl.pitchAngle.get().floatValue();
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$player$Rotation$LockMode[this.pitchLockMode.get().ordinal()]) {
+            case 1: {
+                this.mc.field_1724.field_5965 = this.pitchAngle.get().floatValue();
                 break;
             }
-            case Smart: {
-                llIIlIlIIIIllIl.mc.field_1724.field_5965 = llIIlIlIIIIllIl.getSmartPitchDirection();
+            case 2: {
+                this.mc.field_1724.field_5965 = this.getSmartPitchDirection();
             }
         }
     }
 
-    private void setYawAngle(float llIIlIlIIIIIIll) {
-        llIIlIlIIIIIIlI.mc.field_1724.field_6031 = llIIlIlIIIIIIll;
-        llIIlIlIIIIIIlI.mc.field_1724.field_6241 = llIIlIlIIIIIIll;
-        llIIlIlIIIIIIlI.mc.field_1724.field_6283 = llIIlIlIIIIIIll;
+    private void setYawAngle(float f) {
+        this.mc.field_1724.field_6031 = f;
+        this.mc.field_1724.field_6241 = f;
+        this.mc.field_1724.field_6283 = f;
     }
 
     public Rotation() {
         super(Categories.Player, "rotation", "Changes/locks your yaw and pitch.");
-        Rotation llIIlIlIIIlIlIl;
-        llIIlIlIIIlIlIl.sgYaw = llIIlIlIIIlIlIl.settings.createGroup("Yaw");
-        llIIlIlIIIlIlIl.sgPitch = llIIlIlIIIlIlIl.settings.createGroup("Pitch");
-        llIIlIlIIIlIlIl.yawLockMode = llIIlIlIIIlIlIl.sgYaw.add(new EnumSetting.Builder().name("yaw-lock-mode").description("The way in which your yaw is locked.").defaultValue(LockMode.Simple).build());
-        llIIlIlIIIlIlIl.yawAngle = llIIlIlIIIlIlIl.sgYaw.add(new DoubleSetting.Builder().name("yaw-angle").description("Yaw angle in degrees.").defaultValue(0.0).sliderMax(360.0).max(360.0).build());
-        llIIlIlIIIlIlIl.pitchLockMode = llIIlIlIIIlIlIl.sgPitch.add(new EnumSetting.Builder().name("pitch-lock-mode").description("The way in which your pitch is locked.").defaultValue(LockMode.Simple).build());
-        llIIlIlIIIlIlIl.pitchAngle = llIIlIlIIIlIlIl.sgPitch.add(new DoubleSetting.Builder().name("pitch-angle").description("Pitch angle in degrees.").defaultValue(0.0).min(-90.0).max(90.0).sliderMin(-90.0).sliderMax(90.0).build());
+        this.sgYaw = this.settings.createGroup("Yaw");
+        this.sgPitch = this.settings.createGroup("Pitch");
+        this.yawLockMode = this.sgYaw.add(new EnumSetting.Builder().name("yaw-lock-mode").description("The way in which your yaw is locked.").defaultValue(LockMode.Simple).build());
+        this.yawAngle = this.sgYaw.add(new DoubleSetting.Builder().name("yaw-angle").description("Yaw angle in degrees.").defaultValue(0.0).sliderMax(360.0).max(360.0).build());
+        this.pitchLockMode = this.sgPitch.add(new EnumSetting.Builder().name("pitch-lock-mode").description("The way in which your pitch is locked.").defaultValue(LockMode.Simple).build());
+        this.pitchAngle = this.sgPitch.add(new DoubleSetting.Builder().name("pitch-angle").description("Pitch angle in degrees.").defaultValue(0.0).min(-90.0).max(90.0).sliderMin(-90.0).sliderMax(90.0).build());
     }
 
     @Override
     public void onActivate() {
-        Rotation llIIlIlIIIlIIIl;
-        llIIlIlIIIlIIIl.onTick(null);
+        this.onTick(null);
     }
 
     public static enum LockMode {
@@ -82,10 +77,6 @@ extends Module {
         Simple,
         None;
 
-
-        private LockMode() {
-            LockMode lllllllllllllllllIllIIIlIIlIIIII;
-        }
     }
 }
 

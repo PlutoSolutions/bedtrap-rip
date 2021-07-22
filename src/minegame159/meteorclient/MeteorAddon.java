@@ -7,10 +7,6 @@ public abstract class MeteorAddon {
     public void onRegisterCategories() {
     }
 
-    public MeteorAddon() {
-        MeteorAddon lllllllllllllllllIllIIlIIIIlIIll;
-    }
-
     public abstract void onInitialize();
 }
 

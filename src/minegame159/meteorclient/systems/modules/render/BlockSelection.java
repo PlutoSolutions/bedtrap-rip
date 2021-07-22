@@ -34,69 +34,67 @@ import net.minecraft.class_3965;
 
 public class BlockSelection
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<SettingColor> lineColor;
-    private final /* synthetic */ Setting<ShapeMode> shapeMode;
-    private final /* synthetic */ Setting<Boolean> oneSide;
-    private final /* synthetic */ Setting<SettingColor> sideColor;
-    private final /* synthetic */ Setting<Boolean> advanced;
+    private final SettingGroup sgGeneral;
+    private final Setting<SettingColor> lineColor;
+    private final Setting<ShapeMode> shapeMode;
+    private final Setting<Boolean> oneSide;
+    private final Setting<SettingColor> sideColor;
+    private final Setting<Boolean> advanced;
 
     public BlockSelection() {
         super(Categories.Render, "block-selection", "Modifies how your block selection is rendered.");
-        BlockSelection llllllllllllllllllIlllIlIIlIlIIl;
-        llllllllllllllllllIlllIlIIlIlIIl.sgGeneral = llllllllllllllllllIlllIlIIlIlIIl.settings.getDefaultGroup();
-        llllllllllllllllllIlllIlIIlIlIIl.advanced = llllllllllllllllllIlllIlIIlIlIIl.sgGeneral.add(new BoolSetting.Builder().name("advanced").description("Shows a more advanced outline on different types of shape blocks.").defaultValue(true).build());
-        llllllllllllllllllIlllIlIIlIlIIl.oneSide = llllllllllllllllllIlllIlIIlIlIIl.sgGeneral.add(new BoolSetting.Builder().name("single-side").description("Only renders the side you are looking at.").defaultValue(false).build());
-        llllllllllllllllllIlllIlIIlIlIIl.shapeMode = llllllllllllllllllIlllIlIIlIlIIl.sgGeneral.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
-        llllllllllllllllllIlllIlIIlIlIIl.sideColor = llllllllllllllllllIlllIlIIlIlIIl.sgGeneral.add(new ColorSetting.Builder().name("side-color").description("The side color.").defaultValue(new SettingColor(255, 255, 255, 50)).build());
-        llllllllllllllllllIlllIlIIlIlIIl.lineColor = llllllllllllllllllIlllIlIIlIlIIl.sgGeneral.add(new ColorSetting.Builder().name("line-color").description("The line color.").defaultValue(new SettingColor(255, 255, 255, 255)).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.advanced = this.sgGeneral.add(new BoolSetting.Builder().name("advanced").description("Shows a more advanced outline on different types of shape blocks.").defaultValue(true).build());
+        this.oneSide = this.sgGeneral.add(new BoolSetting.Builder().name("single-side").description("Only renders the side you are looking at.").defaultValue(false).build());
+        this.shapeMode = this.sgGeneral.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
+        this.sideColor = this.sgGeneral.add(new ColorSetting.Builder().name("side-color").description("The side color.").defaultValue(new SettingColor(255, 255, 255, 50)).build());
+        this.lineColor = this.sgGeneral.add(new ColorSetting.Builder().name("line-color").description("The line color.").defaultValue(new SettingColor(255, 255, 255, 255)).build());
+    }
+
+    private void lambda$onRender$0(class_2338 class_23382, double d, double d2, double d3, double d4, double d5, double d6) {
+        Renderer.LINES.line((double)class_23382.method_10263() + d, (double)class_23382.method_10264() + d2, (double)class_23382.method_10260() + d3, (double)class_23382.method_10263() + d4, (double)class_23382.method_10264() + d5, (double)class_23382.method_10260() + d6, this.lineColor.get());
     }
 
     @EventHandler
-    private void onRender(RenderEvent llllllllllllllllllIlllIlIIIllIlI) {
-        BlockSelection llllllllllllllllllIlllIlIIIlIIll;
-        if (llllllllllllllllllIlllIlIIIlIIll.mc.field_1765 == null || !(llllllllllllllllllIlllIlIIIlIIll.mc.field_1765 instanceof class_3965)) {
+    private void onRender(RenderEvent renderEvent) {
+        if (this.mc.field_1765 == null || !(this.mc.field_1765 instanceof class_3965)) {
             return;
         }
-        class_3965 llllllllllllllllllIlllIlIIIllIIl = (class_3965)llllllllllllllllllIlllIlIIIlIIll.mc.field_1765;
-        class_2338 llllllllllllllllllIlllIlIIIllIII = llllllllllllllllllIlllIlIIIllIIl.method_17777();
-        class_2350 llllllllllllllllllIlllIlIIIlIlll = llllllllllllllllllIlllIlIIIllIIl.method_17780();
-        class_2680 llllllllllllllllllIlllIlIIIlIllI = llllllllllllllllllIlllIlIIIlIIll.mc.field_1687.method_8320(llllllllllllllllllIlllIlIIIllIII);
-        class_265 llllllllllllllllllIlllIlIIIlIlIl = llllllllllllllllllIlllIlIIIlIllI.method_26218((class_1922)llllllllllllllllllIlllIlIIIlIIll.mc.field_1687, llllllllllllllllllIlllIlIIIllIII);
-        if (llllllllllllllllllIlllIlIIIlIlIl.method_1110()) {
+        class_3965 class_39652 = (class_3965)this.mc.field_1765;
+        class_2338 class_23382 = class_39652.method_17777();
+        class_2350 class_23502 = class_39652.method_17780();
+        class_2680 class_26802 = this.mc.field_1687.method_8320(class_23382);
+        class_265 class_2652 = class_26802.method_26218((class_1922)this.mc.field_1687, class_23382);
+        if (class_2652.method_1110()) {
             return;
         }
-        class_238 llllllllllllllllllIlllIlIIIlIlII = llllllllllllllllllIlllIlIIIlIlIl.method_1107();
-        if (llllllllllllllllllIlllIlIIIlIIll.oneSide.get().booleanValue()) {
-            if (llllllllllllllllllIlllIlIIIlIlll == class_2350.field_11036 || llllllllllllllllllIlllIlIIIlIlll == class_2350.field_11033) {
-                Renderer.quadWithLinesHorizontal(Renderer.NORMAL, Renderer.LINES, (double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIlIIIlIlII.field_1323, (double)llllllllllllllllllIlllIlIIIllIII.method_10264() + (llllllllllllllllllIlllIlIIIlIlll == class_2350.field_11033 ? llllllllllllllllllIlllIlIIIlIlII.field_1322 : llllllllllllllllllIlllIlIIIlIlII.field_1325), (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIlIIIlIlII.field_1321, (double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIlIIIlIlII.field_1320, (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIlIIIlIlII.field_1324, llllllllllllllllllIlllIlIIIlIIll.sideColor.get(), llllllllllllllllllIlllIlIIIlIIll.lineColor.get(), llllllllllllllllllIlllIlIIIlIIll.shapeMode.get());
-            } else if (llllllllllllllllllIlllIlIIIlIlll == class_2350.field_11035 || llllllllllllllllllIlllIlIIIlIlll == class_2350.field_11043) {
-                double llllllllllllllllllIlllIlIIIllllI = llllllllllllllllllIlllIlIIIlIlll == class_2350.field_11043 ? llllllllllllllllllIlllIlIIIlIlII.field_1321 : llllllllllllllllllIlllIlIIIlIlII.field_1324;
-                Renderer.quadWithLinesVertical(Renderer.NORMAL, Renderer.LINES, (double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIlIIIlIlII.field_1323, (double)llllllllllllllllllIlllIlIIIllIII.method_10264() + llllllllllllllllllIlllIlIIIlIlII.field_1322, (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIlIIIllllI, (double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIlIIIlIlII.field_1320, (double)llllllllllllllllllIlllIlIIIllIII.method_10264() + llllllllllllllllllIlllIlIIIlIlII.field_1325, (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIlIIIllllI, llllllllllllllllllIlllIlIIIlIIll.sideColor.get(), llllllllllllllllllIlllIlIIIlIIll.lineColor.get(), llllllllllllllllllIlllIlIIIlIIll.shapeMode.get());
+        class_238 class_2383 = class_2652.method_1107();
+        if (this.oneSide.get().booleanValue()) {
+            if (class_23502 == class_2350.field_11036 || class_23502 == class_2350.field_11033) {
+                Renderer.quadWithLinesHorizontal(Renderer.NORMAL, Renderer.LINES, (double)class_23382.method_10263() + class_2383.field_1323, (double)class_23382.method_10264() + (class_23502 == class_2350.field_11033 ? class_2383.field_1322 : class_2383.field_1325), (double)class_23382.method_10260() + class_2383.field_1321, (double)class_23382.method_10263() + class_2383.field_1320, (double)class_23382.method_10260() + class_2383.field_1324, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get());
+            } else if (class_23502 == class_2350.field_11035 || class_23502 == class_2350.field_11043) {
+                double d = class_23502 == class_2350.field_11043 ? class_2383.field_1321 : class_2383.field_1324;
+                Renderer.quadWithLinesVertical(Renderer.NORMAL, Renderer.LINES, (double)class_23382.method_10263() + class_2383.field_1323, (double)class_23382.method_10264() + class_2383.field_1322, (double)class_23382.method_10260() + d, (double)class_23382.method_10263() + class_2383.field_1320, (double)class_23382.method_10264() + class_2383.field_1325, (double)class_23382.method_10260() + d, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get());
             } else {
-                double llllllllllllllllllIlllIlIIIlllIl = llllllllllllllllllIlllIlIIIlIlll == class_2350.field_11039 ? llllllllllllllllllIlllIlIIIlIlII.field_1323 : llllllllllllllllllIlllIlIIIlIlII.field_1320;
-                Renderer.quadWithLinesVertical(Renderer.NORMAL, Renderer.LINES, (double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIlIIIlllIl, (double)llllllllllllllllllIlllIlIIIllIII.method_10264() + llllllllllllllllllIlllIlIIIlIlII.field_1322, (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIlIIIlIlII.field_1321, (double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIlIIIlllIl, (double)llllllllllllllllllIlllIlIIIllIII.method_10264() + llllllllllllllllllIlllIlIIIlIlII.field_1325, (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIlIIIlIlII.field_1324, llllllllllllllllllIlllIlIIIlIIll.sideColor.get(), llllllllllllllllllIlllIlIIIlIIll.lineColor.get(), llllllllllllllllllIlllIlIIIlIIll.shapeMode.get());
+                double d = class_23502 == class_2350.field_11039 ? class_2383.field_1323 : class_2383.field_1320;
+                Renderer.quadWithLinesVertical(Renderer.NORMAL, Renderer.LINES, (double)class_23382.method_10263() + d, (double)class_23382.method_10264() + class_2383.field_1322, (double)class_23382.method_10260() + class_2383.field_1321, (double)class_23382.method_10263() + d, (double)class_23382.method_10264() + class_2383.field_1325, (double)class_23382.method_10260() + class_2383.field_1324, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get());
             }
-        } else if (llllllllllllllllllIlllIlIIIlIIll.advanced.get().booleanValue()) {
-            if (llllllllllllllllllIlllIlIIIlIIll.shapeMode.get() == ShapeMode.Both || llllllllllllllllllIlllIlIIIlIIll.shapeMode.get() == ShapeMode.Lines) {
-                llllllllllllllllllIlllIlIIIlIlIl.method_1104((llllllllllllllllllIlllIIlllIllll, llllllllllllllllllIlllIIllllIllI, llllllllllllllllllIlllIIlllIllIl, llllllllllllllllllIlllIIllllIlII, llllllllllllllllllIlllIIllllIIll, llllllllllllllllllIlllIIlllIlIlI) -> {
-                    BlockSelection llllllllllllllllllIlllIIllllIIIl;
-                    Renderer.LINES.line((double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIIlllIllll, (double)llllllllllllllllllIlllIlIIIllIII.method_10264() + llllllllllllllllllIlllIIllllIllI, (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIIlllIllIl, (double)llllllllllllllllllIlllIlIIIllIII.method_10263() + llllllllllllllllllIlllIIllllIlII, (double)llllllllllllllllllIlllIlIIIllIII.method_10264() + llllllllllllllllllIlllIIllllIIll, (double)llllllllllllllllllIlllIlIIIllIII.method_10260() + llllllllllllllllllIlllIIlllIlIlI, llllllllllllllllllIlllIIllllIIIl.lineColor.get());
-                });
+        } else if (this.advanced.get().booleanValue()) {
+            if (this.shapeMode.get() == ShapeMode.Both || this.shapeMode.get() == ShapeMode.Lines) {
+                class_2652.method_1104((arg_0, arg_1, arg_2, arg_3, arg_4, arg_5) -> this.lambda$onRender$0(class_23382, arg_0, arg_1, arg_2, arg_3, arg_4, arg_5));
             }
-            if (llllllllllllllllllIlllIlIIIlIIll.shapeMode.get() == ShapeMode.Both || llllllllllllllllllIlllIlIIIlIIll.shapeMode.get() == ShapeMode.Sides) {
-                for (class_238 llllllllllllllllllIlllIlIIIlllII : llllllllllllllllllIlllIlIIIlIlIl.method_1090()) {
-                    llllllllllllllllllIlllIlIIIlIIll.render(llllllllllllllllllIlllIlIIIllIII, llllllllllllllllllIlllIlIIIlllII);
+            if (this.shapeMode.get() == ShapeMode.Both || this.shapeMode.get() == ShapeMode.Sides) {
+                for (class_238 class_2384 : class_2652.method_1090()) {
+                    this.render(class_23382, class_2384);
                 }
             }
         } else {
-            llllllllllllllllllIlllIlIIIlIIll.render(llllllllllllllllllIlllIlIIIllIII, llllllllllllllllllIlllIlIIIlIlII);
+            this.render(class_23382, class_2383);
         }
     }
 
-    private void render(class_2338 llllllllllllllllllIlllIlIIIIIllI, class_238 llllllllllllllllllIlllIlIIIIIlIl) {
-        BlockSelection llllllllllllllllllIlllIlIIIIIlll;
-        Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, (double)llllllllllllllllllIlllIlIIIIIllI.method_10263() + llllllllllllllllllIlllIlIIIIIlIl.field_1323, (double)llllllllllllllllllIlllIlIIIIIllI.method_10264() + llllllllllllllllllIlllIlIIIIIlIl.field_1322, (double)llllllllllllllllllIlllIlIIIIIllI.method_10260() + llllllllllllllllllIlllIlIIIIIlIl.field_1321, (double)llllllllllllllllllIlllIlIIIIIllI.method_10263() + llllllllllllllllllIlllIlIIIIIlIl.field_1320, (double)llllllllllllllllllIlllIlIIIIIllI.method_10264() + llllllllllllllllllIlllIlIIIIIlIl.field_1325, (double)llllllllllllllllllIlllIlIIIIIllI.method_10260() + llllllllllllllllllIlllIlIIIIIlIl.field_1324, llllllllllllllllllIlllIlIIIIIlll.sideColor.get(), llllllllllllllllllIlllIlIIIIIlll.lineColor.get(), llllllllllllllllllIlllIlIIIIIlll.shapeMode.get(), 0);
+    private void render(class_2338 class_23382, class_238 class_2383) {
+        Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, (double)class_23382.method_10263() + class_2383.field_1323, (double)class_23382.method_10264() + class_2383.field_1322, (double)class_23382.method_10260() + class_2383.field_1321, (double)class_23382.method_10263() + class_2383.field_1320, (double)class_23382.method_10264() + class_2383.field_1325, (double)class_23382.method_10260() + class_2383.field_1324, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get(), 0);
     }
 }
 

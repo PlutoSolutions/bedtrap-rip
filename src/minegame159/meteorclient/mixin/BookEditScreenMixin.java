@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 import minegame159.meteorclient.utils.Utils;
 import net.minecraft.class_2487;
 import net.minecraft.class_2499;
@@ -68,64 +70,74 @@ extends class_437 {
     @Shadow
     protected abstract void method_2413();
 
-    public BookEditScreenMixin(class_2561 title) {
-        super(title);
+    public BookEditScreenMixin(class_2561 class_25612) {
+        super(class_25612);
     }
 
     @Inject(method={"init"}, at={@At(value="TAIL")})
-    private void onInit(CallbackInfo info) {
-        this.method_25411((class_339)new class_4185(4, 4, 70, 16, (class_2561)new class_2585("Copy"), button -> {
-            class_2499 listTag = new class_2499();
-            this.field_17116.stream().map(class_2519::method_23256).forEach(listTag::add);
-            class_2487 tag = new class_2487();
-            tag.method_10566("pages", (class_2520)listTag);
-            tag.method_10569("currentPage", this.field_2840);
-            FastByteArrayOutputStream bytes = new FastByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream((OutputStream)bytes);
-            try {
-                class_2507.method_10628((class_2487)tag, (DataOutput)out);
+    private void onInit(CallbackInfo callbackInfo) {
+        this.method_25411((class_339)new class_4185(4, 4, 70, 16, (class_2561)new class_2585("Copy"), this::lambda$onInit$0));
+        this.method_25411((class_339)new class_4185(4, 24, 70, 16, (class_2561)new class_2585("Paste"), this::lambda$onInit$1));
+    }
+
+    /*
+     * WARNING - Removed back jump from a try to a catch block - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     */
+    private void lambda$onInit$1(class_4185 class_41852) {
+        byte[] arrby;
+        String string = GLFW.glfwGetClipboardString((long)Utils.mc.method_22683().method_4490());
+        if (string == null) {
+            return;
+        }
+        try {
+            arrby = Base64.getDecoder().decode(string);
+        }
+        catch (IllegalArgumentException exception) {
+            return;
+        }
+        DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(arrby));
+        {
+            class_2487 class_24872 = class_2507.method_10627((DataInput)dataInputStream);
+            class_2499 class_24992 = class_24872.method_10554("pages", 8).method_10612();
+            this.field_17116.clear();
+            for (int i = 0; i < class_24992.size(); ++i) {
+                this.field_17116.add(class_24992.method_10608(i));
             }
-            catch (IOException e) {
-                e.printStackTrace();
+            if (this.field_17116.isEmpty()) {
+                this.field_17116.add("");
             }
-            try {
-                GLFW.glfwSetClipboardString((long)Utils.mc.method_22683().method_4490(), (CharSequence)Base64.getEncoder().encodeToString(bytes.array));
-            }
-            catch (OutOfMemoryError exception) {
-                GLFW.glfwSetClipboardString((long)Utils.mc.method_22683().method_4490(), (CharSequence)exception.toString());
-            }
-        }));
-        this.method_25411((class_339)new class_4185(4, 24, 70, 16, (class_2561)new class_2585("Paste"), button -> {
-            byte[] bytes;
-            String clipboard = GLFW.glfwGetClipboardString((long)Utils.mc.method_22683().method_4490());
-            if (clipboard == null) {
-                return;
-            }
-            try {
-                bytes = Base64.getDecoder().decode(clipboard);
-            }
-            catch (IllegalArgumentException ignored) {
-                return;
-            }
-            DataInputStream in = new DataInputStream(new ByteArrayInputStream(bytes));
-            try {
-                class_2487 tag = class_2507.method_10627((DataInput)in);
-                class_2499 listTag = tag.method_10554("pages", 8).method_10612();
-                this.field_17116.clear();
-                for (int i = 0; i < listTag.size(); ++i) {
-                    this.field_17116.add(listTag.method_10608(i));
-                }
-                if (this.field_17116.isEmpty()) {
-                    this.field_17116.add("");
-                }
-                this.field_2840 = tag.method_10550("currentPage");
-                this.field_2837 = true;
-                this.method_2413();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }));
+            this.field_2840 = class_24872.method_10550("currentPage");
+            this.field_2837 = true;
+            this.method_2413();
+            return;
+        }
+    }
+
+    private void lambda$onInit$0(class_4185 class_41852) {
+        class_2499 class_24992 = new class_2499();
+        Stream<class_2519> stream = this.field_17116.stream().map(class_2519::method_23256);
+        Objects.requireNonNull(class_24992);
+        stream.forEach(class_24992::add);
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10566("pages", (class_2520)class_24992);
+        class_24872.method_10569("currentPage", this.field_2840);
+        FastByteArrayOutputStream fastByteArrayOutputStream = new FastByteArrayOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream((OutputStream)fastByteArrayOutputStream);
+        try {
+            class_2507.method_10628((class_2487)class_24872, (DataOutput)dataOutputStream);
+        }
+        catch (IOException iOException) {
+            iOException.printStackTrace();
+        }
+        try {
+            GLFW.glfwSetClipboardString((long)Utils.mc.method_22683().method_4490(), (CharSequence)Base64.getEncoder().encodeToString(fastByteArrayOutputStream.array));
+        }
+        catch (OutOfMemoryError outOfMemoryError) {
+            GLFW.glfwSetClipboardString((long)Utils.mc.method_22683().method_4490(), (CharSequence)outOfMemoryError.toString());
+        }
     }
 }
 

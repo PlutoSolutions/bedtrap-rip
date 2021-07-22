@@ -32,12 +32,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class AbstractFurnaceScreenMixin<T extends class_1720>
 extends class_465<T>
 implements class_518 {
-    public AbstractFurnaceScreenMixin(T container, class_1661 playerInventory, class_2561 name) {
-        super(container, playerInventory, name);
+    public AbstractFurnaceScreenMixin(T t, class_1661 class_16612, class_2561 class_25612) {
+        super(t, class_16612, class_25612);
     }
 
     @Inject(method={"tick"}, at={@At(value="TAIL")})
-    private void onTick(CallbackInfo info) {
+    private void onTick(CallbackInfo callbackInfo) {
         if (Modules.get().isActive(AutoSmelter.class)) {
             Modules.get().get(AutoSmelter.class).tick((class_1720)this.field_2797);
         }

@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 public interface Callback {
-    public static final /* synthetic */ List<String> FORBIDDEN_NAMES;
-    public static final /* synthetic */ String METHOD_NAME;
+    public static final List<String> FORBIDDEN_NAMES;
+    public static final String METHOD_NAME;
 
     static {
         METHOD_NAME = "callback";

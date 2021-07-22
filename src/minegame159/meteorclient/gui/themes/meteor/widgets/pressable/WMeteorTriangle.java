@@ -10,14 +10,9 @@ import minegame159.meteorclient.gui.widgets.pressable.WTriangle;
 public class WMeteorTriangle
 extends WTriangle
 implements MeteorWidget {
-    public WMeteorTriangle() {
-        WMeteorTriangle lllllllllllllllllIlIllIIlIllIlIl;
-    }
-
     @Override
-    protected void onRender(GuiRenderer lllllllllllllllllIlIllIIlIllIIIl, double lllllllllllllllllIlIllIIlIllIIII, double lllllllllllllllllIlIllIIlIlIllll, double lllllllllllllllllIlIllIIlIlIlllI) {
-        WMeteorTriangle lllllllllllllllllIlIllIIlIlIllIl;
-        lllllllllllllllllIlIllIIlIllIIIl.rotatedQuad(lllllllllllllllllIlIllIIlIlIllIl.x, lllllllllllllllllIlIllIIlIlIllIl.y, lllllllllllllllllIlIllIIlIlIllIl.width, lllllllllllllllllIlIllIIlIlIllIl.height, lllllllllllllllllIlIllIIlIlIllIl.rotation, GuiRenderer.TRIANGLE, lllllllllllllllllIlIllIIlIlIllIl.theme().backgroundColor.get(lllllllllllllllllIlIllIIlIlIllIl.pressed, lllllllllllllllllIlIllIIlIlIllIl.mouseOver));
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        guiRenderer.rotatedQuad(this.x, this.y, this.width, this.height, this.rotation, GuiRenderer.TRIANGLE, this.theme().backgroundColor.get(this.pressed, this.mouseOver));
     }
 }
 

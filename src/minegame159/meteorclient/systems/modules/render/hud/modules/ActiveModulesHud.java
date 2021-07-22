@@ -21,131 +21,132 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 
 public class ActiveModulesHud
 extends HudElement {
-    private final /* synthetic */ Setting<SettingColor> flatColor;
-    private final /* synthetic */ Setting<ColorMode> colorMode;
-    private final /* synthetic */ minegame159.meteorclient.utils.render.color.Color rainbow;
-    private final /* synthetic */ Setting<Boolean> activeInfo;
-    private final /* synthetic */ List<Module> modules;
-    private /* synthetic */ double rainbowHue2;
-    private final /* synthetic */ Setting<Double> rainbowSpread;
-    private final /* synthetic */ Setting<Double> rainbowSpeed;
-    private /* synthetic */ double rainbowHue1;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Sort> sort;
+    private final Setting<SettingColor> flatColor;
+    private final Setting<ColorMode> colorMode;
+    private final minegame159.meteorclient.utils.render.color.Color rainbow;
+    private final Setting<Boolean> activeInfo;
+    private final List<Module> modules;
+    private double rainbowHue2;
+    private final Setting<Double> rainbowSpread;
+    private final Setting<Double> rainbowSpeed;
+    private double rainbowHue1;
+    private final SettingGroup sgGeneral;
+    private final Setting<Sort> sort;
 
-    private void renderModule(HudRenderer lllllllllllllllllIIIllllIllllllI, Module lllllllllllllllllIIIlllllIIIIlII, double lllllllllllllllllIIIlllllIIIIIll, double lllllllllllllllllIIIlllllIIIIIlI) {
-        String lllllllllllllllllIIIlllllIIIIlll;
-        ActiveModulesHud lllllllllllllllllIIIlllllIIIIllI;
-        minegame159.meteorclient.utils.render.color.Color lllllllllllllllllIIIlllllIIIIIIl = lllllllllllllllllIIIlllllIIIIllI.flatColor.get();
-        ColorMode lllllllllllllllllIIIlllllIIIIIII = lllllllllllllllllIIIlllllIIIIllI.colorMode.get();
-        if (lllllllllllllllllIIIlllllIIIIIII == ColorMode.Random) {
-            lllllllllllllllllIIIlllllIIIIIIl = lllllllllllllllllIIIlllllIIIIlII.color;
-        } else if (lllllllllllllllllIIIlllllIIIIIII == ColorMode.Rainbow) {
-            lllllllllllllllllIIIlllllIIIIllI.rainbowHue2 += lllllllllllllllllIIIlllllIIIIllI.rainbowSpread.get().doubleValue();
-            int lllllllllllllllllIIIlllllIIIlIII = Color.HSBtoRGB((float)lllllllllllllllllIIIlllllIIIIllI.rainbowHue2, 1.0f, 1.0f);
-            lllllllllllllllllIIIlllllIIIIllI.rainbow.r = minegame159.meteorclient.utils.render.color.Color.toRGBAR(lllllllllllllllllIIIlllllIIIlIII);
-            lllllllllllllllllIIIlllllIIIIllI.rainbow.g = minegame159.meteorclient.utils.render.color.Color.toRGBAG(lllllllllllllllllIIIlllllIIIlIII);
-            lllllllllllllllllIIIlllllIIIIllI.rainbow.b = minegame159.meteorclient.utils.render.color.Color.toRGBAB(lllllllllllllllllIIIlllllIIIlIII);
-            lllllllllllllllllIIIlllllIIIIIIl = lllllllllllllllllIIIlllllIIIIllI.rainbow;
+    private void renderModule(HudRenderer hudRenderer, Module module, double d, double d2) {
+        String string;
+        minegame159.meteorclient.utils.render.color.Color color = this.flatColor.get();
+        ColorMode colorMode = this.colorMode.get();
+        if (colorMode == ColorMode.Random) {
+            color = module.color;
+        } else if (colorMode == ColorMode.Rainbow) {
+            this.rainbowHue2 += this.rainbowSpread.get().doubleValue();
+            int n = Color.HSBtoRGB((float)this.rainbowHue2, 1.0f, 1.0f);
+            this.rainbow.r = minegame159.meteorclient.utils.render.color.Color.toRGBAR(n);
+            this.rainbow.g = minegame159.meteorclient.utils.render.color.Color.toRGBAG(n);
+            this.rainbow.b = minegame159.meteorclient.utils.render.color.Color.toRGBAB(n);
+            color = this.rainbow;
         }
-        lllllllllllllllllIIIllllIllllllI.text(lllllllllllllllllIIIlllllIIIIlII.title, lllllllllllllllllIIIlllllIIIIIll, lllllllllllllllllIIIlllllIIIIIlI, lllllllllllllllllIIIlllllIIIIIIl);
-        if (lllllllllllllllllIIIlllllIIIIllI.activeInfo.get().booleanValue() && (lllllllllllllllllIIIlllllIIIIlll = lllllllllllllllllIIIlllllIIIIlII.getInfoString()) != null) {
-            lllllllllllllllllIIIllllIllllllI.text(lllllllllllllllllIIIlllllIIIIlll, lllllllllllllllllIIIlllllIIIIIll + lllllllllllllllllIIIllllIllllllI.textWidth(lllllllllllllllllIIIlllllIIIIlII.title) + lllllllllllllllllIIIllllIllllllI.textWidth(" "), lllllllllllllllllIIIlllllIIIIIlI, lllllllllllllllllIIIlllllIIIIllI.hud.secondaryColor.get());
+        hudRenderer.text(module.title, d, d2, color);
+        if (this.activeInfo.get().booleanValue() && (string = module.getInfoString()) != null) {
+            hudRenderer.text(string, d + hudRenderer.textWidth(module.title) + hudRenderer.textWidth(" "), d2, this.hud.secondaryColor.get());
         }
     }
 
     @Override
-    public void update(HudRenderer lllllllllllllllllIIIlllllIlIIlll) {
-        ActiveModulesHud lllllllllllllllllIIIlllllIlIlIII;
+    public void update(HudRenderer hudRenderer) {
         if (Modules.get() == null) {
-            lllllllllllllllllIIIlllllIlIlIII.box.setSize(lllllllllllllllllIIIlllllIlIIlll.textWidth("Active Modules"), lllllllllllllllllIIIlllllIlIIlll.textHeight());
+            this.box.setSize(hudRenderer.textWidth("Active Modules"), hudRenderer.textHeight());
             return;
         }
-        lllllllllllllllllIIIlllllIlIlIII.modules.clear();
-        for (Module lllllllllllllllllIIIlllllIlIllll : Modules.get().getActive()) {
-            if (!lllllllllllllllllIIIlllllIlIllll.isVisible()) continue;
-            lllllllllllllllllIIIlllllIlIlIII.modules.add(lllllllllllllllllIIIlllllIlIllll);
+        this.modules.clear();
+        for (Module module : Modules.get().getActive()) {
+            if (!module.isVisible()) continue;
+            this.modules.add(module);
         }
-        lllllllllllllllllIIIlllllIlIlIII.modules.sort((lllllllllllllllllIIIllllIlIlIlll, lllllllllllllllllIIIllllIlIlllIl) -> {
-            int lllllllllllllllllIIIllllIlIllIlI;
-            ActiveModulesHud lllllllllllllllllIIIllllIllIIIII;
-            double lllllllllllllllllIIIllllIlIlllII = lllllllllllllllllIIIllllIllIIIII.getModuleWidth(lllllllllllllllllIIIlllllIlIIlll, (Module)lllllllllllllllllIIIllllIlIlIlll);
-            double lllllllllllllllllIIIllllIlIllIll = lllllllllllllllllIIIllllIllIIIII.getModuleWidth(lllllllllllllllllIIIlllllIlIIlll, (Module)lllllllllllllllllIIIllllIlIlllIl);
-            if (lllllllllllllllllIIIllllIllIIIII.sort.get() == Sort.Smallest) {
-                double lllllllllllllllllIIIllllIllIIIIl = lllllllllllllllllIIIllllIlIlllII;
-                lllllllllllllllllIIIllllIlIlllII = lllllllllllllllllIIIllllIlIllIll;
-                lllllllllllllllllIIIllllIlIllIll = lllllllllllllllllIIIllllIllIIIIl;
-            }
-            if ((lllllllllllllllllIIIllllIlIllIlI = Double.compare(lllllllllllllllllIIIllllIlIlllII, lllllllllllllllllIIIllllIlIllIll)) == 0) {
-                return 0;
-            }
-            return lllllllllllllllllIIIllllIlIllIlI < 0 ? 1 : -1;
-        });
-        double lllllllllllllllllIIIlllllIlIlIlI = 0.0;
-        double lllllllllllllllllIIIlllllIlIlIIl = 0.0;
-        for (int lllllllllllllllllIIIlllllIlIllIl = 0; lllllllllllllllllIIIlllllIlIllIl < lllllllllllllllllIIIlllllIlIlIII.modules.size(); ++lllllllllllllllllIIIlllllIlIllIl) {
-            Module lllllllllllllllllIIIlllllIlIlllI = lllllllllllllllllIIIlllllIlIlIII.modules.get(lllllllllllllllllIIIlllllIlIllIl);
-            lllllllllllllllllIIIlllllIlIlIlI = Math.max(lllllllllllllllllIIIlllllIlIlIlI, lllllllllllllllllIIIlllllIlIlIII.getModuleWidth(lllllllllllllllllIIIlllllIlIIlll, lllllllllllllllllIIIlllllIlIlllI));
-            lllllllllllllllllIIIlllllIlIlIIl += lllllllllllllllllIIIlllllIlIIlll.textHeight();
-            if (lllllllllllllllllIIIlllllIlIllIl <= 0) continue;
-            lllllllllllllllllIIIlllllIlIlIIl += 2.0;
+        this.modules.sort((arg_0, arg_1) -> this.lambda$update$3(hudRenderer, arg_0, arg_1));
+        double d = 0.0;
+        double d2 = 0.0;
+        for (int i = 0; i < this.modules.size(); ++i) {
+            Module module = this.modules.get(i);
+            d = Math.max(d, this.getModuleWidth(hudRenderer, module));
+            d2 += hudRenderer.textHeight();
+            if (i <= 0) continue;
+            d2 += 2.0;
+            if (3 != 4) continue;
+            return;
         }
-        lllllllllllllllllIIIlllllIlIlIII.box.setSize(lllllllllllllllllIIIlllllIlIlIlI, lllllllllllllllllIIIlllllIlIlIIl);
+        this.box.setSize(d, d2);
     }
 
-    public ActiveModulesHud(HUD lllllllllllllllllIIIlllllIlllIIl) {
-        super(lllllllllllllllllIIIlllllIlllIIl, "active-modules", "Displays your active modules.");
-        ActiveModulesHud lllllllllllllllllIIIlllllIlllIII;
-        lllllllllllllllllIIIlllllIlllIII.sgGeneral = lllllllllllllllllIIIlllllIlllIII.settings.getDefaultGroup();
-        lllllllllllllllllIIIlllllIlllIII.sort = lllllllllllllllllIIIlllllIlllIII.sgGeneral.add(new EnumSetting.Builder().name("sort").description("How to sort active modules.").defaultValue(Sort.Biggest).build());
-        lllllllllllllllllIIIlllllIlllIII.activeInfo = lllllllllllllllllIIIlllllIlllIII.sgGeneral.add(new BoolSetting.Builder().name("additional-info").description("Shows additional info from the module next to the name in the active modules list.").defaultValue(true).build());
-        lllllllllllllllllIIIlllllIlllIII.colorMode = lllllllllllllllllIIIlllllIlllIII.sgGeneral.add(new EnumSetting.Builder().name("color-mode").description("What color to use for active modules.").defaultValue(ColorMode.Rainbow).build());
-        lllllllllllllllllIIIlllllIlllIII.flatColor = lllllllllllllllllIIIlllllIlllIII.sgGeneral.add(new ColorSetting.Builder().name("flat-color").description("Color for flat color mode.").defaultValue(new SettingColor(225, 25, 25)).visible(() -> {
-            ActiveModulesHud lllllllllllllllllIIIllllIlIIlIll;
-            return lllllllllllllllllIIIllllIlIIlIll.colorMode.get() == ColorMode.Flat;
-        }).build());
-        lllllllllllllllllIIIlllllIlllIII.rainbowSpeed = lllllllllllllllllIIIlllllIlllIII.sgGeneral.add(new DoubleSetting.Builder().name("rainbow-speed").description("Rainbow speed of rainbow color mode.").defaultValue(0.0035).sliderMax(0.1).decimalPlaces(4).visible(() -> {
-            ActiveModulesHud lllllllllllllllllIIIllllIlIIllIl;
-            return lllllllllllllllllIIIllllIlIIllIl.colorMode.get() == ColorMode.Rainbow;
-        }).build());
-        lllllllllllllllllIIIlllllIlllIII.rainbowSpread = lllllllllllllllllIIIlllllIlllIII.sgGeneral.add(new DoubleSetting.Builder().name("rainbow-spread").description("Rainbow spread of rainbow color mode.").defaultValue(0.025).sliderMax(0.05).decimalPlaces(4).visible(() -> {
-            ActiveModulesHud lllllllllllllllllIIIllllIlIlIIII;
-            return lllllllllllllllllIIIllllIlIlIIII.colorMode.get() == ColorMode.Rainbow;
-        }).build());
-        lllllllllllllllllIIIlllllIlllIII.modules = new ArrayList<Module>();
-        lllllllllllllllllIIIlllllIlllIII.rainbow = new minegame159.meteorclient.utils.render.color.Color(255, 255, 255);
+    private boolean lambda$new$1() {
+        return this.colorMode.get() == ColorMode.Rainbow;
     }
 
-    private double getModuleWidth(HudRenderer lllllllllllllllllIIIllllIlllIIII, Module lllllllllllllllllIIIllllIllIllll) {
-        String lllllllllllllllllIIIllllIlllIIlI;
-        ActiveModulesHud lllllllllllllllllIIIllllIllIllIl;
-        double lllllllllllllllllIIIllllIllIlllI = lllllllllllllllllIIIllllIlllIIII.textWidth(lllllllllllllllllIIIllllIllIllll.title);
-        if (lllllllllllllllllIIIllllIllIllIl.activeInfo.get().booleanValue() && (lllllllllllllllllIIIllllIlllIIlI = lllllllllllllllllIIIllllIllIllll.getInfoString()) != null) {
-            lllllllllllllllllIIIllllIllIlllI += lllllllllllllllllIIIllllIlllIIII.textWidth(" ") + lllllllllllllllllIIIllllIlllIIII.textWidth(lllllllllllllllllIIIllllIlllIIlI);
+    public ActiveModulesHud(HUD hUD) {
+        super(hUD, "active-modules", "Displays your active modules.");
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sort = this.sgGeneral.add(new EnumSetting.Builder().name("sort").description("How to sort active modules.").defaultValue(Sort.Biggest).build());
+        this.activeInfo = this.sgGeneral.add(new BoolSetting.Builder().name("additional-info").description("Shows additional info from the module next to the name in the active modules list.").defaultValue(true).build());
+        this.colorMode = this.sgGeneral.add(new EnumSetting.Builder().name("color-mode").description("What color to use for active modules.").defaultValue(ColorMode.Rainbow).build());
+        this.flatColor = this.sgGeneral.add(new ColorSetting.Builder().name("flat-color").description("Color for flat color mode.").defaultValue(new SettingColor(225, 25, 25)).visible(this::lambda$new$0).build());
+        this.rainbowSpeed = this.sgGeneral.add(new DoubleSetting.Builder().name("rainbow-speed").description("Rainbow speed of rainbow color mode.").defaultValue(0.0035).sliderMax(0.1).decimalPlaces(4).visible(this::lambda$new$1).build());
+        this.rainbowSpread = this.sgGeneral.add(new DoubleSetting.Builder().name("rainbow-spread").description("Rainbow spread of rainbow color mode.").defaultValue(0.025).sliderMax(0.05).decimalPlaces(4).visible(this::lambda$new$2).build());
+        this.modules = new ArrayList<Module>();
+        this.rainbow = new minegame159.meteorclient.utils.render.color.Color(255, 255, 255);
+    }
+
+    private double getModuleWidth(HudRenderer hudRenderer, Module module) {
+        String string;
+        double d = hudRenderer.textWidth(module.title);
+        if (this.activeInfo.get().booleanValue() && (string = module.getInfoString()) != null) {
+            d += hudRenderer.textWidth(" ") + hudRenderer.textWidth(string);
         }
-        return lllllllllllllllllIIIllllIllIlllI;
+        return d;
+    }
+
+    private boolean lambda$new$2() {
+        return this.colorMode.get() == ColorMode.Rainbow;
     }
 
     @Override
-    public void render(HudRenderer lllllllllllllllllIIIlllllIIllIIl) {
-        ActiveModulesHud lllllllllllllllllIIIlllllIIllIlI;
-        double lllllllllllllllllIIIlllllIIllIII = lllllllllllllllllIIIlllllIIllIlI.box.getX();
-        double lllllllllllllllllIIIlllllIIlIlll = lllllllllllllllllIIIlllllIIllIlI.box.getY();
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX();
+        double d2 = this.box.getY();
         if (Modules.get() == null) {
-            lllllllllllllllllIIIlllllIIllIIl.text("Active Modules", lllllllllllllllllIIIlllllIIllIII, lllllllllllllllllIIIlllllIIlIlll, lllllllllllllllllIIIlllllIIllIlI.hud.color);
+            hudRenderer.text("Active Modules", d, d2, this.hud.color);
             return;
         }
-        lllllllllllllllllIIIlllllIIllIlI.rainbowHue1 += lllllllllllllllllIIIlllllIIllIlI.rainbowSpeed.get() * lllllllllllllllllIIIlllllIIllIIl.delta;
-        if (lllllllllllllllllIIIlllllIIllIlI.rainbowHue1 > 1.0) {
-            lllllllllllllllllIIIlllllIIllIlI.rainbowHue1 -= 1.0;
-        } else if (lllllllllllllllllIIIlllllIIllIlI.rainbowHue1 < -1.0) {
-            lllllllllllllllllIIIlllllIIllIlI.rainbowHue1 += 1.0;
+        this.rainbowHue1 += this.rainbowSpeed.get() * hudRenderer.delta;
+        if (this.rainbowHue1 > 1.0) {
+            this.rainbowHue1 -= 1.0;
+        } else if (this.rainbowHue1 < -1.0) {
+            this.rainbowHue1 += 1.0;
         }
-        lllllllllllllllllIIIlllllIIllIlI.rainbowHue2 = lllllllllllllllllIIIlllllIIllIlI.rainbowHue1;
-        for (Module lllllllllllllllllIIIlllllIIllIll : lllllllllllllllllIIIlllllIIllIlI.modules) {
-            lllllllllllllllllIIIlllllIIllIlI.renderModule(lllllllllllllllllIIIlllllIIllIIl, lllllllllllllllllIIIlllllIIllIll, lllllllllllllllllIIIlllllIIllIII + lllllllllllllllllIIIlllllIIllIlI.box.alignX(lllllllllllllllllIIIlllllIIllIlI.getModuleWidth(lllllllllllllllllIIIlllllIIllIIl, lllllllllllllllllIIIlllllIIllIll)), lllllllllllllllllIIIlllllIIlIlll);
-            lllllllllllllllllIIIlllllIIlIlll += 2.0 + lllllllllllllllllIIIlllllIIllIIl.textHeight();
+        this.rainbowHue2 = this.rainbowHue1;
+        for (Module module : this.modules) {
+            this.renderModule(hudRenderer, module, d + this.box.alignX(this.getModuleWidth(hudRenderer, module)), d2);
+            d2 += 2.0 + hudRenderer.textHeight();
         }
+    }
+
+    private boolean lambda$new$0() {
+        return this.colorMode.get() == ColorMode.Flat;
+    }
+
+    private int lambda$update$3(HudRenderer hudRenderer, Module module, Module module2) {
+        int n;
+        double d = this.getModuleWidth(hudRenderer, module);
+        double d2 = this.getModuleWidth(hudRenderer, module2);
+        if (this.sort.get() == Sort.Smallest) {
+            double d3 = d;
+            d = d2;
+            d2 = d3;
+        }
+        if ((n = Double.compare(d, d2)) == 0) {
+            return 0;
+        }
+        return n < 0 ? 1 : -1;
     }
 
     public static enum ColorMode {
@@ -153,20 +154,12 @@ extends HudElement {
         Random,
         Rainbow;
 
-
-        private ColorMode() {
-            ColorMode lllllllllllllllllllIlIlIIllIIlll;
-        }
     }
 
     public static enum Sort {
         Biggest,
         Smallest;
 
-
-        private Sort() {
-            Sort llIlIllIIllIl;
-        }
     }
 }
 

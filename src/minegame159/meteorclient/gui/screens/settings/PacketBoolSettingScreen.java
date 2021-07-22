@@ -18,19 +18,27 @@ import net.minecraft.class_2596;
 public class PacketBoolSettingScreen
 extends LeftRightListSettingScreen<Class<? extends class_2596<?>>> {
     @Override
-    protected WWidget getValueWidget(Class<? extends class_2596<?>> lIlllIllIlllI) {
-        PacketBoolSettingScreen lIlllIllIllll;
-        return lIlllIllIllll.theme.label(lIlllIllIllll.getValueName(lIlllIllIlllI));
-    }
-
-    public PacketBoolSettingScreen(GuiTheme lIlllIlllIlIl, Setting<Set<Class<? extends class_2596<?>>>> lIlllIlllIlll) {
-        super(lIlllIlllIlIl, "Select Packets", lIlllIlllIlll, (Collection)lIlllIlllIlll.get(), PacketUtils.REGISTRY);
-        PacketBoolSettingScreen lIlllIllllIIl;
+    protected WWidget getValueWidget(Object object) {
+        return this.getValueWidget((Class)object);
     }
 
     @Override
-    protected String getValueName(Class<? extends class_2596<?>> lIlllIllIlIlI) {
-        return PacketUtils.getName(lIlllIllIlIlI);
+    protected String getValueName(Object object) {
+        return this.getValueName((Class)object);
+    }
+
+    @Override
+    protected WWidget getValueWidget(Class<? extends class_2596<?>> class_) {
+        return this.theme.label(this.getValueName(class_));
+    }
+
+    public PacketBoolSettingScreen(GuiTheme guiTheme, Setting<Set<Class<? extends class_2596<?>>>> setting) {
+        super(guiTheme, "Select Packets", setting, (Collection)setting.get(), PacketUtils.REGISTRY);
+    }
+
+    @Override
+    protected String getValueName(Class<? extends class_2596<?>> class_) {
+        return PacketUtils.getName(class_);
     }
 }
 

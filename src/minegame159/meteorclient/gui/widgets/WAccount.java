@@ -17,57 +17,58 @@ import minegame159.meteorclient.utils.render.color.Color;
 
 public abstract class WAccount
 extends WHorizontalList {
-    private final /* synthetic */ Account<?> account;
-    public /* synthetic */ Runnable refreshScreenAction;
-    private final /* synthetic */ WidgetScreen screen;
+    private final Account<?> account;
+    public Runnable refreshScreenAction;
+    private final WidgetScreen screen;
 
-    public WAccount(WidgetScreen llIllllIIIIlIl, Account<?> llIllllIIIIIIl) {
-        WAccount llIllllIIIIllI;
-        llIllllIIIIllI.screen = llIllllIIIIlIl;
-        llIllllIIIIllI.account = llIllllIIIIIIl;
+    public WAccount(WidgetScreen widgetScreen, Account<?> account) {
+        this.screen = widgetScreen;
+        this.account = account;
     }
 
     protected abstract Color accountTypeColor();
 
+    private void lambda$init$2() {
+        Accounts.get().remove(this.account);
+        if (this.refreshScreenAction != null) {
+            this.refreshScreenAction.run();
+        }
+    }
+
     protected abstract Color loggedInColor();
+
+    private void lambda$init$1(WButton wButton, WLabel wLabel) {
+        wButton.minWidth = wButton.width;
+        wButton.set("...");
+        this.screen.locked = true;
+        MeteorExecutor.execute(() -> this.lambda$init$0(wLabel, wButton));
+    }
 
     @Override
     public void init() {
-        WAccount llIlllIlllIllI;
-        llIlllIlllIllI.add(llIlllIlllIllI.theme.texture(32.0, 32.0, 90.0, llIlllIlllIllI.account.getCache().getHeadTexture()));
-        WLabel llIlllIllllIlI = llIlllIlllIllI.add(llIlllIlllIllI.theme.label(llIlllIlllIllI.account.getUsername())).widget();
-        if (Utils.mc.method_1548().method_1676().equalsIgnoreCase(llIlllIlllIllI.account.getUsername())) {
-            llIlllIllllIlI.color = llIlllIlllIllI.loggedInColor();
+        this.add(this.theme.texture(32.0, 32.0, 90.0, this.account.getCache().getHeadTexture()));
+        WLabel wLabel = this.add(this.theme.label(this.account.getUsername())).widget();
+        if (Utils.mc.method_1548().method_1676().equalsIgnoreCase(this.account.getUsername())) {
+            wLabel.color = this.loggedInColor();
         }
-        WLabel llIlllIllllIIl = llIlllIlllIllI.add(llIlllIlllIllI.theme.label(String.valueOf(new StringBuilder().append("(").append((Object)llIlllIlllIllI.account.getType()).append(")")))).expandCellX().right().widget();
-        llIlllIllllIIl.color = llIlllIlllIllI.accountTypeColor();
-        WButton llIlllIllllIII = llIlllIlllIllI.add(llIlllIlllIllI.theme.button("Login")).widget();
-        llIlllIllllIII.action = () -> {
-            WAccount llIlllIllIlIll;
-            llIlllIllIlIlI.minWidth = llIlllIllIlIlI.width;
-            llIlllIllllIII.set("...");
-            llIlllIllIlIll.screen.locked = true;
-            MeteorExecutor.execute(() -> {
-                WAccount llIlllIlIlllll;
-                if (llIlllIlIlllll.account.login()) {
-                    llIlllIllllIlI.set(llIlllIlIlllll.account.getUsername());
-                    Accounts.get().save();
-                    OnlinePlayers.forcePing();
-                    llIlllIlIlllll.screen.taskAfterRender = llIlllIlIlllll.refreshScreenAction;
-                }
-                llIlllIlIlllIl.minWidth = 0.0;
-                llIlllIllllIII.set("Login");
-                llIlllIlIlllll.screen.locked = false;
-            });
-        };
-        WMinus llIlllIlllIlll = llIlllIlllIllI.add(llIlllIlllIllI.theme.minus()).widget();
-        llIlllIlllIlll.action = () -> {
-            WAccount llIlllIllIllll;
-            Accounts.get().remove(llIlllIllIllll.account);
-            if (llIlllIllIllll.refreshScreenAction != null) {
-                llIlllIllIllll.refreshScreenAction.run();
-            }
-        };
+        WLabel wLabel2 = this.add(this.theme.label(String.valueOf(new StringBuilder().append("(").append((Object)this.account.getType()).append(")")))).expandCellX().right().widget();
+        wLabel2.color = this.accountTypeColor();
+        WButton wButton = this.add(this.theme.button("Login")).widget();
+        wButton.action = () -> this.lambda$init$1(wButton, wLabel);
+        WMinus wMinus = this.add(this.theme.minus()).widget();
+        wMinus.action = this::lambda$init$2;
+    }
+
+    private void lambda$init$0(WLabel wLabel, WButton wButton) {
+        if (this.account.login()) {
+            wLabel.set(this.account.getUsername());
+            Accounts.get().save();
+            OnlinePlayers.forcePing();
+            this.screen.taskAfterRender = this.refreshScreenAction;
+        }
+        wButton.minWidth = 0.0;
+        wButton.set("Login");
+        this.screen.locked = false;
     }
 }
 

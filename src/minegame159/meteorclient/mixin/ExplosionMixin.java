@@ -65,14 +65,14 @@ implements IExplosion {
     private class_1927.class_4179 field_9184;
 
     @Override
-    public void set(class_243 pos, float power, boolean createFire) {
+    public void set(class_243 class_2432, float f, boolean bl) {
         this.field_9187 = Utils.mc.field_1687;
         this.field_9185 = null;
-        this.field_9195 = pos.field_1352;
-        this.field_9192 = pos.field_1351;
-        this.field_9189 = pos.field_1350;
-        this.field_9190 = power;
-        this.field_9186 = createFire;
+        this.field_9195 = class_2432.field_1352;
+        this.field_9192 = class_2432.field_1351;
+        this.field_9189 = class_2432.field_1350;
+        this.field_9190 = f;
+        this.field_9186 = bl;
         this.field_9184 = class_1927.class_4179.field_18687;
     }
 }

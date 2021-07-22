@@ -10,7 +10,6 @@ public class OldAnimations
 extends Module {
     public OldAnimations() {
         super(Categories.BedTrap, "old-animations", "Makes your handswing look like pre 1.9.");
-        OldAnimations lIlllIlIIlIlIl;
     }
 }
 

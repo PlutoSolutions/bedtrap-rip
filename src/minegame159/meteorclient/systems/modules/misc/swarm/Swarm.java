@@ -25,118 +25,112 @@ import minegame159.meteorclient.systems.modules.misc.swarm.SwarmWorker;
 
 public class Swarm
 extends Module {
-    public final /* synthetic */ Setting<Mode> mode;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Integer> serverPort;
-    public /* synthetic */ SwarmHost host;
-    public /* synthetic */ SwarmWorker worker;
-    private final /* synthetic */ Setting<String> ipAddress;
+    public final Setting<Mode> mode;
+    private final SettingGroup sgGeneral;
+    private final Setting<Integer> serverPort;
+    public SwarmHost host;
+    public SwarmWorker worker;
+    private final Setting<String> ipAddress;
+
+    private void lambda$getWidget$1() {
+        if (!this.isActive()) {
+            return;
+        }
+        this.close();
+        if (this.mode.get() == Mode.Host) {
+            this.host = new SwarmHost(this.serverPort.get());
+        } else {
+            this.worker = new SwarmWorker(this.ipAddress.get(), this.serverPort.get());
+        }
+    }
 
     public Swarm() {
         super(Categories.Misc, "Swarm", "Allows you to control multiple instances of Meteor from one central host.");
-        Swarm llllllllllllllllIllIlIIlIIIIlllI;
-        llllllllllllllllIllIlIIlIIIIlllI.sgGeneral = llllllllllllllllIllIlIIlIIIIlllI.settings.getDefaultGroup();
-        llllllllllllllllIllIlIIlIIIIlllI.mode = llllllllllllllllIllIlIIlIIIIlllI.sgGeneral.add(new EnumSetting.Builder().name("mode").description("What type of client to run.").defaultValue(Mode.Host).build());
-        llllllllllllllllIllIlIIlIIIIlllI.ipAddress = llllllllllllllllIllIlIIlIIIIlllI.sgGeneral.add(new StringSetting.Builder().name("ip").description("The IP address of the host server.").defaultValue("localhost").visible(() -> {
-            Swarm llllllllllllllllIllIlIIIllIIllll;
-            return llllllllllllllllIllIlIIIllIIllll.mode.get() == Mode.Worker;
-        }).build());
-        llllllllllllllllIllIlIIlIIIIlllI.serverPort = llllllllllllllllIllIlIIlIIIIlllI.sgGeneral.add(new IntSetting.Builder().name("port").description("The port used for connections.").defaultValue(7777).sliderMin(1).sliderMax(65535).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("What type of client to run.").defaultValue(Mode.Host).build());
+        this.ipAddress = this.sgGeneral.add(new StringSetting.Builder().name("ip").description("The IP address of the host server.").defaultValue("localhost").visible(this::lambda$new$0).build());
+        this.serverPort = this.sgGeneral.add(new IntSetting.Builder().name("port").description("The port used for connections.").defaultValue(7777).sliderMin(1).sliderMax(65535).build());
+    }
+
+    private boolean lambda$new$0() {
+        return this.mode.get() == Mode.Worker;
+    }
+
+    private static void lambda$getWidget$2() {
+        Main.openUrl("https://github.com/MeteorDevelopment/meteor-client/wiki/Swarm-Guide");
     }
 
     @Override
     public void toggle() {
-        Swarm llllllllllllllllIllIlIIIllIlllll;
-        llllllllllllllllIllIlIIIllIlllll.close();
+        this.close();
         super.toggle();
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llllllllllllllllIllIlIIIllIlIllI) {
-        Swarm llllllllllllllllIllIlIIIllIlIlIl;
-        if (llllllllllllllllIllIlIIIllIlIlIl.isWorker()) {
-            llllllllllllllllIllIlIIIllIlIlIl.worker.tick();
+    private void onTick(TickEvent.Post post) {
+        if (this.isWorker()) {
+            this.worker.tick();
         }
     }
 
     @EventHandler
-    private void onGameLeft(GameLeftEvent llllllllllllllllIllIlIIIlllIIlll) {
-        Swarm llllllllllllllllIllIlIIIlllIlIII;
-        llllllllllllllllIllIlIIIlllIlIII.toggle();
+    private void onGameLeft(GameLeftEvent gameLeftEvent) {
+        this.toggle();
     }
 
     public boolean isHost() {
-        Swarm llllllllllllllllIllIlIIIllIlllIl;
-        return llllllllllllllllIllIlIIIllIlllIl.mode.get() == Mode.Host && llllllllllllllllIllIlIIIllIlllIl.host != null && !llllllllllllllllIllIlIIIllIlllIl.host.isInterrupted();
+        return this.mode.get() == Mode.Host && this.host != null && !this.host.isInterrupted();
     }
 
     public boolean isWorker() {
-        Swarm llllllllllllllllIllIlIIIllIllIIl;
-        return llllllllllllllllIllIlIIIllIllIIl.mode.get() == Mode.Worker && llllllllllllllllIllIlIIIllIllIIl.worker != null && !llllllllllllllllIllIlIIIllIllIIl.worker.isInterrupted();
+        return this.mode.get() == Mode.Worker && this.worker != null && !this.worker.isInterrupted();
     }
 
     @Override
     public void onDeactivate() {
-        Swarm llllllllllllllllIllIlIIIlllIllll;
-        llllllllllllllllIllIlIIIlllIllll.close();
+        this.close();
     }
 
     @Override
     public void onActivate() {
-        Swarm llllllllllllllllIllIlIIIllllIIll;
-        llllllllllllllllIllIlIIIllllIIll.close();
+        this.close();
     }
 
     @EventHandler
-    private void onGameJoin(GameJoinedEvent llllllllllllllllIllIlIIIlllIIIll) {
-        Swarm llllllllllllllllIllIlIIIlllIIIlI;
-        llllllllllllllllIllIlIIIlllIIIlI.toggle();
+    private void onGameJoin(GameJoinedEvent gameJoinedEvent) {
+        this.toggle();
     }
 
     @Override
-    public WWidget getWidget(GuiTheme llllllllllllllllIllIlIIIllllllIl) {
-        Swarm llllllllllllllllIllIlIIlIIIIIlIl;
-        WVerticalList llllllllllllllllIllIlIIlIIIIIIll = llllllllllllllllIllIlIIIllllllIl.verticalList();
-        WHorizontalList llllllllllllllllIllIlIIlIIIIIIlI = llllllllllllllllIllIlIIlIIIIIIll.add(llllllllllllllllIllIlIIIllllllIl.horizontalList()).expandX().widget();
-        WButton llllllllllllllllIllIlIIlIIIIIIIl = llllllllllllllllIllIlIIlIIIIIIlI.add(llllllllllllllllIllIlIIIllllllIl.button("Start")).expandX().widget();
-        llllllllllllllllIllIlIIlIIIIIIIl.action = () -> {
-            Swarm llllllllllllllllIllIlIIIllIlIIlI;
-            if (!llllllllllllllllIllIlIIIllIlIIlI.isActive()) {
-                return;
-            }
-            llllllllllllllllIllIlIIIllIlIIlI.close();
-            if (llllllllllllllllIllIlIIIllIlIIlI.mode.get() == Mode.Host) {
-                llllllllllllllllIllIlIIIllIlIIlI.host = new SwarmHost(llllllllllllllllIllIlIIIllIlIIlI.serverPort.get());
-            } else {
-                llllllllllllllllIllIlIIIllIlIIlI.worker = new SwarmWorker(llllllllllllllllIllIlIIIllIlIIlI.ipAddress.get(), llllllllllllllllIllIlIIIllIlIIlI.serverPort.get());
-            }
-        };
-        WButton llllllllllllllllIllIlIIlIIIIIIII = llllllllllllllllIllIlIIlIIIIIIlI.add(llllllllllllllllIllIlIIIllllllIl.button("Stop")).expandX().widget();
-        llllllllllllllllIllIlIIlIIIIIIII.action = llllllllllllllllIllIlIIlIIIIIlIl::close;
-        WButton llllllllllllllllIllIlIIIllllllll = llllllllllllllllIllIlIIlIIIIIIll.add(llllllllllllllllIllIlIIIllllllIl.button("Guide")).expandX().widget();
-        llllllllllllllllIllIlIIIllllllll.action = () -> Main.openUrl("https://github.com/MeteorDevelopment/meteor-client/wiki/Swarm-Guide");
-        return llllllllllllllllIllIlIIlIIIIIIll;
+    public WWidget getWidget(GuiTheme guiTheme) {
+        WVerticalList wVerticalList = guiTheme.verticalList();
+        WHorizontalList wHorizontalList = wVerticalList.add(guiTheme.horizontalList()).expandX().widget();
+        WButton wButton = wHorizontalList.add(guiTheme.button("Start")).expandX().widget();
+        wButton.action = this::lambda$getWidget$1;
+        WButton wButton2 = wHorizontalList.add(guiTheme.button("Stop")).expandX().widget();
+        wButton2.action = this::close;
+        WButton wButton3 = wVerticalList.add(guiTheme.button("Guide")).expandX().widget();
+        wButton3.action = Swarm::lambda$getWidget$2;
+        return wVerticalList;
     }
 
     @Override
     public String getInfoString() {
-        Swarm llllllllllllllllIllIlIIIllllIllI;
-        return llllllllllllllllIllIlIIIllllIllI.mode.get().name();
+        return this.mode.get().name();
     }
 
     public void close() {
         try {
-            Swarm llllllllllllllllIllIlIIIlllIllII;
-            if (llllllllllllllllIllIlIIIlllIllII.host != null) {
-                llllllllllllllllIllIlIIIlllIllII.host.disconnect();
-                llllllllllllllllIllIlIIIlllIllII.host = null;
+            if (this.host != null) {
+                this.host.disconnect();
+                this.host = null;
             }
-            if (llllllllllllllllIllIlIIIlllIllII.worker != null) {
-                llllllllllllllllIllIlIIIlllIllII.worker.disconnect();
-                llllllllllllllllIllIlIIIlllIllII.worker = null;
+            if (this.worker != null) {
+                this.worker.disconnect();
+                this.worker = null;
             }
         }
-        catch (Exception llllllllllllllllIllIlIIIlllIlIlI) {
+        catch (Exception exception) {
             // empty catch block
         }
     }
@@ -145,10 +139,6 @@ extends Module {
         Host,
         Worker;
 
-
-        private Mode() {
-            Mode lllllllllllllllllIIllllIIllIIIIl;
-        }
     }
 }
 

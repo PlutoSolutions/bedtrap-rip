@@ -21,168 +21,168 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class NBSDecoder {
-    public static final /* synthetic */ Logger LOG;
+    public static final Logger LOG = LogManager.getLogger();
 
-    private static String readString(DataInputStream lllIIIlIlllIIl) throws IOException {
-        int lllIIIlIlllIII;
-        StringBuilder lllIIIlIllIlll = new StringBuilder(lllIIIlIlllIII);
-        for (lllIIIlIlllIII = NBSDecoder.readInt(lllIIIlIlllIIl); lllIIIlIlllIII > 0; --lllIIIlIlllIII) {
-            char lllIIIlIlllIlI = (char)lllIIIlIlllIIl.readByte();
-            if (lllIIIlIlllIlI == '\r') {
-                lllIIIlIlllIlI = ' ';
+    private static String readString(DataInputStream dataInputStream) throws IOException {
+        int n;
+        StringBuilder stringBuilder = new StringBuilder(n);
+        for (n = NBSDecoder.readInt(dataInputStream); n > 0; --n) {
+            char c = (char)dataInputStream.readByte();
+            if (c == '\r') {
+                c = ' ';
             }
-            lllIIIlIllIlll.append(lllIIIlIlllIlI);
-        }
-        return String.valueOf(lllIIIlIllIlll);
-    }
-
-    public NBSDecoder() {
-        NBSDecoder lllIIlIlIlIlIl;
-    }
-
-    public static Song parse(InputStream lllIIlIlIIllIl) {
-        return NBSDecoder.parse(lllIIlIlIIllIl, null);
-    }
-
-    private static Song parseOpenNBS(DataInputStream lllIIlIIIIIIIl, File lllIIIllllIlIl) throws IOException {
-        short lllIIlIIIIIlIl;
-        HashMap<Integer, Layer> lllIIIllllllll = new HashMap<Integer, Layer>();
-        byte lllIIIlllllllI = lllIIlIIIIIIIl.readByte();
-        if (lllIIIlllllllI != 5) {
+            stringBuilder.append(c);
+            if (null == null) continue;
             return null;
         }
-        lllIIlIIIIIIIl.readByte();
-        short lllIIIllllllIl = NBSDecoder.readShort(lllIIlIIIIIIIl);
-        int lllIIIllllllII = NBSDecoder.readShort(lllIIlIIIIIIIl);
-        String lllIIIlllllIll = NBSDecoder.readString(lllIIlIIIIIIIl);
-        String lllIIIlllllIlI = NBSDecoder.readString(lllIIlIIIIIIIl);
-        NBSDecoder.readString(lllIIlIIIIIIIl);
-        String lllIIIlllllIIl = NBSDecoder.readString(lllIIlIIIIIIIl);
-        float lllIIIlllllIII = (float)NBSDecoder.readShort(lllIIlIIIIIIIl) / 100.0f;
-        lllIIlIIIIIIIl.readByte();
-        lllIIlIIIIIIIl.readByte();
-        lllIIlIIIIIIIl.readByte();
-        NBSDecoder.readInt(lllIIlIIIIIIIl);
-        NBSDecoder.readInt(lllIIlIIIIIIIl);
-        NBSDecoder.readInt(lllIIlIIIIIIIl);
-        NBSDecoder.readInt(lllIIlIIIIIIIl);
-        NBSDecoder.readInt(lllIIlIIIIIIIl);
-        NBSDecoder.readString(lllIIlIIIIIIIl);
-        lllIIlIIIIIIIl.readByte();
-        lllIIlIIIIIIIl.readByte();
-        NBSDecoder.readShort(lllIIlIIIIIIIl);
-        int lllIIIllllIlll = -1;
-        while ((lllIIlIIIIIlIl = NBSDecoder.readShort(lllIIlIIIIIIIl)) != 0) {
-            short lllIIlIIIIIllI;
-            lllIIIllllIlll = (short)(lllIIIllllIlll + lllIIlIIIIIlIl);
-            int lllIIlIIIIIlII = -1;
-            while ((lllIIlIIIIIllI = NBSDecoder.readShort(lllIIlIIIIIIIl)) != 0) {
-                lllIIlIIIIIlII = (short)(lllIIlIIIIIlII + lllIIlIIIIIllI);
-                NBSDecoder.setNote(lllIIlIIIIIlII, lllIIIllllIlll, lllIIlIIIIIIIl.readByte(), lllIIlIIIIIIIl.readByte(), lllIIIllllllll);
-                lllIIlIIIIIIIl.readByte();
-                lllIIlIIIIIIIl.readByte();
-                NBSDecoder.readShort(lllIIlIIIIIIIl);
-            }
-        }
-        for (int lllIIlIIIIIIlI = 0; lllIIlIIIIIIlI < lllIIIllllllII; ++lllIIlIIIIIIlI) {
-            Layer lllIIlIIIIIIll = (Layer)lllIIIllllllll.get(lllIIlIIIIIIlI);
-            if (lllIIlIIIIIIll == null) continue;
-            lllIIlIIIIIIll.setName(NBSDecoder.readString(lllIIlIIIIIIIl));
-            lllIIlIIIIIIIl.readByte();
-            lllIIlIIIIIIll.setVolume(lllIIlIIIIIIIl.readByte());
-            lllIIlIIIIIIIl.readByte();
-        }
-        return new Song(lllIIIlllllIII, lllIIIllllllll, (short)lllIIIllllllII, lllIIIllllllIl, lllIIIlllllIll, lllIIIlllllIlI, lllIIIlllllIIl, lllIIIllllIlIl);
+        return String.valueOf(stringBuilder);
     }
 
-    private static Song parse(InputStream lllIIlIlIIIIll, File lllIIlIlIIIIII) {
-        try {
-            DataInputStream lllIIlIlIIIlll = new DataInputStream(lllIIlIlIIIIll);
-            short lllIIlIlIIIllI = NBSDecoder.readShort(lllIIlIlIIIlll);
-            if (lllIIlIlIIIllI != 0) {
-                return NBSDecoder.parseClassic(lllIIlIlIIIlll, lllIIlIlIIIIII, lllIIlIlIIIllI);
+    public static Song parse(InputStream inputStream) {
+        return NBSDecoder.parse(inputStream, null);
+    }
+
+    private static Song parseOpenNBS(DataInputStream dataInputStream, File file) throws IOException {
+        int n;
+        HashMap<Integer, Layer> hashMap = new HashMap<Integer, Layer>();
+        byte by = dataInputStream.readByte();
+        if (by != 5) {
+            return null;
+        }
+        dataInputStream.readByte();
+        short s = NBSDecoder.readShort(dataInputStream);
+        int n2 = NBSDecoder.readShort(dataInputStream);
+        String string = NBSDecoder.readString(dataInputStream);
+        String string2 = NBSDecoder.readString(dataInputStream);
+        NBSDecoder.readString(dataInputStream);
+        String string3 = NBSDecoder.readString(dataInputStream);
+        float f = (float)NBSDecoder.readShort(dataInputStream) / 100.0f;
+        dataInputStream.readByte();
+        dataInputStream.readByte();
+        dataInputStream.readByte();
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readString(dataInputStream);
+        dataInputStream.readByte();
+        dataInputStream.readByte();
+        NBSDecoder.readShort(dataInputStream);
+        int n3 = -1;
+        while ((n = NBSDecoder.readShort(dataInputStream)) != 0) {
+            short s2;
+            n3 = (short)(n3 + n);
+            int n4 = -1;
+            while ((s2 = NBSDecoder.readShort(dataInputStream)) != 0) {
+                n4 = (short)(n4 + s2);
+                NBSDecoder.setNote(n4, n3, dataInputStream.readByte(), dataInputStream.readByte(), hashMap);
+                dataInputStream.readByte();
+                dataInputStream.readByte();
+                NBSDecoder.readShort(dataInputStream);
             }
-            return NBSDecoder.parseOpenNBS(lllIIlIlIIIlll, lllIIlIlIIIIII);
         }
-        catch (FileNotFoundException lllIIlIlIIIlIl) {
-            LOG.error((Object)lllIIlIlIIIlIl.getStackTrace());
+        for (n = 0; n < n2; ++n) {
+            Layer layer = (Layer)hashMap.get(n);
+            if (layer == null) continue;
+            layer.setName(NBSDecoder.readString(dataInputStream));
+            dataInputStream.readByte();
+            layer.setVolume(dataInputStream.readByte());
+            dataInputStream.readByte();
+            if (0 >= -1) continue;
+            return null;
         }
-        catch (IOException lllIIlIlIIIlII) {
-            LOG.error((Object)lllIIlIlIIIlII.getStackTrace());
+        return new Song(f, hashMap, (short)n2, s, string, string2, string3, file);
+    }
+
+    private static Song parse(InputStream inputStream, File file) {
+        DataInputStream dataInputStream;
+        block4: {
+            dataInputStream = new DataInputStream(inputStream);
+            short s = NBSDecoder.readShort(dataInputStream);
+            if (s == 0) break block4;
+            return NBSDecoder.parseClassic(dataInputStream, file, s);
+        }
+        try {
+            return NBSDecoder.parseOpenNBS(dataInputStream, file);
+        }
+        catch (FileNotFoundException fileNotFoundException) {
+            LOG.error((Object)fileNotFoundException.getStackTrace());
+        }
+        catch (IOException iOException) {
+            LOG.error((Object)iOException.getStackTrace());
         }
         return null;
     }
 
-    private static Song parseClassic(DataInputStream lllIIlIIlIIIIl, File lllIIlIIlIIIII, short lllIIlIIlIlIIl) throws IOException {
-        short lllIIlIIlIllll;
-        HashMap<Integer, Layer> lllIIlIIlIlIII = new HashMap<Integer, Layer>();
-        int lllIIlIIlIIlll = NBSDecoder.readShort(lllIIlIIlIIIIl);
-        String lllIIlIIlIIllI = NBSDecoder.readString(lllIIlIIlIIIIl);
-        String lllIIlIIlIIlIl = NBSDecoder.readString(lllIIlIIlIIIIl);
-        NBSDecoder.readString(lllIIlIIlIIIIl);
-        String lllIIlIIlIIlII = NBSDecoder.readString(lllIIlIIlIIIIl);
-        float lllIIlIIlIIIll = (float)NBSDecoder.readShort(lllIIlIIlIIIIl) / 100.0f;
-        lllIIlIIlIIIIl.readBoolean();
-        lllIIlIIlIIIIl.readByte();
-        lllIIlIIlIIIIl.readByte();
-        NBSDecoder.readInt(lllIIlIIlIIIIl);
-        NBSDecoder.readInt(lllIIlIIlIIIIl);
-        NBSDecoder.readInt(lllIIlIIlIIIIl);
-        NBSDecoder.readInt(lllIIlIIlIIIIl);
-        NBSDecoder.readInt(lllIIlIIlIIIIl);
-        NBSDecoder.readString(lllIIlIIlIIIIl);
-        int lllIIlIIlIIIlI = -1;
-        while ((lllIIlIIlIllll = NBSDecoder.readShort(lllIIlIIlIIIIl)) != 0) {
-            short lllIIlIIllIIII;
-            lllIIlIIlIIIlI = (short)(lllIIlIIlIIIlI + lllIIlIIlIllll);
-            int lllIIlIIlIlllI = -1;
-            while ((lllIIlIIllIIII = NBSDecoder.readShort(lllIIlIIlIIIIl)) != 0) {
-                lllIIlIIlIlllI = (short)(lllIIlIIlIlllI + lllIIlIIllIIII);
-                NBSDecoder.setNote(lllIIlIIlIlllI, lllIIlIIlIIIlI, lllIIlIIlIIIIl.readByte(), lllIIlIIlIIIIl.readByte(), lllIIlIIlIlIII);
+    private static Song parseClassic(DataInputStream dataInputStream, File file, short s) throws IOException {
+        int n;
+        HashMap<Integer, Layer> hashMap = new HashMap<Integer, Layer>();
+        int n2 = NBSDecoder.readShort(dataInputStream);
+        String string = NBSDecoder.readString(dataInputStream);
+        String string2 = NBSDecoder.readString(dataInputStream);
+        NBSDecoder.readString(dataInputStream);
+        String string3 = NBSDecoder.readString(dataInputStream);
+        float f = (float)NBSDecoder.readShort(dataInputStream) / 100.0f;
+        dataInputStream.readBoolean();
+        dataInputStream.readByte();
+        dataInputStream.readByte();
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readInt(dataInputStream);
+        NBSDecoder.readString(dataInputStream);
+        int n3 = -1;
+        while ((n = NBSDecoder.readShort(dataInputStream)) != 0) {
+            short s2;
+            n3 = (short)(n3 + n);
+            int n4 = -1;
+            while ((s2 = NBSDecoder.readShort(dataInputStream)) != 0) {
+                n4 = (short)(n4 + s2);
+                NBSDecoder.setNote(n4, n3, dataInputStream.readByte(), dataInputStream.readByte(), hashMap);
             }
         }
-        for (int lllIIlIIlIllII = 0; lllIIlIIlIllII < lllIIlIIlIIlll; ++lllIIlIIlIllII) {
-            Layer lllIIlIIlIllIl = (Layer)lllIIlIIlIlIII.get(lllIIlIIlIllII);
-            if (lllIIlIIlIllIl == null) continue;
-            lllIIlIIlIllIl.setName(NBSDecoder.readString(lllIIlIIlIIIIl));
-            lllIIlIIlIllIl.setVolume(lllIIlIIlIIIIl.readByte());
+        for (n = 0; n < n2; ++n) {
+            Layer layer = (Layer)hashMap.get(n);
+            if (layer == null) continue;
+            layer.setName(NBSDecoder.readString(dataInputStream));
+            layer.setVolume(dataInputStream.readByte());
+            if (!false) continue;
+            return null;
         }
-        return new Song(lllIIlIIlIIIll, lllIIlIIlIlIII, (short)lllIIlIIlIIlll, lllIIlIIlIlIIl, lllIIlIIlIIllI, lllIIlIIlIIlIl, lllIIlIIlIIlII, lllIIlIIlIIIII);
+        return new Song(f, hashMap, (short)n2, s, string, string2, string3, file);
     }
 
-    private static short readShort(DataInputStream lllIIIllIlIIII) throws IOException {
-        int lllIIIllIlIIlI = lllIIIllIlIIII.readUnsignedByte();
-        int lllIIIllIlIIIl = lllIIIllIlIIII.readUnsignedByte();
-        return (short)(lllIIIllIlIIlI + (lllIIIllIlIIIl << 8));
+    private static short readShort(DataInputStream dataInputStream) throws IOException {
+        int n = dataInputStream.readUnsignedByte();
+        int n2 = dataInputStream.readUnsignedByte();
+        return (short)(n + (n2 << 8));
     }
 
-    static {
-        LOG = LogManager.getLogger();
+    private static int readInt(DataInputStream dataInputStream) throws IOException {
+        int n = dataInputStream.readUnsignedByte();
+        int n2 = dataInputStream.readUnsignedByte();
+        int n3 = dataInputStream.readUnsignedByte();
+        int n4 = dataInputStream.readUnsignedByte();
+        return n + (n2 << 8) + (n3 << 16) + (n4 << 24);
     }
 
-    private static int readInt(DataInputStream lllIIIllIIlIII) throws IOException {
-        int lllIIIllIIIlll = lllIIIllIIlIII.readUnsignedByte();
-        int lllIIIllIIIllI = lllIIIllIIlIII.readUnsignedByte();
-        int lllIIIllIIIlIl = lllIIIllIIlIII.readUnsignedByte();
-        int lllIIIllIIIlII = lllIIIllIIlIII.readUnsignedByte();
-        return lllIIIllIIIlll + (lllIIIllIIIllI << 8) + (lllIIIllIIIlIl << 16) + (lllIIIllIIIlII << 24);
-    }
-
-    private static void setNote(int lllIIIllIlllII, int lllIIIllIllIll, byte lllIIIlllIIIII, byte lllIIIllIllIIl, HashMap<Integer, Layer> lllIIIllIllIII) {
-        Layer lllIIIllIlllIl = lllIIIllIllIII.get(lllIIIllIlllII);
-        if (lllIIIllIlllIl == null) {
-            lllIIIllIlllIl = new Layer();
-            lllIIIllIllIII.put(lllIIIllIlllII, lllIIIllIlllIl);
+    private static void setNote(int n, int n2, byte by, byte by2, HashMap<Integer, Layer> hashMap) {
+        Layer layer = hashMap.get(n);
+        if (layer == null) {
+            layer = new Layer();
+            hashMap.put(n, layer);
         }
-        lllIIIllIlllIl.setNote(lllIIIllIllIll, new Note(lllIIIlllIIIII, lllIIIllIllIIl));
+        layer.setNote(n2, new Note(by, by2));
     }
 
-    public static Song parse(File lllIIlIlIlIIIl) {
+    public static Song parse(File file) {
         try {
-            return NBSDecoder.parse(new FileInputStream(lllIIlIlIlIIIl), lllIIlIlIlIIIl);
+            return NBSDecoder.parse(new FileInputStream(file), file);
         }
-        catch (FileNotFoundException lllIIlIlIlIIlI) {
-            lllIIlIlIlIIlI.printStackTrace();
+        catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
             return null;
         }
     }

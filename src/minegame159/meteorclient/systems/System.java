@@ -17,11 +17,10 @@ import net.minecraft.class_2507;
 
 public abstract class System<T>
 implements ISerializable<T> {
-    private /* synthetic */ File file;
+    private File file;
 
     public void save() {
-        System llllllllllllllllIllIlIllIIIllIll;
-        llllllllllllllllIllIlIllIIIllIll.save(null);
+        this.save(null);
     }
 
     @Override
@@ -29,22 +28,21 @@ implements ISerializable<T> {
         return null;
     }
 
-    public void load(File llllllllllllllllIllIlIllIIIlIIll) {
-        System llllllllllllllllIllIlIllIIIlIlII;
-        File llllllllllllllllIllIlIllIIIlIIlI = llllllllllllllllIllIlIllIIIlIlII.getFile();
-        if (llllllllllllllllIllIlIllIIIlIIlI == null) {
+    public void load(File file) {
+        File file2 = this.getFile();
+        if (file2 == null) {
             return;
         }
         try {
-            if (llllllllllllllllIllIlIllIIIlIIll != null) {
-                llllllllllllllllIllIlIllIIIlIIlI = new File(llllllllllllllllIllIlIllIIIlIIll, llllllllllllllllIllIlIllIIIlIIlI.getName());
+            if (file != null) {
+                file2 = new File(file, file2.getName());
             }
-            if (llllllllllllllllIllIlIllIIIlIIlI.exists()) {
-                llllllllllllllllIllIlIllIIIlIlII.fromTag(class_2507.method_10633((File)llllllllllllllllIllIlIllIIIlIIlI));
+            if (file2.exists()) {
+                this.fromTag(class_2507.method_10633((File)file2));
             }
         }
-        catch (IOException llllllllllllllllIllIlIllIIIlIlIl) {
-            llllllllllllllllIllIlIllIIIlIlIl.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
     }
 
@@ -52,49 +50,45 @@ implements ISerializable<T> {
     }
 
     @Override
-    public T fromTag(class_2487 llllllllllllllllIllIlIllIIIIIlIl) {
+    public T fromTag(class_2487 class_24872) {
         return null;
     }
 
     public void load() {
-        System llllllllllllllllIllIlIllIIIIllII;
-        llllllllllllllllIllIlIllIIIIllII.load(null);
+        this.load(null);
     }
 
     public File getFile() {
-        System llllllllllllllllIllIlIllIIIIlIII;
-        return llllllllllllllllIllIlIllIIIIlIII.file;
+        return this.file;
     }
 
-    public void save(File llllllllllllllllIllIlIllIIlIIIII) {
-        System llllllllllllllllIllIlIllIIlIIIIl;
-        File llllllllllllllllIllIlIllIIlIIIll = llllllllllllllllIllIlIllIIlIIIIl.getFile();
-        if (llllllllllllllllIllIlIllIIlIIIll == null) {
+    public void save(File file) {
+        File file2 = this.getFile();
+        if (file2 == null) {
             return;
         }
-        class_2487 llllllllllllllllIllIlIllIIlIIIlI = llllllllllllllllIllIlIllIIlIIIIl.toTag();
-        if (llllllllllllllllIllIlIllIIlIIIlI == null) {
+        class_2487 class_24872 = this.toTag();
+        if (class_24872 == null) {
             return;
         }
         try {
-            File llllllllllllllllIllIlIllIIlIIlll = File.createTempFile("meteor-client", llllllllllllllllIllIlIllIIlIIIll.getName());
-            class_2507.method_10630((class_2487)llllllllllllllllIllIlIllIIlIIIlI, (File)llllllllllllllllIllIlIllIIlIIlll);
-            if (llllllllllllllllIllIlIllIIlIIIII != null) {
-                llllllllllllllllIllIlIllIIlIIIll = new File(llllllllllllllllIllIlIllIIlIIIII, llllllllllllllllIllIlIllIIlIIIll.getName());
+            File file3 = File.createTempFile("meteor-client", file2.getName());
+            class_2507.method_10630((class_2487)class_24872, (File)file3);
+            if (file != null) {
+                file2 = new File(file, file2.getName());
             }
-            llllllllllllllllIllIlIllIIlIIIll.getParentFile().mkdirs();
-            StreamUtils.copy(llllllllllllllllIllIlIllIIlIIlll, llllllllllllllllIllIlIllIIlIIIll);
-            llllllllllllllllIllIlIllIIlIIlll.delete();
+            file2.getParentFile().mkdirs();
+            StreamUtils.copy(file3, file2);
+            file3.delete();
         }
-        catch (IOException llllllllllllllllIllIlIllIIlIIllI) {
-            llllllllllllllllIllIlIllIIlIIllI.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
     }
 
-    public System(String llllllllllllllllIllIlIllIIlIlllI) {
-        System llllllllllllllllIllIlIllIIllIIIl;
-        if (llllllllllllllllIllIlIllIIlIlllI != null) {
-            llllllllllllllllIllIlIllIIllIIIl.file = new File(MeteorClient.FOLDER, String.valueOf(new StringBuilder().append(llllllllllllllllIllIlIllIIlIlllI).append(".nbt")));
+    public System(String string) {
+        if (string != null) {
+            this.file = new File(MeteorClient.FOLDER, String.valueOf(new StringBuilder().append(string).append(".nbt")));
         }
     }
 }

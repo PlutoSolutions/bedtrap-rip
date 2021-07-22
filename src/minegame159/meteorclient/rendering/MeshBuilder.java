@@ -29,225 +29,192 @@ import net.minecraft.class_4493;
 import org.lwjgl.opengl.GL11;
 
 public class MeshBuilder {
-    private /* synthetic */ double offsetZ;
-    private /* synthetic */ double offsetX;
-    public /* synthetic */ double alpha;
-    public /* synthetic */ boolean depthTest;
-    private /* synthetic */ int count;
-    public /* synthetic */ boolean texture;
-    private final /* synthetic */ class_287 buffer;
-    private /* synthetic */ double offsetY;
+    private double offsetZ;
+    private double offsetX;
+    public double alpha = 1.0;
+    public boolean depthTest = false;
+    private int count;
+    public boolean texture = false;
+    private final class_287 buffer;
+    private double offsetY;
 
-    public MeshBuilder pos(double lIIIlllIIllIlIl, double lIIIlllIIlllIII, double lIIIlllIIllIlll) {
-        MeshBuilder lIIIlllIIllIllI;
-        lIIIlllIIllIllI.buffer.method_22912(lIIIlllIIllIlIl + lIIIlllIIllIllI.offsetX, lIIIlllIIlllIII + lIIIlllIIllIllI.offsetY, lIIIlllIIllIlll + lIIIlllIIllIllI.offsetZ);
-        return lIIIlllIIllIllI;
+    public MeshBuilder pos(double d, double d2, double d3) {
+        this.buffer.method_22912(d + this.offsetX, d2 + this.offsetY, d3 + this.offsetZ);
+        return this;
     }
 
-    public MeshBuilder color(int lIIIlllIIIlllIl) {
-        MeshBuilder lIIIlllIIIllllI;
-        lIIIlllIIIllllI.buffer.method_22915((float)Color.toRGBAR(lIIIlllIIIlllIl) / 255.0f, (float)Color.toRGBAG(lIIIlllIIIlllIl) / 255.0f, (float)Color.toRGBAB(lIIIlllIIIlllIl) / 255.0f, (float)Color.toRGBAA(lIIIlllIIIlllIl) / 255.0f * (float)lIIIlllIIIllllI.alpha);
-        return lIIIlllIIIllllI;
+    public MeshBuilder color(int n) {
+        this.buffer.method_22915((float)Color.toRGBAR(n) / 255.0f, (float)Color.toRGBAG(n) / 255.0f, (float)Color.toRGBAB(n) / 255.0f, (float)Color.toRGBAA(n) / 255.0f * (float)this.alpha);
+        return this;
     }
 
-    public void verticalQuad(double lIIIlIllIIlIIII, double lIIIlIllIIIllll, double lIIIlIllIIIlllI, double lIIIlIllIIlIlIl, double lIIIlIllIIIllII, double lIIIlIllIIIlIll, Color lIIIlIllIIIlIlI) {
-        MeshBuilder lIIIlIllIIlIIIl;
-        lIIIlIllIIlIIIl.quad(lIIIlIllIIlIIII, lIIIlIllIIIllll, lIIIlIllIIIlllI, lIIIlIllIIlIIII, lIIIlIllIIIllII, lIIIlIllIIIlllI, lIIIlIllIIlIlIl, lIIIlIllIIIllII, lIIIlIllIIIlIll, lIIIlIllIIlIlIl, lIIIlIllIIIllll, lIIIlIllIIIlIll, lIIIlIllIIIlIlI);
+    public void verticalQuad(double d, double d2, double d3, double d4, double d5, double d6, Color color) {
+        this.quad(d, d2, d3, d, d5, d3, d4, d5, d6, d4, d2, d6, color);
     }
 
-    public void boxEdges(double lIIIlIIllIlllIl, double lIIIlIIllIlIllI, double lIIIlIIllIllIll, double lIIIlIIllIllIlI, Color lIIIlIIllIllIIl) {
-        MeshBuilder lIIIlIIllIllllI;
-        lIIIlIIllIllllI.boxEdges(lIIIlIIllIlllIl, lIIIlIIllIlIllI, 0.0, lIIIlIIllIlllIl + lIIIlIIllIllIll, lIIIlIIllIlIllI + lIIIlIIllIllIlI, 0.0, lIIIlIIllIllIIl, 0);
+    public void boxEdges(double d, double d2, double d3, double d4, Color color) {
+        this.boxEdges(d, d2, 0.0, d + d3, d2 + d4, 0.0, color, 0);
     }
 
-    public MeshBuilder color(Color lIIIlllIIlIIlII) {
-        MeshBuilder lIIIlllIIlIIlll;
-        lIIIlllIIlIIlll.buffer.method_22915((float)lIIIlllIIlIIlII.r / 255.0f, (float)lIIIlllIIlIIlII.g / 255.0f, (float)lIIIlllIIlIIlII.b / 255.0f, (float)lIIIlllIIlIIlII.a / 255.0f * (float)lIIIlllIIlIIlll.alpha);
-        return lIIIlllIIlIIlll;
+    public MeshBuilder color(Color color) {
+        this.buffer.method_22915((float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f * (float)this.alpha);
+        return this;
     }
 
-    public void line(double lIIIlIlIIIllIII, double lIIIlIlIIIlIlll, double lIIIlIlIIIllllI, double lIIIlIlIIIlIlIl, double lIIIlIlIIIlIlII, double lIIIlIlIIIlIIll, Color lIIIlIlIIIllIlI) {
-        MeshBuilder lIIIlIlIIlIIIIl;
-        lIIIlIlIIlIIIIl.line(lIIIlIlIIIllIII, lIIIlIlIIIlIlll, lIIIlIlIIIllllI, lIIIlIlIIIlIlIl, lIIIlIlIIIlIlII, lIIIlIlIIIlIIll, lIIIlIlIIIllIlI, lIIIlIlIIIllIlI);
+    public void line(double d, double d2, double d3, double d4, double d5, double d6, Color color) {
+        this.line(d, d2, d3, d4, d5, d6, color, color);
     }
 
-    public void begin(RenderEvent lIIIlllIlIlllII, DrawMode lIIIlllIlIllIlI, class_293 lIIIlllIlIllIII) {
-        MeshBuilder lIIIlllIlIlIllI;
-        if (lIIIlllIlIlllII != null) {
-            lIIIlllIlIlIllI.offsetX = -lIIIlllIlIlllII.offsetX;
-            lIIIlllIlIlIllI.offsetY = -lIIIlllIlIlllII.offsetY;
-            lIIIlllIlIlIllI.offsetZ = -lIIIlllIlIlllII.offsetZ;
+    public void begin(RenderEvent renderEvent, DrawMode drawMode, class_293 class_2932) {
+        if (renderEvent != null) {
+            this.offsetX = -renderEvent.offsetX;
+            this.offsetY = -renderEvent.offsetY;
+            this.offsetZ = -renderEvent.offsetZ;
         } else {
-            lIIIlllIlIlIllI.offsetX = 0.0;
-            lIIIlllIlIlIllI.offsetY = 0.0;
-            lIIIlllIlIlIllI.offsetZ = 0.0;
+            this.offsetX = 0.0;
+            this.offsetY = 0.0;
+            this.offsetZ = 0.0;
         }
-        lIIIlllIlIlIllI.buffer.method_1328(lIIIlllIlIllIlI.toOpenGl(), lIIIlllIlIllIII);
-        lIIIlllIlIlIllI.count = 0;
+        this.buffer.method_1328(drawMode.toOpenGl(), class_2932);
+        this.count = 0;
     }
 
     public MeshBuilder() {
-        MeshBuilder lIIIlllIllIlIlI;
-        lIIIlllIllIlIlI.alpha = 1.0;
-        lIIIlllIllIlIlI.depthTest = false;
-        lIIIlllIllIlIlI.texture = false;
-        lIIIlllIllIlIlI.buffer = new class_287(0x200000);
+        this.buffer = new class_287(0x200000);
     }
 
-    public void verticalGradientQuad(double lIIIllIIIlllIlI, double lIIIllIIIlllIIl, double lIIIllIIIlllIII, double lIIIllIIIlllllI, Color lIIIllIIIllIllI, Color lIIIllIIIllllII) {
-        MeshBuilder lIIIllIIlIIIIlI;
-        lIIIllIIlIIIIlI.verticalGradientQuad(lIIIllIIIlllIlI, lIIIllIIIlllIIl, 0.0, lIIIllIIIlllIlI + lIIIllIIIlllIII, lIIIllIIIlllIIl, 0.0, lIIIllIIIlllIlI + lIIIllIIIlllIII, lIIIllIIIlllIIl + lIIIllIIIlllllI, 0.0, lIIIllIIIlllIlI, lIIIllIIIlllIIl + lIIIllIIIlllllI, 0.0, lIIIllIIIllIllI, lIIIllIIIllllII);
+    public void verticalGradientQuad(double d, double d2, double d3, double d4, Color color, Color color2) {
+        this.verticalGradientQuad(d, d2, 0.0, d + d3, d2, 0.0, d + d3, d2 + d4, 0.0, d, d2 + d4, 0.0, color, color2);
     }
 
-    public void quad(double lIIIlIlllIIIIIl, double lIIIlIllIlllIlI, double lIIIlIllIlllIIl, double lIIIlIllIlllIII, Color lIIIlIllIllIlll) {
-        MeshBuilder lIIIlIlllIIIIlI;
-        lIIIlIlllIIIIlI.quad(lIIIlIlllIIIIIl, lIIIlIllIlllIlI, 0.0, lIIIlIlllIIIIIl + lIIIlIllIlllIIl, lIIIlIllIlllIlI, 0.0, lIIIlIlllIIIIIl + lIIIlIllIlllIIl, lIIIlIllIlllIlI + lIIIlIllIlllIII, 0.0, lIIIlIlllIIIIIl, lIIIlIllIlllIlI + lIIIlIllIlllIII, 0.0, lIIIlIllIllIlll);
+    public void quad(double d, double d2, double d3, double d4, Color color) {
+        this.quad(d, d2, 0.0, d + d3, d2, 0.0, d + d3, d2 + d4, 0.0, d, d2 + d4, 0.0, color);
     }
 
     public boolean isBuilding() {
-        MeshBuilder lIIIlllIlIIIIII;
-        return lIIIlllIlIIIIII.buffer.method_22893();
+        return this.buffer.method_22893();
     }
 
-    public void quad(double lIIIllIllIIlIll, double lIIIllIllIIlIIl, double lIIIllIllIIIlll, double lIIIllIllIIIlIl, double lIIIllIlllIIlII, double lIIIllIllIIIIIl, double lIIIllIlIllllll, double lIIIllIllIllllI, double lIIIllIlIllllIl, double lIIIllIlIllllII, double lIIIllIllIllIIl, double lIIIllIllIlIlll, Color lIIIllIllIlIlIl, Color lIIIllIlIlllIII, Color lIIIllIlIllIlll, Color lIIIllIlIllIllI) {
-        MeshBuilder lIIIllIlllIllIl;
-        lIIIllIlllIllIl.pos(lIIIllIllIIlIll, lIIIllIllIIlIIl, lIIIllIllIIIlll).color(lIIIllIllIlIlIl).endVertex();
-        lIIIllIlllIllIl.pos(lIIIllIllIIIlIl, lIIIllIlllIIlII, lIIIllIllIIIIIl).color(lIIIllIlIlllIII).endVertex();
-        lIIIllIlllIllIl.pos(lIIIllIlIllllll, lIIIllIllIllllI, lIIIllIlIllllIl).color(lIIIllIlIllIlll).endVertex();
-        lIIIllIlllIllIl.pos(lIIIllIllIIlIll, lIIIllIllIIlIIl, lIIIllIllIIIlll).color(lIIIllIllIlIlIl).endVertex();
-        lIIIllIlllIllIl.pos(lIIIllIlIllllll, lIIIllIllIllllI, lIIIllIlIllllIl).color(lIIIllIlIllIlll).endVertex();
-        lIIIllIlllIllIl.pos(lIIIllIlIllllII, lIIIllIllIllIIl, lIIIllIllIlIlll).color(lIIIllIlIllIllI).endVertex();
+    public void quad(double d, double d2, double d3, double d4, double d5, double d6, double d7, double d8, double d9, double d10, double d11, double d12, Color color, Color color2, Color color3, Color color4) {
+        this.pos(d, d2, d3).color(color).endVertex();
+        this.pos(d4, d5, d6).color(color2).endVertex();
+        this.pos(d7, d8, d9).color(color3).endVertex();
+        this.pos(d, d2, d3).color(color).endVertex();
+        this.pos(d7, d8, d9).color(color3).endVertex();
+        this.pos(d10, d11, d12).color(color4).endVertex();
     }
 
-    public void line(double lIIIlIlIIllIllI, double lIIIlIlIIllIlIl, double lIIIlIlIIlIllIl, double lIIIlIlIIllIIll, Color lIIIlIlIIlIlIll, Color lIIIlIlIIlIlIlI) {
-        MeshBuilder lIIIlIlIIllIIII;
-        lIIIlIlIIllIIII.line(lIIIlIlIIllIllI, lIIIlIlIIllIlIl, 0.0, lIIIlIlIIlIllIl, lIIIlIlIIllIIll, 0.0, lIIIlIlIIlIlIll, lIIIlIlIIlIlIlI);
+    public void line(double d, double d2, double d3, double d4, Color color, Color color2) {
+        this.line(d, d2, 0.0, d3, d4, 0.0, color, color2);
     }
 
-    public void horizontalGradientQuad(double lIIIlIlllllllll, double lIIIlIllllllllI, double lIIIlIlllllllIl, double lIIIlIlllllIlIl, Color lIIIlIlllllIlII, Color lIIIlIlllllIIll) {
-        MeshBuilder lIIIlIllllllIIl;
-        lIIIlIllllllIIl.horizontalGradientQuad(lIIIlIlllllllll, lIIIlIllllllllI, 0.0, lIIIlIlllllllll + lIIIlIlllllllIl, lIIIlIllllllllI, 0.0, lIIIlIlllllllll + lIIIlIlllllllIl, lIIIlIllllllllI + lIIIlIlllllIlIl, 0.0, lIIIlIlllllllll, lIIIlIllllllllI + lIIIlIlllllIlIl, 0.0, lIIIlIlllllIlII, lIIIlIlllllIIll);
+    public void horizontalGradientQuad(double d, double d2, double d3, double d4, Color color, Color color2) {
+        this.horizontalGradientQuad(d, d2, 0.0, d + d3, d2, 0.0, d + d3, d2 + d4, 0.0, d, d2 + d4, 0.0, color, color2);
     }
 
-    public void quad(double lIIIlIllllIIIll, double lIIIlIlllIlIlII, double lIIIlIllllIIIIl, double lIIIlIllllIIIII, double lIIIlIlllIlIIIl, double lIIIlIlllIlIIII, double lIIIlIlllIlllIl, double lIIIlIlllIIlllI, double lIIIlIlllIIllIl, double lIIIlIlllIllIlI, double lIIIlIlllIIlIll, double lIIIlIlllIllIII, Color lIIIlIlllIlIlll) {
-        MeshBuilder lIIIlIllllIIlII;
-        lIIIlIllllIIlII.quad(lIIIlIllllIIIll, lIIIlIlllIlIlII, lIIIlIllllIIIIl, lIIIlIllllIIIII, lIIIlIlllIlIIIl, lIIIlIlllIlIIII, lIIIlIlllIlllIl, lIIIlIlllIIlllI, lIIIlIlllIIllIl, lIIIlIlllIllIlI, lIIIlIlllIIlIll, lIIIlIlllIllIII, lIIIlIlllIlIlll, lIIIlIlllIlIlll, lIIIlIlllIlIlll, lIIIlIlllIlIlll);
+    public void quad(double d, double d2, double d3, double d4, double d5, double d6, double d7, double d8, double d9, double d10, double d11, double d12, Color color) {
+        this.quad(d, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, color, color, color, color);
     }
 
-    public void quad(double lIIIllIlIlIlIlI, double lIIIllIlIIllIlI, double lIIIllIlIIllIII, double lIIIllIlIlIIlII, Color lIIIllIlIIlIllI, Color lIIIllIlIIlIlIl, Color lIIIllIlIlIIIIl, Color lIIIllIlIIlIIlI) {
-        MeshBuilder lIIIllIlIlIllII;
-        lIIIllIlIlIllII.quad(lIIIllIlIlIlIlI, lIIIllIlIIllIlI, 0.0, lIIIllIlIlIlIlI + lIIIllIlIIllIII, lIIIllIlIIllIlI, 0.0, lIIIllIlIlIlIlI + lIIIllIlIIllIII, lIIIllIlIIllIlI + lIIIllIlIlIIlII, 0.0, lIIIllIlIlIlIlI, lIIIllIlIIllIlI + lIIIllIlIlIIlII, 0.0, lIIIllIlIIlIllI, lIIIllIlIIlIlIl, lIIIllIlIlIIIIl, lIIIllIlIIlIIlI);
+    public void quad(double d, double d2, double d3, double d4, Color color, Color color2, Color color3, Color color4) {
+        this.quad(d, d2, 0.0, d + d3, d2, 0.0, d + d3, d2 + d4, 0.0, d, d2 + d4, 0.0, color, color2, color3, color4);
     }
 
-    public void horizontalGradientQuad(double lIIIllIIIIlIlIl, double lIIIllIIIIlIlII, double lIIIllIIIIlIIll, double lIIIllIIIlIIIIl, double lIIIllIIIIlIIIl, double lIIIllIIIIlllll, double lIIIllIIIIllllI, double lIIIllIIIIlllIl, double lIIIllIIIIIllIl, double lIIIllIIIIllIll, double lIIIllIIIIIlIll, double lIIIllIIIIIlIlI, Color lIIIllIIIIIlIIl, Color lIIIllIIIIIlIII) {
-        MeshBuilder lIIIllIIIlIIlIl;
-        lIIIllIIIlIIlIl.quad(lIIIllIIIIlIlIl, lIIIllIIIIlIlII, lIIIllIIIIlIIll, lIIIllIIIlIIIIl, lIIIllIIIIlIIIl, lIIIllIIIIlllll, lIIIllIIIIllllI, lIIIllIIIIlllIl, lIIIllIIIIIllIl, lIIIllIIIIllIll, lIIIllIIIIIlIll, lIIIllIIIIIlIlI, lIIIllIIIIIlIIl, lIIIllIIIIIlIII, lIIIllIIIIIlIII, lIIIllIIIIIlIIl);
+    public void horizontalGradientQuad(double d, double d2, double d3, double d4, double d5, double d6, double d7, double d8, double d9, double d10, double d11, double d12, Color color, Color color2) {
+        this.quad(d, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, color, color2, color2, color);
     }
 
-    public void horizontalQuad(double lIIIlIllIlIlllI, double lIIIlIllIlIllIl, double lIIIlIllIlIllII, double lIIIlIllIlIlIll, double lIIIlIllIlIlIlI, Color lIIIlIllIlIlIIl) {
-        MeshBuilder lIIIlIllIlIlIII;
-        lIIIlIllIlIlIII.quad(lIIIlIllIlIlllI, lIIIlIllIlIlIlI, lIIIlIllIlIllIl, lIIIlIllIlIlllI, lIIIlIllIlIlIlI, lIIIlIllIlIlIll, lIIIlIllIlIllII, lIIIlIllIlIlIlI, lIIIlIllIlIlIll, lIIIlIllIlIllII, lIIIlIllIlIlIlI, lIIIlIllIlIllIl, lIIIlIllIlIlIIl);
+    public void horizontalQuad(double d, double d2, double d3, double d4, double d5, Color color) {
+        this.quad(d, d5, d2, d, d5, d4, d3, d5, d4, d3, d5, d2, color);
     }
 
     public void endVertex() {
-        MeshBuilder lIIIlllIIIlIIlI;
-        lIIIlllIIIlIIlI.buffer.method_1344();
+        this.buffer.method_1344();
     }
 
-    public void texQuad(double lIIIlIllIIIIIIl, double lIIIlIlIllllIIl, double lIIIlIlIllllIII, double lIIIlIlIllllllI, TextureRegion lIIIlIlIlllIllI, Color lIIIlIlIlllllII) {
-        MeshBuilder lIIIlIllIIIIIlI;
-        lIIIlIllIIIIIlI.pos(lIIIlIllIIIIIIl, lIIIlIlIllllIIl, 0.0).color(lIIIlIlIlllllII).texture(lIIIlIlIlllIllI.x1, lIIIlIlIlllIllI.y1).endVertex();
-        lIIIlIllIIIIIlI.pos(lIIIlIllIIIIIIl + lIIIlIlIllllIII, lIIIlIlIllllIIl, 0.0).color(lIIIlIlIlllllII).texture(lIIIlIlIlllIllI.x2, lIIIlIlIlllIllI.y1).endVertex();
-        lIIIlIllIIIIIlI.pos(lIIIlIllIIIIIIl + lIIIlIlIllllIII, lIIIlIlIllllIIl + lIIIlIlIllllllI, 0.0).color(lIIIlIlIlllllII).texture(lIIIlIlIlllIllI.x2, lIIIlIlIlllIllI.y2).endVertex();
-        lIIIlIllIIIIIlI.pos(lIIIlIllIIIIIIl, lIIIlIlIllllIIl, 0.0).color(lIIIlIlIlllllII).texture(lIIIlIlIlllIllI.x1, lIIIlIlIlllIllI.y1).endVertex();
-        lIIIlIllIIIIIlI.pos(lIIIlIllIIIIIIl + lIIIlIlIllllIII, lIIIlIlIllllIIl + lIIIlIlIllllllI, 0.0).color(lIIIlIlIlllllII).texture(lIIIlIlIlllIllI.x2, lIIIlIlIlllIllI.y2).endVertex();
-        lIIIlIllIIIIIlI.pos(lIIIlIllIIIIIIl, lIIIlIlIllllIIl + lIIIlIlIllllllI, 0.0).color(lIIIlIlIlllllII).texture(lIIIlIlIlllIllI.x1, lIIIlIlIlllIllI.y2).endVertex();
+    public void texQuad(double d, double d2, double d3, double d4, TextureRegion textureRegion, Color color) {
+        this.pos(d, d2, 0.0).color(color).texture(textureRegion.x1, textureRegion.y1).endVertex();
+        this.pos(d + d3, d2, 0.0).color(color).texture(textureRegion.x2, textureRegion.y1).endVertex();
+        this.pos(d + d3, d2 + d4, 0.0).color(color).texture(textureRegion.x2, textureRegion.y2).endVertex();
+        this.pos(d, d2, 0.0).color(color).texture(textureRegion.x1, textureRegion.y1).endVertex();
+        this.pos(d + d3, d2 + d4, 0.0).color(color).texture(textureRegion.x2, textureRegion.y2).endVertex();
+        this.pos(d, d2 + d4, 0.0).color(color).texture(textureRegion.x1, textureRegion.y2).endVertex();
     }
 
-    public MeshBuilder(int lIIIlllIllIllll) {
-        MeshBuilder lIIIlllIlllIIII;
-        lIIIlllIlllIIII.alpha = 1.0;
-        lIIIlllIlllIIII.depthTest = false;
-        lIIIlllIlllIIII.texture = false;
-        lIIIlllIlllIIII.buffer = new class_287(lIIIlllIllIllll);
+    public MeshBuilder(int n) {
+        this.buffer = new class_287(n);
     }
 
-    public MeshBuilder texture(double lIIIlllIIlIlIll, double lIIIlllIIlIllIl) {
-        MeshBuilder lIIIlllIIlIllll;
-        lIIIlllIIlIllll.buffer.method_22913((float)lIIIlllIIlIlIll, (float)lIIIlllIIlIllIl);
-        return lIIIlllIIlIllll;
+    public MeshBuilder texture(double d, double d2) {
+        this.buffer.method_22913((float)d, (float)d2);
+        return this;
     }
 
-    public void verticalGradientQuad(double lIIIllIIlIlllll, double lIIIllIIlIllllI, double lIIIllIIlllIIlI, double lIIIllIIlIllIlI, double lIIIllIIlIlIlll, double lIIIllIIlIlIllI, double lIIIllIIllIlIll, double lIIIllIIlIlIlII, double lIIIllIIlIlIIll, double lIIIllIIlIlIIIl, double lIIIllIIlIIllll, double lIIIllIIllIIlII, Color lIIIllIIlIIlIll, Color lIIIllIIlIIlIlI) {
-        MeshBuilder lIIIllIIllIIIII;
-        lIIIllIIllIIIII.quad(lIIIllIIlIlllll, lIIIllIIlIllllI, lIIIllIIlllIIlI, lIIIllIIlIllIlI, lIIIllIIlIlIlll, lIIIllIIlIlIllI, lIIIllIIllIlIll, lIIIllIIlIlIlII, lIIIllIIlIlIIll, lIIIllIIlIlIIIl, lIIIllIIlIIllll, lIIIllIIllIIlII, lIIIllIIlIIlIll, lIIIllIIlIIlIll, lIIIllIIlIIlIlI, lIIIllIIlIIlIlI);
+    public void verticalGradientQuad(double d, double d2, double d3, double d4, double d5, double d6, double d7, double d8, double d9, double d10, double d11, double d12, Color color, Color color2) {
+        this.quad(d, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, color, color, color2, color2);
     }
 
-    public void line(double lIIIlIlIlIIllll, double lIIIlIlIlIIlllI, double lIIIlIlIlIIllIl, double lIIIlIlIlIIllII, double lIIIlIlIlIIIIlI, double lIIIlIlIlIIlIlI, Color lIIIlIlIlIIlIIl, Color lIIIlIlIlIIlIII) {
-        MeshBuilder lIIIlIlIlIlIIII;
-        lIIIlIlIlIlIIII.pos(lIIIlIlIlIIllll, lIIIlIlIlIIlllI, lIIIlIlIlIIllIl).color(lIIIlIlIlIIlIIl).endVertex();
-        lIIIlIlIlIlIIII.pos(lIIIlIlIlIIllII, lIIIlIlIlIIIIlI, lIIIlIlIlIIlIlI).color(lIIIlIlIlIIlIII).endVertex();
+    public void line(double d, double d2, double d3, double d4, double d5, double d6, Color color, Color color2) {
+        this.pos(d, d2, d3).color(color).endVertex();
+        this.pos(d4, d5, d6).color(color2).endVertex();
     }
 
-    public void line(double lIIIlIlIIIIlIlI, double lIIIlIlIIIIlIIl, double lIIIlIlIIIIlIII, double lIIIlIlIIIIIlll, Color lIIIlIlIIIIIIII) {
-        MeshBuilder lIIIlIlIIIIlIll;
-        lIIIlIlIIIIlIll.line(lIIIlIlIIIIlIlI, lIIIlIlIIIIlIIl, 0.0, lIIIlIlIIIIlIII, lIIIlIlIIIIIlll, 0.0, lIIIlIlIIIIIIII);
+    public void line(double d, double d2, double d3, double d4, Color color) {
+        this.line(d, d2, 0.0, d3, d4, 0.0, color);
     }
 
-    public void boxEdges(double lIIIlIIllllIlIl, double lIIIlIIllllIlII, double lIIIlIIlllIlIlI, double lIIIlIIllllIIlI, double lIIIlIIllllIIIl, double lIIIlIIllllIIII, Color lIIIlIIlllIllll, int lIIIlIIlllIIlIl) {
-        MeshBuilder lIIIlIIllllIllI;
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)32) && Dir.is(lIIIlIIlllIIlIl, (byte)8)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIlII, lIIIlIIlllIlIlI, lIIIlIIllllIlIl, lIIIlIIllllIIIl, lIIIlIIlllIlIlI, lIIIlIIlllIllll);
+    public void boxEdges(double d, double d2, double d3, double d4, double d5, double d6, Color color, int n) {
+        if (Dir.is(n, (byte)32) && Dir.is(n, (byte)8)) {
+            this.line(d, d2, d3, d, d5, d3, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)32) && Dir.is(lIIIlIIlllIIlIl, (byte)16)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIlII, lIIIlIIllllIIII, lIIIlIIllllIlIl, lIIIlIIllllIIIl, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)32) && Dir.is(n, (byte)16)) {
+            this.line(d, d2, d6, d, d5, d6, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)64) && Dir.is(lIIIlIIlllIIlIl, (byte)8)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIIlI, lIIIlIIllllIlII, lIIIlIIlllIlIlI, lIIIlIIllllIIlI, lIIIlIIllllIIIl, lIIIlIIlllIlIlI, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)64) && Dir.is(n, (byte)8)) {
+            this.line(d4, d2, d3, d4, d5, d3, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)64) && Dir.is(lIIIlIIlllIIlIl, (byte)16)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIIlI, lIIIlIIllllIlII, lIIIlIIllllIIII, lIIIlIIllllIIlI, lIIIlIIllllIIIl, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)64) && Dir.is(n, (byte)16)) {
+            this.line(d4, d2, d6, d4, d5, d6, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)8)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIlII, lIIIlIIlllIlIlI, lIIIlIIllllIIlI, lIIIlIIllllIlII, lIIIlIIlllIlIlI, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)8)) {
+            this.line(d, d2, d3, d4, d2, d3, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)8)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIIIl, lIIIlIIlllIlIlI, lIIIlIIllllIIlI, lIIIlIIllllIIIl, lIIIlIIlllIlIlI, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)8)) {
+            this.line(d, d5, d3, d4, d5, d3, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)16)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIlII, lIIIlIIllllIIII, lIIIlIIllllIIlI, lIIIlIIllllIlII, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)16)) {
+            this.line(d, d2, d6, d4, d2, d6, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)16)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIIIl, lIIIlIIllllIIII, lIIIlIIllllIIlI, lIIIlIIllllIIIl, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)16)) {
+            this.line(d, d5, d6, d4, d5, d6, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)32)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIlII, lIIIlIIlllIlIlI, lIIIlIIllllIlIl, lIIIlIIllllIlII, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)32)) {
+            this.line(d, d2, d3, d, d2, d6, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)32)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIlIl, lIIIlIIllllIIIl, lIIIlIIlllIlIlI, lIIIlIIllllIlIl, lIIIlIIllllIIIl, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)32)) {
+            this.line(d, d5, d3, d, d5, d6, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)64)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIIlI, lIIIlIIllllIlII, lIIIlIIlllIlIlI, lIIIlIIllllIIlI, lIIIlIIllllIlII, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)64)) {
+            this.line(d4, d2, d3, d4, d2, d6, color);
         }
-        if (Dir.is(lIIIlIIlllIIlIl, (byte)64)) {
-            lIIIlIIllllIllI.line(lIIIlIIllllIIlI, lIIIlIIllllIIIl, lIIIlIIlllIlIlI, lIIIlIIllllIIlI, lIIIlIIllllIIIl, lIIIlIIllllIIII, lIIIlIIlllIllll);
+        if (Dir.is(n, (byte)64)) {
+            this.line(d4, d5, d3, d4, d5, d6, color);
         }
     }
 
     public void end() {
-        MeshBuilder lIIIlllIlIIIlIl;
-        lIIIlllIlIIIlIl.buffer.method_1326();
+        this.buffer.method_1326();
         GL11.glPushMatrix();
         RenderSystem.multMatrix((class_1159)Matrices.getTop());
         RenderSystem.enableBlend();
         RenderSystem.blendFunc((class_4493.class_4535)class_4493.class_4535.field_22541, (class_4493.class_4534)class_4493.class_4534.field_22523);
-        if (lIIIlllIlIIIlIl.depthTest) {
+        if (this.depthTest) {
             RenderSystem.enableDepthTest();
         } else {
             RenderSystem.disableDepthTest();
         }
         RenderSystem.disableAlphaTest();
-        if (lIIIlllIlIIIlIl.texture) {
+        if (this.texture) {
             RenderSystem.enableTexture();
         } else {
             RenderSystem.disableTexture();
@@ -258,7 +225,7 @@ public class MeshBuilder {
         RenderSystem.lineWidth((float)1.0f);
         RenderSystem.color4f((float)1.0f, (float)1.0f, (float)1.0f, (float)1.0f);
         class_4493.method_22083((int)7425);
-        class_286.method_1309((class_287)lIIIlllIlIIIlIl.buffer);
+        class_286.method_1309((class_287)this.buffer);
         RenderSystem.enableAlphaTest();
         RenderSystem.enableDepthTest();
         RenderSystem.enableTexture();
@@ -266,25 +233,24 @@ public class MeshBuilder {
         GL11.glPopMatrix();
     }
 
-    public void boxSides(double lIIIlIlIllIlIlI, double lIIIlIlIllIlIIl, double lIIIlIlIllIlIII, double lIIIlIlIlIllllI, double lIIIlIlIlIlllIl, double lIIIlIlIllIIlIl, Color lIIIlIlIlIllIll, int lIIIlIlIllIIIll) {
-        MeshBuilder lIIIlIlIllIIIlI;
-        if (Dir.is(lIIIlIlIllIIIll, (byte)4)) {
-            lIIIlIlIllIIIlI.quad(lIIIlIlIllIlIlI, lIIIlIlIllIlIIl, lIIIlIlIllIlIII, lIIIlIlIllIlIlI, lIIIlIlIllIlIIl, lIIIlIlIllIIlIl, lIIIlIlIlIllllI, lIIIlIlIllIlIIl, lIIIlIlIllIIlIl, lIIIlIlIlIllllI, lIIIlIlIllIlIIl, lIIIlIlIllIlIII, lIIIlIlIlIllIll);
+    public void boxSides(double d, double d2, double d3, double d4, double d5, double d6, Color color, int n) {
+        if (Dir.is(n, (byte)4)) {
+            this.quad(d, d2, d3, d, d2, d6, d4, d2, d6, d4, d2, d3, color);
         }
-        if (Dir.is(lIIIlIlIllIIIll, (byte)2)) {
-            lIIIlIlIllIIIlI.quad(lIIIlIlIllIlIlI, lIIIlIlIlIlllIl, lIIIlIlIllIlIII, lIIIlIlIllIlIlI, lIIIlIlIlIlllIl, lIIIlIlIllIIlIl, lIIIlIlIlIllllI, lIIIlIlIlIlllIl, lIIIlIlIllIIlIl, lIIIlIlIlIllllI, lIIIlIlIlIlllIl, lIIIlIlIllIlIII, lIIIlIlIlIllIll);
+        if (Dir.is(n, (byte)2)) {
+            this.quad(d, d5, d3, d, d5, d6, d4, d5, d6, d4, d5, d3, color);
         }
-        if (Dir.is(lIIIlIlIllIIIll, (byte)8)) {
-            lIIIlIlIllIIIlI.quad(lIIIlIlIllIlIlI, lIIIlIlIllIlIIl, lIIIlIlIllIlIII, lIIIlIlIllIlIlI, lIIIlIlIlIlllIl, lIIIlIlIllIlIII, lIIIlIlIlIllllI, lIIIlIlIlIlllIl, lIIIlIlIllIlIII, lIIIlIlIlIllllI, lIIIlIlIllIlIIl, lIIIlIlIllIlIII, lIIIlIlIlIllIll);
+        if (Dir.is(n, (byte)8)) {
+            this.quad(d, d2, d3, d, d5, d3, d4, d5, d3, d4, d2, d3, color);
         }
-        if (Dir.is(lIIIlIlIllIIIll, (byte)16)) {
-            lIIIlIlIllIIIlI.quad(lIIIlIlIllIlIlI, lIIIlIlIllIlIIl, lIIIlIlIllIIlIl, lIIIlIlIllIlIlI, lIIIlIlIlIlllIl, lIIIlIlIllIIlIl, lIIIlIlIlIllllI, lIIIlIlIlIlllIl, lIIIlIlIllIIlIl, lIIIlIlIlIllllI, lIIIlIlIllIlIIl, lIIIlIlIllIIlIl, lIIIlIlIlIllIll);
+        if (Dir.is(n, (byte)16)) {
+            this.quad(d, d2, d6, d, d5, d6, d4, d5, d6, d4, d2, d6, color);
         }
-        if (Dir.is(lIIIlIlIllIIIll, (byte)32)) {
-            lIIIlIlIllIIIlI.quad(lIIIlIlIllIlIlI, lIIIlIlIllIlIIl, lIIIlIlIllIlIII, lIIIlIlIllIlIlI, lIIIlIlIlIlllIl, lIIIlIlIllIlIII, lIIIlIlIllIlIlI, lIIIlIlIlIlllIl, lIIIlIlIllIIlIl, lIIIlIlIllIlIlI, lIIIlIlIllIlIIl, lIIIlIlIllIIlIl, lIIIlIlIlIllIll);
+        if (Dir.is(n, (byte)32)) {
+            this.quad(d, d2, d3, d, d5, d3, d, d5, d6, d, d2, d6, color);
         }
-        if (Dir.is(lIIIlIlIllIIIll, (byte)64)) {
-            lIIIlIlIllIIIlI.quad(lIIIlIlIlIllllI, lIIIlIlIllIlIIl, lIIIlIlIllIlIII, lIIIlIlIlIllllI, lIIIlIlIlIlllIl, lIIIlIlIllIlIII, lIIIlIlIlIllllI, lIIIlIlIlIlllIl, lIIIlIlIllIIlIl, lIIIlIlIlIllllI, lIIIlIlIllIlIIl, lIIIlIlIllIIlIl, lIIIlIlIlIllIll);
+        if (Dir.is(n, (byte)64)) {
+            this.quad(d4, d2, d3, d4, d5, d3, d4, d5, d6, d4, d2, d6, color);
         }
     }
 }

@@ -10,20 +10,14 @@ import minegame159.meteorclient.utils.render.color.Color;
 public class WMeteorTopBar
 extends WTopBar
 implements MeteorWidget {
-    public WMeteorTopBar() {
-        WMeteorTopBar lIIlIllIlIIll;
-    }
-
     @Override
     protected Color getNameColor() {
-        WMeteorTopBar lIIlIllIIIlll;
-        return lIIlIllIIIlll.theme().textColor.get();
+        return this.theme().textColor.get();
     }
 
     @Override
-    protected Color getButtonColor(boolean lIIlIllIIllIl, boolean lIIlIllIIlIIl) {
-        WMeteorTopBar lIIlIllIIlllI;
-        return lIIlIllIIlllI.theme().backgroundColor.get(lIIlIllIIllIl, lIIlIllIIlIIl);
+    protected Color getButtonColor(boolean bl, boolean bl2) {
+        return this.theme().backgroundColor.get(bl, bl2);
     }
 }
 

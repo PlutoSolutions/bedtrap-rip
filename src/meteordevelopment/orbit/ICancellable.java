@@ -5,8 +5,7 @@ package meteordevelopment.orbit;
 
 public interface ICancellable {
     default public void cancel() {
-        ICancellable llllllllllllllllIlllIIlIIllIlIIl;
-        llllllllllllllllIlllIIlIIllIlIIl.setCancelled(true);
+        this.setCancelled(true);
     }
 
     public void setCancelled(boolean var1);

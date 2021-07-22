@@ -17,45 +17,42 @@ import minegame159.meteorclient.utils.misc.input.KeyAction;
 
 public class AirJump
 extends Module {
-    private /* synthetic */ int level;
-    private final /* synthetic */ Setting<Boolean> onGround;
-    private final /* synthetic */ Setting<Boolean> maintainY;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> onHold;
+    private int level;
+    private final Setting<Boolean> onGround;
+    private final Setting<Boolean> maintainY;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> onHold;
 
     public AirJump() {
         super(Categories.Movement, "air-jump", "Lets you jump in the air.");
-        AirJump llllIllIIlIl;
-        llllIllIIlIl.sgGeneral = llllIllIIlIl.settings.getDefaultGroup();
-        llllIllIIlIl.maintainY = llllIllIIlIl.sgGeneral.add(new BoolSetting.Builder().name("maintain-level").description("Maintains your current Y level.").defaultValue(false).build());
-        llllIllIIlIl.onHold = llllIllIIlIl.sgGeneral.add(new BoolSetting.Builder().name("on-hold").description("Whether or not to air jump if you hold down the space bar.").defaultValue(true).build());
-        llllIllIIlIl.onGround = llllIllIIlIl.sgGeneral.add(new BoolSetting.Builder().name("on-ground").description("Whether to airjump if you are on the ground.").defaultValue(false).build());
-        llllIllIIlIl.level = 0;
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.maintainY = this.sgGeneral.add(new BoolSetting.Builder().name("maintain-level").description("Maintains your current Y level.").defaultValue(false).build());
+        this.onHold = this.sgGeneral.add(new BoolSetting.Builder().name("on-hold").description("Whether or not to air jump if you hold down the space bar.").defaultValue(true).build());
+        this.onGround = this.sgGeneral.add(new BoolSetting.Builder().name("on-ground").description("Whether to airjump if you are on the ground.").defaultValue(false).build());
+        this.level = 0;
     }
 
     @EventHandler
-    private void onKey(KeyEvent llllIlIlllll) {
-        AirJump llllIllIIIlI;
-        if (Modules.get().isActive(Freecam.class) || llllIllIIIlI.mc.field_1755 != null || !llllIllIIIlI.onGround.get().booleanValue() && llllIllIIIlI.mc.field_1724.method_24828()) {
+    private void onKey(KeyEvent keyEvent) {
+        if (Modules.get().isActive(Freecam.class) || this.mc.field_1755 != null || !this.onGround.get().booleanValue() && this.mc.field_1724.method_24828()) {
             return;
         }
-        if ((llllIlIlllll.action == KeyAction.Press || llllIlIlllll.action == KeyAction.Repeat && llllIllIIIlI.onHold.get().booleanValue()) && llllIllIIIlI.mc.field_1690.field_1903.method_1417(llllIlIlllll.key, 0)) {
-            llllIllIIIlI.mc.field_1724.method_6043();
-            llllIllIIIlI.level = llllIllIIIlI.mc.field_1724.method_24515().method_10264();
+        if ((keyEvent.action == KeyAction.Press || keyEvent.action == KeyAction.Repeat && this.onHold.get().booleanValue()) && this.mc.field_1690.field_1903.method_1417(keyEvent.key, 0)) {
+            this.mc.field_1724.method_6043();
+            this.level = this.mc.field_1724.method_24515().method_10264();
         }
-        if ((llllIlIlllll.action == KeyAction.Press || llllIlIlllll.action == KeyAction.Repeat && llllIllIIIlI.onHold.get().booleanValue()) && llllIllIIIlI.mc.field_1690.field_1832.method_1417(llllIlIlllll.key, 0)) {
-            --llllIllIIIlI.level;
+        if ((keyEvent.action == KeyAction.Press || keyEvent.action == KeyAction.Repeat && this.onHold.get().booleanValue()) && this.mc.field_1690.field_1832.method_1417(keyEvent.key, 0)) {
+            --this.level;
         }
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llllIlIlllII) {
-        AirJump llllIlIllIll;
-        if (Modules.get().isActive(Freecam.class) || !llllIlIllIll.onGround.get().booleanValue() && llllIlIllIll.mc.field_1724.method_24828()) {
+    private void onTick(TickEvent.Post post) {
+        if (Modules.get().isActive(Freecam.class) || !this.onGround.get().booleanValue() && this.mc.field_1724.method_24828()) {
             return;
         }
-        if (llllIlIllIll.maintainY.get().booleanValue() && llllIlIllIll.mc.field_1724.method_24515().method_10264() == llllIlIllIll.level) {
-            llllIlIllIll.mc.field_1724.method_6043();
+        if (this.maintainY.get().booleanValue() && this.mc.field_1724.method_24515().method_10264() == this.level) {
+            this.mc.field_1724.method_6043();
         }
     }
 }

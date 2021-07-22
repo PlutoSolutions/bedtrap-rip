@@ -9,16 +9,11 @@ public enum DrawMode {
     Quads;
 
 
-    private DrawMode() {
-        DrawMode lllllllllllllllllIlIIIIlIlIlIIIl;
-    }
-
     public int toOpenGl() {
-        DrawMode lllllllllllllllllIlIIIIlIlIIlIII;
-        if (lllllllllllllllllIlIIIIlIlIIlIII == Triangles) {
+        if (this == Triangles) {
             return 4;
         }
-        if (lllllllllllllllllIlIIIIlIlIIlIII == Quads) {
+        if (this == Quads) {
             return 7;
         }
         return 1;

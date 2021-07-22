@@ -18,47 +18,49 @@ import minegame159.meteorclient.utils.Utils;
 
 public class HudElementScreen
 extends WindowScreen {
-    private final /* synthetic */ HudElement element;
-    private /* synthetic */ WContainer settings;
+    private final HudElement element;
+    private WContainer settings;
 
-    public HudElementScreen(GuiTheme llllllllllllllllllIlIIIIIlllIIIl, HudElement llllllllllllllllllIlIIIIIlllIIII) {
-        super(llllllllllllllllllIlIIIIIlllIIIl, llllllllllllllllllIlIIIIIlllIIII.title);
-        HudElementScreen llllllllllllllllllIlIIIIIllllIII;
-        llllllllllllllllllIlIIIIIllllIII.element = llllllllllllllllllIlIIIIIlllIIII;
-        llllllllllllllllllIlIIIIIllllIII.add(llllllllllllllllllIlIIIIIlllIIIl.label(llllllllllllllllllIlIIIIIlllIIII.description, (double)Utils.getWindowWidth() / 2.0));
-        if (llllllllllllllllllIlIIIIIlllIIII.settings.sizeGroups() > 0) {
-            llllllllllllllllllIlIIIIIllllIII.settings = llllllllllllllllllIlIIIIIllllIII.add(llllllllllllllllllIlIIIIIlllIIIl.verticalList()).expandX().widget();
-            llllllllllllllllllIlIIIIIllllIII.settings.add(llllllllllllllllllIlIIIIIlllIIIl.settings(llllllllllllllllllIlIIIIIlllIIII.settings)).expandX();
-            llllllllllllllllllIlIIIIIllllIII.add(llllllllllllllllllIlIIIIIlllIIIl.horizontalSeparator()).expandX();
+    public HudElementScreen(GuiTheme guiTheme, HudElement hudElement) {
+        super(guiTheme, hudElement.title);
+        this.element = hudElement;
+        this.add(guiTheme.label(hudElement.description, (double)Utils.getWindowWidth() / 2.0));
+        if (hudElement.settings.sizeGroups() > 0) {
+            this.settings = this.add(guiTheme.verticalList()).expandX().widget();
+            this.settings.add(guiTheme.settings(hudElement.settings)).expandX();
+            this.add(guiTheme.horizontalSeparator()).expandX();
         }
-        WHorizontalList llllllllllllllllllIlIIIIIlllIlIl = llllllllllllllllllIlIIIIIllllIII.add(llllllllllllllllllIlIIIIIlllIIIl.horizontalList()).expandX().widget();
-        llllllllllllllllllIlIIIIIlllIlIl.add(llllllllllllllllllIlIIIIIlllIIIl.label("Active:"));
-        WCheckbox llllllllllllllllllIlIIIIIlllIlII = llllllllllllllllllIlIIIIIlllIlIl.add(llllllllllllllllllIlIIIIIlllIIIl.checkbox(llllllllllllllllllIlIIIIIlllIIII.active)).widget();
-        llllllllllllllllllIlIIIIIlllIlII.action = () -> {
-            if (llllllllllllllllllIlIIIIIlIllIll.active != llllllllllllllllllIlIIIIIlIllIlI.checked) {
-                llllllllllllllllllIlIIIIIlllIIII.toggle();
-            }
-        };
-        WButton llllllllllllllllllIlIIIIIlllIIll = llllllllllllllllllIlIIIIIlllIlIl.add(llllllllllllllllllIlIIIIIlllIIIl.button(GuiRenderer.RESET)).expandCellX().right().widget();
-        llllllllllllllllllIlIIIIIlllIIll.action = () -> {
-            if (llllllllllllllllllIlIIIIIllIIIIl.active != llllllllllllllllllIlIIIIIllIIIIl.defaultActive) {
-                llllllllllllllllllIlIIIIIllIIIIl.active = llllllllllllllllllIlIIIIIllIIIII.checked = llllllllllllllllllIlIIIIIllIIIIl.defaultActive;
-            }
-        };
+        WHorizontalList wHorizontalList = this.add(guiTheme.horizontalList()).expandX().widget();
+        wHorizontalList.add(guiTheme.label("Active:"));
+        WCheckbox wCheckbox = wHorizontalList.add(guiTheme.checkbox(hudElement.active)).widget();
+        wCheckbox.action = () -> HudElementScreen.lambda$new$0(hudElement, wCheckbox);
+        WButton wButton = wHorizontalList.add(guiTheme.button(GuiRenderer.RESET)).expandCellX().right().widget();
+        wButton.action = () -> HudElementScreen.lambda$new$1(hudElement, wCheckbox);
+    }
+
+    private static void lambda$new$0(HudElement hudElement, WCheckbox wCheckbox) {
+        if (hudElement.active != wCheckbox.checked) {
+            hudElement.toggle();
+        }
     }
 
     @Override
-    protected void onRenderBefore(float llllllllllllllllllIlIIIIIllIIlll) {
-        Modules.get().get(HUD.class).onRender(Render2DEvent.get(0, 0, llllllllllllllllllIlIIIIIllIIlll));
+    protected void onRenderBefore(float f) {
+        Modules.get().get(HUD.class).onRender(Render2DEvent.get(0, 0, f));
+    }
+
+    private static void lambda$new$1(HudElement hudElement, WCheckbox wCheckbox) {
+        if (hudElement.active != hudElement.defaultActive) {
+            hudElement.active = wCheckbox.checked = hudElement.defaultActive;
+        }
     }
 
     public void method_25393() {
-        HudElementScreen llllllllllllllllllIlIIIIIllIlIlI;
         super.method_25393();
-        if (llllllllllllllllllIlIIIIIllIlIlI.settings == null) {
+        if (this.settings == null) {
             return;
         }
-        llllllllllllllllllIlIIIIIllIlIlI.element.settings.tick(llllllllllllllllllIlIIIIIllIlIlI.settings, llllllllllllllllllIlIIIIIllIlIlI.theme);
+        this.element.settings.tick(this.settings, this.theme);
     }
 }
 

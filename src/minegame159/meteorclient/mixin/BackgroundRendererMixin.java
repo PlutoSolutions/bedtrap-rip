@@ -29,10 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_758.class})
 public class BackgroundRendererMixin {
     @Inject(method={"applyFog"}, at={@At(value="TAIL")}, cancellable=true)
-    private static void onApplyFog(class_4184 camera, class_758.class_4596 fogType, float viewDistance, boolean thickFog, CallbackInfo info) {
-        if ((Modules.get().get(NoRender.class).noFog() || Modules.get().isActive(Xray.class)) && fogType == class_758.class_4596.field_20946) {
-            RenderSystem.fogStart((float)(viewDistance * 4.0f));
-            RenderSystem.fogEnd((float)(viewDistance * 4.25f));
+    private static void onApplyFog(class_4184 class_41842, class_758.class_4596 class_45962, float f, boolean bl, CallbackInfo callbackInfo) {
+        if ((Modules.get().get(NoRender.class).noFog() || Modules.get().isActive(Xray.class)) && class_45962 == class_758.class_4596.field_20946) {
+            RenderSystem.fogStart((float)(f * 4.0f));
+            RenderSystem.fogEnd((float)(f * 4.25f));
             RenderSystem.fogMode((class_4493.class_1028)class_4493.class_1028.field_5095);
             RenderSystem.setupNvFogDistance();
         }

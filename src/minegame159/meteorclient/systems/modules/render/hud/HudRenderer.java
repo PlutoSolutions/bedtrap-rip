@@ -9,16 +9,11 @@ import minegame159.meteorclient.rendering.text.TextRenderer;
 import minegame159.meteorclient.utils.render.color.Color;
 
 public class HudRenderer {
-    private final /* synthetic */ List<Runnable> postTasks;
-    public /* synthetic */ double delta;
+    private final List<Runnable> postTasks = new ArrayList<Runnable>();
+    public double delta;
 
-    public HudRenderer() {
-        HudRenderer llllllllllllllllIlIlIIllIIIIIIIl;
-        llllllllllllllllIlIlIIllIIIIIIIl.postTasks = new ArrayList<Runnable>();
-    }
-
-    public double textWidth(String llllllllllllllllIlIlIIlIllIlllIl) {
-        return TextRenderer.get().getWidth(llllllllllllllllIlIlIIlIllIlllIl);
+    public double textWidth(String string) {
+        return TextRenderer.get().getWidth(string);
     }
 
     public double textHeight() {
@@ -26,26 +21,24 @@ public class HudRenderer {
     }
 
     public void end() {
-        HudRenderer llllllllllllllllIlIlIIlIllllIIII;
         TextRenderer.get().end();
-        for (Runnable llllllllllllllllIlIlIIlIllllIIIl : llllllllllllllllIlIlIIlIllllIIII.postTasks) {
-            llllllllllllllllIlIlIIlIllllIIIl.run();
+        for (Runnable runnable : this.postTasks) {
+            runnable.run();
         }
-        llllllllllllllllIlIlIIlIllllIIII.postTasks.clear();
+        this.postTasks.clear();
     }
 
-    public void addPostTask(Runnable llllllllllllllllIlIlIIlIllIlIlll) {
-        HudRenderer llllllllllllllllIlIlIIlIllIllIII;
-        llllllllllllllllIlIlIIlIllIllIII.postTasks.add(llllllllllllllllIlIlIIlIllIlIlll);
+    public void addPostTask(Runnable runnable) {
+        this.postTasks.add(runnable);
     }
 
-    public void begin(double llllllllllllllllIlIlIIlIllllIlll, double llllllllllllllllIlIlIIlIlllllIlI, boolean llllllllllllllllIlIlIIlIllllIlIl) {
-        TextRenderer.get().begin(llllllllllllllllIlIlIIlIllllIlll, llllllllllllllllIlIlIIlIllllIlIl, false);
-        llllllllllllllllIlIlIIlIllllllII.delta = llllllllllllllllIlIlIIlIlllllIlI;
+    public void begin(double d, double d2, boolean bl) {
+        TextRenderer.get().begin(d, bl, false);
+        this.delta = d2;
     }
 
-    public void text(String llllllllllllllllIlIlIIlIlllIIlll, double llllllllllllllllIlIlIIlIlllIIIlI, double llllllllllllllllIlIlIIlIlllIIlIl, Color llllllllllllllllIlIlIIlIlllIIlII) {
-        TextRenderer.get().render(llllllllllllllllIlIlIIlIlllIIlll, llllllllllllllllIlIlIIlIlllIIIlI, llllllllllllllllIlIlIIlIlllIIlIl, llllllllllllllllIlIlIIlIlllIIlII, true);
+    public void text(String string, double d, double d2, Color color) {
+        TextRenderer.get().render(string, d, d2, color, true);
     }
 }
 

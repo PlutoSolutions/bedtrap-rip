@@ -6,53 +6,45 @@ package com.sun.jna;
 public final class WString
 implements CharSequence,
 Comparable {
-    private /* synthetic */ String string;
+    private String string;
 
     public int hashCode() {
-        WString llIllIlllIllIl;
-        return llIllIlllIllIl.toString().hashCode();
+        return this.toString().hashCode();
     }
 
-    public int compareTo(Object llIllIlllIIlll) {
-        WString llIllIlllIlIlI;
-        return llIllIlllIlIlI.toString().compareTo(llIllIlllIIlll.toString());
-    }
-
-    @Override
-    public CharSequence subSequence(int llIllIllIllIIl, int llIllIllIllIII) {
-        WString llIllIllIllIlI;
-        return llIllIllIllIlI.toString().subSequence(llIllIllIllIIl, llIllIllIllIII);
+    public int compareTo(Object object) {
+        return this.toString().compareTo(object.toString());
     }
 
     @Override
-    public char charAt(int llIllIlllIIIII) {
-        WString llIllIlllIIIIl;
-        return llIllIlllIIIIl.toString().charAt(llIllIlllIIIII);
+    public CharSequence subSequence(int n, int n2) {
+        return this.toString().subSequence(n, n2);
+    }
+
+    @Override
+    public char charAt(int n) {
+        return this.toString().charAt(n);
     }
 
     @Override
     public int length() {
-        WString llIllIlllIIlII;
-        return llIllIlllIIlII.toString().length();
+        return this.toString().length();
     }
 
-    public WString(String llIllIlllllIll) {
-        WString llIllIlllllIlI;
-        if (llIllIlllllIll == null) {
+    public WString(String string) {
+        if (string == null) {
             throw new NullPointerException("String initializer must be non-null");
         }
-        llIllIlllllIlI.string = llIllIlllllIll;
+        this.string = string;
     }
 
-    public boolean equals(Object llIllIllllIIII) {
-        WString llIllIllllIIIl;
-        return llIllIllllIIII instanceof WString && llIllIllllIIIl.toString().equals(llIllIllllIIII.toString());
+    public boolean equals(Object object) {
+        return object instanceof WString && this.toString().equals(object.toString());
     }
 
     @Override
     public String toString() {
-        WString llIllIllllIllI;
-        return llIllIllllIllI.string;
+        return this.string;
     }
 }
 

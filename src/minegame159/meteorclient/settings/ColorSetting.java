@@ -18,21 +18,32 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class ColorSetting
 extends Setting<SettingColor> {
-    private static final /* synthetic */ List<String> SUGGESTIONS;
+    private static final List<String> SUGGESTIONS = ImmutableList.of((Object)"0 0 0 255", (Object)"225 25 25 255", (Object)"25 225 25 255", (Object)"25 25 225 255", (Object)"255 255 255 255");
 
-    public ColorSetting(String lIlIllllllIIlIl, String lIlIllllllIlIll, SettingColor lIlIllllllIlIlI, Consumer<SettingColor> lIlIllllllIlIIl, Consumer<Setting<SettingColor>> lIlIllllllIIIIl, IVisible lIlIllllllIIIII) {
-        super(lIlIllllllIIlIl, lIlIllllllIlIll, lIlIllllllIlIlI, lIlIllllllIlIIl, lIlIllllllIIIIl, lIlIllllllIIIII);
-        ColorSetting lIlIllllllIIllI;
+    public ColorSetting(String string, String string2, SettingColor settingColor, Consumer<SettingColor> consumer, Consumer<Setting<SettingColor>> consumer2, IVisible iVisible) {
+        super(string, string2, settingColor, consumer, consumer2, iVisible);
+    }
+
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     @Override
     public class_2487 toTag() {
-        ColorSetting lIlIlllllIIlIlI;
-        class_2487 lIlIlllllIIlIIl = lIlIlllllIIlIlI.saveGeneral();
-        lIlIlllllIIlIIl.method_10566("value", (class_2520)((SettingColor)lIlIlllllIIlIlI.get()).toTag());
-        return lIlIlllllIIlIIl;
+        class_2487 class_24872 = this.saveGeneral();
+        class_24872.method_10566("value", (class_2520)((SettingColor)this.get()).toTag());
+        return class_24872;
     }
 
     @Override
@@ -40,101 +51,87 @@ extends Setting<SettingColor> {
         return SUGGESTIONS;
     }
 
-    static {
-        SUGGESTIONS = ImmutableList.of((Object)"0 0 0 255", (Object)"225 25 25 255", (Object)"25 225 25 255", (Object)"25 25 225 255", (Object)"255 255 255 255");
+    @Override
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((SettingColor)object);
     }
 
     @Override
-    public void reset(boolean lIlIlllllIlIlII) {
-        ColorSetting lIlIlllllIlIlIl;
-        if (lIlIlllllIlIlIl.value == null) {
-            lIlIlllllIlIlIl.value = new SettingColor((SettingColor)lIlIlllllIlIlIl.defaultValue);
+    public void reset(boolean bl) {
+        if (this.value == null) {
+            this.value = new SettingColor((SettingColor)this.defaultValue);
         } else {
-            ((SettingColor)lIlIlllllIlIlIl.value).set((Color)lIlIlllllIlIlIl.defaultValue);
+            ((SettingColor)this.value).set((Color)this.defaultValue);
         }
-        if (lIlIlllllIlIlII) {
-            lIlIlllllIlIlIl.changed();
+        if (bl) {
+            this.changed();
         }
     }
 
     @Override
-    protected SettingColor parseImpl(String lIlIlllllIllIlI) {
+    protected SettingColor parseImpl(String string) {
         try {
-            String[] lIlIlllllIlllIl = lIlIlllllIllIlI.split(" ");
-            return new SettingColor(Integer.parseInt(lIlIlllllIlllIl[0]), Integer.parseInt(lIlIlllllIlllIl[1]), Integer.parseInt(lIlIlllllIlllIl[2]), Integer.parseInt(lIlIlllllIlllIl[3]));
+            String[] arrstring = string.split(" ");
+            return new SettingColor(Integer.parseInt(arrstring[0]), Integer.parseInt(arrstring[1]), Integer.parseInt(arrstring[2]), Integer.parseInt(arrstring[3]));
         }
-        catch (IndexOutOfBoundsException | NumberFormatException lIlIlllllIlllII) {
+        catch (IndexOutOfBoundsException | NumberFormatException runtimeException) {
             return null;
         }
     }
 
     @Override
-    public SettingColor fromTag(class_2487 lIlIlllllIIIIll) {
-        ColorSetting lIlIlllllIIIlII;
-        ((SettingColor)lIlIlllllIIIlII.get()).fromTag(lIlIlllllIIIIll.method_10562("value"));
-        lIlIlllllIIIlII.changed();
-        return (SettingColor)lIlIlllllIIIlII.get();
+    public SettingColor fromTag(class_2487 class_24872) {
+        ((SettingColor)this.get()).fromTag(class_24872.method_10562("value"));
+        this.changed();
+        return (SettingColor)this.get();
     }
 
     @Override
-    protected boolean isValueValid(SettingColor lIlIlllllIIlllI) {
-        lIlIlllllIIlllI.validate();
+    protected boolean isValueValid(SettingColor settingColor) {
+        settingColor.validate();
         return true;
     }
 
     public static class Builder {
-        private /* synthetic */ String description;
-        private /* synthetic */ String name;
-        private /* synthetic */ Consumer<SettingColor> onChanged;
-        private /* synthetic */ SettingColor defaultValue;
-        private /* synthetic */ Consumer<Setting<SettingColor>> onModuleActivated;
-        private /* synthetic */ IVisible visible;
+        private String description = "";
+        private String name = "undefined";
+        private Consumer<SettingColor> onChanged;
+        private SettingColor defaultValue;
+        private Consumer<Setting<SettingColor>> onModuleActivated;
+        private IVisible visible;
 
-        public Builder onModuleActivated(Consumer<Setting<SettingColor>> lllllllllllllllllIllllIIIlIIllII) {
-            Builder lllllllllllllllllIllllIIIlIIllIl;
-            lllllllllllllllllIllllIIIlIIllIl.onModuleActivated = lllllllllllllllllIllllIIIlIIllII;
-            return lllllllllllllllllIllllIIIlIIllIl;
+        public Builder onModuleActivated(Consumer<Setting<SettingColor>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
         public ColorSetting build() {
-            Builder lllllllllllllllllIllllIIIlIIIIIl;
-            return new ColorSetting(lllllllllllllllllIllllIIIlIIIIIl.name, lllllllllllllllllIllllIIIlIIIIIl.description, lllllllllllllllllIllllIIIlIIIIIl.defaultValue, lllllllllllllllllIllllIIIlIIIIIl.onChanged, lllllllllllllllllIllllIIIlIIIIIl.onModuleActivated, lllllllllllllllllIllllIIIlIIIIIl.visible);
+            return new ColorSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
 
-        public Builder visible(IVisible lllllllllllllllllIllllIIIlIIIlII) {
-            Builder lllllllllllllllllIllllIIIlIIIlll;
-            lllllllllllllllllIllllIIIlIIIlll.visible = lllllllllllllllllIllllIIIlIIIlII;
-            return lllllllllllllllllIllllIIIlIIIlll;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder name(String lllllllllllllllllIllllIIIllIIlII) {
-            Builder lllllllllllllllllIllllIIIllIIIll;
-            lllllllllllllllllIllllIIIllIIIll.name = lllllllllllllllllIllllIIIllIIlII;
-            return lllllllllllllllllIllllIIIllIIIll;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder onChanged(Consumer<SettingColor> lllllllllllllllllIllllIIIlIlIIlI) {
-            Builder lllllllllllllllllIllllIIIlIlIIIl;
-            lllllllllllllllllIllllIIIlIlIIIl.onChanged = lllllllllllllllllIllllIIIlIlIIlI;
-            return lllllllllllllllllIllllIIIlIlIIIl;
+        public Builder onChanged(Consumer<SettingColor> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder description(String lllllllllllllllllIllllIIIlIlllII) {
-            Builder lllllllllllllllllIllllIIIlIlllIl;
-            lllllllllllllllllIllllIIIlIlllIl.description = lllllllllllllllllIllllIIIlIlllII;
-            return lllllllllllllllllIllllIIIlIlllIl;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder defaultValue(SettingColor lllllllllllllllllIllllIIIlIllIII) {
-            Builder lllllllllllllllllIllllIIIlIlIlll;
-            lllllllllllllllllIllllIIIlIlIlll.defaultValue = lllllllllllllllllIllllIIIlIllIII;
-            return lllllllllllllllllIllllIIIlIlIlll;
-        }
-
-        public Builder() {
-            Builder lllllllllllllllllIllllIIIllIlIIl;
-            lllllllllllllllllIllllIIIllIlIIl.name = "undefined";
-            lllllllllllllllllIllllIIIllIlIIl.description = "";
+        public Builder defaultValue(SettingColor settingColor) {
+            this.defaultValue = settingColor;
+            return this;
         }
     }
 }

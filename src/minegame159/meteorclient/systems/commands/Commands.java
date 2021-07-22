@@ -61,54 +61,53 @@ import net.minecraft.class_637;
 
 public class Commands
 extends System<Commands> {
-    private final /* synthetic */ Map<Class<? extends Command>, Command> commandInstances;
-    private final /* synthetic */ class_2172 COMMAND_SOURCE;
-    private final /* synthetic */ List<Command> commands;
-    private final /* synthetic */ CommandDispatcher<class_2172> DISPATCHER;
+    private final Map<Class<? extends Command>, Command> commandInstances;
+    private final class_2172 COMMAND_SOURCE;
+    private final List<Command> commands;
+    private final CommandDispatcher<class_2172> DISPATCHER = new CommandDispatcher();
 
-    public void dispatch(String llllllllllllllllIlIllllIllIlllIl, class_2172 llllllllllllllllIlIllllIllIlllII) throws CommandSyntaxException {
-        Commands llllllllllllllllIlIllllIllIllIlI;
-        ParseResults llllllllllllllllIlIllllIllIllIll = llllllllllllllllIlIllllIllIllIlI.DISPATCHER.parse(llllllllllllllllIlIllllIllIlllIl, (Object)llllllllllllllllIlIllllIllIlllII);
-        llllllllllllllllIlIllllIllIllIlI.DISPATCHER.execute(llllllllllllllllIlIllllIllIllIll);
+    public void dispatch(String string, class_2172 class_21722) throws CommandSyntaxException {
+        ParseResults parseResults = this.DISPATCHER.parse(string, (Object)class_21722);
+        this.DISPATCHER.execute(parseResults);
     }
 
     public class_2172 getCommandSource() {
-        Commands llllllllllllllllIlIllllIllIlIIlI;
-        return llllllllllllllllIlIllllIllIlIIlI.COMMAND_SOURCE;
+        return this.COMMAND_SOURCE;
     }
 
-    public <T extends Command> T get(Class<T> llllllllllllllllIlIllllIlIllllll) {
-        Commands llllllllllllllllIlIllllIllIIIIlI;
-        return (T)llllllllllllllllIlIllllIllIIIIlI.commandInstances.get(llllllllllllllllIlIllllIlIllllll);
+    public <T extends Command> T get(Class<T> class_) {
+        return (T)this.commandInstances.get(class_);
     }
 
     public CommandDispatcher<class_2172> getDispatcher() {
-        Commands llllllllllllllllIlIllllIllIlIlIl;
-        return llllllllllllllllIlIllllIllIlIlIl.DISPATCHER;
+        return this.DISPATCHER;
     }
 
     public List<Command> getAll() {
-        Commands llllllllllllllllIlIllllIllIIIlIl;
-        return llllllllllllllllIlIllllIllIIIlIl.commands;
+        return this.commands;
     }
 
-    public void dispatch(String llllllllllllllllIlIllllIlllIIlIl) throws CommandSyntaxException {
-        Commands llllllllllllllllIlIllllIlllIIlII;
-        llllllllllllllllIlIllllIlllIIlII.dispatch(llllllllllllllllIlIllllIlllIIlIl, (class_2172)new ChatCommandSource(Utils.mc));
+    private static boolean lambda$add$1(Command command, Command command2) {
+        return command2.getName().equals(command.getName());
+    }
+
+    private static boolean lambda$add$0(Command command, Command command2) {
+        return command2.getName().equals(command.getName());
+    }
+
+    public void dispatch(String string) throws CommandSyntaxException {
+        this.dispatch(string, (class_2172)new ChatCommandSource(Utils.mc));
     }
 
     public int getCount() {
-        Commands llllllllllllllllIlIllllIllIIlIII;
-        return llllllllllllllllIlIllllIllIIlIII.commands.size();
+        return this.commands.size();
     }
 
     public Commands() {
         super(null);
-        Commands llllllllllllllllIlIllllIlllIllII;
-        llllllllllllllllIlIllllIlllIllII.DISPATCHER = new CommandDispatcher();
-        llllllllllllllllIlIllllIlllIllII.COMMAND_SOURCE = new ChatCommandSource(Utils.mc);
-        llllllllllllllllIlIllllIlllIllII.commands = new ArrayList<Command>();
-        llllllllllllllllIlIllllIlllIllII.commandInstances = new HashMap<Class<? extends Command>, Command>();
+        this.COMMAND_SOURCE = new ChatCommandSource(Utils.mc);
+        this.commands = new ArrayList<Command>();
+        this.commandInstances = new HashMap<Class<? extends Command>, Command>();
     }
 
     public static Commands get() {
@@ -117,56 +116,53 @@ extends System<Commands> {
 
     @Override
     public void init() {
-        Commands llllllllllllllllIlIllllIlllIlIIl;
-        llllllllllllllllIlIllllIlllIlIIl.add(new BaritoneCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new VClipCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new HClipCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new ClearChatCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new DismountCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new DamageCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new DropCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new EnchantCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new FakePlayerCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new FriendsCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new CommandsCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new InventoryCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new LocateCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new NbtCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new NotebotCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new PanicCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new PeekCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new ProfilesCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new ReloadCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new ResetCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new SayCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new ServerCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new SwarmCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new ToggleCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new SettingCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new SpectateCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new GamemodeCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new SaveMapCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new ModulesCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new BindsCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new GiveCommand());
-        llllllllllllllllIlIllllIlllIlIIl.add(new NameHistoryCommand());
-        llllllllllllllllIlIllllIlllIlIIl.commands.sort(Comparator.comparing(Command::getName));
+        this.add(new BaritoneCommand());
+        this.add(new VClipCommand());
+        this.add(new HClipCommand());
+        this.add(new ClearChatCommand());
+        this.add(new DismountCommand());
+        this.add(new DamageCommand());
+        this.add(new DropCommand());
+        this.add(new EnchantCommand());
+        this.add(new FakePlayerCommand());
+        this.add(new FriendsCommand());
+        this.add(new CommandsCommand());
+        this.add(new InventoryCommand());
+        this.add(new LocateCommand());
+        this.add(new NbtCommand());
+        this.add(new NotebotCommand());
+        this.add(new PanicCommand());
+        this.add(new PeekCommand());
+        this.add(new ProfilesCommand());
+        this.add(new ReloadCommand());
+        this.add(new ResetCommand());
+        this.add(new SayCommand());
+        this.add(new ServerCommand());
+        this.add(new SwarmCommand());
+        this.add(new ToggleCommand());
+        this.add(new SettingCommand());
+        this.add(new SpectateCommand());
+        this.add(new GamemodeCommand());
+        this.add(new SaveMapCommand());
+        this.add(new ModulesCommand());
+        this.add(new BindsCommand());
+        this.add(new GiveCommand());
+        this.add(new NameHistoryCommand());
+        this.commands.sort(Comparator.comparing(Command::getName));
     }
 
-    public void add(Command llllllllllllllllIlIllllIllIIlIll) {
-        Commands llllllllllllllllIlIllllIllIIlllI;
-        llllllllllllllllIlIllllIllIIlllI.commands.removeIf(llllllllllllllllIlIllllIlIllIlIl -> llllllllllllllllIlIllllIlIllIlIl.getName().equals(llllllllllllllllIlIllllIllIIlIll.getName()));
-        llllllllllllllllIlIllllIllIIlllI.commandInstances.values().removeIf(llllllllllllllllIlIllllIlIlllIll -> llllllllllllllllIlIllllIlIlllIll.getName().equals(llllllllllllllllIlIllllIllIIlIll.getName()));
-        llllllllllllllllIlIllllIllIIlIll.registerTo(llllllllllllllllIlIllllIllIIlllI.DISPATCHER);
-        llllllllllllllllIlIllllIllIIlllI.commands.add(llllllllllllllllIlIllllIllIIlIll);
-        llllllllllllllllIlIllllIllIIlllI.commandInstances.put(llllllllllllllllIlIllllIllIIlIll.getClass(), llllllllllllllllIlIllllIllIIlIll);
+    public void add(Command command) {
+        this.commands.removeIf(arg_0 -> Commands.lambda$add$0(command, arg_0));
+        this.commandInstances.values().removeIf(arg_0 -> Commands.lambda$add$1(command, arg_0));
+        command.registerTo(this.DISPATCHER);
+        this.commands.add(command);
+        this.commandInstances.put(command.getClass(), command);
     }
 
     private static final class ChatCommandSource
     extends class_637 {
-        public ChatCommandSource(class_310 lllllllllllllllllIlIIllIIIIllIll) {
-            super(null, lllllllllllllllllIlIIllIIIIllIll);
-            ChatCommandSource lllllllllllllllllIlIIllIIIIlllII;
+        public ChatCommandSource(class_310 class_3102) {
+            super(null, class_3102);
         }
     }
 }

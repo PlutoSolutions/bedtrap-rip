@@ -9,23 +9,20 @@ import java.lang.reflect.Field;
 
 public class StructureWriteContext
 extends ToNativeContext {
-    private /* synthetic */ Field field;
-    private /* synthetic */ Structure struct;
+    private Field field;
+    private Structure struct;
 
     public Field getField() {
-        StructureWriteContext llllllllllllllllIllIIIlllllllIlI;
-        return llllllllllllllllIllIIIlllllllIlI.field;
+        return this.field;
     }
 
-    StructureWriteContext(Structure llllllllllllllllIllIIlIIIIIIIIII, Field llllllllllllllllIllIIIllllllllll) {
-        StructureWriteContext llllllllllllllllIllIIlIIIIIIIIIl;
-        llllllllllllllllIllIIlIIIIIIIIIl.struct = llllllllllllllllIllIIlIIIIIIIIII;
-        llllllllllllllllIllIIlIIIIIIIIIl.field = llllllllllllllllIllIIIllllllllll;
+    StructureWriteContext(Structure structure, Field field) {
+        this.struct = structure;
+        this.field = field;
     }
 
     public Structure getStructure() {
-        StructureWriteContext llllllllllllllllIllIIIllllllllII;
-        return llllllllllllllllIllIIIllllllllII.struct;
+        return this.struct;
     }
 }
 

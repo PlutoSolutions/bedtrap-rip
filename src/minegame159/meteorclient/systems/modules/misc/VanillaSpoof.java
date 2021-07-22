@@ -27,28 +27,32 @@ public class VanillaSpoof
 extends Module {
     public VanillaSpoof() {
         super(Categories.Misc, "vanilla-spoof", "When connecting to a server it spoofs the client name to be 'vanilla'.");
-        VanillaSpoof lllllllllllllllllllIIlllIllIllIl;
-        MeteorClient.EVENT_BUS.subscribe(lllllllllllllllllllIIlllIllIllIl.new Listener());
+        MeteorClient.EVENT_BUS.subscribe(new Listener(this, null));
     }
 
     private class Listener {
-        private Listener() {
-            Listener llIllIllIIlIIll;
+        final VanillaSpoof this$0;
+
+        private Listener(VanillaSpoof vanillaSpoof) {
+            this.this$0 = vanillaSpoof;
         }
 
         @EventHandler
-        private void onPacketSend(PacketEvent.Send llIllIllIIIllII) {
-            Listener llIllIllIIIllIl;
-            if (!llIllIllIIIllIl.VanillaSpoof.this.isActive() || !(llIllIllIIIllII.packet instanceof class_2817)) {
+        private void onPacketSend(PacketEvent.Send send) {
+            if (!this.this$0.isActive() || !(send.packet instanceof class_2817)) {
                 return;
             }
-            CustomPayloadC2SPacketAccessor llIllIllIIIlIll = (CustomPayloadC2SPacketAccessor)llIllIllIIIllII.packet;
-            class_2960 llIllIllIIIlIlI = llIllIllIIIlIll.getChannel();
-            if (llIllIllIIIlIlI.equals((Object)class_2817.field_12831)) {
-                llIllIllIIIlIll.setData(new class_2540(Unpooled.buffer()).method_10814("vanilla"));
-            } else if (StringUtils.containsIgnoreCase((CharSequence)llIllIllIIIlIll.getData().toString(StandardCharsets.UTF_8), (CharSequence)"fabric")) {
-                llIllIllIIIllII.cancel();
+            CustomPayloadC2SPacketAccessor customPayloadC2SPacketAccessor = (CustomPayloadC2SPacketAccessor)send.packet;
+            class_2960 class_29602 = customPayloadC2SPacketAccessor.getChannel();
+            if (class_29602.equals((Object)class_2817.field_12831)) {
+                customPayloadC2SPacketAccessor.setData(new class_2540(Unpooled.buffer()).method_10814("vanilla"));
+            } else if (StringUtils.containsIgnoreCase((CharSequence)customPayloadC2SPacketAccessor.getData().toString(StandardCharsets.UTF_8), (CharSequence)"fabric")) {
+                send.cancel();
             }
+        }
+
+        Listener(VanillaSpoof vanillaSpoof, 1 var2_2) {
+            this(vanillaSpoof);
         }
     }
 }

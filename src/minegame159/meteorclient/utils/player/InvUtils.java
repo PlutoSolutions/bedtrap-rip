@@ -20,238 +20,229 @@ import net.minecraft.class_1792;
 import net.minecraft.class_1799;
 
 public class InvUtils {
-    private static final /* synthetic */ Action ACTION;
+    private static final Action ACTION = new Action(null);
+
+    private static boolean lambda$find$1(class_1792[] arrclass_1792, class_1799 class_17992) {
+        for (class_1792 class_17922 : arrclass_1792) {
+            if (class_17992.method_7909() != class_17922) continue;
+            return true;
+        }
+        return false;
+    }
 
     public static Action drop() {
-        ACTION.type = class_1713.field_7795;
-        ACTION.data = 1;
+        Action.access$102(ACTION, class_1713.field_7795);
+        Action.access$302(ACTION, 1);
         return ACTION;
     }
 
     public static Action move() {
-        ACTION.type = class_1713.field_7790;
-        ACTION.two = true;
+        Action.access$102(ACTION, class_1713.field_7790);
+        Action.access$202(ACTION, true);
         return ACTION;
     }
 
-    public static FindItemResult findInHotbar(Predicate<class_1799> lllllllllllllllllllIllllllIIllIl) {
-        if (lllllllllllllllllllIllllllIIllIl.test(Utils.mc.field_1724.method_6079())) {
+    public static FindItemResult findInHotbar(Predicate<class_1799> predicate) {
+        if (predicate.test(Utils.mc.field_1724.method_6079())) {
             return new FindItemResult(45, Utils.mc.field_1724.method_6079().method_7947());
         }
-        if (lllllllllllllllllllIllllllIIllIl.test(Utils.mc.field_1724.method_6047())) {
+        if (predicate.test(Utils.mc.field_1724.method_6047())) {
             return new FindItemResult(Utils.mc.field_1724.field_7514.field_7545, Utils.mc.field_1724.method_6047().method_7947());
         }
-        return InvUtils.find(lllllllllllllllllllIllllllIIllIl, 0, 8);
+        return InvUtils.find(predicate, 0, 8);
     }
 
     public static FindItemResult findEmpty() {
         return InvUtils.find(class_1799::method_7960);
     }
 
-    private static FindItemResult find(Predicate<class_1799> lllllllllllllllllllIlllllIllIlll, int lllllllllllllllllllIlllllIlllIll, int lllllllllllllllllllIlllllIlllIlI) {
-        int lllllllllllllllllllIlllllIlllIIl = -1;
-        int lllllllllllllllllllIlllllIlllIII = 0;
-        for (int lllllllllllllllllllIlllllIllllIl = lllllllllllllllllllIlllllIlllIll; lllllllllllllllllllIlllllIllllIl <= lllllllllllllllllllIlllllIlllIlI; ++lllllllllllllllllllIlllllIllllIl) {
-            class_1799 lllllllllllllllllllIlllllIlllllI = Utils.mc.field_1724.field_7514.method_5438(lllllllllllllllllllIlllllIllllIl);
-            if (!lllllllllllllllllllIlllllIllIlll.test(lllllllllllllllllllIlllllIlllllI)) continue;
-            if (lllllllllllllllllllIlllllIlllIIl == -1) {
-                lllllllllllllllllllIlllllIlllIIl = lllllllllllllllllllIlllllIllllIl;
+    private static FindItemResult find(Predicate<class_1799> predicate, int n, int n2) {
+        int n3 = -1;
+        int n4 = 0;
+        for (int i = n; i <= n2; ++i) {
+            class_1799 class_17992 = Utils.mc.field_1724.field_7514.method_5438(i);
+            if (!predicate.test(class_17992)) continue;
+            if (n3 == -1) {
+                n3 = i;
             }
-            lllllllllllllllllllIlllllIlllIII += lllllllllllllllllllIlllllIlllllI.method_7947();
+            n4 += class_17992.method_7947();
+            if (!false) continue;
+            return null;
         }
-        return new FindItemResult(lllllllllllllllllllIlllllIlllIIl, lllllllllllllllllllIlllllIlllIII);
+        return new FindItemResult(n3, n4);
     }
 
-    public static FindItemResult find(class_1792 ... lllllllllllllllllllIllllllIIlIIl) {
-        return InvUtils.find((class_1799 lllllllllllllllllllIlllllIlIIIll) -> {
-            for (class_1792 lllllllllllllllllllIlllllIlIIlll : lllllllllllllllllllIllllllIIlIIl) {
-                if (lllllllllllllllllllIlllllIlIIIll.method_7909() != lllllllllllllllllllIlllllIlIIlll) continue;
-                return true;
-            }
-            return false;
-        });
+    public static FindItemResult find(class_1792 ... arrclass_1792) {
+        return InvUtils.find(arg_0 -> InvUtils.lambda$find$1(arrclass_1792, arg_0));
     }
 
     public static Action click() {
-        ACTION.type = class_1713.field_7790;
+        Action.access$102(ACTION, class_1713.field_7790);
         return ACTION;
     }
 
     public static Action quickMove() {
-        ACTION.type = class_1713.field_7794;
+        Action.access$102(ACTION, class_1713.field_7794);
         return ACTION;
     }
 
-    static {
-        ACTION = new Action();
+    private static boolean lambda$findInHotbar$0(class_1792[] arrclass_1792, class_1799 class_17992) {
+        for (class_1792 class_17922 : arrclass_1792) {
+            if (class_17992.method_7909() != class_17922) continue;
+            return true;
+        }
+        return false;
     }
 
-    public static FindItemResult findInHotbar(class_1792 ... lllllllllllllllllllIllllllIIllll) {
-        return InvUtils.findInHotbar((class_1799 lllllllllllllllllllIlllllIIlIlII) -> {
-            for (class_1792 lllllllllllllllllllIlllllIIllIII : lllllllllllllllllllIllllllIIllll) {
-                if (lllllllllllllllllllIlllllIIlIlII.method_7909() != lllllllllllllllllllIlllllIIllIII) continue;
-                return true;
-            }
-            return false;
-        });
+    public static FindItemResult findInHotbar(class_1792 ... arrclass_1792) {
+        return InvUtils.findInHotbar(arg_0 -> InvUtils.lambda$findInHotbar$0(arrclass_1792, arg_0));
     }
 
-    public InvUtils() {
-        InvUtils lllllllllllllllllllIllllllIlIIlI;
+    public static FindItemResult find(Predicate<class_1799> predicate) {
+        return InvUtils.find(predicate, 0, Utils.mc.field_1724.field_7514.method_5439());
     }
 
-    public static FindItemResult find(Predicate<class_1799> lllllllllllllllllllIllllllIIIllI) {
-        return InvUtils.find(lllllllllllllllllllIllllllIIIllI, 0, Utils.mc.field_1724.field_7514.method_5439());
-    }
-
-    public static boolean swap(int lllllllllllllllllllIlllllIlIllll) {
-        if (lllllllllllllllllllIlllllIlIllll < 0 || lllllllllllllllllllIlllllIlIllll > 8) {
+    public static boolean swap(int n) {
+        if (n < 0 || n > 8) {
             return false;
         }
-        Utils.mc.field_1724.field_7514.field_7545 = lllllllllllllllllllIlllllIlIllll;
+        Utils.mc.field_1724.field_7514.field_7545 = n;
         ((IClientPlayerInteractionManager)Utils.mc.field_1761).syncSelectedSlot2();
         return true;
     }
 
     public static class Action {
-        private /* synthetic */ int to;
-        private /* synthetic */ int from;
-        private /* synthetic */ boolean isRecursive;
-        private /* synthetic */ int data;
-        private /* synthetic */ boolean two;
-        private /* synthetic */ class_1713 type;
+        private int to = -1;
+        private int from = -1;
+        private boolean isRecursive = false;
+        private int data = 0;
+        private boolean two = false;
+        private class_1713 type = null;
+
+        Action(1 var1_1) {
+            this();
+        }
 
         public void slotOffhand() {
-            Action lllIIIIllIllIIl;
-            lllIIIIllIllIIl.slot(45);
+            this.slot(45);
         }
 
-        public void to(int lllIIIlIIIIIlII) {
-            Action lllIIIlIIIIIlIl;
-            lllIIIlIIIIIlIl.toId(SlotUtils.indexToId(lllIIIlIIIIIlII));
+        public void to(int n) {
+            this.toId(SlotUtils.indexToId(n));
         }
 
-        public Action fromArmor(int lllIIIlIIIlIIII) {
-            Action lllIIIlIIIlIIIl;
-            return lllIIIlIIIlIIIl.from(36 + (3 - lllIIIlIIIlIIII));
+        public Action fromArmor(int n) {
+            return this.from(36 + (3 - n));
         }
 
-        public void toMain(int lllIIIIllllIIll) {
-            Action lllIIIIllllIllI;
-            lllIIIIllllIllI.to(9 + lllIIIIllllIIll);
+        static boolean access$202(Action action, boolean bl) {
+            action.two = bl;
+            return bl;
         }
 
-        public void toId(int lllIIIlIIIIlIlI) {
-            Action lllIIIlIIIIlIIl;
-            lllIIIlIIIIlIIl.to = lllIIIlIIIIlIlI;
-            lllIIIlIIIIlIIl.run();
+        static class_1713 access$102(Action action, class_1713 class_17132) {
+            action.type = class_17132;
+            return class_17132;
         }
 
-        public void slotArmor(int lllIIIIllIIllII) {
-            Action lllIIIIllIIllll;
-            lllIIIIllIIllll.slot(36 + (3 - lllIIIIllIIllII));
+        public void toMain(int n) {
+            this.to(9 + n);
+        }
+
+        public void toId(int n) {
+            this.to = n;
+            this.run();
+        }
+
+        public void slotArmor(int n) {
+            this.slot(36 + (3 - n));
         }
 
         public void toOffhand() {
-            Action lllIIIIlllllIlI;
-            lllIIIIlllllIlI.to(45);
+            this.to(45);
         }
 
-        public void slot(int lllIIIIlllIIIIl) {
-            Action lllIIIIlllIIlII;
-            lllIIIIlllIIlII.slotId(SlotUtils.indexToId(lllIIIIlllIIIIl));
+        public void slot(int n) {
+            this.slotId(SlotUtils.indexToId(n));
         }
 
-        public Action fromId(int lllIIIlIIlIlIIl) {
-            Action lllIIIlIIlIllII;
-            lllIIIlIIlIllII.from = lllIIIlIIlIlIIl;
-            return lllIIIlIIlIllII;
+        public Action fromId(int n) {
+            this.from = n;
+            return this;
         }
 
-        public Action fromHotbar(int lllIIIlIIIlllll) {
-            Action lllIIIlIIIllllI;
-            return lllIIIlIIIllllI.from(0 + lllIIIlIIIlllll);
+        public Action fromHotbar(int n) {
+            return this.from(0 + n);
         }
 
-        public Action fromMain(int lllIIIlIIIlIlII) {
-            Action lllIIIlIIIlIlll;
-            return lllIIIlIIIlIlll.from(9 + lllIIIlIIIlIlII);
+        public Action fromMain(int n) {
+            return this.from(9 + n);
         }
 
-        public Action from(int lllIIIlIIlIIlIl) {
-            Action lllIIIlIIlIIlII;
-            return lllIIIlIIlIIlII.fromId(SlotUtils.indexToId(lllIIIlIIlIIlIl));
+        public Action from(int n) {
+            return this.fromId(SlotUtils.indexToId(n));
         }
 
         private void run() {
-            Action lllIIIIllIIIlIl;
-            boolean lllIIIIllIIIlII = Utils.mc.field_1724.field_7514.method_7399().method_7960();
-            if (lllIIIIllIIIlIl.type != null && lllIIIIllIIIlIl.from != -1 && lllIIIIllIIIlIl.to != -1) {
-                lllIIIIllIIIlIl.click(lllIIIIllIIIlIl.from);
-                if (lllIIIIllIIIlIl.two) {
-                    lllIIIIllIIIlIl.click(lllIIIIllIIIlIl.to);
+            boolean bl = Utils.mc.field_1724.field_7514.method_7399().method_7960();
+            if (this.type != null && this.from != -1 && this.to != -1) {
+                this.click(this.from);
+                if (this.two) {
+                    this.click(this.to);
                 }
             }
-            class_1713 lllIIIIllIIIIll = lllIIIIllIIIlIl.type;
-            boolean lllIIIIllIIIIlI = lllIIIIllIIIlIl.two;
-            int lllIIIIllIIIIIl = lllIIIIllIIIlIl.from;
-            int lllIIIIllIIIIII = lllIIIIllIIIlIl.to;
-            lllIIIIllIIIlIl.type = null;
-            lllIIIIllIIIlIl.two = false;
-            lllIIIIllIIIlIl.from = -1;
-            lllIIIIllIIIlIl.to = -1;
-            lllIIIIllIIIlIl.data = 0;
-            if (!lllIIIIllIIIlIl.isRecursive && lllIIIIllIIIlII && lllIIIIllIIIIll == class_1713.field_7790 && lllIIIIllIIIIlI && lllIIIIllIIIIIl != -1 && lllIIIIllIIIIII != -1 && !Utils.mc.field_1724.field_7514.method_7399().method_7960()) {
-                lllIIIIllIIIlIl.isRecursive = true;
-                InvUtils.click().slotId(lllIIIIllIIIIIl);
-                lllIIIIllIIIlIl.isRecursive = false;
+            class_1713 class_17132 = this.type;
+            boolean bl2 = this.two;
+            int n = this.from;
+            int n2 = this.to;
+            this.type = null;
+            this.two = false;
+            this.from = -1;
+            this.to = -1;
+            this.data = 0;
+            if (!this.isRecursive && bl && class_17132 == class_1713.field_7790 && bl2 && n != -1 && n2 != -1 && !Utils.mc.field_1724.field_7514.method_7399().method_7960()) {
+                this.isRecursive = true;
+                InvUtils.click().slotId(n);
+                this.isRecursive = false;
             }
         }
 
-        public void slotMain(int lllIIIIllIlIlII) {
-            Action lllIIIIllIlIIll;
-            lllIIIIllIlIIll.slot(9 + lllIIIIllIlIlII);
+        public void slotMain(int n) {
+            this.slot(9 + n);
         }
 
-        public void toArmor(int lllIIIIlllIllIl) {
-            Action lllIIIIlllIlllI;
-            lllIIIIlllIlllI.to(36 + (3 - lllIIIIlllIllIl));
+        public void toArmor(int n) {
+            this.to(36 + (3 - n));
         }
 
-        public void toHotbar(int lllIIIIllllllII) {
-            Action lllIIIIllllllll;
-            lllIIIIllllllll.to(0 + lllIIIIllllllII);
+        public void toHotbar(int n) {
+            this.to(0 + n);
         }
 
         public Action fromOffhand() {
-            Action lllIIIlIIIllIll;
-            return lllIIIlIIIllIll.from(45);
+            return this.from(45);
         }
 
-        private void click(int lllIIIIlIllIllI) {
-            Action lllIIIIlIllIlIl;
-            Utils.mc.field_1761.method_2906(Utils.mc.field_1724.field_7512.field_7763, lllIIIIlIllIllI, lllIIIIlIllIlIl.data, lllIIIIlIllIlIl.type, (class_1657)Utils.mc.field_1724);
+        private void click(int n) {
+            Utils.mc.field_1761.method_2906(Utils.mc.field_1724.field_7512.field_7763, n, this.data, this.type, (class_1657)Utils.mc.field_1724);
         }
 
-        public void slotId(int lllIIIIlllIlIIl) {
-            Action lllIIIIlllIlIII;
-            lllIIIIlllIlIII.from = lllIIIIlllIlIII.to = lllIIIIlllIlIIl;
-            lllIIIIlllIlIII.run();
+        public void slotId(int n) {
+            this.to = n;
+            this.from = n;
+            this.run();
         }
 
-        public void slotHotbar(int lllIIIIllIlllIl) {
-            Action lllIIIIllIlllII;
-            lllIIIIllIlllII.slot(0 + lllIIIIllIlllIl);
+        static int access$302(Action action, int n) {
+            action.data = n;
+            return n;
+        }
+
+        public void slotHotbar(int n) {
+            this.slot(0 + n);
         }
 
         private Action() {
-            Action lllIIIlIIllIIII;
-            lllIIIlIIllIIII.type = null;
-            lllIIIlIIllIIII.two = false;
-            lllIIIlIIllIIII.from = -1;
-            lllIIIlIIllIIII.to = -1;
-            lllIIIlIIllIIII.data = 0;
-            lllIIIlIIllIIII.isRecursive = false;
         }
     }
 }

@@ -13,51 +13,48 @@ import minegame159.meteorclient.utils.Utils;
 public class WMeteorTextBox
 extends WTextBox
 implements MeteorWidget {
-    private /* synthetic */ boolean cursorVisible;
-    private /* synthetic */ double cursorTimer;
-    private /* synthetic */ double animProgress;
+    private boolean cursorVisible;
+    private double cursorTimer;
+    private double animProgress;
 
     @Override
-    protected void onRender(GuiRenderer lIlIllIlllIIII, double lIlIllIlllIlII, double lIlIllIlllIIll, double lIlIllIlllIIlI) {
-        WMeteorTextBox lIlIllIlllIllI;
-        if (lIlIllIlllIllI.cursorTimer >= 1.0) {
-            lIlIllIlllIllI.cursorVisible = !lIlIllIlllIllI.cursorVisible;
-            lIlIllIlllIllI.cursorTimer = 0.0;
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (this.cursorTimer >= 1.0) {
+            this.cursorVisible = !this.cursorVisible;
+            this.cursorTimer = 0.0;
         } else {
-            lIlIllIlllIllI.cursorTimer += lIlIllIlllIIlI * 1.75;
+            this.cursorTimer += d3 * 1.75;
         }
-        lIlIllIlllIllI.renderBackground(lIlIllIlllIIII, lIlIllIlllIllI, false, false);
-        lIlIllIlllIllI.renderTextAndCursor(lIlIllIlllIIII, lIlIllIlllIIlI);
+        this.renderBackground(guiRenderer, this, false, false);
+        this.renderTextAndCursor(guiRenderer, d3);
     }
 
-    private void renderTextAndCursor(GuiRenderer lIlIllIllIIIIl, double lIlIllIllIIIII) {
-        WMeteorTextBox lIlIllIllIIIlI;
-        MeteorGuiTheme lIlIllIllIIlIl = lIlIllIllIIIlI.theme();
-        double lIlIllIllIIlII = lIlIllIllIIIlI.pad();
-        double lIlIllIllIIIll = lIlIllIllIIIlI.getOverflowWidthForRender();
-        if (!lIlIllIllIIIlI.text.isEmpty()) {
-            lIlIllIllIIIIl.scissorStart(lIlIllIllIIIlI.x + lIlIllIllIIlII, lIlIllIllIIIlI.y + lIlIllIllIIlII, lIlIllIllIIIlI.width - lIlIllIllIIlII * 2.0, lIlIllIllIIIlI.height - lIlIllIllIIlII * 2.0);
-            lIlIllIllIIIIl.text(lIlIllIllIIIlI.text, lIlIllIllIIIlI.x + lIlIllIllIIlII - lIlIllIllIIIll, lIlIllIllIIIlI.y + lIlIllIllIIlII, lIlIllIllIIlIl.textColor.get(), false);
-            lIlIllIllIIIIl.scissorEnd();
+    private void renderTextAndCursor(GuiRenderer guiRenderer, double d) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d2 = this.pad();
+        double d3 = this.getOverflowWidthForRender();
+        if (!this.text.isEmpty()) {
+            guiRenderer.scissorStart(this.x + d2, this.y + d2, this.width - d2 * 2.0, this.height - d2 * 2.0);
+            guiRenderer.text(this.text, this.x + d2 - d3, this.y + d2, meteorGuiTheme.textColor.get(), false);
+            guiRenderer.scissorEnd();
         }
-        lIlIllIllIIIlI.animProgress += lIlIllIllIIIII * 10.0 * (double)(lIlIllIllIIIlI.focused && lIlIllIllIIIlI.cursorVisible ? 1 : -1);
-        lIlIllIllIIIlI.animProgress = Utils.clamp(lIlIllIllIIIlI.animProgress, 0.0, 1.0);
-        if (lIlIllIllIIIlI.focused && lIlIllIllIIIlI.cursorVisible || lIlIllIllIIIlI.animProgress > 0.0) {
-            lIlIllIllIIIIl.setAlpha(lIlIllIllIIIlI.animProgress);
-            lIlIllIllIIIIl.quad(lIlIllIllIIIlI.x + lIlIllIllIIlII + lIlIllIllIIIlI.getCursorTextWidth() - lIlIllIllIIIll, lIlIllIllIIIlI.y + lIlIllIllIIlII, lIlIllIllIIlIl.scale(1.0), lIlIllIllIIlIl.textHeight(), lIlIllIllIIlIl.textColor.get());
-            lIlIllIllIIIIl.setAlpha(1.0);
+        this.animProgress += d * 10.0 * (double)(this.focused && this.cursorVisible ? 1 : -1);
+        this.animProgress = Utils.clamp(this.animProgress, 0.0, 1.0);
+        if (this.focused && this.cursorVisible || this.animProgress > 0.0) {
+            guiRenderer.setAlpha(this.animProgress);
+            guiRenderer.quad(this.x + d2 + this.getCursorTextWidth() - d3, this.y + d2, meteorGuiTheme.scale(1.0), meteorGuiTheme.textHeight(), meteorGuiTheme.textColor.get());
+            guiRenderer.setAlpha(1.0);
         }
     }
 
-    public WMeteorTextBox(String lIlIllIllllllI, CharFilter lIlIlllIIIIIII) {
-        super(lIlIllIllllllI, lIlIlllIIIIIII);
-        WMeteorTextBox lIlIlllIIIIIlI;
+    public WMeteorTextBox(String string, CharFilter charFilter) {
+        super(string, charFilter);
     }
 
     @Override
     protected void onCursorChanged() {
-        lIlIllIllllIll.cursorVisible = true;
-        lIlIllIllllIll.cursorTimer = 0.0;
+        this.cursorVisible = true;
+        this.cursorTimer = 0.0;
     }
 }
 

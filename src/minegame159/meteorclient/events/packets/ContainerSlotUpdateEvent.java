@@ -9,20 +9,12 @@ package minegame159.meteorclient.events.packets;
 import net.minecraft.class_2653;
 
 public class ContainerSlotUpdateEvent {
-    private static final /* synthetic */ ContainerSlotUpdateEvent INSTANCE;
-    public /* synthetic */ class_2653 packet;
+    private static final ContainerSlotUpdateEvent INSTANCE = new ContainerSlotUpdateEvent();
+    public class_2653 packet;
 
-    public static ContainerSlotUpdateEvent get(class_2653 lllllllllllllllllIIIIlIlIIllIIIl) {
-        ContainerSlotUpdateEvent.INSTANCE.packet = lllllllllllllllllIIIIlIlIIllIIIl;
+    public static ContainerSlotUpdateEvent get(class_2653 class_26532) {
+        ContainerSlotUpdateEvent.INSTANCE.packet = class_26532;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new ContainerSlotUpdateEvent();
-    }
-
-    public ContainerSlotUpdateEvent() {
-        ContainerSlotUpdateEvent lllllllllllllllllIIIIlIlIIllIlIl;
     }
 }
 

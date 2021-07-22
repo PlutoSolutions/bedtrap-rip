@@ -6,20 +6,12 @@ package minegame159.meteorclient.events.meteor;
 import minegame159.meteorclient.systems.modules.Module;
 
 public class ModuleBindChangedEvent {
-    private static final /* synthetic */ ModuleBindChangedEvent INSTANCE;
-    public /* synthetic */ Module module;
+    private static final ModuleBindChangedEvent INSTANCE = new ModuleBindChangedEvent();
+    public Module module;
 
-    public static ModuleBindChangedEvent get(Module lllllllllllllllllIIIIlIlIlIIlIlI) {
-        ModuleBindChangedEvent.INSTANCE.module = lllllllllllllllllIIIIlIlIlIIlIlI;
+    public static ModuleBindChangedEvent get(Module module) {
+        ModuleBindChangedEvent.INSTANCE.module = module;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new ModuleBindChangedEvent();
-    }
-
-    public ModuleBindChangedEvent() {
-        ModuleBindChangedEvent lllllllllllllllllIIIIlIlIlIIllIl;
     }
 }
 

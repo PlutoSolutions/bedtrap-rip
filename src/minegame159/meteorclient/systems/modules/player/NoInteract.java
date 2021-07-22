@@ -18,16 +18,15 @@ public class NoInteract
 extends Module {
     public NoInteract() {
         super(Categories.Player, "no-interact", "Blocks interactions with certain types of inputs.");
-        NoInteract llllllllllllllllllIlIIIlIlIIlIIl;
     }
 
     @EventHandler
-    private void onScreenOpen(OpenScreenEvent llllllllllllllllllIlIIIlIlIIIllI) {
-        if (llllllllllllllllllIlIIIlIlIIIllI.screen == null) {
+    private void onScreenOpen(OpenScreenEvent openScreenEvent) {
+        if (openScreenEvent.screen == null) {
             return;
         }
-        if (!llllllllllllllllllIlIIIlIlIIIllI.screen.method_25421() && !(llllllllllllllllllIlIIIlIlIIIllI.screen instanceof class_485) && llllllllllllllllllIlIIIlIlIIIllI.screen instanceof class_465) {
-            llllllllllllllllllIlIIIlIlIIIllI.setCancelled(true);
+        if (!openScreenEvent.screen.method_25421() && !(openScreenEvent.screen instanceof class_485) && openScreenEvent.screen instanceof class_465) {
+            openScreenEvent.setCancelled(true);
         }
     }
 }

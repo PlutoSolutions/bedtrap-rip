@@ -24,20 +24,12 @@ import net.minecraft.class_2371;
 import net.minecraft.class_476;
 
 public class EChestMemory {
-    public static final /* synthetic */ class_2371<class_1799> ITEMS;
-    private static /* synthetic */ int echestOpenedState;
-
-    static {
-        ITEMS = class_2371.method_10213((int)27, (Object)class_1799.field_8037);
-    }
-
-    public EChestMemory() {
-        EChestMemory lIllIlIlIllIIl;
-    }
+    public static final class_2371<class_1799> ITEMS = class_2371.method_10213((int)27, (Object)class_1799.field_8037);
+    private static int echestOpenedState;
 
     @EventHandler
-    private static void onOpenScreenEvent(OpenScreenEvent lIllIlIlIIllIl) {
-        if (echestOpenedState == 1 && lIllIlIlIIllIl.screen instanceof class_476) {
+    private static void onOpenScreenEvent(OpenScreenEvent openScreenEvent) {
+        if (echestOpenedState == 1 && openScreenEvent.screen instanceof class_476) {
             echestOpenedState = 2;
             return;
         }
@@ -47,20 +39,22 @@ public class EChestMemory {
         if (!(Utils.mc.field_1755 instanceof class_476)) {
             return;
         }
-        class_1707 lIllIlIlIIllll = (class_1707)((class_476)Utils.mc.field_1755).method_17577();
-        if (lIllIlIlIIllll == null) {
+        class_1707 class_17072 = (class_1707)((class_476)Utils.mc.field_1755).method_17577();
+        if (class_17072 == null) {
             return;
         }
-        class_1263 lIllIlIlIIlllI = lIllIlIlIIllll.method_7629();
-        for (int lIllIlIlIlIIIl = 0; lIllIlIlIlIIIl < 27; ++lIllIlIlIlIIIl) {
-            ITEMS.set(lIllIlIlIlIIIl, (Object)lIllIlIlIIlllI.method_5438(lIllIlIlIlIIIl));
+        class_1263 class_12632 = class_17072.method_7629();
+        for (int i = 0; i < 27; ++i) {
+            ITEMS.set(i, (Object)class_12632.method_5438(i));
+            if (!false) continue;
+            return;
         }
         echestOpenedState = 0;
     }
 
     @EventHandler
-    private static void onBlockActivate(BlockActivateEvent lIllIlIlIlIlll) {
-        if (lIllIlIlIlIlll.blockState.method_26204() instanceof class_2336 && echestOpenedState == 0) {
+    private static void onBlockActivate(BlockActivateEvent blockActivateEvent) {
+        if (blockActivateEvent.blockState.method_26204() instanceof class_2336 && echestOpenedState == 0) {
             echestOpenedState = 1;
         }
     }

@@ -29,170 +29,155 @@ import net.minecraft.class_2519;
 import net.minecraft.class_2520;
 import org.apache.commons.io.FileUtils;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Profile
 implements ISerializable<Profile> {
-    public /* synthetic */ boolean accounts;
-    public /* synthetic */ boolean friends;
-    public /* synthetic */ String name;
-    public /* synthetic */ List<String> loadOnJoinIps;
-    public /* synthetic */ boolean modules;
-    public /* synthetic */ boolean macros;
-    public /* synthetic */ boolean onLaunch;
-    public /* synthetic */ boolean config;
-    public /* synthetic */ boolean waypoints;
+    public boolean accounts = false;
+    public boolean friends = false;
+    public String name = "";
+    public List<String> loadOnJoinIps = new ArrayList<String>();
+    public boolean modules = true;
+    public boolean macros = true;
+    public boolean onLaunch = false;
+    public boolean config = true;
+    public boolean waypoints = false;
 
     @Override
-    public Profile fromTag(class_2487 lllllllllllllllllIllIlllIlIIIlIl) {
-        Profile lllllllllllllllllIllIlllIlIIIlII;
-        lllllllllllllllllIllIlllIlIIIlII.name = lllllllllllllllllIllIlllIlIIIlIl.method_10558("name");
-        lllllllllllllllllIllIlllIlIIIlII.onLaunch = lllllllllllllllllIllIlllIlIIIlIl.method_10545("onLaunch") && lllllllllllllllllIllIlllIlIIIlIl.method_10577("onLaunch");
-        lllllllllllllllllIllIlllIlIIIlII.accounts = lllllllllllllllllIllIlllIlIIIlIl.method_10545("accounts") && lllllllllllllllllIllIlllIlIIIlIl.method_10577("accounts");
-        lllllllllllllllllIllIlllIlIIIlII.config = lllllllllllllllllIllIlllIlIIIlIl.method_10545("config") && lllllllllllllllllIllIlllIlIIIlIl.method_10577("config");
-        lllllllllllllllllIllIlllIlIIIlII.friends = lllllllllllllllllIllIlllIlIIIlIl.method_10545("friends") && lllllllllllllllllIllIlllIlIIIlIl.method_10577("friends");
-        lllllllllllllllllIllIlllIlIIIlII.macros = lllllllllllllllllIllIlllIlIIIlIl.method_10545("macros") && lllllllllllllllllIllIlllIlIIIlIl.method_10577("macros");
-        lllllllllllllllllIllIlllIlIIIlII.modules = lllllllllllllllllIllIlllIlIIIlIl.method_10545("modules") && lllllllllllllllllIllIlllIlIIIlIl.method_10577("modules");
-        lllllllllllllllllIllIlllIlIIIlII.waypoints = lllllllllllllllllIllIlllIlIIIlIl.method_10545("waypoints") && lllllllllllllllllIllIlllIlIIIlIl.method_10577("waypoints");
-        lllllllllllllllllIllIlllIlIIIlII.loadOnJoinIps.clear();
-        if (lllllllllllllllllIllIlllIlIIIlIl.method_10545("loadOnJoinIps")) {
-            class_2499 lllllllllllllllllIllIlllIlIIIlll = lllllllllllllllllIllIlllIlIIIlIl.method_10554("loadOnJoinIps", 8);
-            for (class_2520 lllllllllllllllllIllIlllIlIIlIII : lllllllllllllllllIllIlllIlIIIlll) {
-                lllllllllllllllllIllIlllIlIIIlII.loadOnJoinIps.add(lllllllllllllllllIllIlllIlIIlIII.method_10714());
+    public Profile fromTag(class_2487 class_24872) {
+        this.name = class_24872.method_10558("name");
+        this.onLaunch = class_24872.method_10545("onLaunch") && class_24872.method_10577("onLaunch");
+        this.accounts = class_24872.method_10545("accounts") && class_24872.method_10577("accounts");
+        this.config = class_24872.method_10545("config") && class_24872.method_10577("config");
+        this.friends = class_24872.method_10545("friends") && class_24872.method_10577("friends");
+        this.macros = class_24872.method_10545("macros") && class_24872.method_10577("macros");
+        this.modules = class_24872.method_10545("modules") && class_24872.method_10577("modules");
+        this.waypoints = class_24872.method_10545("waypoints") && class_24872.method_10577("waypoints");
+        this.loadOnJoinIps.clear();
+        if (class_24872.method_10545("loadOnJoinIps")) {
+            class_2499 class_24992 = class_24872.method_10554("loadOnJoinIps", 8);
+            for (class_2520 class_25202 : class_24992) {
+                this.loadOnJoinIps.add(class_25202.method_10714());
             }
         }
-        return lllllllllllllllllIllIlllIlIIIlII;
+        return this;
     }
 
-    public void save(System<?> lllllllllllllllllIllIlllIlllIIlI) {
-        Profile lllllllllllllllllIllIlllIlllIIll;
-        File lllllllllllllllllIllIlllIlllIlII = new File(Profiles.FOLDER, lllllllllllllllllIllIlllIlllIIll.name);
-        lllllllllllllllllIllIlllIlllIIlI.save(lllllllllllllllllIllIlllIlllIlII);
+    public void save(System<?> system) {
+        File file = new File(Profiles.FOLDER, this.name);
+        system.save(file);
     }
 
-    public void load(System<?> lllllllllllllllllIllIllllIIIIIIl) {
-        Profile lllllllllllllllllIllIllllIIIIlIl;
-        File lllllllllllllllllIllIllllIIIIIll = new File(Profiles.FOLDER, lllllllllllllllllIllIllllIIIIlIl.name);
-        lllllllllllllllllIllIllllIIIIIIl.load(lllllllllllllllllIllIllllIIIIIll);
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public void load(System<?> system) {
+        File file = new File(Profiles.FOLDER, this.name);
+        system.load(file);
     }
 
     @Override
     public class_2487 toTag() {
-        Profile lllllllllllllllllIllIlllIlIlIIlI;
-        class_2487 lllllllllllllllllIllIlllIlIlIlII = new class_2487();
-        lllllllllllllllllIllIlllIlIlIlII.method_10582("name", lllllllllllllllllIllIlllIlIlIIlI.name);
-        lllllllllllllllllIllIlllIlIlIlII.method_10556("onLaunch", lllllllllllllllllIllIlllIlIlIIlI.onLaunch);
-        lllllllllllllllllIllIlllIlIlIlII.method_10556("accounts", lllllllllllllllllIllIlllIlIlIIlI.accounts);
-        lllllllllllllllllIllIlllIlIlIlII.method_10556("config", lllllllllllllllllIllIlllIlIlIIlI.config);
-        lllllllllllllllllIllIlllIlIlIlII.method_10556("friends", lllllllllllllllllIllIlllIlIlIIlI.friends);
-        lllllllllllllllllIllIlllIlIlIlII.method_10556("macros", lllllllllllllllllIllIlllIlIlIIlI.macros);
-        lllllllllllllllllIllIlllIlIlIlII.method_10556("modules", lllllllllllllllllIllIlllIlIlIIlI.modules);
-        lllllllllllllllllIllIlllIlIlIlII.method_10556("waypoints", lllllllllllllllllIllIlllIlIlIIlI.waypoints);
-        lllllllllllllllllIllIlllIlIlIIlI.loadOnJoinIps.removeIf(String::isEmpty);
-        class_2499 lllllllllllllllllIllIlllIlIlIIll = new class_2499();
-        for (String lllllllllllllllllIllIlllIlIlIllI : lllllllllllllllllIllIlllIlIlIIlI.loadOnJoinIps) {
-            lllllllllllllllllIllIlllIlIlIIll.add((Object)class_2519.method_23256((String)lllllllllllllllllIllIlllIlIlIllI));
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("name", this.name);
+        class_24872.method_10556("onLaunch", this.onLaunch);
+        class_24872.method_10556("accounts", this.accounts);
+        class_24872.method_10556("config", this.config);
+        class_24872.method_10556("friends", this.friends);
+        class_24872.method_10556("macros", this.macros);
+        class_24872.method_10556("modules", this.modules);
+        class_24872.method_10556("waypoints", this.waypoints);
+        this.loadOnJoinIps.removeIf(String::isEmpty);
+        class_2499 class_24992 = new class_2499();
+        for (String string : this.loadOnJoinIps) {
+            class_24992.add((Object)class_2519.method_23256((String)string));
         }
-        lllllllllllllllllIllIlllIlIlIlII.method_10566("loadOnJoinIps", (class_2520)lllllllllllllllllIllIlllIlIlIIll);
-        return lllllllllllllllllIllIlllIlIlIlII;
+        class_24872.method_10566("loadOnJoinIps", (class_2520)class_24992);
+        return class_24872;
     }
 
-    public Profile set(Profile lllllllllllllllllIllIlllIIllllII) {
-        Profile lllllllllllllllllIllIlllIIlllIll;
-        lllllllllllllllllIllIlllIIlllIll.name = lllllllllllllllllIllIlllIIllllII.name;
-        lllllllllllllllllIllIlllIIlllIll.onLaunch = lllllllllllllllllIllIlllIIllllII.onLaunch;
-        lllllllllllllllllIllIlllIIlllIll.loadOnJoinIps = lllllllllllllllllIllIlllIIllllII.loadOnJoinIps;
-        lllllllllllllllllIllIlllIIlllIll.accounts = lllllllllllllllllIllIlllIIllllII.accounts;
-        lllllllllllllllllIllIlllIIlllIll.config = lllllllllllllllllIllIlllIIllllII.config;
-        lllllllllllllllllIllIlllIIlllIll.friends = lllllllllllllllllIllIlllIIllllII.friends;
-        lllllllllllllllllIllIlllIIlllIll.macros = lllllllllllllllllIllIlllIIllllII.macros;
-        lllllllllllllllllIllIlllIIlllIll.modules = lllllllllllllllllIllIlllIIllllII.modules;
-        lllllllllllllllllIllIlllIIlllIll.waypoints = lllllllllllllllllIllIlllIIllllII.waypoints;
-        return lllllllllllllllllIllIlllIIlllIll;
+    public Profile set(Profile profile) {
+        this.name = profile.name;
+        this.onLaunch = profile.onLaunch;
+        this.loadOnJoinIps = profile.loadOnJoinIps;
+        this.accounts = profile.accounts;
+        this.config = profile.config;
+        this.friends = profile.friends;
+        this.macros = profile.macros;
+        this.modules = profile.modules;
+        this.waypoints = profile.waypoints;
+        return this;
     }
 
-    public void delete(System<?> lllllllllllllllllIllIlllIllIIllI) {
-        Profile lllllllllllllllllIllIlllIllIIlll;
-        File lllllllllllllllllIllIlllIllIIlIl = new File(new File(Profiles.FOLDER, lllllllllllllllllIllIlllIllIIlll.name), lllllllllllllllllIllIlllIllIIllI.getFile().getName());
-        lllllllllllllllllIllIlllIllIIlIl.delete();
+    public void delete(System<?> system) {
+        File file = new File(new File(Profiles.FOLDER, this.name), system.getFile().getName());
+        file.delete();
     }
 
     public void delete() {
         try {
-            Profile lllllllllllllllllIllIlllIlIllllI;
-            FileUtils.deleteDirectory((File)new File(Profiles.FOLDER, lllllllllllllllllIllIlllIlIllllI.name));
+            FileUtils.deleteDirectory((File)new File(Profiles.FOLDER, this.name));
         }
-        catch (IOException lllllllllllllllllIllIlllIlIlllll) {
-            lllllllllllllllllIllIlllIlIlllll.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
     }
 
-    public Profile() {
-        Profile lllllllllllllllllIllIllllIIIlIlI;
-        lllllllllllllllllIllIllllIIIlIlI.name = "";
-        lllllllllllllllllIllIllllIIIlIlI.onLaunch = false;
-        lllllllllllllllllIllIllllIIIlIlI.loadOnJoinIps = new ArrayList<String>();
-        lllllllllllllllllIllIllllIIIlIlI.accounts = false;
-        lllllllllllllllllIllIllllIIIlIlI.config = true;
-        lllllllllllllllllIllIllllIIIlIlI.friends = false;
-        lllllllllllllllllIllIllllIIIlIlI.macros = true;
-        lllllllllllllllllIllIllllIIIlIlI.modules = true;
-        lllllllllllllllllIllIllllIIIlIlI.waypoints = false;
-    }
-
-    public boolean equals(Object lllllllllllllllllIllIlllIIllIIlI) {
-        Profile lllllllllllllllllIllIlllIIllIllI;
-        if (lllllllllllllllllIllIlllIIllIllI == lllllllllllllllllIllIlllIIllIIlI) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (lllllllllllllllllIllIlllIIllIIlI == null || lllllllllllllllllIllIlllIIllIllI.getClass() != lllllllllllllllllIllIlllIIllIIlI.getClass()) {
+        if (object == null || this.getClass() != object.getClass()) {
             return false;
         }
-        Profile lllllllllllllllllIllIlllIIllIlII = (Profile)lllllllllllllllllIllIlllIIllIIlI;
-        return lllllllllllllllllIllIlllIIllIllI.name.equalsIgnoreCase(lllllllllllllllllIllIlllIIllIlII.name);
+        Profile profile = (Profile)object;
+        return this.name.equalsIgnoreCase(profile.name);
     }
 
     public void load() {
-        Profile lllllllllllllllllIllIlllIllllIll;
-        File lllllllllllllllllIllIlllIlllllII = new File(Profiles.FOLDER, lllllllllllllllllIllIlllIllllIll.name);
-        if (lllllllllllllllllIllIlllIllllIll.accounts) {
-            Accounts.get().load(lllllllllllllllllIllIlllIlllllII);
+        File file = new File(Profiles.FOLDER, this.name);
+        if (this.accounts) {
+            Accounts.get().load(file);
         }
-        if (lllllllllllllllllIllIlllIllllIll.config) {
-            Config.get().load(lllllllllllllllllIllIlllIlllllII);
+        if (this.config) {
+            Config.get().load(file);
         }
-        if (lllllllllllllllllIllIlllIllllIll.friends) {
-            Friends.get().load(lllllllllllllllllIllIlllIlllllII);
+        if (this.friends) {
+            Friends.get().load(file);
         }
-        if (lllllllllllllllllIllIlllIllllIll.macros) {
-            Macros.get().load(lllllllllllllllllIllIlllIlllllII);
+        if (this.macros) {
+            Macros.get().load(file);
         }
-        if (lllllllllllllllllIllIlllIllllIll.modules) {
-            Modules.get().load(lllllllllllllllllIllIlllIlllllII);
+        if (this.modules) {
+            Modules.get().load(file);
         }
-        if (lllllllllllllllllIllIlllIllllIll.waypoints) {
-            Waypoints.get().load(lllllllllllllllllIllIlllIlllllII);
+        if (this.waypoints) {
+            Waypoints.get().load(file);
         }
     }
 
     public void save() {
-        Profile lllllllllllllllllIllIlllIllIllII;
-        File lllllllllllllllllIllIlllIllIllIl = new File(Profiles.FOLDER, lllllllllllllllllIllIlllIllIllII.name);
-        if (lllllllllllllllllIllIlllIllIllII.accounts) {
-            Accounts.get().save(lllllllllllllllllIllIlllIllIllIl);
+        File file = new File(Profiles.FOLDER, this.name);
+        if (this.accounts) {
+            Accounts.get().save(file);
         }
-        if (lllllllllllllllllIllIlllIllIllII.config) {
-            Config.get().save(lllllllllllllllllIllIlllIllIllIl);
+        if (this.config) {
+            Config.get().save(file);
         }
-        if (lllllllllllllllllIllIlllIllIllII.friends) {
-            Friends.get().save(lllllllllllllllllIllIlllIllIllIl);
+        if (this.friends) {
+            Friends.get().save(file);
         }
-        if (lllllllllllllllllIllIlllIllIllII.macros) {
-            Macros.get().save(lllllllllllllllllIllIlllIllIllIl);
+        if (this.macros) {
+            Macros.get().save(file);
         }
-        if (lllllllllllllllllIllIlllIllIllII.modules) {
-            Modules.get().save(lllllllllllllllllIllIlllIllIllIl);
+        if (this.modules) {
+            Modules.get().save(file);
         }
-        if (lllllllllllllllllIllIlllIllIllII.waypoints) {
-            Waypoints.get().save(lllllllllllllllllIllIlllIllIllIl);
+        if (this.waypoints) {
+            Waypoints.get().save(file);
         }
     }
 }

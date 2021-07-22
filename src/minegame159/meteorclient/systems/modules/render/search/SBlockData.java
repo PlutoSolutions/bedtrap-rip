@@ -23,98 +23,107 @@ import net.minecraft.class_2248;
 import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class SBlockData
 implements ICopyable<SBlockData>,
 ISerializable<SBlockData>,
 IChangeable,
 IBlockData<SBlockData>,
 IScreenFactory {
-    public /* synthetic */ SettingColor lineColor;
-    public /* synthetic */ SettingColor sideColor;
-    public /* synthetic */ ShapeMode shapeMode;
-    private /* synthetic */ boolean changed;
-    public /* synthetic */ SettingColor tracerColor;
-    public /* synthetic */ boolean tracer;
+    public SettingColor lineColor;
+    public SettingColor sideColor;
+    public ShapeMode shapeMode;
+    private boolean changed;
+    public SettingColor tracerColor;
+    public boolean tracer;
 
     @Override
-    public SBlockData set(SBlockData lllllllllllllllllllIllllIlIIIlIl) {
-        SBlockData lllllllllllllllllllIllllIlIIlIII;
-        lllllllllllllllllllIllllIlIIlIII.shapeMode = lllllllllllllllllllIllllIlIIIlIl.shapeMode;
-        lllllllllllllllllllIllllIlIIlIII.lineColor.set(lllllllllllllllllllIllllIlIIIlIl.lineColor);
-        lllllllllllllllllllIllllIlIIlIII.sideColor.set(lllllllllllllllllllIllllIlIIIlIl.sideColor);
-        lllllllllllllllllllIllllIlIIlIII.tracer = lllllllllllllllllllIllllIlIIIlIl.tracer;
-        lllllllllllllllllllIllllIlIIlIII.tracerColor.set(lllllllllllllllllllIllllIlIIIlIl.tracerColor);
-        lllllllllllllllllllIllllIlIIlIII.changed = lllllllllllllllllllIllllIlIIIlIl.changed;
-        return lllllllllllllllllllIllllIlIIlIII;
+    public SBlockData set(SBlockData sBlockData) {
+        this.shapeMode = sBlockData.shapeMode;
+        this.lineColor.set(sBlockData.lineColor);
+        this.sideColor.set(sBlockData.sideColor);
+        this.tracer = sBlockData.tracer;
+        this.tracerColor.set(sBlockData.tracerColor);
+        this.changed = sBlockData.changed;
+        return this;
     }
 
     public void tickRainbow() {
-        SBlockData lllllllllllllllllllIllllIlIIllII;
-        lllllllllllllllllllIllllIlIIllII.lineColor.update();
-        lllllllllllllllllllIllllIlIIllII.sideColor.update();
-        lllllllllllllllllllIllllIlIIllII.tracerColor.update();
+        this.lineColor.update();
+        this.sideColor.update();
+        this.tracerColor.update();
     }
 
     public void changed() {
-        lllllllllllllllllllIllllIlIIllll.changed = true;
+        this.changed = true;
     }
 
     @Override
     public SBlockData copy() {
-        SBlockData lllllllllllllllllllIllllIlIIIIll;
-        return new SBlockData(lllllllllllllllllllIllllIlIIIIll.shapeMode, new SettingColor(lllllllllllllllllllIllllIlIIIIll.lineColor), new SettingColor(lllllllllllllllllllIllllIlIIIIll.sideColor), lllllllllllllllllllIllllIlIIIIll.tracer, new SettingColor(lllllllllllllllllllIllllIlIIIIll.tracerColor));
+        return new SBlockData(this.shapeMode, new SettingColor(this.lineColor), new SettingColor(this.sideColor), this.tracer, new SettingColor(this.tracerColor));
     }
 
     @Override
     public class_2487 toTag() {
-        SBlockData lllllllllllllllllllIllllIIllllll;
-        class_2487 lllllllllllllllllllIllllIIlllllI = new class_2487();
-        lllllllllllllllllllIllllIIlllllI.method_10582("shapeMode", lllllllllllllllllllIllllIIllllll.shapeMode.name());
-        lllllllllllllllllllIllllIIlllllI.method_10566("lineColor", (class_2520)lllllllllllllllllllIllllIIllllll.lineColor.toTag());
-        lllllllllllllllllllIllllIIlllllI.method_10566("sideColor", (class_2520)lllllllllllllllllllIllllIIllllll.sideColor.toTag());
-        lllllllllllllllllllIllllIIlllllI.method_10556("tracer", lllllllllllllllllllIllllIIllllll.tracer);
-        lllllllllllllllllllIllllIIlllllI.method_10566("tracerColor", (class_2520)lllllllllllllllllllIllllIIllllll.tracerColor.toTag());
-        lllllllllllllllllllIllllIIlllllI.method_10556("changed", lllllllllllllllllllIllllIIllllll.changed);
-        return lllllllllllllllllllIllllIIlllllI;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("shapeMode", this.shapeMode.name());
+        class_24872.method_10566("lineColor", (class_2520)this.lineColor.toTag());
+        class_24872.method_10566("sideColor", (class_2520)this.sideColor.toTag());
+        class_24872.method_10556("tracer", this.tracer);
+        class_24872.method_10566("tracerColor", (class_2520)this.tracerColor.toTag());
+        class_24872.method_10556("changed", this.changed);
+        return class_24872;
     }
 
     @Override
-    public SBlockData fromTag(class_2487 lllllllllllllllllllIllllIIlllIII) {
-        SBlockData lllllllllllllllllllIllllIIllIlll;
-        lllllllllllllllllllIllllIIllIlll.shapeMode = ShapeMode.valueOf(lllllllllllllllllllIllllIIlllIII.method_10558("shapeMode"));
-        lllllllllllllllllllIllllIIllIlll.lineColor.fromTag(lllllllllllllllllllIllllIIlllIII.method_10562("lineColor"));
-        lllllllllllllllllllIllllIIllIlll.sideColor.fromTag(lllllllllllllllllllIllllIIlllIII.method_10562("sideColor"));
-        lllllllllllllllllllIllllIIllIlll.tracer = lllllllllllllllllllIllllIIlllIII.method_10577("tracer");
-        lllllllllllllllllllIllllIIllIlll.tracerColor.fromTag(lllllllllllllllllllIllllIIlllIII.method_10562("tracerColor"));
-        lllllllllllllllllllIllllIIllIlll.changed = lllllllllllllllllllIllllIIlllIII.method_10577("changed");
-        return lllllllllllllllllllIllllIIllIlll;
+    public SBlockData fromTag(class_2487 class_24872) {
+        this.shapeMode = ShapeMode.valueOf(class_24872.method_10558("shapeMode"));
+        this.lineColor.fromTag(class_24872.method_10562("lineColor"));
+        this.sideColor.fromTag(class_24872.method_10562("sideColor"));
+        this.tracer = class_24872.method_10577("tracer");
+        this.tracerColor.fromTag(class_24872.method_10562("tracerColor"));
+        this.changed = class_24872.method_10577("changed");
+        return this;
     }
 
     @Override
-    public WidgetScreen createScreen(GuiTheme lllllllllllllllllllIllllIllIIIII, class_2248 lllllllllllllllllllIllllIlIlllll, BlockDataSetting<SBlockData> lllllllllllllllllllIllllIlIllllI) {
-        SBlockData lllllllllllllllllllIllllIlIlllIl;
-        return new SBlockDataScreen(lllllllllllllllllllIllllIllIIIII, lllllllllllllllllllIllllIlIlllIl, lllllllllllllllllllIllllIlIlllll, lllllllllllllllllllIllllIlIllllI);
-    }
-
-    public SBlockData(ShapeMode lllllllllllllllllllIllllIlllIIII, SettingColor lllllllllllllllllllIllllIllIlIIl, SettingColor lllllllllllllllllllIllllIllIlIII, boolean lllllllllllllllllllIllllIllIIlll, SettingColor lllllllllllllllllllIllllIllIllII) {
-        SBlockData lllllllllllllllllllIllllIllIlIll;
-        lllllllllllllllllllIllllIllIlIll.shapeMode = lllllllllllllllllllIllllIlllIIII;
-        lllllllllllllllllllIllllIllIlIll.lineColor = lllllllllllllllllllIllllIllIlIIl;
-        lllllllllllllllllllIllllIllIlIll.sideColor = lllllllllllllllllllIllllIllIlIII;
-        lllllllllllllllllllIllllIllIlIll.tracer = lllllllllllllllllllIllllIllIIlll;
-        lllllllllllllllllllIllllIllIlIll.tracerColor = lllllllllllllllllllIllllIllIllII;
+    public WidgetScreen createScreen(GuiTheme guiTheme, class_2248 class_22482, BlockDataSetting<SBlockData> blockDataSetting) {
+        return new SBlockDataScreen(guiTheme, this, class_22482, blockDataSetting);
     }
 
     @Override
-    public WidgetScreen createScreen(GuiTheme lllllllllllllllllllIllllIlIlIlII) {
-        SBlockData lllllllllllllllllllIllllIlIlIlll;
-        return new SBlockDataScreen(lllllllllllllllllllIllllIlIlIlII, lllllllllllllllllllIllllIlIlIlll, null, null);
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public SBlockData(ShapeMode shapeMode, SettingColor settingColor, SettingColor settingColor2, boolean bl, SettingColor settingColor3) {
+        this.shapeMode = shapeMode;
+        this.lineColor = settingColor;
+        this.sideColor = settingColor2;
+        this.tracer = bl;
+        this.tracerColor = settingColor3;
+    }
+
+    @Override
+    public WidgetScreen createScreen(GuiTheme guiTheme) {
+        return new SBlockDataScreen(guiTheme, this, null, null);
+    }
+
+    @Override
+    public ICopyable set(ICopyable iCopyable) {
+        return this.set((SBlockData)iCopyable);
+    }
+
+    @Override
+    public ICopyable copy() {
+        return this.copy();
     }
 
     @Override
     public boolean isChanged() {
-        SBlockData lllllllllllllllllllIllllIlIlIIlI;
-        return lllllllllllllllllllIllllIlIlIIlI.changed;
+        return this.changed;
     }
 }
 

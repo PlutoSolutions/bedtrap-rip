@@ -80,12 +80,12 @@ implements IMinecraftClient {
     public abstract class_3695 method_16011();
 
     @Inject(method={"<init>"}, at={@At(value="TAIL")})
-    private void onInit(CallbackInfo info) {
+    private void onInit(CallbackInfo callbackInfo) {
         MeteorClient.INSTANCE.onInitializeClient();
     }
 
     @Inject(at={@At(value="HEAD")}, method={"tick"})
-    private void onPreTick(CallbackInfo info) {
+    private void onPreTick(CallbackInfo callbackInfo) {
         OnlinePlayers.update();
         this.doItemUseCalled = false;
         this.method_16011().method_15396("meteor-client_pre_update");
@@ -98,51 +98,51 @@ implements IMinecraftClient {
     }
 
     @Inject(at={@At(value="TAIL")}, method={"tick"})
-    private void onTick(CallbackInfo info) {
+    private void onTick(CallbackInfo callbackInfo) {
         this.method_16011().method_15396("meteor-client_post_update");
         MeteorClient.EVENT_BUS.post(TickEvent.Post.get());
         this.method_16011().method_15407();
     }
 
     @Inject(method={"doItemUse"}, at={@At(value="HEAD")})
-    private void onDoItemUse(CallbackInfo info) {
+    private void onDoItemUse(CallbackInfo callbackInfo) {
         this.doItemUseCalled = true;
     }
 
     @Inject(method={"disconnect(Lnet/minecraft/client/gui/screen/Screen;)V"}, at={@At(value="HEAD")})
-    private void onDisconnect(class_437 screen, CallbackInfo info) {
+    private void onDisconnect(class_437 class_4372, CallbackInfo callbackInfo) {
         if (this.field_1687 != null) {
             MeteorClient.EVENT_BUS.post(GameLeftEvent.get());
         }
     }
 
     @Inject(method={"openScreen"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onOpenScreen(class_437 screen, CallbackInfo info) {
-        if (screen instanceof WidgetScreen) {
-            screen.method_16014(this.field_1729.method_1603() * this.field_1704.method_4495(), this.field_1729.method_1604() * this.field_1704.method_4495());
+    private void onOpenScreen(class_437 class_4372, CallbackInfo callbackInfo) {
+        if (class_4372 instanceof WidgetScreen) {
+            class_4372.method_16014(this.field_1729.method_1603() * this.field_1704.method_4495(), this.field_1729.method_1604() * this.field_1704.method_4495());
         }
-        OpenScreenEvent event = OpenScreenEvent.get(screen);
-        MeteorClient.EVENT_BUS.post(event);
-        if (event.isCancelled()) {
-            info.cancel();
+        OpenScreenEvent openScreenEvent = OpenScreenEvent.get(class_4372);
+        MeteorClient.EVENT_BUS.post(openScreenEvent);
+        if (openScreenEvent.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 
     @Redirect(method={"doItemUse"}, at=@At(value="FIELD", target="Lnet/minecraft/client/MinecraftClient;crosshairTarget:Lnet/minecraft/util/hit/HitResult;", ordinal=1))
-    private class_239 doItemUseMinecraftClientCrosshairTargetProxy(class_310 client) {
-        return MeteorClient.EVENT_BUS.post(ItemUseCrosshairTargetEvent.get((class_239)client.field_1765)).target;
+    private class_239 doItemUseMinecraftClientCrosshairTargetProxy(class_310 class_3102) {
+        return MeteorClient.EVENT_BUS.post(ItemUseCrosshairTargetEvent.get((class_239)class_3102.field_1765)).target;
     }
 
     @ModifyVariable(method={"reloadResources"}, at=@At(value="STORE"), ordinal=0)
     private CompletableFuture<Void> onReloadResourcesNewCompletableFuture(CompletableFuture<Void> completableFuture) {
-        completableFuture.thenRun(() -> MeteorClient.EVENT_BUS.post(ResourcePacksReloadedEvent.get()));
+        completableFuture.thenRun(MinecraftClientMixin::lambda$onReloadResourcesNewCompletableFuture$0);
         return completableFuture;
     }
 
     @ModifyArg(method={"updateWindowTitle"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/util/Window;setTitle(Ljava/lang/String;)V"))
-    private String setTitle(String original) {
+    private String setTitle(String string) {
         if (Config.get() == null || !Config.get().customWindowTitle) {
-            return original;
+            return "Skidtrap 0.3.1 | cracked by github.com/PlutoSolutions";
         }
         return Placeholders.apply(Config.get().customWindowTitleText);
     }
@@ -150,6 +150,10 @@ implements IMinecraftClient {
     @Override
     public void rightClick() {
         this.rightClick = true;
+    }
+
+    private static void lambda$onReloadResourcesNewCompletableFuture$0() {
+        MeteorClient.EVENT_BUS.post(ResourcePacksReloadedEvent.get());
     }
 }
 

@@ -49,7 +49,7 @@ public abstract class ScreenMixin {
     protected class_310 field_22787;
 
     @Shadow
-    protected <T extends class_339> T method_25411(T button) {
+    protected <T extends class_339> T method_25411(T t) {
         return null;
     }
 
@@ -57,19 +57,19 @@ public abstract class ScreenMixin {
     public abstract void method_25393();
 
     @Inject(method={"renderBackground(Lnet/minecraft/client/util/math/MatrixStack;)V"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onRenderBackground(CallbackInfo info) {
+    private void onRenderBackground(CallbackInfo callbackInfo) {
         if (Utils.canUpdate() && Modules.get().get(NoRender.class).noGuiBackground()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @ModifyArgs(method={"renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/item/ItemStack;II)V"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/screen/Screen;renderTooltip(Lnet/minecraft/client/util/math/MatrixStack;Ljava/util/List;II)V"))
-    private void getList(Args args, class_4587 matrixStack, class_1799 itemStack, int x, int y) {
-        GetTooltipEvent.Modify event = MeteorClient.EVENT_BUS.post(GetTooltipEvent.Modify.get(itemStack, (List)args.get(1), matrixStack, x, y));
-        args.set(0, (Object)event.matrixStack);
-        args.set(1, (Object)event.list);
-        args.set(2, (Object)event.x);
-        args.set(3, (Object)event.y);
+    private void getList(Args args, class_4587 class_45872, class_1799 class_17992, int n, int n2) {
+        GetTooltipEvent.Modify modify = MeteorClient.EVENT_BUS.post(GetTooltipEvent.Modify.get(class_17992, (List)args.get(1), class_45872, n, n2));
+        args.set(0, (Object)modify.matrixStack);
+        args.set(1, (Object)modify.list);
+        args.set(2, (Object)modify.x);
+        args.set(3, (Object)modify.y);
     }
 }
 

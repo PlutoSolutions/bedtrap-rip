@@ -20,8 +20,8 @@ implements IPlayerMoveC2SPacket {
     private int tag;
 
     @Override
-    public void setTag(int tag) {
-        this.tag = tag;
+    public void setTag(int n) {
+        this.tag = n;
     }
 
     @Override

@@ -50,12 +50,12 @@ implements IRaycastContext {
     private class_3726 field_17557;
 
     @Override
-    public void set(class_243 start, class_243 end, class_3959.class_3960 shapeType, class_3959.class_242 fluidHandling, class_1297 entity) {
-        this.field_17553 = start;
-        this.field_17554 = end;
-        this.field_17555 = shapeType;
-        this.field_17556 = fluidHandling;
-        this.field_17557 = class_3726.method_16195((class_1297)entity);
+    public void set(class_243 class_2432, class_243 class_2433, class_3959.class_3960 class_39602, class_3959.class_242 class_2422, class_1297 class_12972) {
+        this.field_17553 = class_2432;
+        this.field_17554 = class_2433;
+        this.field_17555 = class_39602;
+        this.field_17556 = class_2422;
+        this.field_17557 = class_3726.method_16195((class_1297)class_12972);
     }
 }
 

@@ -17,29 +17,27 @@ import net.minecraft.class_2635;
 
 public class AutoLogin
 extends Module {
-    private final /* synthetic */ SettingGroup autoLogin;
-    private final /* synthetic */ Setting<String> loginText;
+    private final SettingGroup autoLogin;
+    private final Setting<String> loginText;
 
     @EventHandler
-    public void onPacket(PacketEvent.Receive lllllllllllllllllllllIllIIIIIllI) {
-        String[] lllllllllllllllllllllIllIIIIlIII;
-        if (!(lllllllllllllllllllllIllIIIIIllI.packet instanceof class_2635)) {
+    public void onPacket(PacketEvent.Receive receive) {
+        String[] arrstring;
+        if (!(receive.packet instanceof class_2635)) {
             return;
         }
-        String lllllllllllllllllllllIllIIIIlIIl = ((class_2635)lllllllllllllllllllllIllIIIIIllI.packet).method_11388().getString();
-        for (String lllllllllllllllllllllIllIIIIllII : lllllllllllllllllllllIllIIIIlIII = new String[]{"/l"}) {
-            AutoLogin lllllllllllllllllllllIllIIIIlIll;
-            if (!lllllllllllllllllllllIllIIIIlIIl.contains(lllllllllllllllllllllIllIIIIllII)) continue;
-            lllllllllllllllllllllIllIIIIlIll.mc.field_1724.method_3142(String.valueOf(new StringBuilder().append("/login ").append(lllllllllllllllllllllIllIIIIlIll.loginText)));
+        String string = ((class_2635)receive.packet).method_11388().getString();
+        for (String string2 : arrstring = new String[]{"/l"}) {
+            if (!string.contains(string2)) continue;
+            this.mc.field_1724.method_3142(String.valueOf(new StringBuilder().append("/login ").append(this.loginText)));
             break;
         }
     }
 
     public AutoLogin() {
         super(Categories.BedTrap, "auto-login", "Sends /login on cracked servers.");
-        AutoLogin lllllllllllllllllllllIllIIIlIlIl;
-        lllllllllllllllllllllIllIIIlIlIl.autoLogin = lllllllllllllllllllllIllIIIlIlIl.settings.createGroup("Auto Login");
-        lllllllllllllllllllllIllIIIlIlIl.loginText = lllllllllllllllllllllIllIIIlIlIl.autoLogin.add(new StringSetting.Builder().name("password").description("/login *pass*").defaultValue("qwerty").build());
+        this.autoLogin = this.settings.createGroup("Auto Login");
+        this.loginText = this.autoLogin.add(new StringSetting.Builder().name("password").description("/login *pass*").defaultValue("qwerty").build());
     }
 }
 

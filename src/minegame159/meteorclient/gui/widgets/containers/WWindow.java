@@ -17,166 +17,151 @@ import minegame159.meteorclient.utils.Utils;
 
 public abstract class WWindow
 extends WVerticalList {
-    protected /* synthetic */ boolean moved;
-    protected /* synthetic */ boolean dragged;
-    public /* synthetic */ WView view;
-    public /* synthetic */ double padding;
-    private /* synthetic */ boolean propagateEventsExpanded;
-    protected /* synthetic */ WHeader header;
-    protected /* synthetic */ double animProgress;
-    protected /* synthetic */ boolean dragging;
-    protected /* synthetic */ double movedY;
-    protected /* synthetic */ double movedX;
-    protected /* synthetic */ boolean expanded;
-    protected final /* synthetic */ String title;
-    public /* synthetic */ String id;
-    public /* synthetic */ Consumer<WContainer> beforeHeaderInit;
+    protected boolean moved = false;
+    protected boolean dragged;
+    public WView view;
+    public double padding = 8.0;
+    private boolean propagateEventsExpanded;
+    protected WHeader header;
+    protected double animProgress = 1.0;
+    protected boolean dragging;
+    protected double movedY;
+    protected double movedX;
+    protected boolean expanded = true;
+    protected final String title;
+    public String id;
+    public Consumer<WContainer> beforeHeaderInit;
 
-    public WWindow(String llIlIllIllIIII) {
-        WWindow llIlIllIllIIIl;
-        llIlIllIllIIIl.padding = 8.0;
-        llIlIllIllIIIl.expanded = true;
-        llIlIllIllIIIl.animProgress = 1.0;
-        llIlIllIllIIIl.moved = false;
-        llIlIllIllIIIl.title = llIlIllIllIIII;
+    public WWindow(String string) {
+        this.title = string;
     }
 
     @Override
     protected void onCalculateWidgetPositions() {
-        WWindow llIlIllIIlIllI;
-        if (llIlIllIIlIllI.id != null) {
-            WindowConfig llIlIllIIllIII = llIlIllIIlIllI.theme.getWindowConfig(llIlIllIIlIllI.id);
-            if (llIlIllIIllIII.x != -1.0) {
-                llIlIllIIlIllI.x = llIlIllIIllIII.x;
-                if (llIlIllIIlIllI.x + llIlIllIIlIllI.width > (double)Utils.getWindowWidth()) {
-                    llIlIllIIlIllI.x = (double)Utils.getWindowWidth() - llIlIllIIlIllI.width;
+        if (this.id != null) {
+            WindowConfig windowConfig = this.theme.getWindowConfig(this.id);
+            if (windowConfig.x != -1.0) {
+                this.x = windowConfig.x;
+                if (this.x + this.width > (double)Utils.getWindowWidth()) {
+                    this.x = (double)Utils.getWindowWidth() - this.width;
                 }
             }
-            if (llIlIllIIllIII.y != -1.0) {
-                llIlIllIIlIllI.y = llIlIllIIllIII.y;
-                if (llIlIllIIlIllI.y + llIlIllIIlIllI.height > (double)Utils.getWindowHeight()) {
-                    llIlIllIIlIllI.y = (double)Utils.getWindowHeight() - llIlIllIIlIllI.height;
+            if (windowConfig.y != -1.0) {
+                this.y = windowConfig.y;
+                if (this.y + this.height > (double)Utils.getWindowHeight()) {
+                    this.y = (double)Utils.getWindowHeight() - this.height;
                 }
             }
         }
         super.onCalculateWidgetPositions();
-        if (llIlIllIIlIllI.moved) {
-            llIlIllIIlIllI.move(llIlIllIIlIllI.movedX - llIlIllIIlIllI.x, llIlIllIIlIllI.movedY - llIlIllIIlIllI.y);
+        if (this.moved) {
+            this.move(this.movedX - this.x, this.movedY - this.y);
         }
     }
 
     @Override
-    public boolean render(GuiRenderer llIlIllIIIllII, double llIlIllIIIlIll, double llIlIllIIIIIll, double llIlIllIIIIIlI) {
-        boolean llIlIllIIIlIII;
-        WWindow llIlIllIIIIllI;
-        if (!llIlIllIIIIllI.visible) {
+    public boolean render(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        boolean bl;
+        if (!this.visible) {
             return true;
         }
-        boolean bl = llIlIllIIIlIII = llIlIllIIIIllI.animProgress != 0.0 && llIlIllIIIIllI.animProgress != 1.0 || llIlIllIIIIllI.expanded && llIlIllIIIIllI.animProgress != 1.0;
-        if (llIlIllIIIlIII) {
-            llIlIllIIIllII.scissorStart(llIlIllIIIIllI.x, llIlIllIIIIllI.y, llIlIllIIIIllI.width, (llIlIllIIIIllI.height - llIlIllIIIIllI.header.height) * llIlIllIIIIllI.animProgress + llIlIllIIIIllI.header.height);
+        boolean bl2 = bl = this.animProgress != 0.0 && this.animProgress != 1.0 || this.expanded && this.animProgress != 1.0;
+        if (bl) {
+            guiRenderer.scissorStart(this.x, this.y, this.width, (this.height - this.header.height) * this.animProgress + this.header.height);
         }
-        boolean llIlIllIIIIlll = super.render(llIlIllIIIllII, llIlIllIIIlIll, llIlIllIIIIIll, llIlIllIIIIIlI);
-        if (llIlIllIIIlIII) {
-            llIlIllIIIllII.scissorEnd();
+        boolean bl3 = super.render(guiRenderer, d, d2, d3);
+        if (bl) {
+            guiRenderer.scissorEnd();
         }
-        return llIlIllIIIIlll;
+        return bl3;
     }
 
     @Override
     public void init() {
-        WWindow llIlIllIlIlllI;
-        llIlIllIlIlllI.header = llIlIllIlIlllI.header();
-        llIlIllIlIlllI.header.theme = llIlIllIlIlllI.theme;
-        super.add(llIlIllIlIlllI.header).expandWidgetX().widget();
-        llIlIllIlIlllI.view = super.add(llIlIllIlIlllI.theme.view()).expandX().pad(llIlIllIlIlllI.padding).widget();
-        if (llIlIllIlIlllI.id != null) {
-            llIlIllIlIlllI.expanded = llIlIllIlIlllI.theme.getWindowConfig((String)llIlIllIlIlllI.id).expanded;
-            llIlIllIlIlllI.animProgress = llIlIllIlIlllI.expanded ? 1.0 : 0.0;
+        this.header = this.header();
+        this.header.theme = this.theme;
+        super.add(this.header).expandWidgetX().widget();
+        this.view = super.add(this.theme.view()).expandX().pad(this.padding).widget();
+        if (this.id != null) {
+            this.expanded = this.theme.getWindowConfig((String)this.id).expanded;
+            this.animProgress = this.expanded ? 1.0 : 0.0;
         }
     }
 
     @Override
     public void clear() {
-        WWindow llIlIllIlIIlIl;
-        llIlIllIlIIlIl.view.clear();
+        this.view.clear();
     }
 
     @Override
-    protected void renderWidget(WWidget llIlIlIllllIII, GuiRenderer llIlIlIlllIIIl, double llIlIlIlllIllI, double llIlIlIllIllll, double llIlIlIlllIlII) {
-        WWindow llIlIlIlllIIll;
-        if (llIlIlIlllIIll.expanded || llIlIlIlllIIll.animProgress > 0.0 || llIlIlIllllIII instanceof WHeader) {
-            llIlIlIllllIII.render(llIlIlIlllIIIl, llIlIlIlllIllI, llIlIlIllIllll, llIlIlIlllIlII);
+    protected void renderWidget(WWidget wWidget, GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (this.expanded || this.animProgress > 0.0 || wWidget instanceof WHeader) {
+            wWidget.render(guiRenderer, d, d2, d3);
         }
-        llIlIlIlllIIll.propagateEventsExpanded = llIlIlIlllIIll.expanded;
+        this.propagateEventsExpanded = this.expanded;
     }
 
-    public void setExpanded(boolean llIlIllIIllllI) {
-        WWindow llIlIllIIlllIl;
-        llIlIllIIlllIl.expanded = llIlIllIIllllI;
-        if (llIlIllIIlllIl.id != null) {
-            WindowConfig llIlIllIlIIIII = llIlIllIIlllIl.theme.getWindowConfig(llIlIllIIlllIl.id);
-            llIlIllIlIIIII.expanded = llIlIllIIllllI;
+    public void setExpanded(boolean bl) {
+        this.expanded = bl;
+        if (this.id != null) {
+            WindowConfig windowConfig = this.theme.getWindowConfig(this.id);
+            windowConfig.expanded = bl;
         }
     }
 
     protected abstract WHeader header();
 
     @Override
-    public <T extends WWidget> Cell<T> add(T llIlIllIlIIlll) {
-        WWindow llIlIllIlIlIlI;
-        return llIlIllIlIlIlI.view.add(llIlIllIlIIlll);
+    public <T extends WWidget> Cell<T> add(T t) {
+        return this.view.add(t);
     }
 
     @Override
-    protected boolean propagateEvents(WWidget llIlIlIllIlIlI) {
-        WWindow llIlIlIllIlIIl;
-        return llIlIlIllIlIlI instanceof WHeader || llIlIlIllIlIIl.propagateEventsExpanded;
+    protected boolean propagateEvents(WWidget wWidget) {
+        return wWidget instanceof WHeader || this.propagateEventsExpanded;
     }
 
     protected abstract class WHeader
     extends WContainer {
-        private /* synthetic */ WTriangle triangle;
-        private /* synthetic */ WHorizontalList list;
+        private WTriangle triangle;
+        private WHorizontalList list;
+        final WWindow this$0;
 
         @Override
-        public void onMouseMoved(double lllllllllllllllllIIllIllllllllIl, double lllllllllllllllllIIllIllllllIlll, double lllllllllllllllllIIllIlllllllIll, double lllllllllllllllllIIllIlllllllIlI) {
-            WHeader lllllllllllllllllIIllIlllllllllI;
-            if (lllllllllllllllllIIllIlllllllllI.WWindow.this.dragging) {
-                lllllllllllllllllIIllIlllllllllI.WWindow.this.move(lllllllllllllllllIIllIllllllllIl - lllllllllllllllllIIllIlllllllIll, lllllllllllllllllIIllIllllllIlll - lllllllllllllllllIIllIlllllllIlI);
-                lllllllllllllllllIIllIlllllllllI.WWindow.this.moved = true;
-                lllllllllllllllllIIllIlllllllllI.WWindow.this.movedX = lllllllllllllllllIIllIlllllllllI.x;
-                lllllllllllllllllIIllIlllllllllI.WWindow.this.movedY = lllllllllllllllllIIllIlllllllllI.y;
-                if (lllllllllllllllllIIllIlllllllllI.WWindow.this.id != null) {
-                    WindowConfig lllllllllllllllllIIllIllllllllll = lllllllllllllllllIIllIlllllllllI.theme.getWindowConfig(lllllllllllllllllIIllIlllllllllI.WWindow.this.id);
-                    lllllllllllllllllIIllIllllllllll.x = lllllllllllllllllIIllIlllllllllI.x;
-                    lllllllllllllllllIIllIllllllllll.y = lllllllllllllllllIIllIlllllllllI.y;
+        public void onMouseMoved(double d, double d2, double d3, double d4) {
+            if (this.this$0.dragging) {
+                this.this$0.move(d - d3, d2 - d4);
+                this.this$0.moved = true;
+                this.this$0.movedX = this.x;
+                this.this$0.movedY = this.y;
+                if (this.this$0.id != null) {
+                    WindowConfig windowConfig = this.theme.getWindowConfig(this.this$0.id);
+                    windowConfig.x = this.x;
+                    windowConfig.y = this.y;
                 }
-                lllllllllllllllllIIllIlllllllllI.WWindow.this.dragged = true;
+                this.this$0.dragged = true;
             }
         }
 
         @Override
-        public boolean onMouseReleased(double lllllllllllllllllIIlllIIIIIIlIIl, double lllllllllllllllllIIlllIIIIIIlIII, int lllllllllllllllllIIlllIIIIIIIlll) {
-            WHeader lllllllllllllllllIIlllIIIIIIlIlI;
-            if (lllllllllllllllllIIlllIIIIIIlIlI.WWindow.this.dragging) {
-                lllllllllllllllllIIlllIIIIIIlIlI.WWindow.this.dragging = false;
-                if (!lllllllllllllllllIIlllIIIIIIlIlI.WWindow.this.dragged) {
-                    lllllllllllllllllIIlllIIIIIIlIlI.WWindow.this.setExpanded(!lllllllllllllllllIIlllIIIIIIlIlI.WWindow.this.expanded);
+        public boolean onMouseReleased(double d, double d2, int n) {
+            if (this.this$0.dragging) {
+                this.this$0.dragging = false;
+                if (!this.this$0.dragged) {
+                    this.this$0.setExpanded(!this.this$0.expanded);
                 }
             }
             return false;
         }
 
         @Override
-        public boolean onMouseClicked(double lllllllllllllllllIIlllIIIIIlIIlI, double lllllllllllllllllIIlllIIIIIlIIIl, int lllllllllllllllllIIlllIIIIIIllIl, boolean lllllllllllllllllIIlllIIIIIIllll) {
-            WHeader lllllllllllllllllIIlllIIIIIlIIll;
-            if (lllllllllllllllllIIlllIIIIIlIIll.mouseOver && !lllllllllllllllllIIlllIIIIIIllll) {
-                if (lllllllllllllllllIIlllIIIIIIllIl == 1) {
-                    lllllllllllllllllIIlllIIIIIlIIll.WWindow.this.setExpanded(!lllllllllllllllllIIlllIIIIIlIIll.WWindow.this.expanded);
+        public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
+            if (this.mouseOver && !bl) {
+                if (n == 1) {
+                    this.this$0.setExpanded(!this.this$0.expanded);
                 } else {
-                    lllllllllllllllllIIlllIIIIIlIIll.WWindow.this.dragging = true;
-                    lllllllllllllllllIIlllIIIIIlIIll.WWindow.this.dragged = false;
+                    this.this$0.dragging = true;
+                    this.this$0.dragged = false;
                 }
                 return true;
             }
@@ -185,55 +170,52 @@ extends WVerticalList {
 
         @Override
         protected void onCalculateSize() {
-            WHeader lllllllllllllllllIIlllIIIIIllIll;
-            lllllllllllllllllIIlllIIIIIllIll.width = 0.0;
-            lllllllllllllllllIIlllIIIIIllIll.height = 0.0;
-            for (Cell lllllllllllllllllIIlllIIIIIlllII : lllllllllllllllllIIlllIIIIIllIll.cells) {
-                double lllllllllllllllllIIlllIIIIIlllIl = lllllllllllllllllIIlllIIIIIlllII.padLeft() + ((WWidget)lllllllllllllllllIIlllIIIIIlllII.widget()).width + lllllllllllllllllIIlllIIIIIlllII.padRight();
-                if (lllllllllllllllllIIlllIIIIIlllII.widget() instanceof WTriangle) {
-                    lllllllllllllllllIIlllIIIIIlllIl *= 2.0;
+            this.width = 0.0;
+            this.height = 0.0;
+            for (Cell cell : this.cells) {
+                double d = cell.padLeft() + ((WWidget)cell.widget()).width + cell.padRight();
+                if (cell.widget() instanceof WTriangle) {
+                    d *= 2.0;
                 }
-                lllllllllllllllllIIlllIIIIIllIll.width += lllllllllllllllllIIlllIIIIIlllIl;
-                lllllllllllllllllIIlllIIIIIllIll.height = Math.max(lllllllllllllllllIIlllIIIIIllIll.height, lllllllllllllllllIIlllIIIIIlllII.padTop() + ((WWidget)lllllllllllllllllIIlllIIIIIlllII.widget()).height + lllllllllllllllllIIlllIIIIIlllII.padBottom());
+                this.width += d;
+                this.height = Math.max(this.height, cell.padTop() + ((WWidget)cell.widget()).height + cell.padBottom());
             }
         }
 
-        protected WHeader() {
-            WHeader lllllllllllllllllIIlllIIIIlIllII;
+        protected WHeader(WWindow wWindow) {
+            this.this$0 = wWindow;
         }
 
         @Override
         public void init() {
-            WHeader lllllllllllllllllIIlllIIIIlIlIIl;
-            if (lllllllllllllllllIIlllIIIIlIlIIl.WWindow.this.beforeHeaderInit != null) {
-                lllllllllllllllllIIlllIIIIlIlIIl.list = lllllllllllllllllIIlllIIIIlIlIIl.add(lllllllllllllllllIIlllIIIIlIlIIl.theme.horizontalList()).expandX().widget();
-                lllllllllllllllllIIlllIIIIlIlIIl.list.spacing = 0.0;
-                lllllllllllllllllIIlllIIIIlIlIIl.WWindow.this.beforeHeaderInit.accept(lllllllllllllllllIIlllIIIIlIlIIl);
+            if (this.this$0.beforeHeaderInit != null) {
+                this.list = this.add(this.theme.horizontalList()).expandX().widget();
+                this.list.spacing = 0.0;
+                this.this$0.beforeHeaderInit.accept(this);
             }
-            lllllllllllllllllIIlllIIIIlIlIIl.add(lllllllllllllllllIIlllIIIIlIlIIl.theme.label(lllllllllllllllllIIlllIIIIlIlIIl.WWindow.this.title, true)).expandCellX().center().pad(4.0);
-            lllllllllllllllllIIlllIIIIlIlIIl.triangle = lllllllllllllllllIIlllIIIIlIlIIl.add(lllllllllllllllllIIlllIIIIlIlIIl.theme.triangle()).pad(4.0).right().centerY().widget();
-            lllllllllllllllllIIlllIIIIlIlIIl.triangle.action = () -> {
-                WHeader lllllllllllllllllIIllIlllllIIIll;
-                lllllllllllllllllIIllIlllllIIIll.WWindow.this.setExpanded(!lllllllllllllllllIIllIlllllIIIll.WWindow.this.expanded);
-            };
+            this.add(this.theme.label(this.this$0.title, true)).expandCellX().center().pad(4.0);
+            this.triangle = this.add(this.theme.triangle()).pad(4.0).right().centerY().widget();
+            this.triangle.action = this::lambda$init$0;
         }
 
         @Override
-        public <T extends WWidget> Cell<T> add(T lllllllllllllllllIIlllIIIIlIIIlI) {
-            WHeader lllllllllllllllllIIlllIIIIlIIlIl;
-            if (lllllllllllllllllIIlllIIIIlIIlIl.list != null) {
-                return lllllllllllllllllIIlllIIIIlIIlIl.list.add(lllllllllllllllllIIlllIIIIlIIIlI);
+        public <T extends WWidget> Cell<T> add(T t) {
+            if (this.list != null) {
+                return this.list.add(t);
             }
-            return super.add(lllllllllllllllllIIlllIIIIlIIIlI);
+            return super.add(t);
         }
 
         @Override
-        public boolean render(GuiRenderer lllllllllllllllllIIllIlllllIlIII, double lllllllllllllllllIIllIlllllIIlll, double lllllllllllllllllIIllIlllllIIllI, double lllllllllllllllllIIllIlllllIlIlI) {
-            WHeader lllllllllllllllllIIllIlllllIlllI;
-            lllllllllllllllllIIllIlllllIlllI.WWindow.this.animProgress += (double)(lllllllllllllllllIIllIlllllIlllI.WWindow.this.expanded ? 1 : -1) * lllllllllllllllllIIllIlllllIlIlI * 14.0;
-            lllllllllllllllllIIllIlllllIlllI.WWindow.this.animProgress = Utils.clamp(lllllllllllllllllIIllIlllllIlllI.WWindow.this.animProgress, 0.0, 1.0);
-            lllllllllllllllllIIllIlllllIlllI.triangle.rotation = (1.0 - lllllllllllllllllIIllIlllllIlllI.WWindow.this.animProgress) * -90.0;
-            return super.render(lllllllllllllllllIIllIlllllIlIII, lllllllllllllllllIIllIlllllIIlll, lllllllllllllllllIIllIlllllIIllI, lllllllllllllllllIIllIlllllIlIlI);
+        public boolean render(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            this.this$0.animProgress += (double)(this.this$0.expanded ? 1 : -1) * d3 * 14.0;
+            this.this$0.animProgress = Utils.clamp(this.this$0.animProgress, 0.0, 1.0);
+            this.triangle.rotation = (1.0 - this.this$0.animProgress) * -90.0;
+            return super.render(guiRenderer, d, d2, d3);
+        }
+
+        private void lambda$init$0() {
+            this.this$0.setExpanded(!this.this$0.expanded);
         }
     }
 }

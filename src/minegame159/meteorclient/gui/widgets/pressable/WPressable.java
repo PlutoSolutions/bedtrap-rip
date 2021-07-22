@@ -7,36 +7,30 @@ import minegame159.meteorclient.gui.widgets.WWidget;
 
 public abstract class WPressable
 extends WWidget {
-    public /* synthetic */ Runnable action;
-    protected /* synthetic */ boolean pressed;
+    public Runnable action;
+    protected boolean pressed;
 
     @Override
-    public boolean onMouseReleased(double lllllllllllllllllIlIlIIlIIlIIlII, double lllllllllllllllllIlIlIIlIIlIIIll, int lllllllllllllllllIlIlIIlIIlIIIlI) {
-        WPressable lllllllllllllllllIlIlIIlIIlIIlIl;
-        if (lllllllllllllllllIlIlIIlIIlIIlIl.pressed) {
-            lllllllllllllllllIlIlIIlIIlIIlIl.onPressed(lllllllllllllllllIlIlIIlIIlIIIlI);
-            if (lllllllllllllllllIlIlIIlIIlIIlIl.action != null) {
-                lllllllllllllllllIlIlIIlIIlIIlIl.action.run();
+    public boolean onMouseReleased(double d, double d2, int n) {
+        if (this.pressed) {
+            this.onPressed(n);
+            if (this.action != null) {
+                this.action.run();
             }
-            lllllllllllllllllIlIlIIlIIlIIlIl.pressed = false;
+            this.pressed = false;
         }
         return false;
     }
 
     @Override
-    public boolean onMouseClicked(double lllllllllllllllllIlIlIIlIIlIlllI, double lllllllllllllllllIlIlIIlIIlIllIl, int lllllllllllllllllIlIlIIlIIlIlIIl, boolean lllllllllllllllllIlIlIIlIIlIlIII) {
-        WPressable lllllllllllllllllIlIlIIlIIlIllll;
-        if (lllllllllllllllllIlIlIIlIIlIllll.mouseOver && (lllllllllllllllllIlIlIIlIIlIlIIl == 0 || lllllllllllllllllIlIlIIlIIlIlIIl == 1) && !lllllllllllllllllIlIlIIlIIlIlIII) {
-            lllllllllllllllllIlIlIIlIIlIllll.pressed = true;
+    public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
+        if (this.mouseOver && (n == 0 || n == 1) && !bl) {
+            this.pressed = true;
         }
-        return lllllllllllllllllIlIlIIlIIlIllll.pressed;
+        return this.pressed;
     }
 
-    public WPressable() {
-        WPressable lllllllllllllllllIlIlIIlIIllIlII;
-    }
-
-    protected void onPressed(int lllllllllllllllllIlIlIIlIIIllllI) {
+    protected void onPressed(int n) {
     }
 }
 

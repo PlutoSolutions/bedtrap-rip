@@ -9,24 +9,20 @@ import com.sun.jna.ptr.ByReference;
 public class NativeLongByReference
 extends ByReference {
     public NativeLong getValue() {
-        NativeLongByReference lIIlIlllIIlllll;
-        return lIIlIlllIIlllll.getPointer().getNativeLong(0L);
+        return this.getPointer().getNativeLong(0L);
     }
 
-    public NativeLongByReference(NativeLong lIIlIlllIlIlIIl) {
+    public NativeLongByReference(NativeLong nativeLong) {
         super(NativeLong.SIZE);
-        NativeLongByReference lIIlIlllIlIlIII;
-        lIIlIlllIlIlIII.setValue(lIIlIlllIlIlIIl);
+        this.setValue(nativeLong);
     }
 
     public NativeLongByReference() {
-        lIIlIlllIlIlllI(new NativeLong(0L));
-        NativeLongByReference lIIlIlllIlIlllI;
+        this(new NativeLong(0L));
     }
 
-    public void setValue(NativeLong lIIlIlllIlIIIll) {
-        NativeLongByReference lIIlIlllIlIIIlI;
-        lIIlIlllIlIIIlI.getPointer().setNativeLong(0L, lIIlIlllIlIIIll);
+    public void setValue(NativeLong nativeLong) {
+        this.getPointer().setNativeLong(0L, nativeLong);
     }
 }
 

@@ -21,10 +21,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_3572.class})
 public class ChunkSkyLightProviderMixin {
     @Inject(at={@At(value="HEAD")}, method={"recalculateLevel"}, cancellable=true)
-    private void recalculateLevel(long long_1, long long_2, int int_1, CallbackInfoReturnable<Integer> ci) {
+    private void recalculateLevel(long l, long l2, int n, CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         if (Modules.get().get(NoRender.class).noSkylightUpdates()) {
-            ci.setReturnValue((Object)15);
-            ci.cancel();
+            callbackInfoReturnable.setReturnValue((Object)15);
+            callbackInfoReturnable.cancel();
         }
     }
 }

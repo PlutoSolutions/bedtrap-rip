@@ -16,42 +16,37 @@ public class CrackedAccount
 extends Account<CrackedAccount> {
     @Override
     public boolean fetchHead() {
-        CrackedAccount lllllllllllllllllIlIlIlllIIIlIlI;
         try {
-            ProfileResponse lllllllllllllllllIlIlIlllIIIllII = (ProfileResponse)HttpUtils.get(String.valueOf(new StringBuilder().append("https://api.mojang.com/users/profiles/minecraft/").append(lllllllllllllllllIlIlIlllIIIlIlI.cache.username)), ProfileResponse.class);
-            return lllllllllllllllllIlIlIlllIIIlIlI.cache.makeHead(String.valueOf(new StringBuilder().append("https://www.mc-heads.net/avatar/").append(lllllllllllllllllIlIlIlllIIIllII.getId()).append("/8")));
+            ProfileResponse profileResponse = (ProfileResponse)HttpUtils.get(String.valueOf(new StringBuilder().append("https://api.mojang.com/users/profiles/minecraft/").append(this.cache.username)), ProfileResponse.class);
+            return this.cache.makeHead(String.valueOf(new StringBuilder().append("https://www.mc-heads.net/avatar/").append(profileResponse.getId()).append("/8")));
         }
-        catch (Exception lllllllllllllllllIlIlIlllIIIlIll) {
-            return lllllllllllllllllIlIlIlllIIIlIlI.cache.makeHead("steve");
+        catch (Exception exception) {
+            return this.cache.makeHead("steve");
         }
     }
 
     @Override
     public boolean login() {
-        CrackedAccount lllllllllllllllllIlIlIlllIIIIlIl;
         super.login();
-        lllllllllllllllllIlIlIlllIIIIlIl.setSession(new class_320(lllllllllllllllllIlIlIlllIIIIlIl.name, "", "", "mojang"));
+        this.setSession(new class_320(this.name, "", "", "mojang"));
         return true;
     }
 
-    public boolean equals(Object lllllllllllllllllIlIlIllIlllllll) {
-        CrackedAccount lllllllllllllllllIlIlIlllIIIIIlI;
-        if (!(lllllllllllllllllIlIlIllIlllllll instanceof CrackedAccount)) {
+    public boolean equals(Object object) {
+        if (!(object instanceof CrackedAccount)) {
             return false;
         }
-        return ((CrackedAccount)lllllllllllllllllIlIlIllIlllllll).getUsername().equals(lllllllllllllllllIlIlIlllIIIIIlI.getUsername());
+        return ((CrackedAccount)object).getUsername().equals(this.getUsername());
     }
 
     @Override
     public boolean fetchInfo() {
-        CrackedAccount lllllllllllllllllIlIlIlllIIlIIII;
-        lllllllllllllllllIlIlIlllIIlIIII.cache.username = lllllllllllllllllIlIlIlllIIlIIII.name;
+        this.cache.username = this.name;
         return true;
     }
 
-    public CrackedAccount(String lllllllllllllllllIlIlIlllIIlIlII) {
-        super(AccountType.Cracked, lllllllllllllllllIlIlIlllIIlIlII);
-        CrackedAccount lllllllllllllllllIlIlIlllIIlIlIl;
+    public CrackedAccount(String string) {
+        super(AccountType.Cracked, string);
     }
 }
 

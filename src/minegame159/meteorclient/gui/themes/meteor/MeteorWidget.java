@@ -11,21 +11,19 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 
 public interface MeteorWidget
 extends BaseWidget {
-    default public void renderBackground(GuiRenderer lllllllllllllllllIlllIIIIIIlIIlI, WWidget lllllllllllllllllIlllIIIIIIlIIIl, boolean lllllllllllllllllIlllIIIIIIlIIII, boolean lllllllllllllllllIlllIIIIIIIllll) {
-        MeteorWidget lllllllllllllllllIlllIIIIIIllIll;
-        MeteorGuiTheme lllllllllllllllllIlllIIIIIIlIllI = lllllllllllllllllIlllIIIIIIllIll.theme();
-        double lllllllllllllllllIlllIIIIIIlIlIl = lllllllllllllllllIlllIIIIIIlIllI.scale(2.0);
-        lllllllllllllllllIlllIIIIIIlIIlI.quad(lllllllllllllllllIlllIIIIIIlIIIl.x + lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIIIl.y + lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIIIl.width - lllllllllllllllllIlllIIIIIIlIlIl * 2.0, lllllllllllllllllIlllIIIIIIlIIIl.height - lllllllllllllllllIlllIIIIIIlIlIl * 2.0, lllllllllllllllllIlllIIIIIIlIllI.backgroundColor.get(lllllllllllllllllIlllIIIIIIlIIII, lllllllllllllllllIlllIIIIIIIllll));
-        SettingColor lllllllllllllllllIlllIIIIIIlIlII = lllllllllllllllllIlllIIIIIIlIllI.outlineColor.get(lllllllllllllllllIlllIIIIIIlIIII, lllllllllllllllllIlllIIIIIIIllll);
-        lllllllllllllllllIlllIIIIIIlIIlI.quad(lllllllllllllllllIlllIIIIIIlIIIl.x, lllllllllllllllllIlllIIIIIIlIIIl.y, lllllllllllllllllIlllIIIIIIlIIIl.width, lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIlII);
-        lllllllllllllllllIlllIIIIIIlIIlI.quad(lllllllllllllllllIlllIIIIIIlIIIl.x, lllllllllllllllllIlllIIIIIIlIIIl.y + lllllllllllllllllIlllIIIIIIlIIIl.height - lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIIIl.width, lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIlII);
-        lllllllllllllllllIlllIIIIIIlIIlI.quad(lllllllllllllllllIlllIIIIIIlIIIl.x, lllllllllllllllllIlllIIIIIIlIIIl.y + lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIIIl.height - lllllllllllllllllIlllIIIIIIlIlIl * 2.0, lllllllllllllllllIlllIIIIIIlIlII);
-        lllllllllllllllllIlllIIIIIIlIIlI.quad(lllllllllllllllllIlllIIIIIIlIIIl.x + lllllllllllllllllIlllIIIIIIlIIIl.width - lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIIIl.y + lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIlIl, lllllllllllllllllIlllIIIIIIlIIIl.height - lllllllllllllllllIlllIIIIIIlIlIl * 2.0, lllllllllllllllllIlllIIIIIIlIlII);
+    default public void renderBackground(GuiRenderer guiRenderer, WWidget wWidget, boolean bl, boolean bl2) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d = meteorGuiTheme.scale(2.0);
+        guiRenderer.quad(wWidget.x + d, wWidget.y + d, wWidget.width - d * 2.0, wWidget.height - d * 2.0, meteorGuiTheme.backgroundColor.get(bl, bl2));
+        SettingColor settingColor = meteorGuiTheme.outlineColor.get(bl, bl2);
+        guiRenderer.quad(wWidget.x, wWidget.y, wWidget.width, d, settingColor);
+        guiRenderer.quad(wWidget.x, wWidget.y + wWidget.height - d, wWidget.width, d, settingColor);
+        guiRenderer.quad(wWidget.x, wWidget.y + d, d, wWidget.height - d * 2.0, settingColor);
+        guiRenderer.quad(wWidget.x + wWidget.width - d, wWidget.y + d, d, wWidget.height - d * 2.0, settingColor);
     }
 
     default public MeteorGuiTheme theme() {
-        MeteorWidget lllllllllllllllllIlllIIIIIlIIlIl;
-        return (MeteorGuiTheme)lllllllllllllllllIlllIIIIIlIIlIl.getTheme();
+        return (MeteorGuiTheme)this.getTheme();
     }
 }
 

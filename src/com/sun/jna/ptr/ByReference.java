@@ -8,9 +8,8 @@ import com.sun.jna.PointerType;
 
 public abstract class ByReference
 extends PointerType {
-    protected ByReference(int lllllllllllllllllllIIllIlllIlIIl) {
-        ByReference lllllllllllllllllllIIllIlllIlIlI;
-        lllllllllllllllllllIIllIlllIlIlI.setPointer(new Memory(lllllllllllllllllllIIllIlllIlIIl));
+    protected ByReference(int n) {
+        this.setPointer(new Memory(n));
     }
 }
 

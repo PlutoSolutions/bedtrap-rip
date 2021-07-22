@@ -322,11 +322,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PacketUtils {
-    private static final /* synthetic */ Map<Class<? extends class_2596<?>>, String> S2C_PACKETS;
-    private static final /* synthetic */ Map<String, Class<? extends class_2596<?>>> S2C_PACKETS_R;
-    private static final /* synthetic */ Map<Class<? extends class_2596<?>>, String> C2S_PACKETS;
-    private static final /* synthetic */ Map<String, Class<? extends class_2596<?>>> C2S_PACKETS_R;
-    public static final /* synthetic */ class_2378<Class<? extends class_2596<?>>> REGISTRY;
+    private static final Map<Class<? extends class_2596<?>>, String> S2C_PACKETS;
+    private static final Map<String, Class<? extends class_2596<?>>> S2C_PACKETS_R;
+    private static final Map<Class<? extends class_2596<?>>, String> C2S_PACKETS;
+    private static final Map<String, Class<? extends class_2596<?>>> C2S_PACKETS_R;
+    public static final class_2378<Class<? extends class_2596<?>>> REGISTRY;
 
     public static Set<Class<? extends class_2596<?>>> getS2CPackets() {
         return S2C_PACKETS.keySet();
@@ -336,24 +336,24 @@ public class PacketUtils {
         return C2S_PACKETS.keySet();
     }
 
-    public PacketUtils() {
-        PacketUtils lIlllIllIllIll;
+    public static String getName(Class<? extends class_2596<?>> class_) {
+        String string = S2C_PACKETS.get(class_);
+        if (string != null) {
+            return string;
+        }
+        return C2S_PACKETS.get(class_);
     }
 
-    public static String getName(Class<? extends class_2596<?>> lIlllIllIllIII) {
-        String lIlllIllIlIlll = S2C_PACKETS.get(lIlllIllIllIII);
-        if (lIlllIllIlIlll != null) {
-            return lIlllIllIlIlll;
-        }
-        return C2S_PACKETS.get(lIlllIllIllIII);
+    static Map access$000() {
+        return S2C_PACKETS;
     }
 
-    public static Class<? extends class_2596<?>> getPacket(String lIlllIllIlIIII) {
-        Class<? extends class_2596<?>> lIlllIllIlIIIl = S2C_PACKETS_R.get(lIlllIllIlIIII);
-        if (lIlllIllIlIIIl != null) {
-            return lIlllIllIlIIIl;
+    public static Class<? extends class_2596<?>> getPacket(String string) {
+        Class<? extends class_2596<?>> class_ = S2C_PACKETS_R.get(string);
+        if (class_ != null) {
+            return class_;
         }
-        return C2S_PACKETS_R.get(lIlllIllIlIIII);
+        return C2S_PACKETS_R.get(string);
     }
 
     static {
@@ -658,10 +658,14 @@ public class PacketUtils {
         C2S_PACKETS_R.put("QueryPingC2SPacket", class_2935.class);
     }
 
+    static Map access$100() {
+        return C2S_PACKETS;
+    }
+
     private static class PacketRegistry
     extends class_2378<Class<? extends class_2596<?>>> {
         @Nullable
-        public Class<? extends class_2596<?>> get(@Nullable class_5321<Class<? extends class_2596<?>>> llllllllllllllllIllIIIIlIlllIIlI) {
+        public Class<? extends class_2596<?>> get(@Nullable class_5321<Class<? extends class_2596<?>>> class_53212) {
             return null;
         }
 
@@ -670,17 +674,27 @@ public class PacketUtils {
         }
 
         @Nullable
-        public Class<? extends class_2596<?>> get(int llllllllllllllllIllIIIIlIllIIlll) {
+        public Object method_29107(@Nullable class_5321 class_53212) {
+            return this.get(class_53212);
+        }
+
+        @Nullable
+        public Class<? extends class_2596<?>> get(int n) {
             return null;
         }
 
-        public boolean method_10250(class_2960 llllllllllllllllIllIIIIlIllIlIIl) {
+        public boolean method_10250(class_2960 class_29602) {
             return false;
         }
 
         @Nullable
-        public Class<? extends class_2596<?>> get(@Nullable class_2960 llllllllllllllllIllIIIIlIlllIIII) {
+        public Class<? extends class_2596<?>> get(@Nullable class_2960 class_29602) {
             return null;
+        }
+
+        @Nullable
+        public Object method_10200(int n) {
+            return this.get(n);
         }
 
         public Set<class_2960> method_10235() {
@@ -688,34 +702,55 @@ public class PacketUtils {
         }
 
         @Nullable
-        public class_2960 getId(Class<? extends class_2596<?>> llllllllllllllllIllIIIIlIllllIII) {
+        public Object method_10223(@Nullable class_2960 class_29602) {
+            return this.get(class_29602);
+        }
+
+        public Optional method_29113(Object object) {
+            return this.getKey((Class)object);
+        }
+
+        @Nullable
+        public class_2960 getId(Class<? extends class_2596<?>> class_) {
             return null;
         }
 
-        public Optional<class_5321<Class<? extends class_2596<?>>>> getKey(Class<? extends class_2596<?>> llllllllllllllllIllIIIIlIlllIllI) {
+        @Nullable
+        public class_2960 method_10221(Object object) {
+            return this.getId((Class)object);
+        }
+
+        public Optional<class_5321<Class<? extends class_2596<?>>>> getKey(Class<? extends class_2596<?>> class_) {
             return Optional.empty();
         }
 
-        protected Lifecycle getEntryLifecycle(Class<? extends class_2596<?>> llllllllllllllllIllIIIIlIllIlllI) {
+        protected Lifecycle getEntryLifecycle(Class<? extends class_2596<?>> class_) {
             return null;
         }
 
         public PacketRegistry() {
             super(class_5321.method_29180((class_2960)new class_2960("meteor-client", "packets")), Lifecycle.stable());
-            PacketRegistry llllllllllllllllIllIIIIlIllllIlI;
         }
 
         public Lifecycle method_31138() {
             return null;
         }
 
-        public int getRawId(@Nullable Class<? extends class_2596<?>> llllllllllllllllIllIIIIlIlllIlII) {
+        protected Lifecycle method_31139(Object object) {
+            return this.getEntryLifecycle((Class)object);
+        }
+
+        public int getRawId(@Nullable Class<? extends class_2596<?>> class_) {
             return 0;
         }
 
         @NotNull
         public Iterator<Class<? extends class_2596<?>>> iterator() {
-            return Iterators.concat(S2C_PACKETS.keySet().iterator(), C2S_PACKETS.keySet().iterator());
+            return Iterators.concat(PacketUtils.access$000().keySet().iterator(), PacketUtils.access$100().keySet().iterator());
+        }
+
+        public int method_10206(@Nullable Object object) {
+            return this.getRawId((Class)object);
         }
     }
 }

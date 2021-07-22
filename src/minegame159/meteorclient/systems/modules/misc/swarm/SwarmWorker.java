@@ -17,80 +17,75 @@ import net.minecraft.class_2248;
 
 public class SwarmWorker
 extends Thread {
-    public /* synthetic */ class_2248 target;
-    private /* synthetic */ Socket socket;
+    public class_2248 target;
+    private Socket socket;
 
     public void disconnect() {
-        SwarmWorker lllIlllIIIIlIll;
         try {
-            lllIlllIIIIlIll.socket.close();
+            this.socket.close();
         }
-        catch (IOException lllIlllIIIIllIl) {
-            lllIlllIIIIllIl.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
         BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
         ChatUtils.info("Swarm", "Disconnected from host.", new Object[0]);
-        lllIlllIIIIlIll.interrupt();
+        this.interrupt();
     }
 
-    private String getIp(String lllIlllIIIIIIII) {
-        return lllIlllIIIIIIII.equals("127.0.0.1") ? "localhost" : lllIlllIIIIIIII;
+    private String getIp(String string) {
+        return string.equals("127.0.0.1") ? "localhost" : string;
     }
 
     public void tick() {
-        SwarmWorker lllIlllIIIIlIII;
-        if (lllIlllIIIIlIII.target == null) {
+        if (this.target == null) {
             return;
         }
         BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
-        BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(new class_2248[]{lllIlllIIIIlIII.target});
-        lllIlllIIIIlIII.target = null;
+        BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(new class_2248[]{this.target});
+        this.target = null;
     }
 
     public String getConnection() {
-        SwarmWorker lllIlllIIIIIlIl;
-        return String.valueOf(new StringBuilder().append(lllIlllIIIIIlIl.getIp(lllIlllIIIIIlIl.socket.getInetAddress().getHostAddress())).append(":").append(lllIlllIIIIIlIl.socket.getPort()));
+        return String.valueOf(new StringBuilder().append(this.getIp(this.socket.getInetAddress().getHostAddress())).append(":").append(this.socket.getPort()));
     }
 
-    public SwarmWorker(String lllIlllIIlIIIlI, int lllIlllIIIllllI) {
-        SwarmWorker lllIlllIIlIIIll;
+    public SwarmWorker(String string, int n) {
         try {
-            lllIlllIIlIIIll.socket = new Socket(lllIlllIIlIIIlI, lllIlllIIIllllI);
+            this.socket = new Socket(string, n);
         }
-        catch (Exception lllIlllIIlIIlII) {
-            lllIlllIIlIIIll.socket = null;
-            ChatUtils.warning("Swarm", "Server not found at %s on port %s.", lllIlllIIlIIIlI, lllIlllIIIllllI);
-            lllIlllIIlIIlII.printStackTrace();
+        catch (Exception exception) {
+            this.socket = null;
+            ChatUtils.warning("Swarm", "Server not found at %s on port %s.", string, n);
+            exception.printStackTrace();
         }
-        if (lllIlllIIlIIIll.socket != null) {
-            lllIlllIIlIIIll.start();
+        if (this.socket != null) {
+            this.start();
         }
     }
 
     @Override
     public void run() {
-        SwarmWorker lllIlllIIIlIIll;
-        ChatUtils.info("Swarm", "Connected to Swarm host on at %s on port %s.", lllIlllIIIlIIll.getIp(lllIlllIIIlIIll.socket.getInetAddress().getHostAddress()), lllIlllIIIlIIll.socket.getPort());
+        ChatUtils.info("Swarm", "Connected to Swarm host on at %s on port %s.", this.getIp(this.socket.getInetAddress().getHostAddress()), this.socket.getPort());
         try {
-            DataInputStream lllIlllIIIlIllI = new DataInputStream(lllIlllIIIlIIll.socket.getInputStream());
-            while (!lllIlllIIIlIIll.isInterrupted()) {
-                String lllIlllIIIlIlll = lllIlllIIIlIllI.readUTF();
-                if (lllIlllIIIlIlll.equals("")) continue;
-                ChatUtils.info("Swarm", "Received command: (highlight)%s", lllIlllIIIlIlll);
+            DataInputStream dataInputStream = new DataInputStream(this.socket.getInputStream());
+            while (!this.isInterrupted()) {
+                String string = dataInputStream.readUTF();
+                if (string.equals("")) continue;
+                ChatUtils.info("Swarm", "Received command: (highlight)%s", string);
                 try {
-                    Commands.get().dispatch(lllIlllIIIlIlll);
+                    Commands.get().dispatch(string);
                 }
-                catch (Exception lllIlllIIIllIII) {
+                catch (Exception exception) {
                     ChatUtils.error("Error fetching command.", new Object[0]);
-                    lllIlllIIIllIII.printStackTrace();
+                    exception.printStackTrace();
                 }
             }
-            lllIlllIIIlIllI.close();
+            dataInputStream.close();
         }
-        catch (IOException lllIlllIIIlIlIl) {
+        catch (IOException iOException) {
             ChatUtils.error("Swarm", "Error in connection to host.", new Object[0]);
-            lllIlllIIIlIlIl.printStackTrace();
-            lllIlllIIIlIIll.disconnect();
+            iOException.printStackTrace();
+            this.disconnect();
         }
     }
 }

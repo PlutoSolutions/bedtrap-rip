@@ -10,7 +10,6 @@ public class NoBreakDelay
 extends Module {
     public NoBreakDelay() {
         super(Categories.Player, "no-break-delay", "Completely removes the delay between breaking blocks.");
-        NoBreakDelay lIIIlIIllIIlIIl;
     }
 }
 

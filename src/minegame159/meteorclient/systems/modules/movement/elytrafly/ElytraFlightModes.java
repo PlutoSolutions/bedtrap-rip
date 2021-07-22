@@ -7,9 +7,5 @@ public enum ElytraFlightModes {
     Vanilla,
     Packet;
 
-
-    private ElytraFlightModes() {
-        ElytraFlightModes llllIIllIlllIlI;
-    }
 }
 

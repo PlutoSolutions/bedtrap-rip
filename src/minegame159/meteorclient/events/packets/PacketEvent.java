@@ -11,64 +11,36 @@ import net.minecraft.class_2596;
 
 public class PacketEvent
 extends Cancellable {
-    public /* synthetic */ class_2596<?> packet;
-
-    public PacketEvent() {
-        PacketEvent lllllllllllllllllllllIlIlIIIIIlI;
-    }
+    public class_2596<?> packet;
 
     public static class Send
     extends PacketEvent {
-        private static final /* synthetic */ Send INSTANCE;
+        private static final Send INSTANCE = new Send();
 
-        static {
-            INSTANCE = new Send();
-        }
-
-        public Send() {
-            Send lllllllllllllllllllIIlIlIlIllIll;
-        }
-
-        public static Send get(class_2596<?> lllllllllllllllllllIIlIlIlIllIII) {
+        public static Send get(class_2596<?> class_25962) {
             INSTANCE.setCancelled(false);
-            Send.INSTANCE.packet = lllllllllllllllllllIIlIlIlIllIII;
+            Send.INSTANCE.packet = class_25962;
             return INSTANCE;
         }
     }
 
     public static class Receive
     extends PacketEvent {
-        private static final /* synthetic */ Receive INSTANCE;
+        private static final Receive INSTANCE = new Receive();
 
-        public Receive() {
-            Receive lllllllllllllllllIIIIIIIlIlIllIl;
-        }
-
-        public static Receive get(class_2596<?> lllllllllllllllllIIIIIIIlIlIlIlI) {
+        public static Receive get(class_2596<?> class_25962) {
             INSTANCE.setCancelled(false);
-            Receive.INSTANCE.packet = lllllllllllllllllIIIIIIIlIlIlIlI;
+            Receive.INSTANCE.packet = class_25962;
             return INSTANCE;
-        }
-
-        static {
-            INSTANCE = new Receive();
         }
     }
 
     public static class Sent
     extends PacketEvent {
-        private static final /* synthetic */ Sent INSTANCE;
+        private static final Sent INSTANCE = new Sent();
 
-        public Sent() {
-            Sent llllllllllllllllllIllIllIlIllIll;
-        }
-
-        static {
-            INSTANCE = new Sent();
-        }
-
-        public static Sent get(class_2596<?> llllllllllllllllllIllIllIlIlIlll) {
-            Sent.INSTANCE.packet = llllllllllllllllllIllIllIlIlIlll;
+        public static Sent get(class_2596<?> class_25962) {
+            Sent.INSTANCE.packet = class_25962;
             return INSTANCE;
         }
     }

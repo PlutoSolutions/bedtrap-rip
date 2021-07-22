@@ -33,64 +33,62 @@ import net.minecraft.class_1820;
 
 public class AutoShearer
 extends Module {
-    private /* synthetic */ boolean offHand;
-    private final /* synthetic */ Setting<Boolean> rotate;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ class_1297 entity;
-    private final /* synthetic */ Setting<Boolean> antiBreak;
-    private /* synthetic */ int preSlot;
-    private final /* synthetic */ Setting<Double> distance;
+    private boolean offHand;
+    private final Setting<Boolean> rotate;
+    private final SettingGroup sgGeneral;
+    private class_1297 entity;
+    private final Setting<Boolean> antiBreak;
+    private int preSlot;
+    private final Setting<Double> distance;
 
     public AutoShearer() {
         super(Categories.World, "auto-shearer", "Automatically shears sheep.");
-        AutoShearer llIlIIllIllIIll;
-        llIlIIllIllIIll.sgGeneral = llIlIIllIllIIll.settings.getDefaultGroup();
-        llIlIIllIllIIll.distance = llIlIIllIllIIll.sgGeneral.add(new DoubleSetting.Builder().name("distance").description("The maximum distance the sheep have to be to be sheared.").min(0.0).defaultValue(5.0).build());
-        llIlIIllIllIIll.antiBreak = llIlIIllIllIIll.sgGeneral.add(new BoolSetting.Builder().name("anti-break").description("Prevents shears from being broken.").defaultValue(false).build());
-        llIlIIllIllIIll.rotate = llIlIIllIllIIll.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Automatically faces towards the animal being sheared.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.distance = this.sgGeneral.add(new DoubleSetting.Builder().name("distance").description("The maximum distance the sheep have to be to be sheared.").min(0.0).defaultValue(5.0).build());
+        this.antiBreak = this.sgGeneral.add(new BoolSetting.Builder().name("anti-break").description("Prevents shears from being broken.").defaultValue(false).build());
+        this.rotate = this.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Automatically faces towards the animal being sheared.").defaultValue(true).build());
     }
 
     private void interact() {
-        AutoShearer llIlIIllIIllIlI;
-        llIlIIllIIllIlI.mc.field_1761.method_2905((class_1657)llIlIIllIIllIlI.mc.field_1724, llIlIIllIIllIlI.entity, llIlIIllIIllIlI.offHand ? class_1268.field_5810 : class_1268.field_5808);
-        InvUtils.swap(llIlIIllIIllIlI.preSlot);
+        this.mc.field_1761.method_2905((class_1657)this.mc.field_1724, this.entity, this.offHand ? class_1268.field_5810 : class_1268.field_5808);
+        InvUtils.swap(this.preSlot);
+    }
+
+    private boolean lambda$onTick$0(class_1799 class_17992) {
+        return (this.antiBreak.get() == false || this.antiBreak.get() != false && class_17992.method_7919() < class_17992.method_7936() - 1) && class_17992.method_7909() == class_1802.field_8868;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre llIlIIllIlIIIll) {
-        AutoShearer llIlIIllIlIIIlI;
-        llIlIIllIlIIIlI.entity = null;
-        for (class_1297 llIlIIllIlIIlIl : llIlIIllIlIIIlI.mc.field_1687.method_18112()) {
-            FindItemResult llIlIIllIlIlIII;
-            boolean llIlIIllIlIIllI;
-            if (!(llIlIIllIlIIlIl instanceof class_1472) || ((class_1472)llIlIIllIlIIlIl).method_6629() || ((class_1472)llIlIIllIlIIlIl).method_6109() || (double)llIlIIllIlIIIlI.mc.field_1724.method_5739(llIlIIllIlIIlIl) > llIlIIllIlIIIlI.distance.get()) continue;
-            boolean llIlIIllIlIIlll = false;
-            if (llIlIIllIlIIIlI.mc.field_1724.field_7514.method_7391().method_7909() instanceof class_1820) {
-                if (llIlIIllIlIIIlI.antiBreak.get().booleanValue() && llIlIIllIlIIIlI.mc.field_1724.field_7514.method_7391().method_7919() >= llIlIIllIlIIIlI.mc.field_1724.field_7514.method_7391().method_7936() - 1) {
-                    llIlIIllIlIIlll = true;
+    private void onTick(TickEvent.Pre pre) {
+        this.entity = null;
+        for (class_1297 class_12972 : this.mc.field_1687.method_18112()) {
+            FindItemResult findItemResult;
+            boolean bl;
+            if (!(class_12972 instanceof class_1472) || ((class_1472)class_12972).method_6629() || ((class_1472)class_12972).method_6109() || (double)this.mc.field_1724.method_5739(class_12972) > this.distance.get()) continue;
+            boolean bl2 = false;
+            if (this.mc.field_1724.field_7514.method_7391().method_7909() instanceof class_1820) {
+                if (this.antiBreak.get().booleanValue() && this.mc.field_1724.field_7514.method_7391().method_7919() >= this.mc.field_1724.field_7514.method_7391().method_7936() - 1) {
+                    bl2 = true;
                 }
-            } else if (((class_1799)llIlIIllIlIIIlI.mc.field_1724.field_7514.field_7544.get(0)).method_7909() instanceof class_1820) {
-                if (llIlIIllIlIIIlI.antiBreak.get().booleanValue() && ((class_1799)llIlIIllIlIIIlI.mc.field_1724.field_7514.field_7544.get(0)).method_7919() >= ((class_1799)llIlIIllIlIIIlI.mc.field_1724.field_7514.field_7544.get(0)).method_7936() - 1) {
-                    llIlIIllIlIIlll = true;
+            } else if (((class_1799)this.mc.field_1724.field_7514.field_7544.get(0)).method_7909() instanceof class_1820) {
+                if (this.antiBreak.get().booleanValue() && ((class_1799)this.mc.field_1724.field_7514.field_7544.get(0)).method_7919() >= ((class_1799)this.mc.field_1724.field_7514.field_7544.get(0)).method_7936() - 1) {
+                    bl2 = true;
                 } else {
-                    llIlIIllIlIIIlI.offHand = true;
+                    this.offHand = true;
                 }
             } else {
-                llIlIIllIlIIlll = true;
+                bl2 = true;
             }
-            boolean bl = llIlIIllIlIIllI = !llIlIIllIlIIlll;
-            if (llIlIIllIlIIlll && InvUtils.swap((llIlIIllIlIlIII = InvUtils.findInHotbar(llIlIIllIIlIllI -> {
-                AutoShearer llIlIIllIIlIlIl;
-                return (llIlIIllIIlIlIl.antiBreak.get() == false || llIlIIllIIlIlIl.antiBreak.get() != false && llIlIIllIIlIllI.method_7919() < llIlIIllIIlIllI.method_7936() - 1) && llIlIIllIIlIllI.method_7909() == class_1802.field_8868;
-            })).getSlot())) {
-                llIlIIllIlIIllI = true;
+            boolean bl3 = bl = !bl2;
+            if (bl2 && InvUtils.swap((findItemResult = InvUtils.findInHotbar(this::lambda$onTick$0)).getSlot())) {
+                bl = true;
             }
-            if (!llIlIIllIlIIllI) continue;
-            llIlIIllIlIIIlI.entity = llIlIIllIlIIlIl;
-            if (llIlIIllIlIIIlI.rotate.get().booleanValue()) {
-                Rotations.rotate(Rotations.getYaw(llIlIIllIlIIlIl), Rotations.getPitch(llIlIIllIlIIlIl), -100, llIlIIllIlIIIlI::interact);
+            if (!bl) continue;
+            this.entity = class_12972;
+            if (this.rotate.get().booleanValue()) {
+                Rotations.rotate(Rotations.getYaw(class_12972), Rotations.getPitch(class_12972), -100, this::interact);
             } else {
-                llIlIIllIlIIIlI.interact();
+                this.interact();
             }
             return;
         }
@@ -98,7 +96,7 @@ extends Module {
 
     @Override
     public void onDeactivate() {
-        llIlIIllIllIIII.entity = null;
+        this.entity = null;
     }
 }
 

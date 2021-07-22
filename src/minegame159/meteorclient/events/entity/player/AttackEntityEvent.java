@@ -11,20 +11,12 @@ import net.minecraft.class_1297;
 
 public class AttackEntityEvent
 extends Cancellable {
-    private static final /* synthetic */ AttackEntityEvent INSTANCE;
-    public /* synthetic */ class_1297 entity;
+    private static final AttackEntityEvent INSTANCE = new AttackEntityEvent();
+    public class_1297 entity;
 
-    static {
-        INSTANCE = new AttackEntityEvent();
-    }
-
-    public AttackEntityEvent() {
-        AttackEntityEvent llIlIIlIlIIlllI;
-    }
-
-    public static AttackEntityEvent get(class_1297 llIlIIlIlIIlIlI) {
+    public static AttackEntityEvent get(class_1297 class_12972) {
         INSTANCE.setCancelled(false);
-        AttackEntityEvent.INSTANCE.entity = llIlIIlIlIIlIlI;
+        AttackEntityEvent.INSTANCE.entity = class_12972;
         return INSTANCE;
     }
 }

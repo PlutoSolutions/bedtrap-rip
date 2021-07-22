@@ -21,25 +21,23 @@ import net.minecraft.class_1299;
 
 public class Hitboxes
 extends Module {
-    private final /* synthetic */ Setting<Object2BooleanMap<class_1299<?>>> entities;
-    private final /* synthetic */ Setting<Double> value;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Object2BooleanMap<class_1299<?>>> entities;
+    private final Setting<Double> value;
+    private final SettingGroup sgGeneral;
 
     public Hitboxes() {
         super(Categories.Combat, "hitboxes", "Expands an entity's hitboxes.");
-        Hitboxes llllllllllllllllllIIIIllllllllll;
-        llllllllllllllllllIIIIllllllllll.sgGeneral = llllllllllllllllllIIIIllllllllll.settings.getDefaultGroup();
-        llllllllllllllllllIIIIllllllllll.entities = llllllllllllllllllIIIIllllllllll.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Which entities to target.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
-        llllllllllllllllllIIIIllllllllll.value = llllllllllllllllllIIIIllllllllll.sgGeneral.add(new DoubleSetting.Builder().name("expand").description("How much to expand the hitbox of the entity.").defaultValue(0.5).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Which entities to target.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
+        this.value = this.sgGeneral.add(new DoubleSetting.Builder().name("expand").description("How much to expand the hitbox of the entity.").defaultValue(0.5).build());
     }
 
-    public double getEntityValue(class_1297 llllllllllllllllllIIIIlllllllIlI) {
-        Hitboxes llllllllllllllllllIIIIlllllllIll;
-        if (!llllllllllllllllllIIIIlllllllIll.isActive()) {
+    public double getEntityValue(class_1297 class_12972) {
+        if (!this.isActive()) {
             return 0.0;
         }
-        if (llllllllllllllllllIIIIlllllllIll.entities.get().getBoolean((Object)llllllllllllllllllIIIIlllllllIlI.method_5864())) {
-            return llllllllllllllllllIIIIlllllllIll.value.get();
+        if (this.entities.get().getBoolean((Object)class_12972.method_5864())) {
+            return this.value.get();
         }
         return 0.0;
     }

@@ -9,20 +9,12 @@ package minegame159.meteorclient.events.entity;
 import net.minecraft.class_1297;
 
 public class EntityAddedEvent {
-    private static final /* synthetic */ EntityAddedEvent INSTANCE;
-    public /* synthetic */ class_1297 entity;
+    private static final EntityAddedEvent INSTANCE = new EntityAddedEvent();
+    public class_1297 entity;
 
-    public EntityAddedEvent() {
-        EntityAddedEvent lIllIlIllllIII;
-    }
-
-    public static EntityAddedEvent get(class_1297 lIllIlIlllIlIl) {
-        EntityAddedEvent.INSTANCE.entity = lIllIlIlllIlIl;
+    public static EntityAddedEvent get(class_1297 class_12972) {
+        EntityAddedEvent.INSTANCE.entity = class_12972;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new EntityAddedEvent();
     }
 }
 

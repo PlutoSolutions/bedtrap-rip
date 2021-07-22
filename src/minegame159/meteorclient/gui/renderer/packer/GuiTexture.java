@@ -8,30 +8,23 @@ import java.util.List;
 import minegame159.meteorclient.gui.renderer.packer.TextureRegion;
 
 public class GuiTexture {
-    private final /* synthetic */ List<TextureRegion> regions;
+    private final List<TextureRegion> regions = new ArrayList<TextureRegion>(2);
 
-    void add(TextureRegion lllllllllllllllllllIIIIIlIIlIllI) {
-        GuiTexture lllllllllllllllllllIIIIIlIIllIIl;
-        lllllllllllllllllllIIIIIlIIllIIl.regions.add(lllllllllllllllllllIIIIIlIIlIllI);
+    void add(TextureRegion textureRegion) {
+        this.regions.add(textureRegion);
     }
 
-    public GuiTexture() {
-        GuiTexture lllllllllllllllllllIIIIIlIIlllIl;
-        lllllllllllllllllllIIIIIlIIlllIl.regions = new ArrayList<TextureRegion>(2);
-    }
-
-    public TextureRegion get(double lllllllllllllllllllIIIIIlIIIlIIl, double lllllllllllllllllllIIIIIlIIIIIlI) {
-        GuiTexture lllllllllllllllllllIIIIIlIIIlIlI;
-        double lllllllllllllllllllIIIIIlIIIIlll = Math.sqrt(lllllllllllllllllllIIIIIlIIIlIIl * lllllllllllllllllllIIIIIlIIIlIIl + lllllllllllllllllllIIIIIlIIIIIlI * lllllllllllllllllllIIIIIlIIIIIlI);
-        double lllllllllllllllllllIIIIIlIIIIllI = Double.MAX_VALUE;
-        TextureRegion lllllllllllllllllllIIIIIlIIIIlIl = null;
-        for (TextureRegion lllllllllllllllllllIIIIIlIIIlIll : lllllllllllllllllllIIIIIlIIIlIlI.regions) {
-            double lllllllllllllllllllIIIIIlIIIllII = Math.abs(lllllllllllllllllllIIIIIlIIIIlll - lllllllllllllllllllIIIIIlIIIlIll.diagonal);
-            if (!(lllllllllllllllllllIIIIIlIIIllII < lllllllllllllllllllIIIIIlIIIIllI)) continue;
-            lllllllllllllllllllIIIIIlIIIIllI = lllllllllllllllllllIIIIIlIIIllII;
-            lllllllllllllllllllIIIIIlIIIIlIl = lllllllllllllllllllIIIIIlIIIlIll;
+    public TextureRegion get(double d, double d2) {
+        double d3 = Math.sqrt(d * d + d2 * d2);
+        double d4 = Double.MAX_VALUE;
+        TextureRegion textureRegion = null;
+        for (TextureRegion textureRegion2 : this.regions) {
+            double d5 = Math.abs(d3 - textureRegion2.diagonal);
+            if (!(d5 < d4)) continue;
+            d4 = d5;
+            textureRegion = textureRegion2;
         }
-        return lllllllllllllllllllIIIIIlIIIIlIl;
+        return textureRegion;
     }
 }
 

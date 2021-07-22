@@ -11,26 +11,24 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class Timer
 extends Module {
-    private /* synthetic */ double override;
-    public static final /* synthetic */ double OFF = 1.0;
-    private final /* synthetic */ Setting<Double> multiplier;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private double override;
+    public static final double OFF = 1.0;
+    private final Setting<Double> multiplier;
+    private final SettingGroup sgGeneral;
 
     public double getMultiplier() {
-        Timer llllIIllIIlIIl;
-        return llllIIllIIlIIl.override != 1.0 ? llllIIllIIlIIl.override : (llllIIllIIlIIl.isActive() ? llllIIllIIlIIl.multiplier.get() : 1.0);
+        return this.override != 1.0 ? this.override : (this.isActive() ? this.multiplier.get() : 1.0);
     }
 
     public Timer() {
         super(Categories.World, "timer", "Changes the speed of everything in your game.");
-        Timer llllIIllIIllII;
-        llllIIllIIllII.sgGeneral = llllIIllIIllII.settings.getDefaultGroup();
-        llllIIllIIllII.multiplier = llllIIllIIllII.sgGeneral.add(new DoubleSetting.Builder().name("multiplier").description("The timer multiplier amount.").defaultValue(1.0).min(0.1).sliderMin(0.1).sliderMax(10.0).build());
-        llllIIllIIllII.override = 1.0;
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.multiplier = this.sgGeneral.add(new DoubleSetting.Builder().name("multiplier").description("The timer multiplier amount.").defaultValue(1.0).min(0.1).sliderMin(0.1).sliderMax(10.0).build());
+        this.override = 1.0;
     }
 
-    public void setOverride(double llllIIllIIIlII) {
-        llllIIllIIIIll.override = llllIIllIIIlII;
+    public void setOverride(double d) {
+        this.override = d;
     }
 }
 

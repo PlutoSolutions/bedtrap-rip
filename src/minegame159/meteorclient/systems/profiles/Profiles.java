@@ -22,46 +22,45 @@ import minegame159.meteorclient.utils.misc.NbtUtils;
 import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Profiles
 extends System<Profiles>
 implements Iterable<Profile> {
-    public static final /* synthetic */ File FOLDER;
-    private /* synthetic */ List<Profile> profiles;
+    public static final File FOLDER = new File(MeteorClient.FOLDER, "profiles");
+    private List<Profile> profiles = new ArrayList<Profile>();
 
-    public void add(Profile llllllllllllllllllIIlllIlllllIIl) {
-        Profiles llllllllllllllllllIIlllIlllllIlI;
-        if (!llllllllllllllllllIIlllIlllllIlI.profiles.contains(llllllllllllllllllIIlllIlllllIIl)) {
-            llllllllllllllllllIIlllIlllllIlI.profiles.add(llllllllllllllllllIIlllIlllllIIl);
+    public void add(Profile profile) {
+        if (!this.profiles.contains(profile)) {
+            this.profiles.add(profile);
         }
-        llllllllllllllllllIIlllIlllllIIl.save();
-        llllllllllllllllllIIlllIlllllIlI.save();
+        profile.save();
+        this.save();
     }
 
-    static {
-        FOLDER = new File(MeteorClient.FOLDER, "profiles");
+    private static Profile lambda$fromTag$0(class_2520 class_25202) {
+        return new Profile().fromTag((class_2487)class_25202);
     }
 
-    public void remove(Profile llllllllllllllllllIIlllIllllIlIl) {
-        Profiles llllllllllllllllllIIlllIllllIlII;
-        if (llllllllllllllllllIIlllIllllIlII.profiles.remove(llllllllllllllllllIIlllIllllIlIl)) {
-            llllllllllllllllllIIlllIllllIlIl.delete();
+    public void remove(Profile profile) {
+        if (this.profiles.remove(profile)) {
+            profile.delete();
         }
-        llllllllllllllllllIIlllIllllIlII.save();
+        this.save();
     }
 
     @EventHandler
-    private void onGameJoined(GameJoinedEvent llllllllllllllllllIIlllIllIlIIlI) {
-        Profiles llllllllllllllllllIIlllIllIlIIll;
-        for (Profile llllllllllllllllllIIlllIllIlIlII : llllllllllllllllllIIlllIllIlIIll) {
-            if (!llllllllllllllllllIIlllIllIlIlII.loadOnJoinIps.contains(Utils.getWorldName())) continue;
-            llllllllllllllllllIIlllIllIlIlII.load();
+    private void onGameJoined(GameJoinedEvent gameJoinedEvent) {
+        for (Profile profile : this) {
+            if (!profile.loadOnJoinIps.contains(Utils.getWorldName())) continue;
+            profile.load();
         }
     }
 
     @Override
     public Iterator<Profile> iterator() {
-        Profiles llllllllllllllllllIIlllIllIIllIl;
-        return llllllllllllllllllIIlllIllIIllIl.profiles.iterator();
+        return this.profiles.iterator();
     }
 
     @Override
@@ -75,37 +74,36 @@ implements Iterable<Profile> {
 
     public Profiles() {
         super("profiles");
-        Profiles llllllllllllllllllIIllllIIIIIIII;
-        llllllllllllllllllIIllllIIIIIIII.profiles = new ArrayList<Profile>();
     }
 
-    public Profile get(String llllllllllllllllllIIlllIlllIlIlI) {
-        Profiles llllllllllllllllllIIlllIlllIlIll;
-        for (Profile llllllllllllllllllIIlllIlllIlllI : llllllllllllllllllIIlllIlllIlIll) {
-            if (!llllllllllllllllllIIlllIlllIlllI.name.equalsIgnoreCase(llllllllllllllllllIIlllIlllIlIlI)) continue;
-            return llllllllllllllllllIIlllIlllIlllI;
+    public Profile get(String string) {
+        for (Profile profile : this) {
+            if (!profile.name.equalsIgnoreCase(string)) continue;
+            return profile;
         }
         return null;
     }
 
     @Override
     public class_2487 toTag() {
-        Profiles llllllllllllllllllIIlllIlllIIIIl;
-        class_2487 llllllllllllllllllIIlllIlllIIIII = new class_2487();
-        llllllllllllllllllIIlllIlllIIIII.method_10566("profiles", (class_2520)NbtUtils.listToTag(llllllllllllllllllIIlllIlllIIIIl.profiles));
-        return llllllllllllllllllIIlllIlllIIIII;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10566("profiles", (class_2520)NbtUtils.listToTag(this.profiles));
+        return class_24872;
     }
 
     @Override
-    public Profiles fromTag(class_2487 llllllllllllllllllIIlllIllIllIII) {
-        Profiles llllllllllllllllllIIlllIllIllIIl;
-        llllllllllllllllllIIlllIllIllIIl.profiles = NbtUtils.listFromTag(llllllllllllllllllIIlllIllIllIII.method_10554("profiles", 10), llllllllllllllllllIIlllIllIIIlIl -> new Profile().fromTag((class_2487)llllllllllllllllllIIlllIllIIIlIl));
-        return llllllllllllllllllIIlllIllIllIIl;
+    public Profiles fromTag(class_2487 class_24872) {
+        this.profiles = NbtUtils.listFromTag(class_24872.method_10554("profiles", 10), Profiles::lambda$fromTag$0);
+        return this;
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     public List<Profile> getAll() {
-        Profiles llllllllllllllllllIIlllIlllIIlIl;
-        return llllllllllllllllllIIlllIlllIIlIl.profiles;
+        return this.profiles;
     }
 }
 

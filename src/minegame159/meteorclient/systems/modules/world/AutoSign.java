@@ -22,35 +22,33 @@ import net.minecraft.class_498;
 
 public class AutoSign
 extends Module {
-    private /* synthetic */ String[] text;
+    private String[] text;
 
     @EventHandler
-    private void onSendPacket(PacketEvent.Send llllllllllllllllllIllIlIIIlIllII) {
-        if (!(llllllllllllllllllIllIlIIIlIllII.packet instanceof class_2877)) {
+    private void onSendPacket(PacketEvent.Send send) {
+        if (!(send.packet instanceof class_2877)) {
             return;
         }
-        llllllllllllllllllIllIlIIIlIllll.text = ((class_2877)llllllllllllllllllIllIlIIIlIllII.packet).method_12508();
+        this.text = ((class_2877)send.packet).method_12508();
     }
 
     public AutoSign() {
         super(Categories.World, "auto-sign", "Automatically writes signs. The first sign's text will be used.");
-        AutoSign llllllllllllllllllIllIlIIIllIllI;
     }
 
     @EventHandler
-    private void onOpenScreen(OpenScreenEvent llllllllllllllllllIllIlIIIlIIlII) {
-        AutoSign llllllllllllllllllIllIlIIIlIIlIl;
-        if (!(llllllllllllllllllIllIlIIIlIIlII.screen instanceof class_498) || llllllllllllllllllIllIlIIIlIIlIl.text == null) {
+    private void onOpenScreen(OpenScreenEvent openScreenEvent) {
+        if (!(openScreenEvent.screen instanceof class_498) || this.text == null) {
             return;
         }
-        class_2625 llllllllllllllllllIllIlIIIlIIllI = ((SignEditScreenAccessor)llllllllllllllllllIllIlIIIlIIlII.screen).getSign();
-        llllllllllllllllllIllIlIIIlIIlIl.mc.field_1724.field_3944.method_2883((class_2596)new class_2877(llllllllllllllllllIllIlIIIlIIllI.method_11016(), llllllllllllllllllIllIlIIIlIIlIl.text[0], llllllllllllllllllIllIlIIIlIIlIl.text[1], llllllllllllllllllIllIlIIIlIIlIl.text[2], llllllllllllllllllIllIlIIIlIIlIl.text[3]));
-        llllllllllllllllllIllIlIIIlIIlII.cancel();
+        class_2625 class_26252 = ((SignEditScreenAccessor)openScreenEvent.screen).getSign();
+        this.mc.field_1724.field_3944.method_2883((class_2596)new class_2877(class_26252.method_11016(), this.text[0], this.text[1], this.text[2], this.text[3]));
+        openScreenEvent.cancel();
     }
 
     @Override
     public void onDeactivate() {
-        llllllllllllllllllIllIlIIIllIIlI.text = null;
+        this.text = null;
     }
 }
 
