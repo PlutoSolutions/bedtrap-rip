@@ -20,25 +20,38 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 
 public class ColorSettingScreen
 extends WindowScreen {
-    private final /* synthetic */ WHueQuad hueQuad;
-    private final /* synthetic */ WIntEdit aItb;
-    private static final /* synthetic */ Color WHITE;
-    private final /* synthetic */ WIntEdit gItb;
-    private static final /* synthetic */ Color[] HUE_COLORS;
-    private final /* synthetic */ WIntEdit bItb;
-    private final /* synthetic */ WIntEdit rItb;
-    private final /* synthetic */ WQuad displayQuad;
-    private static final /* synthetic */ Color BLACK;
-    private final /* synthetic */ Setting<SettingColor> setting;
-    private final /* synthetic */ WBrightnessQuad brightnessQuad;
-    private final /* synthetic */ WCheckbox rainbow;
-    public /* synthetic */ Runnable action;
+    private final WHueQuad hueQuad;
+    private final WIntEdit aItb;
+    private static final Color WHITE;
+    private final WIntEdit gItb;
+    private static final Color[] HUE_COLORS;
+    private final WIntEdit bItb;
+    private final WIntEdit rItb;
+    private final WQuad displayQuad;
+    private static final Color BLACK;
+    private final Setting<SettingColor> setting;
+    private final WBrightnessQuad brightnessQuad;
+    private final WCheckbox rainbow;
+    public Runnable action;
+
+    static void access$300(ColorSettingScreen colorSettingScreen) {
+        colorSettingScreen.hsvChanged();
+    }
 
     private void callAction() {
-        ColorSettingScreen llllllllllllllllllIllIllIIIIIlII;
-        if (llllllllllllllllllIllIllIIIIIlII.action != null) {
-            llllllllllllllllllIllIllIIIIIlII.action.run();
+        if (this.action != null) {
+            this.action.run();
         }
+    }
+
+    static Color[] access$900() {
+        return HUE_COLORS;
+    }
+
+    private void lambda$new$1(Setting setting) {
+        setting.reset();
+        this.setFromSetting();
+        this.callAction();
     }
 
     static {
@@ -47,498 +60,508 @@ extends WindowScreen {
         BLACK = new Color(0, 0, 0);
     }
 
-    public ColorSettingScreen(GuiTheme llllllllllllllllllIllIllIIIlIIlI, Setting<SettingColor> llllllllllllllllllIllIllIIIllIIl) {
-        super(llllllllllllllllllIllIllIIIlIIlI, "Select Color");
-        ColorSettingScreen llllllllllllllllllIllIllIIIllIll;
-        llllllllllllllllllIllIllIIIllIll.setting = llllllllllllllllllIllIllIIIllIIl;
-        llllllllllllllllllIllIllIIIllIll.displayQuad = llllllllllllllllllIllIllIIIllIll.add(llllllllllllllllllIllIllIIIlIIlI.quad(llllllllllllllllllIllIllIIIllIIl.get())).expandX().widget();
-        llllllllllllllllllIllIllIIIllIll.brightnessQuad = llllllllllllllllllIllIllIIIllIll.add(llllllllllllllllllIllIllIIIllIll.new WBrightnessQuad()).expandX().widget();
-        llllllllllllllllllIllIllIIIllIll.hueQuad = llllllllllllllllllIllIllIIIllIll.add(llllllllllllllllllIllIllIIIllIll.new WHueQuad()).expandX().widget();
-        WTable llllllllllllllllllIllIllIIIllIII = llllllllllllllllllIllIllIIIllIll.add(llllllllllllllllllIllIllIIIlIIlI.table()).expandX().widget();
-        llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.label("R:"));
-        llllllllllllllllllIllIllIIIllIll.rItb = llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.intEdit(llllllllllllllllllIllIllIIIllIIl.get().r, 0, 255)).expandX().widget();
-        llllllllllllllllllIllIllIIIllIll.rItb.min = 0;
-        llllllllllllllllllIllIllIIIllIll.rItb.max = 255;
-        llllllllllllllllllIllIllIIIllIll.rItb.action = llllllllllllllllllIllIllIIIllIll::rgbaChanged;
-        llllllllllllllllllIllIllIIIllIII.row();
-        llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.label("G:"));
-        llllllllllllllllllIllIllIIIllIll.gItb = llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.intEdit(llllllllllllllllllIllIllIIIllIIl.get().g, 0, 255)).expandX().widget();
-        llllllllllllllllllIllIllIIIllIll.gItb.min = 0;
-        llllllllllllllllllIllIllIIIllIll.gItb.max = 255;
-        llllllllllllllllllIllIllIIIllIll.gItb.action = llllllllllllllllllIllIllIIIllIll::rgbaChanged;
-        llllllllllllllllllIllIllIIIllIII.row();
-        llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.label("B:"));
-        llllllllllllllllllIllIllIIIllIll.bItb = llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.intEdit(llllllllllllllllllIllIllIIIllIIl.get().b, 0, 255)).expandX().widget();
-        llllllllllllllllllIllIllIIIllIll.bItb.min = 0;
-        llllllllllllllllllIllIllIIIllIll.bItb.max = 255;
-        llllllllllllllllllIllIllIIIllIll.bItb.action = llllllllllllllllllIllIllIIIllIll::rgbaChanged;
-        llllllllllllllllllIllIllIIIllIII.row();
-        llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.label("A:"));
-        llllllllllllllllllIllIllIIIllIll.aItb = llllllllllllllllllIllIllIIIllIII.add(llllllllllllllllllIllIllIIIlIIlI.intEdit(llllllllllllllllllIllIllIIIllIIl.get().a, 0, 255)).expandX().widget();
-        llllllllllllllllllIllIllIIIllIll.aItb.min = 0;
-        llllllllllllllllllIllIllIIIllIll.aItb.max = 255;
-        llllllllllllllllllIllIllIIIllIll.aItb.action = llllllllllllllllllIllIllIIIllIll::rgbaChanged;
-        WHorizontalList llllllllllllllllllIllIllIIIlIlll = llllllllllllllllllIllIllIIIllIll.add(llllllllllllllllllIllIllIIIlIIlI.horizontalList()).expandX().widget();
-        llllllllllllllllllIllIllIIIlIlll.add(llllllllllllllllllIllIllIIIlIIlI.label("Rainbow: "));
-        llllllllllllllllllIllIllIIIllIll.rainbow = llllllllllllllllllIllIllIIIlIIlI.checkbox(llllllllllllllllllIllIllIIIllIIl.get().rainbow);
-        llllllllllllllllllIllIllIIIllIll.rainbow.action = () -> {
-            ColorSettingScreen llllllllllllllllllIllIlIllIIlIll;
-            ((SettingColor)llllllllllllllllllIllIlIllIIllII.get()).rainbow = llllllllllllllllllIllIlIllIIlIll.rainbow.checked;
-            llllllllllllllllllIllIllIIIllIIl.changed();
-        };
-        llllllllllllllllllIllIllIIIlIlll.add(llllllllllllllllllIllIllIIIllIll.rainbow).expandCellX().right();
-        WHorizontalList llllllllllllllllllIllIllIIIlIllI = llllllllllllllllllIllIllIIIllIll.add(llllllllllllllllllIllIllIIIlIIlI.horizontalList()).expandX().widget();
-        WButton llllllllllllllllllIllIllIIIlIlIl = llllllllllllllllllIllIllIIIlIllI.add(llllllllllllllllllIllIllIIIlIIlI.button("Back")).expandX().widget();
-        llllllllllllllllllIllIllIIIlIlIl.action = llllllllllllllllllIllIllIIIllIll::method_25419;
-        WButton llllllllllllllllllIllIllIIIlIlII = llllllllllllllllllIllIllIIIlIllI.add(llllllllllllllllllIllIllIIIlIIlI.button(GuiRenderer.RESET)).widget();
-        llllllllllllllllllIllIllIIIlIlII.action = () -> {
-            ColorSettingScreen llllllllllllllllllIllIlIllIlIIll;
-            llllllllllllllllllIllIllIIIllIIl.reset();
-            llllllllllllllllllIllIlIllIlIIll.setFromSetting();
-            llllllllllllllllllIllIlIllIlIIll.callAction();
-        };
-        llllllllllllllllllIllIllIIIllIll.hueQuad.calculateFromSetting(false);
-        llllllllllllllllllIllIllIIIllIll.brightnessQuad.calculateFromColor(llllllllllllllllllIllIllIIIllIIl.get(), false);
+    public ColorSettingScreen(GuiTheme guiTheme, Setting<SettingColor> setting) {
+        super(guiTheme, "Select Color");
+        this.setting = setting;
+        this.displayQuad = this.add(guiTheme.quad(setting.get())).expandX().widget();
+        this.brightnessQuad = this.add(new WBrightnessQuad(this, null)).expandX().widget();
+        this.hueQuad = this.add(new WHueQuad(this, null)).expandX().widget();
+        WTable wTable = this.add(guiTheme.table()).expandX().widget();
+        wTable.add(guiTheme.label("R:"));
+        this.rItb = wTable.add(guiTheme.intEdit(setting.get().r, 0, 255)).expandX().widget();
+        this.rItb.min = 0;
+        this.rItb.max = 255;
+        this.rItb.action = this::rgbaChanged;
+        wTable.row();
+        wTable.add(guiTheme.label("G:"));
+        this.gItb = wTable.add(guiTheme.intEdit(setting.get().g, 0, 255)).expandX().widget();
+        this.gItb.min = 0;
+        this.gItb.max = 255;
+        this.gItb.action = this::rgbaChanged;
+        wTable.row();
+        wTable.add(guiTheme.label("B:"));
+        this.bItb = wTable.add(guiTheme.intEdit(setting.get().b, 0, 255)).expandX().widget();
+        this.bItb.min = 0;
+        this.bItb.max = 255;
+        this.bItb.action = this::rgbaChanged;
+        wTable.row();
+        wTable.add(guiTheme.label("A:"));
+        this.aItb = wTable.add(guiTheme.intEdit(setting.get().a, 0, 255)).expandX().widget();
+        this.aItb.min = 0;
+        this.aItb.max = 255;
+        this.aItb.action = this::rgbaChanged;
+        WHorizontalList wHorizontalList = this.add(guiTheme.horizontalList()).expandX().widget();
+        wHorizontalList.add(guiTheme.label("Rainbow: "));
+        this.rainbow = guiTheme.checkbox(setting.get().rainbow);
+        this.rainbow.action = () -> this.lambda$new$0(setting);
+        wHorizontalList.add(this.rainbow).expandCellX().right();
+        WHorizontalList wHorizontalList2 = this.add(guiTheme.horizontalList()).expandX().widget();
+        WButton wButton = wHorizontalList2.add(guiTheme.button("Back")).expandX().widget();
+        wButton.action = this::method_25419;
+        WButton wButton2 = wHorizontalList2.add(guiTheme.button(GuiRenderer.RESET)).widget();
+        wButton2.action = () -> this.lambda$new$1(setting);
+        this.hueQuad.calculateFromSetting(false);
+        this.brightnessQuad.calculateFromColor(setting.get(), false);
+    }
+
+    private void lambda$new$0(Setting setting) {
+        ((SettingColor)setting.get()).rainbow = this.rainbow.checked;
+        setting.changed();
     }
 
     private void rgbaChanged() {
-        ColorSettingScreen llllllllllllllllllIllIlIlllllIll;
-        Color llllllllllllllllllIllIlIllllllII = llllllllllllllllllIllIlIlllllIll.setting.get();
-        llllllllllllllllllIllIlIllllllII.r = llllllllllllllllllIllIlIlllllIll.rItb.get();
-        llllllllllllllllllIllIlIllllllII.g = llllllllllllllllllIllIlIlllllIll.gItb.get();
-        llllllllllllllllllIllIlIllllllII.b = llllllllllllllllllIllIlIlllllIll.bItb.get();
-        llllllllllllllllllIllIlIllllllII.a = llllllllllllllllllIllIlIlllllIll.aItb.get();
-        llllllllllllllllllIllIlIllllllII.validate();
-        if (llllllllllllllllllIllIlIllllllII.r != llllllllllllllllllIllIlIlllllIll.rItb.get()) {
-            llllllllllllllllllIllIlIlllllIll.rItb.set(llllllllllllllllllIllIlIllllllII.r);
+        Color color = this.setting.get();
+        color.r = this.rItb.get();
+        color.g = this.gItb.get();
+        color.b = this.bItb.get();
+        color.a = this.aItb.get();
+        color.validate();
+        if (color.r != this.rItb.get()) {
+            this.rItb.set(color.r);
         }
-        if (llllllllllllllllllIllIlIllllllII.g != llllllllllllllllllIllIlIlllllIll.gItb.get()) {
-            llllllllllllllllllIllIlIlllllIll.gItb.set(llllllllllllllllllIllIlIllllllII.g);
+        if (color.g != this.gItb.get()) {
+            this.gItb.set(color.g);
         }
-        if (llllllllllllllllllIllIlIllllllII.b != llllllllllllllllllIllIlIlllllIll.bItb.get()) {
-            llllllllllllllllllIllIlIlllllIll.bItb.set(llllllllllllllllllIllIlIllllllII.b);
+        if (color.b != this.bItb.get()) {
+            this.bItb.set(color.b);
         }
-        if (llllllllllllllllllIllIlIllllllII.a != llllllllllllllllllIllIlIlllllIll.aItb.get()) {
-            llllllllllllllllllIllIlIlllllIll.aItb.set(llllllllllllllllllIllIlIllllllII.a);
+        if (color.a != this.aItb.get()) {
+            this.aItb.set(color.a);
         }
-        llllllllllllllllllIllIlIlllllIll.displayQuad.color.set(llllllllllllllllllIllIlIllllllII);
-        llllllllllllllllllIllIlIlllllIll.hueQuad.calculateFromSetting(true);
-        llllllllllllllllllIllIlIlllllIll.brightnessQuad.calculateFromColor(llllllllllllllllllIllIlIlllllIll.setting.get(), true);
-        llllllllllllllllllIllIlIlllllIll.setting.changed();
-        llllllllllllllllllIllIlIlllllIll.callAction();
+        this.displayQuad.color.set(color);
+        this.hueQuad.calculateFromSetting(true);
+        this.brightnessQuad.calculateFromColor(this.setting.get(), true);
+        this.setting.changed();
+        this.callAction();
+    }
+
+    static Color access$700() {
+        return BLACK;
     }
 
     private void setFromSetting() {
-        ColorSettingScreen llllllllllllllllllIllIllIIIIlIIl;
-        SettingColor llllllllllllllllllIllIllIIIIlIII = llllllllllllllllllIllIllIIIIlIIl.setting.get();
-        if (llllllllllllllllllIllIllIIIIlIII.r != llllllllllllllllllIllIllIIIIlIIl.rItb.get()) {
-            llllllllllllllllllIllIllIIIIlIIl.rItb.set(llllllllllllllllllIllIllIIIIlIII.r);
+        SettingColor settingColor = this.setting.get();
+        if (settingColor.r != this.rItb.get()) {
+            this.rItb.set(settingColor.r);
         }
-        if (llllllllllllllllllIllIllIIIIlIII.g != llllllllllllllllllIllIllIIIIlIIl.gItb.get()) {
-            llllllllllllllllllIllIllIIIIlIIl.gItb.set(llllllllllllllllllIllIllIIIIlIII.g);
+        if (settingColor.g != this.gItb.get()) {
+            this.gItb.set(settingColor.g);
         }
-        if (llllllllllllllllllIllIllIIIIlIII.b != llllllllllllllllllIllIllIIIIlIIl.bItb.get()) {
-            llllllllllllllllllIllIllIIIIlIIl.bItb.set(llllllllllllllllllIllIllIIIIlIII.b);
+        if (settingColor.b != this.bItb.get()) {
+            this.bItb.set(settingColor.b);
         }
-        if (llllllllllllllllllIllIllIIIIlIII.a != llllllllllllllllllIllIllIIIIlIIl.aItb.get()) {
-            llllllllllllllllllIllIllIIIIlIIl.aItb.set(llllllllllllllllllIllIllIIIIlIII.a);
+        if (settingColor.a != this.aItb.get()) {
+            this.aItb.set(settingColor.a);
         }
-        llllllllllllllllllIllIllIIIIlIIl.rainbow.checked = llllllllllllllllllIllIllIIIIlIII.rainbow;
-        llllllllllllllllllIllIllIIIIlIIl.displayQuad.color.set(llllllllllllllllllIllIllIIIIlIIl.setting.get());
-        llllllllllllllllllIllIllIIIIlIIl.hueQuad.calculateFromSetting(true);
-        llllllllllllllllllIllIllIIIIlIIl.brightnessQuad.calculateFromColor(llllllllllllllllllIllIllIIIIlIIl.setting.get(), true);
+        this.rainbow.checked = settingColor.rainbow;
+        this.displayQuad.color.set(this.setting.get());
+        this.hueQuad.calculateFromSetting(true);
+        this.brightnessQuad.calculateFromColor(this.setting.get(), true);
+    }
+
+    static Color access$500() {
+        return WHITE;
+    }
+
+    static Setting access$800(ColorSettingScreen colorSettingScreen) {
+        return colorSettingScreen.setting;
     }
 
     public void method_25393() {
-        ColorSettingScreen llllllllllllllllllIllIllIIIIIIII;
         super.method_25393();
-        if (llllllllllllllllllIllIllIIIIIIII.setting.get().rainbow) {
-            llllllllllllllllllIllIllIIIIIIII.setFromSetting();
+        if (this.setting.get().rainbow) {
+            this.setFromSetting();
         }
     }
 
+    static WHueQuad access$400(ColorSettingScreen colorSettingScreen) {
+        return colorSettingScreen.hueQuad;
+    }
+
     private void hsvChanged() {
-        ColorSettingScreen llllllllllllllllllIllIlIlllIIIII;
-        double llllllllllllllllllIllIlIlllIIllI = 0.0;
-        double llllllllllllllllllIllIlIlllIIlIl = 0.0;
-        double llllllllllllllllllIllIlIlllIIlII = 0.0;
-        boolean llllllllllllllllllIllIlIlllIIIll = false;
-        if (llllllllllllllllllIllIlIlllIIIII.brightnessQuad.saturation <= 0.0) {
-            llllllllllllllllllIllIlIlllIIllI = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
-            llllllllllllllllllIllIlIlllIIlIl = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
-            llllllllllllllllllIllIlIlllIIlII = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
-            llllllllllllllllllIllIlIlllIIIll = true;
+        double d = 0.0;
+        double d2 = 0.0;
+        double d3 = 0.0;
+        boolean bl = false;
+        if (this.brightnessQuad.saturation <= 0.0) {
+            d = this.brightnessQuad.value;
+            d2 = this.brightnessQuad.value;
+            d3 = this.brightnessQuad.value;
+            bl = true;
         }
-        if (!llllllllllllllllllIllIlIlllIIIll) {
-            double llllllllllllllllllIllIlIlllIllIl = llllllllllllllllllIllIlIlllIIIII.hueQuad.hueAngle;
-            if (llllllllllllllllllIllIlIlllIllIl >= 360.0) {
-                llllllllllllllllllIllIlIlllIllIl = 0.0;
+        if (!bl) {
+            double d4 = WHueQuad.access$200(this.hueQuad);
+            if (d4 >= 360.0) {
+                d4 = 0.0;
             }
-            int llllllllllllllllllIllIlIlllIlIII = (int)(llllllllllllllllllIllIlIlllIllIl /= 60.0);
-            double llllllllllllllllllIllIlIlllIlIIl = llllllllllllllllllIllIlIlllIllIl - (double)llllllllllllllllllIllIlIlllIlIII;
-            double llllllllllllllllllIllIlIlllIllII = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value * (1.0 - llllllllllllllllllIllIlIlllIIIII.brightnessQuad.saturation);
-            double llllllllllllllllllIllIlIlllIlIll = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value * (1.0 - llllllllllllllllllIllIlIlllIIIII.brightnessQuad.saturation * llllllllllllllllllIllIlIlllIlIIl);
-            double llllllllllllllllllIllIlIlllIlIlI = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value * (1.0 - llllllllllllllllllIllIlIlllIIIII.brightnessQuad.saturation * (1.0 - llllllllllllllllllIllIlIlllIlIIl));
-            switch (llllllllllllllllllIllIlIlllIlIII) {
+            int n = (int)(d4 /= 60.0);
+            double d5 = d4 - (double)n;
+            double d6 = this.brightnessQuad.value * (1.0 - this.brightnessQuad.saturation);
+            double d7 = this.brightnessQuad.value * (1.0 - this.brightnessQuad.saturation * d5);
+            double d8 = this.brightnessQuad.value * (1.0 - this.brightnessQuad.saturation * (1.0 - d5));
+            switch (n) {
                 case 0: {
-                    llllllllllllllllllIllIlIlllIIllI = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
-                    llllllllllllllllllIllIlIlllIIlIl = llllllllllllllllllIllIlIlllIlIlI;
-                    llllllllllllllllllIllIlIlllIIlII = llllllllllllllllllIllIlIlllIllII;
+                    d = this.brightnessQuad.value;
+                    d2 = d8;
+                    d3 = d6;
                     break;
                 }
                 case 1: {
-                    llllllllllllllllllIllIlIlllIIllI = llllllllllllllllllIllIlIlllIlIll;
-                    llllllllllllllllllIllIlIlllIIlIl = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
-                    llllllllllllllllllIllIlIlllIIlII = llllllllllllllllllIllIlIlllIllII;
+                    d = d7;
+                    d2 = this.brightnessQuad.value;
+                    d3 = d6;
                     break;
                 }
                 case 2: {
-                    llllllllllllllllllIllIlIlllIIllI = llllllllllllllllllIllIlIlllIllII;
-                    llllllllllllllllllIllIlIlllIIlIl = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
-                    llllllllllllllllllIllIlIlllIIlII = llllllllllllllllllIllIlIlllIlIlI;
+                    d = d6;
+                    d2 = this.brightnessQuad.value;
+                    d3 = d8;
                     break;
                 }
                 case 3: {
-                    llllllllllllllllllIllIlIlllIIllI = llllllllllllllllllIllIlIlllIllII;
-                    llllllllllllllllllIllIlIlllIIlIl = llllllllllllllllllIllIlIlllIlIll;
-                    llllllllllllllllllIllIlIlllIIlII = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
+                    d = d6;
+                    d2 = d7;
+                    d3 = this.brightnessQuad.value;
                     break;
                 }
                 case 4: {
-                    llllllllllllllllllIllIlIlllIIllI = llllllllllllllllllIllIlIlllIlIlI;
-                    llllllllllllllllllIllIlIlllIIlIl = llllllllllllllllllIllIlIlllIllII;
-                    llllllllllllllllllIllIlIlllIIlII = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
+                    d = d8;
+                    d2 = d6;
+                    d3 = this.brightnessQuad.value;
                     break;
                 }
                 default: {
-                    llllllllllllllllllIllIlIlllIIllI = llllllllllllllllllIllIlIlllIIIII.brightnessQuad.value;
-                    llllllllllllllllllIllIlIlllIIlIl = llllllllllllllllllIllIlIlllIllII;
-                    llllllllllllllllllIllIlIlllIIlII = llllllllllllllllllIllIlIlllIlIll;
+                    d = this.brightnessQuad.value;
+                    d2 = d6;
+                    d3 = d7;
                 }
             }
         }
-        Color llllllllllllllllllIllIlIlllIIIlI = llllllllllllllllllIllIlIlllIIIII.setting.get();
-        llllllllllllllllllIllIlIlllIIIlI.r = (int)(llllllllllllllllllIllIlIlllIIllI * 255.0);
-        llllllllllllllllllIllIlIlllIIIlI.g = (int)(llllllllllllllllllIllIlIlllIIlIl * 255.0);
-        llllllllllllllllllIllIlIlllIIIlI.b = (int)(llllllllllllllllllIllIlIlllIIlII * 255.0);
-        llllllllllllllllllIllIlIlllIIIlI.validate();
-        llllllllllllllllllIllIlIlllIIIII.rItb.set(llllllllllllllllllIllIlIlllIIIlI.r);
-        llllllllllllllllllIllIlIlllIIIII.gItb.set(llllllllllllllllllIllIlIlllIIIlI.g);
-        llllllllllllllllllIllIlIlllIIIII.bItb.set(llllllllllllllllllIllIlIlllIIIlI.b);
-        llllllllllllllllllIllIlIlllIIIII.displayQuad.color.set(llllllllllllllllllIllIlIlllIIIlI);
-        llllllllllllllllllIllIlIlllIIIII.setting.changed();
-        llllllllllllllllllIllIlIlllIIIII.callAction();
+        Color color = this.setting.get();
+        color.r = (int)(d * 255.0);
+        color.g = (int)(d2 * 255.0);
+        color.b = (int)(d3 * 255.0);
+        color.validate();
+        this.rItb.set(color.r);
+        this.gItb.set(color.g);
+        this.bItb.set(color.b);
+        this.displayQuad.color.set(color);
+        this.setting.changed();
+        this.callAction();
     }
 
     private class WBrightnessQuad
     extends WWidget {
-        /* synthetic */ double fixedHeight;
-        /* synthetic */ boolean dragging;
-        /* synthetic */ boolean calculateHandlePosOnLayout;
-        /* synthetic */ double handleX;
-        /* synthetic */ double handleY;
-        /* synthetic */ double saturation;
-        /* synthetic */ double lastMouseY;
-        /* synthetic */ double value;
-        /* synthetic */ double lastMouseX;
+        double fixedHeight;
+        boolean dragging;
+        boolean calculateHandlePosOnLayout;
+        double handleX;
+        double handleY;
+        double saturation;
+        final ColorSettingScreen this$0;
+        double lastMouseY;
+        double value;
+        double lastMouseX;
 
         @Override
         protected void onCalculateWidgetPositions() {
-            WBrightnessQuad llllIIIlllIllll;
-            if (llllIIIlllIllll.calculateHandlePosOnLayout) {
-                llllIIIlllIllll.handleX = llllIIIlllIllll.saturation * llllIIIlllIllll.width;
-                llllIIIlllIllll.handleY = (1.0 - llllIIIlllIllll.value) * llllIIIlllIllll.height;
-                llllIIIlllIllll.calculateHandlePosOnLayout = false;
+            if (this.calculateHandlePosOnLayout) {
+                this.handleX = this.saturation * this.width;
+                this.handleY = (1.0 - this.value) * this.height;
+                this.calculateHandlePosOnLayout = false;
             }
             super.onCalculateWidgetPositions();
         }
 
         @Override
-        public boolean onMouseReleased(double llllIIIlllIIIll, double llllIIIlllIIIlI, int llllIIIlllIIIIl) {
-            WBrightnessQuad llllIIIlllIIlII;
-            if (llllIIIlllIIlII.dragging) {
-                llllIIIlllIIlII.dragging = false;
+        public boolean onMouseReleased(double d, double d2, int n) {
+            if (this.dragging) {
+                this.dragging = false;
             }
             return false;
         }
 
-        void calculateFromColor(Color llllIIIllllIllI, boolean llllIIIlllllIll) {
-            double llllIIIlllllIlI = Math.min(Math.min(llllIIIllllIllI.r, llllIIIllllIllI.g), llllIIIllllIllI.b);
-            double llllIIIlllllIIl = Math.max(Math.max(llllIIIllllIllI.r, llllIIIllllIllI.g), llllIIIllllIllI.b);
-            double llllIIIlllllIII = llllIIIlllllIIl - llllIIIlllllIlI;
-            llllIIIllllIlll.value = llllIIIlllllIIl / 255.0;
-            llllIIIllllIlll.saturation = llllIIIlllllIII == 0.0 ? 0.0 : llllIIIlllllIII / llllIIIlllllIIl;
-            if (llllIIIlllllIll) {
-                WBrightnessQuad llllIIIllllIlll;
-                llllIIIllllIlll.handleX = llllIIIllllIlll.saturation * llllIIIllllIlll.width;
-                llllIIIllllIlll.handleY = (1.0 - llllIIIllllIlll.value) * llllIIIllllIlll.height;
+        WBrightnessQuad(ColorSettingScreen colorSettingScreen, 1 var2_2) {
+            this(colorSettingScreen);
+        }
+
+        void calculateFromColor(Color color, boolean bl) {
+            double d = Math.min(Math.min(color.r, color.g), color.b);
+            double d2 = Math.max(Math.max(color.r, color.g), color.b);
+            double d3 = d2 - d;
+            this.value = d2 / 255.0;
+            this.saturation = d3 == 0.0 ? 0.0 : d3 / d2;
+            if (bl) {
+                this.handleX = this.saturation * this.width;
+                this.handleY = (1.0 - this.value) * this.height;
             } else {
-                llllIIIllllIlll.calculateHandlePosOnLayout = true;
+                this.calculateHandlePosOnLayout = true;
             }
         }
 
         @Override
         protected void onCalculateSize() {
-            WBrightnessQuad llllIIlIIIIIlll;
-            double llllIIlIIIIIllI;
-            llllIIlIIIIIlll.width = llllIIlIIIIIllI = llllIIlIIIIIlll.theme.scale(75.0);
-            llllIIlIIIIIlll.height = llllIIlIIIIIllI;
-            if (llllIIlIIIIIlll.fixedHeight != -1.0) {
-                llllIIlIIIIIlll.height = llllIIlIIIIIlll.fixedHeight;
-                llllIIlIIIIIlll.fixedHeight = -1.0;
+            double d;
+            this.width = d = this.theme.scale(75.0);
+            this.height = d;
+            if (this.fixedHeight != -1.0) {
+                this.height = this.fixedHeight;
+                this.fixedHeight = -1.0;
             }
         }
 
         @Override
-        protected void onRender(GuiRenderer llllIIIlIllllIl, double llllIIIllIIIIlI, double llllIIIllIIIIIl, double llllIIIllIIIIII) {
-            WBrightnessQuad llllIIIlIlllllI;
-            if (llllIIIlIlllllI.height != llllIIIlIlllllI.width) {
-                llllIIIlIlllllI.fixedHeight = llllIIIlIlllllI.width;
-                llllIIIlIlllllI.invalidate();
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            if (this.height != this.width) {
+                this.fixedHeight = this.width;
+                this.invalidate();
             }
-            llllIIIlIlllllI.ColorSettingScreen.this.hueQuad.calculateColor();
-            llllIIIlIllllIl.quad(llllIIIlIlllllI.x, llllIIIlIlllllI.y, llllIIIlIlllllI.width, llllIIIlIlllllI.height, WHITE, llllIIIlIlllllI.ColorSettingScreen.this.hueQuad.color, BLACK, BLACK);
-            double llllIIIlIllllll = llllIIIlIlllllI.theme.scale(2.0);
-            llllIIIlIllllIl.quad(llllIIIlIlllllI.x + llllIIIlIlllllI.handleX - llllIIIlIllllll / 2.0, llllIIIlIlllllI.y + llllIIIlIlllllI.handleY - llllIIIlIllllll / 2.0, llllIIIlIllllll, llllIIIlIllllll, WHITE);
+            ColorSettingScreen.access$400(this.this$0).calculateColor();
+            guiRenderer.quad(this.x, this.y, this.width, this.height, ColorSettingScreen.access$500(), WHueQuad.access$600(ColorSettingScreen.access$400(this.this$0)), ColorSettingScreen.access$700(), ColorSettingScreen.access$700());
+            double d4 = this.theme.scale(2.0);
+            guiRenderer.quad(this.x + this.handleX - d4 / 2.0, this.y + this.handleY - d4 / 2.0, d4, d4, ColorSettingScreen.access$500());
         }
 
         @Override
-        public boolean onMouseClicked(double llllIIIlllIlIll, double llllIIIlllIlIlI, int llllIIIlllIlIIl, boolean llllIIIlllIlIII) {
-            WBrightnessQuad llllIIIlllIIlll;
-            if (llllIIIlllIlIII) {
+        public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
+            if (bl) {
                 return false;
             }
-            if (llllIIIlllIIlll.mouseOver) {
-                llllIIIlllIIlll.dragging = true;
-                llllIIIlllIIlll.handleX = llllIIIlllIIlll.lastMouseX - llllIIIlllIIlll.x;
-                llllIIIlllIIlll.handleY = llllIIIlllIIlll.lastMouseY - llllIIIlllIIlll.y;
-                llllIIIlllIIlll.handleMoved();
+            if (this.mouseOver) {
+                this.dragging = true;
+                this.handleX = this.lastMouseX - this.x;
+                this.handleY = this.lastMouseY - this.y;
+                this.handleMoved();
                 return true;
             }
             return false;
         }
 
         void handleMoved() {
-            WBrightnessQuad llllIIIllIIlIlI;
-            double llllIIIllIIllII = llllIIIllIIlIlI.handleX / llllIIIllIIlIlI.width;
-            double llllIIIllIIlIll = llllIIIllIIlIlI.handleY / llllIIIllIIlIlI.height;
-            llllIIIllIIlIlI.saturation = llllIIIllIIllII;
-            llllIIIllIIlIlI.value = 1.0 - llllIIIllIIlIll;
-            llllIIIllIIlIlI.ColorSettingScreen.this.hsvChanged();
+            double d = this.handleX / this.width;
+            double d2 = this.handleY / this.height;
+            this.saturation = d;
+            this.value = 1.0 - d2;
+            ColorSettingScreen.access$300(this.this$0);
         }
 
-        private WBrightnessQuad() {
-            WBrightnessQuad llllIIlIIIIllII;
-            llllIIlIIIIllII.fixedHeight = -1.0;
+        private WBrightnessQuad(ColorSettingScreen colorSettingScreen) {
+            this.this$0 = colorSettingScreen;
+            this.fixedHeight = -1.0;
         }
 
         @Override
-        public void onMouseMoved(double llllIIIllIllIIl, double llllIIIllIlIIll, double llllIIIllIlIlll, double llllIIIllIlIllI) {
-            WBrightnessQuad llllIIIllIlIlIl;
-            if (llllIIIllIlIlIl.dragging) {
-                if (llllIIIllIllIIl >= llllIIIllIlIlIl.x && llllIIIllIllIIl <= llllIIIllIlIlIl.x + llllIIIllIlIlIl.width) {
-                    llllIIIllIlIlIl.handleX += llllIIIllIllIIl - llllIIIllIlIlll;
-                } else if (llllIIIllIlIlIl.handleX > 0.0 && llllIIIllIllIIl < llllIIIllIlIlIl.x) {
-                    llllIIIllIlIlIl.handleX = 0.0;
-                } else if (llllIIIllIlIlIl.handleX < llllIIIllIlIlIl.width && llllIIIllIllIIl > llllIIIllIlIlIl.x + llllIIIllIlIlIl.width) {
-                    llllIIIllIlIlIl.handleX = llllIIIllIlIlIl.width;
+        public void onMouseMoved(double d, double d2, double d3, double d4) {
+            if (this.dragging) {
+                if (d >= this.x && d <= this.x + this.width) {
+                    this.handleX += d - d3;
+                } else if (this.handleX > 0.0 && d < this.x) {
+                    this.handleX = 0.0;
+                } else if (this.handleX < this.width && d > this.x + this.width) {
+                    this.handleX = this.width;
                 }
-                if (llllIIIllIlIIll >= llllIIIllIlIlIl.y && llllIIIllIlIIll <= llllIIIllIlIlIl.y + llllIIIllIlIlIl.height) {
-                    llllIIIllIlIlIl.handleY += llllIIIllIlIIll - llllIIIllIlIllI;
-                } else if (llllIIIllIlIlIl.handleY > 0.0 && llllIIIllIlIIll < llllIIIllIlIlIl.y) {
-                    llllIIIllIlIlIl.handleY = 0.0;
-                } else if (llllIIIllIlIlIl.handleY < llllIIIllIlIlIl.height && llllIIIllIlIIll > llllIIIllIlIlIl.y + llllIIIllIlIlIl.height) {
-                    llllIIIllIlIlIl.handleY = llllIIIllIlIlIl.height;
+                if (d2 >= this.y && d2 <= this.y + this.height) {
+                    this.handleY += d2 - d4;
+                } else if (this.handleY > 0.0 && d2 < this.y) {
+                    this.handleY = 0.0;
+                } else if (this.handleY < this.height && d2 > this.y + this.height) {
+                    this.handleY = this.height;
                 }
-                llllIIIllIlIlIl.handleMoved();
+                this.handleMoved();
             }
-            llllIIIllIlIlIl.lastMouseX = llllIIIllIllIIl;
-            llllIIIllIlIlIl.lastMouseY = llllIIIllIlIIll;
+            this.lastMouseX = d;
+            this.lastMouseY = d2;
         }
     }
 
     private class WHueQuad
     extends WWidget {
-        private /* synthetic */ boolean calculateHandleXOnLayout;
-        private /* synthetic */ double handleX;
-        private /* synthetic */ boolean dragging;
-        private /* synthetic */ double hueAngle;
-        private final /* synthetic */ Color color;
-        private /* synthetic */ double lastMouseX;
+        private boolean calculateHandleXOnLayout;
+        final ColorSettingScreen this$0;
+        private double handleX;
+        private boolean dragging;
+        private double hueAngle;
+        private final Color color;
+        private double lastMouseX;
 
         @Override
-        public void onMouseMoved(double lIIIllIlIIllll, double lIIIllIlIlIIll, double lIIIllIlIIlllI, double lIIIllIlIlIIIl) {
-            WHueQuad lIIIllIlIlIlIl;
-            if (lIIIllIlIlIlIl.dragging) {
-                if (lIIIllIlIIllll >= lIIIllIlIlIlIl.x && lIIIllIlIIllll <= lIIIllIlIlIlIl.x + lIIIllIlIlIlIl.width) {
-                    lIIIllIlIlIlIl.handleX += lIIIllIlIIllll - lIIIllIlIIlllI;
-                    lIIIllIlIlIlIl.handleX = Utils.clamp(lIIIllIlIlIlIl.handleX, 0.0, lIIIllIlIlIlIl.width);
-                } else if (lIIIllIlIlIlIl.handleX > 0.0 && lIIIllIlIIllll < lIIIllIlIlIlIl.x) {
-                    lIIIllIlIlIlIl.handleX = 0.0;
-                } else if (lIIIllIlIlIlIl.handleX < lIIIllIlIlIlIl.width && lIIIllIlIIllll > lIIIllIlIlIlIl.x + lIIIllIlIlIlIl.width) {
-                    lIIIllIlIlIlIl.handleX = lIIIllIlIlIlIl.width;
+        public void onMouseMoved(double d, double d2, double d3, double d4) {
+            if (this.dragging) {
+                if (d >= this.x && d <= this.x + this.width) {
+                    this.handleX += d - d3;
+                    this.handleX = Utils.clamp(this.handleX, 0.0, this.width);
+                } else if (this.handleX > 0.0 && d < this.x) {
+                    this.handleX = 0.0;
+                } else if (this.handleX < this.width && d > this.x + this.width) {
+                    this.handleX = this.width;
                 }
-                lIIIllIlIlIlIl.calculateHueAngleFromHandleX();
-                lIIIllIlIlIlIl.ColorSettingScreen.this.hsvChanged();
+                this.calculateHueAngleFromHandleX();
+                ColorSettingScreen.access$300(this.this$0);
             }
-            lIIIllIlIlIlIl.lastMouseX = lIIIllIlIIllll;
+            this.lastMouseX = d;
+        }
+
+        static Color access$600(WHueQuad wHueQuad) {
+            return wHueQuad.color;
         }
 
         @Override
         protected void onCalculateWidgetPositions() {
-            WHueQuad lIIIlllIIlIlll;
-            if (lIIIlllIIlIlll.calculateHandleXOnLayout) {
-                double lIIIlllIIllIII = lIIIlllIIlIlll.hueAngle / 360.0;
-                lIIIlllIIlIlll.handleX = lIIIlllIIllIII * lIIIlllIIlIlll.width;
-                lIIIlllIIlIlll.calculateHandleXOnLayout = false;
+            if (this.calculateHandleXOnLayout) {
+                double d = this.hueAngle / 360.0;
+                this.handleX = d * this.width;
+                this.calculateHandleXOnLayout = false;
             }
             super.onCalculateWidgetPositions();
         }
 
         @Override
-        public boolean onMouseReleased(double lIIIllIlIlllII, double lIIIllIlIllIll, int lIIIllIlIllIlI) {
-            WHueQuad lIIIllIlIllIIl;
-            if (lIIIllIlIllIIl.dragging) {
-                lIIIllIlIllIIl.dragging = false;
+        public boolean onMouseReleased(double d, double d2, int n) {
+            if (this.dragging) {
+                this.dragging = false;
             }
-            return lIIIllIlIllIIl.mouseOver;
+            return this.mouseOver;
         }
 
-        private WHueQuad() {
-            WHueQuad lIIIlllIllIlll;
-            lIIIlllIllIlll.color = new Color();
+        private WHueQuad(ColorSettingScreen colorSettingScreen) {
+            this.this$0 = colorSettingScreen;
+            this.color = new Color();
         }
 
         void calculateHueAngleFromHandleX() {
-            WHueQuad lIIIllIlIIlIll;
-            double lIIIllIlIIlIlI = lIIIllIlIIlIll.handleX / (lIIIllIlIIlIll.width - 4.0);
-            lIIIllIlIIlIll.hueAngle = lIIIllIlIIlIlI * 360.0;
+            double d = this.handleX / (this.width - 4.0);
+            this.hueAngle = d * 360.0;
         }
 
-        void calculateFromSetting(boolean lIIIlllIlIIIIl) {
-            WHueQuad lIIIlllIlIlIIl;
-            Color lIIIlllIlIIlll = (Color)lIIIlllIlIlIIl.ColorSettingScreen.this.setting.get();
-            boolean lIIIlllIlIIllI = false;
-            double lIIIlllIlIIlIl = Math.min(lIIIlllIlIIlll.r, lIIIlllIlIIlll.g);
-            lIIIlllIlIIlIl = lIIIlllIlIIlIl < (double)lIIIlllIlIIlll.b ? lIIIlllIlIIlIl : (double)lIIIlllIlIIlll.b;
-            double lIIIlllIlIIlII = Math.max(lIIIlllIlIIlll.r, lIIIlllIlIIlll.g);
-            double lIIIlllIlIIIll = (lIIIlllIlIIlII = lIIIlllIlIIlII > (double)lIIIlllIlIIlll.b ? lIIIlllIlIIlII : (double)lIIIlllIlIIlll.b) - lIIIlllIlIIlIl;
-            if (lIIIlllIlIIIll < 1.0E-5) {
-                lIIIlllIlIlIIl.hueAngle = 0.0;
-                lIIIlllIlIIllI = true;
+        void calculateFromSetting(boolean bl) {
+            Color color = (Color)ColorSettingScreen.access$800(this.this$0).get();
+            boolean bl2 = false;
+            double d = Math.min(color.r, color.g);
+            d = d < (double)color.b ? d : (double)color.b;
+            double d2 = Math.max(color.r, color.g);
+            double d3 = (d2 = d2 > (double)color.b ? d2 : (double)color.b) - d;
+            if (d3 < 1.0E-5) {
+                this.hueAngle = 0.0;
+                bl2 = true;
             }
-            if (!lIIIlllIlIIllI) {
-                if (lIIIlllIlIIlII <= 0.0) {
-                    lIIIlllIlIlIIl.hueAngle = 0.0;
-                    lIIIlllIlIIllI = true;
+            if (!bl2) {
+                if (d2 <= 0.0) {
+                    this.hueAngle = 0.0;
+                    bl2 = true;
                 }
-                if (!lIIIlllIlIIllI) {
-                    lIIIlllIlIlIIl.hueAngle = (double)lIIIlllIlIIlll.r >= lIIIlllIlIIlII ? (double)(lIIIlllIlIIlll.g - lIIIlllIlIIlll.b) / lIIIlllIlIIIll : ((double)lIIIlllIlIIlll.g >= lIIIlllIlIIlII ? 2.0 + (double)(lIIIlllIlIIlll.b - lIIIlllIlIIlll.r) / lIIIlllIlIIIll : 4.0 + (double)(lIIIlllIlIIlll.r - lIIIlllIlIIlll.g) / lIIIlllIlIIIll);
-                    lIIIlllIlIlIIl.hueAngle *= 60.0;
-                    if (lIIIlllIlIlIIl.hueAngle < 0.0) {
-                        lIIIlllIlIlIIl.hueAngle += 360.0;
+                if (!bl2) {
+                    this.hueAngle = (double)color.r >= d2 ? (double)(color.g - color.b) / d3 : ((double)color.g >= d2 ? 2.0 + (double)(color.b - color.r) / d3 : 4.0 + (double)(color.r - color.g) / d3);
+                    this.hueAngle *= 60.0;
+                    if (this.hueAngle < 0.0) {
+                        this.hueAngle += 360.0;
                     }
                 }
             }
-            if (lIIIlllIlIIIIl) {
-                double lIIIlllIlIlIlI = lIIIlllIlIlIIl.hueAngle / 360.0;
-                lIIIlllIlIlIIl.handleX = lIIIlllIlIlIlI * lIIIlllIlIlIIl.width;
+            if (bl) {
+                double d4 = this.hueAngle / 360.0;
+                this.handleX = d4 * this.width;
             } else {
-                lIIIlllIlIlIIl.calculateHandleXOnLayout = true;
+                this.calculateHandleXOnLayout = true;
             }
         }
 
         @Override
-        public boolean onMouseClicked(double lIIIllIllIIlII, double lIIIllIllIIIll, int lIIIllIllIIIlI, boolean lIIIllIlIlllll) {
-            WHueQuad lIIIllIllIIlIl;
-            if (lIIIllIlIlllll) {
+        public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
+            if (bl) {
                 return false;
             }
-            if (lIIIllIllIIlIl.mouseOver) {
-                lIIIllIllIIlIl.dragging = true;
-                lIIIllIllIIlIl.handleX = lIIIllIllIIlIl.lastMouseX - lIIIllIllIIlIl.x;
-                lIIIllIllIIlIl.calculateHueAngleFromHandleX();
-                lIIIllIllIIlIl.ColorSettingScreen.this.hsvChanged();
+            if (this.mouseOver) {
+                this.dragging = true;
+                this.handleX = this.lastMouseX - this.x;
+                this.calculateHueAngleFromHandleX();
+                ColorSettingScreen.access$300(this.this$0);
                 return true;
             }
             return false;
         }
 
+        static double access$200(WHueQuad wHueQuad) {
+            return wHueQuad.hueAngle;
+        }
+
         @Override
-        protected void onRender(GuiRenderer lIIIllIlIIIIII, double lIIIllIIllllll, double lIIIllIIlllllI, double lIIIllIIllllIl) {
-            WHueQuad lIIIllIIlllIIl;
-            double lIIIllIIllllII = lIIIllIIlllIIl.width / (double)(HUE_COLORS.length - 1);
-            double lIIIllIIlllIll = lIIIllIIlllIIl.x;
-            for (int lIIIllIlIIIIlI = 0; lIIIllIlIIIIlI < HUE_COLORS.length - 1; ++lIIIllIlIIIIlI) {
-                lIIIllIlIIIIII.quad(lIIIllIIlllIll, lIIIllIIlllIIl.y, lIIIllIIllllII, lIIIllIIlllIIl.height, HUE_COLORS[lIIIllIlIIIIlI], HUE_COLORS[lIIIllIlIIIIlI + 1], HUE_COLORS[lIIIllIlIIIIlI + 1], HUE_COLORS[lIIIllIlIIIIlI]);
-                lIIIllIIlllIll += lIIIllIIllllII;
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            double d4 = this.width / (double)(ColorSettingScreen.access$900().length - 1);
+            double d5 = this.x;
+            for (int i = 0; i < ColorSettingScreen.access$900().length - 1; ++i) {
+                guiRenderer.quad(d5, this.y, d4, this.height, ColorSettingScreen.access$900()[i], ColorSettingScreen.access$900()[i + 1], ColorSettingScreen.access$900()[i + 1], ColorSettingScreen.access$900()[i]);
+                d5 += d4;
+                if (-1 <= 0) continue;
+                return;
             }
-            double lIIIllIIlllIlI = lIIIllIIlllIIl.theme.scale(2.0);
-            lIIIllIlIIIIII.quad(lIIIllIIlllIIl.x + lIIIllIIlllIIl.handleX - lIIIllIIlllIlI / 2.0, lIIIllIIlllIIl.y, lIIIllIIlllIlI, lIIIllIIlllIIl.height, WHITE);
+            double d6 = this.theme.scale(2.0);
+            guiRenderer.quad(this.x + this.handleX - d6 / 2.0, this.y, d6, this.height, ColorSettingScreen.access$500());
+        }
+
+        WHueQuad(ColorSettingScreen colorSettingScreen, 1 var2_2) {
+            this(colorSettingScreen);
         }
 
         void calculateColor() {
-            double lIIIllIlllIIlI;
-            double lIIIllIlllIIll;
-            double lIIIllIlllIlII;
-            WHueQuad lIIIllIllllIll;
-            double lIIIllIllllIlI = lIIIllIllllIll.hueAngle;
-            if (lIIIllIllllIlI >= 360.0) {
-                lIIIllIllllIlI = 0.0;
+            double d;
+            double d2;
+            double d3;
+            double d4 = this.hueAngle;
+            if (d4 >= 360.0) {
+                d4 = 0.0;
             }
-            int lIIIllIlllIlIl = (int)(lIIIllIllllIlI /= 60.0);
-            double lIIIllIlllIllI = lIIIllIllllIlI - (double)lIIIllIlllIlIl;
-            double lIIIllIllllIIl = 0.0;
-            double lIIIllIllllIII = 1.0 * (1.0 - 1.0 * lIIIllIlllIllI);
-            double lIIIllIlllIlll = 1.0 * (1.0 - 1.0 * (1.0 - lIIIllIlllIllI));
-            switch (lIIIllIlllIlIl) {
+            int n = (int)(d4 /= 60.0);
+            double d5 = d4 - (double)n;
+            double d6 = 0.0;
+            double d7 = 1.0 * (1.0 - 1.0 * d5);
+            double d8 = 1.0 * (1.0 - 1.0 * (1.0 - d5));
+            switch (n) {
                 case 0: {
-                    double lIIIlllIIIlIlI = 1.0;
-                    double lIIIlllIIIlIIl = lIIIllIlllIlll;
-                    double lIIIlllIIIlIII = lIIIllIllllIIl;
+                    d3 = 1.0;
+                    d2 = d8;
+                    d = d6;
                     break;
                 }
                 case 1: {
-                    double lIIIlllIIIIlll = lIIIllIllllIII;
-                    double lIIIlllIIIIllI = 1.0;
-                    double lIIIlllIIIIlIl = lIIIllIllllIIl;
+                    d3 = d7;
+                    d2 = 1.0;
+                    d = d6;
                     break;
                 }
                 case 2: {
-                    double lIIIlllIIIIlII = lIIIllIllllIIl;
-                    double lIIIlllIIIIIll = 1.0;
-                    double lIIIlllIIIIIlI = lIIIllIlllIlll;
+                    d3 = d6;
+                    d2 = 1.0;
+                    d = d8;
                     break;
                 }
                 case 3: {
-                    double lIIIlllIIIIIIl = lIIIllIllllIIl;
-                    double lIIIlllIIIIIII = lIIIllIllllIII;
-                    double lIIIllIlllllll = 1.0;
+                    d3 = d6;
+                    d2 = d7;
+                    d = 1.0;
                     break;
                 }
                 case 4: {
-                    double lIIIllIllllllI = lIIIllIlllIlll;
-                    double lIIIllIlllllIl = lIIIllIllllIIl;
-                    double lIIIllIlllllII = 1.0;
+                    d3 = d8;
+                    d2 = d6;
+                    d = 1.0;
                     break;
                 }
                 default: {
-                    lIIIllIlllIlII = 1.0;
-                    lIIIllIlllIIll = lIIIllIllllIIl;
-                    lIIIllIlllIIlI = lIIIllIllllIII;
+                    d3 = 1.0;
+                    d2 = d6;
+                    d = d7;
                 }
             }
-            lIIIllIllllIll.color.r = (int)(lIIIllIlllIlII * 255.0);
-            lIIIllIllllIll.color.g = (int)(lIIIllIlllIIll * 255.0);
-            lIIIllIllllIll.color.b = (int)(lIIIllIlllIIlI * 255.0);
-            lIIIllIllllIll.color.validate();
+            this.color.r = (int)(d3 * 255.0);
+            this.color.g = (int)(d2 * 255.0);
+            this.color.b = (int)(d * 255.0);
+            this.color.validate();
         }
 
         @Override
         protected void onCalculateSize() {
-            WHueQuad lIIIlllIllIIll;
-            lIIIlllIllIIll.width = lIIIlllIllIIll.theme.scale(75.0);
-            lIIIlllIllIIll.height = lIIIlllIllIIll.theme.scale(10.0);
+            this.width = this.theme.scale(75.0);
+            this.height = this.theme.scale(10.0);
         }
     }
 }

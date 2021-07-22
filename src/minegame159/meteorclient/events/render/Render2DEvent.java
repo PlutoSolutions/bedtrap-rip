@@ -4,23 +4,15 @@
 package minegame159.meteorclient.events.render;
 
 public class Render2DEvent {
-    private static final /* synthetic */ Render2DEvent INSTANCE;
-    public /* synthetic */ int screenHeight;
-    public /* synthetic */ int screenWidth;
-    public /* synthetic */ float tickDelta;
+    private static final Render2DEvent INSTANCE = new Render2DEvent();
+    public int screenHeight;
+    public int screenWidth;
+    public float tickDelta;
 
-    static {
-        INSTANCE = new Render2DEvent();
-    }
-
-    public Render2DEvent() {
-        Render2DEvent lllllllllllllllllIllIIlIIlIlIllI;
-    }
-
-    public static Render2DEvent get(int lllllllllllllllllIllIIlIIlIlIIlI, int lllllllllllllllllIllIIlIIlIIlllI, float lllllllllllllllllIllIIlIIlIlIIII) {
-        Render2DEvent.INSTANCE.screenWidth = lllllllllllllllllIllIIlIIlIlIIlI;
-        Render2DEvent.INSTANCE.screenHeight = lllllllllllllllllIllIIlIIlIIlllI;
-        Render2DEvent.INSTANCE.tickDelta = lllllllllllllllllIllIIlIIlIlIIII;
+    public static Render2DEvent get(int n, int n2, float f) {
+        Render2DEvent.INSTANCE.screenWidth = n;
+        Render2DEvent.INSTANCE.screenHeight = n2;
+        Render2DEvent.INSTANCE.tickDelta = f;
         return INSTANCE;
     }
 }

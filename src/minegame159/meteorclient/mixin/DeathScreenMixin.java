@@ -31,15 +31,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_418.class})
 public class DeathScreenMixin
 extends class_437 {
-    protected DeathScreenMixin(class_2561 title) {
-        super(title);
+    protected DeathScreenMixin(class_2561 class_25612) {
+        super(class_25612);
     }
 
     @Inject(method={"init"}, at={@At(value="HEAD")})
-    protected void init(CallbackInfo ci) {
+    protected void init(CallbackInfo callbackInfo) {
         if (Modules.get().isActive(BypassDeathScreen.class)) {
-            this.method_25411((class_339)new class_4185(this.field_22789 / 2 - 100, this.field_22790 / 4 + 48, 200, 20, (class_2561)new class_2585("Ghost Spectate"), buttonWidgetx -> this.field_22787.method_1507(null)));
+            this.method_25411((class_339)new class_4185(this.field_22789 / 2 - 100, this.field_22790 / 4 + 48, 200, 20, (class_2561)new class_2585("Ghost Spectate"), this::lambda$init$0));
         }
+    }
+
+    private void lambda$init$0(class_4185 class_41852) {
+        this.field_22787.method_1507(null);
     }
 }
 

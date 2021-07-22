@@ -15,23 +15,21 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 
 public class WelcomeHud
 extends DoubleTextHudElement {
-    private final /* synthetic */ Setting<String> msg;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<SettingColor> color;
+    private final Setting<String> msg;
+    private final SettingGroup sgGeneral;
+    private final Setting<SettingColor> color;
 
     @Override
     protected String getRight() {
-        WelcomeHud lIIlllllllIl;
-        return lIIlllllllIl.msg.get().replace("{player}", Modules.get().get(NameProtect.class).getName(lIIlllllllIl.mc.method_1548().method_1676()));
+        return this.msg.get().replace("{player}", Modules.get().get(NameProtect.class).getName(this.mc.method_1548().method_1676()));
     }
 
-    public WelcomeHud(HUD lIlIIIIIIIlI) {
-        super(lIlIIIIIIIlI, "welcome", "Displays a welcome message.", "");
-        WelcomeHud lIlIIIIIIIll;
-        lIlIIIIIIIll.sgGeneral = lIlIIIIIIIll.settings.getDefaultGroup();
-        lIlIIIIIIIll.color = lIlIIIIIIIll.sgGeneral.add(new ColorSetting.Builder().name("color").description("Color of welcome text.").defaultValue(new SettingColor(120, 43, 153)).build());
-        lIlIIIIIIIll.msg = lIlIIIIIIIll.sgGeneral.add(new StringSetting.Builder().name("message").description("The message to display on the hud.").defaultValue("Welcome to BedTrap, {player}!").build());
-        lIlIIIIIIIll.rightColor = lIlIIIIIIIll.color.get();
+    public WelcomeHud(HUD hUD) {
+        super(hUD, "welcome", "Displays a welcome message.", "");
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.color = this.sgGeneral.add(new ColorSetting.Builder().name("color").description("Color of welcome text.").defaultValue(new SettingColor(120, 43, 153)).build());
+        this.msg = this.sgGeneral.add(new StringSetting.Builder().name("message").description("The message to display on the hud.").defaultValue("Welcome to BedTrap, {player}!").build());
+        this.rightColor = this.color.get();
     }
 }
 

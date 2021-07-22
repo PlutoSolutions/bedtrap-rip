@@ -34,21 +34,21 @@ implements IVec3d {
     public double field_1350;
 
     @Override
-    public void set(double x, double y, double z) {
-        this.field_1352 = x;
-        this.field_1351 = y;
-        this.field_1350 = z;
+    public void set(double d, double d2, double d3) {
+        this.field_1352 = d;
+        this.field_1351 = d2;
+        this.field_1350 = d3;
     }
 
     @Override
-    public void setXZ(double x, double z) {
-        this.field_1352 = x;
-        this.field_1350 = z;
+    public void setXZ(double d, double d2) {
+        this.field_1352 = d;
+        this.field_1350 = d2;
     }
 
     @Override
-    public void setY(double y) {
-        this.field_1351 = y;
+    public void setY(double d) {
+        this.field_1351 = d;
     }
 }
 

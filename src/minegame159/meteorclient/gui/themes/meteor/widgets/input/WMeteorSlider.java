@@ -12,35 +12,31 @@ import minegame159.meteorclient.utils.render.color.Color;
 public class WMeteorSlider
 extends WSlider
 implements MeteorWidget {
-    private void renderBar(GuiRenderer llIllllllIlllll, double llIllllllIllllI) {
-        WMeteorSlider llIlllllllIIIII;
-        MeteorGuiTheme llIlllllllIIlIl = llIlllllllIIIII.theme();
-        double llIlllllllIIlII = llIlllllllIIlIl.scale(3.0);
-        double llIlllllllIIIll = llIlllllllIIIII.handleSize();
-        double llIlllllllIIIlI = llIlllllllIIIII.x + llIlllllllIIIll / 2.0;
-        double llIlllllllIIIIl = llIlllllllIIIII.y + llIlllllllIIIII.height / 2.0 - llIlllllllIIlII / 2.0;
-        llIllllllIlllll.quad(llIlllllllIIIlI, llIlllllllIIIIl, llIllllllIllllI, llIlllllllIIlII, llIlllllllIIlIl.sliderLeft.get());
-        llIllllllIlllll.quad(llIlllllllIIIlI + llIllllllIllllI, llIlllllllIIIIl, llIlllllllIIIII.width - llIllllllIllllI - llIlllllllIIIll, llIlllllllIIlII, llIlllllllIIlIl.sliderRight.get());
+    private void renderBar(GuiRenderer guiRenderer, double d) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d2 = meteorGuiTheme.scale(3.0);
+        double d3 = this.handleSize();
+        double d4 = this.x + d3 / 2.0;
+        double d5 = this.y + this.height / 2.0 - d2 / 2.0;
+        guiRenderer.quad(d4, d5, d, d2, meteorGuiTheme.sliderLeft.get());
+        guiRenderer.quad(d4 + d, d5, this.width - d - d3, d2, meteorGuiTheme.sliderRight.get());
     }
 
-    public WMeteorSlider(double llIllllllllllll, double lllIIIIIIIIIIlI, double llIllllllllllIl) {
-        super(llIllllllllllll, lllIIIIIIIIIIlI, llIllllllllllIl);
-        WMeteorSlider lllIIIIIIIIIlII;
+    public WMeteorSlider(double d, double d2, double d3) {
+        super(d, d2, d3);
     }
 
     @Override
-    protected void onRender(GuiRenderer llIllllllllIIlI, double llIllllllllIlll, double llIllllllllIllI, double llIllllllllIlIl) {
-        WMeteorSlider llIlllllllllIIl;
-        double llIllllllllIlII = llIlllllllllIIl.valueWidth();
-        llIlllllllllIIl.renderBar(llIllllllllIIlI, llIllllllllIlII);
-        llIlllllllllIIl.renderHandle(llIllllllllIIlI, llIllllllllIlII);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        double d4 = this.valueWidth();
+        this.renderBar(guiRenderer, d4);
+        this.renderHandle(guiRenderer, d4);
     }
 
-    private void renderHandle(GuiRenderer llIllllllIlIIlI, double llIllllllIlIIIl) {
-        WMeteorSlider llIllllllIIlllI;
-        MeteorGuiTheme llIllllllIlIIII = llIllllllIIlllI.theme();
-        double llIllllllIIllll = llIllllllIIlllI.handleSize();
-        llIllllllIlIIlI.quad(llIllllllIIlllI.x + llIllllllIlIIIl, llIllllllIIlllI.y, llIllllllIIllll, llIllllllIIllll, GuiRenderer.CIRCLE, (Color)llIllllllIlIIII.sliderHandle.get(llIllllllIIlllI.dragging, llIllllllIIlllI.handleMouseOver));
+    private void renderHandle(GuiRenderer guiRenderer, double d) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d2 = this.handleSize();
+        guiRenderer.quad(this.x + d, this.y, d2, d2, GuiRenderer.CIRCLE, (Color)meteorGuiTheme.sliderHandle.get(this.dragging, this.handleMouseOver));
     }
 }
 

@@ -64,79 +64,79 @@ public abstract class EndCrystalEntityRendererMixin {
     private class_630 field_21004;
 
     @Inject(method={"render"}, at={@At(value="HEAD")}, cancellable=true)
-    private void render(class_1511 endCrystalEntity, float f, float g, class_4587 matrixStack, class_4597 vertexConsumerProvider, int i, CallbackInfo ci) {
-        Chams module = Modules.get().get(Chams.class);
-        field_21736 = class_1921.method_23580((class_2960)(module.isActive() && module.crystals.get() != false && module.crystalsTexture.get() == false ? Chams.BLANK : field_4663));
+    private void render(class_1511 class_15112, float f, float f2, class_4587 class_45872, class_4597 class_45972, int n, CallbackInfo callbackInfo) {
+        Chams chams = Modules.get().get(Chams.class);
+        field_21736 = class_1921.method_23580((class_2960)(chams.isActive() && chams.crystals.get() != false && chams.crystalsTexture.get() == false ? Chams.BLANK : field_4663));
     }
 
     @ModifyArgs(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;scale(FFF)V", ordinal=0))
     private void modifyScale(Args args) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!module.isActive() || !module.crystals.get().booleanValue()) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!chams.isActive() || !chams.crystals.get().booleanValue()) {
             return;
         }
-        args.set(0, (Object)Float.valueOf(2.0f * module.crystalsScale.get().floatValue()));
-        args.set(1, (Object)Float.valueOf(2.0f * module.crystalsScale.get().floatValue()));
-        args.set(2, (Object)Float.valueOf(2.0f * module.crystalsScale.get().floatValue()));
+        args.set(0, (Object)Float.valueOf(2.0f * chams.crystalsScale.get().floatValue()));
+        args.set(1, (Object)Float.valueOf(2.0f * chams.crystalsScale.get().floatValue()));
+        args.set(2, (Object)Float.valueOf(2.0f * chams.crystalsScale.get().floatValue()));
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/EndCrystalEntityRenderer;getYOffset(Lnet/minecraft/entity/decoration/EndCrystalEntity;F)F"))
-    private float getYOff(class_1511 crystal, float tickDelta) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!module.isActive() || !module.crystals.get().booleanValue()) {
-            return class_892.method_23155((class_1511)crystal, (float)tickDelta);
+    private float getYOff(class_1511 class_15112, float f) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!chams.isActive() || !chams.crystals.get().booleanValue()) {
+            return class_892.method_23155((class_1511)class_15112, (float)f);
         }
-        float f = (float)crystal.field_7034 + tickDelta;
-        float g = class_3532.method_15374((float)(f * 0.2f)) / 2.0f + 0.5f;
-        g = (g * g + g) * 0.4f * module.crystalsBounce.get().floatValue();
-        return g - 1.4f;
+        float f2 = (float)class_15112.field_7034 + f;
+        float f3 = class_3532.method_15374((float)(f2 * 0.2f)) / 2.0f + 0.5f;
+        f3 = (f3 * f3 + f3) * 0.4f * chams.crystalsBounce.get().floatValue();
+        return f3 - 1.4f;
     }
 
     @ModifyArgs(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/util/math/Vector3f;getDegreesQuaternion(F)Lnet/minecraft/util/math/Quaternion;"))
     private void modifySpeed(Args args) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!module.isActive() || !module.crystals.get().booleanValue()) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!chams.isActive() || !chams.crystals.get().booleanValue()) {
             return;
         }
-        args.set(0, (Object)Float.valueOf(((Float)args.get(0)).floatValue() * module.crystalsRotationSpeed.get().floatValue()));
+        args.set(0, (Object)Float.valueOf(((Float)args.get(0)).floatValue() * chams.crystalsRotationSpeed.get().floatValue()));
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V", ordinal=3))
-    private void modifyCore(class_630 modelPart, class_4587 matrices, class_4588 vertices, int light, int overlay) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!module.isActive() || !module.crystals.get().booleanValue()) {
-            this.field_21003.method_22698(matrices, vertices, light, overlay);
+    private void modifyCore(class_630 class_6302, class_4587 class_45872, class_4588 class_45882, int n, int n2) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!chams.isActive() || !chams.crystals.get().booleanValue()) {
+            this.field_21003.method_22698(class_45872, class_45882, n, n2);
             return;
         }
-        if (module.renderCore.get().booleanValue()) {
-            Color color = module.crystalsCoreColor.get();
-            this.field_21003.method_22699(matrices, vertices, light, overlay, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
+        if (chams.renderCore.get().booleanValue()) {
+            Color color = chams.crystalsCoreColor.get();
+            this.field_21003.method_22699(class_45872, class_45882, n, n2, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
         }
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V", ordinal=1))
-    private void modifyFrame1(class_630 modelPart, class_4587 matrices, class_4588 vertices, int light, int overlay) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!module.isActive() || !module.crystals.get().booleanValue()) {
-            this.field_21004.method_22698(matrices, vertices, light, overlay);
+    private void modifyFrame1(class_630 class_6302, class_4587 class_45872, class_4588 class_45882, int n, int n2) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!chams.isActive() || !chams.crystals.get().booleanValue()) {
+            this.field_21004.method_22698(class_45872, class_45882, n, n2);
             return;
         }
-        if (module.renderFrame1.get().booleanValue()) {
-            Color color = module.crystalsFrame1Color.get();
-            this.field_21004.method_22699(matrices, vertices, light, overlay, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
+        if (chams.renderFrame1.get().booleanValue()) {
+            Color color = chams.crystalsFrame1Color.get();
+            this.field_21004.method_22699(class_45872, class_45882, n, n2, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
         }
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;II)V", ordinal=2))
-    private void modifyFrame2(class_630 modelPart, class_4587 matrices, class_4588 vertices, int light, int overlay) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!module.isActive() || !module.crystals.get().booleanValue()) {
-            this.field_21004.method_22698(matrices, vertices, light, overlay);
+    private void modifyFrame2(class_630 class_6302, class_4587 class_45872, class_4588 class_45882, int n, int n2) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!chams.isActive() || !chams.crystals.get().booleanValue()) {
+            this.field_21004.method_22698(class_45872, class_45882, n, n2);
             return;
         }
-        if (module.renderFrame2.get().booleanValue()) {
-            Color color = module.crystalsFrame2Color.get();
-            this.field_21004.method_22699(matrices, vertices, light, overlay, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
+        if (chams.renderFrame2.get().booleanValue()) {
+            Color color = chams.crystalsFrame2Color.get();
+            this.field_21004.method_22699(class_45872, class_45882, n, n2, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
         }
     }
 }

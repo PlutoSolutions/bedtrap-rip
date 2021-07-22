@@ -9,42 +9,37 @@ package minegame159.meteorclient.systems.modules;
 import net.minecraft.class_1799;
 
 public class Category {
-    private final /* synthetic */ int nameHash;
-    public final /* synthetic */ class_1799 icon;
-    public final /* synthetic */ String name;
+    private final int nameHash;
+    public final class_1799 icon;
+    public final String name;
 
-    public Category(String lllllllllllllllllIIlIIIlllIlIIIl, class_1799 lllllllllllllllllIIlIIIlllIlIIII) {
-        Category lllllllllllllllllIIlIIIlllIlIlIl;
-        lllllllllllllllllIIlIIIlllIlIlIl.name = lllllllllllllllllIIlIIIlllIlIIIl;
-        lllllllllllllllllIIlIIIlllIlIlIl.nameHash = lllllllllllllllllIIlIIIlllIlIIIl.hashCode();
-        lllllllllllllllllIIlIIIlllIlIlIl.icon = lllllllllllllllllIIlIIIlllIlIIII;
+    public Category(String string, class_1799 class_17992) {
+        this.name = string;
+        this.nameHash = string.hashCode();
+        this.icon = class_17992;
     }
 
     public int hashCode() {
-        Category lllllllllllllllllIIlIIIllIlllIll;
-        return lllllllllllllllllIIlIIIllIlllIll.nameHash;
+        return this.nameHash;
     }
 
     public String toString() {
-        Category lllllllllllllllllIIlIIIlllIIlIII;
-        return lllllllllllllllllIIlIIIlllIIlIII.name;
+        return this.name;
     }
 
-    public boolean equals(Object lllllllllllllllllIIlIIIllIllllll) {
-        Category lllllllllllllllllIIlIIIlllIIIIII;
-        if (lllllllllllllllllIIlIIIlllIIIIII == lllllllllllllllllIIlIIIllIllllll) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (lllllllllllllllllIIlIIIllIllllll == null || lllllllllllllllllIIlIIIlllIIIIII.getClass() != lllllllllllllllllIIlIIIllIllllll.getClass()) {
+        if (object == null || this.getClass() != object.getClass()) {
             return false;
         }
-        Category lllllllllllllllllIIlIIIlllIIIIIl = (Category)lllllllllllllllllIIlIIIllIllllll;
-        return lllllllllllllllllIIlIIIlllIIIIII.nameHash == lllllllllllllllllIIlIIIlllIIIIIl.nameHash;
+        Category category = (Category)object;
+        return this.nameHash == category.nameHash;
     }
 
-    public Category(String lllllllllllllllllIIlIIIlllIIlIlI) {
-        lllllllllllllllllIIlIIIlllIIllIl(lllllllllllllllllIIlIIIlllIIlIlI, null);
-        Category lllllllllllllllllIIlIIIlllIIllIl;
+    public Category(String string) {
+        this(string, null);
     }
 }
 

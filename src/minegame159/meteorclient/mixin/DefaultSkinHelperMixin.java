@@ -20,9 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_1068.class})
 public class DefaultSkinHelperMixin {
     @Inject(method={"shouldUseSlimModel"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onShouldUseSlimModel(UUID uuid, CallbackInfoReturnable<Boolean> info) {
-        if (uuid == null) {
-            info.setReturnValue((Object)false);
+    private static void onShouldUseSlimModel(UUID uUID, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        if (uUID == null) {
+            callbackInfoReturnable.setReturnValue((Object)false);
         }
     }
 }

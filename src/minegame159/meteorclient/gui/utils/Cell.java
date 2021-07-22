@@ -8,215 +8,186 @@ import minegame159.meteorclient.gui.utils.AlignmentY;
 import minegame159.meteorclient.gui.widgets.WWidget;
 
 public class Cell<T extends WWidget> {
-    private /* synthetic */ double padBottom;
-    private /* synthetic */ double padTop;
-    public /* synthetic */ double y;
-    private /* synthetic */ boolean expandWidgetY;
-    public /* synthetic */ boolean expandCellX;
-    public /* synthetic */ double width;
-    private /* synthetic */ double padRight;
-    public /* synthetic */ double height;
-    private /* synthetic */ double padLeft;
-    private /* synthetic */ boolean expandWidgetX;
-    public /* synthetic */ double x;
-    private final /* synthetic */ T widget;
-    private /* synthetic */ AlignmentX alignX;
-    private /* synthetic */ AlignmentY alignY;
+    private double padBottom;
+    private double padTop;
+    public double y;
+    private boolean expandWidgetY;
+    public boolean expandCellX;
+    public double width;
+    private double padRight;
+    public double height;
+    private double padLeft;
+    private boolean expandWidgetX;
+    public double x;
+    private final T widget;
+    private AlignmentX alignX = AlignmentX.Left;
+    private AlignmentY alignY = AlignmentY.Top;
 
     public double padLeft() {
-        Cell lIIIIIIIlllIIll;
-        return lIIIIIIIlllIIll.s(lIIIIIIIlllIIll.padLeft);
+        return this.s(this.padLeft);
     }
 
-    public Cell(T lIIIIIIllIIllII) {
-        Cell lIIIIIIllIIllll;
-        lIIIIIIllIIllll.alignX = AlignmentX.Left;
-        lIIIIIIllIIllll.alignY = AlignmentY.Top;
-        lIIIIIIllIIllll.widget = lIIIIIIllIIllII;
+    public Cell(T t) {
+        this.widget = t;
     }
 
-    public Cell<T> padBottom(double lIIIIIIlIIlIllI) {
-        Cell lIIIIIIlIIllIIl;
-        lIIIIIIlIIllIIl.padBottom = lIIIIIIlIIlIllI;
-        return lIIIIIIlIIllIIl;
+    public Cell<T> padBottom(double d) {
+        this.padBottom = d;
+        return this;
     }
 
     public double padBottom() {
-        Cell lIIIIIIIlllIlIl;
-        return lIIIIIIIlllIlIl.s(lIIIIIIIlllIlIl.padBottom);
+        return this.s(this.padBottom);
     }
 
-    public Cell<T> minWidth(double lIIIIIIlIllllII) {
-        Cell lIIIIIIlIllllIl;
-        ((WWidget)lIIIIIIlIllllIl.widget).minWidth = lIIIIIIlIllllII;
-        return lIIIIIIlIllllIl;
+    public Cell<T> minWidth(double d) {
+        ((WWidget)this.widget).minWidth = d;
+        return this;
     }
 
     public T widget() {
-        Cell lIIIIIIllIIlIIl;
-        return lIIIIIIllIIlIIl.widget;
+        return this.widget;
     }
 
     public double padRight() {
-        Cell lIIIIIIIllllIIl;
-        return lIIIIIIIllllIIl.s(lIIIIIIIllllIIl.padRight);
+        return this.s(this.padRight);
     }
 
     public double padTop() {
-        Cell lIIIIIIIllllIll;
-        return lIIIIIIIllllIll.s(lIIIIIIIllllIll.padTop);
+        return this.s(this.padTop);
     }
 
-    public Cell<T> padLeft(double lIIIIIIlIIlIIII) {
-        Cell lIIIIIIlIIlIIll;
-        lIIIIIIlIIlIIll.padLeft = lIIIIIIlIIlIIII;
-        return lIIIIIIlIIlIIll;
+    public Cell<T> padLeft(double d) {
+        this.padLeft = d;
+        return this;
     }
 
-    public Cell<T> padRight(double lIIIIIIlIIlllII) {
-        Cell lIIIIIIlIIlllll;
-        lIIIIIIlIIlllll.padRight = lIIIIIIlIIlllII;
-        return lIIIIIIlIIlllll;
+    public Cell<T> padRight(double d) {
+        this.padRight = d;
+        return this;
     }
 
-    public Cell<T> padTop(double lIIIIIIlIlIIIlI) {
-        Cell lIIIIIIlIlIIlIl;
-        lIIIIIIlIlIIlIl.padTop = lIIIIIIlIlIIIlI;
-        return lIIIIIIlIlIIlIl;
+    public Cell<T> padTop(double d) {
+        this.padTop = d;
+        return this;
     }
 
     public Cell<T> center() {
-        Cell lIIIIIIlIlIllII;
-        lIIIIIIlIlIllII.alignX = AlignmentX.Center;
-        lIIIIIIlIlIllII.alignY = AlignmentY.Center;
-        return lIIIIIIlIlIllII;
+        this.alignX = AlignmentX.Center;
+        this.alignY = AlignmentY.Center;
+        return this;
     }
 
     public Cell<T> top() {
-        Cell lIIIIIIlIlIlIIl;
-        lIIIIIIlIlIlIIl.alignY = AlignmentY.Top;
-        return lIIIIIIlIlIlIIl;
+        this.alignY = AlignmentY.Top;
+        return this;
     }
 
-    private double s(double lIIIIIIIlIlllIl) {
-        Cell lIIIIIIIllIIIII;
-        return ((WWidget)lIIIIIIIllIIIII.widget).theme.scale(lIIIIIIIlIlllIl);
+    private double s(double d) {
+        return ((WWidget)this.widget).theme.scale(d);
     }
 
     public Cell<T> centerX() {
-        Cell lIIIIIIlIllIlll;
-        lIIIIIIlIllIlll.alignX = AlignmentX.Center;
-        return lIIIIIIlIllIlll;
+        this.alignX = AlignmentX.Center;
+        return this;
     }
 
     public Cell<T> expandWidgetY() {
-        Cell lIIIIIIIllIllII;
-        lIIIIIIIllIllII.expandWidgetY = true;
-        return lIIIIIIIllIllII;
+        this.expandWidgetY = true;
+        return this;
     }
 
-    public void move(double lIIIIIIllIIIlII, double lIIIIIIllIIIIII) {
-        Cell lIIIIIIllIIIIlI;
-        lIIIIIIllIIIIlI.x += lIIIIIIllIIIlII;
-        lIIIIIIllIIIIlI.y += lIIIIIIllIIIIII;
-        ((WWidget)lIIIIIIllIIIIlI.widget).move(lIIIIIIllIIIlII, lIIIIIIllIIIIII);
+    public void move(double d, double d2) {
+        this.x += d;
+        this.y += d2;
+        ((WWidget)this.widget).move(d, d2);
     }
 
     public Cell<T> bottom() {
-        Cell lIIIIIIlIlIlllI;
-        lIIIIIIlIlIlllI.alignY = AlignmentY.Bottom;
-        return lIIIIIIlIlIlllI;
+        this.alignY = AlignmentY.Bottom;
+        return this;
     }
 
-    public Cell<T> padVertical(double lIIIIIIlIIIIllI) {
-        Cell lIIIIIIlIIIIlIl;
-        lIIIIIIlIIIIlIl.padTop = lIIIIIIlIIIIlIl.padBottom = lIIIIIIlIIIIllI;
-        return lIIIIIIlIIIIlIl;
+    public Cell<T> padVertical(double d) {
+        this.padTop = this.padBottom = d;
+        return this;
     }
 
     public Cell<T> centerY() {
-        Cell lIIIIIIlIllIIlI;
-        lIIIIIIlIllIIlI.alignY = AlignmentY.Center;
-        return lIIIIIIlIllIIlI;
+        this.alignY = AlignmentY.Center;
+        return this;
     }
 
     public Cell<T> right() {
-        Cell lIIIIIIlIllIlII;
-        lIIIIIIlIllIlII.alignX = AlignmentX.Right;
-        return lIIIIIIlIllIlII;
+        this.alignX = AlignmentX.Right;
+        return this;
     }
 
     public Cell<T> expandX() {
-        Cell lIIIIIIIllIIlll;
-        lIIIIIIIllIIlll.expandWidgetX = true;
-        lIIIIIIIllIIlll.expandCellX = true;
-        return lIIIIIIIllIIlll;
+        this.expandWidgetX = true;
+        this.expandCellX = true;
+        return this;
     }
 
-    public Cell<T> pad(double lIIIIIIIllllllI) {
-        Cell lIIIIIIIlllllll;
-        lIIIIIIIlllllll.padBottom = lIIIIIIIlllllll.padLeft = lIIIIIIIllllllI;
-        lIIIIIIIlllllll.padRight = lIIIIIIIlllllll.padLeft;
-        lIIIIIIIlllllll.padTop = lIIIIIIIlllllll.padLeft;
-        return lIIIIIIIlllllll;
+    public Cell<T> pad(double d) {
+        this.padBottom = this.padLeft = d;
+        this.padRight = this.padLeft;
+        this.padTop = this.padLeft;
+        return this;
     }
 
-    public Cell<T> padHorizontal(double lIIIIIIlIIIlIlI) {
-        Cell lIIIIIIlIIIllIl;
-        lIIIIIIlIIIllIl.padRight = lIIIIIIlIIIllIl.padLeft = lIIIIIIlIIIlIlI;
-        return lIIIIIIlIIIllIl;
+    public Cell<T> padHorizontal(double d) {
+        this.padRight = this.padLeft = d;
+        return this;
     }
 
     public void alignWidget() {
-        Cell lIIIIIIIllIIIll;
-        if (lIIIIIIIllIIIll.expandWidgetX) {
-            ((WWidget)lIIIIIIIllIIIll.widget).x = lIIIIIIIllIIIll.x;
-            ((WWidget)lIIIIIIIllIIIll.widget).width = lIIIIIIIllIIIll.width;
+        if (this.expandWidgetX) {
+            ((WWidget)this.widget).x = this.x;
+            ((WWidget)this.widget).width = this.width;
         } else {
-            switch (lIIIIIIIllIIIll.alignX) {
+            switch (this.alignX) {
                 case Left: {
-                    ((WWidget)lIIIIIIIllIIIll.widget).x = lIIIIIIIllIIIll.x;
+                    ((WWidget)this.widget).x = this.x;
                     break;
                 }
                 case Center: {
-                    ((WWidget)lIIIIIIIllIIIll.widget).x = lIIIIIIIllIIIll.x + lIIIIIIIllIIIll.width / 2.0 - ((WWidget)lIIIIIIIllIIIll.widget).width / 2.0;
+                    ((WWidget)this.widget).x = this.x + this.width / 2.0 - ((WWidget)this.widget).width / 2.0;
                     break;
                 }
                 case Right: {
-                    ((WWidget)lIIIIIIIllIIIll.widget).x = lIIIIIIIllIIIll.x + lIIIIIIIllIIIll.width - ((WWidget)lIIIIIIIllIIIll.widget).width;
+                    ((WWidget)this.widget).x = this.x + this.width - ((WWidget)this.widget).width;
                 }
             }
         }
-        if (lIIIIIIIllIIIll.expandWidgetY) {
-            ((WWidget)lIIIIIIIllIIIll.widget).y = lIIIIIIIllIIIll.y;
-            ((WWidget)lIIIIIIIllIIIll.widget).height = lIIIIIIIllIIIll.height;
+        if (this.expandWidgetY) {
+            ((WWidget)this.widget).y = this.y;
+            ((WWidget)this.widget).height = this.height;
         } else {
-            switch (lIIIIIIIllIIIll.alignY) {
+            switch (this.alignY) {
                 case Top: {
-                    ((WWidget)lIIIIIIIllIIIll.widget).y = lIIIIIIIllIIIll.y;
+                    ((WWidget)this.widget).y = this.y;
                     break;
                 }
                 case Center: {
-                    ((WWidget)lIIIIIIIllIIIll.widget).y = lIIIIIIIllIIIll.y + lIIIIIIIllIIIll.height / 2.0 - ((WWidget)lIIIIIIIllIIIll.widget).height / 2.0;
+                    ((WWidget)this.widget).y = this.y + this.height / 2.0 - ((WWidget)this.widget).height / 2.0;
                     break;
                 }
                 case Bottom: {
-                    ((WWidget)lIIIIIIIllIIIll.widget).y = lIIIIIIIllIIIll.y + lIIIIIIIllIIIll.height - ((WWidget)lIIIIIIIllIIIll.widget).height;
+                    ((WWidget)this.widget).y = this.y + this.height - ((WWidget)this.widget).height;
                 }
             }
         }
     }
 
     public Cell<T> expandWidgetX() {
-        Cell lIIIIIIIllIllll;
-        lIIIIIIIllIllll.expandWidgetX = true;
-        return lIIIIIIIllIllll;
+        this.expandWidgetX = true;
+        return this;
     }
 
     public Cell<T> expandCellX() {
-        Cell lIIIIIIIllIlIlI;
-        lIIIIIIIllIlIlI.expandCellX = true;
-        return lIIIIIIIllIlIlI;
+        this.expandCellX = true;
+        return this;
     }
 }
 

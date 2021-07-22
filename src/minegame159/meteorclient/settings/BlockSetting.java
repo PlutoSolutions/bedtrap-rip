@@ -18,13 +18,16 @@ import net.minecraft.class_2378;
 import net.minecraft.class_2487;
 import net.minecraft.class_2960;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class BlockSetting
 extends Setting<class_2248> {
-    public final /* synthetic */ Predicate<class_2248> filter;
+    public final Predicate<class_2248> filter;
 
     @Override
-    protected class_2248 parseImpl(String lllllllllllllllllIIIIlIllIlIIllI) {
-        return (class_2248)BlockSetting.parseId(class_2378.field_11146, lllllllllllllllllIIIIlIllIlIIllI);
+    protected class_2248 parseImpl(String string) {
+        return (class_2248)BlockSetting.parseId(class_2378.field_11146, string);
     }
 
     @Override
@@ -33,100 +36,97 @@ extends Setting<class_2248> {
     }
 
     @Override
-    protected boolean isValueValid(class_2248 lllllllllllllllllIIIIlIllIIlllll) {
-        BlockSetting lllllllllllllllllIIIIlIllIlIIIII;
-        return lllllllllllllllllIIIIlIllIlIIIII.filter == null || lllllllllllllllllIIIIlIllIlIIIII.filter.test(lllllllllllllllllIIIIlIllIIlllll);
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((class_2248)object);
+    }
+
+    @Override
+    protected boolean isValueValid(class_2248 class_22482) {
+        return this.filter == null || this.filter.test(class_22482);
     }
 
     @Override
     public class_2487 toTag() {
-        BlockSetting lllllllllllllllllIIIIlIllIIllIIl;
-        class_2487 lllllllllllllllllIIIIlIllIIllIlI = new class_2487();
-        lllllllllllllllllIIIIlIllIIllIlI.method_10582("value", class_2378.field_11146.method_10221((Object)((class_2248)lllllllllllllllllIIIIlIllIIllIIl.get())).toString());
-        return lllllllllllllllllIIIIlIllIIllIlI;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("value", class_2378.field_11146.method_10221((Object)((class_2248)this.get())).toString());
+        return class_24872;
     }
 
     @Override
-    public class_2248 fromTag(class_2487 lllllllllllllllllIIIIlIllIIIllll) {
-        BlockSetting lllllllllllllllllIIIIlIllIIlIIII;
-        lllllllllllllllllIIIIlIllIIlIIII.value = class_2378.field_11146.method_10223(new class_2960(lllllllllllllllllIIIIlIllIIIllll.method_10558("value")));
-        if (lllllllllllllllllIIIIlIllIIlIIII.filter != null && !lllllllllllllllllIIIIlIllIIlIIII.filter.test((class_2248)lllllllllllllllllIIIIlIllIIlIIII.value)) {
-            for (class_2248 lllllllllllllllllIIIIlIllIIlIIll : class_2378.field_11146) {
-                if (!lllllllllllllllllIIIIlIllIIlIIII.filter.test(lllllllllllllllllIIIIlIllIIlIIll)) continue;
-                lllllllllllllllllIIIIlIllIIlIIII.value = lllllllllllllllllIIIIlIllIIlIIll;
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    @Override
+    public class_2248 fromTag(class_2487 class_24872) {
+        this.value = class_2378.field_11146.method_10223(new class_2960(class_24872.method_10558("value")));
+        if (this.filter != null && !this.filter.test((class_2248)this.value)) {
+            for (class_2248 class_22482 : class_2378.field_11146) {
+                if (!this.filter.test(class_22482)) continue;
+                this.value = class_22482;
                 break;
             }
         }
-        lllllllllllllllllIIIIlIllIIlIIII.changed();
-        return (class_2248)lllllllllllllllllIIIIlIllIIlIIII.get();
+        this.changed();
+        return (class_2248)this.get();
     }
 
-    public BlockSetting(String lllllllllllllllllIIIIlIllIlIllll, String lllllllllllllllllIIIIlIllIlIlllI, class_2248 lllllllllllllllllIIIIlIllIllIlIl, Consumer<class_2248> lllllllllllllllllIIIIlIllIllIlII, Consumer<Setting<class_2248>> lllllllllllllllllIIIIlIllIlIlIll, IVisible lllllllllllllllllIIIIlIllIlIlIlI, Predicate<class_2248> lllllllllllllllllIIIIlIllIllIIIl) {
-        super(lllllllllllllllllIIIIlIllIlIllll, lllllllllllllllllIIIIlIllIlIlllI, lllllllllllllllllIIIIlIllIllIlIl, lllllllllllllllllIIIIlIllIllIlII, lllllllllllllllllIIIIlIllIlIlIll, lllllllllllllllllIIIIlIllIlIlIlI);
-        BlockSetting lllllllllllllllllIIIIlIllIllIIII;
-        lllllllllllllllllIIIIlIllIllIIII.filter = lllllllllllllllllIIIIlIllIllIIIl;
+    public BlockSetting(String string, String string2, class_2248 class_22482, Consumer<class_2248> consumer, Consumer<Setting<class_2248>> consumer2, IVisible iVisible, Predicate<class_2248> predicate) {
+        super(string, string2, class_22482, consumer, consumer2, iVisible);
+        this.filter = predicate;
+    }
+
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
     }
 
     public static class Builder {
-        private /* synthetic */ String name;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ String description;
-        private /* synthetic */ Consumer<class_2248> onChanged;
-        private /* synthetic */ class_2248 defaultValue;
-        private /* synthetic */ Consumer<Setting<class_2248>> onModuleActivated;
-        private /* synthetic */ Predicate<class_2248> filter;
+        private String name = "undefined";
+        private IVisible visible;
+        private String description = "";
+        private Consumer<class_2248> onChanged;
+        private class_2248 defaultValue;
+        private Consumer<Setting<class_2248>> onModuleActivated;
+        private Predicate<class_2248> filter;
 
-        public Builder filter(Predicate<class_2248> llIllIIIlIIlI) {
-            Builder llIllIIIlIIIl;
-            llIllIIIlIIIl.filter = llIllIIIlIIlI;
-            return llIllIIIlIIIl;
+        public Builder filter(Predicate<class_2248> predicate) {
+            this.filter = predicate;
+            return this;
         }
 
-        public Builder defaultValue(class_2248 llIllIIlIIlII) {
-            Builder llIllIIlIIlIl;
-            llIllIIlIIlIl.defaultValue = llIllIIlIIlII;
-            return llIllIIlIIlIl;
+        public Builder defaultValue(class_2248 class_22482) {
+            this.defaultValue = class_22482;
+            return this;
         }
 
-        public Builder name(String llIllIIllIIII) {
-            Builder llIllIIllIIIl;
-            llIllIIllIIIl.name = llIllIIllIIII;
-            return llIllIIllIIIl;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder onChanged(Consumer<class_2248> llIllIIIllllI) {
-            Builder llIllIIIlllIl;
-            llIllIIIlllIl.onChanged = llIllIIIllllI;
-            return llIllIIIlllIl;
+        public Builder onChanged(Consumer<class_2248> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
         public BlockSetting build() {
-            Builder llIllIIIIIlll;
-            return new BlockSetting(llIllIIIIIlll.name, llIllIIIIIlll.description, llIllIIIIIlll.defaultValue, llIllIIIIIlll.onChanged, llIllIIIIIlll.onModuleActivated, llIllIIIIIlll.visible, llIllIIIIIlll.filter);
+            return new BlockSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible, this.filter);
         }
 
-        public Builder onModuleActivated(Consumer<Setting<class_2248>> llIllIIIllIII) {
-            Builder llIllIIIlIlll;
-            llIllIIIlIlll.onModuleActivated = llIllIIIllIII;
-            return llIllIIIlIlll;
+        public Builder onModuleActivated(Consumer<Setting<class_2248>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder() {
-            Builder llIllIIllIlIl;
-            llIllIIllIlIl.name = "undefined";
-            llIllIIllIlIl.description = "";
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder description(String llIllIIlIlIII) {
-            Builder llIllIIlIlIll;
-            llIllIIlIlIll.description = llIllIIlIlIII;
-            return llIllIIlIlIll;
-        }
-
-        public Builder visible(IVisible llIllIIIIllII) {
-            Builder llIllIIIIlIll;
-            llIllIIIIlIll.visible = llIllIIIIllII;
-            return llIllIIIIlIll;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
     }
 }

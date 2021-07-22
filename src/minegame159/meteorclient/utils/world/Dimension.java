@@ -8,9 +8,5 @@ public enum Dimension {
     Nether,
     End;
 
-
-    private Dimension() {
-        Dimension lIIllIIlIllII;
-    }
 }
 

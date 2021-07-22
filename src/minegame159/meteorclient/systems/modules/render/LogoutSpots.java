@@ -7,6 +7,7 @@
  *  net.minecraft.class_1657
  *  net.minecraft.class_290
  *  net.minecraft.class_308
+ *  net.minecraft.class_310
  *  net.minecraft.class_4184
  *  net.minecraft.class_640
  */
@@ -42,85 +43,106 @@ import net.minecraft.class_1297;
 import net.minecraft.class_1657;
 import net.minecraft.class_290;
 import net.minecraft.class_308;
+import net.minecraft.class_310;
 import net.minecraft.class_4184;
 import net.minecraft.class_640;
 
 public class LogoutSpots
 extends Module {
-    private static final /* synthetic */ Color GREEN;
-    private final /* synthetic */ SettingGroup sgRender;
-    private static final /* synthetic */ Color RED;
-    private /* synthetic */ int timer;
-    private final /* synthetic */ Setting<SettingColor> nameColor;
-    private final /* synthetic */ Setting<SettingColor> lineColor;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private static final /* synthetic */ Color ORANGE;
-    private final /* synthetic */ List<Entry> players;
-    private final /* synthetic */ Setting<Boolean> fullHeight;
-    private static final /* synthetic */ MeshBuilder MB;
-    private final /* synthetic */ Setting<ShapeMode> shapeMode;
-    private final /* synthetic */ Setting<SettingColor> sideColor;
-    private final /* synthetic */ List<class_640> lastPlayerList;
-    private final /* synthetic */ List<class_1657> lastPlayers;
-    private /* synthetic */ Dimension lastDimension;
-    private final /* synthetic */ Setting<Double> scale;
-    private final /* synthetic */ Setting<SettingColor> nameBackgroundColor;
+    private static final Color GREEN;
+    private final SettingGroup sgRender;
+    private static final Color RED;
+    private int timer;
+    private final Setting<SettingColor> nameColor;
+    private final Setting<SettingColor> lineColor;
+    private final SettingGroup sgGeneral;
+    private static final Color ORANGE;
+    private final List<Entry> players;
+    private final Setting<Boolean> fullHeight;
+    private static final MeshBuilder MB;
+    private final Setting<ShapeMode> shapeMode;
+    private final Setting<SettingColor> sideColor;
+    private final List<class_640> lastPlayerList;
+    private final List<class_1657> lastPlayers;
+    private Dimension lastDimension;
+    private final Setting<Double> scale;
+    private final Setting<SettingColor> nameBackgroundColor;
+
+    static Setting access$100(LogoutSpots logoutSpots) {
+        return logoutSpots.scale;
+    }
 
     @EventHandler
-    private void onTick(TickEvent.Post lIIIllIlIllIl) {
-        LogoutSpots lIIIllIlIlllI;
-        if (lIIIllIlIlllI.mc.method_1562().method_2880().size() != lIIIllIlIlllI.lastPlayerList.size()) {
-            for (class_640 lIIIllIlIllll : lIIIllIlIlllI.lastPlayerList) {
-                if (lIIIllIlIlllI.mc.method_1562().method_2880().stream().anyMatch(lIIIlIllllIlI -> lIIIlIllllIlI.method_2966().equals((Object)lIIIllIlIllll.method_2966()))) continue;
-                for (class_1657 lIIIllIllIIII : lIIIllIlIlllI.lastPlayers) {
-                    if (!lIIIllIllIIII.method_5667().equals(lIIIllIlIllll.method_2966().getId())) continue;
-                    lIIIllIlIlllI.add(lIIIllIlIlllI.new Entry(lIIIllIllIIII));
+    private void onTick(TickEvent.Post post) {
+        if (this.mc.method_1562().method_2880().size() != this.lastPlayerList.size()) {
+            for (class_640 class_6402 : this.lastPlayerList) {
+                if (this.mc.method_1562().method_2880().stream().anyMatch(arg_0 -> LogoutSpots.lambda$onTick$0(class_6402, arg_0))) continue;
+                for (class_1657 class_16572 : this.lastPlayers) {
+                    if (!class_16572.method_5667().equals(class_6402.method_2966().getId())) continue;
+                    this.add(new Entry(this, class_16572));
                 }
             }
-            lIIIllIlIlllI.lastPlayerList.clear();
-            lIIIllIlIlllI.lastPlayerList.addAll(lIIIllIlIlllI.mc.method_1562().method_2880());
-            lIIIllIlIlllI.updateLastPlayers();
+            this.lastPlayerList.clear();
+            this.lastPlayerList.addAll(this.mc.method_1562().method_2880());
+            this.updateLastPlayers();
         }
-        if (lIIIllIlIlllI.timer <= 0) {
-            lIIIllIlIlllI.updateLastPlayers();
-            lIIIllIlIlllI.timer = 10;
+        if (this.timer <= 0) {
+            this.updateLastPlayers();
+            this.timer = 10;
         } else {
-            --lIIIllIlIlllI.timer;
+            --this.timer;
         }
-        Dimension lIIIllIlIllII = PlayerUtils.getDimension();
-        if (lIIIllIlIllII != lIIIllIlIlllI.lastDimension) {
-            lIIIllIlIlllI.players.clear();
+        Object object = PlayerUtils.getDimension();
+        if (object != this.lastDimension) {
+            this.players.clear();
         }
-        lIIIllIlIlllI.lastDimension = lIIIllIlIllII;
+        this.lastDimension = object;
+    }
+
+    static Color access$800() {
+        return ORANGE;
+    }
+
+    static Color access$700() {
+        return RED;
     }
 
     @Override
     public String getInfoString() {
-        LogoutSpots lIIIllIIIlIlI;
-        return Integer.toString(lIIIllIIIlIlI.players.size());
+        return Integer.toString(this.players.size());
+    }
+
+    static Setting access$400(LogoutSpots logoutSpots) {
+        return logoutSpots.sideColor;
+    }
+
+    static Setting access$300(LogoutSpots logoutSpots) {
+        return logoutSpots.fullHeight;
     }
 
     @EventHandler
-    private void onEntityAdded(EntityAddedEvent lIIIllIlllIII) {
-        if (lIIIllIlllIII.entity instanceof class_1657) {
-            LogoutSpots lIIIllIlllIll;
-            int lIIIllIllllII = -1;
-            for (int lIIIllIllllIl = 0; lIIIllIllllIl < lIIIllIlllIll.players.size(); ++lIIIllIllllIl) {
-                if (!lIIIllIlllIll.players.get((int)lIIIllIllllIl).uuid.equals(lIIIllIlllIII.entity.method_5667())) continue;
-                lIIIllIllllII = lIIIllIllllIl;
+    private void onEntityAdded(EntityAddedEvent entityAddedEvent) {
+        if (entityAddedEvent.entity instanceof class_1657) {
+            int n = -1;
+            for (int i = 0; i < this.players.size(); ++i) {
+                if (!this.players.get((int)i).uuid.equals(entityAddedEvent.entity.method_5667())) continue;
+                n = i;
                 break;
             }
-            if (lIIIllIllllII != -1) {
-                lIIIllIlllIll.players.remove(lIIIllIllllII);
+            if (n != -1) {
+                this.players.remove(n);
             }
         }
     }
 
+    static class_310 access$000(LogoutSpots logoutSpots) {
+        return logoutSpots.mc;
+    }
+
     @EventHandler
-    private void onRender(RenderEvent lIIIllIIIlllI) {
-        LogoutSpots lIIIllIIIllll;
-        for (Entry lIIIllIIlIIlI : lIIIllIIIllll.players) {
-            lIIIllIIlIIlI.render(lIIIllIIIlllI);
+    private void onRender(RenderEvent renderEvent) {
+        for (Entry entry : this.players) {
+            entry.render(renderEvent);
         }
         RenderSystem.disableDepthTest();
         RenderSystem.disableTexture();
@@ -130,17 +152,19 @@ extends Module {
 
     @Override
     public void onActivate() {
-        LogoutSpots lIIIlllIIllIl;
-        lIIIlllIIllIl.lastPlayerList.addAll(lIIIlllIIllIl.mc.method_1562().method_2880());
-        lIIIlllIIllIl.updateLastPlayers();
-        lIIIlllIIllIl.timer = 10;
-        lIIIlllIIllIl.lastDimension = PlayerUtils.getDimension();
+        this.lastPlayerList.addAll(this.mc.method_1562().method_2880());
+        this.updateLastPlayers();
+        this.timer = 10;
+        this.lastDimension = PlayerUtils.getDimension();
     }
 
-    private void add(Entry lIIIllIIlllll) {
-        LogoutSpots lIIIllIlIIlII;
-        lIIIllIlIIlII.players.removeIf(lIIIllIIIIIlI -> lIIIllIIIIIlI.uuid.equals(lIIIllIIIIIll.uuid));
-        lIIIllIlIIlII.players.add(lIIIllIIlllll);
+    private void add(Entry entry) {
+        this.players.removeIf(arg_0 -> LogoutSpots.lambda$add$1(entry, arg_0));
+        this.players.add(entry);
+    }
+
+    private static boolean lambda$add$1(Entry entry, Entry entry2) {
+        return entry2.uuid.equals(entry.uuid);
     }
 
     static {
@@ -150,105 +174,127 @@ extends Module {
         RED = new Color(225, 25, 25);
     }
 
+    static Setting access$600(LogoutSpots logoutSpots) {
+        return logoutSpots.shapeMode;
+    }
+
     public LogoutSpots() {
         super(Categories.Render, "logout-spots", "Displays a box where another player has logged out at.");
-        LogoutSpots lIIIlllIlIIII;
-        lIIIlllIlIIII.sgGeneral = lIIIlllIlIIII.settings.getDefaultGroup();
-        lIIIlllIlIIII.sgRender = lIIIlllIlIIII.settings.createGroup("Render");
-        lIIIlllIlIIII.scale = lIIIlllIlIIII.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("The scale.").defaultValue(1.0).min(0.0).build());
-        lIIIlllIlIIII.fullHeight = lIIIlllIlIIII.sgGeneral.add(new BoolSetting.Builder().name("full-height").description("Displays the height as the player's full height.").defaultValue(true).build());
-        lIIIlllIlIIII.shapeMode = lIIIlllIlIIII.sgRender.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
-        lIIIlllIlIIII.sideColor = lIIIlllIlIIII.sgRender.add(new ColorSetting.Builder().name("side-color").description("The side color.").defaultValue(new SettingColor(255, 0, 255, 55)).build());
-        lIIIlllIlIIII.lineColor = lIIIlllIlIIII.sgRender.add(new ColorSetting.Builder().name("line-color").description("The line color.").defaultValue(new SettingColor(255, 0, 255)).build());
-        lIIIlllIlIIII.nameColor = lIIIlllIlIIII.sgRender.add(new ColorSetting.Builder().name("name-color").description("The name color.").defaultValue(new SettingColor(255, 255, 255)).build());
-        lIIIlllIlIIII.nameBackgroundColor = lIIIlllIlIIII.sgRender.add(new ColorSetting.Builder().name("name-background-color").description("The name background color.").defaultValue(new SettingColor(0, 0, 0, 75)).build());
-        lIIIlllIlIIII.players = new ArrayList<Entry>();
-        lIIIlllIlIIII.lastPlayerList = new ArrayList<class_640>();
-        lIIIlllIlIIII.lastPlayers = new ArrayList<class_1657>();
-        lIIIlllIlIIII.lineColor.changed();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgRender = this.settings.createGroup("Render");
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("The scale.").defaultValue(1.0).min(0.0).build());
+        this.fullHeight = this.sgGeneral.add(new BoolSetting.Builder().name("full-height").description("Displays the height as the player's full height.").defaultValue(true).build());
+        this.shapeMode = this.sgRender.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
+        this.sideColor = this.sgRender.add(new ColorSetting.Builder().name("side-color").description("The side color.").defaultValue(new SettingColor(255, 0, 255, 55)).build());
+        this.lineColor = this.sgRender.add(new ColorSetting.Builder().name("line-color").description("The line color.").defaultValue(new SettingColor(255, 0, 255)).build());
+        this.nameColor = this.sgRender.add(new ColorSetting.Builder().name("name-color").description("The name color.").defaultValue(new SettingColor(255, 255, 255)).build());
+        this.nameBackgroundColor = this.sgRender.add(new ColorSetting.Builder().name("name-background-color").description("The name background color.").defaultValue(new SettingColor(0, 0, 0, 75)).build());
+        this.players = new ArrayList<Entry>();
+        this.lastPlayerList = new ArrayList<class_640>();
+        this.lastPlayers = new ArrayList<class_1657>();
+        this.lineColor.changed();
+    }
+
+    static Setting access$1200(LogoutSpots logoutSpots) {
+        return logoutSpots.nameColor;
+    }
+
+    static Setting access$1100(LogoutSpots logoutSpots) {
+        return logoutSpots.nameBackgroundColor;
+    }
+
+    private static boolean lambda$onTick$0(class_640 class_6402, class_640 class_6403) {
+        return class_6403.method_2966().equals((Object)class_6402.method_2966());
+    }
+
+    static Color access$900() {
+        return GREEN;
+    }
+
+    static MeshBuilder access$1000() {
+        return MB;
+    }
+
+    static class_310 access$200(LogoutSpots logoutSpots) {
+        return logoutSpots.mc;
     }
 
     @Override
     public void onDeactivate() {
-        LogoutSpots lIIIlllIIlIlI;
-        lIIIlllIIlIlI.players.clear();
-        lIIIlllIIlIlI.lastPlayerList.clear();
+        this.players.clear();
+        this.lastPlayerList.clear();
     }
 
     private void updateLastPlayers() {
-        LogoutSpots lIIIlllIIIlII;
-        lIIIlllIIIlII.lastPlayers.clear();
-        for (class_1297 lIIIlllIIIllI : lIIIlllIIIlII.mc.field_1687.method_18112()) {
-            if (!(lIIIlllIIIllI instanceof class_1657)) continue;
-            lIIIlllIIIlII.lastPlayers.add((class_1657)lIIIlllIIIllI);
+        this.lastPlayers.clear();
+        for (class_1297 class_12972 : this.mc.field_1687.method_18112()) {
+            if (!(class_12972 instanceof class_1657)) continue;
+            this.lastPlayers.add((class_1657)class_12972);
         }
     }
 
-    private class Entry {
-        public final /* synthetic */ String name;
-        public final /* synthetic */ UUID uuid;
-        public final /* synthetic */ double z;
-        public final /* synthetic */ double x;
-        public final /* synthetic */ String healthText;
-        public final /* synthetic */ double xWidth;
-        public final /* synthetic */ double y;
-        public final /* synthetic */ double height;
-        public final /* synthetic */ int health;
-        public final /* synthetic */ double zWidth;
-        public final /* synthetic */ int maxHealth;
+    static Setting access$500(LogoutSpots logoutSpots) {
+        return logoutSpots.lineColor;
+    }
 
-        public Entry(class_1657 lllllllllllllllllllIlllIlllIlllI) {
-            Entry lllllllllllllllllllIlllIlllIllIl;
-            lllllllllllllllllllIlllIlllIllIl.x = lllllllllllllllllllIlllIlllIlllI.method_23317();
-            lllllllllllllllllllIlllIlllIllIl.y = lllllllllllllllllllIlllIlllIlllI.method_23318();
-            lllllllllllllllllllIlllIlllIllIl.z = lllllllllllllllllllIlllIlllIlllI.method_23321();
-            lllllllllllllllllllIlllIlllIllIl.xWidth = lllllllllllllllllllIlllIlllIlllI.method_5829().method_17939();
-            lllllllllllllllllllIlllIlllIllIl.zWidth = lllllllllllllllllllIlllIlllIlllI.method_5829().method_17941();
-            lllllllllllllllllllIlllIlllIllIl.height = lllllllllllllllllllIlllIlllIlllI.method_5829().method_17940();
-            lllllllllllllllllllIlllIlllIllIl.uuid = lllllllllllllllllllIlllIlllIlllI.method_5667();
-            lllllllllllllllllllIlllIlllIllIl.name = lllllllllllllllllllIlllIlllIlllI.method_5820();
-            lllllllllllllllllllIlllIlllIllIl.health = Math.round(lllllllllllllllllllIlllIlllIlllI.method_6032() + lllllllllllllllllllIlllIlllIlllI.method_6067());
-            lllllllllllllllllllIlllIlllIllIl.maxHealth = Math.round(lllllllllllllllllllIlllIlllIlllI.method_6063() + lllllllllllllllllllIlllIlllIlllI.method_6067());
-            lllllllllllllllllllIlllIlllIllIl.healthText = String.valueOf(new StringBuilder().append(" ").append(lllllllllllllllllllIlllIlllIllIl.health));
+    private class Entry {
+        public final String name;
+        public final UUID uuid;
+        public final double z;
+        public final double x;
+        public final String healthText;
+        public final double xWidth;
+        public final double y;
+        public final double height;
+        public final int health;
+        final LogoutSpots this$0;
+        public final double zWidth;
+        public final int maxHealth;
+
+        public Entry(LogoutSpots logoutSpots, class_1657 class_16572) {
+            this.this$0 = logoutSpots;
+            this.x = class_16572.method_23317();
+            this.y = class_16572.method_23318();
+            this.z = class_16572.method_23321();
+            this.xWidth = class_16572.method_5829().method_17939();
+            this.zWidth = class_16572.method_5829().method_17941();
+            this.height = class_16572.method_5829().method_17940();
+            this.uuid = class_16572.method_5667();
+            this.name = class_16572.method_5820();
+            this.health = Math.round(class_16572.method_6032() + class_16572.method_6067());
+            this.maxHealth = Math.round(class_16572.method_6063() + class_16572.method_6067());
+            this.healthText = String.valueOf(new StringBuilder().append(" ").append(this.health));
         }
 
-        public void render(RenderEvent lllllllllllllllllllIlllIllIllllI) {
-            Color lllllllllllllllllllIlllIllIllIIl;
-            Entry lllllllllllllllllllIlllIllIlllll;
-            class_4184 lllllllllllllllllllIlllIllIlllIl = ((LogoutSpots)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this).mc.field_1773.method_19418();
-            double lllllllllllllllllllIlllIllIlllII = 0.025;
-            double lllllllllllllllllllIlllIllIllIll = PlayerUtils.distanceToCamera(lllllllllllllllllllIlllIllIlllll.x, lllllllllllllllllllIlllIllIlllll.y, lllllllllllllllllllIlllIllIlllll.z);
-            if (lllllllllllllllllllIlllIllIllIll > 8.0) {
-                lllllllllllllllllllIlllIllIlllII *= lllllllllllllllllllIlllIllIllIll / 8.0 * (Double)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.scale.get();
+        public void render(RenderEvent renderEvent) {
+            class_4184 class_41842 = LogoutSpots.access$000((LogoutSpots)this.this$0).field_1773.method_19418();
+            double d = 0.025;
+            double d2 = PlayerUtils.distanceToCamera(this.x, this.y, this.z);
+            if (d2 > 8.0) {
+                d *= d2 / 8.0 * (Double)LogoutSpots.access$100(this.this$0).get();
             }
-            if (lllllllllllllllllllIlllIllIllIll > (double)(((LogoutSpots)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this).mc.field_1690.field_1870 * 16)) {
+            if (d2 > (double)(LogoutSpots.access$200((LogoutSpots)this.this$0).field_1690.field_1870 * 16)) {
                 return;
             }
-            double lllllllllllllllllllIlllIllIllIlI = (double)lllllllllllllllllllIlllIllIlllll.health / (double)lllllllllllllllllllIlllIllIlllll.maxHealth;
-            if (((Boolean)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.fullHeight.get()).booleanValue()) {
-                Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, lllllllllllllllllllIlllIllIlllll.x, lllllllllllllllllllIlllIllIlllll.y, lllllllllllllllllllIlllIllIlllll.z, lllllllllllllllllllIlllIllIlllll.x + lllllllllllllllllllIlllIllIlllll.xWidth, lllllllllllllllllllIlllIllIlllll.y + lllllllllllllllllllIlllIllIlllll.height, lllllllllllllllllllIlllIllIlllll.z + lllllllllllllllllllIlllIllIlllll.zWidth, (Color)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.sideColor.get(), (Color)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.lineColor.get(), (ShapeMode)((Object)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.shapeMode.get()), 0);
+            double d3 = (double)this.health / (double)this.maxHealth;
+            if (((Boolean)LogoutSpots.access$300(this.this$0).get()).booleanValue()) {
+                Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, this.x, this.y, this.z, this.x + this.xWidth, this.y + this.height, this.z + this.zWidth, (Color)LogoutSpots.access$400(this.this$0).get(), (Color)LogoutSpots.access$500(this.this$0).get(), (ShapeMode)((Object)LogoutSpots.access$600(this.this$0).get()), 0);
             } else {
-                Renderer.quadWithLinesHorizontal(Renderer.NORMAL, Renderer.LINES, lllllllllllllllllllIlllIllIlllll.x, lllllllllllllllllllIlllIllIlllll.y, lllllllllllllllllllIlllIllIlllll.z, lllllllllllllllllllIlllIllIlllll.xWidth, (Color)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.sideColor.get(), (Color)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.lineColor.get(), (ShapeMode)((Object)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.shapeMode.get()));
+                Renderer.quadWithLinesHorizontal(Renderer.NORMAL, Renderer.LINES, this.x, this.y, this.z, this.xWidth, (Color)LogoutSpots.access$400(this.this$0).get(), (Color)LogoutSpots.access$500(this.this$0).get(), (ShapeMode)((Object)LogoutSpots.access$600(this.this$0).get()));
             }
-            if (lllllllllllllllllllIlllIllIllIlI <= 0.333) {
-                Color lllllllllllllllllllIlllIlllIIIIl = RED;
-            } else if (lllllllllllllllllllIlllIllIllIlI <= 0.666) {
-                Color lllllllllllllllllllIlllIlllIIIII = ORANGE;
-            } else {
-                lllllllllllllllllllIlllIllIllIIl = GREEN;
-            }
+            Color color = d3 <= 0.333 ? LogoutSpots.access$700() : (d3 <= 0.666 ? LogoutSpots.access$800() : LogoutSpots.access$900());
             Matrices.push();
-            Matrices.translate(lllllllllllllllllllIlllIllIlllll.x + lllllllllllllllllllIlllIllIlllll.xWidth / 2.0 - lllllllllllllllllllIlllIllIllllI.offsetX, lllllllllllllllllllIlllIllIlllll.y + ((Boolean)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.fullHeight.get() != false ? lllllllllllllllllllIlllIllIlllll.height + 0.5 : 0.5) - lllllllllllllllllllIlllIllIllllI.offsetY, lllllllllllllllllllIlllIllIlllll.z + lllllllllllllllllllIlllIllIlllll.zWidth / 2.0 - lllllllllllllllllllIlllIllIllllI.offsetZ);
-            Matrices.rotate(-lllllllllllllllllllIlllIllIlllIl.method_19330(), 0.0, 1.0, 0.0);
-            Matrices.rotate(lllllllllllllllllllIlllIllIlllIl.method_19329(), 1.0, 0.0, 0.0);
-            Matrices.scale(-lllllllllllllllllllIlllIllIlllII, -lllllllllllllllllllIlllIllIlllII, lllllllllllllllllllIlllIllIlllII);
-            double lllllllllllllllllllIlllIllIllIII = TextRenderer.get().getWidth(lllllllllllllllllllIlllIllIlllll.name) / 2.0 + TextRenderer.get().getWidth(lllllllllllllllllllIlllIllIlllll.healthText) / 2.0;
-            MB.begin(null, DrawMode.Triangles, class_290.field_1576);
-            MB.quad(-lllllllllllllllllllIlllIllIllIII - 1.0, -1.0, 0.0, -lllllllllllllllllllIlllIllIllIII - 1.0, 8.0, 0.0, lllllllllllllllllllIlllIllIllIII + 1.0, 8.0, 0.0, lllllllllllllllllllIlllIllIllIII + 1.0, -1.0, 0.0, (Color)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.nameBackgroundColor.get());
-            MB.end();
+            Matrices.translate(this.x + this.xWidth / 2.0 - renderEvent.offsetX, this.y + ((Boolean)LogoutSpots.access$300(this.this$0).get() != false ? this.height + 0.5 : 0.5) - renderEvent.offsetY, this.z + this.zWidth / 2.0 - renderEvent.offsetZ);
+            Matrices.rotate(-class_41842.method_19330(), 0.0, 1.0, 0.0);
+            Matrices.rotate(class_41842.method_19329(), 1.0, 0.0, 0.0);
+            Matrices.scale(-d, -d, d);
+            double d4 = TextRenderer.get().getWidth(this.name) / 2.0 + TextRenderer.get().getWidth(this.healthText) / 2.0;
+            LogoutSpots.access$1000().begin(null, DrawMode.Triangles, class_290.field_1576);
+            LogoutSpots.access$1000().quad(-d4 - 1.0, -1.0, 0.0, -d4 - 1.0, 8.0, 0.0, d4 + 1.0, 8.0, 0.0, d4 + 1.0, -1.0, 0.0, (Color)LogoutSpots.access$1100(this.this$0).get());
+            LogoutSpots.access$1000().end();
             TextRenderer.get().begin(1.0, false, true);
-            double lllllllllllllllllllIlllIllIlIlll = TextRenderer.get().render(lllllllllllllllllllIlllIllIlllll.name, -lllllllllllllllllllIlllIllIllIII, 0.0, (Color)lllllllllllllllllllIlllIllIlllll.LogoutSpots.this.nameColor.get());
-            TextRenderer.get().render(lllllllllllllllllllIlllIllIlllll.healthText, lllllllllllllllllllIlllIllIlIlll, 0.0, lllllllllllllllllllIlllIllIllIIl);
+            double d5 = TextRenderer.get().render(this.name, -d4, 0.0, (Color)LogoutSpots.access$1200(this.this$0).get());
+            TextRenderer.get().render(this.healthText, d5, 0.0, color);
             TextRenderer.get().end();
             Matrices.pop();
         }

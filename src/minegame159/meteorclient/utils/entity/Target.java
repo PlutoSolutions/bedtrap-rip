@@ -8,9 +8,5 @@ public enum Target {
     Body,
     Feet;
 
-
-    private Target() {
-        Target llllllllllllllllIlIlIlllIIIlIlII;
-    }
 }
 

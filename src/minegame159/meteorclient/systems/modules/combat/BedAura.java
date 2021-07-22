@@ -6,6 +6,7 @@
  *  net.minecraft.class_1309
  *  net.minecraft.class_1657
  *  net.minecraft.class_1748
+ *  net.minecraft.class_1799
  *  net.minecraft.class_2244
  *  net.minecraft.class_2338
  *  net.minecraft.class_2350
@@ -43,6 +44,7 @@ import net.minecraft.class_1268;
 import net.minecraft.class_1309;
 import net.minecraft.class_1657;
 import net.minecraft.class_1748;
+import net.minecraft.class_1799;
 import net.minecraft.class_2244;
 import net.minecraft.class_2338;
 import net.minecraft.class_2350;
@@ -50,42 +52,42 @@ import net.minecraft.class_3965;
 
 public class BedAura
 extends Module {
-    private final /* synthetic */ Setting<Boolean> autoMove;
-    private final /* synthetic */ Setting<SortPriority> priority;
-    private final /* synthetic */ Setting<Double> minHealth;
-    private final /* synthetic */ Setting<Boolean> swapBack;
-    private final /* synthetic */ SettingGroup sgMisc;
-    private final /* synthetic */ Setting<Integer> autoMoveSlot;
-    private final /* synthetic */ SettingGroup sgRender;
-    private final /* synthetic */ Setting<Boolean> place;
-    private final /* synthetic */ Setting<Double> maxSelfDamage;
-    private final /* synthetic */ SettingGroup sgPlace;
-    private final /* synthetic */ Setting<SettingColor> sideColor;
-    private final /* synthetic */ Setting<Integer> placeDelay;
-    private final /* synthetic */ Setting<Double> minDamage;
-    private final /* synthetic */ Setting<Boolean> pauseOnEat;
-    private final /* synthetic */ Setting<Boolean> autoSwitch;
-    private final /* synthetic */ SettingGroup sgBreak;
-    private final /* synthetic */ Setting<Integer> breakDelay;
-    private final /* synthetic */ Setting<ShapeMode> shapeMode;
-    private final /* synthetic */ SettingGroup sgPause;
-    private /* synthetic */ class_1657 target;
-    private /* synthetic */ int breakDelayLeft;
-    private final /* synthetic */ Setting<Safety> breakMode;
-    private final /* synthetic */ Setting<Boolean> pauseOnDrink;
-    private final /* synthetic */ Setting<Double> targetRange;
-    private /* synthetic */ Stage stage;
-    private /* synthetic */ class_2350 direction;
-    private /* synthetic */ class_2338 bestPos;
-    private final /* synthetic */ Setting<Boolean> render;
-    private final /* synthetic */ Setting<Boolean> pauseOnMine;
-    private final /* synthetic */ Setting<SettingColor> lineColor;
-    private final /* synthetic */ Setting<Boolean> noSwing;
-    private /* synthetic */ int placeDelayLeft;
-    private final /* synthetic */ Setting<Safety> placeMode;
+    private final Setting<Boolean> autoMove;
+    private final Setting<SortPriority> priority;
+    private final Setting<Double> minHealth;
+    private final Setting<Boolean> swapBack;
+    private final SettingGroup sgMisc;
+    private final Setting<Integer> autoMoveSlot;
+    private final SettingGroup sgRender;
+    private final Setting<Boolean> place;
+    private final Setting<Double> maxSelfDamage;
+    private final SettingGroup sgPlace;
+    private final Setting<SettingColor> sideColor;
+    private final Setting<Integer> placeDelay;
+    private final Setting<Double> minDamage;
+    private final Setting<Boolean> pauseOnEat;
+    private final Setting<Boolean> autoSwitch;
+    private final SettingGroup sgBreak;
+    private final Setting<Integer> breakDelay;
+    private final Setting<ShapeMode> shapeMode;
+    private final SettingGroup sgPause;
+    private class_1657 target;
+    private int breakDelayLeft;
+    private final Setting<Safety> breakMode;
+    private final Setting<Boolean> pauseOnDrink;
+    private final Setting<Double> targetRange;
+    private Stage stage;
+    private class_2350 direction;
+    private class_2338 bestPos;
+    private final Setting<Boolean> render;
+    private final Setting<Boolean> pauseOnMine;
+    private final Setting<SettingColor> lineColor;
+    private final Setting<Boolean> noSwing;
+    private int placeDelayLeft;
+    private final Setting<Safety> placeMode;
 
-    private float yawFromDir(class_2350 llllIlIIIllIlII) {
-        switch (llllIlIIIllIlII) {
+    private float yawFromDir(class_2350 class_23502) {
+        switch (class_23502) {
             case field_11034: {
                 return 90.0f;
             }
@@ -104,265 +106,266 @@ extends Module {
 
     @Override
     public void onActivate() {
-        BedAura llllIlIlIIIIlll;
-        llllIlIlIIIIlll.stage = llllIlIlIIIIlll.place.get() != false ? Stage.Placing : Stage.Breaking;
-        llllIlIlIIIIlll.bestPos = null;
-        llllIlIlIIIIlll.direction = class_2350.field_11034;
-        llllIlIlIIIIlll.placeDelayLeft = llllIlIlIIIIlll.placeDelay.get();
-        llllIlIlIIIIlll.breakDelayLeft = llllIlIlIIIIlll.placeDelay.get();
+        this.stage = this.place.get() != false ? Stage.Placing : Stage.Breaking;
+        this.bestPos = null;
+        this.direction = class_2350.field_11034;
+        this.placeDelayLeft = this.placeDelay.get();
+        this.breakDelayLeft = this.placeDelay.get();
     }
 
     @EventHandler
-    private void onRender(RenderEvent llllIlIIIlIlIll) {
-        BedAura llllIlIIIlIllII;
-        if (llllIlIIIlIllII.render.get().booleanValue() && llllIlIIIlIllII.bestPos != null) {
-            int llllIlIIIlIllll = llllIlIIIlIllII.bestPos.method_10263();
-            int llllIlIIIlIlllI = llllIlIIIlIllII.bestPos.method_10264();
-            int llllIlIIIlIllIl = llllIlIIIlIllII.bestPos.method_10260();
-            switch (llllIlIIIlIllII.direction) {
+    private void onRender(RenderEvent renderEvent) {
+        if (this.render.get().booleanValue() && this.bestPos != null) {
+            int n = this.bestPos.method_10263();
+            int n2 = this.bestPos.method_10264();
+            int n3 = this.bestPos.method_10260();
+            switch (this.direction) {
                 case field_11043: {
-                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, llllIlIIIlIllll, llllIlIIIlIlllI, llllIlIIIlIllIl, llllIlIIIlIllll + 1, (double)llllIlIIIlIlllI + 0.6, llllIlIIIlIllIl + 2, llllIlIIIlIllII.sideColor.get(), llllIlIIIlIllII.lineColor.get(), llllIlIIIlIllII.shapeMode.get(), 0);
+                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, n, n2, n3, n + 1, (double)n2 + 0.6, n3 + 2, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get(), 0);
                     break;
                 }
                 case field_11035: {
-                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, llllIlIIIlIllll, llllIlIIIlIlllI, llllIlIIIlIllIl - 1, llllIlIIIlIllll + 1, (double)llllIlIIIlIlllI + 0.6, llllIlIIIlIllIl + 1, llllIlIIIlIllII.sideColor.get(), llllIlIIIlIllII.lineColor.get(), llllIlIIIlIllII.shapeMode.get(), 0);
+                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, n, n2, n3 - 1, n + 1, (double)n2 + 0.6, n3 + 1, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get(), 0);
                     break;
                 }
                 case field_11034: {
-                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, llllIlIIIlIllll - 1, llllIlIIIlIlllI, llllIlIIIlIllIl, llllIlIIIlIllll + 1, (double)llllIlIIIlIlllI + 0.6, llllIlIIIlIllIl + 1, llllIlIIIlIllII.sideColor.get(), llllIlIIIlIllII.lineColor.get(), llllIlIIIlIllII.shapeMode.get(), 0);
+                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, n - 1, n2, n3, n + 1, (double)n2 + 0.6, n3 + 1, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get(), 0);
                     break;
                 }
                 case field_11039: {
-                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, llllIlIIIlIllll, llllIlIIIlIlllI, llllIlIIIlIllIl, llllIlIIIlIllll + 2, (double)llllIlIIIlIlllI + 0.6, llllIlIIIlIllIl + 1, llllIlIIIlIllII.sideColor.get(), llllIlIIIlIllII.lineColor.get(), llllIlIIIlIllII.shapeMode.get(), 0);
+                    Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, n, n2, n3, n + 2, (double)n2 + 0.6, n3 + 1, this.sideColor.get(), this.lineColor.get(), this.shapeMode.get(), 0);
                 }
             }
         }
     }
 
-    private class_2338 getBreakPos(class_1657 llllIlIIlIIlllI) {
-        BedAura llllIlIIlIlIIlI;
-        class_2338 llllIlIIlIlIIII = llllIlIIlIIlllI.method_24515();
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11043, llllIlIIlIIlllI, true)) {
-            return llllIlIIlIlIIII.method_10084().method_10095();
+    private class_2338 getBreakPos(class_1657 class_16572) {
+        class_2338 class_23382 = class_16572.method_24515();
+        if (this.checkBreak(class_2350.field_11043, class_16572, true)) {
+            return class_23382.method_10084().method_10095();
         }
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11035, llllIlIIlIIlllI, true)) {
-            return llllIlIIlIlIIII.method_10084().method_10072();
+        if (this.checkBreak(class_2350.field_11035, class_16572, true)) {
+            return class_23382.method_10084().method_10072();
         }
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11034, llllIlIIlIIlllI, true)) {
-            return llllIlIIlIlIIII.method_10084().method_10078();
+        if (this.checkBreak(class_2350.field_11034, class_16572, true)) {
+            return class_23382.method_10084().method_10078();
         }
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11039, llllIlIIlIIlllI, true)) {
-            return llllIlIIlIlIIII.method_10084().method_10067();
+        if (this.checkBreak(class_2350.field_11039, class_16572, true)) {
+            return class_23382.method_10084().method_10067();
         }
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11043, llllIlIIlIIlllI, false)) {
-            return llllIlIIlIlIIII.method_10095();
+        if (this.checkBreak(class_2350.field_11043, class_16572, false)) {
+            return class_23382.method_10095();
         }
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11035, llllIlIIlIIlllI, false)) {
-            return llllIlIIlIlIIII.method_10072();
+        if (this.checkBreak(class_2350.field_11035, class_16572, false)) {
+            return class_23382.method_10072();
         }
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11034, llllIlIIlIIlllI, false)) {
-            return llllIlIIlIlIIII.method_10078();
+        if (this.checkBreak(class_2350.field_11034, class_16572, false)) {
+            return class_23382.method_10078();
         }
-        if (llllIlIIlIlIIlI.checkBreak(class_2350.field_11039, llllIlIIlIIlllI, false)) {
-            return llllIlIIlIlIIII.method_10067();
+        if (this.checkBreak(class_2350.field_11039, class_16572, false)) {
+            return class_23382.method_10067();
         }
         return null;
     }
 
-    private boolean checkBreak(class_2350 llllIlIIlIIIllI, class_1657 llllIlIIlIIIIII, boolean llllIlIIlIIIlII) {
-        BedAura llllIlIIlIIIlll;
-        class_2338 llllIlIIlIIIIll;
-        class_2338 class_23382 = llllIlIIlIIIIll = llllIlIIlIIIlII ? llllIlIIlIIIIII.method_24515().method_10084() : llllIlIIlIIIIII.method_24515();
-        if (llllIlIIlIIIlll.mc.field_1687.method_8320(llllIlIIlIIIIll).method_26204() instanceof class_2244 && llllIlIIlIIIlll.mc.field_1687.method_8320(llllIlIIlIIIIll.method_10093(llllIlIIlIIIllI)).method_26204() instanceof class_2244 && (llllIlIIlIIIlll.breakMode.get() == Safety.Suicide || DamageCalcUtils.bedDamage((class_1309)llllIlIIlIIIIII, Utils.vec3d(llllIlIIlIIIIll)) >= llllIlIIlIIIlll.minDamage.get() && DamageCalcUtils.bedDamage((class_1309)llllIlIIlIIIlll.mc.field_1724, Utils.vec3d(llllIlIIlIIIIll.method_10093(llllIlIIlIIIllI))) < llllIlIIlIIIlll.maxSelfDamage.get() && DamageCalcUtils.bedDamage((class_1309)llllIlIIlIIIlll.mc.field_1724, Utils.vec3d(llllIlIIlIIIIll)) < llllIlIIlIIIlll.maxSelfDamage.get())) {
-            llllIlIIlIIIlll.direction = llllIlIIlIIIllI;
+    private static boolean lambda$onTick$0(class_1799 class_17992) {
+        return class_17992.method_7909() instanceof class_1748;
+    }
+
+    private static boolean lambda$doAutoMove$4(class_1799 class_17992) {
+        return class_17992.method_7909() instanceof class_1748;
+    }
+
+    private boolean checkBreak(class_2350 class_23502, class_1657 class_16572, boolean bl) {
+        class_2338 class_23382;
+        class_2338 class_23383 = class_23382 = bl ? class_16572.method_24515().method_10084() : class_16572.method_24515();
+        if (this.mc.field_1687.method_8320(class_23382).method_26204() instanceof class_2244 && this.mc.field_1687.method_8320(class_23382.method_10093(class_23502)).method_26204() instanceof class_2244 && (this.breakMode.get() == Safety.Suicide || DamageCalcUtils.bedDamage((class_1309)class_16572, Utils.vec3d(class_23382)) >= this.minDamage.get() && DamageCalcUtils.bedDamage((class_1309)this.mc.field_1724, Utils.vec3d(class_23382.method_10093(class_23502))) < this.maxSelfDamage.get() && DamageCalcUtils.bedDamage((class_1309)this.mc.field_1724, Utils.vec3d(class_23382)) < this.maxSelfDamage.get())) {
+            this.direction = class_23502;
             return true;
         }
         return false;
     }
 
     private void doAutoMove() {
-        BedAura llllIlIIIlllIIl;
-        FindItemResult llllIlIIIlllIlI = InvUtils.find(llllIlIIIlIIIIl -> llllIlIIIlIIIIl.method_7909() instanceof class_1748);
-        if (llllIlIIIlllIlI.found() && llllIlIIIlllIlI.getSlot() != llllIlIIIlllIIl.autoMoveSlot.get() - 1) {
-            InvUtils.move().from(llllIlIIIlllIlI.getSlot()).toHotbar(llllIlIIIlllIIl.autoMoveSlot.get() - 1);
+        FindItemResult findItemResult = InvUtils.find(BedAura::lambda$doAutoMove$4);
+        if (findItemResult.found() && findItemResult.getSlot() != this.autoMoveSlot.get() - 1) {
+            InvUtils.move().from(findItemResult.getSlot()).toHotbar(this.autoMoveSlot.get() - 1);
         }
     }
 
     @Override
     public String getInfoString() {
-        BedAura llllIlIIIlIIlIl;
-        if (llllIlIIIlIIlIl.target != null) {
-            return llllIlIIIlIIlIl.target.method_5820();
+        if (this.target != null) {
+            return this.target.method_5820();
         }
         return null;
     }
 
+    private static boolean lambda$placeBed$2(class_1799 class_17992) {
+        return class_17992.method_7909() instanceof class_1748;
+    }
+
     @EventHandler
-    private void onTick(TickEvent.Post llllIlIlIIIIlII) {
-        BedAura llllIlIlIIIIlIl;
-        if (llllIlIlIIIIlIl.mc.field_1687.method_8597().method_29956()) {
-            llllIlIlIIIIlIl.error("You are in the Overworld... disabling!", new Object[0]);
-            llllIlIlIIIIlIl.toggle();
+    private void onTick(TickEvent.Post post) {
+        if (this.mc.field_1687.method_8597().method_29956()) {
+            this.error("You are in the Overworld... disabling!", new Object[0]);
+            this.toggle();
             return;
         }
-        if (PlayerUtils.shouldPause(llllIlIlIIIIlIl.pauseOnMine.get(), llllIlIlIIIIlIl.pauseOnEat.get(), llllIlIlIIIIlIl.pauseOnDrink.get())) {
+        if (PlayerUtils.shouldPause(this.pauseOnMine.get(), this.pauseOnEat.get(), this.pauseOnDrink.get())) {
             return;
         }
-        if ((double)EntityUtils.getTotalHealth((class_1657)llllIlIlIIIIlIl.mc.field_1724) <= llllIlIlIIIIlIl.minHealth.get()) {
+        if ((double)EntityUtils.getTotalHealth((class_1657)this.mc.field_1724) <= this.minHealth.get()) {
             return;
         }
-        llllIlIlIIIIlIl.target = TargetUtils.getPlayerTarget(llllIlIlIIIIlIl.targetRange.get(), llllIlIlIIIIlIl.priority.get());
-        if (llllIlIlIIIIlIl.target == null) {
-            llllIlIlIIIIlIl.bestPos = null;
+        this.target = TargetUtils.getPlayerTarget(this.targetRange.get(), this.priority.get());
+        if (this.target == null) {
+            this.bestPos = null;
             return;
         }
-        if (llllIlIlIIIIlIl.place.get().booleanValue() && InvUtils.find(llllIlIIIIIllll -> llllIlIIIIIllll.method_7909() instanceof class_1748).found()) {
-            switch (llllIlIlIIIIlIl.stage) {
+        if (this.place.get().booleanValue() && InvUtils.find(BedAura::lambda$onTick$0).found()) {
+            switch (this.stage) {
                 case Placing: {
-                    llllIlIlIIIIlIl.bestPos = llllIlIlIIIIlIl.getPlacePos(llllIlIlIIIIlIl.target);
-                    if (llllIlIlIIIIlIl.placeDelayLeft > 0) {
-                        --llllIlIlIIIIlIl.placeDelayLeft;
+                    this.bestPos = this.getPlacePos(this.target);
+                    if (this.placeDelayLeft > 0) {
+                        --this.placeDelayLeft;
                     } else {
-                        llllIlIlIIIIlIl.placeBed(llllIlIlIIIIlIl.bestPos);
-                        llllIlIlIIIIlIl.placeDelayLeft = llllIlIlIIIIlIl.placeDelay.get();
-                        llllIlIlIIIIlIl.stage = Stage.Breaking;
+                        this.placeBed(this.bestPos);
+                        this.placeDelayLeft = this.placeDelay.get();
+                        this.stage = Stage.Breaking;
                     }
                 }
                 case Breaking: {
-                    llllIlIlIIIIlIl.bestPos = llllIlIlIIIIlIl.getBreakPos(llllIlIlIIIIlIl.target);
-                    if (llllIlIlIIIIlIl.breakDelayLeft > 0) {
-                        --llllIlIlIIIIlIl.breakDelayLeft;
+                    this.bestPos = this.getBreakPos(this.target);
+                    if (this.breakDelayLeft > 0) {
+                        --this.breakDelayLeft;
                         break;
                     }
-                    llllIlIlIIIIlIl.breakBed(llllIlIlIIIIlIl.bestPos);
-                    llllIlIlIIIIlIl.breakDelayLeft = llllIlIlIIIIlIl.breakDelay.get();
-                    llllIlIlIIIIlIl.stage = Stage.Placing;
+                    this.breakBed(this.bestPos);
+                    this.breakDelayLeft = this.breakDelay.get();
+                    this.stage = Stage.Placing;
                 }
             }
         } else {
-            llllIlIlIIIIlIl.bestPos = llllIlIlIIIIlIl.getBreakPos(llllIlIlIIIIlIl.target);
-            if (llllIlIlIIIIlIl.breakDelayLeft > 0) {
-                --llllIlIlIIIIlIl.breakDelayLeft;
+            this.bestPos = this.getBreakPos(this.target);
+            if (this.breakDelayLeft > 0) {
+                --this.breakDelayLeft;
             } else {
-                llllIlIlIIIIlIl.breakDelayLeft = llllIlIlIIIIlIl.breakDelay.get();
-                llllIlIlIIIIlIl.breakBed(llllIlIlIIIIlIl.bestPos);
+                this.breakDelayLeft = this.breakDelay.get();
+                this.breakBed(this.bestPos);
             }
         }
     }
 
-    private boolean checkPlace(class_2350 llllIlIIlIllllI, class_1657 llllIlIIlIlllIl, boolean llllIlIIlIlIlll) {
-        BedAura llllIlIIlIlllll;
-        class_2338 llllIlIIlIllIll;
-        class_2338 class_23382 = llllIlIIlIllIll = llllIlIIlIlIlll ? llllIlIIlIlllIl.method_24515().method_10084() : llllIlIIlIlllIl.method_24515();
-        if (llllIlIIlIlllll.mc.field_1687.method_8320(llllIlIIlIllIll).method_26207().method_15800() && BlockUtils.canPlace(llllIlIIlIllIll.method_10093(llllIlIIlIllllI)) && (llllIlIIlIlllll.placeMode.get() == Safety.Suicide || DamageCalcUtils.bedDamage((class_1309)llllIlIIlIlllIl, Utils.vec3d(llllIlIIlIllIll)) >= llllIlIIlIlllll.minDamage.get() && DamageCalcUtils.bedDamage((class_1309)llllIlIIlIlllll.mc.field_1724, Utils.vec3d(llllIlIIlIllIll.method_10093(llllIlIIlIllllI))) < llllIlIIlIlllll.maxSelfDamage.get() && DamageCalcUtils.bedDamage((class_1309)llllIlIIlIlllll.mc.field_1724, Utils.vec3d(llllIlIIlIllIll)) < llllIlIIlIlllll.maxSelfDamage.get())) {
-            llllIlIIlIlllll.direction = llllIlIIlIllllI;
+    private boolean checkPlace(class_2350 class_23502, class_1657 class_16572, boolean bl) {
+        class_2338 class_23382;
+        class_2338 class_23383 = class_23382 = bl ? class_16572.method_24515().method_10084() : class_16572.method_24515();
+        if (this.mc.field_1687.method_8320(class_23382).method_26207().method_15800() && BlockUtils.canPlace(class_23382.method_10093(class_23502)) && (this.placeMode.get() == Safety.Suicide || DamageCalcUtils.bedDamage((class_1309)class_16572, Utils.vec3d(class_23382)) >= this.minDamage.get() && DamageCalcUtils.bedDamage((class_1309)this.mc.field_1724, Utils.vec3d(class_23382.method_10093(class_23502))) < this.maxSelfDamage.get() && DamageCalcUtils.bedDamage((class_1309)this.mc.field_1724, Utils.vec3d(class_23382)) < this.maxSelfDamage.get())) {
+            this.direction = class_23502;
             return true;
         }
         return false;
     }
 
-    private void placeBed(class_2338 llllIlIIlllllIl) {
-        BedAura llllIlIIllllllI;
-        FindItemResult llllIlIIlllllII = InvUtils.find(llllIlIIIIlIIlI -> llllIlIIIIlIIlI.method_7909() instanceof class_1748);
-        if (llllIlIIlllllII.isMain() && llllIlIIllllllI.autoMove.get().booleanValue()) {
-            llllIlIIllllllI.doAutoMove();
+    private void lambda$placeBed$3(class_2338 class_23382, FindItemResult findItemResult) {
+        BlockUtils.place(class_23382, findItemResult, false, 0, this.noSwing.get() == false, true, this.swapBack.get());
+    }
+
+    private static boolean lambda$placeBed$1(class_1799 class_17992) {
+        return class_17992.method_7909() instanceof class_1748;
+    }
+
+    private void placeBed(class_2338 class_23382) {
+        FindItemResult findItemResult = InvUtils.find(BedAura::lambda$placeBed$1);
+        if (findItemResult.isMain() && this.autoMove.get().booleanValue()) {
+            this.doAutoMove();
         }
-        if (!(llllIlIIlllllII = InvUtils.findInHotbar(llllIlIIIIlIllI -> llllIlIIIIlIllI.method_7909() instanceof class_1748)).found()) {
+        if (!(findItemResult = InvUtils.findInHotbar(BedAura::lambda$placeBed$2)).found()) {
             return;
         }
-        if (llllIlIIlllllII.getHand() == null && !llllIlIIllllllI.autoSwitch.get().booleanValue()) {
+        if (findItemResult.getHand() == null && !this.autoSwitch.get().booleanValue()) {
             return;
         }
-        FindItemResult llllIlIIllllIll = llllIlIIlllllII;
-        Rotations.rotate(llllIlIIllllllI.yawFromDir(llllIlIIllllllI.direction), llllIlIIllllllI.mc.field_1724.field_5965, () -> {
-            BedAura llllIlIIIIlllIl;
-            BlockUtils.place(llllIlIIlllllIl, llllIlIIllllIll, false, 0, llllIlIIIIlllIl.noSwing.get() == false, true, llllIlIIIIlllIl.swapBack.get());
-        });
+        FindItemResult findItemResult2 = findItemResult;
+        Rotations.rotate(this.yawFromDir(this.direction), this.mc.field_1724.field_5965, () -> this.lambda$placeBed$3(class_23382, findItemResult2));
     }
 
     public BedAura() {
         super(Categories.Combat, "bed-aura", "Automatically places and explodes beds in the Nether and End.");
-        BedAura llllIlIlIIIlIll;
-        llllIlIlIIIlIll.sgPlace = llllIlIlIIIlIll.settings.createGroup("Place");
-        llllIlIlIIIlIll.sgBreak = llllIlIlIIIlIll.settings.createGroup("Break");
-        llllIlIlIIIlIll.sgPause = llllIlIlIIIlIll.settings.createGroup("Pause");
-        llllIlIlIIIlIll.sgMisc = llllIlIlIIIlIll.settings.createGroup("Misc");
-        llllIlIlIIIlIll.sgRender = llllIlIlIIIlIll.settings.createGroup("Render");
-        llllIlIlIIIlIll.place = llllIlIlIIIlIll.sgPlace.add(new BoolSetting.Builder().name("place").description("Allows Bed Aura to place beds.").defaultValue(true).build());
-        llllIlIlIIIlIll.placeMode = llllIlIlIIIlIll.sgPlace.add(new EnumSetting.Builder().name("place-mode").description("The way beds are allowed to be placed near you.").defaultValue(Safety.Safe).visible(llllIlIlIIIlIll.place::get).build());
-        llllIlIlIIIlIll.placeDelay = llllIlIlIIIlIll.sgPlace.add(new IntSetting.Builder().name("place-delay").description("The tick delay for placing beds.").defaultValue(9).min(0).sliderMax(20).visible(llllIlIlIIIlIll.place::get).build());
-        llllIlIlIIIlIll.breakDelay = llllIlIlIIIlIll.sgBreak.add(new IntSetting.Builder().name("break-delay").description("The tick delay for breaking beds.").defaultValue(0).min(0).sliderMax(20).build());
-        llllIlIlIIIlIll.breakMode = llllIlIlIIIlIll.sgBreak.add(new EnumSetting.Builder().name("break-mode").description("The way beds are allowed to be broken near you.").defaultValue(Safety.Safe).build());
-        llllIlIlIIIlIll.pauseOnEat = llllIlIlIIIlIll.sgPause.add(new BoolSetting.Builder().name("pause-on-eat").description("Pauses while eating.").defaultValue(false).build());
-        llllIlIlIIIlIll.pauseOnDrink = llllIlIlIIIlIll.sgPause.add(new BoolSetting.Builder().name("pause-on-drink").description("Pauses while drinking potions.").defaultValue(false).build());
-        llllIlIlIIIlIll.pauseOnMine = llllIlIlIIIlIll.sgPause.add(new BoolSetting.Builder().name("pause-on-mine").description("Pauses while mining blocks.").defaultValue(false).build());
-        llllIlIlIIIlIll.targetRange = llllIlIlIIIlIll.sgMisc.add(new DoubleSetting.Builder().name("range").description("The maximum range for players to be targeted.").defaultValue(4.0).min(0.0).sliderMax(5.0).build());
-        llllIlIlIIIlIll.autoSwitch = llllIlIlIIIlIll.sgMisc.add(new BoolSetting.Builder().name("auto-switch").description("Switches to a bed automatically.").defaultValue(true).build());
-        llllIlIlIIIlIll.swapBack = llllIlIlIIIlIll.sgMisc.add(new BoolSetting.Builder().name("swap-back").description("Switches back to previous slot after placing.").defaultValue(true).build());
-        llllIlIlIIIlIll.autoMove = llllIlIlIIIlIll.sgMisc.add(new BoolSetting.Builder().name("auto-move").description("Moves beds into a selected hotbar slot.").defaultValue(false).build());
-        llllIlIlIIIlIll.autoMoveSlot = llllIlIlIIIlIll.sgMisc.add(new IntSetting.Builder().name("auto-move-slot").description("The slot Auto Move moves beds to.").defaultValue(9).min(1).sliderMin(1).max(9).sliderMax(9).visible(llllIlIlIIIlIll.autoMove::get).build());
-        llllIlIlIIIlIll.noSwing = llllIlIlIIIlIll.sgMisc.add(new BoolSetting.Builder().name("no-swing").description("Disables hand swings clientside.").defaultValue(false).build());
-        llllIlIlIIIlIll.minDamage = llllIlIlIIIlIll.sgMisc.add(new DoubleSetting.Builder().name("min-damage").description("The minimum damage to inflict on your target.").defaultValue(7.0).min(0.0).sliderMax(20.0).max(20.0).build());
-        llllIlIlIIIlIll.maxSelfDamage = llllIlIlIIIlIll.sgMisc.add(new DoubleSetting.Builder().name("max-self-damage").description("The maximum damage to inflict on yourself.").defaultValue(7.0).min(0.0).sliderMax(20.0).max(20.0).build());
-        llllIlIlIIIlIll.minHealth = llllIlIlIIIlIll.sgMisc.add(new DoubleSetting.Builder().name("min-health").description("The minimum health required for Bed Aura to work.").defaultValue(4.0).min(0.0).sliderMax(36.0).max(36.0).build());
-        llllIlIlIIIlIll.priority = llllIlIlIIIlIll.sgMisc.add(new EnumSetting.Builder().name("priority").description("How to select the player to target.").defaultValue(SortPriority.LowestHealth).build());
-        llllIlIlIIIlIll.render = llllIlIlIIIlIll.sgRender.add(new BoolSetting.Builder().name("render").description("Renders the block where it is placing a bed.").defaultValue(true).build());
-        llllIlIlIIIlIll.sideColor = llllIlIlIIIlIll.sgRender.add(new ColorSetting.Builder().name("place-side-color").description("The side color for positions to be placed.").defaultValue(new SettingColor(0, 0, 0, 75)).build());
-        llllIlIlIIIlIll.lineColor = llllIlIlIIIlIll.sgRender.add(new ColorSetting.Builder().name("place-line-color").description("The line color for positions to be placed.").defaultValue(new SettingColor(15, 255, 211, 255)).build());
-        llllIlIlIIIlIll.shapeMode = llllIlIlIIIlIll.sgRender.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
+        this.sgPlace = this.settings.createGroup("Place");
+        this.sgBreak = this.settings.createGroup("Break");
+        this.sgPause = this.settings.createGroup("Pause");
+        this.sgMisc = this.settings.createGroup("Misc");
+        this.sgRender = this.settings.createGroup("Render");
+        this.place = this.sgPlace.add(new BoolSetting.Builder().name("place").description("Allows Bed Aura to place beds.").defaultValue(true).build());
+        this.placeMode = this.sgPlace.add(new EnumSetting.Builder().name("place-mode").description("The way beds are allowed to be placed near you.").defaultValue(Safety.Safe).visible(this.place::get).build());
+        this.placeDelay = this.sgPlace.add(new IntSetting.Builder().name("place-delay").description("The tick delay for placing beds.").defaultValue(9).min(0).sliderMax(20).visible(this.place::get).build());
+        this.breakDelay = this.sgBreak.add(new IntSetting.Builder().name("break-delay").description("The tick delay for breaking beds.").defaultValue(0).min(0).sliderMax(20).build());
+        this.breakMode = this.sgBreak.add(new EnumSetting.Builder().name("break-mode").description("The way beds are allowed to be broken near you.").defaultValue(Safety.Safe).build());
+        this.pauseOnEat = this.sgPause.add(new BoolSetting.Builder().name("pause-on-eat").description("Pauses while eating.").defaultValue(false).build());
+        this.pauseOnDrink = this.sgPause.add(new BoolSetting.Builder().name("pause-on-drink").description("Pauses while drinking potions.").defaultValue(false).build());
+        this.pauseOnMine = this.sgPause.add(new BoolSetting.Builder().name("pause-on-mine").description("Pauses while mining blocks.").defaultValue(false).build());
+        this.targetRange = this.sgMisc.add(new DoubleSetting.Builder().name("range").description("The maximum range for players to be targeted.").defaultValue(4.0).min(0.0).sliderMax(5.0).build());
+        this.autoSwitch = this.sgMisc.add(new BoolSetting.Builder().name("auto-switch").description("Switches to a bed automatically.").defaultValue(true).build());
+        this.swapBack = this.sgMisc.add(new BoolSetting.Builder().name("swap-back").description("Switches back to previous slot after placing.").defaultValue(true).build());
+        this.autoMove = this.sgMisc.add(new BoolSetting.Builder().name("auto-move").description("Moves beds into a selected hotbar slot.").defaultValue(false).build());
+        this.autoMoveSlot = this.sgMisc.add(new IntSetting.Builder().name("auto-move-slot").description("The slot Auto Move moves beds to.").defaultValue(9).min(1).sliderMin(1).max(9).sliderMax(9).visible(this.autoMove::get).build());
+        this.noSwing = this.sgMisc.add(new BoolSetting.Builder().name("no-swing").description("Disables hand swings clientside.").defaultValue(false).build());
+        this.minDamage = this.sgMisc.add(new DoubleSetting.Builder().name("min-damage").description("The minimum damage to inflict on your target.").defaultValue(7.0).min(0.0).sliderMax(20.0).max(20.0).build());
+        this.maxSelfDamage = this.sgMisc.add(new DoubleSetting.Builder().name("max-self-damage").description("The maximum damage to inflict on yourself.").defaultValue(7.0).min(0.0).sliderMax(20.0).max(20.0).build());
+        this.minHealth = this.sgMisc.add(new DoubleSetting.Builder().name("min-health").description("The minimum health required for Bed Aura to work.").defaultValue(4.0).min(0.0).sliderMax(36.0).max(36.0).build());
+        this.priority = this.sgMisc.add(new EnumSetting.Builder().name("priority").description("How to select the player to target.").defaultValue(SortPriority.LowestHealth).build());
+        this.render = this.sgRender.add(new BoolSetting.Builder().name("render").description("Renders the block where it is placing a bed.").defaultValue(true).build());
+        this.sideColor = this.sgRender.add(new ColorSetting.Builder().name("place-side-color").description("The side color for positions to be placed.").defaultValue(new SettingColor(0, 0, 0, 75)).build());
+        this.lineColor = this.sgRender.add(new ColorSetting.Builder().name("place-line-color").description("The line color for positions to be placed.").defaultValue(new SettingColor(15, 255, 211, 255)).build());
+        this.shapeMode = this.sgRender.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
     }
 
-    private class_2338 getPlacePos(class_1657 llllIlIIllIlIIl) {
-        BedAura llllIlIIllIIlll;
-        class_2338 llllIlIIllIlIII = llllIlIIllIlIIl.method_24515();
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11043, llllIlIIllIlIIl, true)) {
-            return llllIlIIllIlIII.method_10084().method_10095();
+    private class_2338 getPlacePos(class_1657 class_16572) {
+        class_2338 class_23382 = class_16572.method_24515();
+        if (this.checkPlace(class_2350.field_11043, class_16572, true)) {
+            return class_23382.method_10084().method_10095();
         }
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11035, llllIlIIllIlIIl, true)) {
-            return llllIlIIllIlIII.method_10084().method_10072();
+        if (this.checkPlace(class_2350.field_11035, class_16572, true)) {
+            return class_23382.method_10084().method_10072();
         }
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11034, llllIlIIllIlIIl, true)) {
-            return llllIlIIllIlIII.method_10084().method_10078();
+        if (this.checkPlace(class_2350.field_11034, class_16572, true)) {
+            return class_23382.method_10084().method_10078();
         }
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11039, llllIlIIllIlIIl, true)) {
-            return llllIlIIllIlIII.method_10084().method_10067();
+        if (this.checkPlace(class_2350.field_11039, class_16572, true)) {
+            return class_23382.method_10084().method_10067();
         }
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11043, llllIlIIllIlIIl, false)) {
-            return llllIlIIllIlIII.method_10095();
+        if (this.checkPlace(class_2350.field_11043, class_16572, false)) {
+            return class_23382.method_10095();
         }
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11035, llllIlIIllIlIIl, false)) {
-            return llllIlIIllIlIII.method_10072();
+        if (this.checkPlace(class_2350.field_11035, class_16572, false)) {
+            return class_23382.method_10072();
         }
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11034, llllIlIIllIlIIl, false)) {
-            return llllIlIIllIlIII.method_10078();
+        if (this.checkPlace(class_2350.field_11034, class_16572, false)) {
+            return class_23382.method_10078();
         }
-        if (llllIlIIllIIlll.checkPlace(class_2350.field_11039, llllIlIIllIlIIl, false)) {
-            return llllIlIIllIlIII.method_10067();
+        if (this.checkPlace(class_2350.field_11039, class_16572, false)) {
+            return class_23382.method_10067();
         }
         return null;
     }
 
-    private void breakBed(class_2338 llllIlIIlllIIlI) {
-        BedAura llllIlIIlllIIll;
-        if (llllIlIIlllIIlI == null) {
+    private void breakBed(class_2338 class_23382) {
+        if (class_23382 == null) {
             return;
         }
-        boolean llllIlIIlllIIIl = llllIlIIlllIIll.mc.field_1724.method_5715();
-        if (llllIlIIlllIIIl) {
-            llllIlIIlllIIll.mc.field_1724.method_5660(false);
+        boolean bl = this.mc.field_1724.method_5715();
+        if (bl) {
+            this.mc.field_1724.method_5660(false);
         }
-        llllIlIIlllIIll.mc.field_1761.method_2896(llllIlIIlllIIll.mc.field_1724, llllIlIIlllIIll.mc.field_1687, class_1268.field_5810, new class_3965(llllIlIIlllIIll.mc.field_1724.method_19538(), class_2350.field_11036, llllIlIIlllIIll.bestPos, false));
-        llllIlIIlllIIll.mc.field_1724.method_5660(llllIlIIlllIIIl);
+        this.mc.field_1761.method_2896(this.mc.field_1724, this.mc.field_1687, class_1268.field_5810, new class_3965(this.mc.field_1724.method_19538(), class_2350.field_11036, this.bestPos, false));
+        this.mc.field_1724.method_5660(bl);
     }
 
     private static enum Stage {
         Placing,
         Breaking;
 
-
-        private Stage() {
-            Stage llllIllllIIlII;
-        }
     }
 }
 

@@ -10,25 +10,17 @@ import minegame159.meteorclient.utils.misc.Pool;
 import net.minecraft.class_2818;
 
 public class ChunkDataEvent {
-    public /* synthetic */ class_2818 chunk;
-    private static final /* synthetic */ Pool<ChunkDataEvent> INSTANCE;
+    public class_2818 chunk;
+    private static final Pool<ChunkDataEvent> INSTANCE = new Pool<ChunkDataEvent>(ChunkDataEvent::new);
 
-    public static ChunkDataEvent get(class_2818 llIIIllllIIllI) {
-        ChunkDataEvent llIIIllllIIlll = INSTANCE.get();
-        llIIIllllIIlll.chunk = llIIIllllIIllI;
-        return llIIIllllIIlll;
+    public static ChunkDataEvent get(class_2818 class_28182) {
+        ChunkDataEvent chunkDataEvent = INSTANCE.get();
+        chunkDataEvent.chunk = class_28182;
+        return chunkDataEvent;
     }
 
-    public ChunkDataEvent() {
-        ChunkDataEvent llIIIllllIlIll;
-    }
-
-    static {
-        INSTANCE = new Pool<ChunkDataEvent>(ChunkDataEvent::new);
-    }
-
-    public static void returnChunkDataEvent(ChunkDataEvent llIIIllllIIIll) {
-        INSTANCE.free(llIIIllllIIIll);
+    public static void returnChunkDataEvent(ChunkDataEvent chunkDataEvent) {
+        INSTANCE.free(chunkDataEvent);
     }
 }
 

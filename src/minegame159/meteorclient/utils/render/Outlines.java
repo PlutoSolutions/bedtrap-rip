@@ -23,11 +23,11 @@ import net.minecraft.class_4618;
 import net.minecraft.class_761;
 
 public class Outlines {
-    public static /* synthetic */ boolean loadingOutlineShader;
-    public static /* synthetic */ class_4618 vertexConsumerProvider;
-    public static /* synthetic */ boolean renderingOutlines;
-    public static /* synthetic */ class_276 outlinesFbo;
-    private static /* synthetic */ class_279 outlinesShader;
+    public static boolean loadingOutlineShader;
+    public static class_4618 vertexConsumerProvider;
+    public static boolean renderingOutlines;
+    public static class_276 outlinesFbo;
+    private static class_279 outlinesShader;
 
     public static void beginRender() {
         outlinesFbo.method_1230(class_310.field_1703);
@@ -46,38 +46,34 @@ public class Outlines {
             vertexConsumerProvider = new class_4618(Utils.mc.method_22940().method_23000());
             loadingOutlineShader = false;
         }
-        catch (IOException llllllllllllllllllllllllIlIIIlII) {
-            llllllllllllllllllllllllIlIIIlII.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
     }
 
-    public static void endRender(float llllllllllllllllllllllllIIlllllI) {
-        class_761 llllllllllllllllllllllllIIllllIl = Utils.mc.field_1769;
-        WorldRendererAccessor llllllllllllllllllllllllIIllllII = (WorldRendererAccessor)llllllllllllllllllllllllIIllllIl;
-        class_276 llllllllllllllllllllllllIIlllIll = llllllllllllllllllllllllIIllllIl.method_22990();
-        llllllllllllllllllllllllIIllllII.setEntityOutlinesFramebuffer(outlinesFbo);
+    public static void endRender(float f) {
+        class_761 class_7612 = Utils.mc.field_1769;
+        WorldRendererAccessor worldRendererAccessor = (WorldRendererAccessor)class_7612;
+        class_276 class_2763 = class_7612.method_22990();
+        worldRendererAccessor.setEntityOutlinesFramebuffer(outlinesFbo);
         vertexConsumerProvider.method_23285();
-        llllllllllllllllllllllllIIllllII.setEntityOutlinesFramebuffer(llllllllllllllllllllllllIIlllIll);
-        outlinesShader.method_1258(llllllllllllllllllllllllIIlllllI);
+        worldRendererAccessor.setEntityOutlinesFramebuffer(class_2763);
+        outlinesShader.method_1258(f);
         Utils.mc.method_1522().method_1235(false);
     }
 
-    public static void onResized(int llllllllllllllllllllllllIIllIlII, int llllllllllllllllllllllllIIllIIIl) {
+    public static void onResized(int n, int n2) {
         if (outlinesShader != null) {
-            outlinesShader.method_1259(llllllllllllllllllllllllIIllIlII, llllllllllllllllllllllllIIllIIIl);
+            outlinesShader.method_1259(n, n2);
         }
     }
 
-    public static void setUniform(String llllllllllllllllllllllllIIlIlllI, float llllllllllllllllllllllllIIlIllIl) {
-        ((ShaderEffectAccessor)outlinesShader).getPasses().get(0).method_1295().method_1271(llllllllllllllllllllllllIIlIlllI).method_1251(llllllllllllllllllllllllIIlIllIl);
+    public static void setUniform(String string, float f) {
+        ((ShaderEffectAccessor)outlinesShader).getPasses().get(0).method_1295().method_1271(string).method_1251(f);
     }
 
     public static void renderFbo() {
         outlinesFbo.method_22594(Utils.mc.method_22683().method_4489(), Utils.mc.method_22683().method_4506(), false);
-    }
-
-    public Outlines() {
-        Outlines llllllllllllllllllllllllIlIIIllI;
     }
 }
 

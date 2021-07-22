@@ -57,30 +57,32 @@ extends class_437 {
     @Shadow
     private int field_17119;
 
-    public BookScreenMixin(class_2561 title) {
-        super(title);
+    public BookScreenMixin(class_2561 class_25612) {
+        super(class_25612);
     }
 
     @Inject(method={"init"}, at={@At(value="TAIL")})
-    private void onInit(CallbackInfo info) {
-        this.method_25411((class_339)new class_4185(4, 4, 70, 16, (class_2561)new class_2585("Copy"), button -> {
-            class_2499 listTag = new class_2499();
-            for (int i = 0; i < this.field_17418.method_17560(); ++i) {
-                listTag.add((Object)class_2519.method_23256((String)this.field_17418.method_17563(i).getString()));
-            }
-            class_2487 tag = new class_2487();
-            tag.method_10566("pages", (class_2520)listTag);
-            tag.method_10569("currentPage", this.field_17119);
-            FastByteArrayOutputStream bytes = new FastByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream((OutputStream)bytes);
-            try {
-                class_2507.method_10628((class_2487)tag, (DataOutput)out);
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            GLFW.glfwSetClipboardString((long)Utils.mc.method_22683().method_4490(), (CharSequence)Base64.getEncoder().encodeToString(bytes.array));
-        }));
+    private void onInit(CallbackInfo callbackInfo) {
+        this.method_25411((class_339)new class_4185(4, 4, 70, 16, (class_2561)new class_2585("Copy"), this::lambda$onInit$0));
+    }
+
+    private void lambda$onInit$0(class_4185 class_41852) {
+        class_2499 class_24992 = new class_2499();
+        for (int i = 0; i < this.field_17418.method_17560(); ++i) {
+            class_24992.add((Object)class_2519.method_23256((String)this.field_17418.method_17563(i).getString()));
+        }
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10566("pages", (class_2520)class_24992);
+        class_24872.method_10569("currentPage", this.field_17119);
+        FastByteArrayOutputStream fastByteArrayOutputStream = new FastByteArrayOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream((OutputStream)fastByteArrayOutputStream);
+        try {
+            class_2507.method_10628((class_2487)class_24872, (DataOutput)dataOutputStream);
+        }
+        catch (IOException iOException) {
+            iOException.printStackTrace();
+        }
+        GLFW.glfwSetClipboardString((long)Utils.mc.method_22683().method_4490(), (CharSequence)Base64.getEncoder().encodeToString(fastByteArrayOutputStream.array));
     }
 }
 

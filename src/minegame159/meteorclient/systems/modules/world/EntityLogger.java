@@ -34,41 +34,34 @@ import net.minecraft.class_5250;
 
 public class EntityLogger
 extends Module {
-    private final /* synthetic */ Setting<Boolean> friends;
-    private final /* synthetic */ Setting<Boolean> playerNames;
-    private final /* synthetic */ Setting<Object2BooleanMap<class_1299<?>>> entities;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Boolean> friends;
+    private final Setting<Boolean> playerNames;
+    private final Setting<Object2BooleanMap<class_1299<?>>> entities;
+    private final SettingGroup sgGeneral;
 
     public EntityLogger() {
         super(Categories.World, "entity-logger", "Sends a client-side chat alert if a specified entity appears in render distance.");
-        EntityLogger lllllllllllllllllllIlIllIIIllIII;
-        lllllllllllllllllllIlIllIIIllIII.sgGeneral = lllllllllllllllllllIlIllIIIllIII.settings.getDefaultGroup();
-        lllllllllllllllllllIlIllIIIllIII.entities = lllllllllllllllllllIlIllIIIllIII.sgGeneral.add(new EntityTypeListSetting.Builder().name("entites").description("Select specific entities.").defaultValue((Object2BooleanMap<class_1299<?>>)new Object2BooleanOpenHashMap(0)).build());
-        lllllllllllllllllllIlIllIIIllIII.playerNames = lllllllllllllllllllIlIllIIIllIII.sgGeneral.add(new BoolSetting.Builder().name("player-names").description("Shows the player's name.").defaultValue(true).build());
-        lllllllllllllllllllIlIllIIIllIII.friends = lllllllllllllllllllIlIllIIIllIII.sgGeneral.add(new BoolSetting.Builder().name("friends").description("Logs friends.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entites").description("Select specific entities.").defaultValue((Object2BooleanMap<class_1299<?>>)new Object2BooleanOpenHashMap(0)).build());
+        this.playerNames = this.sgGeneral.add(new BoolSetting.Builder().name("player-names").description("Shows the player's name.").defaultValue(true).build());
+        this.friends = this.sgGeneral.add(new BoolSetting.Builder().name("friends").description("Logs friends.").defaultValue(true).build());
     }
 
     @EventHandler
-    private void onEntityAdded(EntityAddedEvent lllllllllllllllllllIlIllIIIIllIl) {
-        EntityLogger lllllllllllllllllllIlIllIIIIlllI;
-        if (lllllllllllllllllllIlIllIIIIllIl.entity.method_5667().equals(lllllllllllllllllllIlIllIIIIlllI.mc.field_1724.method_5667())) {
+    private void onEntityAdded(EntityAddedEvent entityAddedEvent) {
+        if (entityAddedEvent.entity.method_5667().equals(this.mc.field_1724.method_5667())) {
             return;
         }
-        if (lllllllllllllllllllIlIllIIIIlllI.entities.get().getBoolean((Object)lllllllllllllllllllIlIllIIIIllIl.entity.method_5864())) {
-            String lllllllllllllllllllIlIllIIIlIIlI;
-            if (lllllllllllllllllllIlIllIIIIllIl.entity instanceof class_1657 && !lllllllllllllllllllIlIllIIIIlllI.friends.get().booleanValue() && Friends.get().get((class_1657)lllllllllllllllllllIlIllIIIIllIl.entity) != null) {
+        if (this.entities.get().getBoolean((Object)entityAddedEvent.entity.method_5864())) {
+            if (entityAddedEvent.entity instanceof class_1657 && !this.friends.get().booleanValue() && Friends.get().get((class_1657)entityAddedEvent.entity) != null) {
                 return;
             }
-            if (lllllllllllllllllllIlIllIIIIlllI.playerNames.get().booleanValue() && lllllllllllllllllllIlIllIIIIllIl.entity instanceof class_1657) {
-                String lllllllllllllllllllIlIllIIIlIIll = String.valueOf(new StringBuilder().append(lllllllllllllllllllIlIllIIIIllIl.entity.method_5820()).append(" (Player)"));
-            } else {
-                lllllllllllllllllllIlIllIIIlIIlI = lllllllllllllllllllIlIllIIIIllIl.entity.method_5864().method_5897().getString();
-            }
-            class_5250 lllllllllllllllllllIlIllIIIlIIIl = new class_2585(String.valueOf(new StringBuilder().append(lllllllllllllllllllIlIllIIIlIIlI).append(" "))).method_27692(class_124.field_1068);
-            lllllllllllllllllllIlIllIIIlIIIl.method_10852((class_2561)new class_2585(" has spawned at ").method_27692(class_124.field_1080));
-            lllllllllllllllllllIlIllIIIlIIIl.method_10852((class_2561)ChatUtils.formatCoords(lllllllllllllllllllIlIllIIIIllIl.entity.method_19538()));
-            lllllllllllllllllllIlIllIIIlIIIl.method_10852((class_2561)new class_2585(".").method_27692(class_124.field_1080));
-            lllllllllllllllllllIlIllIIIIlllI.info((class_2561)lllllllllllllllllllIlIllIIIlIIIl);
+            String string = this.playerNames.get() != false && entityAddedEvent.entity instanceof class_1657 ? String.valueOf(new StringBuilder().append(entityAddedEvent.entity.method_5820()).append(" (Player)")) : entityAddedEvent.entity.method_5864().method_5897().getString();
+            class_5250 class_52502 = new class_2585(String.valueOf(new StringBuilder().append(string).append(" "))).method_27692(class_124.field_1068);
+            class_52502.method_10852((class_2561)new class_2585(" has spawned at ").method_27692(class_124.field_1080));
+            class_52502.method_10852((class_2561)ChatUtils.formatCoords(entityAddedEvent.entity.method_19538()));
+            class_52502.method_10852((class_2561)new class_2585(".").method_27692(class_124.field_1080));
+            this.info((class_2561)class_52502);
         }
     }
 }

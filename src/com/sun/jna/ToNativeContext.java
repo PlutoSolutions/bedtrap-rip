@@ -5,7 +5,6 @@ package com.sun.jna;
 
 public class ToNativeContext {
     ToNativeContext() {
-        ToNativeContext llllllllllllllllIlllIIlIIllIllll;
     }
 }
 

@@ -25,8 +25,8 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(value={class_472.class})
 public abstract class BrewingStandScreenMixin
 extends class_465<class_1708> {
-    public BrewingStandScreenMixin(class_1708 container, class_1661 playerInventory, class_2561 name) {
-        super((class_1703)container, playerInventory, name);
+    public BrewingStandScreenMixin(class_1708 class_17082, class_1661 class_16612, class_2561 class_25612) {
+        super((class_1703)class_17082, class_16612, class_25612);
     }
 
     public void method_25393() {

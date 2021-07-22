@@ -19,79 +19,82 @@ import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 import org.jetbrains.annotations.NotNull;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Proxies
 extends System<Proxies>
 implements Iterable<Proxy> {
-    private /* synthetic */ List<Proxy> proxies;
+    private List<Proxy> proxies = new ArrayList<Proxy>();
 
-    public boolean add(Proxy llllllllllllllllllllIlIllIIllIlI) {
-        Proxies llllllllllllllllllllIlIllIIlllII;
-        for (Proxy llllllllllllllllllllIlIllIIllllI : llllllllllllllllllllIlIllIIlllII.proxies) {
-            if (llllllllllllllllllllIlIllIIllllI.type != llllllllllllllllllllIlIllIIllIlI.type || !llllllllllllllllllllIlIllIIllllI.ip.equals(llllllllllllllllllllIlIllIIllIlI.ip) || llllllllllllllllllllIlIllIIllllI.port != llllllllllllllllllllIlIllIIllIlI.port) continue;
+    public boolean add(Proxy proxy) {
+        for (Proxy proxy2 : this.proxies) {
+            if (proxy2.type != proxy.type || !proxy2.ip.equals(proxy.ip) || proxy2.port != proxy.port) continue;
             return false;
         }
-        if (llllllllllllllllllllIlIllIIlllII.proxies.isEmpty()) {
-            llllllllllllllllllllIlIllIIllIlI.enabled = true;
+        if (this.proxies.isEmpty()) {
+            proxy.enabled = true;
         }
-        llllllllllllllllllllIlIllIIlllII.proxies.add(llllllllllllllllllllIlIllIIllIlI);
-        llllllllllllllllllllIlIllIIlllII.save();
+        this.proxies.add(proxy);
+        this.save();
         return true;
     }
 
     @Override
-    public Proxies fromTag(class_2487 llllllllllllllllllllIlIlIllIlIII) {
-        Proxies llllllllllllllllllllIlIlIllIlIIl;
-        llllllllllllllllllllIlIlIllIlIIl.proxies = NbtUtils.listFromTag(llllllllllllllllllllIlIlIllIlIII.method_10554("proxies", 10), llllllllllllllllllllIlIlIllIIIII -> new Proxy().fromTag((class_2487)llllllllllllllllllllIlIlIllIIIII));
-        return llllllllllllllllllllIlIlIllIlIIl;
+    public Proxies fromTag(class_2487 class_24872) {
+        this.proxies = NbtUtils.listFromTag(class_24872.method_10554("proxies", 10), Proxies::lambda$fromTag$0);
+        return this;
     }
 
     public Proxies() {
         super("proxies");
-        Proxies llllllllllllllllllllIlIllIlIllIl;
-        llllllllllllllllllllIlIllIlIllIl.proxies = new ArrayList<Proxy>();
     }
 
     @Override
     public class_2487 toTag() {
-        Proxies llllllllllllllllllllIlIlIllIllll;
-        class_2487 llllllllllllllllllllIlIlIlllIIII = new class_2487();
-        llllllllllllllllllllIlIlIlllIIII.method_10566("proxies", (class_2520)NbtUtils.listToTag(llllllllllllllllllllIlIlIllIllll.proxies));
-        return llllllllllllllllllllIlIlIlllIIII;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10566("proxies", (class_2520)NbtUtils.listToTag(this.proxies));
+        return class_24872;
     }
 
-    public void setEnabled(Proxy llllllllllllllllllllIlIlIlllllIl, boolean llllllllllllllllllllIlIlIllllIIl) {
-        Proxies llllllllllllllllllllIlIlIllllIll;
-        for (Proxy llllllllllllllllllllIlIlIlllllll : llllllllllllllllllllIlIlIllllIll.proxies) {
-            llllllllllllllllllllIlIlIlllllll.enabled = false;
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public void setEnabled(Proxy proxy, boolean bl) {
+        for (Proxy proxy2 : this.proxies) {
+            proxy2.enabled = false;
         }
-        llllllllllllllllllllIlIlIlllllIl.enabled = llllllllllllllllllllIlIlIllllIIl;
-        llllllllllllllllllllIlIlIllllIll.save();
+        proxy.enabled = bl;
+        this.save();
     }
 
     public Proxy getEnabled() {
-        Proxies llllllllllllllllllllIlIllIIIlIII;
-        for (Proxy llllllllllllllllllllIlIllIIIlIIl : llllllllllllllllllllIlIllIIIlIII.proxies) {
-            if (!llllllllllllllllllllIlIllIIIlIIl.enabled) continue;
-            return llllllllllllllllllllIlIllIIIlIIl;
+        for (Proxy proxy : this.proxies) {
+            if (!proxy.enabled) continue;
+            return proxy;
         }
         return null;
+    }
+
+    private static Proxy lambda$fromTag$0(class_2520 class_25202) {
+        return new Proxy().fromTag((class_2487)class_25202);
     }
 
     @Override
     @NotNull
     public Iterator<Proxy> iterator() {
-        Proxies llllllllllllllllllllIlIlIlllIlII;
-        return llllllllllllllllllllIlIlIlllIlII.proxies.iterator();
+        return this.proxies.iterator();
     }
 
     public static Proxies get() {
         return Systems.get(Proxies.class);
     }
 
-    public void remove(Proxy llllllllllllllllllllIlIllIIIllll) {
-        Proxies llllllllllllllllllllIlIllIIIlllI;
-        if (llllllllllllllllllllIlIllIIIlllI.proxies.remove(llllllllllllllllllllIlIllIIIllll)) {
-            llllllllllllllllllllIlIllIIIlllI.save();
+    public void remove(Proxy proxy) {
+        if (this.proxies.remove(proxy)) {
+            this.save();
         }
     }
 }

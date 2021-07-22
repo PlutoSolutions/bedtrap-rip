@@ -9,83 +9,78 @@ import com.sun.jna.NativeMapped;
 public abstract class IntegerType
 extends Number
 implements NativeMapped {
-    private /* synthetic */ int size;
-    private /* synthetic */ boolean unsigned;
-    private /* synthetic */ long value;
-    private /* synthetic */ Number number;
-    private static final /* synthetic */ long serialVersionUID = 1L;
+    private int size;
+    private boolean unsigned;
+    private long value;
+    private Number number;
+    private static final long serialVersionUID = 1L;
 
     @Override
     public int intValue() {
-        IntegerType llIIIllIIllIll;
-        return (int)llIIIllIIllIll.value;
+        return (int)this.value;
     }
 
-    public void setValue(long llIIIllIllIlll) {
-        IntegerType llIIIllIlllIII;
-        long llIIIllIllIllI = llIIIllIllIlll;
-        llIIIllIlllIII.value = llIIIllIllIlll;
-        switch (llIIIllIlllIII.size) {
+    public void setValue(long l) {
+        long l2 = l;
+        this.value = l;
+        switch (this.size) {
             case 1: {
-                if (llIIIllIlllIII.unsigned) {
-                    llIIIllIlllIII.value = llIIIllIllIlll & 0xFFL;
+                if (this.unsigned) {
+                    this.value = l & 0xFFL;
                 }
-                llIIIllIllIllI = (byte)llIIIllIllIlll;
-                llIIIllIlllIII.number = (byte)llIIIllIllIlll;
+                l2 = (byte)l;
+                this.number = (byte)l;
                 break;
             }
             case 2: {
-                if (llIIIllIlllIII.unsigned) {
-                    llIIIllIlllIII.value = llIIIllIllIlll & 0xFFFFL;
+                if (this.unsigned) {
+                    this.value = l & 0xFFFFL;
                 }
-                llIIIllIllIllI = (short)llIIIllIllIlll;
-                llIIIllIlllIII.number = (short)llIIIllIllIlll;
+                l2 = (short)l;
+                this.number = (short)l;
                 break;
             }
             case 4: {
-                if (llIIIllIlllIII.unsigned) {
-                    llIIIllIlllIII.value = llIIIllIllIlll & 0xFFFFFFFFL;
+                if (this.unsigned) {
+                    this.value = l & 0xFFFFFFFFL;
                 }
-                llIIIllIllIllI = (int)llIIIllIllIlll;
-                llIIIllIlllIII.number = (int)llIIIllIllIlll;
+                l2 = (int)l;
+                this.number = (int)l;
                 break;
             }
             case 8: {
-                llIIIllIlllIII.number = llIIIllIllIlll;
+                this.number = l;
                 break;
             }
             default: {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported size: ").append(llIIIllIlllIII.size)));
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported size: ").append(this.size)));
             }
         }
-        if (llIIIllIlllIII.size < 8) {
-            long llIIIllIlllIIl = (1L << llIIIllIlllIII.size * 8) - 1L ^ 0xFFFFFFFFFFFFFFFFL;
-            if (llIIIllIllIlll < 0L && llIIIllIllIllI != llIIIllIllIlll || llIIIllIllIlll >= 0L && (llIIIllIlllIIl & llIIIllIllIlll) != 0L) {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Argument value 0x").append(Long.toHexString(llIIIllIllIlll)).append(" exceeds native capacity (").append(llIIIllIlllIII.size).append(" bytes) mask=0x").append(Long.toHexString(llIIIllIlllIIl))));
+        if (this.size < 8) {
+            long l3 = (1L << this.size * 8) - 1L ^ 0xFFFFFFFFFFFFFFFFL;
+            if (l < 0L && l2 != l || l >= 0L && (l3 & l) != 0L) {
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Argument value 0x").append(Long.toHexString(l)).append(" exceeds native capacity (").append(this.size).append(" bytes) mask=0x").append(Long.toHexString(l3))));
             }
         }
     }
 
-    public IntegerType(int llIIIlllIIlllI, long llIIIlllIIllIl) {
-        llIIIlllIIllII(llIIIlllIIlllI, llIIIlllIIllIl, false);
-        IntegerType llIIIlllIIllII;
+    public IntegerType(int n, long l) {
+        this(n, l, false);
     }
 
-    public boolean equals(Object llIIIllIIIlIll) {
-        IntegerType llIIIllIIIllII;
-        return llIIIllIIIlIll instanceof IntegerType && llIIIllIIIllII.number.equals(((IntegerType)llIIIllIIIlIll).number);
+    public boolean equals(Object object) {
+        return object instanceof IntegerType && this.number.equals(((IntegerType)object).number);
     }
 
-    public IntegerType(int llIIIlllIlIlII, boolean llIIIlllIlIIll) {
-        llIIIlllIllIII(llIIIlllIlIlII, 0L, llIIIlllIlIIll);
-        IntegerType llIIIlllIllIII;
+    public IntegerType(int n, boolean bl) {
+        this(n, 0L, bl);
     }
 
-    public static final int compare(long llIIIlIlllIllI, long llIIIlIlllIlIl) {
-        if (llIIIlIlllIllI == llIIIlIlllIlIl) {
+    public static final int compare(long l, long l2) {
+        if (l == l2) {
             return 0;
         }
-        if (llIIIlIlllIllI < llIIIlIlllIlIl) {
+        if (l < l2) {
             return -1;
         }
         return 1;
@@ -93,91 +88,78 @@ implements NativeMapped {
 
     @Override
     public Class<?> nativeType() {
-        IntegerType llIIIllIIllllI;
-        return llIIIllIIllllI.number.getClass();
+        return this.number.getClass();
     }
 
-    public IntegerType(int llIIIlllIlllII) {
-        llIIIlllIlllIl(llIIIlllIlllII, 0L, false);
-        IntegerType llIIIlllIlllIl;
+    public IntegerType(int n) {
+        this(n, 0L, false);
     }
 
-    public static int compare(IntegerType llIIIlIlllllII, long llIIIlIllllIll) {
-        if (llIIIlIlllllII == null) {
+    public static int compare(IntegerType integerType, long l) {
+        if (integerType == null) {
             return 1;
         }
-        return IntegerType.compare(llIIIlIlllllII.longValue(), llIIIlIllllIll);
+        return IntegerType.compare(integerType.longValue(), l);
     }
 
     @Override
     public float floatValue() {
-        IntegerType llIIIllIIlIlIl;
-        return llIIIllIIlIlIl.number.floatValue();
+        return this.number.floatValue();
     }
 
-    public IntegerType(int llIIIlllIIIlII, long llIIIlllIIIIll, boolean llIIIlllIIIIlI) {
-        IntegerType llIIIlllIIIIIl;
-        llIIIlllIIIIIl.size = llIIIlllIIIlII;
-        llIIIlllIIIIIl.unsigned = llIIIlllIIIIlI;
-        llIIIlllIIIIIl.setValue(llIIIlllIIIIll);
+    public IntegerType(int n, long l, boolean bl) {
+        this.size = n;
+        this.unsigned = bl;
+        this.setValue(l);
     }
 
     @Override
     public long longValue() {
-        IntegerType llIIIllIIllIII;
-        return llIIIllIIllIII.value;
+        return this.value;
     }
 
-    public static <T extends IntegerType> int compare(T llIIIllIIIIIII, T llIIIllIIIIIIl) {
-        if (llIIIllIIIIIII == llIIIllIIIIIIl) {
+    public static <T extends IntegerType> int compare(T t, T t2) {
+        if (t == t2) {
             return 0;
         }
-        if (llIIIllIIIIIII == null) {
+        if (t == null) {
             return 1;
         }
-        if (llIIIllIIIIIIl == null) {
+        if (t2 == null) {
             return -1;
         }
-        return IntegerType.compare(llIIIllIIIIIII.longValue(), llIIIllIIIIIIl.longValue());
+        return IntegerType.compare(t.longValue(), t2.longValue());
     }
 
     @Override
     public Object toNative() {
-        IntegerType llIIIllIlIllll;
-        return llIIIllIlIllll.number;
+        return this.number;
     }
 
     public String toString() {
-        IntegerType llIIIllIIIlIII;
-        return llIIIllIIIlIII.number.toString();
+        return this.number.toString();
     }
 
     @Override
-    public Object fromNative(Object llIIIllIlIIIlI, FromNativeContext llIIIllIlIIlIl) {
-        IntegerType llIIIllIlIIIll;
-        long llIIIllIlIIlII = llIIIllIlIIIlI == null ? 0L : ((Number)llIIIllIlIIIlI).longValue();
+    public Object fromNative(Object object, FromNativeContext fromNativeContext) {
+        long l = object == null ? 0L : ((Number)object).longValue();
         try {
-            IntegerType llIIIllIlIlIlI = (IntegerType)llIIIllIlIIIll.getClass().newInstance();
-            llIIIllIlIlIlI.setValue(llIIIllIlIIlII);
-            return llIIIllIlIlIlI;
+            IntegerType integerType = (IntegerType)this.getClass().newInstance();
+            integerType.setValue(l);
+            return integerType;
         }
-        catch (InstantiationException llIIIllIlIlIIl) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't instantiate ").append(llIIIllIlIIIll.getClass())));
-        }
-        catch (IllegalAccessException llIIIllIlIlIII) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Not allowed to instantiate ").append(llIIIllIlIIIll.getClass())));
+        catch (IllegalAccessException | InstantiationException reflectiveOperationException) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't instantiate ").append(this.getClass())));
         }
     }
 
     @Override
     public double doubleValue() {
-        IntegerType llIIIllIIlIIlI;
-        return llIIIllIIlIIlI.number.doubleValue();
+        return this.number.doubleValue();
     }
 
     public int hashCode() {
-        IntegerType llIIIllIIIIllI;
-        return llIIIllIIIIllI.number.hashCode();
+        return this.number.hashCode();
     }
 }
 

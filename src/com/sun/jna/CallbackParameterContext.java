@@ -8,31 +8,27 @@ import java.lang.reflect.Method;
 
 public class CallbackParameterContext
 extends FromNativeContext {
-    private /* synthetic */ Method method;
-    private /* synthetic */ Object[] args;
-    private /* synthetic */ int index;
+    private Method method;
+    private Object[] args;
+    private int index;
 
-    CallbackParameterContext(Class<?> lIllIlIllIllIl, Method lIllIlIllIllII, Object[] lIllIlIllIlIll, int lIllIlIllIlIlI) {
-        super(lIllIlIllIllIl);
-        CallbackParameterContext lIllIlIllIlIIl;
-        lIllIlIllIlIIl.method = lIllIlIllIllII;
-        lIllIlIllIlIIl.args = lIllIlIllIlIll;
-        lIllIlIllIlIIl.index = lIllIlIllIlIlI;
+    CallbackParameterContext(Class<?> class_, Method method, Object[] arrobject, int n) {
+        super(class_);
+        this.method = method;
+        this.args = arrobject;
+        this.index = n;
     }
 
     public Object[] getArguments() {
-        CallbackParameterContext lIllIlIllIIIII;
-        return lIllIlIllIIIII.args;
+        return this.args;
     }
 
     public int getIndex() {
-        CallbackParameterContext lIllIlIlIlllII;
-        return lIllIlIlIlllII.index;
+        return this.index;
     }
 
     public Method getMethod() {
-        CallbackParameterContext lIllIlIllIIIll;
-        return lIllIlIllIIIll.method;
+        return this.method;
     }
 }
 

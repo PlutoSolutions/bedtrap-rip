@@ -12,24 +12,22 @@ import minegame159.meteorclient.utils.Utils;
 public class WMeteorCheckbox
 extends WCheckbox
 implements MeteorWidget {
-    private /* synthetic */ double animProgress;
+    private double animProgress;
 
-    public WMeteorCheckbox(boolean llllllllllllllllllllIIIIIIllIlIl) {
-        super(llllllllllllllllllllIIIIIIllIlIl);
-        WMeteorCheckbox llllllllllllllllllllIIIIIIllIllI;
-        llllllllllllllllllllIIIIIIllIllI.animProgress = llllllllllllllllllllIIIIIIllIlIl ? 1.0 : 0.0;
+    public WMeteorCheckbox(boolean bl) {
+        super(bl);
+        this.animProgress = bl ? 1.0 : 0.0;
     }
 
     @Override
-    protected void onRender(GuiRenderer llllllllllllllllllllIIIIIIlIllIl, double llllllllllllllllllllIIIIIIlIllII, double llllllllllllllllllllIIIIIIlIlIll, double llllllllllllllllllllIIIIIIlIIllI) {
-        WMeteorCheckbox llllllllllllllllllllIIIIIIlIlIII;
-        MeteorGuiTheme llllllllllllllllllllIIIIIIlIlIIl = llllllllllllllllllllIIIIIIlIlIII.theme();
-        llllllllllllllllllllIIIIIIlIlIII.animProgress += (double)(llllllllllllllllllllIIIIIIlIlIII.checked ? 1 : -1) * llllllllllllllllllllIIIIIIlIIllI * 14.0;
-        llllllllllllllllllllIIIIIIlIlIII.animProgress = Utils.clamp(llllllllllllllllllllIIIIIIlIlIII.animProgress, 0.0, 1.0);
-        llllllllllllllllllllIIIIIIlIlIII.renderBackground(llllllllllllllllllllIIIIIIlIllIl, llllllllllllllllllllIIIIIIlIlIII, llllllllllllllllllllIIIIIIlIlIII.pressed, llllllllllllllllllllIIIIIIlIlIII.mouseOver);
-        if (llllllllllllllllllllIIIIIIlIlIII.animProgress > 0.0) {
-            double llllllllllllllllllllIIIIIIlIllll = (llllllllllllllllllllIIIIIIlIlIII.width - llllllllllllllllllllIIIIIIlIlIIl.scale(2.0)) / 1.75 * llllllllllllllllllllIIIIIIlIlIII.animProgress;
-            llllllllllllllllllllIIIIIIlIllIl.quad(llllllllllllllllllllIIIIIIlIlIII.x + (llllllllllllllllllllIIIIIIlIlIII.width - llllllllllllllllllllIIIIIIlIllll) / 2.0, llllllllllllllllllllIIIIIIlIlIII.y + (llllllllllllllllllllIIIIIIlIlIII.height - llllllllllllllllllllIIIIIIlIllll) / 2.0, llllllllllllllllllllIIIIIIlIllll, llllllllllllllllllllIIIIIIlIllll, llllllllllllllllllllIIIIIIlIlIIl.checkboxColor.get());
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        this.animProgress += (double)(this.checked ? 1 : -1) * d3 * 14.0;
+        this.animProgress = Utils.clamp(this.animProgress, 0.0, 1.0);
+        this.renderBackground(guiRenderer, this, this.pressed, this.mouseOver);
+        if (this.animProgress > 0.0) {
+            double d4 = (this.width - meteorGuiTheme.scale(2.0)) / 1.75 * this.animProgress;
+            guiRenderer.quad(this.x + (this.width - d4) / 2.0, this.y + (this.height - d4) / 2.0, d4, d4, meteorGuiTheme.checkboxColor.get());
         }
     }
 }

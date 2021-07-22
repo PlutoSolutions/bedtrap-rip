@@ -7,21 +7,13 @@ import minegame159.meteorclient.events.Cancellable;
 
 public class MouseScrollEvent
 extends Cancellable {
-    public /* synthetic */ double value;
-    private static final /* synthetic */ MouseScrollEvent INSTANCE;
+    public double value;
+    private static final MouseScrollEvent INSTANCE = new MouseScrollEvent();
 
-    static {
-        INSTANCE = new MouseScrollEvent();
-    }
-
-    public static MouseScrollEvent get(double lIlIIIIIlIIIIlI) {
+    public static MouseScrollEvent get(double d) {
         INSTANCE.setCancelled(false);
-        MouseScrollEvent.INSTANCE.value = lIlIIIIIlIIIIlI;
+        MouseScrollEvent.INSTANCE.value = d;
         return INSTANCE;
-    }
-
-    public MouseScrollEvent() {
-        MouseScrollEvent lIlIIIIIlIIIlIl;
     }
 }
 

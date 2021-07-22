@@ -8,26 +8,20 @@ import minegame159.meteorclient.rendering.text.TextRenderer;
 
 public class TextOperation
 extends GuiRenderOperation<TextOperation> {
-    private /* synthetic */ TextRenderer renderer;
-    private /* synthetic */ String text;
-    public /* synthetic */ boolean title;
+    private TextRenderer renderer;
+    private String text;
+    public boolean title;
 
-    public TextOperation set(String llllllllllllllllllIllIIllIIlIIlI, TextRenderer llllllllllllllllllIllIIllIIlIIIl, boolean llllllllllllllllllIllIIllIIlIIII) {
-        TextOperation llllllllllllllllllIllIIllIIlIlll;
-        llllllllllllllllllIllIIllIIlIlll.text = llllllllllllllllllIllIIllIIlIIlI;
-        llllllllllllllllllIllIIllIIlIlll.renderer = llllllllllllllllllIllIIllIIlIIIl;
-        llllllllllllllllllIllIIllIIlIlll.title = llllllllllllllllllIllIIllIIlIIII;
-        return llllllllllllllllllIllIIllIIlIlll;
+    public TextOperation set(String string, TextRenderer textRenderer, boolean bl) {
+        this.text = string;
+        this.renderer = textRenderer;
+        this.title = bl;
+        return this;
     }
 
     @Override
     protected void onRun() {
-        TextOperation llllllllllllllllllIllIIllIIIlIll;
-        llllllllllllllllllIllIIllIIIlIll.renderer.render(llllllllllllllllllIllIIllIIIlIll.text, llllllllllllllllllIllIIllIIIlIll.x, llllllllllllllllllIllIIllIIIlIll.y, llllllllllllllllllIllIIllIIIlIll.color);
-    }
-
-    public TextOperation() {
-        TextOperation llllllllllllllllllIllIIllIlIIIII;
+        this.renderer.render(this.text, this.x, this.y, this.color);
     }
 }
 

@@ -21,43 +21,39 @@ import minegame159.meteorclient.utils.render.color.RainbowColor;
 import minegame159.meteorclient.utils.render.color.SettingColor;
 
 public class RainbowColors {
-    private static final /* synthetic */ List<Setting<SettingColor>> colorSettings;
-    private static final /* synthetic */ List<SettingColor> colors;
-    private static final /* synthetic */ List<Runnable> listeners;
-    public static final /* synthetic */ RainbowColor GLOBAL;
-
-    public RainbowColors() {
-        RainbowColors llllllllllllllllIlllIIlIlllllIll;
-    }
+    private static final List<Setting<SettingColor>> colorSettings;
+    private static final List<SettingColor> colors;
+    private static final List<Runnable> listeners;
+    public static final RainbowColor GLOBAL;
 
     @EventHandler
-    private static void onTick(TickEvent.Post llllllllllllllllIlllIIlIlllIIlII) {
+    private static void onTick(TickEvent.Post post) {
         GLOBAL.getNext();
-        for (Setting<SettingColor> llllllllllllllllIlllIIlIlllIlIlI : colorSettings) {
-            if (llllllllllllllllIlllIIlIlllIlIlI.module != null && !llllllllllllllllIlllIIlIlllIlIlI.module.isActive()) continue;
-            llllllllllllllllIlllIIlIlllIlIlI.get().update();
+        for (Setting<SettingColor> object : colorSettings) {
+            if (object.module != null && !object.module.isActive()) continue;
+            object.get().update();
         }
-        for (SettingColor llllllllllllllllIlllIIlIlllIlIIl : colors) {
-            llllllllllllllllIlllIIlIlllIlIIl.update();
+        for (SettingColor settingColor : colors) {
+            settingColor.update();
         }
-        for (Waypoint llllllllllllllllIlllIIlIlllIlIII : Waypoints.get()) {
-            llllllllllllllllIlllIIlIlllIlIII.color.update();
+        for (Waypoint waypoint : Waypoints.get()) {
+            waypoint.color.update();
         }
         if (Utils.mc.field_1755 instanceof WidgetScreen) {
-            for (SettingGroup llllllllllllllllIlllIIlIlllIIllI : GuiThemes.get().settings) {
-                for (Setting<?> llllllllllllllllIlllIIlIlllIIlll : llllllllllllllllIlllIIlIlllIIllI) {
-                    if (!(llllllllllllllllIlllIIlIlllIIlll instanceof ColorSetting)) continue;
-                    ((SettingColor)llllllllllllllllIlllIIlIlllIIlll.get()).update();
+            for (SettingGroup settingGroup : GuiThemes.get().settings) {
+                for (Setting<?> setting : settingGroup) {
+                    if (!(setting instanceof ColorSetting)) continue;
+                    ((SettingColor)setting.get()).update();
                 }
             }
         }
-        for (Runnable llllllllllllllllIlllIIlIlllIIlIl : listeners) {
-            llllllllllllllllIlllIIlIlllIIlIl.run();
+        for (Runnable runnable : listeners) {
+            runnable.run();
         }
     }
 
-    public static void removeSetting(Setting<SettingColor> llllllllllllllllIlllIIlIllllIllI) {
-        colorSettings.remove(llllllllllllllllIlllIIlIllllIllI);
+    public static void removeSetting(Setting<SettingColor> setting) {
+        colorSettings.remove(setting);
     }
 
     static {
@@ -71,16 +67,16 @@ public class RainbowColors {
         MeteorClient.EVENT_BUS.subscribe(RainbowColors.class);
     }
 
-    public static void add(SettingColor llllllllllllllllIlllIIlIllllIIlI) {
-        colors.add(llllllllllllllllIlllIIlIllllIIlI);
+    public static void add(SettingColor settingColor) {
+        colors.add(settingColor);
     }
 
-    public static void register(Runnable llllllllllllllllIlllIIlIllllIIII) {
-        listeners.add(llllllllllllllllIlllIIlIllllIIII);
+    public static void register(Runnable runnable) {
+        listeners.add(runnable);
     }
 
-    public static void addSetting(Setting<SettingColor> llllllllllllllllIlllIIlIlllllIII) {
-        colorSettings.add(llllllllllllllllIlllIIlIlllllIII);
+    public static void addSetting(Setting<SettingColor> setting) {
+        colorSettings.add(setting);
     }
 }
 

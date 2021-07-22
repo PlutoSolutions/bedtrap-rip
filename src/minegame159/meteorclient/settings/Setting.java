@@ -24,37 +24,33 @@ import net.minecraft.class_2960;
 public abstract class Setting<T>
 implements IGetter<T>,
 ISerializable<T> {
-    private final /* synthetic */ Consumer<T> onChanged;
-    public final /* synthetic */ Consumer<Setting<T>> onModuleActivated;
-    private final /* synthetic */ IVisible visible;
-    public final /* synthetic */ String title;
-    public /* synthetic */ Module module;
-    protected /* synthetic */ T value;
-    private static final /* synthetic */ List<String> NO_SUGGESTIONS;
-    public final /* synthetic */ String description;
-    public final /* synthetic */ String name;
-    protected final /* synthetic */ T defaultValue;
-    public /* synthetic */ boolean lastWasVisible;
+    private final Consumer<T> onChanged;
+    public final Consumer<Setting<T>> onModuleActivated;
+    private final IVisible visible;
+    public final String title;
+    public Module module;
+    protected T value;
+    private static final List<String> NO_SUGGESTIONS = new ArrayList<String>(0);
+    public final String description;
+    public final String name;
+    protected final T defaultValue;
+    public boolean lastWasVisible;
 
     public String toString() {
-        Setting lllllllllllllllllIIlIIllllIIlllI;
-        return lllllllllllllllllIIlIIllllIIlllI.value.toString();
+        return this.value.toString();
     }
 
     public void reset() {
-        Setting lllllllllllllllllIIlIIlllllIlllI;
-        lllllllllllllllllIIlIIlllllIlllI.reset(true);
+        this.reset(true);
     }
 
     public int hashCode() {
-        Setting lllllllllllllllllIIlIIllllIIIIll;
-        return Objects.hash(lllllllllllllllllIIlIIllllIIIIll.name);
+        return Objects.hash(this.name);
     }
 
     public void onActivated() {
-        Setting lllllllllllllllllIIlIIllllIlllII;
-        if (lllllllllllllllllIIlIIllllIlllII.onModuleActivated != null) {
-            lllllllllllllllllIIlIIllllIlllII.onModuleActivated.accept(lllllllllllllllllIIlIIllllIlllII);
+        if (this.onModuleActivated != null) {
+            this.onModuleActivated.accept(this);
         }
     }
 
@@ -62,62 +58,52 @@ ISerializable<T> {
         return null;
     }
 
-    public boolean parse(String lllllllllllllllllIIlIIlllllIIIll) {
-        Setting lllllllllllllllllIIlIIlllllIIlll;
-        T lllllllllllllllllIIlIIlllllIIlIl = lllllllllllllllllIIlIIlllllIIlll.parseImpl(lllllllllllllllllIIlIIlllllIIIll);
-        if (lllllllllllllllllIIlIIlllllIIlIl != null && lllllllllllllllllIIlIIlllllIIlll.isValueValid(lllllllllllllllllIIlIIlllllIIlIl)) {
-            lllllllllllllllllIIlIIlllllIIlll.value = lllllllllllllllllIIlIIlllllIIlIl;
-            lllllllllllllllllIIlIIlllllIIlll.changed();
+    public boolean parse(String string) {
+        T t = this.parseImpl(string);
+        if (t != null && this.isValueValid(t)) {
+            this.value = t;
+            this.changed();
         }
-        return lllllllllllllllllIIlIIlllllIIlIl != null;
+        return t != null;
     }
 
-    public boolean equals(Object lllllllllllllllllIIlIIllllIIIllI) {
-        Setting lllllllllllllllllIIlIIllllIIIlll;
-        if (lllllllllllllllllIIlIIllllIIIlll == lllllllllllllllllIIlIIllllIIIllI) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (lllllllllllllllllIIlIIllllIIIllI == null || lllllllllllllllllIIlIIllllIIIlll.getClass() != lllllllllllllllllIIlIIllllIIIllI.getClass()) {
+        if (object == null || this.getClass() != object.getClass()) {
             return false;
         }
-        Setting lllllllllllllllllIIlIIllllIIlIII = (Setting)lllllllllllllllllIIlIIllllIIIllI;
-        return Objects.equals(lllllllllllllllllIIlIIllllIIIlll.name, lllllllllllllllllIIlIIllllIIlIII.name);
+        Setting setting = (Setting)object;
+        return Objects.equals(this.name, setting.name);
     }
 
-    public void reset(boolean lllllllllllllllllIIlIIllllllIIIl) {
-        Setting lllllllllllllllllIIlIIllllllIlII;
-        lllllllllllllllllIIlIIllllllIlII.value = lllllllllllllllllIIlIIllllllIlII.defaultValue;
-        if (lllllllllllllllllIIlIIllllllIIIl) {
-            lllllllllllllllllIIlIIllllllIlII.changed();
+    public void reset(boolean bl) {
+        this.value = this.defaultValue;
+        if (bl) {
+            this.changed();
         }
     }
 
     public T getDefaultValue() {
-        Setting lllllllllllllllllIIlIIlllllIlIll;
-        return lllllllllllllllllIIlIIlllllIlIll.defaultValue;
+        return this.defaultValue;
     }
 
-    public Setting(String lllllllllllllllllIIlIlIIIIIIllII, String lllllllllllllllllIIlIlIIIIIIIlII, T lllllllllllllllllIIlIlIIIIIIlIlI, Consumer<T> lllllllllllllllllIIlIlIIIIIIlIIl, Consumer<Setting<T>> lllllllllllllllllIIlIlIIIIIIlIII, IVisible lllllllllllllllllIIlIlIIIIIIIIII) {
-        Setting lllllllllllllllllIIlIlIIIIIIllIl;
-        lllllllllllllllllIIlIlIIIIIIllIl.name = lllllllllllllllllIIlIlIIIIIIllII;
-        lllllllllllllllllIIlIlIIIIIIllIl.title = Utils.nameToTitle(lllllllllllllllllIIlIlIIIIIIllII);
-        lllllllllllllllllIIlIlIIIIIIllIl.description = lllllllllllllllllIIlIlIIIIIIIlII;
-        lllllllllllllllllIIlIlIIIIIIllIl.defaultValue = lllllllllllllllllIIlIlIIIIIIlIlI;
-        lllllllllllllllllIIlIlIIIIIIllIl.reset(false);
-        lllllllllllllllllIIlIlIIIIIIllIl.onChanged = lllllllllllllllllIIlIlIIIIIIlIIl;
-        lllllllllllllllllIIlIlIIIIIIllIl.onModuleActivated = lllllllllllllllllIIlIlIIIIIIlIII;
-        lllllllllllllllllIIlIlIIIIIIllIl.visible = lllllllllllllllllIIlIlIIIIIIIIII;
+    public Setting(String string, String string2, T t, Consumer<T> consumer, Consumer<Setting<T>> consumer2, IVisible iVisible) {
+        this.name = string;
+        this.title = Utils.nameToTitle(string);
+        this.description = string2;
+        this.defaultValue = t;
+        this.reset(false);
+        this.onChanged = consumer;
+        this.onModuleActivated = consumer2;
+        this.visible = iVisible;
     }
 
-    public static <T> T parseId(class_2378<T> lllllllllllllllllIIlIIlllIlllIlI, String lllllllllllllllllIIlIIlllIllllII) {
-        class_2960 lllllllllllllllllIIlIIlllIlllIll;
-        if ((lllllllllllllllllIIlIIlllIllllII = lllllllllllllllllIIlIIlllIllllII.trim()).contains(":")) {
-            class_2960 lllllllllllllllllIIlIIlllIlllllI = new class_2960(lllllllllllllllllIIlIIlllIllllII);
-        } else {
-            lllllllllllllllllIIlIIlllIlllIll = new class_2960("minecraft", lllllllllllllllllIIlIIlllIllllII);
-        }
-        if (lllllllllllllllllIIlIIlllIlllIlI.method_10250(lllllllllllllllllIIlIIlllIlllIll)) {
-            return (T)lllllllllllllllllIIlIIlllIlllIlI.method_10223(lllllllllllllllllIIlIIlllIlllIll);
+    public static <T> T parseId(class_2378<T> class_23782, String string) {
+        class_2960 class_29602 = (string = string.trim()).contains(":") ? new class_2960(string) : new class_2960("minecraft", string);
+        if (class_23782.method_10250(class_29602)) {
+            return (T)class_23782.method_10223(class_29602);
         }
         return null;
     }
@@ -132,41 +118,32 @@ ISerializable<T> {
 
     @Override
     public T get() {
-        Setting lllllllllllllllllIIlIIllllllllIl;
-        return lllllllllllllllllIIlIIllllllllIl.value;
+        return this.value;
     }
 
-    public boolean set(T lllllllllllllllllIIlIIllllllIlll) {
-        Setting lllllllllllllllllIIlIIlllllllIII;
-        if (!lllllllllllllllllIIlIIlllllllIII.isValueValid(lllllllllllllllllIIlIIllllllIlll)) {
+    public boolean set(T t) {
+        if (!this.isValueValid(t)) {
             return false;
         }
-        lllllllllllllllllIIlIIlllllllIII.value = lllllllllllllllllIIlIIllllllIlll;
-        lllllllllllllllllIIlIIlllllllIII.changed();
+        this.value = t;
+        this.changed();
         return true;
     }
 
-    static {
-        NO_SUGGESTIONS = new ArrayList<String>(0);
-    }
-
     protected class_2487 saveGeneral() {
-        Setting lllllllllllllllllIIlIIllllIlIIlI;
-        class_2487 lllllllllllllllllIIlIIllllIlIIll = new class_2487();
-        lllllllllllllllllIIlIIllllIlIIll.method_10582("name", lllllllllllllllllIIlIIllllIlIIlI.name);
-        return lllllllllllllllllIIlIIllllIlIIll;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("name", this.name);
+        return class_24872;
     }
 
     public void changed() {
-        Setting lllllllllllllllllIIlIIllllIlllll;
-        if (lllllllllllllllllIIlIIllllIlllll.onChanged != null) {
-            lllllllllllllllllIIlIIllllIlllll.onChanged.accept(lllllllllllllllllIIlIIllllIlllll.value);
+        if (this.onChanged != null) {
+            this.onChanged.accept(this.value);
         }
     }
 
     public boolean isVisible() {
-        Setting lllllllllllllllllIIlIIllllIllIlI;
-        return lllllllllllllllllIIlIIllllIllIlI.visible == null || lllllllllllllllllIIlIIllllIllIlI.visible.isVisible();
+        return this.visible == null || this.visible.isVisible();
     }
 }
 

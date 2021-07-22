@@ -11,21 +11,19 @@ import java.util.Objects;
 
 public class DiscordUser
 extends Structure {
-    public /* synthetic */ String discriminator;
-    public /* synthetic */ String userId;
-    private static final /* synthetic */ List<String> FIELD_ORDER;
-    public /* synthetic */ String avatar;
-    public /* synthetic */ String username;
+    public String discriminator;
+    public String userId;
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("userId", "username", "discriminator", "avatar"));
+    public String avatar;
+    public String username;
 
     public DiscordUser() {
-        lllllllllllllllllIIllIIIIIlllIlI("UTF-8");
-        DiscordUser lllllllllllllllllIIllIIIIIlllIlI;
+        this("UTF-8");
     }
 
     @Override
     public int hashCode() {
-        DiscordUser lllllllllllllllllIIllIIIIIlIllIl;
-        return Objects.hash(lllllllllllllllllIIllIIIIIlIllIl.userId, lllllllllllllllllIIllIIIIIlIllIl.username, lllllllllllllllllIIllIIIIIlIllIl.discriminator, lllllllllllllllllIIllIIIIIlIllIl.avatar);
+        return Objects.hash(this.userId, this.username, this.discriminator, this.avatar);
     }
 
     @Override
@@ -33,26 +31,20 @@ extends Structure {
         return FIELD_ORDER;
     }
 
-    static {
-        FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("userId", "username", "discriminator", "avatar"));
-    }
-
-    public DiscordUser(String lllllllllllllllllIIllIIIIIllllII) {
-        DiscordUser lllllllllllllllllIIllIIIIIllllll;
-        lllllllllllllllllIIllIIIIIllllll.setStringEncoding(lllllllllllllllllIIllIIIIIllllII);
+    public DiscordUser(String string) {
+        this.setStringEncoding(string);
     }
 
     @Override
-    public boolean equals(Object lllllllllllllllllIIllIIIIIllIlII) {
-        DiscordUser lllllllllllllllllIIllIIIIIllIIlI;
-        if (lllllllllllllllllIIllIIIIIllIIlI == lllllllllllllllllIIllIIIIIllIlII) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (!(lllllllllllllllllIIllIIIIIllIlII instanceof DiscordUser)) {
+        if (!(object instanceof DiscordUser)) {
             return false;
         }
-        DiscordUser lllllllllllllllllIIllIIIIIllIIll = (DiscordUser)lllllllllllllllllIIllIIIIIllIlII;
-        return Objects.equals(lllllllllllllllllIIllIIIIIllIIlI.userId, lllllllllllllllllIIllIIIIIllIIll.userId) && Objects.equals(lllllllllllllllllIIllIIIIIllIIlI.username, lllllllllllllllllIIllIIIIIllIIll.username) && Objects.equals(lllllllllllllllllIIllIIIIIllIIlI.discriminator, lllllllllllllllllIIllIIIIIllIIll.discriminator) && Objects.equals(lllllllllllllllllIIllIIIIIllIIlI.avatar, lllllllllllllllllIIllIIIIIllIIll.avatar);
+        DiscordUser discordUser = (DiscordUser)object;
+        return Objects.equals(this.userId, discordUser.userId) && Objects.equals(this.username, discordUser.username) && Objects.equals(this.discriminator, discordUser.discriminator) && Objects.equals(this.avatar, discordUser.avatar);
     }
 }
 

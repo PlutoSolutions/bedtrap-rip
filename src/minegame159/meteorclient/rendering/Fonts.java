@@ -13,42 +13,41 @@ import minegame159.meteorclient.utils.Utils;
 import minegame159.meteorclient.utils.files.StreamUtils;
 
 public class Fonts {
-    public static final /* synthetic */ String DEFAULT_FONT;
-    private static /* synthetic */ CustomTextRenderer a;
-    private static /* synthetic */ String lastFont;
-    private static final /* synthetic */ String[] BUILTIN_FONTS;
-    private static final /* synthetic */ File FOLDER;
+    public static final String DEFAULT_FONT = "JetBrains Mono";
+    private static CustomTextRenderer a;
+    private static String lastFont;
+    private static final String[] BUILTIN_FONTS;
+    private static final File FOLDER;
 
     public static void init() {
         FOLDER.mkdirs();
-        for (String lIlIlIIIllIIIll : BUILTIN_FONTS) {
-            File lIlIlIIIllIIlII = new File(FOLDER, lIlIlIIIllIIIll);
-            if (lIlIlIIIllIIlII.exists()) continue;
-            StreamUtils.copy(Fonts.class.getResourceAsStream(String.valueOf(new StringBuilder().append("/assets/meteor-client/fonts/").append(lIlIlIIIllIIIll))), lIlIlIIIllIIlII);
+        for (String string : BUILTIN_FONTS) {
+            File file = new File(FOLDER, string);
+            if (file.exists()) continue;
+            StreamUtils.copy(Fonts.class.getResourceAsStream(String.valueOf(new StringBuilder().append("/assets/meteor-client/fonts/").append(string))), file);
+            if (!false) continue;
+            return;
         }
         MeteorClient.FONT = new CustomTextRenderer(new File(FOLDER, "JetBrains Mono.ttf"));
         lastFont = "JetBrains Mono";
     }
 
-    public Fonts() {
-        Fonts lIlIlIIIllIlIll;
-    }
-
     public static String[] getAvailableFonts() {
-        ArrayList<String> lIlIlIIIlIIlllI = new ArrayList<String>(4);
-        File[] lIlIlIIIlIIllIl = FOLDER.listFiles(File::isFile);
-        if (lIlIlIIIlIIllIl != null) {
-            for (File lIlIlIIIlIIllll : lIlIlIIIlIIllIl) {
-                int lIlIlIIIlIlIIII = lIlIlIIIlIIllll.getName().lastIndexOf(46);
-                if (!lIlIlIIIlIIllll.getName().substring(lIlIlIIIlIlIIII).equals(".ttf")) continue;
-                lIlIlIIIlIIlllI.add(lIlIlIIIlIIllll.getName().substring(0, lIlIlIIIlIlIIII));
+        ArrayList<String> arrayList = new ArrayList<String>(4);
+        File[] arrfile = FOLDER.listFiles(File::isFile);
+        if (arrfile != null) {
+            for (File file : arrfile) {
+                int n = file.getName().lastIndexOf(46);
+                if (!file.getName().substring(n).equals(".ttf")) continue;
+                arrayList.add(file.getName().substring(0, n));
+                if (-5 < 0) continue;
+                return null;
             }
         }
-        return lIlIlIIIlIIlllI.toArray(new String[0]);
+        return arrayList.toArray(new String[0]);
     }
 
     static {
-        DEFAULT_FONT = "JetBrains Mono";
         BUILTIN_FONTS = new String[]{"JetBrains Mono.ttf", "Comfortaa.ttf", "Tw Cen MT.ttf", "Pixelation.ttf"};
         FOLDER = new File(MeteorClient.FOLDER, "fonts");
         lastFont = "";
@@ -58,18 +57,18 @@ public class Fonts {
         if (lastFont.equals(Config.get().font)) {
             return;
         }
-        File lIlIlIIIlIllIlI = new File(FOLDER, String.valueOf(new StringBuilder().append(Config.get().font).append(".ttf")));
-        if (!lIlIlIIIlIllIlI.exists()) {
+        File file = new File(FOLDER, String.valueOf(new StringBuilder().append(Config.get().font).append(".ttf")));
+        if (!file.exists()) {
             Config.get().font = "JetBrains Mono";
-            lIlIlIIIlIllIlI = new File(FOLDER, String.valueOf(new StringBuilder().append(Config.get().font).append(".ttf")));
+            file = new File(FOLDER, String.valueOf(new StringBuilder().append(Config.get().font).append(".ttf")));
         }
         try {
-            MeteorClient.FONT = new CustomTextRenderer(lIlIlIIIlIllIlI);
+            MeteorClient.FONT = new CustomTextRenderer(file);
         }
-        catch (Exception lIlIlIIIlIllIll) {
+        catch (Exception exception) {
             Config.get().font = "JetBrains Mono";
-            lIlIlIIIlIllIlI = new File(FOLDER, String.valueOf(new StringBuilder().append(Config.get().font).append(".ttf")));
-            MeteorClient.FONT = new CustomTextRenderer(lIlIlIIIlIllIlI);
+            file = new File(FOLDER, String.valueOf(new StringBuilder().append(Config.get().font).append(".ttf")));
+            MeteorClient.FONT = new CustomTextRenderer(file);
         }
         if (Utils.mc.field_1755 instanceof WidgetScreen && Config.get().customFont) {
             ((WidgetScreen)Utils.mc.field_1755).invalidate();

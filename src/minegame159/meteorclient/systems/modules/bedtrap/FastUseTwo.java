@@ -23,50 +23,54 @@ import net.minecraft.class_1802;
 
 public class FastUseTwo
 extends Module {
-    private final /* synthetic */ Setting<Item> itemChoose;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> firework;
+    private final Setting<Item> itemChoose;
+    static final boolean $assertionsDisabled = !FastUseTwo.class.desiredAssertionStatus();
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> firework;
 
     private void setClickDelay() {
-        FastUseTwo llIIlllIlIIIlII;
-        ((MinecraftClientAccessor)llIIlllIlIIIlII.mc).setItemUseCooldown(0);
+        ((MinecraftClientAccessor)this.mc).setItemUseCooldown(0);
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llIIlllIlIIlIII) {
-        FastUseTwo llIIlllIlIIIlll;
-        if (llIIlllIlIIIlll.itemChoose.get() == Item.All) {
-            if (llIIlllIlIIIlll.firework.get().booleanValue() && llIIlllIlIIIlll.mc.field_1724.method_6047().method_7909() == class_1802.field_8639 || llIIlllIlIIIlll.mc.field_1724.method_6079().method_7909() == class_1802.field_8639) {
+    private void onTick(TickEvent.Post post) {
+        if (this.itemChoose.get() == Item.All) {
+            if (this.firework.get().booleanValue() && this.mc.field_1724.method_6047().method_7909() == class_1802.field_8639 || this.mc.field_1724.method_6079().method_7909() == class_1802.field_8639) {
                 return;
             }
-            llIIlllIlIIIlll.setClickDelay();
+            this.setClickDelay();
         }
-        if (llIIlllIlIIIlll.itemChoose.get() == Item.Exp) {
-            assert (llIIlllIlIIIlll.mc.field_1724 != null);
-            if (llIIlllIlIIIlll.mc.field_1724.method_6047().method_7909() instanceof class_1779 || llIIlllIlIIIlll.mc.field_1724.method_6079().method_7909() instanceof class_1779) {
-                llIIlllIlIIIlll.setClickDelay();
+        if (this.itemChoose.get() == Item.Exp) {
+            if (!$assertionsDisabled && this.mc.field_1724 == null) {
+                throw new AssertionError();
+            }
+            if (this.mc.field_1724.method_6047().method_7909() instanceof class_1779 || this.mc.field_1724.method_6079().method_7909() instanceof class_1779) {
+                this.setClickDelay();
             }
         }
-        if (llIIlllIlIIIlll.itemChoose.get() == Item.Crystal) {
-            assert (llIIlllIlIIIlll.mc.field_1724 != null);
-            if (llIIlllIlIIIlll.mc.field_1724.method_6047().method_7909() instanceof class_1774 || llIIlllIlIIIlll.mc.field_1724.method_6079().method_7909() instanceof class_1774) {
-                llIIlllIlIIIlll.setClickDelay();
+        if (this.itemChoose.get() == Item.Crystal) {
+            if (!$assertionsDisabled && this.mc.field_1724 == null) {
+                throw new AssertionError();
+            }
+            if (this.mc.field_1724.method_6047().method_7909() instanceof class_1774 || this.mc.field_1724.method_6079().method_7909() instanceof class_1774) {
+                this.setClickDelay();
             }
         }
-        if (llIIlllIlIIIlll.itemChoose.get() == Item.ExpAndCrystal) {
-            assert (llIIlllIlIIIlll.mc.field_1724 != null);
-            if (llIIlllIlIIIlll.mc.field_1724.method_6047().method_7909() instanceof class_1774 || llIIlllIlIIIlll.mc.field_1724.method_6047().method_7909() instanceof class_1779 || llIIlllIlIIIlll.mc.field_1724.method_6079().method_7909() instanceof class_1774 || llIIlllIlIIIlll.mc.field_1724.method_6079().method_7909() instanceof class_1779) {
-                llIIlllIlIIIlll.setClickDelay();
+        if (this.itemChoose.get() == Item.ExpAndCrystal) {
+            if (!$assertionsDisabled && this.mc.field_1724 == null) {
+                throw new AssertionError();
+            }
+            if (this.mc.field_1724.method_6047().method_7909() instanceof class_1774 || this.mc.field_1724.method_6047().method_7909() instanceof class_1779 || this.mc.field_1724.method_6079().method_7909() instanceof class_1774 || this.mc.field_1724.method_6079().method_7909() instanceof class_1779) {
+                this.setClickDelay();
             }
         }
     }
 
     public FastUseTwo() {
         super(Categories.BedTrap, "fast-use+", "Removes item cooldown.");
-        FastUseTwo llIIlllIlIIlIll;
-        llIIlllIlIIlIll.sgGeneral = llIIlllIlIIlIll.settings.getDefaultGroup();
-        llIIlllIlIIlIll.itemChoose = llIIlllIlIIlIll.sgGeneral.add(new EnumSetting.Builder().name("Which item").description("item").defaultValue(Item.All).build());
-        llIIlllIlIIlIll.firework = llIIlllIlIIlIll.sgGeneral.add(new BoolSetting.Builder().name("anti-firework").description("Prevent to spam fireworks.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.itemChoose = this.sgGeneral.add(new EnumSetting.Builder().name("Which item").description("item").defaultValue(Item.All).build());
+        this.firework = this.sgGeneral.add(new BoolSetting.Builder().name("anti-firework").description("Prevent to spam fireworks.").defaultValue(true).build());
     }
 
     public static enum Item {
@@ -75,10 +79,6 @@ extends Module {
         Crystal,
         ExpAndCrystal;
 
-
-        private Item() {
-            Item lIlIlllIlIlllII;
-        }
     }
 }
 

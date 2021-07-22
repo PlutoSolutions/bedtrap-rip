@@ -25,26 +25,26 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_1163.class})
 public class BiomeColorsMixin {
     @Inject(method={"getWaterColor"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onGetWaterColor(class_1920 world, class_2338 pos, CallbackInfoReturnable<Integer> info) {
+    private static void onGetWaterColor(class_1920 class_19202, class_2338 class_23382, CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeWaterColor.get().booleanValue()) {
-            info.setReturnValue((Object)ambience.waterColor.get().getPacked());
+            callbackInfoReturnable.setReturnValue((Object)ambience.waterColor.get().getPacked());
         }
     }
 
     @Inject(method={"getFoliageColor"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onGetFoliageColor(class_1920 world, class_2338 pos, CallbackInfoReturnable<Integer> info) {
+    private static void onGetFoliageColor(class_1920 class_19202, class_2338 class_23382, CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeFoliageColor.get().booleanValue()) {
-            info.setReturnValue((Object)ambience.foliageColor.get().getPacked());
+            callbackInfoReturnable.setReturnValue((Object)ambience.foliageColor.get().getPacked());
         }
     }
 
     @Inject(method={"getGrassColor"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onGetGrassColor(class_1920 world, class_2338 pos, CallbackInfoReturnable<Integer> info) {
+    private static void onGetGrassColor(class_1920 class_19202, class_2338 class_23382, CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeGrassColor.get().booleanValue()) {
-            info.setReturnValue((Object)ambience.grassColor.get().getPacked());
+            callbackInfoReturnable.setReturnValue((Object)ambience.grassColor.get().getPacked());
         }
     }
 }

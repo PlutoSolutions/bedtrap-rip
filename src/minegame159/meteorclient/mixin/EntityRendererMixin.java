@@ -47,28 +47,28 @@ implements IEntityRenderer {
     public abstract class_2960 method_3931(class_1297 var1);
 
     @Inject(method={"renderLabelIfPresent"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onRenderLabel(T entity, class_2561 text, class_4587 matrices, class_4597 vertexConsumers, int light, CallbackInfo info) {
-        if (!(entity instanceof class_1657)) {
+    private void onRenderLabel(T t, class_2561 class_25612, class_4587 class_45872, class_4597 class_45972, int n, CallbackInfo callbackInfo) {
+        if (!(t instanceof class_1657)) {
             return;
         }
         if (Modules.get().isActive(Nametags.class)) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"shouldRender"}, at={@At(value="HEAD")}, cancellable=true)
-    private void shouldRender(T entity, class_4604 frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
-        if (Modules.get().get(NoRender.class).noEntity((class_1297)entity)) {
-            cir.cancel();
+    private void shouldRender(T t, class_4604 class_46042, double d, double d2, double d3, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        if (Modules.get().get(NoRender.class).noEntity((class_1297)t)) {
+            callbackInfoReturnable.cancel();
         }
-        if (Modules.get().get(NoRender.class).noFallingBlocks() && entity instanceof class_1540) {
-            cir.cancel();
+        if (Modules.get().get(NoRender.class).noFallingBlocks() && t instanceof class_1540) {
+            callbackInfoReturnable.cancel();
         }
     }
 
     @Override
-    public class_2960 getTextureInterface(class_1297 entity) {
-        return this.method_3931(entity);
+    public class_2960 getTextureInterface(class_1297 class_12972) {
+        return this.method_3931(class_12972);
     }
 }
 

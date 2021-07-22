@@ -12,16 +12,14 @@ public class WMeteorLabel
 extends WLabel
 implements MeteorWidget {
     @Override
-    protected void onRender(GuiRenderer llllllllllllllllllllIIIIIIIlIIll, double llllllllllllllllllllIIIIIIIlIIlI, double llllllllllllllllllllIIIIIIIlIIIl, double llllllllllllllllllllIIIIIIIlIIII) {
-        WMeteorLabel llllllllllllllllllllIIIIIIIlIlII;
-        if (!llllllllllllllllllllIIIIIIIlIlII.text.isEmpty()) {
-            llllllllllllllllllllIIIIIIIlIIll.text(llllllllllllllllllllIIIIIIIlIlII.text, llllllllllllllllllllIIIIIIIlIlII.x, llllllllllllllllllllIIIIIIIlIlII.y, llllllllllllllllllllIIIIIIIlIlII.color != null ? llllllllllllllllllllIIIIIIIlIlII.color : (llllllllllllllllllllIIIIIIIlIlII.title ? (Color)llllllllllllllllllllIIIIIIIlIlII.theme().titleTextColor.get() : (Color)llllllllllllllllllllIIIIIIIlIlII.theme().textColor.get()), llllllllllllllllllllIIIIIIIlIlII.title);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (!this.text.isEmpty()) {
+            guiRenderer.text(this.text, this.x, this.y, this.color != null ? this.color : (this.title ? (Color)this.theme().titleTextColor.get() : (Color)this.theme().textColor.get()), this.title);
         }
     }
 
-    public WMeteorLabel(String llllllllllllllllllllIIIIIIIllIII, boolean llllllllllllllllllllIIIIIIIllIlI) {
-        super(llllllllllllllllllllIIIIIIIllIII, llllllllllllllllllllIIIIIIIllIlI);
-        WMeteorLabel llllllllllllllllllllIIIIIIIllIIl;
+    public WMeteorLabel(String string, boolean bl) {
+        super(string, bl);
     }
 }
 

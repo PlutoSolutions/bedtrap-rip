@@ -11,35 +11,37 @@ public class WMeteorWindow
 extends WWindow
 implements MeteorWidget {
     @Override
-    protected void onRender(GuiRenderer lllllIllIIIIIll, double lllllIllIIIIIlI, double lllllIllIIIIIIl, double lllllIllIIIIIII) {
-        WMeteorWindow lllllIllIIIIlII;
-        if (lllllIllIIIIlII.expanded || lllllIllIIIIlII.animProgress > 0.0) {
-            lllllIllIIIIIll.quad(lllllIllIIIIlII.x, lllllIllIIIIlII.y + lllllIllIIIIlII.header.height, lllllIllIIIIlII.width, lllllIllIIIIlII.height - lllllIllIIIIlII.header.height, lllllIllIIIIlII.theme().backgroundColor.get());
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (this.expanded || this.animProgress > 0.0) {
+            guiRenderer.quad(this.x, this.y + this.header.height, this.width, this.height - this.header.height, this.theme().backgroundColor.get());
         }
     }
 
-    public WMeteorWindow(String lllllIllIIIlIlI) {
-        super(lllllIllIIIlIlI);
-        WMeteorWindow lllllIllIIIllIl;
+    public WMeteorWindow(String string) {
+        super(string);
     }
 
     @Override
     protected WWindow.WHeader header() {
-        WMeteorWindow lllllIllIIIIlll;
-        return lllllIllIIIIlll.new WMeteorHeader();
+        return new WMeteorHeader(this, null);
     }
 
     private class WMeteorHeader
     extends WWindow.WHeader {
+        final WMeteorWindow this$0;
+
         @Override
-        protected void onRender(GuiRenderer llllllllllllllllIlIlllllllIIlIll, double llllllllllllllllIlIlllllllIIlIlI, double llllllllllllllllIlIlllllllIIlIIl, double llllllllllllllllIlIlllllllIIlIII) {
-            WMeteorHeader llllllllllllllllIlIlllllllIIIlll;
-            llllllllllllllllIlIlllllllIIlIll.quad(llllllllllllllllIlIlllllllIIIlll, llllllllllllllllIlIlllllllIIIlll.WMeteorWindow.this.theme().accentColor.get());
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            guiRenderer.quad(this, this.this$0.theme().accentColor.get());
         }
 
-        private WMeteorHeader() {
-            WMeteorHeader llllllllllllllllIlIlllllllIlIIIl;
-            super(llllllllllllllllIlIlllllllIlIIIl.WMeteorWindow.this);
+        private WMeteorHeader(WMeteorWindow wMeteorWindow) {
+            this.this$0 = wMeteorWindow;
+            super(wMeteorWindow);
+        }
+
+        WMeteorHeader(WMeteorWindow wMeteorWindow, 1 var2_2) {
+            this(wMeteorWindow);
         }
     }
 }

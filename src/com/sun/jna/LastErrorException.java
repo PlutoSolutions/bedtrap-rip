@@ -7,50 +7,46 @@ import com.sun.jna.Platform;
 
 public class LastErrorException
 extends RuntimeException {
-    private /* synthetic */ int errorCode;
-    private static final /* synthetic */ long serialVersionUID = 1L;
+    private int errorCode;
+    private static final long serialVersionUID = 1L;
 
-    public LastErrorException(String lIIlIllIllIIlII) {
-        super(LastErrorException.parseMessage(lIIlIllIllIIlII.trim()));
-        LastErrorException lIIlIllIllIIIll;
+    public LastErrorException(String string) {
+        super(LastErrorException.parseMessage(string.trim()));
         try {
-            if (lIIlIllIllIIlII.startsWith("[")) {
-                lIIlIllIllIIlII = lIIlIllIllIIlII.substring(1, lIIlIllIllIIlII.indexOf("]"));
+            if (string.startsWith("[")) {
+                string = string.substring(1, string.indexOf("]"));
             }
-            lIIlIllIllIIIll.errorCode = Integer.parseInt(lIIlIllIllIIlII);
+            this.errorCode = Integer.parseInt(string);
         }
-        catch (NumberFormatException lIIlIllIllIIllI) {
-            lIIlIllIllIIIll.errorCode = -1;
+        catch (NumberFormatException numberFormatException) {
+            this.errorCode = -1;
         }
     }
 
-    protected LastErrorException(int lIIlIllIlIlIllI, String lIIlIllIlIlIIlI) {
-        super(lIIlIllIlIlIIlI);
-        LastErrorException lIIlIllIlIlIlII;
-        lIIlIllIlIlIlII.errorCode = lIIlIllIlIlIllI;
+    protected LastErrorException(int n, String string) {
+        super(string);
+        this.errorCode = n;
     }
 
-    private static String formatMessage(int lIIlIllIlllIlII) {
-        return Platform.isWindows() ? String.valueOf(new StringBuilder().append("GetLastError() returned ").append(lIIlIllIlllIlII)) : String.valueOf(new StringBuilder().append("errno was ").append(lIIlIllIlllIlII));
+    private static String formatMessage(int n) {
+        return Platform.isWindows() ? String.valueOf(new StringBuilder().append("GetLastError() returned ").append(n)) : String.valueOf(new StringBuilder().append("errno was ").append(n));
     }
 
-    public LastErrorException(int lIIlIllIlIllIll) {
-        lIIlIllIlIllllI(lIIlIllIlIllIll, LastErrorException.formatMessage(lIIlIllIlIllIll));
-        LastErrorException lIIlIllIlIllllI;
+    public LastErrorException(int n) {
+        this(n, LastErrorException.formatMessage(n));
     }
 
-    private static String parseMessage(String lIIlIllIllIlllI) {
+    private static String parseMessage(String string) {
         try {
-            return LastErrorException.formatMessage(Integer.parseInt(lIIlIllIllIlllI));
+            return LastErrorException.formatMessage(Integer.parseInt(string));
         }
-        catch (NumberFormatException lIIlIllIlllIIII) {
-            return lIIlIllIllIlllI;
+        catch (NumberFormatException numberFormatException) {
+            return string;
         }
     }
 
     public int getErrorCode() {
-        LastErrorException lIIlIllIllIlIlI;
-        return lIIlIllIllIlIlI.errorCode;
+        return this.errorCode;
     }
 }
 

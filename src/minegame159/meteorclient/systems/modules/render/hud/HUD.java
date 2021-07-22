@@ -67,158 +67,162 @@ import net.minecraft.class_2487;
 import net.minecraft.class_2499;
 import net.minecraft.class_2520;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class HUD
 extends Module {
-    public final /* synthetic */ Setting<Double> scale;
-    public final /* synthetic */ Runnable reset;
-    public final /* synthetic */ Setting<SettingColor> secondaryColor;
-    public final /* synthetic */ List<HudElement> elements;
-    private final /* synthetic */ HudElementLayer topCenter;
-    private final /* synthetic */ HudElementLayer bottomRight;
-    private final /* synthetic */ SettingGroup sgEditor;
-    public final /* synthetic */ Setting<SettingColor> primaryColor;
-    private final /* synthetic */ HudElementLayer topRight;
-    public final /* synthetic */ Setting<Integer> snappingRange;
-    private final /* synthetic */ HudElementLayer bottomCenter;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private static final /* synthetic */ HudRenderer RENDERER;
-    private final /* synthetic */ HudElementLayer topLeft;
-    private final /* synthetic */ HudElementLayer bottomLeft;
+    public final Setting<Double> scale;
+    public final Runnable reset;
+    public final Setting<SettingColor> secondaryColor;
+    public final List<HudElement> elements;
+    private final HudElementLayer topCenter;
+    private final HudElementLayer bottomRight;
+    private final SettingGroup sgEditor;
+    public final Setting<SettingColor> primaryColor;
+    private final HudElementLayer topRight;
+    public final Setting<Integer> snappingRange;
+    private final HudElementLayer bottomCenter;
+    private final SettingGroup sgGeneral;
+    private static final HudRenderer RENDERER = new HudRenderer();
+    private final HudElementLayer topLeft;
+    private final HudElementLayer bottomLeft;
 
-    static {
-        RENDERER = new HudRenderer();
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    private void lambda$new$2() {
+        this.align();
+        this.elements.forEach(HUD::lambda$new$1);
     }
 
     private void align() {
-        HUD llllllllllllllllllIllIIIlIllIIll;
-        RENDERER.begin(llllllllllllllllllIllIIIlIllIIll.scale.get(), 0.0, true);
-        llllllllllllllllllIllIIIlIllIIll.topLeft.align();
-        llllllllllllllllllIllIIIlIllIIll.topCenter.align();
-        llllllllllllllllllIllIIIlIllIIll.topRight.align();
-        llllllllllllllllllIllIIIlIllIIll.bottomLeft.align();
-        llllllllllllllllllIllIIIlIllIIll.bottomCenter.align();
-        llllllllllllllllllIllIIIlIllIIll.bottomRight.align();
+        RENDERER.begin(this.scale.get(), 0.0, true);
+        this.topLeft.align();
+        this.topCenter.align();
+        this.topRight.align();
+        this.bottomLeft.align();
+        this.bottomCenter.align();
+        this.bottomRight.align();
         RENDERER.end();
     }
 
     @Override
-    public WWidget getWidget(GuiTheme llllllllllllllllllIllIIIlIIlllIl) {
-        HUD llllllllllllllllllIllIIIlIlIIIlI;
-        WHorizontalList llllllllllllllllllIllIIIlIlIIIII = llllllllllllllllllIllIIIlIIlllIl.horizontalList();
-        WButton llllllllllllllllllIllIIIlIIlllll = llllllllllllllllllIllIIIlIlIIIII.add(llllllllllllllllllIllIIIlIIlllIl.button("Reset")).widget();
-        llllllllllllllllllIllIIIlIIlllll.action = llllllllllllllllllIllIIIlIlIIIlI.reset;
-        llllllllllllllllllIllIIIlIlIIIII.add(llllllllllllllllllIllIIIlIIlllIl.label("Resets positions (do this after changing scale)."));
-        return llllllllllllllllllIllIIIlIlIIIII;
+    public WWidget getWidget(GuiTheme guiTheme) {
+        WHorizontalList wHorizontalList = guiTheme.horizontalList();
+        WButton wButton = wHorizontalList.add(guiTheme.button("Reset")).widget();
+        wButton.action = this.reset;
+        wHorizontalList.add(guiTheme.label("Resets positions (do this after changing scale)."));
+        return wHorizontalList;
+    }
+
+    private static void lambda$new$0(SettingGroup settingGroup) {
+        settingGroup.forEach(Setting::reset);
     }
 
     @Override
     public class_2487 toTag() {
-        HUD llllllllllllllllllIllIIIlIIlIIIl;
-        class_2487 llllllllllllllllllIllIIIlIIlIIll = super.toTag();
-        class_2499 llllllllllllllllllIllIIIlIIlIIlI = new class_2499();
-        for (HudElement llllllllllllllllllIllIIIlIIlIlIl : llllllllllllllllllIllIIIlIIlIIIl.elements) {
-            llllllllllllllllllIllIIIlIIlIIlI.add((Object)llllllllllllllllllIllIIIlIIlIlIl.toTag());
+        class_2487 class_24872 = super.toTag();
+        class_2499 class_24992 = new class_2499();
+        for (HudElement hudElement : this.elements) {
+            class_24992.add((Object)hudElement.toTag());
         }
-        llllllllllllllllllIllIIIlIIlIIll.method_10566("modules", (class_2520)llllllllllllllllllIllIIIlIIlIIlI);
-        return llllllllllllllllllIllIIIlIIlIIll;
+        class_24872.method_10566("modules", (class_2520)class_24992);
+        return class_24872;
     }
 
     @EventHandler
-    public void onRender(Render2DEvent llllllllllllllllllIllIIIlIlIlIll) {
-        HUD llllllllllllllllllIllIIIlIlIllII;
-        if (llllllllllllllllllIllIIIlIlIllII.mc.field_1690.field_1866 || llllllllllllllllllIllIIIlIlIllII.mc.field_1690.field_1842) {
+    public void onRender(Render2DEvent render2DEvent) {
+        if (this.mc.field_1690.field_1866 || this.mc.field_1690.field_1842) {
             return;
         }
-        RENDERER.begin(llllllllllllllllllIllIIIlIlIllII.scale.get(), llllllllllllllllllIllIIIlIlIlIll.tickDelta, false);
-        for (HudElement llllllllllllllllllIllIIIlIlIllIl : llllllllllllllllllIllIIIlIlIllII.elements) {
-            if (!llllllllllllllllllIllIIIlIlIllIl.active && !HudTab.INSTANCE.isScreen(llllllllllllllllllIllIIIlIlIllII.mc.field_1755) && !(llllllllllllllllllIllIIIlIlIllII.mc.field_1755 instanceof HudElementScreen)) continue;
-            llllllllllllllllllIllIIIlIlIllIl.update(RENDERER);
-            llllllllllllllllllIllIIIlIlIllIl.render(RENDERER);
+        RENDERER.begin(this.scale.get(), render2DEvent.tickDelta, false);
+        for (HudElement hudElement : this.elements) {
+            if (!hudElement.active && !HudTab.INSTANCE.isScreen(this.mc.field_1755) && !(this.mc.field_1755 instanceof HudElementScreen)) continue;
+            hudElement.update(RENDERER);
+            hudElement.render(RENDERER);
         }
         RENDERER.end();
     }
 
-    @Override
-    public Module fromTag(class_2487 llllllllllllllllllIllIIIlIIIIIII) {
-        HUD llllllllllllllllllIllIIIIlllllll;
-        if (llllllllllllllllllIllIIIlIIIIIII.method_10545("modules")) {
-            class_2499 llllllllllllllllllIllIIIlIIIIIlI = llllllllllllllllllIllIIIlIIIIIII.method_10554("modules", 10);
-            for (class_2520 llllllllllllllllllIllIIIlIIIIIll : llllllllllllllllllIllIIIlIIIIIlI) {
-                class_2487 llllllllllllllllllIllIIIlIIIIlIl = (class_2487)llllllllllllllllllIllIIIlIIIIIll;
-                HudElement llllllllllllllllllIllIIIlIIIIlII = llllllllllllllllllIllIIIIlllllll.getModule(llllllllllllllllllIllIIIlIIIIlIl.method_10558("name"));
-                if (llllllllllllllllllIllIIIlIIIIlII == null) continue;
-                llllllllllllllllllIllIIIlIIIIlII.fromTag(llllllllllllllllllIllIIIlIIIIlIl);
-            }
-        }
-        return super.fromTag(llllllllllllllllllIllIIIlIIIIIII);
+    private static void lambda$new$1(HudElement hudElement) {
+        hudElement.active = hudElement.defaultActive;
+        hudElement.settings.forEach(HUD::lambda$new$0);
     }
 
-    private HudElement getModule(String llllllllllllllllllIllIIIIlllIIlI) {
-        HUD llllllllllllllllllIllIIIIlllIIIl;
-        for (HudElement llllllllllllllllllIllIIIIlllIlII : llllllllllllllllllIllIIIIlllIIIl.elements) {
-            if (!llllllllllllllllllIllIIIIlllIlII.name.equals(llllllllllllllllllIllIIIIlllIIlI)) continue;
-            return llllllllllllllllllIllIIIIlllIlII;
+    @Override
+    public Module fromTag(class_2487 class_24872) {
+        if (class_24872.method_10545("modules")) {
+            class_2499 class_24992 = class_24872.method_10554("modules", 10);
+            for (class_2520 class_25202 : class_24992) {
+                class_2487 class_24873 = (class_2487)class_25202;
+                HudElement hudElement = this.getModule(class_24873.method_10558("name"));
+                if (hudElement == null) continue;
+                hudElement.fromTag(class_24873);
+            }
+        }
+        return super.fromTag(class_24872);
+    }
+
+    private HudElement getModule(String string) {
+        for (HudElement hudElement : this.elements) {
+            if (!hudElement.name.equals(string)) continue;
+            return hudElement;
         }
         return null;
     }
 
     public HUD() {
         super(Categories.Render, "HUD", "In game overlay.");
-        HUD llllllllllllllllllIllIIIlIllIllI;
-        llllllllllllllllllIllIIIlIllIllI.sgGeneral = llllllllllllllllllIllIIIlIllIllI.settings.getDefaultGroup();
-        llllllllllllllllllIllIIIlIllIllI.sgEditor = llllllllllllllllllIllIIIlIllIllI.settings.createGroup("Editor");
-        llllllllllllllllllIllIIIlIllIllI.scale = llllllllllllllllllIllIIIlIllIllI.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of the HUD.").defaultValue(1.0).min(0.75).sliderMin(0.75).sliderMax(4.0).build());
-        llllllllllllllllllIllIIIlIllIllI.primaryColor = llllllllllllllllllIllIIIlIllIllI.sgGeneral.add(new ColorSetting.Builder().name("primary-color").description("Primary color of text.").defaultValue(new SettingColor(255, 255, 255)).build());
-        llllllllllllllllllIllIIIlIllIllI.secondaryColor = llllllllllllllllllIllIIIlIllIllI.sgGeneral.add(new ColorSetting.Builder().name("secondary-color").description("Secondary color of text.").defaultValue(new SettingColor(175, 175, 175)).build());
-        llllllllllllllllllIllIIIlIllIllI.snappingRange = llllllllllllllllllIllIIIlIllIllI.sgEditor.add(new IntSetting.Builder().name("snapping-range").description("Snapping range in editor.").defaultValue(6).build());
-        llllllllllllllllllIllIIIlIllIllI.elements = new ArrayList<HudElement>();
-        llllllllllllllllllIllIIIlIllIllI.reset = () -> {
-            HUD llllllllllllllllllIllIIIIllIIlll;
-            llllllllllllllllllIllIIIIllIIlll.align();
-            llllllllllllllllllIllIIIIllIIlll.elements.forEach(llllllllllllllllllIllIIIIllIIIll -> {
-                llllllllllllllllllIllIIIIllIIIll.active = llllllllllllllllllIllIIIIllIIIll.defaultActive;
-                llllllllllllllllllIllIIIIllIIIll.settings.forEach(llllllllllllllllllIllIIIIllIIIIl -> llllllllllllllllllIllIIIIllIIIIl.forEach(Setting::reset));
-            });
-        };
-        llllllllllllllllllIllIIIlIllIllI.topLeft = new HudElementLayer(RENDERER, llllllllllllllllllIllIIIlIllIllI.elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new WatermarkHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new FpsHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new PingHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new TpsHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new SpeedHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new BiomeHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new TimeHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new ServerHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new DurabilityHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new BreakingBlockHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new LookingAtHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new ModuleInfoHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new TextRadarHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new BedHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new CrystalHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new EGAppleHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new ExpHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topLeft.add(new ObsidianHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topCenter = new HudElementLayer(RENDERER, llllllllllllllllllIllIIIlIllIllI.elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
-        llllllllllllllllllIllIIIlIllIllI.topCenter.add(new InventoryViewerHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topCenter.add(new WelcomeHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topCenter.add(new LagNotifierHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.topRight = new HudElementLayer(RENDERER, llllllllllllllllllIllIIIlIllIllI.elements, AlignmentX.Right, AlignmentY.Top, 2, 2);
-        llllllllllllllllllIllIIIlIllIllI.topRight.add(new ActiveModulesHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomLeft = new HudElementLayer(RENDERER, llllllllllllllllllIllIIIlIllIllI.elements, AlignmentX.Left, AlignmentY.Bottom, 2, 2);
-        llllllllllllllllllIllIIIlIllIllI.bottomLeft.add(new PlayerModelHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomCenter = new HudElementLayer(RENDERER, llllllllllllllllllIllIIIlIllIllI.elements, AlignmentX.Center, AlignmentY.Bottom, 48, 64);
-        llllllllllllllllllIllIIIlIllIllI.bottomCenter.add(new ArmorHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomCenter.add(new CompassHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomCenter.add(new ContainerViewerHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomCenter.add(new TotemHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomRight = new HudElementLayer(RENDERER, llllllllllllllllllIllIIIlIllIllI.elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
-        llllllllllllllllllIllIIIlIllIllI.bottomRight.add(new PositionHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomRight.add(new RotationHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomRight.add(new PotionTimersHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomRight.add(new HoleHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.bottomRight.add(new CombatHud(llllllllllllllllllIllIIIlIllIllI));
-        llllllllllllllllllIllIIIlIllIllI.align();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgEditor = this.settings.createGroup("Editor");
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of the HUD.").defaultValue(1.0).min(0.75).sliderMin(0.75).sliderMax(4.0).build());
+        this.primaryColor = this.sgGeneral.add(new ColorSetting.Builder().name("primary-color").description("Primary color of text.").defaultValue(new SettingColor(255, 255, 255)).build());
+        this.secondaryColor = this.sgGeneral.add(new ColorSetting.Builder().name("secondary-color").description("Secondary color of text.").defaultValue(new SettingColor(175, 175, 175)).build());
+        this.snappingRange = this.sgEditor.add(new IntSetting.Builder().name("snapping-range").description("Snapping range in editor.").defaultValue(6).build());
+        this.elements = new ArrayList<HudElement>();
+        this.reset = this::lambda$new$2;
+        this.topLeft = new HudElementLayer(RENDERER, this.elements, AlignmentX.Left, AlignmentY.Top, 2, 2);
+        this.topLeft.add(new WatermarkHud(this));
+        this.topLeft.add(new FpsHud(this));
+        this.topLeft.add(new PingHud(this));
+        this.topLeft.add(new TpsHud(this));
+        this.topLeft.add(new SpeedHud(this));
+        this.topLeft.add(new BiomeHud(this));
+        this.topLeft.add(new TimeHud(this));
+        this.topLeft.add(new ServerHud(this));
+        this.topLeft.add(new DurabilityHud(this));
+        this.topLeft.add(new BreakingBlockHud(this));
+        this.topLeft.add(new LookingAtHud(this));
+        this.topLeft.add(new ModuleInfoHud(this));
+        this.topLeft.add(new TextRadarHud(this));
+        this.topLeft.add(new BedHud(this));
+        this.topLeft.add(new CrystalHud(this));
+        this.topLeft.add(new EGAppleHud(this));
+        this.topLeft.add(new ExpHud(this));
+        this.topLeft.add(new ObsidianHud(this));
+        this.topCenter = new HudElementLayer(RENDERER, this.elements, AlignmentX.Center, AlignmentY.Top, 0, 2);
+        this.topCenter.add(new InventoryViewerHud(this));
+        this.topCenter.add(new WelcomeHud(this));
+        this.topCenter.add(new LagNotifierHud(this));
+        this.topRight = new HudElementLayer(RENDERER, this.elements, AlignmentX.Right, AlignmentY.Top, 2, 2);
+        this.topRight.add(new ActiveModulesHud(this));
+        this.bottomLeft = new HudElementLayer(RENDERER, this.elements, AlignmentX.Left, AlignmentY.Bottom, 2, 2);
+        this.bottomLeft.add(new PlayerModelHud(this));
+        this.bottomCenter = new HudElementLayer(RENDERER, this.elements, AlignmentX.Center, AlignmentY.Bottom, 48, 64);
+        this.bottomCenter.add(new ArmorHud(this));
+        this.bottomCenter.add(new CompassHud(this));
+        this.bottomCenter.add(new ContainerViewerHud(this));
+        this.bottomCenter.add(new TotemHud(this));
+        this.bottomRight = new HudElementLayer(RENDERER, this.elements, AlignmentX.Right, AlignmentY.Bottom, 2, 2);
+        this.bottomRight.add(new PositionHud(this));
+        this.bottomRight.add(new RotationHud(this));
+        this.bottomRight.add(new PotionTimersHud(this));
+        this.bottomRight.add(new HoleHud(this));
+        this.bottomRight.add(new CombatHud(this));
+        this.align();
     }
 }
 

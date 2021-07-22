@@ -11,21 +11,13 @@ import net.minecraft.class_1113;
 
 public class PlaySoundEvent
 extends Cancellable {
-    private static final /* synthetic */ PlaySoundEvent INSTANCE;
-    public /* synthetic */ class_1113 sound;
+    private static final PlaySoundEvent INSTANCE = new PlaySoundEvent();
+    public class_1113 sound;
 
-    public static PlaySoundEvent get(class_1113 llllIllllIllII) {
+    public static PlaySoundEvent get(class_1113 class_11132) {
         INSTANCE.setCancelled(false);
-        PlaySoundEvent.INSTANCE.sound = llllIllllIllII;
+        PlaySoundEvent.INSTANCE.sound = class_11132;
         return INSTANCE;
-    }
-
-    public PlaySoundEvent() {
-        PlaySoundEvent llllIllllIlllI;
-    }
-
-    static {
-        INSTANCE = new PlaySoundEvent();
     }
 }
 

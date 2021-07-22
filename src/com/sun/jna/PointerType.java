@@ -9,80 +9,69 @@ import com.sun.jna.Pointer;
 
 public abstract class PointerType
 implements NativeMapped {
-    private /* synthetic */ Pointer pointer;
+    private Pointer pointer;
 
     @Override
     public Class<?> nativeType() {
         return Pointer.class;
     }
 
-    public boolean equals(Object lllllllllllllllllllIlllIIIIIIIlI) {
-        PointerType lllllllllllllllllllIlllIIIIIIlIl;
-        if (lllllllllllllllllllIlllIIIIIIIlI == lllllllllllllllllllIlllIIIIIIlIl) {
+    public boolean equals(Object object) {
+        if (object == this) {
             return true;
         }
-        if (lllllllllllllllllllIlllIIIIIIIlI instanceof PointerType) {
-            Pointer lllllllllllllllllllIlllIIIIIIllI = ((PointerType)lllllllllllllllllllIlllIIIIIIIlI).getPointer();
-            if (lllllllllllllllllllIlllIIIIIIlIl.pointer == null) {
-                return lllllllllllllllllllIlllIIIIIIllI == null;
+        if (object instanceof PointerType) {
+            Pointer pointer = ((PointerType)object).getPointer();
+            if (this.pointer == null) {
+                return pointer == null;
             }
-            return lllllllllllllllllllIlllIIIIIIlIl.pointer.equals(lllllllllllllllllllIlllIIIIIIllI);
+            return this.pointer.equals(pointer);
         }
         return false;
     }
 
-    public void setPointer(Pointer lllllllllllllllllllIlllIIIIllIIl) {
-        lllllllllllllllllllIlllIIIIllIlI.pointer = lllllllllllllllllllIlllIIIIllIIl;
+    public void setPointer(Pointer pointer) {
+        this.pointer = pointer;
     }
 
-    protected PointerType(Pointer lllllllllllllllllllIlllIIIlIIllI) {
-        PointerType lllllllllllllllllllIlllIIIlIIlll;
-        lllllllllllllllllllIlllIIIlIIlll.pointer = lllllllllllllllllllIlllIIIlIIllI;
+    protected PointerType(Pointer pointer) {
+        this.pointer = pointer;
     }
 
     public Pointer getPointer() {
-        PointerType lllllllllllllllllllIlllIIIlIIIII;
-        return lllllllllllllllllllIlllIIIlIIIII.pointer;
+        return this.pointer;
     }
 
     @Override
-    public Object fromNative(Object lllllllllllllllllllIlllIIIIlIIIl, FromNativeContext lllllllllllllllllllIlllIIIIlIIII) {
-        PointerType lllllllllllllllllllIlllIIIIlIIlI;
-        if (lllllllllllllllllllIlllIIIIlIIIl == null) {
+    public Object fromNative(Object object, FromNativeContext fromNativeContext) {
+        if (object == null) {
             return null;
         }
         try {
-            PointerType lllllllllllllllllllIlllIIIIlIlIl = (PointerType)lllllllllllllllllllIlllIIIIlIIlI.getClass().newInstance();
-            lllllllllllllllllllIlllIIIIlIlIl.pointer = (Pointer)lllllllllllllllllllIlllIIIIlIIIl;
-            return lllllllllllllllllllIlllIIIIlIlIl;
+            PointerType pointerType = (PointerType)this.getClass().newInstance();
+            pointerType.pointer = (Pointer)object;
+            return pointerType;
         }
-        catch (InstantiationException lllllllllllllllllllIlllIIIIlIlII) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't instantiate ").append(lllllllllllllllllllIlllIIIIlIIlI.getClass())));
-        }
-        catch (IllegalAccessException lllllllllllllllllllIlllIIIIlIIll) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Not allowed to instantiate ").append(lllllllllllllllllllIlllIIIIlIIlI.getClass())));
+        catch (IllegalAccessException | InstantiationException reflectiveOperationException) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't instantiate ").append(this.getClass())));
         }
     }
 
     protected PointerType() {
-        PointerType lllllllllllllllllllIlllIIIlIllII;
-        lllllllllllllllllllIlllIIIlIllII.pointer = Pointer.NULL;
+        this.pointer = Pointer.NULL;
     }
 
     public int hashCode() {
-        PointerType lllllllllllllllllllIlllIIIIIlIll;
-        return lllllllllllllllllllIlllIIIIIlIll.pointer != null ? lllllllllllllllllllIlllIIIIIlIll.pointer.hashCode() : 0;
+        return this.pointer != null ? this.pointer.hashCode() : 0;
     }
 
     @Override
     public Object toNative() {
-        PointerType lllllllllllllllllllIlllIIIlIIIll;
-        return lllllllllllllllllllIlllIIIlIIIll.getPointer();
+        return this.getPointer();
     }
 
     public String toString() {
-        PointerType lllllllllllllllllllIllIllllllllI;
-        return lllllllllllllllllllIllIllllllllI.pointer == null ? "NULL" : String.valueOf(new StringBuilder().append(lllllllllllllllllllIllIllllllllI.pointer.toString()).append(" (").append(super.toString()).append(")"));
+        return this.pointer == null ? "NULL" : String.valueOf(new StringBuilder().append(this.pointer.toString()).append(" (").append(super.toString()).append(")"));
     }
 }
 

@@ -22,32 +22,29 @@ import net.minecraft.class_1935;
 
 public class ExpHud
 extends HudElement {
-    private final /* synthetic */ Setting<Double> scale;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Double> scale;
+    private final SettingGroup sgGeneral;
 
     @Override
-    public void update(HudRenderer llllllllllllllllIlllIIIIIIllIIll) {
-        ExpHud llllllllllllllllIlllIIIIIIllIlII;
-        llllllllllllllllIlllIIIIIIllIlII.box.setSize(16.0 * llllllllllllllllIlllIIIIIIllIlII.scale.get(), 16.0 * llllllllllllllllIlllIIIIIIllIlII.scale.get());
+    public void update(HudRenderer hudRenderer) {
+        this.box.setSize(16.0 * this.scale.get(), 16.0 * this.scale.get());
     }
 
     @Override
-    public void render(HudRenderer llllllllllllllllIlllIIIIIIlIllIl) {
-        ExpHud llllllllllllllllIlllIIIIIIlIlllI;
-        double llllllllllllllllIlllIIIIIIlIllII = llllllllllllllllIlllIIIIIIlIlllI.box.getX();
-        double llllllllllllllllIlllIIIIIIlIlIll = llllllllllllllllIlllIIIIIIlIlllI.box.getY();
-        if (llllllllllllllllIlllIIIIIIlIlllI.isInEditor()) {
-            RenderUtils.drawItem(class_1802.field_8287.method_7854(), (int)llllllllllllllllIlllIIIIIIlIllII, (int)llllllllllllllllIlllIIIIIIlIlIll, llllllllllllllllIlllIIIIIIlIlllI.scale.get(), true);
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX();
+        double d2 = this.box.getY();
+        if (this.isInEditor()) {
+            RenderUtils.drawItem(class_1802.field_8287.method_7854(), (int)d, (int)d2, this.scale.get(), true);
         } else if (InvUtils.find(class_1802.field_8287).getCount() > 0) {
-            RenderUtils.drawItem(new class_1799((class_1935)class_1802.field_8287, InvUtils.find(class_1802.field_8287).getCount()), (int)llllllllllllllllIlllIIIIIIlIllII, (int)llllllllllllllllIlllIIIIIIlIlIll, llllllllllllllllIlllIIIIIIlIlllI.scale.get(), true);
+            RenderUtils.drawItem(new class_1799((class_1935)class_1802.field_8287, InvUtils.find(class_1802.field_8287).getCount()), (int)d, (int)d2, this.scale.get(), true);
         }
     }
 
-    public ExpHud(HUD llllllllllllllllIlllIIIIIIlllIII) {
-        super(llllllllllllllllIlllIIIIIIlllIII, "Exp", "Displays the amount of exp bottles in your inventory.", false);
-        ExpHud llllllllllllllllIlllIIIIIIllIlll;
-        llllllllllllllllIlllIIIIIIllIlll.sgGeneral = llllllllllllllllIlllIIIIIIllIlll.settings.getDefaultGroup();
-        llllllllllllllllIlllIIIIIIllIlll.scale = llllllllllllllllIlllIIIIIIllIlll.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of golden apple counter.").defaultValue(3.0).min(1.0).sliderMin(1.0).sliderMax(4.0).build());
+    public ExpHud(HUD hUD) {
+        super(hUD, "Exp", "Displays the amount of exp bottles in your inventory.", false);
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of golden apple counter.").defaultValue(3.0).min(1.0).sliderMin(1.0).sliderMax(4.0).build());
     }
 }
 

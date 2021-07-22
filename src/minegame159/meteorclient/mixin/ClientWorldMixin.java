@@ -47,36 +47,36 @@ public class ClientWorldMixin {
     private final class_5294 customSky = new Ambience.Custom();
 
     @Inject(method={"addEntityPrivate"}, at={@At(value="TAIL")})
-    private void onAddEntityPrivate(int id, class_1297 entity, CallbackInfo info) {
-        MeteorClient.EVENT_BUS.post(EntityAddedEvent.get(entity));
+    private void onAddEntityPrivate(int n, class_1297 class_12972, CallbackInfo callbackInfo) {
+        MeteorClient.EVENT_BUS.post(EntityAddedEvent.get(class_12972));
     }
 
     @Inject(method={"finishRemovingEntity"}, at={@At(value="TAIL")})
-    private void onFinishRemovingEntity(class_1297 entity, CallbackInfo info) {
-        MeteorClient.EVENT_BUS.post(EntityRemovedEvent.get(entity));
+    private void onFinishRemovingEntity(class_1297 class_12972, CallbackInfo callbackInfo) {
+        MeteorClient.EVENT_BUS.post(EntityRemovedEvent.get(class_12972));
     }
 
     @Inject(method={"method_23777"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetSkyColor(class_2338 blockPos, float tickDelta, CallbackInfoReturnable<class_243> info) {
+    private void onGetSkyColor(class_2338 class_23382, float f, CallbackInfoReturnable<class_243> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeSkyColor.get().booleanValue()) {
-            info.setReturnValue((Object)ambience.skyColor.get().getVec3d());
+            callbackInfoReturnable.setReturnValue((Object)ambience.skyColor.get().getVec3d());
         }
     }
 
     @Inject(method={"getSkyProperties"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetSkyProperties(CallbackInfoReturnable<class_5294> info) {
+    private void onGetSkyProperties(CallbackInfoReturnable<class_5294> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.enderMode.get().booleanValue()) {
-            info.setReturnValue((Object)(ambience.enderCustomSkyColor.get() != false ? this.customSky : this.endSky));
+            callbackInfoReturnable.setReturnValue((Object)(ambience.enderCustomSkyColor.get() != false ? this.customSky : this.endSky));
         }
     }
 
     @Inject(method={"getCloudsColor"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetCloudsColor(float tickDelta, CallbackInfoReturnable<class_243> info) {
+    private void onGetCloudsColor(float f, CallbackInfoReturnable<class_243> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeCloudColor.get().booleanValue()) {
-            info.setReturnValue((Object)ambience.cloudColor.get().getVec3d());
+            callbackInfoReturnable.setReturnValue((Object)ambience.cloudColor.get().getVec3d());
         }
     }
 

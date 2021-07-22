@@ -28,31 +28,31 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_742.class})
 public class AbstractClientPlayerEntityMixin {
     @Inject(method={"getCapeTexture"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetCapeTexture(CallbackInfoReturnable<class_2960> info) {
-        class_2960 id = Capes.get((class_1657)this);
-        if (id != null) {
-            info.setReturnValue((Object)id);
+    private void onGetCapeTexture(CallbackInfoReturnable<class_2960> callbackInfoReturnable) {
+        class_2960 class_29602 = Capes.get((class_1657)this);
+        if (class_29602 != null) {
+            callbackInfoReturnable.setReturnValue((Object)class_29602);
         }
     }
 
     @Inject(method={"getPlayerListEntry"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetPlayerListEntry(CallbackInfoReturnable<class_640> info) {
+    private void onGetPlayerListEntry(CallbackInfoReturnable<class_640> callbackInfoReturnable) {
         if (Utils.mc.method_1562() == null) {
-            info.setReturnValue((Object)FakeClientPlayer.getPlayerListEntry());
+            callbackInfoReturnable.setReturnValue((Object)FakeClientPlayer.getPlayerListEntry());
         }
     }
 
     @Inject(method={"isSpectator"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onIsSpectator(CallbackInfoReturnable<Boolean> info) {
+    private void onIsSpectator(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Utils.mc.method_1562() == null) {
-            info.setReturnValue((Object)false);
+            callbackInfoReturnable.setReturnValue((Object)false);
         }
     }
 
     @Inject(method={"isCreative"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onIsCreative(CallbackInfoReturnable<Boolean> info) {
+    private void onIsCreative(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Utils.mc.method_1562() == null) {
-            info.setReturnValue((Object)false);
+            callbackInfoReturnable.setReturnValue((Object)false);
         }
     }
 }

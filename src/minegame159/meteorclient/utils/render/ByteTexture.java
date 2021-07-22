@@ -21,24 +21,23 @@ import org.lwjgl.opengl.GL30C;
 
 public class ByteTexture
 extends class_1044 {
-    public void method_4625(class_3300 lllllllllllllllllIllIlIllIIllIll) throws IOException {
+    private void lambda$new$0(int n, int n2, byte[] arrby, Format format, Filter filter, Filter filter2) {
+        this.upload(n, n2, arrby, format, filter, filter2);
     }
 
-    public ByteTexture(int lllllllllllllllllIllIlIllllIIlII, int lllllllllllllllllIllIlIllllIlIlI, byte[] lllllllllllllllllIllIlIllllIlIIl, Format lllllllllllllllllIllIlIllllIIIIl, Filter lllllllllllllllllIllIlIllllIIlll, Filter lllllllllllllllllIllIlIlllIlllll) {
-        ByteTexture lllllllllllllllllIllIlIllllIIlIl;
+    public void method_4625(class_3300 class_33002) throws IOException {
+    }
+
+    public ByteTexture(int n, int n2, byte[] arrby, Format format, Filter filter, Filter filter2) {
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> {
-                ByteTexture lllllllllllllllllIllIlIlIlllIlll;
-                lllllllllllllllllIllIlIlIlllIlll.upload(lllllllllllllllllIllIlIllllIIlII, lllllllllllllllllIllIlIllllIlIlI, lllllllllllllllllIllIlIllllIlIIl, lllllllllllllllllIllIlIllllIIIIl, lllllllllllllllllIllIlIllllIIlll, lllllllllllllllllIllIlIlllIlllll);
-            });
+            RenderSystem.recordRenderCall(() -> this.lambda$new$0(n, n2, arrby, format, filter, filter2));
         } else {
-            lllllllllllllllllIllIlIllllIIlIl.upload(lllllllllllllllllIllIlIllllIIlII, lllllllllllllllllIllIlIllllIlIlI, lllllllllllllllllIllIlIllllIlIIl, lllllllllllllllllIllIlIllllIIIIl, lllllllllllllllllIllIlIllllIIlll, lllllllllllllllllIllIlIlllIlllll);
+            this.upload(n, n2, arrby, format, filter, filter2);
         }
     }
 
-    private void upload(int lllllllllllllllllIllIlIllIlIIIlI, int lllllllllllllllllIllIlIllIlIIIIl, ByteBuffer lllllllllllllllllIllIlIllIlIIIII, Format lllllllllllllllllIllIlIllIIlllll, Filter lllllllllllllllllIllIlIllIlIIlIl, Filter lllllllllllllllllIllIlIllIlIIlII) {
-        ByteTexture lllllllllllllllllIllIlIllIlIlIlI;
-        lllllllllllllllllIllIlIllIlIlIlI.method_23207();
+    private void upload(int n, int n2, ByteBuffer byteBuffer, Format format, Filter filter, Filter filter2) {
+        this.method_23207();
         GL30C.glPixelStorei((int)3312, (int)0);
         GL30C.glPixelStorei((int)3313, (int)0);
         GL30C.glPixelStorei((int)3314, (int)0);
@@ -49,28 +48,27 @@ extends class_1044 {
         GL30C.glPixelStorei((int)3317, (int)4);
         GL30C.glTexParameteri((int)3553, (int)10242, (int)10497);
         GL30C.glTexParameteri((int)3553, (int)10243, (int)10497);
-        GL30C.glTexParameteri((int)3553, (int)10241, (int)lllllllllllllllllIllIlIllIlIIlIl.toOpenGL());
-        GL30C.glTexParameteri((int)3553, (int)10240, (int)lllllllllllllllllIllIlIllIlIIlII.toOpenGL());
-        ((Buffer)lllllllllllllllllIllIlIllIlIIIII).rewind();
-        GL30C.glTexImage2D((int)3553, (int)0, (int)lllllllllllllllllIllIlIllIIlllll.toOpenGL(), (int)lllllllllllllllllIllIlIllIlIIIlI, (int)lllllllllllllllllIllIlIllIlIIIIl, (int)0, (int)lllllllllllllllllIllIlIllIIlllll.toOpenGL(), (int)5121, (ByteBuffer)lllllllllllllllllIllIlIllIlIIIII);
+        GL30C.glTexParameteri((int)3553, (int)10241, (int)filter.toOpenGL());
+        GL30C.glTexParameteri((int)3553, (int)10240, (int)filter2.toOpenGL());
+        ((Buffer)byteBuffer).rewind();
+        GL30C.glTexImage2D((int)3553, (int)0, (int)format.toOpenGL(), (int)n, (int)n2, (int)0, (int)format.toOpenGL(), (int)5121, (ByteBuffer)byteBuffer);
     }
 
-    private void upload(int lllllllllllllllllIllIlIlllIIIIII, int lllllllllllllllllIllIlIllIllIlll, byte[] lllllllllllllllllIllIlIllIlllllI, Format lllllllllllllllllIllIlIllIllIlIl, Filter lllllllllllllllllIllIlIllIllIlII, Filter lllllllllllllllllIllIlIllIllIIll) {
-        ByteTexture lllllllllllllllllIllIlIlllIIIIIl;
-        ByteBuffer lllllllllllllllllIllIlIllIlllIlI = BufferUtils.createByteBuffer((int)lllllllllllllllllIllIlIllIlllllI.length).put(lllllllllllllllllIllIlIllIlllllI);
-        lllllllllllllllllIllIlIlllIIIIIl.upload(lllllllllllllllllIllIlIlllIIIIII, lllllllllllllllllIllIlIllIllIlll, lllllllllllllllllIllIlIllIlllIlI, lllllllllllllllllIllIlIllIllIlIl, lllllllllllllllllIllIlIllIllIlII, lllllllllllllllllIllIlIllIllIIll);
+    private void upload(int n, int n2, byte[] arrby, Format format, Filter filter, Filter filter2) {
+        ByteBuffer byteBuffer = BufferUtils.createByteBuffer((int)arrby.length).put(arrby);
+        this.upload(n, n2, byteBuffer, format, filter, filter2);
     }
 
-    public ByteTexture(int lllllllllllllllllIllIlIlllIlIllI, int lllllllllllllllllIllIlIlllIlIlIl, ByteBuffer lllllllllllllllllIllIlIlllIIllIl, Format lllllllllllllllllIllIlIlllIlIIll, Filter lllllllllllllllllIllIlIlllIIlIll, Filter lllllllllllllllllIllIlIlllIlIIIl) {
-        ByteTexture lllllllllllllllllIllIlIlllIlIlll;
+    public ByteTexture(int n, int n2, ByteBuffer byteBuffer, Format format, Filter filter, Filter filter2) {
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> {
-                ByteTexture lllllllllllllllllIllIlIllIIlIIll;
-                lllllllllllllllllIllIlIllIIlIIll.upload(lllllllllllllllllIllIlIlllIlIllI, lllllllllllllllllIllIlIlllIlIlIl, lllllllllllllllllIllIlIlllIIllIl, lllllllllllllllllIllIlIlllIlIIll, lllllllllllllllllIllIlIlllIIlIll, lllllllllllllllllIllIlIlllIlIIIl);
-            });
+            RenderSystem.recordRenderCall(() -> this.lambda$new$1(n, n2, byteBuffer, format, filter, filter2));
         } else {
-            lllllllllllllllllIllIlIlllIlIlll.upload(lllllllllllllllllIllIlIlllIlIllI, lllllllllllllllllIllIlIlllIlIlIl, lllllllllllllllllIllIlIlllIIllIl, lllllllllllllllllIllIlIlllIlIIll, lllllllllllllllllIllIlIlllIIlIll, lllllllllllllllllIllIlIlllIlIIIl);
+            this.upload(n, n2, byteBuffer, format, filter, filter2);
         }
+    }
+
+    private void lambda$new$1(int n, int n2, ByteBuffer byteBuffer, Format format, Filter filter, Filter filter2) {
+        this.upload(n, n2, byteBuffer, format, filter, filter2);
     }
 
     public static enum Format {
@@ -80,23 +78,18 @@ extends class_1044 {
 
 
         public int toOpenGL() {
-            Format lllllllllllllllllIIlIIIlIIlIIlII;
-            switch (lllllllllllllllllIIlIIIlIIlIIlII) {
-                case A: {
+            switch (1.$SwitchMap$minegame159$meteorclient$utils$render$ByteTexture$Format[this.ordinal()]) {
+                case 1: {
                     return 6406;
                 }
-                case RGB: {
+                case 2: {
                     return 6407;
                 }
-                case RGBA: {
+                case 3: {
                     return 6408;
                 }
             }
             return 0;
-        }
-
-        private Format() {
-            Format lllllllllllllllllIIlIIIlIIlIlIIl;
         }
     }
 
@@ -105,13 +98,8 @@ extends class_1044 {
         Linear;
 
 
-        private Filter() {
-            Filter lllllIlIlllIIlI;
-        }
-
         public int toOpenGL() {
-            Filter lllllIlIllIllIl;
-            return lllllIlIllIllIl == Nearest ? 9728 : 9729;
+            return this == Nearest ? 9728 : 9729;
         }
     }
 }

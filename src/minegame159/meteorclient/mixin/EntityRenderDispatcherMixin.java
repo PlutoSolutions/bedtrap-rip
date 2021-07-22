@@ -41,24 +41,24 @@ public class EntityRenderDispatcherMixin {
     public class_4184 field_4686;
 
     @Inject(method={"drawBox"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/render/WorldRenderer;drawBox(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/util/math/Box;FFFF)V")}, locals=LocalCapture.CAPTURE_FAILSOFT)
-    private void onDrawBox(class_4587 matrix, class_4588 vertices, class_1297 entity, float red, float green, float blue, CallbackInfo info, class_238 box) {
-        double v = Modules.get().get(Hitboxes.class).getEntityValue(entity);
-        if (v != 0.0) {
-            ((IBox)box).expand(v);
+    private void onDrawBox(class_4587 class_45872, class_4588 class_45882, class_1297 class_12972, float f, float f2, float f3, CallbackInfo callbackInfo, class_238 class_2383) {
+        double d = Modules.get().get(Hitboxes.class).getEntityValue(class_12972);
+        if (d != 0.0) {
+            ((IBox)class_2383).expand(d);
         }
     }
 
     @Inject(method={"getSquaredDistanceToCamera(Lnet/minecraft/entity/Entity;)D"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetSquaredDistanceToCameraEntity(class_1297 entity, CallbackInfoReturnable<Double> info) {
+    private void onGetSquaredDistanceToCameraEntity(class_1297 class_12972, CallbackInfoReturnable<Double> callbackInfoReturnable) {
         if (this.field_4686 == null) {
-            info.setReturnValue((Object)0.0);
+            callbackInfoReturnable.setReturnValue((Object)0.0);
         }
     }
 
     @Inject(method={"getSquaredDistanceToCamera(DDD)D"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetSquaredDistanceToCameraXYZ(double x, double y, double z, CallbackInfoReturnable<Double> info) {
+    private void onGetSquaredDistanceToCameraXYZ(double d, double d2, double d3, CallbackInfoReturnable<Double> callbackInfoReturnable) {
         if (this.field_4686 == null) {
-            info.setReturnValue((Object)0.0);
+            callbackInfoReturnable.setReturnValue((Object)0.0);
         }
     }
 }

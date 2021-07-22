@@ -14,63 +14,36 @@ import net.minecraft.class_345;
 
 public class RenderBossBarEvent
 extends Cancellable {
-    public RenderBossBarEvent() {
-        RenderBossBarEvent lllllllllllllIl;
-    }
 
     public static class BossText {
-        public /* synthetic */ class_2561 name;
-        public /* synthetic */ class_345 bossBar;
-        private static final /* synthetic */ BossText INSTANCE;
+        public class_2561 name;
+        public class_345 bossBar;
+        private static final BossText INSTANCE = new BossText();
 
-        static {
-            INSTANCE = new BossText();
-        }
-
-        public BossText() {
-            BossText lllllllllllllllllIllIlIIlIlIIIlI;
-        }
-
-        public static BossText get(class_345 lllllllllllllllllIllIlIIlIIlllIl, class_2561 lllllllllllllllllIllIlIIlIIllllI) {
-            BossText.INSTANCE.bossBar = lllllllllllllllllIllIlIIlIIlllIl;
-            BossText.INSTANCE.name = lllllllllllllllllIllIlIIlIIllllI;
+        public static BossText get(class_345 class_3452, class_2561 class_25612) {
+            BossText.INSTANCE.bossBar = class_3452;
+            BossText.INSTANCE.name = class_25612;
             return INSTANCE;
         }
     }
 
     public static class BossIterator {
-        public /* synthetic */ Iterator<class_345> iterator;
-        private static final /* synthetic */ BossIterator INSTANCE;
+        public Iterator<class_345> iterator;
+        private static final BossIterator INSTANCE = new BossIterator();
 
-        public static BossIterator get(Iterator<class_345> llllllllllllllllllIlllIIIllIIIII) {
-            BossIterator.INSTANCE.iterator = llllllllllllllllllIlllIIIllIIIII;
+        public static BossIterator get(Iterator<class_345> iterator) {
+            BossIterator.INSTANCE.iterator = iterator;
             return INSTANCE;
-        }
-
-        static {
-            INSTANCE = new BossIterator();
-        }
-
-        public BossIterator() {
-            BossIterator llllllllllllllllllIlllIIIllIIIlI;
         }
     }
 
     public static class BossSpacing {
-        private static final /* synthetic */ BossSpacing INSTANCE;
-        public /* synthetic */ int spacing;
+        private static final BossSpacing INSTANCE = new BossSpacing();
+        public int spacing;
 
-        public static BossSpacing get(int llllllllllllllllIllIIlIIlllllIll) {
-            BossSpacing.INSTANCE.spacing = llllllllllllllllIllIIlIIlllllIll;
+        public static BossSpacing get(int n) {
+            BossSpacing.INSTANCE.spacing = n;
             return INSTANCE;
-        }
-
-        static {
-            INSTANCE = new BossSpacing();
-        }
-
-        public BossSpacing() {
-            BossSpacing llllllllllllllllIllIIlIIlllllllI;
         }
     }
 }

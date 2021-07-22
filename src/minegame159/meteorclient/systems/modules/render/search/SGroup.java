@@ -9,7 +9,9 @@ package minegame159.meteorclient.systems.modules.render.search;
 
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.util.ArrayDeque;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import minegame159.meteorclient.events.render.RenderEvent;
 import minegame159.meteorclient.systems.modules.Modules;
@@ -21,137 +23,132 @@ import minegame159.meteorclient.utils.render.RenderUtils;
 import net.minecraft.class_2248;
 
 public class SGroup {
-    public final /* synthetic */ List<SBlock> blocks;
-    private /* synthetic */ double sumZ;
-    private final /* synthetic */ class_2248 block;
-    private /* synthetic */ double sumX;
-    private /* synthetic */ double sumY;
-    private static final /* synthetic */ Search search;
+    public final List<SBlock> blocks = new UnorderedArrayList<SBlock>();
+    private double sumZ;
+    private final class_2248 block;
+    private double sumX;
+    private double sumY;
+    private static final Search search = Modules.get().get(Search.class);
 
-    private void trySplit(SBlock lllllllllllllllllllllIIIlllIIlII) {
-        SGroup lllllllllllllllllllllIIIlllIIIII;
-        ObjectOpenHashSet lllllllllllllllllllllIIIlllIIIll = new ObjectOpenHashSet(6);
-        for (int lllllllllllllllllllllIIIlllIllll : SBlock.SIDES) {
-            SBlock lllllllllllllllllllllIIIllllIIII;
-            if ((lllllllllllllllllllllIIIlllIIlII.neighbours & lllllllllllllllllllllIIIlllIllll) != lllllllllllllllllllllIIIlllIllll || (lllllllllllllllllllllIIIllllIIII = lllllllllllllllllllllIIIlllIIlII.getSideBlock(lllllllllllllllllllllIIIlllIllll)) == null) continue;
-            lllllllllllllllllllllIIIlllIIIll.add(lllllllllllllllllllllIIIllllIIII);
-        }
-        if (lllllllllllllllllllllIIIlllIIIll.size() <= 1) {
+    private void trySplit(SBlock sBlock) {
+        ObjectOpenHashSet objectOpenHashSet = new ObjectOpenHashSet(6);
+        for (int n : SBlock.SIDES) {
+            SBlock sBlock2;
+            if ((sBlock.neighbours & n) != n || (sBlock2 = sBlock.getSideBlock(n)) == null) continue;
+            objectOpenHashSet.add(sBlock2);
+            if (3 >= 1) continue;
             return;
         }
-        ObjectOpenHashSet lllllllllllllllllllllIIIlllIIIlI = new ObjectOpenHashSet(lllllllllllllllllllllIIIlllIIIII.blocks);
-        ArrayDeque<SBlock> lllllllllllllllllllllIIIlllIIIIl = new ArrayDeque<SBlock>();
-        lllllllllllllllllllllIIIlllIIIIl.offer(lllllllllllllllllllllIIIlllIIIII.blocks.get(0));
-        lllllllllllllllllllllIIIlllIIIlI.remove(lllllllllllllllllllllIIIlllIIIII.blocks.get(0));
-        lllllllllllllllllllllIIIlllIIIll.remove(lllllllllllllllllllllIIIlllIIIII.blocks.get(0));
-        block1: while (!lllllllllllllllllllllIIIlllIIIIl.isEmpty()) {
-            SBlock lllllllllllllllllllllIIIlllIllII = (SBlock)lllllllllllllllllllllIIIlllIIIIl.poll();
-            for (int lllllllllllllllllllllIIIlllIllIl : SBlock.SIDES) {
-                SBlock lllllllllllllllllllllIIIlllIlllI;
-                if ((lllllllllllllllllllllIIIlllIllII.neighbours & lllllllllllllllllllllIIIlllIllIl) != lllllllllllllllllllllIIIlllIllIl || (lllllllllllllllllllllIIIlllIlllI = lllllllllllllllllllllIIIlllIllII.getSideBlock(lllllllllllllllllllllIIIlllIllIl)) == null || !lllllllllllllllllllllIIIlllIIIlI.contains(lllllllllllllllllllllIIIlllIlllI)) continue;
-                lllllllllllllllllllllIIIlllIIIIl.offer(lllllllllllllllllllllIIIlllIlllI);
-                lllllllllllllllllllllIIIlllIIIlI.remove(lllllllllllllllllllllIIIlllIlllI);
-                lllllllllllllllllllllIIIlllIIIll.remove(lllllllllllllllllllllIIIlllIlllI);
-                if (lllllllllllllllllllllIIIlllIIIll.isEmpty()) break block1;
+        if (objectOpenHashSet.size() <= 1) {
+            return;
+        }
+        Object object = (Object)new ObjectOpenHashSet(this.blocks);
+        ArrayDeque<SBlock> arrayDeque = new ArrayDeque<SBlock>();
+        arrayDeque.offer(this.blocks.get(0));
+        object.remove(this.blocks.get(0));
+        objectOpenHashSet.remove(this.blocks.get(0));
+        block1: while (!arrayDeque.isEmpty()) {
+            SBlock sBlock3 = (SBlock)arrayDeque.poll();
+            for (int n : SBlock.SIDES) {
+                SBlock sBlock4;
+                if ((sBlock3.neighbours & n) != n || (sBlock4 = sBlock3.getSideBlock(n)) == null || !object.contains(sBlock4)) continue;
+                arrayDeque.offer(sBlock4);
+                object.remove(sBlock4);
+                objectOpenHashSet.remove(sBlock4);
+                if (objectOpenHashSet.isEmpty()) break block1;
+                if (null == null) continue;
+                return;
             }
         }
-        if (lllllllllllllllllllllIIIlllIIIll.size() > 0) {
-            SGroup lllllllllllllllllllllIIIlllIIllI = search.newGroup(lllllllllllllllllllllIIIlllIIIII.block);
-            ((UnorderedArrayList)lllllllllllllllllllllIIIlllIIllI.blocks).ensureCapacity(lllllllllllllllllllllIIIlllIIIlI.size());
-            lllllllllllllllllllllIIIlllIIIII.blocks.removeIf(((Set)lllllllllllllllllllllIIIlllIIIlI)::contains);
-            for (SBlock lllllllllllllllllllllIIIlllIlIll : lllllllllllllllllllllIIIlllIIIlI) {
-                lllllllllllllllllllllIIIlllIIllI.add(lllllllllllllllllllllIIIlllIlIll, false, false);
-                lllllllllllllllllllllIIIlllIIIII.sumX -= (double)lllllllllllllllllllllIIIlllIlIll.x;
-                lllllllllllllllllllllIIIlllIIIII.sumY -= (double)lllllllllllllllllllllIIIlllIlIll.y;
-                lllllllllllllllllllllIIIlllIIIII.sumZ -= (double)lllllllllllllllllllllIIIlllIlIll.z;
+        if (objectOpenHashSet.size() > 0) {
+            SGroup sGroup = search.newGroup(this.block);
+            ((UnorderedArrayList)sGroup.blocks).ensureCapacity(object.size());
+            Objects.requireNonNull(object);
+            this.blocks.removeIf(((Set)object)::contains);
+            Iterator iterator = object.iterator();
+            while (iterator.hasNext()) {
+                SBlock sBlock5 = (SBlock)iterator.next();
+                sGroup.add(sBlock5, false, false);
+                this.sumX -= (double)sBlock5.x;
+                this.sumY -= (double)sBlock5.y;
+                this.sumZ -= (double)sBlock5.z;
             }
-            if (lllllllllllllllllllllIIIlllIIIll.size() > 1) {
-                lllllllllllllllllllllIIIlllIIlII.neighbours = 0;
-                for (SBlock lllllllllllllllllllllIIIlllIIlll : lllllllllllllllllllllIIIlllIIIll) {
-                    int lllllllllllllllllllllIIIlllIlIlI = lllllllllllllllllllllIIIlllIIlll.x - lllllllllllllllllllllIIIlllIIlII.x;
-                    if (lllllllllllllllllllllIIIlllIlIlI == 1) {
-                        lllllllllllllllllllllIIIlllIIlII.neighbours |= 8;
-                    } else if (lllllllllllllllllllllIIIlllIlIlI == -1) {
-                        lllllllllllllllllllllIIIlllIIlII.neighbours |= 0x80;
+            if (objectOpenHashSet.size() > 1) {
+                sBlock.neighbours = 0;
+                for (SBlock sBlock6 : objectOpenHashSet) {
+                    int n;
+                    int n2 = sBlock6.x - sBlock.x;
+                    if (n2 == 1) {
+                        sBlock.neighbours |= 8;
+                    } else if (n2 == -1) {
+                        sBlock.neighbours |= 0x80;
                     }
-                    int lllllllllllllllllllllIIIlllIlIIl = lllllllllllllllllllllIIIlllIIlll.y - lllllllllllllllllllllIIIlllIIlII.y;
-                    if (lllllllllllllllllllllIIIlllIlIIl == 1) {
-                        lllllllllllllllllllllIIIlllIIlII.neighbours |= 0x200;
-                    } else if (lllllllllllllllllllllIIIlllIlIIl == -1) {
-                        lllllllllllllllllllllIIIlllIIlII.neighbours |= 0x4000;
+                    n = sBlock6.y - sBlock.y;
+                    if (n == 1) {
+                        sBlock.neighbours |= 0x200;
+                    } else if (n == -1) {
+                        sBlock.neighbours |= 0x4000;
                     }
-                    int lllllllllllllllllllllIIIlllIlIII = lllllllllllllllllllllIIIlllIIlll.z - lllllllllllllllllllllIIIlllIIlII.z;
-                    if (lllllllllllllllllllllIIIlllIlIII == 1) {
-                        lllllllllllllllllllllIIIlllIIlII.neighbours |= 2;
+                    int n3 = sBlock6.z - sBlock.z;
+                    if (n3 == 1) {
+                        sBlock.neighbours |= 2;
                         continue;
                     }
-                    if (lllllllllllllllllllllIIIlllIlIII != -1) continue;
-                    lllllllllllllllllllllIIIlllIIlII.neighbours |= 0x20;
+                    if (n3 != -1) continue;
+                    sBlock.neighbours |= 0x20;
                 }
-                lllllllllllllllllllllIIIlllIIllI.trySplit(lllllllllllllllllllllIIIlllIIlII);
+                sGroup.trySplit(sBlock);
             }
         }
     }
 
-    public void merge(SGroup lllllllllllllllllllllIIIllIIllll) {
-        for (SBlock lllllllllllllllllllllIIIllIlIIIl : lllllllllllllllllllllIIIllIIllll.blocks) {
-            SGroup lllllllllllllllllllllIIIllIIlllI;
-            lllllllllllllllllllllIIIllIIlllI.add(lllllllllllllllllllllIIIllIlIIIl, false, false);
+    public void merge(SGroup sGroup) {
+        for (SBlock sBlock : sGroup.blocks) {
+            this.add(sBlock, false, false);
         }
-        search.removeGroup(lllllllllllllllllllllIIIllIIllll);
+        search.removeGroup(sGroup);
     }
 
-    public void remove(SBlock lllllllllllllllllllllIIlIIIIIllI, boolean lllllllllllllllllllllIIlIIIIIIlI) {
-        SGroup lllllllllllllllllllllIIlIIIIIlll;
-        lllllllllllllllllllllIIlIIIIIlll.blocks.remove(lllllllllllllllllllllIIlIIIIIllI);
-        lllllllllllllllllllllIIlIIIIIlll.sumX -= (double)lllllllllllllllllllllIIlIIIIIllI.x;
-        lllllllllllllllllllllIIlIIIIIlll.sumY -= (double)lllllllllllllllllllllIIlIIIIIllI.y;
-        lllllllllllllllllllllIIlIIIIIlll.sumZ -= (double)lllllllllllllllllllllIIlIIIIIllI.z;
-        if (lllllllllllllllllllllIIlIIIIIlll.blocks.isEmpty()) {
-            search.removeGroup(lllllllllllllllllllllIIlIIIIIllI.group);
-        } else if (lllllllllllllllllllllIIlIIIIIIlI) {
-            lllllllllllllllllllllIIlIIIIIlll.trySplit(lllllllllllllllllllllIIlIIIIIllI);
+    public void remove(SBlock sBlock, boolean bl) {
+        this.blocks.remove(sBlock);
+        this.sumX -= (double)sBlock.x;
+        this.sumY -= (double)sBlock.y;
+        this.sumZ -= (double)sBlock.z;
+        if (this.blocks.isEmpty()) {
+            search.removeGroup(sBlock.group);
+        } else if (bl) {
+            this.trySplit(sBlock);
         }
     }
 
-    static {
-        search = Modules.get().get(Search.class);
+    public void remove(SBlock sBlock) {
+        this.remove(sBlock, true);
     }
 
-    public void remove(SBlock lllllllllllllllllllllIIIllllllII) {
-        SGroup lllllllllllllllllllllIIIllllllIl;
-        lllllllllllllllllllllIIIllllllIl.remove(lllllllllllllllllllllIIIllllllII, true);
-    }
-
-    public void add(SBlock lllllllllllllllllllllIIlIIIlIlll, boolean lllllllllllllllllllllIIlIIIlIIlI, boolean lllllllllllllllllllllIIlIIIlIIIl) {
-        SGroup lllllllllllllllllllllIIlIIIllIII;
-        lllllllllllllllllllllIIlIIIllIII.blocks.add(lllllllllllllllllllllIIlIIIlIlll);
-        lllllllllllllllllllllIIlIIIllIII.sumX += (double)lllllllllllllllllllllIIlIIIlIlll.x;
-        lllllllllllllllllllllIIlIIIllIII.sumY += (double)lllllllllllllllllllllIIlIIIlIlll.y;
-        lllllllllllllllllllllIIlIIIllIII.sumZ += (double)lllllllllllllllllllllIIlIIIlIlll.z;
-        if (lllllllllllllllllllllIIlIIIlIlll.group != null && lllllllllllllllllllllIIlIIIlIIlI) {
-            lllllllllllllllllllllIIlIIIlIlll.group.remove(lllllllllllllllllllllIIlIIIlIlll, lllllllllllllllllllllIIlIIIlIIIl);
+    public void add(SBlock sBlock, boolean bl, boolean bl2) {
+        this.blocks.add(sBlock);
+        this.sumX += (double)sBlock.x;
+        this.sumY += (double)sBlock.y;
+        this.sumZ += (double)sBlock.z;
+        if (sBlock.group != null && bl) {
+            sBlock.group.remove(sBlock, bl2);
         }
-        lllllllllllllllllllllIIlIIIlIlll.group = lllllllllllllllllllllIIlIIIllIII;
+        sBlock.group = this;
     }
 
-    public void render(RenderEvent lllllllllllllllllllllIIIllIIIIll) {
-        SGroup lllllllllllllllllllllIIIllIIIlII;
-        SBlockData lllllllllllllllllllllIIIllIIIlIl = search.getBlockData(lllllllllllllllllllllIIIllIIIlII.block);
-        if (lllllllllllllllllllllIIIllIIIlIl.tracer) {
-            RenderUtils.drawLine(RenderUtils.getCameraVector(), lllllllllllllllllllllIIIllIIIlII.sumX / (double)lllllllllllllllllllllIIIllIIIlII.blocks.size() + 0.5, lllllllllllllllllllllIIIllIIIlII.sumY / (double)lllllllllllllllllllllIIIllIIIlII.blocks.size() + 0.5, lllllllllllllllllllllIIIllIIIlII.sumZ / (double)lllllllllllllllllllllIIIllIIIlII.blocks.size() + 0.5, lllllllllllllllllllllIIIllIIIlIl.tracerColor, lllllllllllllllllllllIIIllIIIIll);
+    public void render(RenderEvent renderEvent) {
+        SBlockData sBlockData = search.getBlockData(this.block);
+        if (sBlockData.tracer) {
+            RenderUtils.drawLine(RenderUtils.getCameraVector(), this.sumX / (double)this.blocks.size() + 0.5, this.sumY / (double)this.blocks.size() + 0.5, this.sumZ / (double)this.blocks.size() + 0.5, sBlockData.tracerColor, renderEvent);
         }
     }
 
-    public void add(SBlock lllllllllllllllllllllIIlIIIIlIll) {
-        SGroup lllllllllllllllllllllIIlIIIIllII;
-        lllllllllllllllllllllIIlIIIIllII.add(lllllllllllllllllllllIIlIIIIlIll, true, true);
+    public void add(SBlock sBlock) {
+        this.add(sBlock, true, true);
     }
 
-    public SGroup(class_2248 lllllllllllllllllllllIIlIIIlllIl) {
-        SGroup lllllllllllllllllllllIIlIIlIIIII;
-        lllllllllllllllllllllIIlIIlIIIII.blocks = new UnorderedArrayList<SBlock>();
-        lllllllllllllllllllllIIlIIlIIIII.block = lllllllllllllllllllllIIlIIIlllIl;
+    public SGroup(class_2248 class_22482) {
+        this.block = class_22482;
     }
 }
 

@@ -7,26 +7,23 @@ import minegame159.meteorclient.gui.widgets.pressable.WPressable;
 
 public abstract class WCheckbox
 extends WPressable {
-    public /* synthetic */ boolean checked;
+    public boolean checked;
 
     @Override
     protected void onCalculateSize() {
-        WCheckbox lIIlIlllIlllIII;
-        double lIIlIlllIlllIlI = lIIlIlllIlllIII.pad();
-        double lIIlIlllIlllIIl = lIIlIlllIlllIII.theme.textHeight();
-        lIIlIlllIlllIII.width = lIIlIlllIlllIlI + lIIlIlllIlllIIl + lIIlIlllIlllIlI;
-        lIIlIlllIlllIII.height = lIIlIlllIlllIlI + lIIlIlllIlllIIl + lIIlIlllIlllIlI;
+        double d = this.pad();
+        double d2 = this.theme.textHeight();
+        this.width = d + d2 + d;
+        this.height = d + d2 + d;
     }
 
     @Override
-    protected void onPressed(int lIIlIlllIllIIll) {
-        WCheckbox lIIlIlllIllIlII;
-        lIIlIlllIllIlII.checked = !lIIlIlllIllIlII.checked;
+    protected void onPressed(int n) {
+        this.checked = !this.checked;
     }
 
-    public WCheckbox(boolean lIIlIlllIllllll) {
-        WCheckbox lIIlIllllIIIIII;
-        lIIlIllllIIIIII.checked = lIIlIlllIllllll;
+    public WCheckbox(boolean bl) {
+        this.checked = bl;
     }
 }
 

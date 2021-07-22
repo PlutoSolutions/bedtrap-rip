@@ -15,7 +15,7 @@ import net.minecraft.class_4493;
 import org.lwjgl.opengl.GL11;
 
 public class PostProcessRenderer {
-    private static /* synthetic */ Mesh mesh;
+    private static Mesh mesh;
 
     public static void begin() {
         RenderSystem.enableBlend();
@@ -40,9 +40,9 @@ public class PostProcessRenderer {
     }
 
     public static void init() {
-        float[] lIlIIlIlllIIlll = new float[]{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f};
-        int[] lIlIIlIlllIIllI = new int[]{0, 1, 2, 2, 3, 0};
-        mesh = new Mesh(lIlIIlIlllIIlll, lIlIIlIlllIIllI, 2);
+        float[] arrf = new float[]{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f};
+        int[] arrn = new int[]{0, 1, 2, 2, 3, 0};
+        mesh = new Mesh(arrf, arrn, 2);
     }
 
     public static void end() {
@@ -51,10 +51,6 @@ public class PostProcessRenderer {
         GL11.glMatrixMode((int)5888);
         GL11.glPopMatrix();
         RenderSystem.enableDepthTest();
-    }
-
-    public PostProcessRenderer() {
-        PostProcessRenderer lIlIIlIlllIlIll;
     }
 
     public static void renderMesh() {

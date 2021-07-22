@@ -7,26 +7,21 @@ import minegame159.meteorclient.utils.misc.Pool;
 import minegame159.meteorclient.utils.render.color.Color;
 
 public abstract class GuiRenderOperation<T extends GuiRenderOperation<T>> {
-    protected /* synthetic */ double x;
-    protected /* synthetic */ Color color;
-    protected /* synthetic */ double y;
+    protected double x;
+    protected Color color;
+    protected double y;
 
-    public void run(Pool<T> llllllllllllllllIlIlIIlIllIIIIII) {
-        GuiRenderOperation llllllllllllllllIlIlIIlIlIllllll;
-        llllllllllllllllIlIlIIlIlIllllll.onRun();
-        llllllllllllllllIlIlIIlIllIIIIII.free(llllllllllllllllIlIlIIlIlIllllll);
-    }
-
-    public GuiRenderOperation() {
-        GuiRenderOperation llllllllllllllllIlIlIIlIllIlIIII;
+    public void run(Pool<T> pool) {
+        this.onRun();
+        pool.free(this);
     }
 
     protected abstract void onRun();
 
-    public void set(double llllllllllllllllIlIlIIlIllIIlIlI, double llllllllllllllllIlIlIIlIllIIlIIl, Color llllllllllllllllIlIlIIlIllIIlIII) {
-        llllllllllllllllIlIlIIlIllIIlIll.x = llllllllllllllllIlIlIIlIllIIlIlI;
-        llllllllllllllllIlIlIIlIllIIlIll.y = llllllllllllllllIlIlIIlIllIIlIIl;
-        llllllllllllllllIlIlIIlIllIIlIll.color = llllllllllllllllIlIlIIlIllIIlIII;
+    public void set(double d, double d2, Color color) {
+        this.x = d;
+        this.y = d2;
+        this.color = color;
     }
 }
 

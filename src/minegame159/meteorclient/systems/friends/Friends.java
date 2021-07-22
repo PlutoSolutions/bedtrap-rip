@@ -25,108 +25,105 @@ import net.minecraft.class_2499;
 import net.minecraft.class_2520;
 import org.jetbrains.annotations.NotNull;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Friends
 extends System<Friends>
 implements Iterable<Friend> {
-    private /* synthetic */ List<Friend> friends;
-    public /* synthetic */ boolean attack;
-    public final /* synthetic */ SettingColor color;
+    private List<Friend> friends = new ArrayList<Friend>();
+    public boolean attack = false;
+    public final SettingColor color = new SettingColor(0, 255, 180);
 
     @Override
     @NotNull
     public Iterator<Friend> iterator() {
-        Friends lllllllllllllllllIlIIIIlIlIIIIII;
-        return lllllllllllllllllIlIIIIlIlIIIIII.friends.iterator();
+        return this.friends.iterator();
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     public Friends() {
         super("friends");
-        Friends lllllllllllllllllIlIIIIlIlllllll;
-        lllllllllllllllllIlIIIIlIlllllll.friends = new ArrayList<Friend>();
-        lllllllllllllllllIlIIIIlIlllllll.color = new SettingColor(0, 255, 180);
-        lllllllllllllllllIlIIIIlIlllllll.attack = false;
     }
 
-    public boolean isFriend(class_1657 lllllllllllllllllIlIIIIlIlIlIllI) {
-        Friends lllllllllllllllllIlIIIIlIlIlIlll;
-        return lllllllllllllllllIlIIIIlIlIlIlll.get(lllllllllllllllllIlIIIIlIlIlIllI) != null;
+    public boolean isFriend(class_1657 class_16572) {
+        return this.get(class_16572) != null;
     }
 
-    public boolean shouldAttack(class_1657 lllllllllllllllllIlIIIIlIlIIlIIl) {
-        Friends lllllllllllllllllIlIIIIlIlIIlIII;
-        return !lllllllllllllllllIlIIIIlIlIIlIII.isFriend(lllllllllllllllllIlIIIIlIlIIlIIl) || lllllllllllllllllIlIIIIlIlIIlIII.attack;
+    public boolean shouldAttack(class_1657 class_16572) {
+        return !this.isFriend(class_16572) || this.attack;
     }
 
     public int count() {
-        Friends lllllllllllllllllIlIIIIlIlIIIlII;
-        return lllllllllllllllllIlIIIIlIlIIIlII.friends.size();
+        return this.friends.size();
     }
 
-    public Friend get(class_1657 lllllllllllllllllIlIIIIlIllIIIII) {
-        Friends lllllllllllllllllIlIIIIlIllIIIIl;
-        return lllllllllllllllllIlIIIIlIllIIIIl.get(lllllllllllllllllIlIIIIlIllIIIII.method_5820());
+    public Friend get(class_1657 class_16572) {
+        return this.get(class_16572.method_5820());
     }
 
-    public boolean add(Friend lllllllllllllllllIlIIIIlIlllIlll) {
-        Friends lllllllllllllllllIlIIIIlIlllIllI;
-        if (lllllllllllllllllIlIIIIlIlllIlll.name.isEmpty()) {
+    public boolean add(Friend friend) {
+        if (friend.name.isEmpty()) {
             return false;
         }
-        if (!lllllllllllllllllIlIIIIlIlllIllI.friends.contains(lllllllllllllllllIlIIIIlIlllIlll)) {
-            lllllllllllllllllIlIIIIlIlllIllI.friends.add(lllllllllllllllllIlIIIIlIlllIlll);
-            lllllllllllllllllIlIIIIlIlllIllI.save();
+        if (!this.friends.contains(friend)) {
+            this.friends.add(friend);
+            this.save();
             return true;
         }
         return false;
     }
 
     @Override
-    public Friends fromTag(class_2487 lllllllllllllllllIlIIIIlIIIlIlll) {
-        Friends lllllllllllllllllIlIIIIlIIIllIII;
-        lllllllllllllllllIlIIIIlIIIllIII.friends = NbtUtils.listFromTag(lllllllllllllllllIlIIIIlIIIlIlll.method_10554("friends", 10), lllllllllllllllllIlIIIIlIIIIlIll -> new Friend((class_2487)lllllllllllllllllIlIIIIlIIIIlIll));
-        if (lllllllllllllllllIlIIIIlIIIlIlll.method_10545("color")) {
-            lllllllllllllllllIlIIIIlIIIllIII.color.fromTag(lllllllllllllllllIlIIIIlIIIlIlll.method_10562("color"));
+    public Friends fromTag(class_2487 class_24872) {
+        this.friends = NbtUtils.listFromTag(class_24872.method_10554("friends", 10), Friends::lambda$fromTag$0);
+        if (class_24872.method_10545("color")) {
+            this.color.fromTag(class_24872.method_10562("color"));
         }
-        lllllllllllllllllIlIIIIlIIIllIII.attack = lllllllllllllllllIlIIIIlIIIlIlll.method_10545("attack") && lllllllllllllllllIlIIIIlIIIlIlll.method_10577("attack");
-        return lllllllllllllllllIlIIIIlIIIllIII;
+        this.attack = class_24872.method_10545("attack") && class_24872.method_10577("attack");
+        return this;
     }
 
-    public boolean remove(Friend lllllllllllllllllIlIIIIlIlllIIIl) {
-        Friends lllllllllllllllllIlIIIIlIlllIIlI;
-        if (lllllllllllllllllIlIIIIlIlllIIlI.friends.remove(lllllllllllllllllIlIIIIlIlllIIIl)) {
-            lllllllllllllllllIlIIIIlIlllIIlI.save();
+    public boolean remove(Friend friend) {
+        if (this.friends.remove(friend)) {
+            this.save();
             return true;
         }
         return false;
     }
 
-    public Friend get(String lllllllllllllllllIlIIIIlIllIIllI) {
-        Friends lllllllllllllllllIlIIIIlIllIlIIl;
-        for (Friend lllllllllllllllllIlIIIIlIllIlIlI : lllllllllllllllllIlIIIIlIllIlIIl.friends) {
-            if (!lllllllllllllllllIlIIIIlIllIlIlI.name.equals(lllllllllllllllllIlIIIIlIllIIllI)) continue;
-            return lllllllllllllllllIlIIIIlIllIlIlI;
+    public Friend get(String string) {
+        for (Friend friend : this.friends) {
+            if (!friend.name.equals(string)) continue;
+            return friend;
         }
         return null;
     }
 
     @Override
     public void init() {
-        Friends lllllllllllllllllIlIIIIlIlllllII;
-        RainbowColors.add(lllllllllllllllllIlIIIIlIlllllII.color);
+        RainbowColors.add(this.color);
     }
 
     @Override
     public class_2487 toTag() {
-        Friends lllllllllllllllllIlIIIIlIIlIlIll;
-        class_2487 lllllllllllllllllIlIIIIlIIlIllIl = new class_2487();
-        class_2499 lllllllllllllllllIlIIIIlIIlIllII = new class_2499();
-        for (Friend lllllllllllllllllIlIIIIlIIllIIII : lllllllllllllllllIlIIIIlIIlIlIll.friends) {
-            lllllllllllllllllIlIIIIlIIlIllII.add((Object)lllllllllllllllllIlIIIIlIIllIIII.toTag());
+        class_2487 class_24872 = new class_2487();
+        class_2499 class_24992 = new class_2499();
+        for (Friend friend : this.friends) {
+            class_24992.add((Object)friend.toTag());
         }
-        lllllllllllllllllIlIIIIlIIlIllIl.method_10566("friends", (class_2520)lllllllllllllllllIlIIIIlIIlIllII);
-        lllllllllllllllllIlIIIIlIIlIllIl.method_10566("color", (class_2520)lllllllllllllllllIlIIIIlIIlIlIll.color.toTag());
-        lllllllllllllllllIlIIIIlIIlIllIl.method_10556("attack", lllllllllllllllllIlIIIIlIIlIlIll.attack);
-        return lllllllllllllllllIlIIIIlIIlIllIl;
+        class_24872.method_10566("friends", (class_2520)class_24992);
+        class_24872.method_10566("color", (class_2520)this.color.toTag());
+        class_24872.method_10556("attack", this.attack);
+        return class_24872;
+    }
+
+    private static Friend lambda$fromTag$0(class_2520 class_25202) {
+        return new Friend((class_2487)class_25202);
     }
 
     public static Friends get() {

@@ -9,63 +9,61 @@ import minegame159.meteorclient.gui.widgets.WLabel;
 
 public abstract class WMultiLabel
 extends WLabel {
-    protected /* synthetic */ double maxWidth;
-    protected /* synthetic */ List<String> lines;
+    protected double maxWidth;
+    protected List<String> lines = new ArrayList<String>(2);
 
     @Override
-    public void set(String lllIIlllIIlll) {
-        WMultiLabel lllIIlllIlIII;
-        if (!lllIIlllIIlll.equals(lllIIlllIlIII.text)) {
-            lllIIlllIlIII.invalidate();
+    public void set(String string) {
+        if (!string.equals(this.text)) {
+            this.invalidate();
         }
-        lllIIlllIlIII.text = lllIIlllIIlll;
+        this.text = string;
     }
 
     @Override
     protected void onCalculateSize() {
-        WMultiLabel lllIIllllIlll;
-        lllIIllllIlll.lines.clear();
-        String[] lllIIlllllllI = lllIIllllIlll.text.split(" ");
-        StringBuilder lllIIllllllIl = new StringBuilder();
-        double lllIIllllllII = lllIIllllIlll.theme.textWidth(" ", 1, lllIIllllIlll.title);
-        double lllIIlllllIll = lllIIllllIlll.theme.scale(lllIIllllIlll.maxWidth);
-        double lllIIlllllIlI = 0.0;
-        double lllIIlllllIIl = 0.0;
-        int lllIIlllllIII = 0;
-        for (int lllIlIIIIIIII = 0; lllIlIIIIIIII < lllIIlllllllI.length; ++lllIlIIIIIIII) {
-            double lllIlIIIIIIlI;
-            double lllIlIIIIIIIl = lllIlIIIIIIlI = lllIIllllIlll.theme.textWidth(lllIIlllllllI[lllIlIIIIIIII], lllIIlllllllI[lllIlIIIIIIII].length(), lllIIllllIlll.title);
-            if (lllIIlllllIII > 0) {
-                lllIlIIIIIIIl += lllIIllllllII;
+        this.lines.clear();
+        String[] arrstring = this.text.split(" ");
+        StringBuilder stringBuilder = new StringBuilder();
+        double d = this.theme.textWidth(" ", 1, this.title);
+        double d2 = this.theme.scale(this.maxWidth);
+        double d3 = 0.0;
+        double d4 = 0.0;
+        int n = 0;
+        for (int i = 0; i < arrstring.length; ++i) {
+            double d5;
+            double d6 = d5 = this.theme.textWidth(arrstring[i], arrstring[i].length(), this.title);
+            if (n > 0) {
+                d6 += d;
             }
-            if (lllIIlllllIlI + lllIlIIIIIIIl > lllIIlllllIll) {
-                lllIIllllIlll.lines.add(String.valueOf(lllIIllllllIl));
-                lllIIllllllIl.setLength(0);
-                lllIIlllllIlI = 0.0;
-                lllIIlllllIII = 0;
-                --lllIlIIIIIIII;
+            if (d3 + d6 > d2) {
+                this.lines.add(String.valueOf(stringBuilder));
+                stringBuilder.setLength(0);
+                d3 = 0.0;
+                n = 0;
+                --i;
                 continue;
             }
-            if (lllIIlllllIII > 0) {
-                lllIIllllllIl.append(' ');
-                lllIIlllllIlI += lllIIllllllII;
+            if (n > 0) {
+                stringBuilder.append(' ');
+                d3 += d;
             }
-            lllIIllllllIl.append(lllIIlllllllI[lllIlIIIIIIII]);
-            lllIIlllllIIl = Math.max(lllIIlllllIIl, lllIIlllllIlI += lllIlIIIIIIlI);
-            ++lllIIlllllIII;
+            stringBuilder.append(arrstring[i]);
+            d4 = Math.max(d4, d3 += d5);
+            ++n;
+            if (2 <= 3) continue;
+            return;
         }
-        if (lllIIllllllIl.length() > 0) {
-            lllIIllllIlll.lines.add(String.valueOf(lllIIllllllIl));
+        if (stringBuilder.length() > 0) {
+            this.lines.add(String.valueOf(stringBuilder));
         }
-        lllIIllllIlll.width = lllIIlllllIIl;
-        lllIIllllIlll.height = lllIIllllIlll.theme.textHeight(lllIIllllIlll.title) * (double)lllIIllllIlll.lines.size();
+        this.width = d4;
+        this.height = this.theme.textHeight(this.title) * (double)this.lines.size();
     }
 
-    public WMultiLabel(String lllIlIIIlIIII, boolean lllIlIIIIllll, double lllIlIIIlIIlI) {
-        super(lllIlIIIlIIII, lllIlIIIIllll);
-        WMultiLabel lllIlIIIlIIIl;
-        lllIlIIIlIIIl.lines = new ArrayList<String>(2);
-        lllIlIIIlIIIl.maxWidth = lllIlIIIlIIlI;
+    public WMultiLabel(String string, boolean bl, double d) {
+        super(string, bl);
+        this.maxWidth = d;
     }
 }
 

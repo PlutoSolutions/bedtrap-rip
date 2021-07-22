@@ -4,15 +4,14 @@
 package minegame159.meteorclient.gui.renderer.packer;
 
 public class TextureRegion {
-    public /* synthetic */ double x1;
-    public /* synthetic */ double y2;
-    public /* synthetic */ double diagonal;
-    public /* synthetic */ double y1;
-    public /* synthetic */ double x2;
+    public double x1;
+    public double y2;
+    public double diagonal;
+    public double y1;
+    public double x2;
 
-    public TextureRegion(double lIllIlIIIIIIIlI, double lIllIlIIIIIIIIl) {
-        TextureRegion lIllIlIIIIIIIll;
-        lIllIlIIIIIIIll.diagonal = Math.sqrt(lIllIlIIIIIIIlI * lIllIlIIIIIIIlI + lIllIlIIIIIIIIl * lIllIlIIIIIIIIl);
+    public TextureRegion(double d, double d2) {
+        this.diagonal = Math.sqrt(d * d + d2 * d2);
     }
 }
 

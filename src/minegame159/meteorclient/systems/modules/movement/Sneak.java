@@ -13,34 +13,27 @@ import minegame159.meteorclient.systems.modules.render.Freecam;
 
 public class Sneak
 extends Module {
-    private final /* synthetic */ Setting<Mode> mode;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Mode> mode;
+    private final SettingGroup sgGeneral;
 
     public boolean doPacket() {
-        Sneak llllIIIIllIl;
-        return llllIIIIllIl.isActive() && !Modules.get().isActive(Freecam.class) && llllIIIIllIl.mode.get() == Mode.Packet;
+        return this.isActive() && !Modules.get().isActive(Freecam.class) && this.mode.get() == Mode.Packet;
     }
 
     public boolean doVanilla() {
-        Sneak llllIIIIlIlI;
-        return llllIIIIlIlI.isActive() && !Modules.get().isActive(Freecam.class) && llllIIIIlIlI.mode.get() == Mode.Vanilla;
+        return this.isActive() && !Modules.get().isActive(Freecam.class) && this.mode.get() == Mode.Vanilla;
     }
 
     public Sneak() {
         super(Categories.Movement, "sneak", "Sneaks for you");
-        Sneak llllIIIlIIIl;
-        llllIIIlIIIl.sgGeneral = llllIIIlIIIl.settings.getDefaultGroup();
-        llllIIIlIIIl.mode = llllIIIlIIIl.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Which method to sneak.").defaultValue(Mode.Vanilla).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Which method to sneak.").defaultValue(Mode.Vanilla).build());
     }
 
     public static enum Mode {
         Packet,
         Vanilla;
 
-
-        private Mode() {
-            Mode lllllllllllllllllIIIIllIllIIllll;
-        }
     }
 }
 

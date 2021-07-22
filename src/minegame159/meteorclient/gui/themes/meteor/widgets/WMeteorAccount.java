@@ -14,19 +14,16 @@ extends WAccount
 implements MeteorWidget {
     @Override
     protected Color accountTypeColor() {
-        WMeteorAccount lIIlIllIlllIlll;
-        return lIIlIllIlllIlll.theme().textSecondaryColor.get();
+        return this.theme().textSecondaryColor.get();
     }
 
     @Override
     protected Color loggedInColor() {
-        WMeteorAccount lIIlIllIllllIIl;
-        return lIIlIllIllllIIl.theme().loggedInColor.get();
+        return this.theme().loggedInColor.get();
     }
 
-    public WMeteorAccount(WidgetScreen lIIlIlllIIIIIII, Account<?> lIIlIllIlllllII) {
-        super(lIIlIlllIIIIIII, lIIlIllIlllllII);
-        WMeteorAccount lIIlIllIllllllI;
+    public WMeteorAccount(WidgetScreen widgetScreen, Account<?> account) {
+        super(widgetScreen, account);
     }
 }
 

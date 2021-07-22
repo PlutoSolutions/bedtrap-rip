@@ -12,7 +12,7 @@ import baritone.api.utils.Rotation;
 import java.lang.reflect.Field;
 
 public class BaritoneUtils {
-    private static /* synthetic */ Field targetField;
+    private static Field targetField;
 
     public static Rotation getTarget() {
         BaritoneUtils.findField();
@@ -23,24 +23,20 @@ public class BaritoneUtils {
         try {
             return (Rotation)targetField.get((Object)BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior());
         }
-        catch (IllegalAccessException llIIIIIlllllIlI) {
-            llIIIIIlllllIlI.printStackTrace();
+        catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
             return null;
         }
-    }
-
-    public BaritoneUtils() {
-        BaritoneUtils llIIIIIllllllII;
     }
 
     private static void findField() {
         if (targetField != null) {
             return;
         }
-        Class<?> llIIIIIllllIIlI = BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior().getClass();
-        for (Field llIIIIIllllIIll : llIIIIIllllIIlI.getDeclaredFields()) {
-            if (llIIIIIllllIIll.getType() != Rotation.class) continue;
-            targetField = llIIIIIllllIIll;
+        Class<?> class_ = BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior().getClass();
+        for (Field field : class_.getDeclaredFields()) {
+            if (field.getType() != Rotation.class) continue;
+            targetField = field;
             break;
         }
     }

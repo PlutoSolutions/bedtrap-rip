@@ -26,50 +26,68 @@ import net.minecraft.class_2960;
 
 public class BlockListSettingScreen
 extends LeftRightListSettingScreen<class_2248> {
-    private static final /* synthetic */ class_2960 ID;
+    private static final class_2960 ID = new class_2960("minecraft", "");
 
     @Override
-    protected boolean includeValue(class_2248 lllllllllllllllllIIllllllIIlIlll) {
-        BlockListSettingScreen lllllllllllllllllIIllllllIIllIII;
-        Predicate<class_2248> lllllllllllllllllIIllllllIIllIIl = ((BlockListSetting)lllllllllllllllllIIllllllIIllIII.setting).filter;
-        if (lllllllllllllllllIIllllllIIllIIl == null) {
-            return lllllllllllllllllIIllllllIIlIlll != class_2246.field_10124;
+    protected boolean includeValue(class_2248 class_22482) {
+        Predicate<class_2248> predicate = ((BlockListSetting)this.setting).filter;
+        if (predicate == null) {
+            return class_22482 != class_2246.field_10124;
         }
-        return lllllllllllllllllIIllllllIIllIIl.test(lllllllllllllllllIIllllllIIlIlll);
-    }
-
-    static {
-        ID = new class_2960("minecraft", "");
+        return predicate.test(class_22482);
     }
 
     @Override
-    protected WWidget getValueWidget(class_2248 lllllllllllllllllIIllllllIIlIIlI) {
-        BlockListSettingScreen lllllllllllllllllIIllllllIIlIIll;
-        return lllllllllllllllllIIllllllIIlIIll.theme.itemWithLabel(lllllllllllllllllIIllllllIIlIIlI.method_8389().method_7854(), lllllllllllllllllIIllllllIIlIIll.getValueName(lllllllllllllllllIIllllllIIlIIlI));
+    protected boolean skipValue(Object object) {
+        return this.skipValue((class_2248)object);
     }
 
     @Override
-    protected boolean skipValue(class_2248 lllllllllllllllllIIllllllIIIlIII) {
-        return class_2378.field_11146.method_10221((Object)lllllllllllllllllIIllllllIIIlIII).method_12832().endsWith("_wall_banner");
-    }
-
-    public BlockListSettingScreen(GuiTheme lllllllllllllllllIIllllllIlIIIll, Setting<List<class_2248>> lllllllllllllllllIIllllllIIlllll) {
-        super(lllllllllllllllllIIllllllIlIIIll, "Select Blocks", lllllllllllllllllIIllllllIIlllll, (Collection)lllllllllllllllllIIllllllIIlllll.get(), class_2378.field_11146);
-        BlockListSettingScreen lllllllllllllllllIIllllllIlIIIIl;
+    protected Object getAdditionalValue(Object object) {
+        return this.getAdditionalValue((class_2248)object);
     }
 
     @Override
-    protected String getValueName(class_2248 lllllllllllllllllIIllllllIIIllIl) {
-        return Names.get(lllllllllllllllllIIllllllIIIllIl);
+    protected WWidget getValueWidget(class_2248 class_22482) {
+        return this.theme.itemWithLabel(class_22482.method_8389().method_7854(), this.getValueName(class_22482));
     }
 
     @Override
-    protected class_2248 getAdditionalValue(class_2248 lllllllllllllllllIIllllllIIIIlII) {
-        String lllllllllllllllllIIllllllIIIIIll = class_2378.field_11146.method_10221((Object)lllllllllllllllllIIllllllIIIIlII).method_12832();
-        if (!lllllllllllllllllIIllllllIIIIIll.endsWith("_banner")) {
+    protected boolean skipValue(class_2248 class_22482) {
+        return class_2378.field_11146.method_10221((Object)class_22482).method_12832().endsWith("_wall_banner");
+    }
+
+    @Override
+    protected String getValueName(Object object) {
+        return this.getValueName((class_2248)object);
+    }
+
+    @Override
+    protected boolean includeValue(Object object) {
+        return this.includeValue((class_2248)object);
+    }
+
+    public BlockListSettingScreen(GuiTheme guiTheme, Setting<List<class_2248>> setting) {
+        super(guiTheme, "Select Blocks", setting, (Collection)setting.get(), class_2378.field_11146);
+    }
+
+    @Override
+    protected String getValueName(class_2248 class_22482) {
+        return Names.get(class_22482);
+    }
+
+    @Override
+    protected WWidget getValueWidget(Object object) {
+        return this.getValueWidget((class_2248)object);
+    }
+
+    @Override
+    protected class_2248 getAdditionalValue(class_2248 class_22482) {
+        String string = class_2378.field_11146.method_10221((Object)class_22482).method_12832();
+        if (!string.endsWith("_banner")) {
             return null;
         }
-        ((IdentifierAccessor)ID).setPath(String.valueOf(new StringBuilder().append(lllllllllllllllllIIllllllIIIIIll.substring(0, lllllllllllllllllIIllllllIIIIIll.length() - 6)).append("wall_banner")));
+        ((IdentifierAccessor)ID).setPath(String.valueOf(new StringBuilder().append(string.substring(0, string.length() - 6)).append("wall_banner")));
         return (class_2248)class_2378.field_11146.method_10223(ID);
     }
 }

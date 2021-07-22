@@ -72,49 +72,49 @@ public class SodiumBlockRendererMixin {
     private BiomeColorBlender biomeColorBlender;
 
     @Inject(method={"renderQuad"}, at={@At(value="INVOKE", target="Lme/jellysquid/mods/sodium/client/model/quad/ModelQuadViewMutable;setColor(II)V", shift=At.Shift.AFTER)}, cancellable=true)
-    private void onRenderQuad(class_1920 world, class_2680 state, class_2338 pos, ModelQuadSinkDelegate consumer, class_243 offset, class_322 colorProvider, class_777 bakedQuad, QuadLightData light, ModelQuadFacing facing, CallbackInfo ci) {
+    private void onRenderQuad(class_1920 class_19202, class_2680 class_26802, class_2338 class_23382, ModelQuadSinkDelegate modelQuadSinkDelegate, class_243 class_2432, class_322 class_3222, class_777 class_7772, QuadLightData quadLightData, ModelQuadFacing modelQuadFacing, CallbackInfo callbackInfo) {
         WallHack wallHack = Modules.get().get(WallHack.class);
-        if (wallHack.isActive() && wallHack.blocks.get().contains((Object)state.method_26204())) {
-            this.whRenderQuad(world, state, pos, consumer, offset, colorProvider, bakedQuad, light, facing, wallHack);
-            ci.cancel();
+        if (wallHack.isActive() && wallHack.blocks.get().contains((Object)class_26802.method_26204())) {
+            this.whRenderQuad(class_19202, class_26802, class_23382, modelQuadSinkDelegate, class_2432, class_3222, class_7772, quadLightData, modelQuadFacing, wallHack);
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"renderModel"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onRenderModel(class_1920 world, class_2680 state, class_2338 pos, class_1087 model, ModelQuadSinkDelegate builder, boolean cull, long seed, CallbackInfoReturnable<Boolean> cir) {
+    private void onRenderModel(class_1920 class_19202, class_2680 class_26802, class_2338 class_23382, class_1087 class_10872, ModelQuadSinkDelegate modelQuadSinkDelegate, boolean bl, long l, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         Xray xray = Modules.get().get(Xray.class);
-        if (xray.isActive() && xray.isBlocked(state.method_26204())) {
-            cir.setReturnValue((Object)false);
+        if (xray.isActive() && xray.isBlocked(class_26802.method_26204())) {
+            callbackInfoReturnable.setReturnValue((Object)false);
         }
     }
 
-    private void whRenderQuad(class_1920 world, class_2680 state, class_2338 pos, ModelQuadSinkDelegate consumer, class_243 offset, class_322 colorProvider, class_777 bakedQuad, QuadLightData light, ModelQuadFacing facing, WallHack wallHack) {
-        ModelQuadView src = (ModelQuadView)bakedQuad;
-        ModelQuadOrientation order = ModelQuadOrientation.orient((float[])light.br);
-        ModelQuad copy = this.cachedQuad;
-        int norm = ModelQuadUtil.getFacingNormal((class_2350)bakedQuad.method_3358());
-        int[] colors = null;
-        if (bakedQuad.method_3360()) {
-            colors = this.biomeColorBlender.getColors(colorProvider, world, state, pos, src);
+    private void whRenderQuad(class_1920 class_19202, class_2680 class_26802, class_2338 class_23382, ModelQuadSinkDelegate modelQuadSinkDelegate, class_243 class_2432, class_322 class_3222, class_777 class_7772, QuadLightData quadLightData, ModelQuadFacing modelQuadFacing, WallHack wallHack) {
+        ModelQuadView modelQuadView = (ModelQuadView)class_7772;
+        ModelQuadOrientation modelQuadOrientation = ModelQuadOrientation.orient((float[])quadLightData.br);
+        ModelQuad modelQuad = this.cachedQuad;
+        int n = ModelQuadUtil.getFacingNormal((class_2350)class_7772.method_3358());
+        int[] arrn = null;
+        if (class_7772.method_3360()) {
+            arrn = this.biomeColorBlender.getColors(class_3222, class_19202, class_26802, class_23382, modelQuadView);
         }
-        for (int dstIndex = 0; dstIndex < 4; ++dstIndex) {
-            int srcIndex = order.getVertexIndex(dstIndex);
-            copy.setX(dstIndex, src.getX(srcIndex) + (float)offset.method_10216());
-            copy.setY(dstIndex, src.getY(srcIndex) + (float)offset.method_10214());
-            copy.setZ(dstIndex, src.getZ(srcIndex) + (float)offset.method_10215());
-            int newColor = ColorABGR.mul((int)(colors != null ? colors[srcIndex] : -1), (float)light.br[srcIndex]);
-            int alpha = wallHack.opacity.get();
-            int blue = ColorABGR.unpackBlue((int)newColor);
-            int green = ColorABGR.unpackGreen((int)newColor);
-            int red = ColorABGR.unpackRed((int)newColor);
-            copy.setColor(dstIndex, ColorABGR.pack((int)red, (int)green, (int)blue, (int)alpha));
-            copy.setTexU(dstIndex, src.getTexU(srcIndex));
-            copy.setTexV(dstIndex, src.getTexV(srcIndex));
-            copy.setLight(dstIndex, light.lm[srcIndex]);
-            copy.setNormal(dstIndex, norm);
-            copy.setSprite(src.getSprite());
+        for (int i = 0; i < 4; ++i) {
+            int n2 = modelQuadOrientation.getVertexIndex(i);
+            modelQuad.setX(i, modelQuadView.getX(n2) + (float)class_2432.method_10216());
+            modelQuad.setY(i, modelQuadView.getY(n2) + (float)class_2432.method_10214());
+            modelQuad.setZ(i, modelQuadView.getZ(n2) + (float)class_2432.method_10215());
+            int n3 = ColorABGR.mul((int)(arrn != null ? arrn[n2] : -1), (float)quadLightData.br[n2]);
+            int n4 = wallHack.opacity.get();
+            int n5 = ColorABGR.unpackBlue((int)n3);
+            int n6 = ColorABGR.unpackGreen((int)n3);
+            int n7 = ColorABGR.unpackRed((int)n3);
+            modelQuad.setColor(i, ColorABGR.pack((int)n7, (int)n6, (int)n5, (int)n4));
+            modelQuad.setTexU(i, modelQuadView.getTexU(n2));
+            modelQuad.setTexV(i, modelQuadView.getTexV(n2));
+            modelQuad.setLight(i, quadLightData.lm[n2]);
+            modelQuad.setNormal(i, n);
+            modelQuad.setSprite(modelQuadView.getSprite());
         }
-        consumer.get(facing).write((ModelQuadViewMutable)copy);
+        modelQuadSinkDelegate.get(modelQuadFacing).write((ModelQuadViewMutable)modelQuad);
     }
 }
 

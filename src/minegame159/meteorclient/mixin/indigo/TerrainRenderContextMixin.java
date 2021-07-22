@@ -29,10 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={TerrainRenderContext.class}, remap=false)
 public class TerrainRenderContextMixin {
     @Inject(method={"tesselateBlock"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onTesselateBlock(class_2680 blockState, class_2338 blockPos, class_1087 model, class_4587 matrixStack, CallbackInfoReturnable<Boolean> info) {
+    private void onTesselateBlock(class_2680 class_26802, class_2338 class_23382, class_1087 class_10872, class_4587 class_45872, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         Xray xray = Modules.get().get(Xray.class);
-        if (xray.isActive() && xray.isBlocked(blockState.method_26204())) {
-            info.cancel();
+        if (xray.isActive() && xray.isBlocked(class_26802.method_26204())) {
+            callbackInfoReturnable.cancel();
         }
     }
 }

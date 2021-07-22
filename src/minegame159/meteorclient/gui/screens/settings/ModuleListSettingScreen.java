@@ -15,19 +15,27 @@ import minegame159.meteorclient.systems.modules.Modules;
 public class ModuleListSettingScreen
 extends LeftRightListSettingScreen<Module> {
     @Override
-    protected WWidget getValueWidget(Module llllllllllllllllllIlIIlIlllIIIIl) {
-        ModuleListSettingScreen llllllllllllllllllIlIIlIlllIIIlI;
-        return llllllllllllllllllIlIIlIlllIIIlI.theme.label(llllllllllllllllllIlIIlIlllIIIlI.getValueName(llllllllllllllllllIlIIlIlllIIIIl));
+    protected WWidget getValueWidget(Module module) {
+        return this.theme.label(this.getValueName(module));
     }
 
     @Override
-    protected String getValueName(Module llllllllllllllllllIlIIlIllIlllII) {
-        return llllllllllllllllllIlIIlIllIlllII.title;
+    protected String getValueName(Module module) {
+        return module.title;
     }
 
-    public ModuleListSettingScreen(GuiTheme llllllllllllllllllIlIIlIlllIIllI, Setting<List<Module>> llllllllllllllllllIlIIlIlllIIlIl) {
-        super(llllllllllllllllllIlIIlIlllIIllI, "Select modules", llllllllllllllllllIlIIlIlllIIlIl, (Collection)llllllllllllllllllIlIIlIlllIIlIl.get(), Modules.REGISTRY);
-        ModuleListSettingScreen llllllllllllllllllIlIIlIlllIIlll;
+    @Override
+    protected String getValueName(Object object) {
+        return this.getValueName((Module)object);
+    }
+
+    @Override
+    protected WWidget getValueWidget(Object object) {
+        return this.getValueWidget((Module)object);
+    }
+
+    public ModuleListSettingScreen(GuiTheme guiTheme, Setting<List<Module>> setting) {
+        super(guiTheme, "Select modules", setting, (Collection)setting.get(), Modules.REGISTRY);
     }
 }
 

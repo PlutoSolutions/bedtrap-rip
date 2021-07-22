@@ -11,19 +11,14 @@ import minegame159.meteorclient.gui.widgets.pressable.WPlus;
 public class WMeteorPlus
 extends WPlus
 implements MeteorWidget {
-    public WMeteorPlus() {
-        WMeteorPlus llIlllIIlIlll;
-    }
-
     @Override
-    protected void onRender(GuiRenderer llIlllIIIIlll, double llIlllIIIlllI, double llIlllIIIllIl, double llIlllIIIllII) {
-        WMeteorPlus llIlllIIlIIII;
-        MeteorGuiTheme llIlllIIIlIll = llIlllIIlIIII.theme();
-        double llIlllIIIlIlI = llIlllIIlIIII.pad();
-        double llIlllIIIlIIl = llIlllIIIlIll.scale(3.0);
-        llIlllIIlIIII.renderBackground(llIlllIIIIlll, llIlllIIlIIII, llIlllIIlIIII.pressed, llIlllIIlIIII.mouseOver);
-        llIlllIIIIlll.quad(llIlllIIlIIII.x + llIlllIIIlIlI, llIlllIIlIIII.y + llIlllIIlIIII.height / 2.0 - llIlllIIIlIIl / 2.0, llIlllIIlIIII.width - llIlllIIIlIlI * 2.0, llIlllIIIlIIl, llIlllIIIlIll.plusColor.get());
-        llIlllIIIIlll.quad(llIlllIIlIIII.x + llIlllIIlIIII.width / 2.0 - llIlllIIIlIIl / 2.0, llIlllIIlIIII.y + llIlllIIIlIlI, llIlllIIIlIIl, llIlllIIlIIII.height - llIlllIIIlIlI * 2.0, llIlllIIIlIll.plusColor.get());
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        MeteorGuiTheme meteorGuiTheme = this.theme();
+        double d4 = this.pad();
+        double d5 = meteorGuiTheme.scale(3.0);
+        this.renderBackground(guiRenderer, this, this.pressed, this.mouseOver);
+        guiRenderer.quad(this.x + d4, this.y + this.height / 2.0 - d5 / 2.0, this.width - d4 * 2.0, d5, meteorGuiTheme.plusColor.get());
+        guiRenderer.quad(this.x + this.width / 2.0 - d5 / 2.0, this.y + d4, d5, this.height - d4 * 2.0, meteorGuiTheme.plusColor.get());
     }
 }
 

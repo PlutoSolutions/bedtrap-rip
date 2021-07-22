@@ -8,36 +8,33 @@ import minegame159.meteorclient.gui.widgets.pressable.WPressable;
 
 public abstract class WButton
 extends WPressable {
-    protected /* synthetic */ GuiTexture texture;
-    protected /* synthetic */ String text;
-    protected /* synthetic */ double textWidth;
+    protected GuiTexture texture;
+    protected String text;
+    protected double textWidth;
 
-    public WButton(String llllllllllllllllllIlIIlIIlIIIIll, GuiTexture llllllllllllllllllIlIIlIIlIIIIlI) {
-        WButton llllllllllllllllllIlIIlIIlIIIIIl;
-        llllllllllllllllllIlIIlIIlIIIIIl.text = llllllllllllllllllIlIIlIIlIIIIll;
-        llllllllllllllllllIlIIlIIlIIIIIl.texture = llllllllllllllllllIlIIlIIlIIIIlI;
+    public WButton(String string, GuiTexture guiTexture) {
+        this.text = string;
+        this.texture = guiTexture;
     }
 
-    public void set(String llllllllllllllllllIlIIlIIIllIIII) {
-        WButton llllllllllllllllllIlIIlIIIllIIll;
-        if (llllllllllllllllllIlIIlIIIllIIll.text == null || (double)Math.round(llllllllllllllllllIlIIlIIIllIIll.theme.textWidth(llllllllllllllllllIlIIlIIIllIIII)) != llllllllllllllllllIlIIlIIIllIIll.textWidth) {
-            llllllllllllllllllIlIIlIIIllIIll.invalidate();
+    public void set(String string) {
+        if (this.text == null || (double)Math.round(this.theme.textWidth(string)) != this.textWidth) {
+            this.invalidate();
         }
-        llllllllllllllllllIlIIlIIIllIIll.text = llllllllllllllllllIlIIlIIIllIIII;
+        this.text = string;
     }
 
     @Override
     protected void onCalculateSize() {
-        WButton llllllllllllllllllIlIIlIIIlllIII;
-        double llllllllllllllllllIlIIlIIIlllIIl = llllllllllllllllllIlIIlIIIlllIII.pad();
-        if (llllllllllllllllllIlIIlIIIlllIII.text != null) {
-            llllllllllllllllllIlIIlIIIlllIII.textWidth = llllllllllllllllllIlIIlIIIlllIII.theme.textWidth(llllllllllllllllllIlIIlIIIlllIII.text);
-            llllllllllllllllllIlIIlIIIlllIII.width = llllllllllllllllllIlIIlIIIlllIIl + llllllllllllllllllIlIIlIIIlllIII.textWidth + llllllllllllllllllIlIIlIIIlllIIl;
-            llllllllllllllllllIlIIlIIIlllIII.height = llllllllllllllllllIlIIlIIIlllIIl + llllllllllllllllllIlIIlIIIlllIII.theme.textHeight() + llllllllllllllllllIlIIlIIIlllIIl;
+        double d = this.pad();
+        if (this.text != null) {
+            this.textWidth = this.theme.textWidth(this.text);
+            this.width = d + this.textWidth + d;
+            this.height = d + this.theme.textHeight() + d;
         } else {
-            double llllllllllllllllllIlIIlIIIlllIll = llllllllllllllllllIlIIlIIIlllIII.theme.textHeight();
-            llllllllllllllllllIlIIlIIIlllIII.width = llllllllllllllllllIlIIlIIIlllIIl + llllllllllllllllllIlIIlIIIlllIll + llllllllllllllllllIlIIlIIIlllIIl;
-            llllllllllllllllllIlIIlIIIlllIII.height = llllllllllllllllllIlIIlIIIlllIIl + llllllllllllllllllIlIIlIIIlllIll + llllllllllllllllllIlIIlIIIlllIIl;
+            double d2 = this.theme.textHeight();
+            this.width = d + d2 + d;
+            this.height = d + d2 + d;
         }
     }
 }

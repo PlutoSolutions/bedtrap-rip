@@ -29,11 +29,16 @@ import net.minecraft.class_2960;
 
 public class ItemListSetting
 extends Setting<List<class_1792>> {
-    public final /* synthetic */ Predicate<class_1792> filter;
+    public final Predicate<class_1792> filter;
 
     @Override
-    protected boolean isValueValid(List<class_1792> llllllllllllllllllIIIIlllIIIIllI) {
+    protected boolean isValueValid(List<class_1792> list) {
         return true;
+    }
+
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
     }
 
     @Override
@@ -42,125 +47,118 @@ extends Setting<List<class_1792>> {
     }
 
     @Override
-    public void reset(boolean llllllllllllllllllIIIIlllIIIlIlI) {
-        ItemListSetting llllllllllllllllllIIIIlllIIIlIIl;
-        llllllllllllllllllIIIIlllIIIlIIl.value = new ArrayList((Collection)llllllllllllllllllIIIIlllIIIlIIl.defaultValue);
-        if (llllllllllllllllllIIIIlllIIIlIlI) {
-            llllllllllllllllllIIIIlllIIIlIIl.changed();
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((List)object);
+    }
+
+    @Override
+    public void reset(boolean bl) {
+        this.value = new ArrayList((Collection)this.defaultValue);
+        if (bl) {
+            this.changed();
         }
     }
 
     @Override
-    public List<class_1792> fromTag(class_2487 llllllllllllllllllIIIIllIllIlIlI) {
-        ItemListSetting llllllllllllllllllIIIIllIllIlIll;
-        ((List)llllllllllllllllllIIIIllIllIlIll.get()).clear();
-        class_2499 llllllllllllllllllIIIIllIllIllII = llllllllllllllllllIIIIllIllIlIlI.method_10554("value", 8);
-        for (class_2520 llllllllllllllllllIIIIllIllIllll : llllllllllllllllllIIIIllIllIllII) {
-            class_1792 llllllllllllllllllIIIIllIlllIIII = (class_1792)class_2378.field_11142.method_10223(new class_2960(llllllllllllllllllIIIIllIllIllll.method_10714()));
-            if (llllllllllllllllllIIIIllIllIlIll.filter != null && !llllllllllllllllllIIIIllIllIlIll.filter.test(llllllllllllllllllIIIIllIlllIIII)) continue;
-            ((List)llllllllllllllllllIIIIllIllIlIll.get()).add(llllllllllllllllllIIIIllIlllIIII);
+    public List<class_1792> fromTag(class_2487 class_24872) {
+        ((List)this.get()).clear();
+        class_2499 class_24992 = class_24872.method_10554("value", 8);
+        for (class_2520 class_25202 : class_24992) {
+            class_1792 class_17922 = (class_1792)class_2378.field_11142.method_10223(new class_2960(class_25202.method_10714()));
+            if (this.filter != null && !this.filter.test(class_17922)) continue;
+            ((List)this.get()).add(class_17922);
         }
-        llllllllllllllllllIIIIllIllIlIll.changed();
-        return (List)llllllllllllllllllIIIIllIllIlIll.get();
+        this.changed();
+        return (List)this.get();
     }
 
     @Override
     public class_2487 toTag() {
-        ItemListSetting llllllllllllllllllIIIIllIllllIll;
-        class_2487 llllllllllllllllllIIIIllIlllllIl = llllllllllllllllllIIIIllIllllIll.saveGeneral();
-        class_2499 llllllllllllllllllIIIIllIlllllII = new class_2499();
-        for (class_1792 llllllllllllllllllIIIIllIlllllll : (List)llllllllllllllllllIIIIllIllllIll.get()) {
-            llllllllllllllllllIIIIllIlllllII.add((Object)class_2519.method_23256((String)class_2378.field_11142.method_10221((Object)llllllllllllllllllIIIIllIlllllll).toString()));
+        class_2487 class_24872 = this.saveGeneral();
+        class_2499 class_24992 = new class_2499();
+        for (class_1792 class_17922 : (List)this.get()) {
+            class_24992.add((Object)class_2519.method_23256((String)class_2378.field_11142.method_10221((Object)class_17922).toString()));
         }
-        llllllllllllllllllIIIIllIlllllIl.method_10566("value", (class_2520)llllllllllllllllllIIIIllIlllllII);
-        return llllllllllllllllllIIIIllIlllllIl;
+        class_24872.method_10566("value", (class_2520)class_24992);
+        return class_24872;
     }
 
-    public ItemListSetting(String llllllllllllllllllIIIIlllIlIllII, String llllllllllllllllllIIIIlllIllIIll, List<class_1792> llllllllllllllllllIIIIlllIllIIlI, Consumer<List<class_1792>> llllllllllllllllllIIIIlllIlIlIIl, Consumer<Setting<List<class_1792>>> llllllllllllllllllIIIIlllIllIIII, IVisible llllllllllllllllllIIIIlllIlIIlll, Predicate<class_1792> llllllllllllllllllIIIIlllIlIIllI) {
-        super(llllllllllllllllllIIIIlllIlIllII, llllllllllllllllllIIIIlllIllIIll, llllllllllllllllllIIIIlllIllIIlI, llllllllllllllllllIIIIlllIlIlIIl, llllllllllllllllllIIIIlllIllIIII, llllllllllllllllllIIIIlllIlIIlll);
-        ItemListSetting llllllllllllllllllIIIIlllIllIlIl;
-        llllllllllllllllllIIIIlllIllIlIl.value = new ArrayList<class_1792>(llllllllllllllllllIIIIlllIllIIlI);
-        llllllllllllllllllIIIIlllIllIlIl.filter = llllllllllllllllllIIIIlllIlIIllI;
+    public ItemListSetting(String string, String string2, List<class_1792> list, Consumer<List<class_1792>> consumer, Consumer<Setting<List<class_1792>>> consumer2, IVisible iVisible, Predicate<class_1792> predicate) {
+        super(string, string2, list, consumer, consumer2, iVisible);
+        this.value = new ArrayList<class_1792>(list);
+        this.filter = predicate;
     }
 
     @Override
-    protected List<class_1792> parseImpl(String llllllllllllllllllIIIIlllIIllIIl) {
-        String[] llllllllllllllllllIIIIlllIIllIII = llllllllllllllllllIIIIlllIIllIIl.split(",");
-        ArrayList<class_1792> llllllllllllllllllIIIIlllIIlIlll = new ArrayList<class_1792>(llllllllllllllllllIIIIlllIIllIII.length);
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    @Override
+    protected List<class_1792> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        ArrayList<class_1792> arrayList = new ArrayList<class_1792>(arrstring.length);
         try {
-            for (String llllllllllllllllllIIIIlllIIllIll : llllllllllllllllllIIIIlllIIllIII) {
-                ItemListSetting llllllllllllllllllIIIIlllIIlIllI;
-                class_1792 llllllllllllllllllIIIIlllIIlllII = (class_1792)ItemListSetting.parseId(class_2378.field_11142, llllllllllllllllllIIIIlllIIllIll);
-                if (llllllllllllllllllIIIIlllIIlllII == null || llllllllllllllllllIIIIlllIIlIllI.filter != null && !llllllllllllllllllIIIIlllIIlIllI.filter.test(llllllllllllllllllIIIIlllIIlllII)) continue;
-                llllllllllllllllllIIIIlllIIlIlll.add(llllllllllllllllllIIIIlllIIlllII);
+            for (String string2 : arrstring) {
+                class_1792 class_17922 = (class_1792)ItemListSetting.parseId(class_2378.field_11142, string2);
+                if (class_17922 == null || this.filter != null && !this.filter.test(class_17922)) continue;
+                arrayList.add(class_17922);
+                if (2 != 0) continue;
+                return null;
             }
         }
-        catch (Exception llllllllllllllllllIIIIlllIIlIIlI) {
+        catch (Exception exception) {
             // empty catch block
         }
-        return llllllllllllllllllIIIIlllIIlIlll;
+        return arrayList;
     }
 
     public static class Builder {
-        private /* synthetic */ String name;
-        private /* synthetic */ List<class_1792> defaultValue;
-        private /* synthetic */ Consumer<Setting<List<class_1792>>> onModuleActivated;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ String description;
-        private /* synthetic */ Predicate<class_1792> filter;
-        private /* synthetic */ Consumer<List<class_1792>> onChanged;
+        private String name = "undefined";
+        private List<class_1792> defaultValue;
+        private Consumer<Setting<List<class_1792>>> onModuleActivated;
+        private IVisible visible;
+        private String description = "";
+        private Predicate<class_1792> filter;
+        private Consumer<List<class_1792>> onChanged;
 
-        public Builder filter(Predicate<class_1792> lIllIIIIIIlIllI) {
-            Builder lIllIIIIIIlIlll;
-            lIllIIIIIIlIlll.filter = lIllIIIIIIlIllI;
-            return lIllIIIIIIlIlll;
+        public Builder filter(Predicate<class_1792> predicate) {
+            this.filter = predicate;
+            return this;
         }
 
-        public Builder onChanged(Consumer<List<class_1792>> lIllIIIIIlIIllI) {
-            Builder lIllIIIIIlIIlll;
-            lIllIIIIIlIIlll.onChanged = lIllIIIIIlIIllI;
-            return lIllIIIIIlIIlll;
+        public Builder onChanged(Consumer<List<class_1792>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder defaultValue(List<class_1792> lIllIIIIIlIllII) {
-            Builder lIllIIIIIlIllIl;
-            lIllIIIIIlIllIl.defaultValue = lIllIIIIIlIllII;
-            return lIllIIIIIlIllIl;
+        public Builder defaultValue(List<class_1792> list) {
+            this.defaultValue = list;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<List<class_1792>>> lIllIIIIIlIIIII) {
-            Builder lIllIIIIIlIIIll;
-            lIllIIIIIlIIIll.onModuleActivated = lIllIIIIIlIIIII;
-            return lIllIIIIIlIIIll;
+        public Builder onModuleActivated(Consumer<Setting<List<class_1792>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder() {
-            Builder lIllIIIIIllllll;
-            lIllIIIIIllllll.name = "undefined";
-            lIllIIIIIllllll.description = "";
-        }
-
-        public Builder visible(IVisible lIllIIIIIIllIlI) {
-            Builder lIllIIIIIIllIll;
-            lIllIIIIIIllIll.visible = lIllIIIIIIllIlI;
-            return lIllIIIIIIllIll;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
         public ItemListSetting build() {
-            Builder lIllIIIIIIlIIIl;
-            return new ItemListSetting(lIllIIIIIIlIIIl.name, lIllIIIIIIlIIIl.description, lIllIIIIIIlIIIl.defaultValue, lIllIIIIIIlIIIl.onChanged, lIllIIIIIIlIIIl.onModuleActivated, lIllIIIIIIlIIIl.visible, lIllIIIIIIlIIIl.filter);
+            return new ItemListSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible, this.filter);
         }
 
-        public Builder description(String lIllIIIIIllIIlI) {
-            Builder lIllIIIIIllIIll;
-            lIllIIIIIllIIll.description = lIllIIIIIllIIlI;
-            return lIllIIIIIllIIll;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder name(String lIllIIIIIlllIlI) {
-            Builder lIllIIIIIlllIll;
-            lIllIIIIIlllIll.name = lIllIIIIIlllIlI;
-            return lIllIIIIIlllIll;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
     }
 }

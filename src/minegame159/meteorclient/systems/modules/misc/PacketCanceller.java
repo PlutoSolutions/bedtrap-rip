@@ -20,31 +20,28 @@ import net.minecraft.class_2596;
 
 public class PacketCanceller
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Set<Class<? extends class_2596<?>>>> c2sPackets;
-    private final /* synthetic */ Setting<Set<Class<? extends class_2596<?>>>> s2cPackets;
+    private final SettingGroup sgGeneral;
+    private final Setting<Set<Class<? extends class_2596<?>>>> c2sPackets;
+    private final Setting<Set<Class<? extends class_2596<?>>>> s2cPackets;
 
     public PacketCanceller() {
         super(Categories.Misc, "packet-canceller", "Allows you to cancel certain packets.");
-        PacketCanceller lllllllllllllllllIlIIlIlIIIllIII;
-        lllllllllllllllllIlIIlIlIIIllIII.sgGeneral = lllllllllllllllllIlIIlIlIIIllIII.settings.getDefaultGroup();
-        lllllllllllllllllIlIIlIlIIIllIII.s2cPackets = lllllllllllllllllIlIIlIlIIIllIII.sgGeneral.add(new PacketBoolSetting.Builder().name("S2C-packets").description("Server-to-client packets to cancel.").defaultValue((Set<Class<? extends class_2596<?>>>)new ObjectOpenHashSet(0)).build());
-        lllllllllllllllllIlIIlIlIIIllIII.c2sPackets = lllllllllllllllllIlIIlIlIIIllIII.sgGeneral.add(new PacketBoolSetting.Builder().name("C2S-packets").description("Client-to-server packets to cancel.").defaultValue((Set<Class<? extends class_2596<?>>>)new ObjectOpenHashSet(0)).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.s2cPackets = this.sgGeneral.add(new PacketBoolSetting.Builder().name("S2C-packets").description("Server-to-client packets to cancel.").defaultValue((Set<Class<? extends class_2596<?>>>)new ObjectOpenHashSet(0)).build());
+        this.c2sPackets = this.sgGeneral.add(new PacketBoolSetting.Builder().name("C2S-packets").description("Client-to-server packets to cancel.").defaultValue((Set<Class<? extends class_2596<?>>>)new ObjectOpenHashSet(0)).build());
     }
 
     @EventHandler(priority=201)
-    private void onSendPacket(PacketEvent.Send lllllllllllllllllIlIIlIlIIIIllIl) {
-        PacketCanceller lllllllllllllllllIlIIlIlIIIIlllI;
-        if (lllllllllllllllllIlIIlIlIIIIlllI.c2sPackets.get().contains(lllllllllllllllllIlIIlIlIIIIllIl.packet.getClass())) {
-            lllllllllllllllllIlIIlIlIIIIllIl.cancel();
+    private void onSendPacket(PacketEvent.Send send) {
+        if (this.c2sPackets.get().contains(send.packet.getClass())) {
+            send.cancel();
         }
     }
 
     @EventHandler(priority=201)
-    private void onReceivePacket(PacketEvent.Receive lllllllllllllllllIlIIlIlIIIlIIll) {
-        PacketCanceller lllllllllllllllllIlIIlIlIIIlIlII;
-        if (lllllllllllllllllIlIIlIlIIIlIlII.s2cPackets.get().contains(lllllllllllllllllIlIIlIlIIIlIIll.packet.getClass())) {
-            lllllllllllllllllIlIIlIlIIIlIIll.cancel();
+    private void onReceivePacket(PacketEvent.Receive receive) {
+        if (this.s2cPackets.get().contains(receive.packet.getClass())) {
+            receive.cancel();
         }
     }
 }

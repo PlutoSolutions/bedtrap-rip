@@ -15,70 +15,60 @@ import minegame159.meteorclient.utils.Utils;
 import net.minecraft.class_2761;
 
 public class TickRate {
-    private /* synthetic */ int nextIndex;
-    public static /* synthetic */ TickRate INSTANCE;
-    private /* synthetic */ long timeLastTimeUpdate;
-    private /* synthetic */ long timeGameJoined;
-    private final /* synthetic */ float[] tickRates;
+    private int nextIndex = 0;
+    public static TickRate INSTANCE = new TickRate();
+    private long timeLastTimeUpdate = -1L;
+    private long timeGameJoined;
+    private final float[] tickRates = new float[20];
 
     private TickRate() {
-        TickRate llllllllllllllllllIlllIllIlllllI;
-        llllllllllllllllllIlllIllIlllllI.tickRates = new float[20];
-        llllllllllllllllllIlllIllIlllllI.nextIndex = 0;
-        llllllllllllllllllIlllIllIlllllI.timeLastTimeUpdate = -1L;
-        MeteorClient.EVENT_BUS.subscribe(llllllllllllllllllIlllIllIlllllI);
+        MeteorClient.EVENT_BUS.subscribe(this);
     }
 
     @EventHandler
-    private void onGameJoined(GameJoinedEvent llllllllllllllllllIlllIllIllIIlI) {
-        TickRate llllllllllllllllllIlllIllIllIIll;
-        Arrays.fill(llllllllllllllllllIlllIllIllIIll.tickRates, 0.0f);
-        llllllllllllllllllIlllIllIllIIll.nextIndex = 0;
-        llllllllllllllllllIlllIllIllIIll.timeLastTimeUpdate = -1L;
-        llllllllllllllllllIlllIllIllIIll.timeGameJoined = System.currentTimeMillis();
+    private void onGameJoined(GameJoinedEvent gameJoinedEvent) {
+        Arrays.fill(this.tickRates, 0.0f);
+        this.nextIndex = 0;
+        this.timeLastTimeUpdate = -1L;
+        this.timeGameJoined = System.currentTimeMillis();
     }
 
     @EventHandler
-    private void onReceivePacket(PacketEvent.Receive llllllllllllllllllIlllIllIllIllI) {
-        if (llllllllllllllllllIlllIllIllIllI.packet instanceof class_2761) {
-            TickRate llllllllllllllllllIlllIllIllIlll;
-            if (llllllllllllllllllIlllIllIllIlll.timeLastTimeUpdate != -1L) {
-                float llllllllllllllllllIlllIllIlllIlI = (float)(System.currentTimeMillis() - llllllllllllllllllIlllIllIllIlll.timeLastTimeUpdate) / 1000.0f;
-                llllllllllllllllllIlllIllIllIlll.tickRates[llllllllllllllllllIlllIllIllIlll.nextIndex % llllllllllllllllllIlllIllIllIlll.tickRates.length] = Utils.clamp(20.0f / llllllllllllllllllIlllIllIlllIlI, 0.0f, 20.0f);
-                ++llllllllllllllllllIlllIllIllIlll.nextIndex;
+    private void onReceivePacket(PacketEvent.Receive receive) {
+        if (receive.packet instanceof class_2761) {
+            if (this.timeLastTimeUpdate != -1L) {
+                float f = (float)(System.currentTimeMillis() - this.timeLastTimeUpdate) / 1000.0f;
+                this.tickRates[this.nextIndex % this.tickRates.length] = Utils.clamp(20.0f / f, 0.0f, 20.0f);
+                ++this.nextIndex;
             }
-            llllllllllllllllllIlllIllIllIlll.timeLastTimeUpdate = System.currentTimeMillis();
+            this.timeLastTimeUpdate = System.currentTimeMillis();
         }
-    }
-
-    static {
-        INSTANCE = new TickRate();
     }
 
     public float getTimeSinceLastTick() {
-        TickRate llllllllllllllllllIlllIllIIlllII;
-        if (System.currentTimeMillis() - llllllllllllllllllIlllIllIIlllII.timeGameJoined < 4000L) {
+        if (System.currentTimeMillis() - this.timeGameJoined < 4000L) {
             return 0.0f;
         }
-        return (float)(System.currentTimeMillis() - llllllllllllllllllIlllIllIIlllII.timeLastTimeUpdate) / 1000.0f;
+        return (float)(System.currentTimeMillis() - this.timeLastTimeUpdate) / 1000.0f;
     }
 
     public float getTickRate() {
-        TickRate llllllllllllllllllIlllIllIlIlIII;
         if (!Utils.canUpdate()) {
             return 0.0f;
         }
-        if (System.currentTimeMillis() - llllllllllllllllllIlllIllIlIlIII.timeGameJoined < 4000L) {
+        if (System.currentTimeMillis() - this.timeGameJoined < 4000L) {
             return 20.0f;
         }
-        float llllllllllllllllllIlllIllIlIIlll = 0.0f;
-        float llllllllllllllllllIlllIllIlIIllI = 0.0f;
-        for (float llllllllllllllllllIlllIllIlIlIIl : llllllllllllllllllIlllIllIlIlIII.tickRates) {
-            if (!(llllllllllllllllllIlllIllIlIlIIl > 0.0f)) continue;
-            llllllllllllllllllIlllIllIlIIllI += llllllllllllllllllIlllIllIlIlIIl;
-            llllllllllllllllllIlllIllIlIIlll += 1.0f;
+        float f = 0.0f;
+        float f2 = 0.0f;
+        for (float f3 : this.tickRates) {
+            if (!(f3 > 0.0f)) continue;
+            f2 += f3;
+            f += 1.0f;
+            if (4 >= 3) continue;
+            return 0.0f;
         }
-        return Utils.clamp(llllllllllllllllllIlllIllIlIIllI / llllllllllllllllllIlllIllIlIIlll, 0.0f, 20.0f);
+        return Utils.clamp(f2 / f, 0.0f, 20.0f);
     }
 }
 

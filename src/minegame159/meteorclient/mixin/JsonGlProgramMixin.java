@@ -20,19 +20,19 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(value={class_280.class})
 public class JsonGlProgramMixin {
     @ModifyVariable(method={"<init>"}, at=@At(value="STORE"))
-    private class_2960 onInitNewIdentifierModifyVariable(class_2960 identifier) {
-        if (Outlines.loadingOutlineShader && identifier.method_12832().equals("shaders/program/my_entity_outline.json")) {
-            return new class_2960("meteor-client", identifier.method_12832());
+    private class_2960 onInitNewIdentifierModifyVariable(class_2960 class_29602) {
+        if (Outlines.loadingOutlineShader && class_29602.method_12832().equals("shaders/program/my_entity_outline.json")) {
+            return new class_2960("meteor-client", class_29602.method_12832());
         }
-        return identifier;
+        return class_29602;
     }
 
     @ModifyVariable(method={"getShader"}, at=@At(value="STORE"))
-    private static class_2960 onGetShaderNewIdentifierModifyVariable(class_2960 identifier) {
-        if (Outlines.loadingOutlineShader && identifier.method_12832().equals("shaders/program/my_entity_sobel.fsh")) {
-            return new class_2960("meteor-client", identifier.method_12832());
+    private static class_2960 onGetShaderNewIdentifierModifyVariable(class_2960 class_29602) {
+        if (Outlines.loadingOutlineShader && class_29602.method_12832().equals("shaders/program/my_entity_sobel.fsh")) {
+            return new class_2960("meteor-client", class_29602.method_12832());
         }
-        return identifier;
+        return class_29602;
     }
 }
 

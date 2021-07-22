@@ -11,38 +11,34 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class NameProtect
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<String> name;
-    private /* synthetic */ String username;
+    private final SettingGroup sgGeneral;
+    private final Setting<String> name;
+    private String username;
 
-    public String getName(String llllllllllllllllIlIlIllIIIlIllIl) {
-        NameProtect llllllllllllllllIlIlIllIIIlIllII;
-        if (llllllllllllllllIlIlIllIIIlIllII.name.get().length() > 0 && llllllllllllllllIlIlIllIIIlIllII.isActive()) {
-            return llllllllllllllllIlIlIllIIIlIllII.name.get();
+    public String getName(String string) {
+        if (this.name.get().length() > 0 && this.isActive()) {
+            return this.name.get();
         }
-        return llllllllllllllllIlIlIllIIIlIllIl;
+        return string;
     }
 
     @Override
     public void onActivate() {
-        NameProtect llllllllllllllllIlIlIllIIIllIlll;
-        llllllllllllllllIlIlIllIIIllIlll.username = llllllllllllllllIlIlIllIIIllIlll.mc.method_1548().method_1676();
+        this.username = this.mc.method_1548().method_1676();
     }
 
-    public String replaceName(String llllllllllllllllIlIlIllIIIllIIIl) {
-        NameProtect llllllllllllllllIlIlIllIIIllIlII;
-        if (llllllllllllllllIlIlIllIIIllIIIl.contains(llllllllllllllllIlIlIllIIIllIlII.username) && llllllllllllllllIlIlIllIIIllIlII.name.get().length() > 0 && llllllllllllllllIlIlIllIIIllIlII.isActive()) {
-            return llllllllllllllllIlIlIllIIIllIIIl.replace(llllllllllllllllIlIlIllIIIllIlII.username, llllllllllllllllIlIlIllIIIllIlII.name.get());
+    public String replaceName(String string) {
+        if (string.contains(this.username) && this.name.get().length() > 0 && this.isActive()) {
+            return string.replace(this.username, this.name.get());
         }
-        return llllllllllllllllIlIlIllIIIllIIIl;
+        return string;
     }
 
     public NameProtect() {
         super(Categories.Player, "name-protect", "Hides your name client-side.");
-        NameProtect llllllllllllllllIlIlIllIIIlllIll;
-        llllllllllllllllIlIlIllIIIlllIll.sgGeneral = llllllllllllllllIlIlIllIIIlllIll.settings.getDefaultGroup();
-        llllllllllllllllIlIlIllIIIlllIll.name = llllllllllllllllIlIlIllIIIlllIll.sgGeneral.add(new StringSetting.Builder().name("name").description("Name to be replaced with.").defaultValue("seasnail").build());
-        llllllllllllllllIlIlIllIIIlllIll.username = "If you see this, something is wrong.";
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.name = this.sgGeneral.add(new StringSetting.Builder().name("name").description("Name to be replaced with.").defaultValue("seasnail").build());
+        this.username = "If you see this, something is wrong.";
     }
 }
 

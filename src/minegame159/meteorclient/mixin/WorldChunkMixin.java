@@ -35,9 +35,9 @@ public class WorldChunkMixin {
     private class_1937 field_12858;
 
     @Inject(method={"setBlockState"}, at={@At(value="TAIL")})
-    private void onSetBlockState(class_2338 pos, class_2680 state, boolean moved, CallbackInfoReturnable<class_2680> info) {
+    private void onSetBlockState(class_2338 class_23382, class_2680 class_26802, boolean bl, CallbackInfoReturnable<class_2680> callbackInfoReturnable) {
         if (this.field_12858.field_9236) {
-            MeteorClient.EVENT_BUS.post(BlockUpdateEvent.get(pos, (class_2680)info.getReturnValue(), state));
+            MeteorClient.EVENT_BUS.post(BlockUpdateEvent.get(class_23382, (class_2680)callbackInfoReturnable.getReturnValue(), class_26802));
         }
     }
 }

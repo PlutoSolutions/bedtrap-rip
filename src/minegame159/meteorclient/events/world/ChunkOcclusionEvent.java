@@ -7,15 +7,7 @@ import minegame159.meteorclient.events.Cancellable;
 
 public class ChunkOcclusionEvent
 extends Cancellable {
-    private static final /* synthetic */ ChunkOcclusionEvent INSTANCE;
-
-    public ChunkOcclusionEvent() {
-        ChunkOcclusionEvent llllllllllllllllIllIIlllllIIlIlI;
-    }
-
-    static {
-        INSTANCE = new ChunkOcclusionEvent();
-    }
+    private static final ChunkOcclusionEvent INSTANCE = new ChunkOcclusionEvent();
 
     public static ChunkOcclusionEvent get() {
         INSTANCE.setCancelled(false);

@@ -74,96 +74,96 @@ public abstract class WorldRendererMixin {
     protected abstract void method_22977(class_1297 var1, double var2, double var4, double var6, float var8, class_4587 var9, class_4597 var10);
 
     @Inject(method={"loadEntityOutlineShader"}, at={@At(value="TAIL")})
-    private void onLoadEntityOutlineShader(CallbackInfo info) {
+    private void onLoadEntityOutlineShader(CallbackInfo callbackInfo) {
         Outlines.load();
     }
 
     @Inject(method={"checkEmpty"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onCheckEmpty(class_4587 matrixStack, CallbackInfo info) {
-        info.cancel();
+    private void onCheckEmpty(class_4587 class_45872, CallbackInfo callbackInfo) {
+        callbackInfo.cancel();
     }
 
     @Inject(method={"renderWeather"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onRenderWeather(class_765 manager, float f, double d, double e, double g, CallbackInfo info) {
+    private void onRenderWeather(class_765 class_7652, float f, double d, double d2, double d3, CallbackInfo callbackInfo) {
         if (Modules.get().get(NoRender.class).noWeather()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"drawBlockOutline"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onDrawHighlightedBlockOutline(class_4587 matrixStack, class_4588 vertexConsumer, class_1297 entity, double d, double e, double f, class_2338 blockPos, class_2680 blockState, CallbackInfo info) {
+    private void onDrawHighlightedBlockOutline(class_4587 class_45872, class_4588 class_45882, class_1297 class_12972, double d, double d2, double d3, class_2338 class_23382, class_2680 class_26802, CallbackInfo callbackInfo) {
         if (Modules.get().isActive(BlockSelection.class)) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @ModifyArg(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/render/WorldRenderer;setupTerrain(Lnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/Frustum;ZIZ)V"), index=4)
-    private boolean renderSetupTerrainModifyArg(boolean spectator) {
-        return Modules.get().isActive(Freecam.class) || spectator;
+    private boolean renderSetupTerrainModifyArg(boolean bl) {
+        return Modules.get().isActive(Freecam.class) || bl;
     }
 
     @Inject(method={"render"}, at={@At(value="TAIL")})
-    private void onRenderTail(class_4587 matrices, float tickDelta, long limitTime, boolean renderBlockOutline, class_4184 camera, class_757 gameRenderer, class_765 lightmapTextureManager, class_1159 matrix4f, CallbackInfo info) {
+    private void onRenderTail(class_4587 class_45872, float f, long l, boolean bl, class_4184 class_41842, class_757 class_7572, class_765 class_7652, class_1159 class_11592, CallbackInfo callbackInfo) {
         Blur.render();
     }
 
     @Inject(method={"render"}, at={@At(value="HEAD")})
-    private void onRenderHead(class_4587 matrices, float tickDelta, long limitTime, boolean renderBlockOutline, class_4184 camera, class_757 gameRenderer, class_765 lightmapTextureManager, class_1159 matrix4f, CallbackInfo info) {
+    private void onRenderHead(class_4587 class_45872, float f, long l, boolean bl, class_4184 class_41842, class_757 class_7572, class_765 class_7652, class_1159 class_11592, CallbackInfo callbackInfo) {
         Outlines.beginRender();
     }
 
     @Inject(method={"renderEntity"}, at={@At(value="HEAD")}, cancellable=true)
-    private void renderEntity(class_1297 entity, double cameraX, double cameraY, double cameraZ, float tickDelta, class_4587 matrices, class_4597 vertexConsumers, CallbackInfo info) {
-        if (vertexConsumers == Outlines.vertexConsumerProvider) {
+    private void renderEntity(class_1297 class_12972, double d, double d2, double d3, float f, class_4587 class_45872, class_4597 class_45972, CallbackInfo callbackInfo) {
+        if (class_45972 == Outlines.vertexConsumerProvider) {
             return;
         }
-        ESP esp = Modules.get().get(ESP.class);
-        Color color = esp.getOutlineColor(entity);
-        if (esp.shouldDrawOutline(entity)) {
-            class_276 prevBuffer = this.field_4101;
+        ESP eSP = Modules.get().get(ESP.class);
+        Color color = eSP.getOutlineColor(class_12972);
+        if (eSP.shouldDrawOutline(class_12972)) {
+            class_276 class_2763 = this.field_4101;
             this.field_4101 = Outlines.outlinesFbo;
-            Outlines.setUniform("width", esp.outlineWidth.get().intValue());
-            Outlines.setUniform("fillOpacity", esp.fillOpacity.get().floatValue() / 255.0f);
-            Outlines.setUniform("shapeMode", esp.shapeMode.get().ordinal());
+            Outlines.setUniform("width", eSP.outlineWidth.get().intValue());
+            Outlines.setUniform("fillOpacity", eSP.fillOpacity.get().floatValue() / 255.0f);
+            Outlines.setUniform("shapeMode", eSP.shapeMode.get().ordinal());
             Outlines.vertexConsumerProvider.method_23286(color.r, color.g, color.b, color.a);
-            this.method_22977(entity, cameraX, cameraY, cameraZ, tickDelta, matrices, (class_4597)Outlines.vertexConsumerProvider);
-            this.field_4101 = prevBuffer;
+            this.method_22977(class_12972, d, d2, d3, f, class_45872, (class_4597)Outlines.vertexConsumerProvider);
+            this.field_4101 = class_2763;
         }
     }
 
     @Inject(method={"render"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/render/OutlineVertexConsumerProvider;draw()V")})
-    private void onRender(class_4587 matrices, float tickDelta, long limitTime, boolean renderBlockOutline, class_4184 camera, class_757 gameRenderer, class_765 lightmapTextureManager, class_1159 matrix4f, CallbackInfo info) {
-        Outlines.endRender(tickDelta);
+    private void onRender(class_4587 class_45872, float f, long l, boolean bl, class_4184 class_41842, class_757 class_7572, class_765 class_7652, class_1159 class_11592, CallbackInfo callbackInfo) {
+        Outlines.endRender(f);
     }
 
     @Inject(method={"drawEntityOutlinesFramebuffer"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/gl/Framebuffer;draw(IIZ)V")})
-    private void onDrawEntityOutlinesFramebuffer(CallbackInfo info) {
+    private void onDrawEntityOutlinesFramebuffer(CallbackInfo callbackInfo) {
         Outlines.renderFbo();
     }
 
     @Inject(method={"onResized"}, at={@At(value="HEAD")})
-    private void onResized(int i, int j, CallbackInfo info) {
-        Outlines.onResized(i, j);
+    private void onResized(int n, int n2, CallbackInfo callbackInfo) {
+        Outlines.onResized(n, n2);
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/EntityRenderDispatcher;shouldRender(Lnet/minecraft/entity/Entity;Lnet/minecraft/client/render/Frustum;DDD)Z"))
-    private <E extends class_1297> boolean shouldRenderRedirect(class_898 entityRenderDispatcher, E entity, class_4604 frustum, double x, double y, double z) {
-        return Modules.get().isActive(Chams.class) || entityRenderDispatcher.method_3950(entity, frustum, x, y, z);
+    private <E extends class_1297> boolean shouldRenderRedirect(class_898 class_8982, E e, class_4604 class_46042, double d, double d2, double d3) {
+        return Modules.get().isActive(Chams.class) || class_8982.method_3950(e, class_46042, d, d2, d3);
     }
 
     @Inject(method={"renderEndSky"}, at={@At(value="INVOKE", target="Lnet/minecraft/client/render/Tessellator;draw()V")})
-    private void onRenderEndSkyDraw(class_4587 matrices, CallbackInfo info) {
+    private void onRenderEndSkyDraw(class_4587 class_45872, CallbackInfo callbackInfo) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.enderCustomSkyColor.get().booleanValue()) {
-            Color customEndSkyColor = ambience.endSkyColor.get();
-            class_289 tessellator = class_289.method_1348();
-            class_287 bufferBuilder = tessellator.method_1349();
-            class_1159 matrix4f = matrices.method_23760().method_23761();
-            bufferBuilder.method_1343();
-            bufferBuilder.method_22918(matrix4f, -100.0f, -100.0f, -100.0f).method_22913(0.0f, 0.0f).method_1336(customEndSkyColor.r, customEndSkyColor.g, customEndSkyColor.b, 255).method_1344();
-            bufferBuilder.method_22918(matrix4f, -100.0f, -100.0f, 100.0f).method_22913(0.0f, 16.0f).method_1336(customEndSkyColor.r, customEndSkyColor.g, customEndSkyColor.b, 255).method_1344();
-            bufferBuilder.method_22918(matrix4f, 100.0f, -100.0f, 100.0f).method_22913(16.0f, 16.0f).method_1336(customEndSkyColor.r, customEndSkyColor.g, customEndSkyColor.b, 255).method_1344();
-            bufferBuilder.method_22918(matrix4f, 100.0f, -100.0f, -100.0f).method_22913(16.0f, 0.0f).method_1336(customEndSkyColor.r, customEndSkyColor.g, customEndSkyColor.b, 255).method_1344();
+            Color color = ambience.endSkyColor.get();
+            class_289 class_2892 = class_289.method_1348();
+            class_287 class_2872 = class_2892.method_1349();
+            class_1159 class_11592 = class_45872.method_23760().method_23761();
+            class_2872.method_1343();
+            class_2872.method_22918(class_11592, -100.0f, -100.0f, -100.0f).method_22913(0.0f, 0.0f).method_1336(color.r, color.g, color.b, 255).method_1344();
+            class_2872.method_22918(class_11592, -100.0f, -100.0f, 100.0f).method_22913(0.0f, 16.0f).method_1336(color.r, color.g, color.b, 255).method_1344();
+            class_2872.method_22918(class_11592, 100.0f, -100.0f, 100.0f).method_22913(16.0f, 16.0f).method_1336(color.r, color.g, color.b, 255).method_1344();
+            class_2872.method_22918(class_11592, 100.0f, -100.0f, -100.0f).method_22913(16.0f, 0.0f).method_1336(color.r, color.g, color.b, 255).method_1344();
         }
     }
 }

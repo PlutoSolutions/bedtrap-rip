@@ -50,96 +50,110 @@ import net.minecraft.class_3532;
 
 public class NukerTwo
 extends Module {
-    private final /* synthetic */ Setting<Boolean> onlySelected;
-    private final /* synthetic */ Setting<Integer> leftBreak;
-    private final /* synthetic */ Setting<Integer> backwardBreak;
-    private final /* synthetic */ Setting<Integer> spamlimit;
-    private final /* synthetic */ Setting<Double> Distance;
-    private final /* synthetic */ Setting<List<class_2248>> selectedBlocks;
-    private final /* synthetic */ Setting<Boolean> itemsaver;
-    private final /* synthetic */ Setting<Boolean> sword;
-    private final /* synthetic */ Setting<Integer> downBreak;
-    private final /* synthetic */ Setting<Integer> upBreak;
-    private final /* synthetic */ Setting<Integer> forwardBreak;
-    /* synthetic */ int limit;
-    private final /* synthetic */ Setting<Double> lagg;
-    private final /* synthetic */ Setting<Boolean> replaceitems;
-    private final /* synthetic */ Setting<Boolean> onlyOnGround;
-    private final /* synthetic */ Setting<Boolean> swing;
-    private final /* synthetic */ Setting<Integer> rightBreak;
+    private final Setting<Boolean> onlySelected;
+    private final Setting<Integer> leftBreak;
+    private final Setting<Integer> backwardBreak;
+    private final Setting<Integer> spamlimit;
+    private final Setting<Double> Distance;
+    private final Setting<List<class_2248>> selectedBlocks;
+    private final Setting<Boolean> itemsaver;
+    static final boolean $assertionsDisabled = !NukerTwo.class.desiredAssertionStatus();
+    private final Setting<Boolean> sword;
+    private final Setting<Integer> downBreak;
+    private final Setting<Integer> upBreak;
+    private final Setting<Integer> forwardBreak;
+    int limit;
+    private final Setting<Double> lagg;
+    private final Setting<Boolean> replaceitems;
+    private final Setting<Boolean> onlyOnGround;
+    private final Setting<Boolean> swing;
+    private final Setting<Integer> rightBreak;
 
-    private boolean swap_item() {
-        NukerTwo lllllllllllllllllllIIlIlIIlIlIll;
-        boolean lllllllllllllllllllIIlIlIIlIlIlI = false;
-        assert (lllllllllllllllllllIIlIlIIlIlIll.mc.field_1724 != null);
-        class_1792 lllllllllllllllllllIIlIlIIlIlIIl = lllllllllllllllllllIIlIlIIlIlIll.mc.field_1724.method_6047().method_7909();
-        for (int lllllllllllllllllllIIlIlIIlIllII = 0; lllllllllllllllllllIIlIlIIlIllII < lllllllllllllllllllIIlIlIIlIlIll.mc.field_1724.field_7514.method_5439(); ++lllllllllllllllllllIIlIlIIlIllII) {
-            if (lllllllllllllllllllIIlIlIIlIlIll.mc.field_1724.field_7514.method_5438(lllllllllllllllllllIIlIlIIlIllII).method_7909() != lllllllllllllllllllIIlIlIIlIlIIl || lllllllllllllllllllIIlIlIIlIlIll.mc.field_1724.field_7514.method_5438(lllllllllllllllllllIIlIlIIlIllII).method_7936() - lllllllllllllllllllIIlIlIIlIlIll.mc.field_1724.field_7514.method_5438(lllllllllllllllllllIIlIlIIlIllII).method_7919() < 31) continue;
-            InvUtils.clickSlot(InvUtils.invIndexToSlotId(lllllllllllllllllllIIlIlIIlIllII), lllllllllllllllllllIIlIlIIlIlIll.mc.field_1724.field_7514.field_7545, class_1713.field_7791);
-            lllllllllllllllllllIIlIlIIlIlIlI = true;
-            break;
-        }
-        return lllllllllllllllllllIIlIlIIlIlIlI;
+    private void lambda$new$0(Boolean bl) {
+        this.toggleitem();
     }
 
-    private double distance(double lllllllllllllllllllIIlIlIlIIIIII, double lllllllllllllllllllIIlIlIIlllIII, double lllllllllllllllllllIIlIlIIllIlll) {
-        NukerTwo lllllllllllllllllllIIlIlIlIIIIIl;
-        assert (lllllllllllllllllllIIlIlIlIIIIIl.mc.field_1724 != null);
-        double lllllllllllllllllllIIlIlIIllllIl = lllllllllllllllllllIIlIlIlIIIIIl.mc.field_1724.method_19538().method_10216() - lllllllllllllllllllIIlIlIlIIIIII;
-        if (lllllllllllllllllllIIlIlIIllllIl < 0.0) {
-            lllllllllllllllllllIIlIlIIllllIl -= 1.0;
+    private boolean swap_item() {
+        boolean bl = false;
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
         }
-        double lllllllllllllllllllIIlIlIIllllII = lllllllllllllllllllIIlIlIlIIIIIl.mc.field_1724.method_19538().method_10214() - lllllllllllllllllllIIlIlIIlllIII;
-        double lllllllllllllllllllIIlIlIIlllIll = lllllllllllllllllllIIlIlIlIIIIIl.mc.field_1724.method_19538().method_10215() - lllllllllllllllllllIIlIlIIllIlll;
-        if (lllllllllllllllllllIIlIlIIlllIll < 0.0) {
-            lllllllllllllllllllIIlIlIIlllIll -= 1.0;
+        class_1792 class_17922 = this.mc.field_1724.method_6047().method_7909();
+        for (int i = 0; i < this.mc.field_1724.field_7514.method_5439(); ++i) {
+            if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_17922 || this.mc.field_1724.field_7514.method_5438(i).method_7936() - this.mc.field_1724.field_7514.method_5438(i).method_7919() < 31) continue;
+            InvUtils.clickSlot(InvUtils.invIndexToSlotId(i), this.mc.field_1724.field_7514.field_7545, class_1713.field_7791);
+            bl = true;
+            break;
         }
-        return class_3532.method_15368((double)(lllllllllllllllllllIIlIlIIllllIl * lllllllllllllllllllIIlIlIIllllIl + lllllllllllllllllllIIlIlIIllllII * lllllllllllllllllllIIlIlIIllllII + lllllllllllllllllllIIlIlIIlllIll * lllllllllllllllllllIIlIlIIlllIll));
+        return bl;
+    }
+
+    private double distance(double d, double d2, double d3) {
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
+        }
+        double d4 = this.mc.field_1724.method_19538().method_10216() - d;
+        if (d4 < 0.0) {
+            d4 -= 1.0;
+        }
+        double d5 = this.mc.field_1724.method_19538().method_10214() - d2;
+        double d6 = this.mc.field_1724.method_19538().method_10215() - d3;
+        if (d6 < 0.0) {
+            d6 -= 1.0;
+        }
+        return class_3532.method_15368((double)(d4 * d4 + d5 * d5 + d6 * d6));
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre lllllllllllllllllllIIlIlIIIIlIII) {
-        NukerTwo lllllllllllllllllllIIlIlIIIIlIIl;
-        assert (lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724 != null);
+    private void onTick(TickEvent.Pre pre) {
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
+        }
         try {
-            if (lllllllllllllllllllIIlIlIIIIlIIl.onlyOnGround.get().booleanValue() && !lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_24828()) {
+            if (this.onlyOnGround.get().booleanValue() && !this.mc.field_1724.method_24828()) {
                 return;
             }
-            if ((double)TickRate.INSTANCE.getTimeSinceLastTick() >= lllllllllllllllllllIIlIlIIIIlIIl.lagg.get()) {
+            if ((double)TickRate.INSTANCE.getTimeSinceLastTick() >= this.lagg.get()) {
                 return;
             }
-            if (lllllllllllllllllllIIlIlIIIIlIIl.sword.get().booleanValue() && lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_6047().method_7909() instanceof class_1829) {
+            if (this.sword.get().booleanValue() && this.mc.field_1724.method_6047().method_7909() instanceof class_1829) {
                 return;
             }
-            lllllllllllllllllllIIlIlIIIIlIIl.limit = 0;
-            int lllllllllllllllllllIIlIlIIIIllII = lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_24515().method_10263();
-            int lllllllllllllllllllIIlIlIIIIlIll = lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_24515().method_10264();
-            int lllllllllllllllllllIIlIlIIIIlIlI = lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_24515().method_10260();
-            for (int lllllllllllllllllllIIlIlIIIIllIl = lllllllllllllllllllIIlIlIIIIllII - lllllllllllllllllllIIlIlIIIIlIIl.forwardBreak.get(); lllllllllllllllllllIIlIlIIIIllIl <= lllllllllllllllllllIIlIlIIIIllII + lllllllllllllllllllIIlIlIIIIlIIl.backwardBreak.get(); ++lllllllllllllllllllIIlIlIIIIllIl) {
-                for (int lllllllllllllllllllIIlIlIIIIlllI = lllllllllllllllllllIIlIlIIIIlIlI - lllllllllllllllllllIIlIlIIIIlIIl.rightBreak.get(); lllllllllllllllllllIIlIlIIIIlllI <= lllllllllllllllllllIIlIlIIIIlIlI + lllllllllllllllllllIIlIlIIIIlIIl.leftBreak.get(); ++lllllllllllllllllllIIlIlIIIIlllI) {
-                    for (int lllllllllllllllllllIIlIlIIIIllll = lllllllllllllllllllIIlIlIIIIlIll - lllllllllllllllllllIIlIlIIIIlIIl.downBreak.get(); lllllllllllllllllllIIlIlIIIIllll <= lllllllllllllllllllIIlIlIIIIlIll + lllllllllllllllllllIIlIlIIIIlIIl.upBreak.get() - 1; ++lllllllllllllllllllIIlIlIIIIllll) {
-                        class_2338 lllllllllllllllllllIIlIlIIIlIIII = new class_2338(lllllllllllllllllllIIlIlIIIIllIl, lllllllllllllllllllIIlIlIIIIllll, lllllllllllllllllllIIlIlIIIIlllI);
-                        assert (lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1687 != null);
-                        if (lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1687.method_8320(lllllllllllllllllllIIlIlIIIlIIII).method_26218((class_1922)lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1687, lllllllllllllllllllIIlIlIIIlIIII) == class_259.method_1073() || lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1687.method_8320(lllllllllllllllllllIIlIlIIIlIIII).method_26204() == class_2246.field_9987 || !(lllllllllllllllllllIIlIlIIIIlIIl.distance(lllllllllllllllllllIIlIlIIIlIIII.method_10263(), lllllllllllllllllllIIlIlIIIlIIII.method_10264(), lllllllllllllllllllIIlIlIIIlIIII.method_10260()) < lllllllllllllllllllIIlIlIIIIlIIl.Distance.get()) || lllllllllllllllllllIIlIlIIIIlIIl.onlySelected.get().booleanValue() && !lllllllllllllllllllIIlIlIIIIlIIl.selectedBlocks.get().contains((Object)lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1687.method_8320(lllllllllllllllllllIIlIlIIIlIIII).method_26204())) continue;
-                        if (lllllllllllllllllllIIlIlIIIIlIIl.limit > lllllllllllllllllllIIlIlIIIIlIIl.spamlimit.get()) {
+            this.limit = 0;
+            int n = this.mc.field_1724.method_24515().method_10263();
+            int n2 = this.mc.field_1724.method_24515().method_10264();
+            int n3 = this.mc.field_1724.method_24515().method_10260();
+            for (int i = n - this.forwardBreak.get(); i <= n + this.backwardBreak.get(); ++i) {
+                for (int j = n3 - this.rightBreak.get(); j <= n3 + this.leftBreak.get(); ++j) {
+                    for (int k = n2 - this.downBreak.get(); k <= n2 + this.upBreak.get() - 1; ++k) {
+                        class_2338 class_23382 = new class_2338(i, k, j);
+                        if (!$assertionsDisabled && this.mc.field_1687 == null) {
+                            throw new AssertionError();
+                        }
+                        if (this.mc.field_1687.method_8320(class_23382).method_26218((class_1922)this.mc.field_1687, class_23382) == class_259.method_1073() || this.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_9987 || !(this.distance(class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) < this.Distance.get()) || this.onlySelected.get().booleanValue() && !this.selectedBlocks.get().contains((Object)this.mc.field_1687.method_8320(class_23382).method_26204())) continue;
+                        if (this.limit > this.spamlimit.get()) {
                             return;
                         }
-                        if (lllllllllllllllllllIIlIlIIIIlIIl.itemsaver.get().booleanValue() && lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_6047().method_7919() != 0 && lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_6047().method_7936() - lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_6047().method_7919() < 31) {
-                            if (lllllllllllllllllllIIlIlIIIIlIIl.replaceitems.get().booleanValue() && lllllllllllllllllllIIlIlIIIIlIIl.swap_item()) {
+                        if (this.itemsaver.get().booleanValue() && this.mc.field_1724.method_6047().method_7919() != 0 && this.mc.field_1724.method_6047().method_7936() - this.mc.field_1724.method_6047().method_7919() < 31) {
+                            if (this.replaceitems.get().booleanValue() && this.swap_item()) {
                                 return;
                             }
                             ChatUtils.info("Your pickaxe durability is low!", new Object[0]);
-                            lllllllllllllllllllIIlIlIIIIlIIl.toggle();
+                            this.toggle();
                             return;
                         }
-                        if (lllllllllllllllllllIIlIlIIIIlIIl.swing.get().booleanValue()) {
-                            lllllllllllllllllllIIlIlIIIIlIIl.mc.field_1724.method_6104(class_1268.field_5808);
+                        if (this.swing.get().booleanValue()) {
+                            this.mc.field_1724.method_6104(class_1268.field_5808);
                         }
-                        lllllllllllllllllllIIlIlIIIIlIIl.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12968, lllllllllllllllllllIIlIlIIIlIIII, class_2350.field_11036));
-                        lllllllllllllllllllIIlIlIIIIlIIl.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, lllllllllllllllllllIIlIlIIIlIIII, class_2350.field_11036));
-                        lllllllllllllllllllIIlIlIIIIlIIl.limit += 2;
+                        this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12968, class_23382, class_2350.field_11036));
+                        this.mc.method_1562().method_2883((class_2596)new class_2846(class_2846.class_2847.field_12973, class_23382, class_2350.field_11036));
+                        this.limit += 2;
+                        if (-1 < 2) continue;
+                        return;
                     }
                 }
+                if (2 < 3) continue;
+                return;
             }
         }
         catch (Exception exception) {
@@ -147,51 +161,46 @@ extends Module {
         }
     }
 
+    private void lambda$new$1(Boolean bl) {
+        this.togglereplace();
+    }
+
     private void togglereplace() {
-        NukerTwo lllllllllllllllllllIIlIlIIlIIIll;
-        if (lllllllllllllllllllIIlIlIIlIIIll.replaceitems.get().booleanValue() && !lllllllllllllllllllIIlIlIIlIIIll.itemsaver.get().booleanValue()) {
-            lllllllllllllllllllIIlIlIIlIIIll.itemsaver.set(true);
+        if (this.replaceitems.get().booleanValue() && !this.itemsaver.get().booleanValue()) {
+            this.itemsaver.set(true);
         }
     }
 
     public NukerTwo() {
         super(Categories.BedTrap, "nuker+", "Breaks a large amount of specified blocks around you.");
-        NukerTwo lllllllllllllllllllIIlIlIIIllIlI;
-        SettingGroup lllllllllllllllllllIIlIlIIIllIll = lllllllllllllllllllIIlIlIIIllIlI.settings.getDefaultGroup();
-        lllllllllllllllllllIIlIlIIIllIlI.onlyOnGround = lllllllllllllllllllIIlIlIIIllIll.add(new BoolSetting.Builder().name("only-on-ground").description("Works only when you standing on blocks.").defaultValue(true).build());
-        lllllllllllllllllllIIlIlIIIllIlI.itemsaver = lllllllllllllllllllIIlIlIIIllIll.add(new BoolSetting.Builder().name("save-items").description("Prevent destruction of tools.").defaultValue(true).onChanged(lllllllllllllllllllIIlIIlllllIIl -> {
-            NukerTwo lllllllllllllllllllIIlIIlllllIlI;
-            lllllllllllllllllllIIlIIlllllIlI.toggleitem();
-        }).build());
-        lllllllllllllllllllIIlIlIIIllIlI.replaceitems = lllllllllllllllllllIIlIlIIIllIll.add(new BoolSetting.Builder().name("replace-items").description("Replace tools before breakage.").defaultValue(true).onChanged(lllllllllllllllllllIIlIIllllllIl -> {
-            NukerTwo lllllllllllllllllllIIlIIllllllII;
-            lllllllllllllllllllIIlIIllllllII.togglereplace();
-        }).build());
-        lllllllllllllllllllIIlIlIIIllIlI.sword = lllllllllllllllllllIIlIlIIIllIll.add(new BoolSetting.Builder().name("stop-on-sword").description("Pause nuker if sword in main hand.").defaultValue(true).build());
-        lllllllllllllllllllIIlIlIIIllIlI.swing = lllllllllllllllllllIIlIlIIIllIll.add(new BoolSetting.Builder().name("swing").description("Swing mainhand.").defaultValue(true).build());
-        lllllllllllllllllllIIlIlIIIllIlI.spamlimit = lllllllllllllllllllIIlIlIIIllIll.add(new IntSetting.Builder().name("speed").description("Block break speed.").defaultValue(25).min(1).sliderMin(1).sliderMax(100).build());
-        lllllllllllllllllllIIlIlIIIllIlI.lagg = lllllllllllllllllllIIlIlIIIllIll.add(new DoubleSetting.Builder().name("stop-on-lags").description("Pause on server lagging. (Time since last tick)").defaultValue(0.8).min(0.1).max(5.0).sliderMin(0.1).sliderMax(5.0).build());
-        lllllllllllllllllllIIlIlIIIllIlI.Distance = lllllllllllllllllllIIlIlIIIllIll.add(new DoubleSetting.Builder().name("distance").description("Maximum distance.").defaultValue(6.6).build());
-        lllllllllllllllllllIIlIlIIIllIlI.onlySelected = lllllllllllllllllllIIlIlIIIllIll.add(new BoolSetting.Builder().name("only-selected").description("Only mines your selected blocks.").defaultValue(false).build());
-        lllllllllllllllllllIIlIlIIIllIlI.selectedBlocks = lllllllllllllllllllIIlIlIIIllIll.add(new BlockListSetting.Builder().name("selected-blocks").description("The certain type of blocks you want to mine.").defaultValue(new ArrayList<class_2248>(0)).build());
-        lllllllllllllllllllIIlIlIIIllIlI.leftBreak = lllllllllllllllllllIIlIlIIIllIll.add(new IntSetting.Builder().name("left").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
-        lllllllllllllllllllIIlIlIIIllIlI.rightBreak = lllllllllllllllllllIIlIlIIIllIll.add(new IntSetting.Builder().name("right").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
-        lllllllllllllllllllIIlIlIIIllIlI.forwardBreak = lllllllllllllllllllIIlIlIIIllIll.add(new IntSetting.Builder().name("forward").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
-        lllllllllllllllllllIIlIlIIIllIlI.backwardBreak = lllllllllllllllllllIIlIlIIIllIll.add(new IntSetting.Builder().name("backward").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
-        lllllllllllllllllllIIlIlIIIllIlI.upBreak = lllllllllllllllllllIIlIlIIIllIll.add(new IntSetting.Builder().name("up").defaultValue(1).min(1).max(6).sliderMin(1).sliderMax(6).build());
-        lllllllllllllllllllIIlIlIIIllIlI.downBreak = lllllllllllllllllllIIlIlIIIllIll.add(new IntSetting.Builder().name("down").defaultValue(0).min(0).max(7).sliderMin(0).sliderMax(7).build());
-        lllllllllllllllllllIIlIlIIIllIlI.limit = 0;
+        SettingGroup settingGroup = this.settings.getDefaultGroup();
+        this.onlyOnGround = settingGroup.add(new BoolSetting.Builder().name("only-on-ground").description("Works only when you standing on blocks.").defaultValue(true).build());
+        this.itemsaver = settingGroup.add(new BoolSetting.Builder().name("save-items").description("Prevent destruction of tools.").defaultValue(true).onChanged(this::lambda$new$0).build());
+        this.replaceitems = settingGroup.add(new BoolSetting.Builder().name("replace-items").description("Replace tools before breakage.").defaultValue(true).onChanged(this::lambda$new$1).build());
+        this.sword = settingGroup.add(new BoolSetting.Builder().name("stop-on-sword").description("Pause nuker if sword in main hand.").defaultValue(true).build());
+        this.swing = settingGroup.add(new BoolSetting.Builder().name("swing").description("Swing mainhand.").defaultValue(true).build());
+        this.spamlimit = settingGroup.add(new IntSetting.Builder().name("speed").description("Block break speed.").defaultValue(25).min(1).sliderMin(1).sliderMax(100).build());
+        this.lagg = settingGroup.add(new DoubleSetting.Builder().name("stop-on-lags").description("Pause on server lagging. (Time since last tick)").defaultValue(0.8).min(0.1).max(5.0).sliderMin(0.1).sliderMax(5.0).build());
+        this.Distance = settingGroup.add(new DoubleSetting.Builder().name("distance").description("Maximum distance.").defaultValue(6.6).build());
+        this.onlySelected = settingGroup.add(new BoolSetting.Builder().name("only-selected").description("Only mines your selected blocks.").defaultValue(false).build());
+        this.selectedBlocks = settingGroup.add(new BlockListSetting.Builder().name("selected-blocks").description("The certain type of blocks you want to mine.").defaultValue(new ArrayList<class_2248>(0)).build());
+        this.leftBreak = settingGroup.add(new IntSetting.Builder().name("left").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
+        this.rightBreak = settingGroup.add(new IntSetting.Builder().name("right").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
+        this.forwardBreak = settingGroup.add(new IntSetting.Builder().name("forward").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
+        this.backwardBreak = settingGroup.add(new IntSetting.Builder().name("backward").defaultValue(1).min(0).max(6).sliderMin(0).sliderMax(6).build());
+        this.upBreak = settingGroup.add(new IntSetting.Builder().name("up").defaultValue(1).min(1).max(6).sliderMin(1).sliderMax(6).build());
+        this.downBreak = settingGroup.add(new IntSetting.Builder().name("down").defaultValue(0).min(0).max(7).sliderMin(0).sliderMax(7).build());
+        this.limit = 0;
     }
 
     @Override
     public void onActivate() {
-        lllllllllllllllllllIIlIlIIllIIlI.limit = 0;
+        this.limit = 0;
     }
 
     private void toggleitem() {
-        NukerTwo lllllllllllllllllllIIlIlIIIlllll;
-        if (lllllllllllllllllllIIlIlIIIlllll.replaceitems.get().booleanValue() && !lllllllllllllllllllIIlIlIIIlllll.itemsaver.get().booleanValue()) {
-            lllllllllllllllllllIIlIlIIIlllll.replaceitems.set(false);
+        if (this.replaceitems.get().booleanValue() && !this.itemsaver.get().booleanValue()) {
+            this.replaceitems.set(false);
         }
     }
 }

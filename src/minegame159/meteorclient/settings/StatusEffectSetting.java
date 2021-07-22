@@ -27,123 +27,123 @@ import net.minecraft.class_2960;
 public class StatusEffectSetting
 extends Setting<Object2IntMap<class_1291>> {
     @Override
-    protected boolean isValueValid(Object2IntMap<class_1291> lIIlIlIIlIllIlI) {
+    protected boolean isValueValid(Object2IntMap<class_1291> object2IntMap) {
         return true;
     }
 
     @Override
-    public void reset(boolean lIIlIlIIllllIlI) {
-        StatusEffectSetting lIIlIlIIllllIll;
-        lIIlIlIIllllIll.value = new Object2IntArrayMap((Object2IntMap)lIIlIlIIllllIll.defaultValue);
-        if (lIIlIlIIllllIlI) {
-            lIIlIlIIllllIll.changed();
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    @Override
+    public void reset(boolean bl) {
+        this.value = new Object2IntArrayMap((Object2IntMap)this.defaultValue);
+        if (bl) {
+            this.changed();
         }
     }
 
     @Override
-    public Object2IntMap<class_1291> fromTag(class_2487 lIIlIlIIIllllll) {
-        StatusEffectSetting lIIlIlIIlIIIIII;
-        ((Object2IntMap)lIIlIlIIlIIIIII.get()).clear();
-        class_2487 lIIlIlIIIlllllI = lIIlIlIIIllllll.method_10562("value");
-        for (String lIIlIlIIlIIIIIl : lIIlIlIIIlllllI.method_10541()) {
-            class_1291 lIIlIlIIlIIIIlI = (class_1291)class_2378.field_11159.method_10223(new class_2960(lIIlIlIIlIIIIIl));
-            if (lIIlIlIIlIIIIlI == null) continue;
-            ((Object2IntMap)lIIlIlIIlIIIIII.get()).put((Object)lIIlIlIIlIIIIlI, lIIlIlIIIlllllI.method_10550(lIIlIlIIlIIIIIl));
+    public Object2IntMap<class_1291> fromTag(class_2487 class_24872) {
+        ((Object2IntMap)this.get()).clear();
+        class_2487 class_24873 = class_24872.method_10562("value");
+        for (String string : class_24873.method_10541()) {
+            class_1291 class_12912 = (class_1291)class_2378.field_11159.method_10223(new class_2960(string));
+            if (class_12912 == null) continue;
+            ((Object2IntMap)this.get()).put((Object)class_12912, class_24873.method_10550(string));
         }
-        lIIlIlIIlIIIIII.changed();
-        return (Object2IntMap)lIIlIlIIlIIIIII.get();
+        this.changed();
+        return (Object2IntMap)this.get();
     }
 
     @Override
-    protected Object2IntMap<class_1291> parseImpl(String lIIlIlIIllIlIII) {
-        String[] lIIlIlIIllIIlll = lIIlIlIIllIlIII.split(",");
-        Object2IntMap<class_1291> lIIlIlIIllIIllI = Utils.createStatusEffectMap();
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    @Override
+    protected Object2IntMap<class_1291> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        Object2IntMap<class_1291> object2IntMap = Utils.createStatusEffectMap();
         try {
-            for (String lIIlIlIIllIlIlI : lIIlIlIIllIIlll) {
-                String[] lIIlIlIIllIllIl = lIIlIlIIllIlIlI.split(" ");
-                class_1291 lIIlIlIIllIllII = (class_1291)StatusEffectSetting.parseId(class_2378.field_11159, lIIlIlIIllIllIl[0]);
-                int lIIlIlIIllIlIll = Integer.parseInt(lIIlIlIIllIllIl[1]);
-                lIIlIlIIllIIllI.put((Object)lIIlIlIIllIllII, lIIlIlIIllIlIll);
+            for (String string2 : arrstring) {
+                String[] arrstring2 = string2.split(" ");
+                class_1291 class_12912 = (class_1291)StatusEffectSetting.parseId(class_2378.field_11159, arrstring2[0]);
+                int n = Integer.parseInt(arrstring2[1]);
+                object2IntMap.put((Object)class_12912, n);
+                if (2 <= 2) continue;
+                return null;
             }
         }
-        catch (Exception lIIlIlIIllIIIlI) {
+        catch (Exception exception) {
             // empty catch block
         }
-        return lIIlIlIIllIIllI;
+        return object2IntMap;
     }
 
-    public StatusEffectSetting(String lIIlIlIlIIIlIlI, String lIIlIlIlIIIIIlI, Object2IntMap<class_1291> lIIlIlIlIIIlIII, Consumer<Object2IntMap<class_1291>> lIIlIlIlIIIIIII, Consumer<Setting<Object2IntMap<class_1291>>> lIIlIlIlIIIIllI, IVisible lIIlIlIlIIIIlIl) {
-        super(lIIlIlIlIIIlIlI, lIIlIlIlIIIIIlI, lIIlIlIlIIIlIII, lIIlIlIlIIIIIII, lIIlIlIlIIIIllI, lIIlIlIlIIIIlIl);
-        StatusEffectSetting lIIlIlIlIIIlIll;
+    @Override
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((Object2IntMap<class_1291>)((Object2IntMap)object));
+    }
+
+    public StatusEffectSetting(String string, String string2, Object2IntMap<class_1291> object2IntMap, Consumer<Object2IntMap<class_1291>> consumer, Consumer<Setting<Object2IntMap<class_1291>>> consumer2, IVisible iVisible) {
+        super(string, string2, object2IntMap, consumer, consumer2, iVisible);
     }
 
     @Override
     public class_2487 toTag() {
-        StatusEffectSetting lIIlIlIIlIlIIIl;
-        class_2487 lIIlIlIIlIlIIII = lIIlIlIIlIlIIIl.saveGeneral();
-        class_2487 lIIlIlIIlIIllll = new class_2487();
-        for (class_1291 lIIlIlIIlIlIIlI : ((Object2IntMap)lIIlIlIIlIlIIIl.get()).keySet()) {
-            class_2960 lIIlIlIIlIlIIll = class_2378.field_11159.method_10221((Object)lIIlIlIIlIlIIlI);
-            if (lIIlIlIIlIlIIll == null) continue;
-            lIIlIlIIlIIllll.method_10569(lIIlIlIIlIlIIll.toString(), ((Object2IntMap)lIIlIlIIlIlIIIl.get()).getInt((Object)lIIlIlIIlIlIIlI));
+        class_2487 class_24872 = this.saveGeneral();
+        class_2487 class_24873 = new class_2487();
+        for (class_1291 class_12912 : ((Object2IntMap)this.get()).keySet()) {
+            class_2960 class_29602 = class_2378.field_11159.method_10221((Object)class_12912);
+            if (class_29602 == null) continue;
+            class_24873.method_10569(class_29602.toString(), ((Object2IntMap)this.get()).getInt((Object)class_12912));
         }
-        lIIlIlIIlIlIIII.method_10566("value", (class_2520)lIIlIlIIlIIllll);
-        return lIIlIlIIlIlIIII;
+        class_24872.method_10566("value", (class_2520)class_24873);
+        return class_24872;
     }
 
     public static class Builder {
-        private /* synthetic */ String description;
-        private /* synthetic */ Consumer<Setting<Object2IntMap<class_1291>>> onModuleActivated;
-        private /* synthetic */ String name;
-        private /* synthetic */ Consumer<Object2IntMap<class_1291>> onChanged;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ Object2IntMap<class_1291> defaultValue;
+        private String description = "";
+        private Consumer<Setting<Object2IntMap<class_1291>>> onModuleActivated;
+        private String name = "undefined";
+        private Consumer<Object2IntMap<class_1291>> onChanged;
+        private IVisible visible;
+        private Object2IntMap<class_1291> defaultValue;
 
         public StatusEffectSetting build() {
-            Builder lIlIlllIllIl;
-            return new StatusEffectSetting(lIlIlllIllIl.name, lIlIlllIllIl.description, lIlIlllIllIl.defaultValue, lIlIlllIllIl.onChanged, lIlIlllIllIl.onModuleActivated, lIlIlllIllIl.visible);
+            return new StatusEffectSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
 
-        public Builder onChanged(Consumer<Object2IntMap<class_1291>> lIllIIIIIlIl) {
-            Builder lIllIIIIIlll;
-            lIllIIIIIlll.onChanged = lIllIIIIIlIl;
-            return lIllIIIIIlll;
+        public Builder onChanged(Consumer<Object2IntMap<class_1291>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder() {
-            Builder lIllIIllIIll;
-            lIllIIllIIll.name = "undefined";
-            lIllIIllIIll.description = "";
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder description(String lIllIIIlIIlI) {
-            Builder lIllIIIlIlII;
-            lIllIIIlIlII.description = lIllIIIlIIlI;
-            return lIllIIIlIlII;
+        public Builder onModuleActivated(Consumer<Setting<Object2IntMap<class_1291>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<Object2IntMap<class_1291>>> lIlIlllllIII) {
-            Builder lIlIlllllIlI;
-            lIlIlllllIlI.onModuleActivated = lIlIlllllIII;
-            return lIlIlllllIlI;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder visible(IVisible lIlIllllIIII) {
-            Builder lIlIllllIIIl;
-            lIlIllllIIIl.visible = lIlIllllIIII;
-            return lIlIllllIIIl;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder name(String lIllIIlIIIII) {
-            Builder lIllIIlIIllI;
-            lIllIIlIIllI.name = lIllIIlIIIII;
-            return lIllIIlIIllI;
-        }
-
-        public Builder defaultValue(Object2IntMap<class_1291> lIllIIIIllIl) {
-            Builder lIllIIIIllII;
-            lIllIIIIllII.defaultValue = lIllIIIIllIl;
-            return lIllIIIIllII;
+        public Builder defaultValue(Object2IntMap<class_1291> object2IntMap) {
+            this.defaultValue = object2IntMap;
+            return this;
         }
     }
 }

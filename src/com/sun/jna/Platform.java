@@ -11,29 +11,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class Platform {
-    public static final /* synthetic */ boolean HAS_DLL_CALLBACKS;
-    public static final /* synthetic */ int KFREEBSD;
-    public static final /* synthetic */ int GNU;
-    public static final /* synthetic */ int AIX;
-    public static final /* synthetic */ int MAC;
-    public static final /* synthetic */ int SOLARIS;
-    public static final /* synthetic */ boolean HAS_AWT;
-    public static final /* synthetic */ String C_LIBRARY_NAME;
-    public static final /* synthetic */ int FREEBSD;
-    public static final /* synthetic */ int WINDOWSCE;
-    public static final /* synthetic */ boolean RO_FIELDS;
-    public static final /* synthetic */ int NETBSD;
-    public static final /* synthetic */ String MATH_LIBRARY_NAME;
-    public static final /* synthetic */ int UNSPECIFIED;
-    public static final /* synthetic */ int WINDOWS;
-    public static final /* synthetic */ String ARCH;
-    public static final /* synthetic */ int ANDROID;
-    public static final /* synthetic */ int LINUX;
-    public static final /* synthetic */ boolean HAS_JAWT;
-    private static final /* synthetic */ int osType;
-    public static final /* synthetic */ boolean HAS_BUFFERS;
-    public static final /* synthetic */ String RESOURCE_PREFIX;
-    public static final /* synthetic */ int OPENBSD;
+    public static final boolean HAS_DLL_CALLBACKS;
+    public static final int KFREEBSD;
+    public static final int GNU;
+    public static final int AIX;
+    public static final int MAC;
+    public static final int SOLARIS;
+    public static final boolean HAS_AWT;
+    public static final String C_LIBRARY_NAME;
+    public static final int FREEBSD;
+    public static final int WINDOWSCE;
+    public static final boolean RO_FIELDS;
+    public static final int NETBSD;
+    public static final String MATH_LIBRARY_NAME;
+    public static final int UNSPECIFIED;
+    public static final int WINDOWS;
+    public static final String ARCH;
+    public static final int ANDROID;
+    public static final int LINUX;
+    public static final boolean HAS_JAWT;
+    private static final int osType;
+    public static final boolean HAS_BUFFERS;
+    public static final String RESOURCE_PREFIX;
+    public static final int OPENBSD;
 
     public static final boolean isGNU() {
         return osType == 9;
@@ -52,7 +52,6 @@ public final class Platform {
     }
 
     private Platform() {
-        Platform lllllllllllllllllIIlIIIIIlIIIIIl;
     }
 
     public static final boolean isARM() {
@@ -97,8 +96,8 @@ public final class Platform {
         MAC = 0;
         AIX = 7;
         GNU = 9;
-        String lllllllllllllllllIIlIIIIIIIIIlIl = System.getProperty("os.name");
-        if (lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("Linux")) {
+        String string = System.getProperty("os.name");
+        if (string.startsWith("Linux")) {
             if ("dalvik".equals(System.getProperty("java.vm.name").toLowerCase())) {
                 osType = 8;
                 System.setProperty("jna.nounpack", "true");
@@ -106,21 +105,21 @@ public final class Platform {
                 osType = 1;
             }
         } else {
-            osType = lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("AIX") ? 7 : (lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("Mac") || lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("Darwin") ? 0 : (lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("Windows CE") ? 6 : (lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("Windows") ? 2 : (lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("Solaris") || lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("SunOS") ? 3 : (lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("FreeBSD") ? 4 : (lllllllllllllllllIIlIIIIIIIIIlIl.startsWith("OpenBSD") ? 5 : (lllllllllllllllllIIlIIIIIIIIIlIl.equalsIgnoreCase("gnu") ? 9 : (lllllllllllllllllIIlIIIIIIIIIlIl.equalsIgnoreCase("gnu/kfreebsd") ? 10 : (lllllllllllllllllIIlIIIIIIIIIlIl.equalsIgnoreCase("netbsd") ? 11 : -1)))))))));
+            osType = string.startsWith("AIX") ? 7 : (string.startsWith("Mac") || string.startsWith("Darwin") ? 0 : (string.startsWith("Windows CE") ? 6 : (string.startsWith("Windows") ? 2 : (string.startsWith("Solaris") || string.startsWith("SunOS") ? 3 : (string.startsWith("FreeBSD") ? 4 : (string.startsWith("OpenBSD") ? 5 : (string.equalsIgnoreCase("gnu") ? 9 : (string.equalsIgnoreCase("gnu/kfreebsd") ? 10 : (string.equalsIgnoreCase("netbsd") ? 11 : -1)))))))));
         }
-        boolean lllllllllllllllllIIlIIIIIIIIIlII = false;
+        boolean bl = false;
         try {
             Class.forName("java.nio.Buffer");
-            lllllllllllllllllIIlIIIIIIIIIlII = true;
+            bl = true;
         }
-        catch (ClassNotFoundException lllllllllllllllllIIlIIIIIIIIIIIl) {
+        catch (ClassNotFoundException classNotFoundException) {
             // empty catch block
         }
         HAS_AWT = osType != 6 && osType != 8 && osType != 7;
         HAS_JAWT = HAS_AWT && osType != 0;
-        HAS_BUFFERS = lllllllllllllllllIIlIIIIIIIIIlII;
-        boolean bl = RO_FIELDS = osType != 6;
-        String string = osType == 2 ? "msvcrt" : (C_LIBRARY_NAME = osType == 6 ? "coredll" : "c");
+        HAS_BUFFERS = bl;
+        boolean bl2 = RO_FIELDS = osType != 6;
+        String string2 = osType == 2 ? "msvcrt" : (C_LIBRARY_NAME = osType == 6 ? "coredll" : "c");
         MATH_LIBRARY_NAME = osType == 2 ? "msvcrt" : (osType == 6 ? "coredll" : "m");
         HAS_DLL_CALLBACKS = osType == 2;
         ARCH = Platform.getCanonicalArchitecture(System.getProperty("os.arch"), Platform.isSoftFloat());
@@ -147,27 +146,27 @@ public final class Platform {
         return osType == 6;
     }
 
-    static String getCanonicalArchitecture(String lllllllllllllllllIIlIIIIIIlllIll, boolean lllllllllllllllllIIlIIIIIIlllIII) {
-        if ("powerpc".equals(lllllllllllllllllIIlIIIIIIlllIll = lllllllllllllllllIIlIIIIIIlllIll.toLowerCase().trim())) {
-            lllllllllllllllllIIlIIIIIIlllIll = "ppc";
-        } else if ("powerpc64".equals(lllllllllllllllllIIlIIIIIIlllIll)) {
-            lllllllllllllllllIIlIIIIIIlllIll = "ppc64";
-        } else if ("i386".equals(lllllllllllllllllIIlIIIIIIlllIll) || "i686".equals(lllllllllllllllllIIlIIIIIIlllIll)) {
-            lllllllllllllllllIIlIIIIIIlllIll = "x86";
-        } else if ("x86_64".equals(lllllllllllllllllIIlIIIIIIlllIll) || "amd64".equals(lllllllllllllllllIIlIIIIIIlllIll)) {
-            lllllllllllllllllIIlIIIIIIlllIll = "x86-64";
+    static String getCanonicalArchitecture(String string, boolean bl) {
+        if ("powerpc".equals(string = string.toLowerCase().trim())) {
+            string = "ppc";
+        } else if ("powerpc64".equals(string)) {
+            string = "ppc64";
+        } else if ("i386".equals(string) || "i686".equals(string)) {
+            string = "x86";
+        } else if ("x86_64".equals(string) || "amd64".equals(string)) {
+            string = "x86-64";
         }
-        if ("ppc64".equals(lllllllllllllllllIIlIIIIIIlllIll) && "little".equals(System.getProperty("sun.cpu.endian"))) {
-            lllllllllllllllllIIlIIIIIIlllIll = "ppc64le";
+        if ("ppc64".equals(string) && "little".equals(System.getProperty("sun.cpu.endian"))) {
+            string = "ppc64le";
         }
-        if ("arm".equals(lllllllllllllllllIIlIIIIIIlllIll) && lllllllllllllllllIIlIIIIIIlllIII) {
-            lllllllllllllllllIIlIIIIIIlllIll = "armel";
+        if ("arm".equals(string) && bl) {
+            string = "armel";
         }
-        return lllllllllllllllllIIlIIIIIIlllIll;
+        return string;
     }
 
-    static String getNativeLibraryResourcePrefix(int lllllllllllllllllIIlIIIIIIlIIlll, String lllllllllllllllllIIlIIIIIIlIlIIl, String lllllllllllllllllIIlIIIIIIlIIlIl) {
-        return Platform.getNativeLibraryResourcePrefix(lllllllllllllllllIIlIIIIIIlIIlll, lllllllllllllllllIIlIIIIIIlIlIIl, lllllllllllllllllIIlIIIIIIlIIlIl, Platform.isSoftFloat());
+    static String getNativeLibraryResourcePrefix(int n, String string, String string2) {
+        return Platform.getNativeLibraryResourcePrefix(n, string, string2, Platform.isSoftFloat());
     }
 
     public static final boolean isWindows() {
@@ -175,9 +174,9 @@ public final class Platform {
     }
 
     public static final boolean is64Bit() {
-        String lllllllllllllllllIIlIIIIIIllllll = System.getProperty("sun.arch.data.model", System.getProperty("com.ibm.vm.bitmode"));
-        if (lllllllllllllllllIIlIIIIIIllllll != null) {
-            return "64".equals(lllllllllllllllllIIlIIIIIIllllll);
+        String string = System.getProperty("sun.arch.data.model", System.getProperty("com.ibm.vm.bitmode"));
+        if (string != null) {
+            return "64".equals(string);
         }
         if ("x86-64".equals(ARCH) || "ia64".equals(ARCH) || "ppc64".equals(ARCH) || "ppc64le".equals(ARCH) || "sparcv9".equals(ARCH) || "amd64".equals(ARCH)) {
             return true;
@@ -186,80 +185,80 @@ public final class Platform {
     }
 
     static String getNativeLibraryResourcePrefix() {
-        String lllllllllllllllllIIlIIIIIIlIllll = System.getProperty("jna.prefix");
-        if (lllllllllllllllllIIlIIIIIIlIllll != null) {
-            return lllllllllllllllllIIlIIIIIIlIllll;
+        String string = System.getProperty("jna.prefix");
+        if (string != null) {
+            return string;
         }
         return Platform.getNativeLibraryResourcePrefix(Platform.getOSType(), System.getProperty("os.arch"), System.getProperty("os.name"));
     }
 
-    static String getNativeLibraryResourcePrefix(int lllllllllllllllllIIlIIIIIIIIlllI, String lllllllllllllllllIIlIIIIIIIIllIl, String lllllllllllllllllIIlIIIIIIIIllII, boolean lllllllllllllllllIIlIIIIIIIlIIII) {
-        String lllllllllllllllllIIlIIIIIIIIllll;
-        lllllllllllllllllIIlIIIIIIIIllIl = Platform.getCanonicalArchitecture(lllllllllllllllllIIlIIIIIIIIllIl, lllllllllllllllllIIlIIIIIIIlIIII);
-        switch (lllllllllllllllllIIlIIIIIIIIlllI) {
+    static String getNativeLibraryResourcePrefix(int n, String string, String string2, boolean bl) {
+        String string3;
+        string = Platform.getCanonicalArchitecture(string, bl);
+        switch (n) {
             case 8: {
-                if (lllllllllllllllllIIlIIIIIIIIllIl.startsWith("arm")) {
-                    lllllllllllllllllIIlIIIIIIIIllIl = "arm";
+                if (string.startsWith("arm")) {
+                    string = "arm";
                 }
-                String lllllllllllllllllIIlIIIIIIIllllI = String.valueOf(new StringBuilder().append("android-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("android-").append(string));
                 break;
             }
             case 2: {
-                String lllllllllllllllllIIlIIIIIIIlllIl = String.valueOf(new StringBuilder().append("win32-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("win32-").append(string));
                 break;
             }
             case 6: {
-                String lllllllllllllllllIIlIIIIIIIlllII = String.valueOf(new StringBuilder().append("w32ce-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("w32ce-").append(string));
                 break;
             }
             case 0: {
-                String lllllllllllllllllIIlIIIIIIIllIll = "darwin";
+                string3 = "darwin";
                 break;
             }
             case 1: {
-                String lllllllllllllllllIIlIIIIIIIllIlI = String.valueOf(new StringBuilder().append("linux-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("linux-").append(string));
                 break;
             }
             case 3: {
-                String lllllllllllllllllIIlIIIIIIIllIIl = String.valueOf(new StringBuilder().append("sunos-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("sunos-").append(string));
                 break;
             }
             case 4: {
-                String lllllllllllllllllIIlIIIIIIIllIII = String.valueOf(new StringBuilder().append("freebsd-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("freebsd-").append(string));
                 break;
             }
             case 5: {
-                String lllllllllllllllllIIlIIIIIIIlIlll = String.valueOf(new StringBuilder().append("openbsd-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("openbsd-").append(string));
                 break;
             }
             case 11: {
-                String lllllllllllllllllIIlIIIIIIIlIllI = String.valueOf(new StringBuilder().append("netbsd-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("netbsd-").append(string));
                 break;
             }
             case 10: {
-                String lllllllllllllllllIIlIIIIIIIlIlIl = String.valueOf(new StringBuilder().append("kfreebsd-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append("kfreebsd-").append(string));
                 break;
             }
             default: {
-                lllllllllllllllllIIlIIIIIIIIllll = lllllllllllllllllIIlIIIIIIIIllII.toLowerCase();
-                int lllllllllllllllllIIlIIIIIIIlIlII = lllllllllllllllllIIlIIIIIIIIllll.indexOf(" ");
-                if (lllllllllllllllllIIlIIIIIIIlIlII != -1) {
-                    lllllllllllllllllIIlIIIIIIIIllll = lllllllllllllllllIIlIIIIIIIIllll.substring(0, lllllllllllllllllIIlIIIIIIIlIlII);
+                string3 = string2.toLowerCase();
+                int n2 = string3.indexOf(" ");
+                if (n2 != -1) {
+                    string3 = string3.substring(0, n2);
                 }
-                lllllllllllllllllIIlIIIIIIIIllll = String.valueOf(new StringBuilder().append(lllllllllllllllllIIlIIIIIIIIllll).append("-").append(lllllllllllllllllIIlIIIIIIIIllIl));
+                string3 = String.valueOf(new StringBuilder().append(string3).append("-").append(string));
             }
         }
-        return lllllllllllllllllIIlIIIIIIIIllll;
+        return string3;
     }
 
     private static boolean isSoftFloat() {
         try {
-            File lllllllllllllllllIIlIIIIIIllIlIl = new File("/proc/self/exe");
-            ELFAnalyser lllllllllllllllllIIlIIIIIIllIlII = ELFAnalyser.analyse(lllllllllllllllllIIlIIIIIIllIlIl.getCanonicalPath());
-            return lllllllllllllllllIIlIIIIIIllIlII.isArmSoftFloat();
+            File file = new File("/proc/self/exe");
+            ELFAnalyser eLFAnalyser = ELFAnalyser.analyse(file.getCanonicalPath());
+            return eLFAnalyser.isArmSoftFloat();
         }
-        catch (IOException lllllllllllllllllIIlIIIIIIllIIll) {
-            Logger.getLogger(Platform.class.getName()).log(Level.FINE, null, lllllllllllllllllIIlIIIIIIllIIll);
+        catch (IOException iOException) {
+            Logger.getLogger(Platform.class.getName()).log(Level.FINE, null, iOException);
             return false;
         }
     }

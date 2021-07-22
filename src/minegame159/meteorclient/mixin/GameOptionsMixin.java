@@ -41,15 +41,15 @@ public class GameOptionsMixin {
     public class_304[] field_1839;
 
     @Inject(method={"<init>"}, at={@At(value="FIELD", target="Lnet/minecraft/client/options/GameOptions;keysAll:[Lnet/minecraft/client/options/KeyBinding;", opcode=181, shift=At.Shift.AFTER)})
-    private void onInitAfterKeysAll(class_310 client, File optionsFile, CallbackInfo info) {
+    private void onInitAfterKeysAll(class_310 class_3102, File file, CallbackInfo callbackInfo) {
         this.field_1839 = KeyBinds.apply(this.field_1839);
     }
 
     @Inject(method={"setPerspective"}, at={@At(value="HEAD")}, cancellable=true)
-    private void setPerspective(class_5498 perspective, CallbackInfo info) {
-        ChangePerspectiveEvent event = MeteorClient.EVENT_BUS.post(ChangePerspectiveEvent.get(perspective));
-        if (event.isCancelled()) {
-            info.cancel();
+    private void setPerspective(class_5498 class_54982, CallbackInfo callbackInfo) {
+        ChangePerspectiveEvent changePerspectiveEvent = MeteorClient.EVENT_BUS.post(ChangePerspectiveEvent.get(class_54982));
+        if (changePerspectiveEvent.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 }

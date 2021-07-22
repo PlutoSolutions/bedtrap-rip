@@ -24,46 +24,45 @@ import org.apache.commons.lang3.StringUtils;
 
 public class StatusEffectSettingScreen
 extends WindowScreen {
-    private /* synthetic */ WTable table;
-    private final /* synthetic */ WTextBox filter;
-    private /* synthetic */ String filterText;
-    private final /* synthetic */ Setting<Object2IntMap<class_1291>> setting;
+    private WTable table;
+    private final WTextBox filter;
+    private String filterText = "";
+    private final Setting<Object2IntMap<class_1291>> setting;
 
-    public StatusEffectSettingScreen(GuiTheme lllllllllllllllllIIllIIllIlllIll, Setting<Object2IntMap<class_1291>> lllllllllllllllllIIllIIllIlllIlI) {
-        super(lllllllllllllllllIIllIIllIlllIll, "Select potions");
-        StatusEffectSettingScreen lllllllllllllllllIIllIIllIllllII;
-        lllllllllllllllllIIllIIllIllllII.filterText = "";
-        lllllllllllllllllIIllIIllIllllII.setting = lllllllllllllllllIIllIIllIlllIlI;
-        lllllllllllllllllIIllIIllIllllII.filter = lllllllllllllllllIIllIIllIllllII.add(lllllllllllllllllIIllIIllIlllIll.textBox("")).minWidth(400.0).expandX().widget();
-        lllllllllllllllllIIllIIllIllllII.filter.setFocused(true);
-        lllllllllllllllllIIllIIllIllllII.filter.action = () -> {
-            StatusEffectSettingScreen lllllllllllllllllIIllIIllIIllllI;
-            lllllllllllllllllIIllIIllIIllllI.filterText = lllllllllllllllllIIllIIllIIllllI.filter.get().trim();
-            lllllllllllllllllIIllIIllIIllllI.table.clear();
-            lllllllllllllllllIIllIIllIIllllI.initWidgets();
-        };
-        lllllllllllllllllIIllIIllIllllII.table = lllllllllllllllllIIllIIllIllllII.add(lllllllllllllllllIIllIIllIlllIll.table()).expandX().widget();
-        lllllllllllllllllIIllIIllIllllII.initWidgets();
+    public StatusEffectSettingScreen(GuiTheme guiTheme, Setting<Object2IntMap<class_1291>> setting) {
+        super(guiTheme, "Select potions");
+        this.setting = setting;
+        this.filter = this.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        this.filter.setFocused(true);
+        this.filter.action = this::lambda$new$0;
+        this.table = this.add(guiTheme.table()).expandX().widget();
+        this.initWidgets();
+    }
+
+    private void lambda$initWidgets$1(class_1291 class_12912, WIntEdit wIntEdit) {
+        this.setting.get().put((Object)class_12912, wIntEdit.get());
+        this.setting.changed();
     }
 
     private void initWidgets() {
-        StatusEffectSettingScreen lllllllllllllllllIIllIIllIlIlllI;
-        ArrayList<class_1291> lllllllllllllllllIIllIIllIlIllll = new ArrayList<class_1291>((Collection<class_1291>)lllllllllllllllllIIllIIllIlIlllI.setting.get().keySet());
-        lllllllllllllllllIIllIIllIlIllll.sort(Comparator.comparing(Names::get));
-        for (class_1291 lllllllllllllllllIIllIIllIllIIIl : lllllllllllllllllIIllIIllIlIllll) {
-            String lllllllllllllllllIIllIIllIllIIll = Names.get(lllllllllllllllllIIllIIllIllIIIl);
-            if (!StringUtils.containsIgnoreCase((CharSequence)lllllllllllllllllIIllIIllIllIIll, (CharSequence)lllllllllllllllllIIllIIllIlIlllI.filterText)) continue;
-            lllllllllllllllllIIllIIllIlIlllI.table.add(lllllllllllllllllIIllIIllIlIlllI.theme.label(lllllllllllllllllIIllIIllIllIIll)).expandCellX();
-            WIntEdit lllllllllllllllllIIllIIllIllIIlI = lllllllllllllllllIIllIIllIlIlllI.theme.intEdit(lllllllllllllllllIIllIIllIlIlllI.setting.get().getInt((Object)lllllllllllllllllIIllIIllIllIIIl), 0, 0);
-            lllllllllllllllllIIllIIllIllIIlI.hasSlider = false;
-            lllllllllllllllllIIllIIllIllIIlI.action = () -> {
-                StatusEffectSettingScreen lllllllllllllllllIIllIIllIlIIlIl;
-                lllllllllllllllllIIllIIllIlIIlIl.setting.get().put((Object)lllllllllllllllllIIllIIllIllIIIl, lllllllllllllllllIIllIIllIllIIlI.get());
-                lllllllllllllllllIIllIIllIlIIlIl.setting.changed();
-            };
-            lllllllllllllllllIIllIIllIlIlllI.table.add(lllllllllllllllllIIllIIllIllIIlI).minWidth(50.0);
-            lllllllllllllllllIIllIIllIlIlllI.table.row();
+        ArrayList<class_1291> arrayList = new ArrayList<class_1291>((Collection<class_1291>)this.setting.get().keySet());
+        arrayList.sort(Comparator.comparing(Names::get));
+        for (class_1291 class_12912 : arrayList) {
+            String string = Names.get(class_12912);
+            if (!StringUtils.containsIgnoreCase((CharSequence)string, (CharSequence)this.filterText)) continue;
+            this.table.add(this.theme.label(string)).expandCellX();
+            WIntEdit wIntEdit = this.theme.intEdit(this.setting.get().getInt((Object)class_12912), 0, 0);
+            wIntEdit.hasSlider = false;
+            wIntEdit.action = () -> this.lambda$initWidgets$1(class_12912, wIntEdit);
+            this.table.add(wIntEdit).minWidth(50.0);
+            this.table.row();
         }
+    }
+
+    private void lambda$new$0() {
+        this.filterText = this.filter.get().trim();
+        this.table.clear();
+        this.initWidgets();
     }
 }
 

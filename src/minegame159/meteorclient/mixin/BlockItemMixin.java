@@ -25,8 +25,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_1747.class})
 public class BlockItemMixin {
     @Inject(method={"place(Lnet/minecraft/item/ItemPlacementContext;Lnet/minecraft/block/BlockState;)Z"}, at={@At(value="HEAD")})
-    private void onPlace(class_1750 context, class_2680 state, CallbackInfoReturnable<Boolean> info) {
-        MeteorClient.EVENT_BUS.post(PlaceBlockEvent.get(context.method_8037(), state.method_26204()));
+    private void onPlace(class_1750 class_17502, class_2680 class_26802, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        MeteorClient.EVENT_BUS.post(PlaceBlockEvent.get(class_17502.method_8037(), class_26802.method_26204()));
     }
 }
 

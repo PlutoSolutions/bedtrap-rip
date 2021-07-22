@@ -20,19 +20,27 @@ import net.minecraft.class_2378;
 public class EnchListSettingScreen
 extends LeftRightListSettingScreen<class_1887> {
     @Override
-    protected String getValueName(class_1887 lllllllllllllllllIIlIIIIIlIlllII) {
-        return Names.get(lllllllllllllllllIIlIIIIIlIlllII);
+    protected String getValueName(class_1887 class_18872) {
+        return Names.get(class_18872);
     }
 
     @Override
-    protected WWidget getValueWidget(class_1887 lllllllllllllllllIIlIIIIIlIlllll) {
-        EnchListSettingScreen lllllllllllllllllIIlIIIIIllIIIII;
-        return lllllllllllllllllIIlIIIIIllIIIII.theme.label(lllllllllllllllllIIlIIIIIllIIIII.getValueName(lllllllllllllllllIIlIIIIIlIlllll));
+    protected WWidget getValueWidget(Object object) {
+        return this.getValueWidget((class_1887)object);
     }
 
-    public EnchListSettingScreen(GuiTheme lllllllllllllllllIIlIIIIIllIlIIl, Setting<List<class_1887>> lllllllllllllllllIIlIIIIIllIIlIl) {
-        super(lllllllllllllllllIIlIIIIIllIlIIl, "Select items", lllllllllllllllllIIlIIIIIllIIlIl, (Collection)lllllllllllllllllIIlIIIIIllIIlIl.get(), class_2378.field_11160);
-        EnchListSettingScreen lllllllllllllllllIIlIIIIIllIIlll;
+    @Override
+    protected WWidget getValueWidget(class_1887 class_18872) {
+        return this.theme.label(this.getValueName(class_18872));
+    }
+
+    public EnchListSettingScreen(GuiTheme guiTheme, Setting<List<class_1887>> setting) {
+        super(guiTheme, "Select items", setting, (Collection)setting.get(), class_2378.field_11160);
+    }
+
+    @Override
+    protected String getValueName(Object object) {
+        return this.getValueName((class_1887)object);
     }
 }
 

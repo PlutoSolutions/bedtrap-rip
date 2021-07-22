@@ -2,6 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
+ *  com.mojang.brigadier.Message
  *  com.mojang.brigadier.StringReader
  *  com.mojang.brigadier.arguments.ArgumentType
  *  com.mojang.brigadier.context.CommandContext
@@ -15,6 +16,7 @@
  */
 package minegame159.meteorclient.systems.commands.arguments;
 
+import com.mojang.brigadier.Message;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -30,46 +32,61 @@ import net.minecraft.class_2172;
 import net.minecraft.class_2585;
 import net.minecraft.class_640;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class PlayerListEntryArgumentType
 implements ArgumentType<class_640> {
-    private static /* synthetic */ Collection<String> EXAMPLES;
-    private static final /* synthetic */ DynamicCommandExceptionType NO_SUCH_PLAYER;
+    private static Collection<String> EXAMPLES;
+    private static final DynamicCommandExceptionType NO_SUCH_PLAYER;
 
-    public class_640 parse(StringReader lIIIIllIIIIllI) throws CommandSyntaxException {
-        String lIIIIllIIIlIII = lIIIIllIIIIllI.readString();
-        class_640 lIIIIllIIIIlll = null;
-        for (class_640 lIIIIllIIIlIll : Utils.mc.method_1562().method_2880()) {
-            if (!lIIIIllIIIlIll.method_2966().getName().equalsIgnoreCase(lIIIIllIIIlIII)) continue;
-            lIIIIllIIIIlll = lIIIIllIIIlIll;
+    public class_640 parse(StringReader stringReader) throws CommandSyntaxException {
+        String string = stringReader.readString();
+        class_640 class_6402 = null;
+        for (class_640 class_6403 : Utils.mc.method_1562().method_2880()) {
+            if (!class_6403.method_2966().getName().equalsIgnoreCase(string)) continue;
+            class_6402 = class_6403;
             break;
         }
-        if (lIIIIllIIIIlll == null) {
-            throw NO_SUCH_PLAYER.create((Object)lIIIIllIIIlIII);
+        if (class_6402 == null) {
+            throw NO_SUCH_PLAYER.create((Object)string);
         }
-        return lIIIIllIIIIlll;
+        return class_6402;
     }
 
-    public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> lIIIIlIlllllll, SuggestionsBuilder lIIIIlIllllllI) {
-        return class_2172.method_9264(Utils.mc.method_1562().method_2880().stream().map(lIIIIlIlllIlII -> lIIIIlIlllIlII.method_2966().getName()), (SuggestionsBuilder)lIIIIlIllllllI);
+    public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> commandContext, SuggestionsBuilder suggestionsBuilder) {
+        return class_2172.method_9264(Utils.mc.method_1562().method_2880().stream().map(PlayerListEntryArgumentType::lambda$listSuggestions$2), (SuggestionsBuilder)suggestionsBuilder);
     }
 
     public Collection<String> getExamples() {
         return EXAMPLES;
     }
 
+    public Object parse(StringReader stringReader) throws CommandSyntaxException {
+        return this.parse(stringReader);
+    }
+
     static {
         if (Utils.mc.method_1562() != null) {
-            EXAMPLES = Utils.mc.method_1562().method_2880().stream().limit(3L).map(lIIIIlIllIllll -> lIIIIlIllIllll.method_2966().getName()).collect(Collectors.toList());
+            EXAMPLES = Utils.mc.method_1562().method_2880().stream().limit(3L).map(PlayerListEntryArgumentType::lambda$static$0).collect(Collectors.toList());
         }
-        NO_SUCH_PLAYER = new DynamicCommandExceptionType(lIIIIlIlllIIIl -> new class_2585(String.valueOf(new StringBuilder().append("Player list entry with name ").append(lIIIIlIlllIIIl).append(" doesn't exist."))));
+        NO_SUCH_PLAYER = new DynamicCommandExceptionType(PlayerListEntryArgumentType::lambda$static$1);
     }
 
-    public PlayerListEntryArgumentType() {
-        PlayerListEntryArgumentType lIIIIllIIlIlIl;
+    private static String lambda$static$0(class_640 class_6402) {
+        return class_6402.method_2966().getName();
     }
 
-    public static class_640 getPlayerListEntry(CommandContext<?> lIIIIllIIlIIIl) {
-        return (class_640)lIIIIllIIlIIIl.getArgument("player", class_640.class);
+    public static class_640 getPlayerListEntry(CommandContext<?> commandContext) {
+        return (class_640)commandContext.getArgument("player", class_640.class);
+    }
+
+    private static Message lambda$static$1(Object object) {
+        return new class_2585(String.valueOf(new StringBuilder().append("Player list entry with name ").append(object).append(" doesn't exist.")));
+    }
+
+    private static String lambda$listSuggestions$2(class_640 class_6402) {
+        return class_6402.method_2966().getName();
     }
 
     public static PlayerListEntryArgumentType playerListEntry() {

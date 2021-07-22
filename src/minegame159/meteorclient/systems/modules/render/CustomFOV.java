@@ -13,36 +13,32 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class CustomFOV
 extends Module {
-    private final /* synthetic */ Setting<Integer> fovSetting;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ double fov;
+    private final Setting<Integer> fovSetting;
+    private final SettingGroup sgGeneral;
+    private double fov;
 
     @Override
     public void onActivate() {
-        CustomFOV lllllllllllllllllIlIIlIIIIIIIlll;
-        lllllllllllllllllIlIIlIIIIIIIlll.fov = lllllllllllllllllIlIIlIIIIIIIlll.mc.field_1690.field_1826;
-        lllllllllllllllllIlIIlIIIIIIIlll.mc.field_1690.field_1826 = lllllllllllllllllIlIIlIIIIIIIlll.fovSetting.get().intValue();
+        this.fov = this.mc.field_1690.field_1826;
+        this.mc.field_1690.field_1826 = this.fovSetting.get().intValue();
     }
 
     public CustomFOV() {
         super(Categories.Render, "custom-fov", "Allows your FOV to be more customizable.");
-        CustomFOV lllllllllllllllllIlIIlIIIIIIlIll;
-        lllllllllllllllllIlIIlIIIIIIlIll.sgGeneral = lllllllllllllllllIlIIlIIIIIIlIll.settings.getDefaultGroup();
-        lllllllllllllllllIlIIlIIIIIIlIll.fovSetting = lllllllllllllllllIlIIlIIIIIIlIll.sgGeneral.add(new IntSetting.Builder().name("fov").description("Your custom fov.").defaultValue(100).sliderMin(1).sliderMax(179).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.fovSetting = this.sgGeneral.add(new IntSetting.Builder().name("fov").description("Your custom fov.").defaultValue(100).sliderMin(1).sliderMax(179).build());
     }
 
     @EventHandler
-    private void onRender(RenderEvent lllllllllllllllllIlIIlIIIIIIIlII) {
-        CustomFOV lllllllllllllllllIlIIlIIIIIIIlIl;
-        if ((double)lllllllllllllllllIlIIlIIIIIIIlIl.fovSetting.get().intValue() != lllllllllllllllllIlIIlIIIIIIIlIl.mc.field_1690.field_1826) {
-            lllllllllllllllllIlIIlIIIIIIIlIl.mc.field_1690.field_1826 = lllllllllllllllllIlIIlIIIIIIIlIl.fovSetting.get().intValue();
+    private void onRender(RenderEvent renderEvent) {
+        if ((double)this.fovSetting.get().intValue() != this.mc.field_1690.field_1826) {
+            this.mc.field_1690.field_1826 = this.fovSetting.get().intValue();
         }
     }
 
     @Override
     public void onDeactivate() {
-        CustomFOV lllllllllllllllllIlIIlIIIIIIIIII;
-        lllllllllllllllllIlIIlIIIIIIIIII.mc.field_1690.field_1826 = lllllllllllllllllIlIIlIIIIIIIIII.fov;
+        this.mc.field_1690.field_1826 = this.fov;
     }
 }
 

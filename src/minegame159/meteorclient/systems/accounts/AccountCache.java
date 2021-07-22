@@ -18,70 +18,70 @@ import minegame159.meteorclient.utils.render.ByteTexture;
 import net.minecraft.class_2487;
 import net.minecraft.class_2960;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class AccountCache
 implements ISerializable<AccountCache> {
-    private /* synthetic */ ByteTexture headTexture;
-    public /* synthetic */ String username;
-    public /* synthetic */ String uuid;
+    private ByteTexture headTexture;
+    public String username = "";
+    public String uuid = "";
 
-    public boolean makeHead(String llllllllllllllllIllllIIlIIllIlII) {
+    public boolean makeHead(String string) {
         try {
-            BufferedImage llllllllllllllllIllllIIlIIlllIlI;
-            byte[] llllllllllllllllIllllIIlIIlllIIl = new byte[192];
-            int[] llllllllllllllllIllllIIlIIlllIII = new int[4];
-            if (llllllllllllllllIllllIIlIIllIlII.equals("steve")) {
-                BufferedImage llllllllllllllllIllllIIlIIlllllI = ImageIO.read(Utils.mc.method_1478().method_14486(new class_2960("meteor-client", "textures/steve.png")).method_14482());
-            } else {
-                llllllllllllllllIllllIIlIIlllIlI = ImageIO.read(new URL(llllllllllllllllIllllIIlIIllIlII));
-            }
-            int llllllllllllllllIllllIIlIIllIlll = 0;
-            for (int llllllllllllllllIllllIIlIIlllIll = 0; llllllllllllllllIllllIIlIIlllIll < 8; ++llllllllllllllllIllllIIlIIlllIll) {
-                for (int llllllllllllllllIllllIIlIIllllII = 0; llllllllllllllllIllllIIlIIllllII < 8; ++llllllllllllllllIllllIIlIIllllII) {
-                    llllllllllllllllIllllIIlIIlllIlI.getData().getPixel(llllllllllllllllIllllIIlIIlllIll, llllllllllllllllIllllIIlIIllllII, llllllllllllllllIllllIIlIIlllIII);
-                    for (int llllllllllllllllIllllIIlIIllllIl = 0; llllllllllllllllIllllIIlIIllllIl < 3; ++llllllllllllllllIllllIIlIIllllIl) {
-                        llllllllllllllllIllllIIlIIlllIIl[llllllllllllllllIllllIIlIIllIlll] = (byte)llllllllllllllllIllllIIlIIlllIII[llllllllllllllllIllllIIlIIllllIl];
-                        ++llllllllllllllllIllllIIlIIllIlll;
+            byte[] arrby = new byte[192];
+            int[] arrn = new int[4];
+            BufferedImage bufferedImage = string.equals("steve") ? ImageIO.read(Utils.mc.method_1478().method_14486(new class_2960("meteor-client", "textures/steve.png")).method_14482()) : ImageIO.read(new URL(string));
+            int n = 0;
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) {
+                    bufferedImage.getData().getPixel(i, j, arrn);
+                    for (int k = 0; k < 3; ++k) {
+                        arrby[n] = (byte)arrn[k];
+                        ++n;
+                        if (2 >= -1) continue;
+                        return false;
                     }
+                    if (2 > 0) continue;
+                    return false;
                 }
+                if (0 < 3) continue;
+                return false;
             }
-            llllllllllllllllIllllIIlIIllIIll.headTexture = new ByteTexture(8, 8, llllllllllllllllIllllIIlIIlllIIl, ByteTexture.Format.RGB, ByteTexture.Filter.Nearest, ByteTexture.Filter.Nearest);
+            this.headTexture = new ByteTexture(8, 8, arrby, ByteTexture.Format.RGB, ByteTexture.Filter.Nearest, ByteTexture.Filter.Nearest);
             return true;
         }
-        catch (Exception llllllllllllllllIllllIIlIIllIllI) {
-            MeteorClient.LOG.error(String.valueOf(new StringBuilder().append("Failed to read skin url. (").append(llllllllllllllllIllllIIlIIllIlII).append(")")));
+        catch (Exception exception) {
+            MeteorClient.LOG.error(String.valueOf(new StringBuilder().append("Failed to read skin url. (").append(string).append(")")));
             return false;
         }
     }
 
     @Override
-    public AccountCache fromTag(class_2487 llllllllllllllllIllllIIlIIIlllll) {
-        AccountCache llllllllllllllllIllllIIlIIlIIIII;
-        if (!llllllllllllllllIllllIIlIIIlllll.method_10545("username") || !llllllllllllllllIllllIIlIIIlllll.method_10545("uuid")) {
+    public AccountCache fromTag(class_2487 class_24872) {
+        if (!class_24872.method_10545("username") || !class_24872.method_10545("uuid")) {
             throw new NbtException();
         }
-        llllllllllllllllIllllIIlIIlIIIII.username = llllllllllllllllIllllIIlIIIlllll.method_10558("username");
-        llllllllllllllllIllllIIlIIlIIIII.uuid = llllllllllllllllIllllIIlIIIlllll.method_10558("uuid");
-        return llllllllllllllllIllllIIlIIlIIIII;
+        this.username = class_24872.method_10558("username");
+        this.uuid = class_24872.method_10558("uuid");
+        return this;
     }
 
     @Override
     public class_2487 toTag() {
-        AccountCache llllllllllllllllIllllIIlIIlIIllI;
-        class_2487 llllllllllllllllIllllIIlIIlIIlll = new class_2487();
-        llllllllllllllllIllllIIlIIlIIlll.method_10582("username", llllllllllllllllIllllIIlIIlIIllI.username);
-        llllllllllllllllIllllIIlIIlIIlll.method_10582("uuid", llllllllllllllllIllllIIlIIlIIllI.uuid);
-        return llllllllllllllllIllllIIlIIlIIlll;
-    }
-
-    public AccountCache() {
-        AccountCache llllllllllllllllIllllIIlIlIIlIll;
-        llllllllllllllllIllllIIlIlIIlIll.username = "";
-        llllllllllllllllIllllIIlIlIIlIll.uuid = "";
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("username", this.username);
+        class_24872.method_10582("uuid", this.uuid);
+        return class_24872;
     }
 
     public ByteTexture getHeadTexture() {
-        AccountCache llllllllllllllllIllllIIlIlIIlIIl;
-        return llllllllllllllllIllllIIlIlIIlIIl.headTexture;
+        return this.headTexture;
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 }
 

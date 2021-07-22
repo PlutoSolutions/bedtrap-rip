@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(value={class_1764.class})
 public interface CrossbowItemAccessor {
     @Invoker(value="getSpeed")
-    public static float getSpeed(class_1799 itemStack) {
+    public static float getSpeed(class_1799 class_17992) {
         return 0.0f;
     }
 }

@@ -59,13 +59,12 @@ public enum MyPotion {
     Weakness(class_1847.field_8975, class_1802.field_8711),
     WeaknessLong(class_1847.field_8970, class_1802.field_8711, class_1802.field_8725);
 
-    public final /* synthetic */ class_1792[] ingredients;
-    public final /* synthetic */ class_1799 potion;
+    public final class_1792[] ingredients;
+    public final class_1799 potion;
 
-    private MyPotion(class_1842 llllllllllllllllllllIIllIllIIIll, class_1792 ... llllllllllllllllllllIIllIlIllIIl) {
-        MyPotion llllllllllllllllllllIIllIllIIIII;
-        llllllllllllllllllllIIllIllIIIII.potion = class_1844.method_8061((class_1799)new class_1799((class_1935)class_1802.field_8574), (class_1842)llllllllllllllllllllIIllIllIIIll);
-        llllllllllllllllllllIIllIllIIIII.ingredients = llllllllllllllllllllIIllIlIllIIl;
+    private MyPotion(class_1842 class_18422, class_1792 ... arrclass_1792) {
+        this.potion = class_1844.method_8061((class_1799)new class_1799((class_1935)class_1802.field_8574), (class_1842)class_18422);
+        this.ingredients = arrclass_1792;
     }
 }
 

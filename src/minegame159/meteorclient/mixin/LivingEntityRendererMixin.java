@@ -66,101 +66,101 @@ public abstract class LivingEntityRendererMixin<T extends class_1309, M extends 
     protected abstract class_1921 method_24302(T var1, boolean var2, boolean var3, boolean var4);
 
     @Redirect(method={"hasLabel"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/MinecraftClient;getCameraEntity()Lnet/minecraft/entity/Entity;"))
-    private class_1297 hasLabelGetCameraEntityProxy(class_310 mc) {
+    private class_1297 hasLabelGetCameraEntityProxy(class_310 class_3102) {
         if (Modules.get().isActive(Freecam.class)) {
             return null;
         }
-        return mc.method_1560();
+        return class_3102.method_1560();
     }
 
     @ModifyVariable(method={"render"}, ordinal=2, at=@At(value="STORE", ordinal=0))
-    public float changeYaw(float oldValue, class_1309 entity) {
-        if (entity.equals((Object)Utils.mc.field_1724) && Rotations.rotationTimer < 10) {
+    public float changeYaw(float f, class_1309 class_13092) {
+        if (class_13092.equals((Object)Utils.mc.field_1724) && Rotations.rotationTimer < 10) {
             return Rotations.serverYaw;
         }
-        return oldValue;
+        return f;
     }
 
     @ModifyVariable(method={"render"}, ordinal=3, at=@At(value="STORE", ordinal=0))
-    public float changeHeadYaw(float oldValue, class_1309 entity) {
-        if (entity.equals((Object)Utils.mc.field_1724) && Rotations.rotationTimer < 10) {
+    public float changeHeadYaw(float f, class_1309 class_13092) {
+        if (class_13092.equals((Object)Utils.mc.field_1724) && Rotations.rotationTimer < 10) {
             return Rotations.serverYaw;
         }
-        return oldValue;
+        return f;
     }
 
     @ModifyVariable(method={"render"}, ordinal=5, at=@At(value="STORE", ordinal=3))
-    public float changePitch(float oldValue, class_1309 entity) {
-        if (entity.equals((Object)Utils.mc.field_1724) && Rotations.rotationTimer < 10) {
+    public float changePitch(float f, class_1309 class_13092) {
+        if (class_13092.equals((Object)Utils.mc.field_1724) && Rotations.rotationTimer < 10) {
             return Rotations.serverPitch;
         }
-        return oldValue;
+        return f;
     }
 
     @Redirect(method={"hasLabel"}, at=@At(value="INVOKE", target="net.minecraft.client.network.ClientPlayerEntity.getScoreboardTeam()Lnet/minecraft/scoreboard/AbstractTeam;"))
-    private class_270 hasLabelClientPlayerEntityGetScoreboardTeamProxy(class_746 player) {
-        if (player == null) {
+    private class_270 hasLabelClientPlayerEntityGetScoreboardTeamProxy(class_746 class_7462) {
+        if (class_7462 == null) {
             return null;
         }
-        return player.method_5781();
+        return class_7462.method_5781();
     }
 
     @Inject(method={"render"}, at={@At(value="HEAD")})
-    private void renderHead(T livingEntity, float f, float g, class_4587 matrixStack, class_4597 vertexConsumerProvider, int i, CallbackInfo ci) {
+    private void renderHead(T t, float f, float f2, class_4587 class_45872, class_4597 class_45972, int n, CallbackInfo callbackInfo) {
         Chams chams = Modules.get().get(Chams.class);
-        if (chams.isActive() && chams.shouldRender((class_1297)livingEntity)) {
+        if (chams.isActive() && chams.shouldRender((class_1297)t)) {
             GL11.glEnable((int)32823);
             GL11.glPolygonOffset((float)1.0f, (float)-1100000.0f);
         }
     }
 
     @Inject(method={"render"}, at={@At(value="TAIL")})
-    private void renderTail(T livingEntity, float f, float g, class_4587 matrixStack, class_4597 vertexConsumerProvider, int i, CallbackInfo ci) {
+    private void renderTail(T t, float f, float f2, class_4587 class_45872, class_4597 class_45972, int n, CallbackInfo callbackInfo) {
         Chams chams = Modules.get().get(Chams.class);
-        if (chams.isActive() && chams.shouldRender((class_1297)livingEntity)) {
+        if (chams.isActive() && chams.shouldRender((class_1297)t)) {
             GL11.glPolygonOffset((float)1.0f, (float)1100000.0f);
             GL11.glDisable((int)32823);
         }
     }
 
     @ModifyArgs(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;scale(FFF)V"))
-    private void modifyScale(Args args, T livingEntity, float f, float g, class_4587 matrixStack, class_4597 vertexConsumerProvider, int i) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!(module.isActive() && module.players.get().booleanValue() && livingEntity instanceof class_1657)) {
+    private void modifyScale(Args args, T t, float f, float f2, class_4587 class_45872, class_4597 class_45972, int n) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!(chams.isActive() && chams.players.get().booleanValue() && t instanceof class_1657)) {
             return;
         }
-        if (module.ignoreSelf.get().booleanValue() && livingEntity == Utils.mc.field_1724) {
+        if (chams.ignoreSelf.get().booleanValue() && t == Utils.mc.field_1724) {
             return;
         }
-        args.set(0, (Object)Float.valueOf(-module.playersScale.get().floatValue()));
-        args.set(1, (Object)Float.valueOf(-module.playersScale.get().floatValue()));
-        args.set(2, (Object)Float.valueOf(module.playersScale.get().floatValue()));
+        args.set(0, (Object)Float.valueOf(-chams.playersScale.get().floatValue()));
+        args.set(1, (Object)Float.valueOf(-chams.playersScale.get().floatValue()));
+        args.set(2, (Object)Float.valueOf(chams.playersScale.get().floatValue()));
     }
 
     @ModifyArgs(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/model/EntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;IIFFFF)V"))
-    private void modifyColor(Args args, T livingEntity, float f, float g, class_4587 matrixStack, class_4597 vertexConsumerProvider, int i) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!(module.isActive() && module.players.get().booleanValue() && livingEntity instanceof class_1657)) {
+    private void modifyColor(Args args, T t, float f, float f2, class_4587 class_45872, class_4597 class_45972, int n) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!(chams.isActive() && chams.players.get().booleanValue() && t instanceof class_1657)) {
             return;
         }
-        if (module.ignoreSelf.get().booleanValue() && livingEntity == Utils.mc.field_1724) {
+        if (chams.ignoreSelf.get().booleanValue() && t == Utils.mc.field_1724) {
             return;
         }
-        Color color = PlayerUtils.getPlayerColor((class_1657)livingEntity, module.playersColor.get());
+        Color color = PlayerUtils.getPlayerColor((class_1657)t, chams.playersColor.get());
         args.set(4, (Object)Float.valueOf((float)color.r / 255.0f));
         args.set(5, (Object)Float.valueOf((float)color.g / 255.0f));
         args.set(6, (Object)Float.valueOf((float)color.b / 255.0f));
-        args.set(7, (Object)Float.valueOf((float)module.playersColor.get().a / 255.0f));
+        args.set(7, (Object)Float.valueOf((float)chams.playersColor.get().a / 255.0f));
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/render/entity/LivingEntityRenderer;getRenderLayer(Lnet/minecraft/entity/LivingEntity;ZZZ)Lnet/minecraft/client/render/RenderLayer;"))
-    private class_1921 getRenderLayer(class_922<T, M> livingEntityRenderer, T livingEntity, boolean showBody, boolean translucent, boolean showOutline) {
-        Chams module = Modules.get().get(Chams.class);
-        if (!module.isActive() || !module.players.get().booleanValue() || !(livingEntity instanceof class_1657) || module.playersTexture.get().booleanValue()) {
-            return this.method_24302(livingEntity, showBody, translucent, showOutline);
+    private class_1921 getRenderLayer(class_922<T, M> class_9222, T t, boolean bl, boolean bl2, boolean bl3) {
+        Chams chams = Modules.get().get(Chams.class);
+        if (!chams.isActive() || !chams.players.get().booleanValue() || !(t instanceof class_1657) || chams.playersTexture.get().booleanValue()) {
+            return this.method_24302(t, bl, bl2, bl3);
         }
-        if (module.ignoreSelf.get().booleanValue() && livingEntity == Utils.mc.field_1724) {
-            return this.method_24302(livingEntity, showBody, translucent, showOutline);
+        if (chams.ignoreSelf.get().booleanValue() && t == Utils.mc.field_1724) {
+            return this.method_24302(t, bl, bl2, bl3);
         }
         return class_1921.method_29379((class_2960)Chams.BLANK);
     }

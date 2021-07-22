@@ -24,47 +24,46 @@ import org.apache.commons.lang3.StringUtils;
 
 public class BlockSettingScreen
 extends WindowScreen {
-    private /* synthetic */ WTable table;
-    private final /* synthetic */ WTextBox filter;
-    private /* synthetic */ String filterText;
-    private final /* synthetic */ BlockSetting setting;
+    private WTable table;
+    private final WTextBox filter;
+    private String filterText = "";
+    private final BlockSetting setting;
 
-    public BlockSettingScreen(GuiTheme lIIIlIIlIIIIIII, BlockSetting lIIIlIIlIIIIIlI) {
-        super(lIIIlIIlIIIIIII, "Select blocks");
-        BlockSettingScreen lIIIlIIlIIIIIIl;
-        lIIIlIIlIIIIIIl.filterText = "";
-        lIIIlIIlIIIIIIl.setting = lIIIlIIlIIIIIlI;
-        lIIIlIIlIIIIIIl.filter = lIIIlIIlIIIIIIl.add(lIIIlIIlIIIIIII.textBox("")).minWidth(400.0).expandX().widget();
-        lIIIlIIlIIIIIIl.filter.setFocused(true);
-        lIIIlIIlIIIIIIl.filter.action = () -> {
-            BlockSettingScreen lIIIlIIIllIIlII;
-            lIIIlIIIllIIlII.filterText = lIIIlIIIllIIlII.filter.get().trim();
-            lIIIlIIIllIIlII.table.clear();
-            lIIIlIIIllIIlII.initWidgets();
-        };
-        lIIIlIIlIIIIIIl.table = lIIIlIIlIIIIIIl.add(lIIIlIIlIIIIIII.table()).expandX().widget();
-        lIIIlIIlIIIIIIl.initWidgets();
+    private void lambda$new$0() {
+        this.filterText = this.filter.get().trim();
+        this.table.clear();
+        this.initWidgets();
     }
 
-    protected boolean skipValue(class_2248 lIIIlIIIllIlllI) {
-        return class_2378.field_11146.method_10221((Object)lIIIlIIIllIlllI).method_12832().endsWith("_wall_banner");
+    public BlockSettingScreen(GuiTheme guiTheme, BlockSetting blockSetting) {
+        super(guiTheme, "Select blocks");
+        this.setting = blockSetting;
+        this.filter = this.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        this.filter.setFocused(true);
+        this.filter.action = this::lambda$new$0;
+        this.table = this.add(guiTheme.table()).expandX().widget();
+        this.initWidgets();
+    }
+
+    protected boolean skipValue(class_2248 class_22482) {
+        return class_2378.field_11146.method_10221((Object)class_22482).method_12832().endsWith("_wall_banner");
     }
 
     private void initWidgets() {
-        for (class_2248 lIIIlIIIlllIlll : class_2378.field_11146) {
-            BlockSettingScreen lIIIlIIIlllIllI;
-            if ((lIIIlIIIlllIllI.setting.filter == null ? lIIIlIIIlllIlll == class_2246.field_10124 : !lIIIlIIIlllIllI.setting.filter.test(lIIIlIIIlllIlll)) || lIIIlIIIlllIllI.skipValue(lIIIlIIIlllIlll)) continue;
-            WItemWithLabel lIIIlIIIllllIIl = lIIIlIIIlllIllI.theme.itemWithLabel(lIIIlIIIlllIlll.method_8389().method_7854(), Names.get(lIIIlIIIlllIlll));
-            if (!lIIIlIIIlllIllI.filterText.isEmpty() && !StringUtils.containsIgnoreCase((CharSequence)lIIIlIIIllllIIl.getLabelText(), (CharSequence)lIIIlIIIlllIllI.filterText)) continue;
-            lIIIlIIIlllIllI.table.add(lIIIlIIIllllIIl);
-            WButton lIIIlIIIllllIII = lIIIlIIIlllIllI.table.add(lIIIlIIIlllIllI.theme.button("Select")).expandCellX().right().widget();
-            lIIIlIIIllllIII.action = () -> {
-                BlockSettingScreen lIIIlIIIllIlIII;
-                lIIIlIIIllIlIII.setting.set(lIIIlIIIlllIlll);
-                lIIIlIIIllIlIII.method_25419();
-            };
-            lIIIlIIIlllIllI.table.row();
+        for (class_2248 class_22482 : class_2378.field_11146) {
+            if ((this.setting.filter == null ? class_22482 == class_2246.field_10124 : !this.setting.filter.test(class_22482)) || this.skipValue(class_22482)) continue;
+            WItemWithLabel wItemWithLabel = this.theme.itemWithLabel(class_22482.method_8389().method_7854(), Names.get(class_22482));
+            if (!this.filterText.isEmpty() && !StringUtils.containsIgnoreCase((CharSequence)wItemWithLabel.getLabelText(), (CharSequence)this.filterText)) continue;
+            this.table.add(wItemWithLabel);
+            WButton wButton = this.table.add(this.theme.button("Select")).expandCellX().right().widget();
+            wButton.action = () -> this.lambda$initWidgets$1(class_22482);
+            this.table.row();
         }
+    }
+
+    private void lambda$initWidgets$1(class_2248 class_22482) {
+        this.setting.set(class_22482);
+        this.method_25419();
     }
 }
 

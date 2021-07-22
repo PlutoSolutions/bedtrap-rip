@@ -17,23 +17,14 @@ import net.minecraft.class_2703;
 
 public class PlayerListEntryFactory
 extends class_2703 {
-    private static final /* synthetic */ PlayerListEntryFactory INSTANCE;
+    private static final PlayerListEntryFactory INSTANCE = new PlayerListEntryFactory();
 
-    public static class_2703.class_2705 create(GameProfile lllllllllllllllllIllllIIIIIIllII, int lllllllllllllllllIllllIIIIIIlIll, class_1934 lllllllllllllllllIllllIIIIIIlIlI, class_2561 lllllllllllllllllIllllIIIIIIlIIl) {
-        return INSTANCE._create(lllllllllllllllllIllllIIIIIIllII, lllllllllllllllllIllllIIIIIIlIll, lllllllllllllllllIllllIIIIIIlIlI, lllllllllllllllllIllllIIIIIIlIIl);
+    public static class_2703.class_2705 create(GameProfile gameProfile, int n, class_1934 class_19342, class_2561 class_25612) {
+        return INSTANCE._create(gameProfile, n, class_19342, class_25612);
     }
 
-    static {
-        INSTANCE = new PlayerListEntryFactory();
-    }
-
-    public PlayerListEntryFactory() {
-        PlayerListEntryFactory lllllllllllllllllIllllIIIIIlIllI;
-    }
-
-    private class_2703.class_2705 _create(GameProfile lllllllllllllllllIlllIllllllllIl, int lllllllllllllllllIllllIIIIIIIIIl, class_1934 lllllllllllllllllIllllIIIIIIIIII, class_2561 lllllllllllllllllIlllIllllllllll) {
-        PlayerListEntryFactory lllllllllllllllllIllllIIIIIIIIll;
-        return new class_2703.class_2705((class_2703)lllllllllllllllllIllllIIIIIIIIll, lllllllllllllllllIlllIllllllllIl, lllllllllllllllllIllllIIIIIIIIIl, lllllllllllllllllIllllIIIIIIIIII, lllllllllllllllllIlllIllllllllll);
+    private class_2703.class_2705 _create(GameProfile gameProfile, int n, class_1934 class_19342, class_2561 class_25612) {
+        return new class_2703.class_2705((class_2703)this, gameProfile, n, class_19342, class_25612);
     }
 }
 

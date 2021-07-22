@@ -34,88 +34,81 @@ import net.minecraft.class_1937;
 
 public class MiddleClickExtra
 extends Module {
-    private /* synthetic */ boolean isUsing;
-    private final /* synthetic */ Setting<Mode> mode;
-    private /* synthetic */ int preSlot;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> notify;
+    private boolean isUsing;
+    private final Setting<Mode> mode;
+    private int preSlot;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> notify;
 
     @EventHandler
-    private void onTick(TickEvent.Pre lllllllllllllllllIIIIIllIIIIlllI) {
-        MiddleClickExtra lllllllllllllllllIIIIIllIIIIllIl;
-        if (lllllllllllllllllIIIIIllIIIIllIl.isUsing) {
-            boolean lllllllllllllllllIIIIIllIIIlIIII = true;
-            if (lllllllllllllllllIIIIIllIIIIllIl.mc.field_1724.method_6047().method_7909() instanceof class_1753) {
-                lllllllllllllllllIIIIIllIIIlIIII = class_1753.method_7722((int)lllllllllllllllllIIIIIllIIIIllIl.mc.field_1724.method_6048()) < 1.0f;
+    private void onTick(TickEvent.Pre pre) {
+        if (this.isUsing) {
+            boolean bl = true;
+            if (this.mc.field_1724.method_6047().method_7909() instanceof class_1753) {
+                bl = class_1753.method_7722((int)this.mc.field_1724.method_6048()) < 1.0f;
             }
-            lllllllllllllllllIIIIIllIIIIllIl.mc.field_1690.field_1904.method_23481(lllllllllllllllllIIIIIllIIIlIIII);
+            this.mc.field_1690.field_1904.method_23481(bl);
         }
     }
 
     @Override
     public void onDeactivate() {
-        MiddleClickExtra lllllllllllllllllIIIIIllIIllIIII;
-        lllllllllllllllllIIIIIllIIllIIII.stopIfUsing();
+        this.stopIfUsing();
     }
 
     @EventHandler
-    private void onStoppedUsingItem(StoppedUsingItemEvent lllllllllllllllllIIIIIllIIIIIlIl) {
-        MiddleClickExtra lllllllllllllllllIIIIIllIIIIIllI;
-        lllllllllllllllllIIIIIllIIIIIllI.stopIfUsing();
+    private void onStoppedUsingItem(StoppedUsingItemEvent stoppedUsingItemEvent) {
+        this.stopIfUsing();
     }
 
     @EventHandler
-    private void onMouseButton(MouseButtonEvent lllllllllllllllllIIIIIllIIIlIlII) {
-        MiddleClickExtra lllllllllllllllllIIIIIllIIIllIII;
-        if (lllllllllllllllllIIIIIllIIIlIlII.action != KeyAction.Press || lllllllllllllllllIIIIIllIIIlIlII.button != 2) {
+    private void onMouseButton(MouseButtonEvent mouseButtonEvent) {
+        if (mouseButtonEvent.action != KeyAction.Press || mouseButtonEvent.button != 2) {
             return;
         }
-        FindItemResult lllllllllllllllllIIIIIllIIIlIllI = InvUtils.findInHotbar(lllllllllllllllllIIIIIllIIIllIII.mode.get().item);
-        if (!lllllllllllllllllIIIIIllIIIlIllI.found()) {
-            if (lllllllllllllllllIIIIIllIIIllIII.notify.get().booleanValue()) {
-                lllllllllllllllllIIIIIllIIIllIII.warning("Unable to find specified item.", new Object[0]);
+        FindItemResult findItemResult = InvUtils.findInHotbar(Mode.access$000(this.mode.get()));
+        if (!findItemResult.found()) {
+            if (this.notify.get().booleanValue()) {
+                this.warning("Unable to find specified item.", new Object[0]);
             }
             return;
         }
-        lllllllllllllllllIIIIIllIIIllIII.preSlot = lllllllllllllllllIIIIIllIIIllIII.mc.field_1724.field_7514.field_7545;
-        InvUtils.swap(lllllllllllllllllIIIIIllIIIlIllI.getSlot());
-        switch (lllllllllllllllllIIIIIllIIIllIII.mode.get().type) {
-            case Immediate: {
-                lllllllllllllllllIIIIIllIIIllIII.mc.field_1761.method_2919((class_1657)lllllllllllllllllIIIIIllIIIllIII.mc.field_1724, (class_1937)lllllllllllllllllIIIIIllIIIllIII.mc.field_1687, class_1268.field_5808);
-                InvUtils.swap(lllllllllllllllllIIIIIllIIIllIII.preSlot);
+        this.preSlot = this.mc.field_1724.field_7514.field_7545;
+        InvUtils.swap(findItemResult.getSlot());
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$player$MiddleClickExtra$Type[Mode.access$100(this.mode.get()).ordinal()]) {
+            case 1: {
+                this.mc.field_1761.method_2919((class_1657)this.mc.field_1724, (class_1937)this.mc.field_1687, class_1268.field_5808);
+                InvUtils.swap(this.preSlot);
                 break;
             }
-            case LongerSingleClick: {
-                lllllllllllllllllIIIIIllIIIllIII.mc.field_1761.method_2919((class_1657)lllllllllllllllllIIIIIllIIIllIII.mc.field_1724, (class_1937)lllllllllllllllllIIIIIllIIIllIII.mc.field_1687, class_1268.field_5808);
+            case 2: {
+                this.mc.field_1761.method_2919((class_1657)this.mc.field_1724, (class_1937)this.mc.field_1687, class_1268.field_5808);
                 break;
             }
-            case Longer: {
-                lllllllllllllllllIIIIIllIIIllIII.mc.field_1690.field_1904.method_23481(true);
-                lllllllllllllllllIIIIIllIIIllIII.isUsing = true;
+            case 3: {
+                this.mc.field_1690.field_1904.method_23481(true);
+                this.isUsing = true;
             }
         }
     }
 
     @EventHandler
-    private void onFinishUsingItem(FinishUsingItem lllllllllllllllllIIIIIllIIIIlIIl) {
-        MiddleClickExtra lllllllllllllllllIIIIIllIIIIlIlI;
-        lllllllllllllllllIIIIIllIIIIlIlI.stopIfUsing();
+    private void onFinishUsingItem(FinishUsingItem finishUsingItem) {
+        this.stopIfUsing();
     }
 
     public MiddleClickExtra() {
         super(Categories.Player, "middle-click-extra", "Lets you use items when you middle click.");
-        MiddleClickExtra lllllllllllllllllIIIIIllIIlllIlI;
-        lllllllllllllllllIIIIIllIIlllIlI.sgGeneral = lllllllllllllllllIIIIIllIIlllIlI.settings.getDefaultGroup();
-        lllllllllllllllllIIIIIllIIlllIlI.mode = lllllllllllllllllIIIIIllIIlllIlI.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Which item to use when you middle click.").defaultValue(Mode.Pearl).build());
-        lllllllllllllllllIIIIIllIIlllIlI.notify = lllllllllllllllllIIIIIllIIlllIlI.sgGeneral.add(new BoolSetting.Builder().name("notify").description("Notifies you when you do not have the specified item in your hotbar.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Which item to use when you middle click.").defaultValue(Mode.Pearl).build());
+        this.notify = this.sgGeneral.add(new BoolSetting.Builder().name("notify").description("Notifies you when you do not have the specified item in your hotbar.").defaultValue(true).build());
     }
 
     private void stopIfUsing() {
-        MiddleClickExtra lllllllllllllllllIIIIIllIIIIIIlI;
-        if (lllllllllllllllllIIIIIllIIIIIIlI.isUsing) {
-            lllllllllllllllllIIIIIllIIIIIIlI.mc.field_1690.field_1904.method_23481(false);
-            InvUtils.swap(lllllllllllllllllIIIIIllIIIIIIlI.preSlot);
-            lllllllllllllllllIIIIIllIIIIIIlI.isUsing = false;
+        if (this.isUsing) {
+            this.mc.field_1690.field_1904.method_23481(false);
+            InvUtils.swap(this.preSlot);
+            this.isUsing = false;
         }
     }
 
@@ -128,13 +121,20 @@ extends Module {
         EGap(class_1802.field_8367, Type.Longer),
         Chorus(class_1802.field_8233, Type.Longer);
 
-        private final /* synthetic */ Type type;
-        private final /* synthetic */ class_1792 item;
+        private final Type type;
+        private final class_1792 item;
 
-        private Mode(class_1792 llllllllllllllllIllIlIllllllIIlI, Type llllllllllllllllIllIlIllllllIIIl) {
-            Mode llllllllllllllllIllIlIllllllIIII;
-            llllllllllllllllIllIlIllllllIIII.item = llllllllllllllllIllIlIllllllIIlI;
-            llllllllllllllllIllIlIllllllIIII.type = llllllllllllllllIllIlIllllllIIIl;
+        static class_1792 access$000(Mode mode) {
+            return mode.item;
+        }
+
+        static Type access$100(Mode mode) {
+            return mode.type;
+        }
+
+        private Mode(class_1792 class_17922, Type type) {
+            this.item = class_17922;
+            this.type = type;
         }
     }
 
@@ -143,10 +143,6 @@ extends Module {
         LongerSingleClick,
         Longer;
 
-
-        private Type() {
-            Type llllllllllllllllIlIlIlllIIIIllIl;
-        }
     }
 }
 

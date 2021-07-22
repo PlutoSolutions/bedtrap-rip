@@ -11,19 +11,17 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class AntiLevitation
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> applyGravity;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> applyGravity;
 
     public AntiLevitation() {
         super(Categories.Movement, "anti-levitation", "Prevents the levitation effect from working.");
-        AntiLevitation lllIIIIllIlIII;
-        lllIIIIllIlIII.sgGeneral = lllIIIIllIlIII.settings.getDefaultGroup();
-        lllIIIIllIlIII.applyGravity = lllIIIIllIlIII.sgGeneral.add(new BoolSetting.Builder().name("gravity").description("Applies gravity.").defaultValue(false).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.applyGravity = this.sgGeneral.add(new BoolSetting.Builder().name("gravity").description("Applies gravity.").defaultValue(false).build());
     }
 
     public boolean isApplyGravity() {
-        AntiLevitation lllIIIIllIIlIl;
-        return lllIIIIllIIlIl.applyGravity.get();
+        return this.applyGravity.get();
     }
 }
 

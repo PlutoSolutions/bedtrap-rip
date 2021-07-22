@@ -29,39 +29,46 @@ import net.minecraft.class_2960;
 public class EnchListSetting
 extends Setting<List<class_1887>> {
     @Override
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((List)object);
+    }
+
+    @Override
     public class_2487 toTag() {
-        EnchListSetting llIllIIIIIIl;
-        class_2487 llIllIIIIIII = llIllIIIIIIl.saveGeneral();
-        class_2499 llIlIlllllll = new class_2499();
-        for (class_1887 llIllIIIIIlI : (List)llIllIIIIIIl.get()) {
+        class_2487 class_24872 = this.saveGeneral();
+        class_2499 class_24992 = new class_2499();
+        for (class_1887 class_18872 : (List)this.get()) {
             try {
-                llIlIlllllll.add((Object)class_2519.method_23256((String)class_2378.field_11160.method_10221((Object)llIllIIIIIlI).toString()));
+                class_24992.add((Object)class_2519.method_23256((String)class_2378.field_11160.method_10221((Object)class_18872).toString()));
             }
-            catch (NullPointerException llIlIllllIIl) {}
+            catch (NullPointerException nullPointerException) {}
         }
-        llIllIIIIIII.method_10566("value", (class_2520)llIlIlllllll);
-        return llIllIIIIIII;
+        class_24872.method_10566("value", (class_2520)class_24992);
+        return class_24872;
     }
 
     @Override
-    public void reset(boolean llIllIlIIlII) {
-        EnchListSetting llIllIlIIIll;
-        llIllIlIIIll.value = new ArrayList((Collection)llIllIlIIIll.defaultValue);
-        if (llIllIlIIlII) {
-            llIllIlIIIll.changed();
+    public void reset(boolean bl) {
+        this.value = new ArrayList((Collection)this.defaultValue);
+        if (bl) {
+            this.changed();
         }
     }
 
     @Override
-    public List<class_1887> fromTag(class_2487 llIlIlllIIIl) {
-        EnchListSetting llIlIllIllll;
-        ((List)llIlIllIllll.get()).clear();
-        class_2499 llIlIlllIIII = llIlIlllIIIl.method_10554("value", 8);
-        for (class_2520 llIlIlllIIll : llIlIlllIIII) {
-            ((List)llIlIllIllll.get()).add((class_1887)class_2378.field_11160.method_10223(new class_2960(llIlIlllIIll.method_10714())));
+    public List<class_1887> fromTag(class_2487 class_24872) {
+        ((List)this.get()).clear();
+        class_2499 class_24992 = class_24872.method_10554("value", 8);
+        for (class_2520 class_25202 : class_24992) {
+            ((List)this.get()).add((class_1887)class_2378.field_11160.method_10223(new class_2960(class_25202.method_10714())));
         }
-        llIlIllIllll.changed();
-        return (List)llIlIllIllll.get();
+        this.changed();
+        return (List)this.get();
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     @Override
@@ -70,86 +77,79 @@ extends Setting<List<class_1887>> {
     }
 
     @Override
-    protected boolean isValueValid(List<class_1887> llIllIIIlIlI) {
+    protected boolean isValueValid(List<class_1887> list) {
         return true;
     }
 
     @Override
-    protected List<class_1887> parseImpl(String llIllIIlIllI) {
-        String[] llIllIIlIlIl = llIllIIlIllI.split(",");
-        ArrayList<class_1887> llIllIIlIlII = new ArrayList<class_1887>(llIllIIlIlIl.length);
+    protected List<class_1887> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        ArrayList<class_1887> arrayList = new ArrayList<class_1887>(arrstring.length);
         try {
-            for (String llIllIIllIII : llIllIIlIlIl) {
-                class_1887 llIllIIllIIl = (class_1887)EnchListSetting.parseId(class_2378.field_11160, llIllIIllIII);
-                if (llIllIIllIIl == null) continue;
-                llIllIIlIlII.add(llIllIIllIIl);
+            for (String string2 : arrstring) {
+                class_1887 class_18872 = (class_1887)EnchListSetting.parseId(class_2378.field_11160, string2);
+                if (class_18872 == null) continue;
+                arrayList.add(class_18872);
+                if (null == null) continue;
+                return null;
             }
         }
-        catch (Exception llIllIIlIIII) {
+        catch (Exception exception) {
             // empty catch block
         }
-        return llIllIIlIlII;
+        return arrayList;
     }
 
-    public EnchListSetting(String llIllIllIlII, String llIllIlIllII, List<class_1887> llIllIllIIlI, Consumer<List<class_1887>> llIllIlIlIlI, Consumer<Setting<List<class_1887>>> llIllIllIIII, IVisible llIllIlIlIII) {
-        super(llIllIllIlII, llIllIlIllII, llIllIllIIlI, llIllIlIlIlI, llIllIllIIII, llIllIlIlIII);
-        EnchListSetting llIllIllIlIl;
-        llIllIllIlIl.value = new ArrayList<class_1887>(llIllIllIIlI);
+    public EnchListSetting(String string, String string2, List<class_1887> list, Consumer<List<class_1887>> consumer, Consumer<Setting<List<class_1887>>> consumer2, IVisible iVisible) {
+        super(string, string2, list, consumer, consumer2, iVisible);
+        this.value = new ArrayList<class_1887>(list);
+    }
+
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
     }
 
     public static class Builder {
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ String name;
-        private /* synthetic */ List<class_1887> defaultValue;
-        private /* synthetic */ Consumer<List<class_1887>> onChanged;
-        private /* synthetic */ String description;
-        private /* synthetic */ Consumer<Setting<List<class_1887>>> onModuleActivated;
+        private IVisible visible;
+        private String name = "undefined";
+        private List<class_1887> defaultValue;
+        private Consumer<List<class_1887>> onChanged;
+        private String description = "";
+        private Consumer<Setting<List<class_1887>>> onModuleActivated;
 
-        public Builder name(String llIIIIlIIllIl) {
-            Builder llIIIIlIIlllI;
-            llIIIIlIIlllI.name = llIIIIlIIllIl;
-            return llIIIIlIIlllI;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder onChanged(Consumer<List<class_1887>> llIIIIIlllIIl) {
-            Builder llIIIIIlllIlI;
-            llIIIIIlllIlI.onChanged = llIIIIIlllIIl;
-            return llIIIIIlllIlI;
+        public Builder onChanged(Consumer<List<class_1887>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder defaultValue(List<class_1887> llIIIIlIIIIIl) {
-            Builder llIIIIlIIIIII;
-            llIIIIlIIIIII.defaultValue = llIIIIlIIIIIl;
-            return llIIIIlIIIIII;
+        public Builder defaultValue(List<class_1887> list) {
+            this.defaultValue = list;
+            return this;
         }
 
-        public Builder() {
-            Builder llIIIIlIlIIIl;
-            llIIIIlIlIIIl.name = "undefined";
-            llIIIIlIlIIIl.description = "";
-        }
-
-        public Builder visible(IVisible llIIIIIlIllll) {
-            Builder llIIIIIllIIII;
-            llIIIIIllIIII.visible = llIIIIIlIllll;
-            return llIIIIIllIIII;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
         public EnchListSetting build() {
-            Builder llIIIIIlIlIll;
-            return new EnchListSetting(llIIIIIlIlIll.name, llIIIIIlIlIll.description, llIIIIIlIlIll.defaultValue, llIIIIIlIlIll.onChanged, llIIIIIlIlIll.onModuleActivated, llIIIIIlIlIll.visible);
+            return new EnchListSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
 
-        public Builder onModuleActivated(Consumer<Setting<List<class_1887>>> llIIIIIllIIll) {
-            Builder llIIIIIllIlII;
-            llIIIIIllIlII.onModuleActivated = llIIIIIllIIll;
-            return llIIIIIllIlII;
+        public Builder onModuleActivated(Consumer<Setting<List<class_1887>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder description(String llIIIIlIIIlIl) {
-            Builder llIIIIlIIlIII;
-            llIIIIlIIlIII.description = llIIIIlIIIlIl;
-            return llIIIIlIIlIII;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
     }
 }

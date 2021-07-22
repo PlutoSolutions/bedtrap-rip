@@ -65,79 +65,76 @@ import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 import net.minecraft.class_437;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public abstract class GuiTheme
 implements ISerializable<GuiTheme> {
-    public static final /* synthetic */ double TITLE_TEXT_SCALE = 1.25;
-    public final /* synthetic */ String name;
-    public final /* synthetic */ Settings settings;
-    protected final /* synthetic */ Map<String, WindowConfig> windowConfigs;
-    protected /* synthetic */ SettingsWidgetFactory settingsFactory;
-    public /* synthetic */ boolean disableHoverColor;
+    public static final double TITLE_TEXT_SCALE = 1.25;
+    public final String name;
+    public final Settings settings = new Settings();
+    protected final Map<String, WindowConfig> windowConfigs = new HashMap<String, WindowConfig>();
+    protected SettingsWidgetFactory settingsFactory;
+    public boolean disableHoverColor;
 
     public abstract WView view();
 
     public abstract WVerticalSeparator verticalSeparator();
 
-    public double textHeight(boolean lllllllllllllllllIIIlIIllIIlIIIl) {
-        GuiTheme lllllllllllllllllIIIlIIllIIlIIlI;
-        return lllllllllllllllllIIIlIIllIIlIIlI.scale(lllllllllllllllllIIIlIIllIIlIIlI.textRenderer().getHeight() * (lllllllllllllllllIIIlIIllIIlIIIl ? 1.25 : 1.0));
+    public double textHeight(boolean bl) {
+        return this.scale(this.textRenderer().getHeight() * (bl ? 1.25 : 1.0));
     }
 
     public TabScreen modulesScreen() {
-        GuiTheme lllllllllllllllllIIIlIIllIlllIlI;
-        return new ModulesScreen(lllllllllllllllllIIIlIIllIlllIlI);
+        return new ModulesScreen(this);
+    }
+
+    private static boolean lambda$textBox$0(String string, char c) {
+        return true;
     }
 
     public abstract boolean blur();
 
     public abstract WQuad quad(Color var1);
 
-    public WTextBox textBox(String lllllllllllllllllIIIlIlIIIllllIl) {
-        GuiTheme lllllllllllllllllIIIlIlIIlIIIIII;
-        return lllllllllllllllllIIIlIlIIlIIIIII.textBox(lllllllllllllllllIIIlIlIIIllllIl, (lllllllllllllllllIIIlIIlIlIlIlll, lllllllllllllllllIIIlIIlIlIlIllI) -> true);
+    public WTextBox textBox(String string) {
+        return this.textBox(string, GuiTheme::lambda$textBox$0);
     }
 
     public abstract WLabel label(String var1, boolean var2, double var3);
 
     @Override
-    public GuiTheme fromTag(class_2487 lllllllllllllllllIIIlIIlIllIIIII) {
-        GuiTheme lllllllllllllllllIIIlIIlIllIIlII;
-        lllllllllllllllllIIIlIIlIllIIlII.settings.fromTag(lllllllllllllllllIIIlIIlIllIIIII.method_10562("settings"));
-        class_2487 lllllllllllllllllIIIlIIlIllIIIlI = lllllllllllllllllIIIlIIlIllIIIII.method_10562("windowConfigs");
-        for (String lllllllllllllllllIIIlIIlIllIIlIl : lllllllllllllllllIIIlIIlIllIIIlI.method_10541()) {
-            lllllllllllllllllIIIlIIlIllIIlII.windowConfigs.put(lllllllllllllllllIIIlIIlIllIIlIl, (WindowConfig)new WindowConfig().fromTag(lllllllllllllllllIIIlIIlIllIIIlI.method_10562(lllllllllllllllllIIIlIIlIllIIlIl)));
+    public GuiTheme fromTag(class_2487 class_24872) {
+        this.settings.fromTag(class_24872.method_10562("settings"));
+        class_2487 class_24873 = class_24872.method_10562("windowConfigs");
+        for (String string : class_24873.method_10541()) {
+            this.windowConfigs.put(string, (WindowConfig)new WindowConfig().fromTag(class_24873.method_10562(string)));
         }
-        return lllllllllllllllllIIIlIIlIllIIlII;
+        return this;
     }
 
-    public GuiTheme(String lllllllllllllllllIIIlIlIIllIllIl) {
-        GuiTheme lllllllllllllllllIIIlIlIIlllIIII;
-        lllllllllllllllllIIIlIlIIlllIIII.settings = new Settings();
-        lllllllllllllllllIIIlIlIIlllIIII.windowConfigs = new HashMap<String, WindowConfig>();
-        lllllllllllllllllIIIlIlIIlllIIII.name = lllllllllllllllllIIIlIlIIllIllIl;
+    public GuiTheme(String string) {
+        this.name = string;
     }
 
     public abstract WTextBox textBox(String var1, CharFilter var2);
 
-    public WWidget settings(Settings lllllllllllllllllIIIlIIlllIIIIll, String lllllllllllllllllIIIlIIlllIIIlIl) {
-        GuiTheme lllllllllllllllllIIIlIIlllIIIlII;
-        return lllllllllllllllllIIIlIIlllIIIlII.settingsFactory.create(lllllllllllllllllIIIlIIlllIIIlII, lllllllllllllllllIIIlIIlllIIIIll, lllllllllllllllllIIIlIIlllIIIlIl);
+    public WWidget settings(Settings settings, String string) {
+        return this.settingsFactory.create(this, settings, string);
     }
 
     public WTable table() {
-        GuiTheme lllllllllllllllllIIIlIlIIIlIIllI;
-        return lllllllllllllllllIIIlIlIIIlIIllI.w(new WTable());
+        return this.w(new WTable());
     }
 
-    public WindowConfig getWindowConfig(String lllllllllllllllllIIIlIIllIIIIllI) {
-        GuiTheme lllllllllllllllllIIIlIIllIIIIlll;
-        WindowConfig lllllllllllllllllIIIlIIllIIIIlIl = lllllllllllllllllIIIlIIllIIIIlll.windowConfigs.get(lllllllllllllllllIIIlIIllIIIIllI);
-        if (lllllllllllllllllIIIlIIllIIIIlIl != null) {
-            return lllllllllllllllllIIIlIIllIIIIlIl;
+    public WindowConfig getWindowConfig(String string) {
+        WindowConfig windowConfig = this.windowConfigs.get(string);
+        if (windowConfig != null) {
+            return windowConfig;
         }
-        lllllllllllllllllIIIlIIllIIIIlIl = new WindowConfig();
-        lllllllllllllllllIIIlIIllIIIIlll.windowConfigs.put(lllllllllllllllllIIIlIIllIIIIllI, lllllllllllllllllIIIlIIllIIIIlIl);
-        return lllllllllllllllllIIIlIIllIIIIlIl;
+        windowConfig = new WindowConfig();
+        this.windowConfigs.put(string, windowConfig);
+        return windowConfig;
     }
 
     public abstract WTooltip tooltip(String var1);
@@ -146,9 +143,8 @@ implements ISerializable<GuiTheme> {
 
     public abstract WAccount account(WidgetScreen var1, Account<?> var2);
 
-    public WKeybind keybind(Keybind lllllllllllllllllIIIlIIlllIIllll, int lllllllllllllllllIIIlIIlllIIlIll) {
-        GuiTheme lllllllllllllllllIIIlIIlllIlIIII;
-        return lllllllllllllllllIIIlIIlllIlIIII.w(new WKeybind(lllllllllllllllllIIIlIIlllIIllll, lllllllllllllllllIIIlIIlllIIlIll));
+    public WKeybind keybind(Keybind keybind, int n) {
+        return this.w(new WKeybind(keybind, n));
     }
 
     public abstract double scale(double var1);
@@ -156,89 +152,79 @@ implements ISerializable<GuiTheme> {
     public abstract <T> WDropdown<T> dropdown(T[] var1, T var2);
 
     public WHorizontalSeparator horizontalSeparator() {
-        GuiTheme lllllllllllllllllIIIlIlIIlIlIIII;
-        return lllllllllllllllllIIIlIlIIlIlIIII.horizontalSeparator(null);
+        return this.horizontalSeparator(null);
     }
 
     public double textHeight() {
-        GuiTheme lllllllllllllllllIIIlIIllIIIlllI;
-        return lllllllllllllllllIIIlIIllIIIlllI.textHeight(false);
+        return this.textHeight(false);
     }
 
-    protected <T extends WWidget> T w(T lllllllllllllllllIIIlIIlIllllIIl) {
-        GuiTheme lllllllllllllllllIIIlIIlIllllIlI;
-        lllllllllllllllllIIIlIIlIllllIIl.theme = lllllllllllllllllIIIlIIlIllllIlI;
-        return lllllllllllllllllIIIlIIlIllllIIl;
+    protected <T extends WWidget> T w(T t) {
+        t.theme = this;
+        return t;
     }
 
     public double pad() {
-        GuiTheme lllllllllllllllllIIIlIIllIIIllII;
-        return lllllllllllllllllIIIlIIllIIIllII.scale(6.0);
+        return this.scale(6.0);
     }
 
     public void clearWindowConfigs() {
-        GuiTheme lllllllllllllllllIIIlIIlIlllllll;
-        lllllllllllllllllIIIlIIlIlllllll.windowConfigs.clear();
+        this.windowConfigs.clear();
     }
 
     public void beforeRender() {
-        lllllllllllllllllIIIlIlIIllIlIlI.disableHoverColor = false;
+        this.disableHoverColor = false;
     }
 
-    public WItemWithLabel itemWithLabel(class_1799 lllllllllllllllllIIIlIlIIIIIlIll, String lllllllllllllllllIIIlIlIIIIIlIlI) {
-        GuiTheme lllllllllllllllllIIIlIlIIIIIlIIl;
-        return lllllllllllllllllIIIlIlIIIIIlIIl.w(new WItemWithLabel(lllllllllllllllllIIIlIlIIIIIlIll, lllllllllllllllllIIIlIlIIIIIlIlI));
+    public WItemWithLabel itemWithLabel(class_1799 class_17992, String string) {
+        return this.w(new WItemWithLabel(class_17992, string));
     }
 
-    public WSection section(String lllllllllllllllllIIIlIlIIIlIIIII, boolean lllllllllllllllllIIIlIlIIIIlllII) {
-        GuiTheme lllllllllllllllllIIIlIlIIIlIIIIl;
-        return lllllllllllllllllIIIlIlIIIlIIIIl.section(lllllllllllllllllIIIlIlIIIlIIIII, lllllllllllllllllIIIlIlIIIIlllII, null);
+    public WSection section(String string, boolean bl) {
+        return this.section(string, bl, null);
     }
 
-    public WButton button(String lllllllllllllllllIIIlIlIIlIIlIIl) {
-        GuiTheme lllllllllllllllllIIIlIlIIlIIllII;
-        return lllllllllllllllllIIIlIlIIlIIllII.button(lllllllllllllllllIIIlIlIIlIIlIIl, null);
+    public WButton button(String string) {
+        return this.button(string, null);
     }
 
-    public WSection section(String lllllllllllllllllIIIlIlIIIIllIII) {
-        GuiTheme lllllllllllllllllIIIlIlIIIIllIIl;
-        return lllllllllllllllllIIIlIlIIIIllIIl.section(lllllllllllllllllIIIlIlIIIIllIII, true);
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public WSection section(String string) {
+        return this.section(string, true);
     }
 
     public abstract WTopBar topBar();
 
-    public WWidget settings(Settings lllllllllllllllllIIIlIIllIllllII) {
-        GuiTheme lllllllllllllllllIIIlIIllIllllIl;
-        return lllllllllllllllllIIIlIIllIllllIl.settings(lllllllllllllllllIIIlIIllIllllII, "");
+    public WWidget settings(Settings settings) {
+        return this.settings(settings, "");
     }
 
     public WHorizontalList horizontalList() {
-        GuiTheme lllllllllllllllllIIIlIlIIIlIlIII;
-        return lllllllllllllllllIIIlIlIIIlIlIII.w(new WHorizontalList());
+        return this.w(new WHorizontalList());
     }
 
-    public WItem item(class_1799 lllllllllllllllllIIIlIlIIIIlIIII) {
-        GuiTheme lllllllllllllllllIIIlIlIIIIlIIIl;
-        return lllllllllllllllllIIIlIlIIIIlIIIl.w(new WItem(lllllllllllllllllIIIlIlIIIIlIIII));
+    public WItem item(class_1799 class_17992) {
+        return this.w(new WItem(class_17992));
     }
 
     public WVerticalList verticalList() {
-        GuiTheme lllllllllllllllllIIIlIlIIIlIllII;
-        return lllllllllllllllllIIIlIlIIIlIllII.w(new WVerticalList());
+        return this.w(new WVerticalList());
     }
 
     protected abstract WButton button(String var1, GuiTexture var2);
 
-    public WLabel label(String lllllllllllllllllIIIlIlIIlIlIIlI) {
-        GuiTheme lllllllllllllllllIIIlIlIIlIlIlIl;
-        return lllllllllllllllllIIIlIlIIlIlIlIl.label(lllllllllllllllllIIIlIlIIlIlIIlI, false);
+    public WLabel label(String string) {
+        return this.label(string, false);
     }
 
     public abstract boolean categoryIcons();
 
-    public WIntEdit intEdit(int lllllllllllllllllIIIlIIllllIlIII, int lllllllllllllllllIIIlIIllllIIlll, int lllllllllllllllllIIIlIIllllIlIlI) {
-        GuiTheme lllllllllllllllllIIIlIIllllIlIIl;
-        return lllllllllllllllllIIIlIIllllIlIIl.w(new WIntEdit(lllllllllllllllllIIIlIIllllIlIII, lllllllllllllllllIIIlIIllllIIlll, lllllllllllllllllIIIlIIllllIlIlI));
+    public WIntEdit intEdit(int n, int n2, int n3) {
+        return this.w(new WIntEdit(n, n2, n3));
     }
 
     public abstract WSection section(String var1, boolean var2, WWidget var3);
@@ -248,90 +234,78 @@ implements ISerializable<GuiTheme> {
     public abstract WTriangle triangle();
 
     public WidgetScreen accountsScreen() {
-        GuiTheme lllllllllllllllllIIIlIIllIlIllIl;
-        return new AccountsScreen(lllllllllllllllllIIIlIIllIlIllIl);
+        return new AccountsScreen(this);
     }
 
     public abstract WSlider slider(double var1, double var3, double var5);
 
-    public <T extends Enum<?>> WDropdown<T> dropdown(T lllllllllllllllllIIIlIlIIIllIIIl) {
-        GuiTheme lllllllllllllllllIIIlIlIIIllIIlI;
-        Class<?> lllllllllllllllllIIIlIlIIIllIlII = lllllllllllllllllIIIlIlIIIllIIIl.getClass();
-        Enum[] lllllllllllllllllIIIlIlIIIllIIll = null;
+    public <T extends Enum<?>> WDropdown<T> dropdown(T t) {
+        Class<?> class_ = t.getClass();
+        Enum[] arrenum = null;
         try {
-            lllllllllllllllllIIIlIlIIIllIIll = (Enum[])lllllllllllllllllIIIlIlIIIllIlII.getDeclaredMethod("values", new Class[0]).invoke(null, new Object[0]);
+            arrenum = (Enum[])class_.getDeclaredMethod("values", new Class[0]).invoke(null, new Object[0]);
         }
-        catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException lllllllllllllllllIIIlIlIIIllIlll) {
-            lllllllllllllllllIIIlIlIIIllIlll.printStackTrace();
+        catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException reflectiveOperationException) {
+            reflectiveOperationException.printStackTrace();
         }
-        return lllllllllllllllllIIIlIlIIIllIIlI.dropdown(lllllllllllllllllIIIlIlIIIllIIll, lllllllllllllllllIIIlIlIIIllIIIl);
+        return this.dropdown(arrenum, t);
     }
 
-    public WTexture texture(double lllllllllllllllllIIIlIIllllllIlI, double lllllllllllllllllIIIlIIllllllIIl, double lllllllllllllllllIIIlIIlllllIIll, class_1044 lllllllllllllllllIIIlIIlllllIlll) {
-        GuiTheme lllllllllllllllllIIIlIIllllllIll;
-        return lllllllllllllllllIIIlIIllllllIll.w(new WTexture(lllllllllllllllllIIIlIIllllllIlI, lllllllllllllllllIIIlIIllllllIIl, lllllllllllllllllIIIlIIlllllIIll, lllllllllllllllllIIIlIIlllllIlll));
+    public WTexture texture(double d, double d2, double d3, class_1044 class_10442) {
+        return this.w(new WTexture(d, d2, d3, class_10442));
     }
 
-    public WLabel label(String lllllllllllllllllIIIlIlIIlIllIIl, double lllllllllllllllllIIIlIlIIlIllIll) {
-        GuiTheme lllllllllllllllllIIIlIlIIlIllIlI;
-        return lllllllllllllllllIIIlIlIIlIllIlI.label(lllllllllllllllllIIIlIlIIlIllIIl, false, lllllllllllllllllIIIlIlIIlIllIll);
+    public WLabel label(String string, double d) {
+        return this.label(string, false, d);
     }
 
-    public WLabel label(String lllllllllllllllllIIIlIlIIllIIIlI, boolean lllllllllllllllllIIIlIlIIllIIIIl) {
-        GuiTheme lllllllllllllllllIIIlIlIIllIIIll;
-        return lllllllllllllllllIIIlIlIIllIIIll.label(lllllllllllllllllIIIlIlIIllIIIlI, lllllllllllllllllIIIlIlIIllIIIIl, 0.0);
+    public WLabel label(String string, boolean bl) {
+        return this.label(string, bl, 0.0);
     }
 
     @Override
     public class_2487 toTag() {
-        GuiTheme lllllllllllllllllIIIlIIlIllIllll;
-        class_2487 lllllllllllllllllIIIlIIlIlllIIIl = new class_2487();
-        lllllllllllllllllIIIlIIlIlllIIIl.method_10582("name", lllllllllllllllllIIIlIIlIllIllll.name);
-        lllllllllllllllllIIIlIIlIlllIIIl.method_10566("settings", (class_2520)lllllllllllllllllIIIlIIlIllIllll.settings.toTag());
-        class_2487 lllllllllllllllllIIIlIIlIlllIIII = new class_2487();
-        for (String lllllllllllllllllIIIlIIlIlllIIll : lllllllllllllllllIIIlIIlIllIllll.windowConfigs.keySet()) {
-            lllllllllllllllllIIIlIIlIlllIIII.method_10566(lllllllllllllllllIIIlIIlIlllIIll, (class_2520)lllllllllllllllllIIIlIIlIllIllll.windowConfigs.get(lllllllllllllllllIIIlIIlIlllIIll).toTag());
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("name", this.name);
+        class_24872.method_10566("settings", (class_2520)this.settings.toTag());
+        class_2487 class_24873 = new class_2487();
+        for (String string : this.windowConfigs.keySet()) {
+            class_24873.method_10566(string, (class_2520)this.windowConfigs.get(string).toTag());
         }
-        lllllllllllllllllIIIlIIlIlllIIIl.method_10566("windowConfigs", (class_2520)lllllllllllllllllIIIlIIlIlllIIII);
-        return lllllllllllllllllIIIlIIlIlllIIIl;
+        class_24872.method_10566("windowConfigs", (class_2520)class_24873);
+        return class_24872;
     }
 
-    public double textWidth(String lllllllllllllllllIIIlIIllIIlIlll) {
-        GuiTheme lllllllllllllllllIIIlIIllIIllIlI;
-        return lllllllllllllllllIIIlIIllIIllIlI.textWidth(lllllllllllllllllIIIlIIllIIlIlll, lllllllllllllllllIIIlIIllIIlIlll.length(), false);
+    public double textWidth(String string) {
+        return this.textWidth(string, string.length(), false);
     }
 
-    public double textWidth(String lllllllllllllllllIIIlIIllIIlllll, int lllllllllllllllllIIIlIIllIlIIIlI, boolean lllllllllllllllllIIIlIIllIIlllIl) {
-        GuiTheme lllllllllllllllllIIIlIIllIlIIlII;
-        return lllllllllllllllllIIIlIIllIlIIlII.scale(lllllllllllllllllIIIlIIllIlIIlII.textRenderer().getWidth(lllllllllllllllllIIIlIIllIIlllll, lllllllllllllllllIIIlIIllIlIIIlI) * (lllllllllllllllllIIIlIIllIIlllIl ? 1.25 : 1.0));
+    public double textWidth(String string, int n, boolean bl) {
+        return this.scale(this.textRenderer().getWidth(string, n) * (bl ? 1.25 : 1.0));
     }
 
-    public WKeybind keybind(Keybind lllllllllllllllllIIIlIIlllIlIlII) {
-        GuiTheme lllllllllllllllllIIIlIIlllIlIlll;
-        return lllllllllllllllllIIIlIIlllIlIlll.keybind(lllllllllllllllllIIIlIIlllIlIlII, -1);
+    public WKeybind keybind(Keybind keybind) {
+        return this.keybind(keybind, -1);
     }
 
     public abstract Color textSecondaryColor();
 
-    public boolean isModulesScreen(class_437 lllllllllllllllllIIIlIIllIllIlIl) {
-        return lllllllllllllllllIIIlIIllIllIlIl instanceof ModulesScreen;
+    public boolean isModulesScreen(class_437 class_4372) {
+        return class_4372 instanceof ModulesScreen;
     }
 
-    public WButton button(GuiTexture lllllllllllllllllIIIlIlIIlIIIlIl) {
-        GuiTheme lllllllllllllllllIIIlIlIIlIIIllI;
-        return lllllllllllllllllIIIlIlIIlIIIllI.button(null, lllllllllllllllllIIIlIlIIlIIIlIl);
+    public WButton button(GuiTexture guiTexture) {
+        return this.button(null, guiTexture);
     }
 
     public WidgetScreen proxiesScreen() {
-        GuiTheme lllllllllllllllllIIIlIIllIlIlIIl;
-        return new ProxiesScreen(lllllllllllllllllIIIlIIllIlIlIIl);
+        return new ProxiesScreen(this);
     }
 
     public abstract WCheckbox checkbox(boolean var1);
 
-    public WItemWithLabel itemWithLabel(class_1799 lllllllllllllllllIIIlIlIIIIIIIIl) {
-        GuiTheme lllllllllllllllllIIIlIlIIIIIIlII;
-        return lllllllllllllllllIIIlIlIIIIIIlII.itemWithLabel(lllllllllllllllllIIIlIlIIIIIIIIl, Names.get(lllllllllllllllllIIIlIlIIIIIIIIl.method_7909()));
+    public WItemWithLabel itemWithLabel(class_1799 class_17992) {
+        return this.itemWithLabel(class_17992, Names.get(class_17992.method_7909()));
     }
 
     public abstract WWidget module(Module var1);
@@ -342,14 +316,12 @@ implements ISerializable<GuiTheme> {
 
     public abstract WMinus minus();
 
-    public WDoubleEdit doubleEdit(double lllllllllllllllllIIIlIIlllIlllII, double lllllllllllllllllIIIlIIlllIllIll, double lllllllllllllllllIIIlIIlllIllIlI) {
-        GuiTheme lllllllllllllllllIIIlIIllllIIIIl;
-        return lllllllllllllllllIIIlIIllllIIIIl.w(new WDoubleEdit(lllllllllllllllllIIIlIIlllIlllII, lllllllllllllllllIIIlIIlllIllIll, lllllllllllllllllIIIlIIlllIllIlI));
+    public WDoubleEdit doubleEdit(double d, double d2, double d3) {
+        return this.w(new WDoubleEdit(d, d2, d3));
     }
 
-    public WidgetScreen moduleScreen(Module lllllllllllllllllIIIlIIllIllIIIl) {
-        GuiTheme lllllllllllllllllIIIlIIllIllIIII;
-        return new ModuleScreen(lllllllllllllllllIIIlIIllIllIIII, lllllllllllllllllIIIlIIllIllIIIl);
+    public WidgetScreen moduleScreen(Module module) {
+        return new ModuleScreen(this, module);
     }
 
     public abstract Color textColor();

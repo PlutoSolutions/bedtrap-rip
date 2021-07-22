@@ -25,10 +25,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_4696.class})
 public class RenderLayersMixin {
     @Inject(method={"getBlockLayer"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onGetBlockLayer(class_2680 state, CallbackInfoReturnable<class_1921> cir) {
+    private static void onGetBlockLayer(class_2680 class_26802, CallbackInfoReturnable<class_1921> callbackInfoReturnable) {
         WallHack wallHack;
-        if (Modules.get() != null && (wallHack = Modules.get().get(WallHack.class)).isActive() && wallHack.blocks.get().contains((Object)state.method_26204())) {
-            cir.setReturnValue((Object)class_1921.method_23583());
+        if (Modules.get() != null && (wallHack = Modules.get().get(WallHack.class)).isActive() && wallHack.blocks.get().contains((Object)class_26802.method_26204())) {
+            callbackInfoReturnable.setReturnValue((Object)class_1921.method_23583());
         }
     }
 }

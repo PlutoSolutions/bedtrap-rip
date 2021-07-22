@@ -23,10 +23,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_852.class})
 public class ChunkOcclusionDataBuilderMixin {
     @Inject(method={"markClosed"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onMarkClosed(class_2338 pos, CallbackInfo info) {
-        ChunkOcclusionEvent event = MeteorClient.EVENT_BUS.post(ChunkOcclusionEvent.get());
-        if (event.isCancelled()) {
-            info.cancel();
+    private void onMarkClosed(class_2338 class_23382, CallbackInfo callbackInfo) {
+        ChunkOcclusionEvent chunkOcclusionEvent = MeteorClient.EVENT_BUS.post(ChunkOcclusionEvent.get());
+        if (chunkOcclusionEvent.isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 }

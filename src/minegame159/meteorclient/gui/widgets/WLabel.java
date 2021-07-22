@@ -8,34 +8,30 @@ import minegame159.meteorclient.utils.render.color.Color;
 
 public abstract class WLabel
 extends WWidget {
-    protected /* synthetic */ String text;
-    public /* synthetic */ Color color;
-    protected /* synthetic */ boolean title;
+    protected String text;
+    public Color color;
+    protected boolean title;
 
-    public void set(String lIIIlIIlIIIllIl) {
-        WLabel lIIIlIIlIIIlllI;
-        if ((double)Math.round(lIIIlIIlIIIlllI.theme.textWidth(lIIIlIIlIIIllIl, lIIIlIIlIIIllIl.length(), lIIIlIIlIIIlllI.title)) != lIIIlIIlIIIlllI.width) {
-            lIIIlIIlIIIlllI.invalidate();
+    public void set(String string) {
+        if ((double)Math.round(this.theme.textWidth(string, string.length(), this.title)) != this.width) {
+            this.invalidate();
         }
-        lIIIlIIlIIIlllI.text = lIIIlIIlIIIllIl;
+        this.text = string;
     }
 
     public String get() {
-        WLabel lIIIlIIlIIIlIlI;
-        return lIIIlIIlIIIlIlI.text;
+        return this.text;
     }
 
-    public WLabel(String lIIIlIIlIIllIlI, boolean lIIIlIIlIIlIllI) {
-        WLabel lIIIlIIlIIllIII;
-        lIIIlIIlIIllIII.text = lIIIlIIlIIllIlI;
-        lIIIlIIlIIllIII.title = lIIIlIIlIIlIllI;
+    public WLabel(String string, boolean bl) {
+        this.text = string;
+        this.title = bl;
     }
 
     @Override
     protected void onCalculateSize() {
-        WLabel lIIIlIIlIIlIlII;
-        lIIIlIIlIIlIlII.width = lIIIlIIlIIlIlII.theme.textWidth(lIIIlIIlIIlIlII.text, lIIIlIIlIIlIlII.text.length(), lIIIlIIlIIlIlII.title);
-        lIIIlIIlIIlIlII.height = lIIIlIIlIIlIlII.theme.textHeight(lIIIlIIlIIlIlII.title);
+        this.width = this.theme.textWidth(this.text, this.text.length(), this.title);
+        this.height = this.theme.textHeight(this.title);
     }
 }
 

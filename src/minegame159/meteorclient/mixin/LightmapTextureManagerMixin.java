@@ -27,15 +27,15 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(value={class_765.class})
 public class LightmapTextureManagerMixin {
     @Redirect(method={"update"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/network/ClientPlayerEntity;hasStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z", ordinal=0))
-    private boolean updateHasStatusEffectProxy(class_746 player, class_1291 effect) {
+    private boolean updateHasStatusEffectProxy(class_746 class_7462, class_1291 class_12912) {
         Fullbright fullbright = Modules.get().get(Fullbright.class);
-        return Fullbright.isEnabled() && fullbright.mode.get() == Fullbright.Mode.Gamma || player.method_6059(effect);
+        return Fullbright.isEnabled() && fullbright.mode.get() == Fullbright.Mode.Gamma || class_7462.method_6059(class_12912);
     }
 
     @Redirect(method={"update"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/render/GameRenderer;getNightVisionStrength(Lnet/minecraft/entity/LivingEntity;F)F"))
-    private float updateGetNightVisionStrengthProxy(class_1309 entity, float delta) {
+    private float updateGetNightVisionStrengthProxy(class_1309 class_13092, float f) {
         Fullbright fullbright = Modules.get().get(Fullbright.class);
-        return Fullbright.isEnabled() && fullbright.mode.get() == Fullbright.Mode.Gamma ? 1.0f : class_757.method_3174((class_1309)entity, (float)delta);
+        return Fullbright.isEnabled() && fullbright.mode.get() == Fullbright.Mode.Gamma ? 1.0f : class_757.method_3174((class_1309)class_13092, (float)f);
     }
 }
 

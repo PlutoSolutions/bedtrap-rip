@@ -10,124 +10,120 @@ import minegame159.meteorclient.gui.widgets.input.WTextBox;
 
 public class WDoubleEdit
 extends WHorizontalList {
-    public /* synthetic */ Double min;
-    public /* synthetic */ Runnable action;
-    public /* synthetic */ int decimalPlaces;
-    private /* synthetic */ double value;
-    public /* synthetic */ boolean noSlider;
-    public /* synthetic */ boolean small;
-    public /* synthetic */ Runnable actionOnRelease;
-    private final /* synthetic */ double sliderMin;
-    private /* synthetic */ WSlider slider;
-    private /* synthetic */ WTextBox textBox;
-    private final /* synthetic */ double sliderMax;
-    public /* synthetic */ Double max;
+    public Double min;
+    public Runnable action;
+    public int decimalPlaces = 3;
+    private double value;
+    public boolean noSlider = false;
+    public boolean small;
+    public Runnable actionOnRelease;
+    private final double sliderMin;
+    private WSlider slider;
+    private WTextBox textBox;
+    private final double sliderMax;
+    public Double max;
 
     public double get() {
-        WDoubleEdit llllllllllllllllIlIlllIlIllllIIl;
-        return llllllllllllllllIlIlllIlIllllIIl.value;
+        return this.value;
+    }
+
+    private void lambda$init$1() {
+        double d = this.value;
+        this.value = this.slider.get();
+        this.textBox.set(this.valueString());
+        if (this.action != null && this.value != d) {
+            this.action.run();
+        }
     }
 
     @Override
     public void init() {
-        WDoubleEdit llllllllllllllllIlIlllIllIIIllll;
-        llllllllllllllllIlIlllIllIIIllll.textBox = llllllllllllllllIlIlllIllIIIllll.add(llllllllllllllllIlIlllIllIIIllll.theme.textBox(llllllllllllllllIlIlllIllIIIllll.valueString(), (arg_0, arg_1) -> llllllllllllllllIlIlllIllIIIllll.filter(arg_0, arg_1))).minWidth(75.0).widget();
-        if (!llllllllllllllllIlIlllIllIIIllll.noSlider) {
-            llllllllllllllllIlIlllIllIIIllll.slider = llllllllllllllllIlIlllIllIIIllll.add(llllllllllllllllIlIlllIllIIIllll.theme.slider(llllllllllllllllIlIlllIllIIIllll.value, llllllllllllllllIlIlllIllIIIllll.sliderMin, llllllllllllllllIlIlllIllIIIllll.sliderMax)).minWidth(llllllllllllllllIlIlllIllIIIllll.small ? 125.0 - llllllllllllllllIlIlllIllIIIllll.spacing : 200.0).centerY().expandX().widget();
+        this.textBox = this.add(this.theme.textBox(this.valueString(), (arg_0, arg_1) -> this.filter(arg_0, arg_1))).minWidth(75.0).widget();
+        if (!this.noSlider) {
+            this.slider = this.add(this.theme.slider(this.value, this.sliderMin, this.sliderMax)).minWidth(this.small ? 125.0 - this.spacing : 200.0).centerY().expandX().widget();
         }
-        llllllllllllllllIlIlllIllIIIllll.textBox.actionOnUnfocused = () -> {
-            WDoubleEdit llllllllllllllllIlIlllIlIllIIIll;
-            double llllllllllllllllIlIlllIlIllIIIlI = llllllllllllllllIlIlllIlIllIIIll.value;
-            llllllllllllllllIlIlllIlIllIIIll.value = llllllllllllllllIlIlllIlIllIIIll.textBox.get().isEmpty() ? 0.0 : (llllllllllllllllIlIlllIlIllIIIll.textBox.get().equals("-") ? 0.0 : (llllllllllllllllIlIlllIlIllIIIll.textBox.get().equals(".") ? 0.0 : (llllllllllllllllIlIlllIlIllIIIll.textBox.get().equals("-.") ? 0.0 : Double.parseDouble(llllllllllllllllIlIlllIlIllIIIll.textBox.get()))));
-            double llllllllllllllllIlIlllIlIllIIIIl = llllllllllllllllIlIlllIlIllIIIll.value;
-            if (llllllllllllllllIlIlllIlIllIIIll.min != null && llllllllllllllllIlIlllIlIllIIIll.value < llllllllllllllllIlIlllIlIllIIIll.min) {
-                llllllllllllllllIlIlllIlIllIIIll.value = llllllllllllllllIlIlllIlIllIIIll.min;
-            } else if (llllllllllllllllIlIlllIlIllIIIll.max != null && llllllllllllllllIlIlllIlIllIIIll.value > llllllllllllllllIlIlllIlIllIIIll.max) {
-                llllllllllllllllIlIlllIlIllIIIll.value = llllllllllllllllIlIlllIlIllIIIll.max;
-            }
-            if (llllllllllllllllIlIlllIlIllIIIll.value != llllllllllllllllIlIlllIlIllIIIIl) {
-                llllllllllllllllIlIlllIlIllIIIll.textBox.set(llllllllllllllllIlIlllIlIllIIIll.valueString());
-            }
-            if (llllllllllllllllIlIlllIlIllIIIll.slider != null) {
-                llllllllllllllllIlIlllIlIllIIIll.slider.set(llllllllllllllllIlIlllIlIllIIIll.value);
-            }
-            if (llllllllllllllllIlIlllIlIllIIIll.value != llllllllllllllllIlIlllIlIllIIIlI) {
-                if (llllllllllllllllIlIlllIlIllIIIll.action != null) {
-                    llllllllllllllllIlIlllIlIllIIIll.action.run();
-                }
-                if (llllllllllllllllIlIlllIlIllIIIll.actionOnRelease != null) {
-                    llllllllllllllllIlIlllIlIllIIIll.actionOnRelease.run();
-                }
-            }
-        };
-        if (llllllllllllllllIlIlllIllIIIllll.slider != null) {
-            llllllllllllllllIlIlllIllIIIllll.slider.action = () -> {
-                WDoubleEdit llllllllllllllllIlIlllIlIllIlIII;
-                double llllllllllllllllIlIlllIlIllIlIIl = llllllllllllllllIlIlllIlIllIlIII.value;
-                llllllllllllllllIlIlllIlIllIlIII.value = llllllllllllllllIlIlllIlIllIlIII.slider.get();
-                llllllllllllllllIlIlllIlIllIlIII.textBox.set(llllllllllllllllIlIlllIlIllIlIII.valueString());
-                if (llllllllllllllllIlIlllIlIllIlIII.action != null && llllllllllllllllIlIlllIlIllIlIII.value != llllllllllllllllIlIlllIlIllIlIIl) {
-                    llllllllllllllllIlIlllIlIllIlIII.action.run();
-                }
-            };
-            llllllllllllllllIlIlllIllIIIllll.slider.actionOnRelease = () -> {
-                WDoubleEdit llllllllllllllllIlIlllIlIllIlllI;
-                if (llllllllllllllllIlIlllIlIllIlllI.actionOnRelease != null) {
-                    llllllllllllllllIlIlllIlIllIlllI.actionOnRelease.run();
-                }
-            };
+        this.textBox.actionOnUnfocused = this::lambda$init$0;
+        if (this.slider != null) {
+            this.slider.action = this::lambda$init$1;
+            this.slider.actionOnRelease = this::lambda$init$2;
         }
     }
 
     private String valueString() {
-        WDoubleEdit llllllllllllllllIlIlllIlIlllIIIl;
-        return String.format(Locale.US, String.valueOf(new StringBuilder().append("%.").append(llllllllllllllllIlIlllIlIlllIIIl.decimalPlaces).append("f")), llllllllllllllllIlIlllIlIlllIIIl.value);
+        return String.format(Locale.US, String.valueOf(new StringBuilder().append("%.").append(this.decimalPlaces).append("f")), this.value);
     }
 
-    public WDoubleEdit(double llllllllllllllllIlIlllIllIIlIIll, double llllllllllllllllIlIlllIllIIlIllI, double llllllllllllllllIlIlllIllIIlIlIl) {
-        WDoubleEdit llllllllllllllllIlIlllIllIIlIlII;
-        llllllllllllllllIlIlllIllIIlIlII.decimalPlaces = 3;
-        llllllllllllllllIlIlllIllIIlIlII.noSlider = false;
-        llllllllllllllllIlIlllIllIIlIlII.value = llllllllllllllllIlIlllIllIIlIIll;
-        llllllllllllllllIlIlllIllIIlIlII.sliderMin = llllllllllllllllIlIlllIllIIlIllI;
-        llllllllllllllllIlIlllIllIIlIlII.sliderMax = llllllllllllllllIlIlllIllIIlIlIl;
-        if (llllllllllllllllIlIlllIllIIlIllI == 0.0 && llllllllllllllllIlIlllIllIIlIlIl == 0.0) {
-            llllllllllllllllIlIlllIllIIlIlII.noSlider = true;
+    private void lambda$init$2() {
+        if (this.actionOnRelease != null) {
+            this.actionOnRelease.run();
         }
     }
 
-    public void set(double llllllllllllllllIlIlllIlIlllIIll) {
-        WDoubleEdit llllllllllllllllIlIlllIlIlllIllI;
-        llllllllllllllllIlIlllIlIlllIllI.value = llllllllllllllllIlIlllIlIlllIIll;
-        llllllllllllllllIlIlllIlIlllIllI.textBox.set(llllllllllllllllIlIlllIlIlllIllI.valueString());
-        if (llllllllllllllllIlIlllIlIlllIllI.slider != null) {
-            llllllllllllllllIlIlllIlIlllIllI.slider.set(llllllllllllllllIlIlllIlIlllIIll);
+    public WDoubleEdit(double d, double d2, double d3) {
+        this.value = d;
+        this.sliderMin = d2;
+        this.sliderMax = d3;
+        if (d2 == 0.0 && d3 == 0.0) {
+            this.noSlider = true;
         }
     }
 
-    private boolean filter(String llllllllllllllllIlIlllIllIIIIlII, char llllllllllllllllIlIlllIllIIIIIll) {
-        boolean llllllllllllllllIlIlllIllIIIIIlI;
-        boolean llllllllllllllllIlIlllIllIIIIIIl = true;
-        if (llllllllllllllllIlIlllIllIIIIIll == '-' && llllllllllllllllIlIlllIllIIIIlII.isEmpty()) {
-            boolean llllllllllllllllIlIlllIllIIIlIII = true;
-            llllllllllllllllIlIlllIllIIIIIIl = false;
-        } else if (llllllllllllllllIlIlllIllIIIIIll == '.' && !llllllllllllllllIlIlllIllIIIIlII.contains(".")) {
-            boolean llllllllllllllllIlIlllIllIIIIlll = true;
-            if (llllllllllllllllIlIlllIllIIIIlII.isEmpty()) {
-                llllllllllllllllIlIlllIllIIIIIIl = false;
+    public void set(double d) {
+        this.value = d;
+        this.textBox.set(this.valueString());
+        if (this.slider != null) {
+            this.slider.set(d);
+        }
+    }
+
+    private boolean filter(String string, char c) {
+        boolean bl;
+        boolean bl2 = true;
+        if (c == '-' && string.isEmpty()) {
+            bl = true;
+            bl2 = false;
+        } else if (c == '.' && !string.contains(".")) {
+            bl = true;
+            if (string.isEmpty()) {
+                bl2 = false;
             }
         } else {
-            llllllllllllllllIlIlllIllIIIIIlI = Character.isDigit(llllllllllllllllIlIlllIllIIIIIll);
+            bl = Character.isDigit(c);
         }
-        if (llllllllllllllllIlIlllIllIIIIIlI && llllllllllllllllIlIlllIllIIIIIIl) {
+        if (bl && bl2) {
             try {
-                Double.parseDouble(String.valueOf(new StringBuilder().append(llllllllllllllllIlIlllIllIIIIlII).append(llllllllllllllllIlIlllIllIIIIIll)));
+                Double.parseDouble(String.valueOf(new StringBuilder().append(string).append(c)));
             }
-            catch (NumberFormatException llllllllllllllllIlIlllIllIIIIllI) {
-                llllllllllllllllIlIlllIllIIIIIlI = false;
+            catch (NumberFormatException numberFormatException) {
+                bl = false;
             }
         }
-        return llllllllllllllllIlIlllIllIIIIIlI;
+        return bl;
+    }
+
+    private void lambda$init$0() {
+        double d = this.value;
+        this.value = this.textBox.get().isEmpty() ? 0.0 : (this.textBox.get().equals("-") ? 0.0 : (this.textBox.get().equals(".") ? 0.0 : (this.textBox.get().equals("-.") ? 0.0 : Double.parseDouble(this.textBox.get()))));
+        double d2 = this.value;
+        if (this.min != null && this.value < this.min) {
+            this.value = this.min;
+        } else if (this.max != null && this.value > this.max) {
+            this.value = this.max;
+        }
+        if (this.value != d2) {
+            this.textBox.set(this.valueString());
+        }
+        if (this.slider != null) {
+            this.slider.set(this.value);
+        }
+        if (this.value != d) {
+            if (this.action != null) {
+                this.action.run();
+            }
+            if (this.actionOnRelease != null) {
+                this.actionOnRelease.run();
+            }
+        }
     }
 }
 

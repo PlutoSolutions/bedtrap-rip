@@ -55,134 +55,125 @@ import net.minecraft.class_2661;
 
 public class InfinityMiner
 extends Module {
-    private volatile /* synthetic */ Boolean BLOCKER;
-    public final /* synthetic */ Setting<Boolean> smartModuleToggle;
-    public final /* synthetic */ Setting<class_2248> targetBlock;
-    private /* synthetic */ int playerY;
-    public final /* synthetic */ Setting<Boolean> autoWalkHome;
-    private /* synthetic */ Mode currentMode;
-    private /* synthetic */ boolean baritoneRunning;
-    public final /* synthetic */ Setting<Boolean> autoLogOut;
-    private final /* synthetic */ HashMap<String, Boolean> originalSettings;
-    private /* synthetic */ int playerX;
-    private /* synthetic */ int playerZ;
-    private final /* synthetic */ SettingGroup sgAutoToggles;
-    private final /* synthetic */ SettingGroup sgExtras;
-    private /* synthetic */ Mode secondaryMode;
-    public final /* synthetic */ Setting<class_2248> repairBlock;
-    public final /* synthetic */ Setting<Double> durabilityThreshold;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private Boolean BLOCKER;
+    public final Setting<Boolean> smartModuleToggle;
+    public final Setting<class_2248> targetBlock;
+    private int playerY;
+    public final Setting<Boolean> autoWalkHome;
+    private Mode currentMode;
+    private boolean baritoneRunning;
+    public final Setting<Boolean> autoLogOut;
+    private final HashMap<String, Boolean> originalSettings;
+    private int playerX;
+    private int playerZ;
+    private final SettingGroup sgAutoToggles;
+    private final SettingGroup sgExtras;
+    private Mode secondaryMode;
+    public final Setting<class_2248> repairBlock;
+    public final Setting<Double> durabilityThreshold;
+    private final SettingGroup sgGeneral;
 
     @EventHandler
-    private void moduleChange(ActiveModulesChangedEvent lIIIIlIIlllIIIl) {
-        InfinityMiner lIIIIlIIlllIIII;
-        if (!lIIIIlIIlllIIII.BLOCKER.booleanValue()) {
-            for (Module lIIIIlIIlllIIll : lIIIIlIIlllIIII.getToggleModules()) {
-                if (lIIIIlIIlllIIll == null || lIIIIlIIlllIIll.isActive()) continue;
-                lIIIIlIIlllIIII.originalSettings.remove(lIIIIlIIlllIIll.name);
+    private void moduleChange(ActiveModulesChangedEvent activeModulesChangedEvent) {
+        if (!this.BLOCKER.booleanValue()) {
+            for (Module module : this.getToggleModules()) {
+                if (module == null || module.isActive()) continue;
+                this.originalSettings.remove(module.name);
             }
         }
     }
 
     public InfinityMiner() {
         super(Categories.World, "infinity-miner", "Allows you to essentially mine forever.");
-        InfinityMiner lIIIIlIlIIlIlII;
-        lIIIIlIlIIlIlII.sgGeneral = lIIIIlIlIIlIlII.settings.getDefaultGroup();
-        lIIIIlIlIIlIlII.sgAutoToggles = lIIIIlIlIIlIlII.settings.createGroup("Auto Toggles");
-        lIIIIlIlIIlIlII.sgExtras = lIIIIlIlIIlIlII.settings.createGroup("Extras");
-        lIIIIlIlIIlIlII.targetBlock = lIIIIlIlIIlIlII.sgGeneral.add(new BlockSetting.Builder().name("target-block").description("The target block to mine.").defaultValue(class_2246.field_22109).filter(lIIIIlIlIIlIlII::filter).build());
-        lIIIIlIlIIlIlII.repairBlock = lIIIIlIlIIlIlII.sgGeneral.add(new BlockSetting.Builder().name("repair-block").description("The block mined to repair your pickaxe.").defaultValue(class_2246.field_10213).filter(lIIIIlIlIIlIlII::filter).build());
-        lIIIIlIlIIlIlII.durabilityThreshold = lIIIIlIlIIlIlII.sgGeneral.add(new DoubleSetting.Builder().name("durability-threshold").description("The durability at which to start repairing as a percent of maximum durability.").defaultValue(0.15).max(0.95).min(0.05).sliderMin(0.05).sliderMax(0.95).build());
-        lIIIIlIlIIlIlII.smartModuleToggle = lIIIIlIlIIlIlII.sgAutoToggles.add(new BoolSetting.Builder().name("smart-module-toggle").description("Will automatically enable helpful modules.").defaultValue(true).build());
-        lIIIIlIlIIlIlII.autoWalkHome = lIIIIlIlIIlIlII.sgExtras.add(new BoolSetting.Builder().name("walk-home").description("Will walk 'home' when your inventory is full.").defaultValue(false).build());
-        lIIIIlIlIIlIlII.autoLogOut = lIIIIlIlIIlIlII.sgExtras.add(new BoolSetting.Builder().name("log-out").description("Logs out when your inventory is full. Will walk home FIRST if walk home is enabled.").defaultValue(false).build());
-        lIIIIlIlIIlIlII.currentMode = Mode.Still;
-        lIIIIlIlIIlIlII.baritoneRunning = false;
-        lIIIIlIlIIlIlII.originalSettings = new HashMap();
-        lIIIIlIlIIlIlII.BLOCKER = false;
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgAutoToggles = this.settings.createGroup("Auto Toggles");
+        this.sgExtras = this.settings.createGroup("Extras");
+        this.targetBlock = this.sgGeneral.add(new BlockSetting.Builder().name("target-block").description("The target block to mine.").defaultValue(class_2246.field_22109).filter(this::filter).build());
+        this.repairBlock = this.sgGeneral.add(new BlockSetting.Builder().name("repair-block").description("The block mined to repair your pickaxe.").defaultValue(class_2246.field_10213).filter(this::filter).build());
+        this.durabilityThreshold = this.sgGeneral.add(new DoubleSetting.Builder().name("durability-threshold").description("The durability at which to start repairing as a percent of maximum durability.").defaultValue(0.15).max(0.95).min(0.05).sliderMin(0.05).sliderMax(0.95).build());
+        this.smartModuleToggle = this.sgAutoToggles.add(new BoolSetting.Builder().name("smart-module-toggle").description("Will automatically enable helpful modules.").defaultValue(true).build());
+        this.autoWalkHome = this.sgExtras.add(new BoolSetting.Builder().name("walk-home").description("Will walk 'home' when your inventory is full.").defaultValue(false).build());
+        this.autoLogOut = this.sgExtras.add(new BoolSetting.Builder().name("log-out").description("Logs out when your inventory is full. Will walk home FIRST if walk home is enabled.").defaultValue(false).build());
+        this.currentMode = Mode.Still;
+        this.baritoneRunning = false;
+        this.originalSettings = new HashMap();
+        this.BLOCKER = false;
     }
 
     private int getCurrentDamage() {
-        InfinityMiner lIIIIlIIIlllIlI;
-        return lIIIIlIIIlllIlI.mc.field_1724 != null ? lIIIIlIIIlllIlI.mc.field_1724.method_6047().method_7909().method_7841() - lIIIIlIIIlllIlI.mc.field_1724.method_6047().method_7919() : -1;
+        return this.mc.field_1724 != null ? this.mc.field_1724.method_6047().method_7909().method_7841() - this.mc.field_1724.method_6047().method_7919() : -1;
     }
 
     public Mode getMode() {
-        InfinityMiner lIIIIlIIlIIIlll;
-        return lIIIIlIIlIIIlll.currentMode;
+        return this.currentMode;
     }
 
     @Override
     public void onDeactivate() {
-        InfinityMiner lIIIIlIlIIIIIII;
-        if (lIIIIlIlIIIIIII.smartModuleToggle.get().booleanValue()) {
-            lIIIIlIlIIIIIII.BLOCKER = true;
+        if (this.smartModuleToggle.get().booleanValue()) {
+            this.BLOCKER = true;
             try {
-                for (Module lIIIIlIlIIIIIlI : lIIIIlIlIIIIIII.getToggleModules()) {
-                    if (lIIIIlIlIIIIIlI == null || lIIIIlIlIIIIIII.originalSettings.get(lIIIIlIlIIIIIlI.name).booleanValue() == lIIIIlIlIIIIIlI.isActive()) continue;
-                    lIIIIlIlIIIIIlI.toggle();
+                for (Module module : this.getToggleModules()) {
+                    if (module == null || this.originalSettings.get(module.name).booleanValue() == module.isActive()) continue;
+                    module.toggle();
                 }
             }
-            catch (NullPointerException lIIIIlIIlllllll) {
+            catch (NullPointerException nullPointerException) {
                 // empty catch block
             }
-            lIIIIlIlIIIIIII.originalSettings.clear();
-            lIIIIlIlIIIIIII.BLOCKER = false;
+            this.originalSettings.clear();
+            this.BLOCKER = false;
         }
         if (!((Boolean)BaritoneAPI.getSettings().mineScanDroppedItems.value).booleanValue()) {
             BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
         }
-        lIIIIlIlIIIIIII.baritoneRequestStop();
-        lIIIIlIlIIIIIII.baritoneRunning = false;
-        lIIIIlIlIIIIIII.currentMode = Mode.Still;
-        lIIIIlIlIIIIIII.secondaryMode = null;
+        this.baritoneRequestStop();
+        this.baritoneRunning = false;
+        this.currentMode = Mode.Still;
+        this.secondaryMode = null;
     }
 
     private boolean isTool() {
-        InfinityMiner lIIIIlIIIllllIl;
-        return lIIIIlIIIllllIl.mc.field_1724 != null && lIIIIlIIIllllIl.mc.field_1724.method_6047() != null && lIIIIlIIIllllIl.mc.field_1724.method_6047().method_7909() instanceof class_1831;
+        return this.mc.field_1724 != null && this.mc.field_1724.method_6047() != null && this.mc.field_1724.method_6047().method_7909() instanceof class_1831;
     }
 
     public int[] getHomeCoords() {
-        InfinityMiner lIIIIlIIlIIIIIl;
-        return new int[]{lIIIIlIIlIIIIIl.playerX, lIIIIlIIlIIIIIl.playerY, lIIIIlIIlIIIIIl.playerX};
+        return new int[]{this.playerX, this.playerY, this.playerX};
     }
 
     @EventHandler
-    private void onGameJoin(GameJoinedEvent lIIIIlIIlIIlIlI) {
-        InfinityMiner lIIIIlIIlIIlIIl;
-        lIIIIlIIlIIlIIl.baritoneRequestStop();
+    private void onGameJoin(GameJoinedEvent gameJoinedEvent) {
+        this.baritoneRequestStop();
         if (!((Boolean)BaritoneAPI.getSettings().mineScanDroppedItems.value).booleanValue()) {
             BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
         }
-        if (lIIIIlIIlIIlIIl.isActive()) {
-            lIIIIlIIlIIlIIl.toggle();
+        if (this.isActive()) {
+            this.toggle();
         }
     }
 
     @Override
     public void onActivate() {
-        InfinityMiner lIIIIlIlIIIlIII;
-        if (lIIIIlIlIIIlIII.smartModuleToggle.get().booleanValue()) {
-            lIIIIlIlIIIlIII.BLOCKER = true;
-            for (Module lIIIIlIlIIIlIlI : lIIIIlIlIIIlIII.getToggleModules()) {
-                lIIIIlIlIIIlIII.originalSettings.put(lIIIIlIlIIIlIlI.name, lIIIIlIlIIIlIlI.isActive());
-                if (lIIIIlIlIIIlIlI.isActive()) continue;
-                lIIIIlIlIIIlIlI.toggle();
+        if (this.smartModuleToggle.get().booleanValue()) {
+            this.BLOCKER = true;
+            for (Module module : this.getToggleModules()) {
+                this.originalSettings.put(module.name, module.isActive());
+                if (module.isActive()) continue;
+                module.toggle();
             }
-            lIIIIlIlIIIlIII.BLOCKER = false;
+            this.BLOCKER = false;
         }
-        if (lIIIIlIlIIIlIII.mc.field_1724 != null) {
-            lIIIIlIlIIIlIII.playerX = (int)lIIIIlIlIIIlIII.mc.field_1724.method_23317();
-            lIIIIlIlIIIlIII.playerY = (int)lIIIIlIlIIIlIII.mc.field_1724.method_23318();
-            lIIIIlIlIIIlIII.playerZ = (int)lIIIIlIlIIIlIII.mc.field_1724.method_23321();
+        if (this.mc.field_1724 != null) {
+            this.playerX = (int)this.mc.field_1724.method_23317();
+            this.playerY = (int)this.mc.field_1724.method_23318();
+            this.playerZ = (int)this.mc.field_1724.method_23321();
         }
     }
 
     private void baritoneRequestStop() {
         BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
-        lIIIIlIIllIIIlI.baritoneRunning = false;
-        lIIIIlIIllIIIlI.currentMode = Mode.Still;
+        this.baritoneRunning = false;
+        this.currentMode = Mode.Still;
     }
 
     private List<Module> getToggleModules() {
@@ -191,136 +182,129 @@ extends Module {
 
     @Override
     public String getInfoString() {
-        InfinityMiner lIIIIlIIIllIllI;
-        switch (lIIIIlIIIllIllI.getMode()) {
-            case Home: {
-                int[] lIIIIlIIIllIlll = lIIIIlIIIllIllI.getHomeCoords();
-                return String.valueOf(new StringBuilder().append("Heading Home: ").append(lIIIIlIIIllIlll[0]).append(" ").append(lIIIIlIIIllIlll[1]).append(" ").append(lIIIIlIIIllIlll[2]));
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$world$InfinityMiner$Mode[this.getMode().ordinal()]) {
+            case 1: {
+                int[] arrn = this.getHomeCoords();
+                return String.valueOf(new StringBuilder().append("Heading Home: ").append(arrn[0]).append(" ").append(arrn[1]).append(" ").append(arrn[2]));
             }
-            case Target: {
-                return String.valueOf(new StringBuilder().append("Mining: ").append(lIIIIlIIIllIllI.getCurrentTarget().method_9518().getString()));
+            case 2: {
+                return String.valueOf(new StringBuilder().append("Mining: ").append(this.getCurrentTarget().method_9518().getString()));
             }
-            case Repair: {
-                return String.valueOf(new StringBuilder().append("Repair-Mining: ").append(lIIIIlIIIllIllI.getCurrentTarget().method_9518().getString()));
+            case 3: {
+                return String.valueOf(new StringBuilder().append("Repair-Mining: ").append(this.getCurrentTarget().method_9518().getString()));
             }
-            case Still: {
+            case 4: {
                 return "Resting";
             }
         }
         return "";
     }
 
-    private boolean filter(class_2248 lIIIIlIlIIlIIII) {
-        InfinityMiner lIIIIlIlIIIllll;
-        return lIIIIlIlIIlIIII != class_2246.field_10124 && lIIIIlIlIIlIIII.method_9564().method_26214((class_1922)lIIIIlIlIIIllll.mc.field_1687, null) != -1.0f && !(lIIIIlIlIIlIIII instanceof class_2404);
+    private boolean filter(class_2248 class_22482) {
+        return class_22482 != class_2246.field_10124 && class_22482.method_9564().method_26214((class_1922)this.mc.field_1687, null) != -1.0f && !(class_22482 instanceof class_2404);
     }
 
     @EventHandler
-    private void onGameDisconnect(GameLeftEvent lIIIIlIIlIIlllI) {
-        InfinityMiner lIIIIlIIlIIllIl;
-        lIIIIlIIlIIllIl.baritoneRequestStop();
+    private void onGameDisconnect(GameLeftEvent gameLeftEvent) {
+        this.baritoneRequestStop();
         if (!((Boolean)BaritoneAPI.getSettings().mineScanDroppedItems.value).booleanValue()) {
             BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
         }
-        if (lIIIIlIIlIIllIl.isActive()) {
-            lIIIIlIIlIIllIl.toggle();
+        if (this.isActive()) {
+            this.toggle();
         }
     }
 
-    private void requestLogout(Mode lIIIIlIIlIlIIIl) {
-        InfinityMiner lIIIIlIIlIlIlII;
-        if (lIIIIlIIlIlIlII.mc.field_1724 != null) {
-            if (lIIIIlIIlIlIIIl == Mode.Home) {
-                lIIIIlIIlIlIlII.mc.field_1724.field_3944.method_11083(new class_2661((class_2561)new class_2585("[Infinity Miner] Inventory is Full and You Are Home")));
+    private void requestLogout(Mode mode) {
+        if (this.mc.field_1724 != null) {
+            if (mode == Mode.Home) {
+                this.mc.field_1724.field_3944.method_11083(new class_2661((class_2561)new class_2585("[Infinity Miner] Inventory is Full and You Are Home")));
             } else {
-                lIIIIlIIlIlIlII.mc.field_1724.field_3944.method_11083(new class_2661((class_2561)new class_2585("[Infinity Miner] Inventory is Full")));
+                this.mc.field_1724.field_3944.method_11083(new class_2661((class_2561)new class_2585("[Infinity Miner] Inventory is Full")));
             }
         }
     }
 
     private void baritoneRequestMineTargetBlock() {
         try {
-            InfinityMiner lIIIIlIIllIlIll;
-            BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(new class_2248[]{lIIIIlIIllIlIll.targetBlock.get()});
-            lIIIIlIIllIlIll.baritoneRunning = true;
+            BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(new class_2248[]{this.targetBlock.get()});
+            this.baritoneRunning = true;
         }
-        catch (Exception lIIIIlIIllIlIIl) {
+        catch (Exception exception) {
             // empty catch block
         }
     }
 
     private Boolean isInventoryFull() {
-        InfinityMiner lIIIIlIIlIllIlI;
-        if (lIIIIlIIlIllIlI.mc.field_1724 == null) {
+        if (this.mc.field_1724 == null) {
             return false;
         }
-        if (lIIIIlIIlIllIlI.mc.field_1724.field_7514.method_7376() != -1) {
+        if (this.mc.field_1724.field_7514.method_7376() != -1) {
             return false;
         }
-        for (int lIIIIlIIlIllIll = 0; lIIIIlIIlIllIll < lIIIIlIIlIllIlI.mc.field_1724.field_7514.method_5439(); ++lIIIIlIIlIllIll) {
-            if (lIIIIlIIlIllIlI.mc.field_1724.field_7514.method_5438(lIIIIlIIlIllIll).method_7909() != lIIIIlIIlIllIlI.targetBlock.get().method_8389() || lIIIIlIIlIllIlI.mc.field_1724.field_7514.method_5438(lIIIIlIIlIllIll).method_7947() >= lIIIIlIIlIllIlI.targetBlock.get().method_8389().method_7882()) continue;
+        for (int i = 0; i < this.mc.field_1724.field_7514.method_5439(); ++i) {
+            if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != this.targetBlock.get().method_8389() || this.mc.field_1724.field_7514.method_5438(i).method_7947() >= this.targetBlock.get().method_8389().method_7882()) continue;
             return false;
         }
         return true;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post lIIIIlIIllllIIl) {
+    private void onTick(TickEvent.Post post) {
         try {
-            InfinityMiner lIIIIlIIllllIlI;
-            if (lIIIIlIIllllIlI.mc.field_1724 == null) {
+            if (this.mc.field_1724 == null) {
                 return;
             }
-            if (!lIIIIlIIllllIlI.baritoneRunning && lIIIIlIIllllIlI.currentMode == Mode.Still) {
-                if (lIIIIlIIllllIlI.autoWalkHome.get().booleanValue() && lIIIIlIIllllIlI.isInventoryFull().booleanValue() && lIIIIlIIllllIlI.secondaryMode != Mode.Home) {
-                    lIIIIlIIllllIlI.baritoneRequestPathHome();
+            if (!this.baritoneRunning && this.currentMode == Mode.Still) {
+                if (this.autoWalkHome.get().booleanValue() && this.isInventoryFull().booleanValue() && this.secondaryMode != Mode.Home) {
+                    this.baritoneRequestPathHome();
                     return;
                 }
-                Mode mode = lIIIIlIIllllIlI.currentMode = lIIIIlIIllllIlI.isTool() && (double)lIIIIlIIllllIlI.getCurrentDamage() <= lIIIIlIIllllIlI.durabilityThreshold.get() ? Mode.Repair : Mode.Target;
-                if (lIIIIlIIllllIlI.currentMode == Mode.Repair) {
-                    lIIIIlIIllllIlI.baritoneRequestMineRepairBlock();
+                Mode mode = this.currentMode = this.isTool() && (double)this.getCurrentDamage() <= this.durabilityThreshold.get() ? Mode.Repair : Mode.Target;
+                if (this.currentMode == Mode.Repair) {
+                    this.baritoneRequestMineRepairBlock();
                 } else {
-                    lIIIIlIIllllIlI.baritoneRequestMineTargetBlock();
+                    this.baritoneRequestMineTargetBlock();
                 }
-            } else if (lIIIIlIIllllIlI.autoWalkHome.get().booleanValue() && lIIIIlIIllllIlI.isInventoryFull().booleanValue() && lIIIIlIIllllIlI.secondaryMode != Mode.Home) {
-                lIIIIlIIllllIlI.baritoneRequestPathHome();
-            } else if (!lIIIIlIIllllIlI.autoWalkHome.get().booleanValue() && lIIIIlIIllllIlI.isInventoryFull().booleanValue() && lIIIIlIIllllIlI.autoLogOut.get().booleanValue()) {
-                lIIIIlIIllllIlI.toggle();
-                lIIIIlIIllllIlI.requestLogout(lIIIIlIIllllIlI.currentMode);
-            } else if (lIIIIlIIllllIlI.currentMode == Mode.Repair) {
-                int lIIIIlIIllllIll = 15;
+            } else if (this.autoWalkHome.get().booleanValue() && this.isInventoryFull().booleanValue() && this.secondaryMode != Mode.Home) {
+                this.baritoneRequestPathHome();
+            } else if (!this.autoWalkHome.get().booleanValue() && this.isInventoryFull().booleanValue() && this.autoLogOut.get().booleanValue()) {
+                this.toggle();
+                this.requestLogout(this.currentMode);
+            } else if (this.currentMode == Mode.Repair) {
+                int n = 15;
                 if (((Boolean)BaritoneAPI.getSettings().mineScanDroppedItems.value).booleanValue()) {
                     BaritoneAPI.getSettings().mineScanDroppedItems.value = false;
                 }
-                if (lIIIIlIIllllIlI.isTool() && lIIIIlIIllllIlI.getCurrentDamage() >= lIIIIlIIllllIlI.mc.field_1724.method_6047().method_7936() - lIIIIlIIllllIll) {
-                    if (lIIIIlIIllllIlI.secondaryMode != Mode.Home) {
-                        lIIIIlIIllllIlI.currentMode = Mode.Target;
-                        lIIIIlIIllllIlI.baritoneRequestMineTargetBlock();
+                if (this.isTool() && this.getCurrentDamage() >= this.mc.field_1724.method_6047().method_7936() - n) {
+                    if (this.secondaryMode != Mode.Home) {
+                        this.currentMode = Mode.Target;
+                        this.baritoneRequestMineTargetBlock();
                     } else {
-                        lIIIIlIIllllIlI.currentMode = Mode.Home;
-                        lIIIIlIIllllIlI.baritoneRequestPathHome();
+                        this.currentMode = Mode.Home;
+                        this.baritoneRequestPathHome();
                     }
                 }
-            } else if (lIIIIlIIllllIlI.currentMode == Mode.Target) {
+            } else if (this.currentMode == Mode.Target) {
                 if (!((Boolean)BaritoneAPI.getSettings().mineScanDroppedItems.value).booleanValue()) {
                     BaritoneAPI.getSettings().mineScanDroppedItems.value = true;
                 }
-                if (lIIIIlIIllllIlI.isTool() && (double)lIIIIlIIllllIlI.getCurrentDamage() <= lIIIIlIIllllIlI.durabilityThreshold.get() * (double)lIIIIlIIllllIlI.mc.field_1724.method_6047().method_7936()) {
-                    lIIIIlIIllllIlI.currentMode = Mode.Repair;
-                    lIIIIlIIllllIlI.baritoneRequestMineRepairBlock();
-                } else if (lIIIIlIIllllIlI.autoWalkHome.get().booleanValue() && lIIIIlIIllllIlI.isInventoryFull().booleanValue()) {
-                    lIIIIlIIllllIlI.baritoneRequestPathHome();
-                } else if (!lIIIIlIIllllIlI.autoWalkHome.get().booleanValue() && lIIIIlIIllllIlI.isInventoryFull().booleanValue() && lIIIIlIIllllIlI.autoWalkHome.get().booleanValue()) {
-                    lIIIIlIIllllIlI.requestLogout(lIIIIlIIllllIlI.currentMode);
+                if (this.isTool() && (double)this.getCurrentDamage() <= this.durabilityThreshold.get() * (double)this.mc.field_1724.method_6047().method_7936()) {
+                    this.currentMode = Mode.Repair;
+                    this.baritoneRequestMineRepairBlock();
+                } else if (this.autoWalkHome.get().booleanValue() && this.isInventoryFull().booleanValue()) {
+                    this.baritoneRequestPathHome();
+                } else if (!this.autoWalkHome.get().booleanValue() && this.isInventoryFull().booleanValue() && this.autoWalkHome.get().booleanValue()) {
+                    this.requestLogout(this.currentMode);
                 }
-            } else if (lIIIIlIIllllIlI.currentMode == Mode.Home) {
-                if (Math.abs(lIIIIlIIllllIlI.mc.field_1724.method_23318() - (double)lIIIIlIIllllIlI.playerY) <= 0.5 && Math.abs(lIIIIlIIllllIlI.mc.field_1724.method_23317() - (double)lIIIIlIIllllIlI.playerX) <= 0.5 && Math.abs(lIIIIlIIllllIlI.mc.field_1724.method_23321() - (double)lIIIIlIIllllIlI.playerZ) <= 0.5) {
-                    if (lIIIIlIIllllIlI.autoLogOut.get().booleanValue()) {
-                        lIIIIlIIllllIlI.requestLogout(lIIIIlIIllllIlI.currentMode);
+            } else if (this.currentMode == Mode.Home) {
+                if (Math.abs(this.mc.field_1724.method_23318() - (double)this.playerY) <= 0.5 && Math.abs(this.mc.field_1724.method_23317() - (double)this.playerX) <= 0.5 && Math.abs(this.mc.field_1724.method_23321() - (double)this.playerZ) <= 0.5) {
+                    if (this.autoLogOut.get().booleanValue()) {
+                        this.requestLogout(this.currentMode);
                     }
-                    lIIIIlIIllllIlI.toggle();
-                } else if (lIIIIlIIllllIlI.isTool() && (double)lIIIIlIIllllIlI.getCurrentDamage() <= lIIIIlIIllllIlI.durabilityThreshold.get()) {
-                    lIIIIlIIllllIlI.currentMode = Mode.Repair;
+                    this.toggle();
+                } else if (this.isTool() && (double)this.getCurrentDamage() <= this.durabilityThreshold.get()) {
+                    this.currentMode = Mode.Repair;
                 }
             }
         }
@@ -330,28 +314,25 @@ extends Module {
     }
 
     public class_2248 getCurrentTarget() {
-        InfinityMiner lIIIIlIIlIIIlII;
-        return lIIIIlIIlIIIlII.currentMode == Mode.Repair ? lIIIIlIIlIIIlII.repairBlock.get() : lIIIIlIIlIIIlII.targetBlock.get();
+        return this.currentMode == Mode.Repair ? this.repairBlock.get() : this.targetBlock.get();
     }
 
     private void baritoneRequestMineRepairBlock() {
         try {
-            InfinityMiner lIIIIlIIllIIllI;
-            BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(new class_2248[]{lIIIIlIIllIIllI.repairBlock.get()});
-            lIIIIlIIllIIllI.baritoneRunning = true;
+            BaritoneAPI.getProvider().getPrimaryBaritone().getMineProcess().mine(new class_2248[]{this.repairBlock.get()});
+            this.baritoneRunning = true;
         }
-        catch (Exception lIIIIlIIllIIlII) {
+        catch (Exception exception) {
             // empty catch block
         }
     }
 
     private void baritoneRequestPathHome() {
-        InfinityMiner lIIIIlIIlIlllll;
-        if (lIIIIlIIlIlllll.autoWalkHome.get().booleanValue()) {
-            lIIIIlIIlIlllll.baritoneRequestStop();
-            lIIIIlIIlIlllll.secondaryMode = Mode.Home;
-            lIIIIlIIlIlllll.currentMode = Mode.Home;
-            BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath((Goal)new GoalBlock(lIIIIlIIlIlllll.playerX, lIIIIlIIlIlllll.playerY, lIIIIlIIlIlllll.playerZ));
+        if (this.autoWalkHome.get().booleanValue()) {
+            this.baritoneRequestStop();
+            this.secondaryMode = Mode.Home;
+            this.currentMode = Mode.Home;
+            BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath((Goal)new GoalBlock(this.playerX, this.playerY, this.playerZ));
         }
     }
 
@@ -361,10 +342,6 @@ extends Module {
         Still,
         Home;
 
-
-        private Mode() {
-            Mode llIlIIllllIIIIl;
-        }
     }
 }
 

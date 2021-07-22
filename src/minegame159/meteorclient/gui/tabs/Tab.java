@@ -12,22 +12,20 @@ import minegame159.meteorclient.utils.Utils;
 import net.minecraft.class_437;
 
 public abstract class Tab {
-    public final /* synthetic */ String name;
+    public final String name;
 
-    public Tab(String llllllllllllllllllIlIllIllIlIllI) {
-        Tab llllllllllllllllllIlIllIllIlIlll;
-        llllllllllllllllllIlIllIllIlIlll.name = llllllllllllllllllIlIllIllIlIllI;
+    public Tab(String string) {
+        this.name = string;
     }
 
     public abstract boolean isScreen(class_437 var1);
 
     protected abstract TabScreen createScreen(GuiTheme var1);
 
-    public void openScreen(GuiTheme llllllllllllllllllIlIllIllIlIIIl) {
-        Tab llllllllllllllllllIlIllIllIIllll;
-        TabScreen llllllllllllllllllIlIllIllIlIIII = llllllllllllllllllIlIllIllIIllll.createScreen(llllllllllllllllllIlIllIllIlIIIl);
-        llllllllllllllllllIlIllIllIlIIII.addDirect(llllllllllllllllllIlIllIllIlIIIl.topBar()).top().centerX();
-        Utils.mc.method_1507((class_437)llllllllllllllllllIlIllIllIlIIII);
+    public void openScreen(GuiTheme guiTheme) {
+        TabScreen tabScreen = this.createScreen(guiTheme);
+        tabScreen.addDirect(guiTheme.topBar()).top().centerX();
+        Utils.mc.method_1507((class_437)tabScreen);
     }
 }
 

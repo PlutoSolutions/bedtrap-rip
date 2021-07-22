@@ -9,20 +9,12 @@ package minegame159.meteorclient.events.entity.player;
 import net.minecraft.class_1799;
 
 public class FinishUsingItem {
-    private static final /* synthetic */ FinishUsingItem INSTANCE;
-    public /* synthetic */ class_1799 itemStack;
+    private static final FinishUsingItem INSTANCE = new FinishUsingItem();
+    public class_1799 itemStack;
 
-    public FinishUsingItem() {
-        FinishUsingItem llllllllllllllllIlllllIIlllIIlIl;
-    }
-
-    public static FinishUsingItem get(class_1799 llllllllllllllllIlllllIIlllIIIlI) {
-        FinishUsingItem.INSTANCE.itemStack = llllllllllllllllIlllllIIlllIIIlI;
+    public static FinishUsingItem get(class_1799 class_17992) {
+        FinishUsingItem.INSTANCE.itemStack = class_17992;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new FinishUsingItem();
     }
 }
 

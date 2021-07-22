@@ -26,15 +26,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_1835.class})
 public class TridentItemMixin {
     @Inject(method={"onStoppedUsing"}, at={@At(value="HEAD")})
-    private void onStoppedUsingHead(class_1799 stack, class_1937 world, class_1309 user, int remainingUseTicks, CallbackInfo info) {
-        if (user == Utils.mc.field_1724) {
+    private void onStoppedUsingHead(class_1799 class_17992, class_1937 class_19372, class_1309 class_13092, int n, CallbackInfo callbackInfo) {
+        if (class_13092 == Utils.mc.field_1724) {
             Utils.isReleasingTrident = true;
         }
     }
 
     @Inject(method={"onStoppedUsing"}, at={@At(value="TAIL")})
-    private void onStoppedUsingTail(class_1799 stack, class_1937 world, class_1309 user, int remainingUseTicks, CallbackInfo info) {
-        if (user == Utils.mc.field_1724) {
+    private void onStoppedUsingTail(class_1799 class_17992, class_1937 class_19372, class_1309 class_13092, int n, CallbackInfo callbackInfo) {
+        if (class_13092 == Utils.mc.field_1724) {
             Utils.isReleasingTrident = false;
         }
     }

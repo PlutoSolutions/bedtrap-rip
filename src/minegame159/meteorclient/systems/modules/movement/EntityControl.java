@@ -22,38 +22,35 @@ import net.minecraft.class_1496;
 
 public class EntityControl
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> maxJump;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> maxJump;
 
     @Override
     public void onDeactivate() {
-        EntityControl llllllllllllllllIlllIlllllIlllll;
-        if (!Utils.canUpdate() || llllllllllllllllIlllIlllllIlllll.mc.field_1687.method_18112() == null) {
+        if (!Utils.canUpdate() || this.mc.field_1687.method_18112() == null) {
             return;
         }
-        for (class_1297 llllllllllllllllIlllIllllllIIIIl : llllllllllllllllIlllIlllllIlllll.mc.field_1687.method_18112()) {
-            if (!(llllllllllllllllIlllIllllllIIIIl instanceof class_1496)) continue;
-            ((IHorseBaseEntity)llllllllllllllllIlllIllllllIIIIl).setSaddled(false);
+        for (class_1297 class_12972 : this.mc.field_1687.method_18112()) {
+            if (!(class_12972 instanceof class_1496)) continue;
+            ((IHorseBaseEntity)class_12972).setSaddled(false);
         }
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre llllllllllllllllIlllIlllllIlIlll) {
-        EntityControl llllllllllllllllIlllIlllllIlIllI;
-        for (class_1297 llllllllllllllllIlllIlllllIllIIl : llllllllllllllllIlllIlllllIlIllI.mc.field_1687.method_18112()) {
-            if (!(llllllllllllllllIlllIlllllIllIIl instanceof class_1496)) continue;
-            ((IHorseBaseEntity)llllllllllllllllIlllIlllllIllIIl).setSaddled(true);
+    private void onTick(TickEvent.Pre pre) {
+        for (class_1297 class_12972 : this.mc.field_1687.method_18112()) {
+            if (!(class_12972 instanceof class_1496)) continue;
+            ((IHorseBaseEntity)class_12972).setSaddled(true);
         }
-        if (llllllllllllllllIlllIlllllIlIllI.maxJump.get().booleanValue()) {
-            ((ClientPlayerEntityAccessor)llllllllllllllllIlllIlllllIlIllI.mc.field_1724).setMountJumpStrength(1.0f);
+        if (this.maxJump.get().booleanValue()) {
+            ((ClientPlayerEntityAccessor)this.mc.field_1724).setMountJumpStrength(1.0f);
         }
     }
 
     public EntityControl() {
         super(Categories.Movement, "entity-control", "Lets you control rideable entities without a saddle.");
-        EntityControl llllllllllllllllIlllIllllllIIlIl;
-        llllllllllllllllIlllIllllllIIlIl.sgGeneral = llllllllllllllllIlllIllllllIIlIl.settings.getDefaultGroup();
-        llllllllllllllllIlllIllllllIIlIl.maxJump = llllllllllllllllIlllIllllllIIlIl.sgGeneral.add(new BoolSetting.Builder().name("max-jump").description("Sets jump power to maximum.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.maxJump = this.sgGeneral.add(new BoolSetting.Builder().name("max-jump").description("Sets jump power to maximum.").defaultValue(true).build());
     }
 }
 

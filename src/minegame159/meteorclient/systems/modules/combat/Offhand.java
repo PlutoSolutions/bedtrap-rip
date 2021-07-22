@@ -39,212 +39,212 @@ import net.minecraft.class_490;
 
 public class Offhand
 extends Module {
-    private final /* synthetic */ Setting<Boolean> sword;
-    private final /* synthetic */ Setting<Boolean> asimov;
-    private final /* synthetic */ Setting<Boolean> offhandCA;
-    private final /* synthetic */ Setting<Boolean> offhandCrystal;
-    private /* synthetic */ Mode currentMode;
-    private /* synthetic */ boolean isClicking;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> selfToggle;
-    private final /* synthetic */ Setting<Boolean> hotBar;
-    private final /* synthetic */ Setting<Boolean> replace;
-    private final /* synthetic */ Setting<Mode> mode;
-    private /* synthetic */ boolean noTotems;
-    private /* synthetic */ boolean sentMessage;
-    private final /* synthetic */ SettingGroup sgExtra;
-    private final /* synthetic */ Setting<Integer> health;
+    private final Setting<Boolean> sword;
+    private final Setting<Boolean> asimov;
+    private final Setting<Boolean> offhandCA;
+    private final Setting<Boolean> offhandCrystal;
+    private Mode currentMode;
+    private boolean isClicking;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> selfToggle;
+    private final Setting<Boolean> hotBar;
+    private final Setting<Boolean> replace;
+    private final Setting<Mode> mode;
+    static final boolean $assertionsDisabled = !Offhand.class.desiredAssertionStatus();
+    private boolean noTotems;
+    private boolean sentMessage;
+    private final SettingGroup sgExtra;
+    private final Setting<Integer> health;
 
     private class_1792 getItem() {
-        Offhand lIlIlIlIlIlIlI;
-        class_1792 lIlIlIlIlIlIll = class_1802.field_8288;
-        switch (lIlIlIlIlIlIlI.currentMode) {
-            case EGap: {
-                lIlIlIlIlIlIll = class_1802.field_8367;
+        class_1792 class_17922 = class_1802.field_8288;
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$combat$Offhand$Mode[this.currentMode.ordinal()]) {
+            case 1: {
+                class_17922 = class_1802.field_8367;
                 break;
             }
-            case EXP: {
-                lIlIlIlIlIlIll = class_1802.field_8287;
+            case 2: {
+                class_17922 = class_1802.field_8287;
                 break;
             }
-            case Gap: {
-                lIlIlIlIlIlIll = class_1802.field_8463;
+            case 3: {
+                class_17922 = class_1802.field_8463;
                 break;
             }
-            case Crystal: {
-                lIlIlIlIlIlIll = class_1802.field_8301;
+            case 4: {
+                class_17922 = class_1802.field_8301;
                 break;
             }
-            case Shield: {
-                lIlIlIlIlIlIll = class_1802.field_8255;
+            case 5: {
+                class_17922 = class_1802.field_8255;
             }
         }
-        return lIlIlIlIlIlIll;
+        return class_17922;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post lIlIlIlIllllIl) {
-        int lIlIlIlIllllll;
-        Offhand lIlIlIlIllllII;
-        assert (lIlIlIlIllllII.mc.field_1724 != null);
-        lIlIlIlIllllII.currentMode = lIlIlIlIllllII.mode.get();
-        if (!(lIlIlIlIllllII.mc.field_1755 == null || (lIlIlIlIllllII.mc.field_1755 instanceof class_490 || lIlIlIlIllllII.mc.field_1755 instanceof WidgetScreen) && lIlIlIlIllllII.asimov.get().booleanValue())) {
+    private void onTick(TickEvent.Post post) {
+        int n;
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
+        }
+        this.currentMode = this.mode.get();
+        if (!(this.mc.field_1755 == null || (this.mc.field_1755 instanceof class_490 || this.mc.field_1755 instanceof WidgetScreen) && this.asimov.get().booleanValue())) {
             return;
         }
-        if (!lIlIlIlIllllII.mc.field_1724.method_6115()) {
-            lIlIlIlIllllII.isClicking = false;
+        if (!this.mc.field_1724.method_6115()) {
+            this.isClicking = false;
         }
         if (Modules.get().get(AutoTotem.class).getLocked()) {
             return;
         }
-        if ((lIlIlIlIllllII.mc.field_1724.method_6047().method_7909() instanceof class_1829 || lIlIlIlIllllII.mc.field_1724.method_6047().method_7909() instanceof class_1743) && lIlIlIlIllllII.sword.get().booleanValue()) {
-            lIlIlIlIllllII.currentMode = Mode.EGap;
-        } else if (lIlIlIlIllllII.mc.field_1724.method_6047().method_7909() instanceof class_1775 && lIlIlIlIllllII.offhandCrystal.get().booleanValue()) {
-            lIlIlIlIllllII.currentMode = Mode.Crystal;
-        } else if (Modules.get().isActive(CrystalAura.class) && lIlIlIlIllllII.offhandCA.get().booleanValue()) {
-            lIlIlIlIllllII.currentMode = Mode.Crystal;
+        if ((this.mc.field_1724.method_6047().method_7909() instanceof class_1829 || this.mc.field_1724.method_6047().method_7909() instanceof class_1743) && this.sword.get().booleanValue()) {
+            this.currentMode = Mode.EGap;
+        } else if (this.mc.field_1724.method_6047().method_7909() instanceof class_1775 && this.offhandCrystal.get().booleanValue()) {
+            this.currentMode = Mode.Crystal;
+        } else if (Modules.get().isActive(CrystalAura.class) && this.offhandCA.get().booleanValue()) {
+            this.currentMode = Mode.Crystal;
         }
-        if ((lIlIlIlIllllII.asimov.get().booleanValue() || lIlIlIlIllllII.noTotems) && lIlIlIlIllllII.mc.field_1724.method_6079().method_7909() != lIlIlIlIllllII.getItem()) {
-            int lIlIlIllIIIIII = lIlIlIlIllllII.findSlot(lIlIlIlIllllII.getItem());
-            if (lIlIlIllIIIIII == -1 && lIlIlIlIllllII.mc.field_1724.method_6079().method_7909() != lIlIlIlIllllII.getItem()) {
-                if (lIlIlIlIllllII.currentMode != lIlIlIlIllllII.mode.get()) {
-                    lIlIlIlIllllII.currentMode = lIlIlIlIllllII.mode.get();
-                    if (lIlIlIlIllllII.mc.field_1724.method_6079().method_7909() != lIlIlIlIllllII.getItem() && (lIlIlIllIIIIII = lIlIlIlIllllII.findSlot(lIlIlIlIllllII.getItem())) != -1) {
-                        InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(lIlIlIllIIIIII), 1);
+        if ((this.asimov.get().booleanValue() || this.noTotems) && this.mc.field_1724.method_6079().method_7909() != this.getItem()) {
+            int n2 = this.findSlot(this.getItem());
+            if (n2 == -1 && this.mc.field_1724.method_6079().method_7909() != this.getItem()) {
+                if (this.currentMode != this.mode.get()) {
+                    this.currentMode = this.mode.get();
+                    if (this.mc.field_1724.method_6079().method_7909() != this.getItem() && (n2 = this.findSlot(this.getItem())) != -1) {
+                        InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(n2), 1);
                         return;
                     }
                 }
-                if (!lIlIlIlIllllII.sentMessage) {
-                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Chosen item not found.").append(lIlIlIlIllllII.selfToggle.get() != false ? " Disabling." : "")), new Object[0]);
-                    lIlIlIlIllllII.sentMessage = true;
+                if (!this.sentMessage) {
+                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Chosen item not found.").append(this.selfToggle.get() != false ? " Disabling." : "")), new Object[0]);
+                    this.sentMessage = true;
                 }
-                if (lIlIlIlIllllII.selfToggle.get().booleanValue()) {
-                    lIlIlIlIllllII.toggle();
+                if (this.selfToggle.get().booleanValue()) {
+                    this.toggle();
                 }
                 return;
             }
-            if (lIlIlIlIllllII.mc.field_1724.method_6079().method_7909() != lIlIlIlIllllII.getItem() && lIlIlIlIllllII.replace.get().booleanValue()) {
-                InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(lIlIlIllIIIIII), 1);
-                lIlIlIlIllllII.sentMessage = false;
+            if (this.mc.field_1724.method_6079().method_7909() != this.getItem() && this.replace.get().booleanValue()) {
+                InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(n2), 1);
+                this.sentMessage = false;
             }
-        } else if (!lIlIlIlIllllII.asimov.get().booleanValue() && !lIlIlIlIllllII.isClicking && lIlIlIlIllllII.mc.field_1724.method_6079().method_7909() != class_1802.field_8288 && (lIlIlIlIllllll = lIlIlIlIllllII.findSlot(class_1802.field_8288)) != -1) {
-            InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(lIlIlIlIllllll), 1);
+        } else if (!this.asimov.get().booleanValue() && !this.isClicking && this.mc.field_1724.method_6079().method_7909() != class_1802.field_8288 && (n = this.findSlot(class_1802.field_8288)) != -1) {
+            InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(n), 1);
         }
     }
 
     @Override
     public String getInfoString() {
-        Offhand lIlIlIlIIlIlIl;
-        return lIlIlIlIIlIlIl.mode.get().name();
+        return this.mode.get().name();
     }
 
     @Override
     public void onActivate() {
-        Offhand lIlIlIllIIlIlI;
-        lIlIlIllIIlIlI.currentMode = lIlIlIllIIlIlI.mode.get();
+        this.currentMode = this.mode.get();
     }
 
-    private int findSlot(class_1792 lIlIlIlIIllIII) {
-        Offhand lIlIlIlIIllIIl;
-        assert (lIlIlIlIIllIIl.mc.field_1724 != null);
-        for (int lIlIlIlIIlllII = 9; lIlIlIlIIlllII < lIlIlIlIIllIIl.mc.field_1724.field_7514.method_5439(); ++lIlIlIlIIlllII) {
-            if (lIlIlIlIIllIIl.mc.field_1724.field_7514.method_5438(lIlIlIlIIlllII).method_7909() != lIlIlIlIIllIII) continue;
-            return lIlIlIlIIlllII;
+    private int findSlot(class_1792 class_17922) {
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
         }
-        if (lIlIlIlIIllIIl.hotBar.get().booleanValue()) {
-            return InvUtils.findItemWithCount((class_1792)lIlIlIlIIllIII).slot;
+        for (int i = 9; i < this.mc.field_1724.field_7514.method_5439(); ++i) {
+            if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_17922) continue;
+            return i;
+        }
+        if (this.hotBar.get().booleanValue()) {
+            return InvUtils.findItemWithCount((class_1792)class_17922).slot;
         }
         return -1;
     }
 
     @EventHandler
-    private void onMouseButton(MouseButtonEvent lIlIlIlIllIIIl) {
-        Offhand lIlIlIlIllIlII;
-        if (lIlIlIlIllIIIl.action != KeyAction.Press || lIlIlIlIllIIIl.button != 1) {
+    private void onMouseButton(MouseButtonEvent mouseButtonEvent) {
+        if (mouseButtonEvent.action != KeyAction.Press || mouseButtonEvent.button != 1) {
             return;
         }
-        if (lIlIlIlIllIlII.mc.field_1755 != null) {
+        if (this.mc.field_1755 != null) {
             return;
         }
-        if (Modules.get().get(AutoTotem.class).getLocked() || !lIlIlIlIllIlII.canMove()) {
+        if (Modules.get().get(AutoTotem.class).getLocked() || !this.canMove()) {
             return;
         }
-        if (lIlIlIlIllIlII.mc.field_1724.method_6079().method_7909() != class_1802.field_8288 || lIlIlIlIllIlII.mc.field_1724.method_6032() + lIlIlIlIllIlII.mc.field_1724.method_6067() > (float)lIlIlIlIllIlII.health.get().intValue() && lIlIlIlIllIlII.mc.field_1724.method_6079().method_7909() != lIlIlIlIllIlII.getItem() && !(lIlIlIlIllIlII.mc.field_1755 instanceof class_465)) {
-            if (lIlIlIlIllIlII.mc.field_1724.method_6047().method_7909() instanceof class_1829 && lIlIlIlIllIlII.sword.get().booleanValue()) {
-                lIlIlIlIllIlII.currentMode = Mode.EGap;
-            } else if (lIlIlIlIllIlII.mc.field_1724.method_6047().method_7909() instanceof class_1775 && lIlIlIlIllIlII.offhandCrystal.get().booleanValue()) {
-                lIlIlIlIllIlII.currentMode = Mode.Crystal;
-            } else if (Modules.get().isActive(CrystalAura.class) && lIlIlIlIllIlII.offhandCA.get().booleanValue()) {
-                lIlIlIlIllIlII.currentMode = Mode.Crystal;
+        if (this.mc.field_1724.method_6079().method_7909() != class_1802.field_8288 || this.mc.field_1724.method_6032() + this.mc.field_1724.method_6067() > (float)this.health.get().intValue() && this.mc.field_1724.method_6079().method_7909() != this.getItem() && !(this.mc.field_1755 instanceof class_465)) {
+            if (this.mc.field_1724.method_6047().method_7909() instanceof class_1829 && this.sword.get().booleanValue()) {
+                this.currentMode = Mode.EGap;
+            } else if (this.mc.field_1724.method_6047().method_7909() instanceof class_1775 && this.offhandCrystal.get().booleanValue()) {
+                this.currentMode = Mode.Crystal;
+            } else if (Modules.get().isActive(CrystalAura.class) && this.offhandCA.get().booleanValue()) {
+                this.currentMode = Mode.Crystal;
             }
-            if (lIlIlIlIllIlII.mc.field_1724.method_6079().method_7909() == lIlIlIlIllIlII.getItem()) {
+            if (this.mc.field_1724.method_6079().method_7909() == this.getItem()) {
                 return;
             }
-            lIlIlIlIllIlII.isClicking = true;
-            class_1792 lIlIlIlIllIllI = lIlIlIlIllIlII.getItem();
-            int lIlIlIlIllIlIl = lIlIlIlIllIlII.findSlot(lIlIlIlIllIllI);
-            if (lIlIlIlIllIlIl == -1 && lIlIlIlIllIlII.mc.field_1724.method_6079().method_7909() != lIlIlIlIllIlII.getItem()) {
-                if (!lIlIlIlIllIlII.sentMessage) {
-                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Chosen item not found.").append(lIlIlIlIllIlII.selfToggle.get() != false ? " Disabling." : "")), new Object[0]);
-                    lIlIlIlIllIlII.sentMessage = true;
+            this.isClicking = true;
+            class_1792 class_17922 = this.getItem();
+            int n = this.findSlot(class_17922);
+            if (n == -1 && this.mc.field_1724.method_6079().method_7909() != this.getItem()) {
+                if (!this.sentMessage) {
+                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Chosen item not found.").append(this.selfToggle.get() != false ? " Disabling." : "")), new Object[0]);
+                    this.sentMessage = true;
                 }
-                if (lIlIlIlIllIlII.selfToggle.get().booleanValue()) {
-                    lIlIlIlIllIlII.toggle();
+                if (this.selfToggle.get().booleanValue()) {
+                    this.toggle();
                 }
                 return;
             }
-            if (lIlIlIlIllIlII.mc.field_1724.method_6079().method_7909() != lIlIlIlIllIllI && lIlIlIlIllIlII.mc.field_1724.method_6047().method_7909() != lIlIlIlIllIllI && lIlIlIlIllIlII.replace.get().booleanValue()) {
-                InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(lIlIlIlIllIlIl), 1);
-                lIlIlIlIllIlII.sentMessage = false;
+            if (this.mc.field_1724.method_6079().method_7909() != class_17922 && this.mc.field_1724.method_6047().method_7909() != class_17922 && this.replace.get().booleanValue()) {
+                InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(n), 1);
+                this.sentMessage = false;
             }
-            lIlIlIlIllIlII.currentMode = lIlIlIlIllIlII.mode.get();
+            this.currentMode = this.mode.get();
         }
     }
 
     @Override
     public void onDeactivate() {
-        Offhand lIlIlIllIIIlIl;
-        if (lIlIlIllIIIlIl.mc.field_1687 == null || lIlIlIllIIIlIl.mc.field_1724 == null) {
+        if (this.mc.field_1687 == null || this.mc.field_1724 == null) {
             return;
         }
-        if (Modules.get().isActive(AutoTotem.class) && lIlIlIllIIIlIl.mc.field_1724.method_6079().method_7909() != class_1802.field_8288) {
-            InvUtils.FindItemResult lIlIlIllIIIllI = InvUtils.findItemWithCount(class_1802.field_8288);
-            if (lIlIlIllIIIllI.slot != -1) {
-                InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(lIlIlIllIIIllI.slot), 1);
+        if (Modules.get().isActive(AutoTotem.class) && this.mc.field_1724.method_6079().method_7909() != class_1802.field_8288) {
+            InvUtils.FindItemResult findItemResult = InvUtils.findItemWithCount(class_1802.field_8288);
+            if (findItemResult.slot != -1) {
+                InvUtils.addSlots(1, 45, InvUtils.invIndexToSlotId(findItemResult.slot), 1);
             }
         }
     }
 
+    private void lambda$new$0(Mode mode) {
+        this.currentMode = mode;
+    }
+
     public Offhand() {
         super(Categories.Combat, "offhand-extra", "Allows you to use specified items in your offhand. REQUIRES AutoTotem to be on smart mode.");
-        Offhand lIlIlIllIIllII;
-        lIlIlIllIIllII.sgGeneral = lIlIlIllIIllII.settings.getDefaultGroup();
-        lIlIlIllIIllII.sgExtra = lIlIlIllIIllII.settings.createGroup("Extras");
-        lIlIlIllIIllII.mode = lIlIlIllIIllII.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Changes what item that will go into your offhand.").defaultValue(Mode.EGap).onChanged(lIlIlIlIIlIIII -> {
-            lIlIlIlIIIllll.currentMode = lIlIlIlIIlIIII;
-        }).build());
-        lIlIlIllIIllII.replace = lIlIlIllIIllII.sgGeneral.add(new BoolSetting.Builder().name("replace").description("Replaces your offhand or waits until your offhand is empty.").defaultValue(true).build());
-        lIlIlIllIIllII.asimov = lIlIlIllIIllII.sgGeneral.add(new BoolSetting.Builder().name("asimov").description("Always holds the item specified in your offhand.").defaultValue(false).build());
-        lIlIlIllIIllII.health = lIlIlIllIIllII.sgGeneral.add(new IntSetting.Builder().name("health").description("The health at which Offhand Extra stops working.").defaultValue(10).min(0).sliderMax(20).build());
-        lIlIlIllIIllII.selfToggle = lIlIlIllIIllII.sgGeneral.add(new BoolSetting.Builder().name("self-toggle").description("Toggles when you run out of the item you chose.").defaultValue(false).build());
-        lIlIlIllIIllII.hotBar = lIlIlIllIIllII.sgGeneral.add(new BoolSetting.Builder().name("search-hotbar").description("Whether to take items out of your hotbar or not.").defaultValue(false).build());
-        lIlIlIllIIllII.sword = lIlIlIllIIllII.sgExtra.add(new BoolSetting.Builder().name("sword-gap").description("Changes the mode to EGap if you are holding a sword in your main hand.").defaultValue(false).build());
-        lIlIlIllIIllII.offhandCrystal = lIlIlIllIIllII.sgExtra.add(new BoolSetting.Builder().name("offhand-crystal-on-gap").description("Changes the mode to Crystal if you are holding an enchanted golden apple in your main hand.").defaultValue(false).build());
-        lIlIlIllIIllII.offhandCA = lIlIlIllIIllII.sgExtra.add(new BoolSetting.Builder().name("offhand-crystal-on-ca").description("Changes the mode to Crystal when Crystal Aura is on.").defaultValue(false).build());
-        lIlIlIllIIllII.isClicking = false;
-        lIlIlIllIIllII.sentMessage = false;
-        lIlIlIllIIllII.noTotems = false;
-        lIlIlIllIIllII.currentMode = lIlIlIllIIllII.mode.get();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgExtra = this.settings.createGroup("Extras");
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Changes what item that will go into your offhand.").defaultValue(Mode.EGap).onChanged(this::lambda$new$0).build());
+        this.replace = this.sgGeneral.add(new BoolSetting.Builder().name("replace").description("Replaces your offhand or waits until your offhand is empty.").defaultValue(true).build());
+        this.asimov = this.sgGeneral.add(new BoolSetting.Builder().name("asimov").description("Always holds the item specified in your offhand.").defaultValue(false).build());
+        this.health = this.sgGeneral.add(new IntSetting.Builder().name("health").description("The health at which Offhand Extra stops working.").defaultValue(10).min(0).sliderMax(20).build());
+        this.selfToggle = this.sgGeneral.add(new BoolSetting.Builder().name("self-toggle").description("Toggles when you run out of the item you chose.").defaultValue(false).build());
+        this.hotBar = this.sgGeneral.add(new BoolSetting.Builder().name("search-hotbar").description("Whether to take items out of your hotbar or not.").defaultValue(false).build());
+        this.sword = this.sgExtra.add(new BoolSetting.Builder().name("sword-gap").description("Changes the mode to EGap if you are holding a sword in your main hand.").defaultValue(false).build());
+        this.offhandCrystal = this.sgExtra.add(new BoolSetting.Builder().name("offhand-crystal-on-gap").description("Changes the mode to Crystal if you are holding an enchanted golden apple in your main hand.").defaultValue(false).build());
+        this.offhandCA = this.sgExtra.add(new BoolSetting.Builder().name("offhand-crystal-on-ca").description("Changes the mode to Crystal when Crystal Aura is on.").defaultValue(false).build());
+        this.isClicking = false;
+        this.sentMessage = false;
+        this.noTotems = false;
+        this.currentMode = this.mode.get();
     }
 
     private boolean canMove() {
-        Offhand lIlIlIlIlIIIII;
-        assert (lIlIlIlIlIIIII.mc.field_1724 != null);
-        return lIlIlIlIlIIIII.mc.field_1724.method_6047().method_7909() != class_1802.field_8102 && lIlIlIlIlIIIII.mc.field_1724.method_6047().method_7909() != class_1802.field_8547 && lIlIlIlIlIIIII.mc.field_1724.method_6047().method_7909() != class_1802.field_8399 && !lIlIlIlIlIIIII.mc.field_1724.method_6047().method_7909().method_19263();
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
+        }
+        return this.mc.field_1724.method_6047().method_7909() != class_1802.field_8102 && this.mc.field_1724.method_6047().method_7909() != class_1802.field_8547 && this.mc.field_1724.method_6047().method_7909() != class_1802.field_8399 && !this.mc.field_1724.method_6047().method_7909().method_19263();
     }
 
-    public void setTotems(boolean lIlIlIlIlIIIll) {
-        lIlIlIlIlIIlII.noTotems = lIlIlIlIlIIIll;
+    public void setTotems(boolean bl) {
+        this.noTotems = bl;
     }
 
     public static enum Mode {
@@ -254,10 +254,6 @@ extends Module {
         Crystal,
         Shield;
 
-
-        private Mode() {
-            Mode llllllllllllllllllIllIIIllllIIIl;
-        }
     }
 }
 

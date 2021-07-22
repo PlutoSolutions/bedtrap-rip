@@ -8,24 +8,21 @@ import com.sun.jna.Function;
 
 public class FunctionResultContext
 extends FromNativeContext {
-    private /* synthetic */ Object[] args;
-    private /* synthetic */ Function function;
+    private Object[] args;
+    private Function function;
 
     public Function getFunction() {
-        FunctionResultContext llllllllllllllllIllIIIIllIIIIIIl;
-        return llllllllllllllllIllIIIIllIIIIIIl.function;
+        return this.function;
     }
 
-    FunctionResultContext(Class<?> llllllllllllllllIllIIIIllIIIlIIl, Function llllllllllllllllIllIIIIllIIIIlII, Object[] llllllllllllllllIllIIIIllIIIIIll) {
-        super(llllllllllllllllIllIIIIllIIIlIIl);
-        FunctionResultContext llllllllllllllllIllIIIIllIIIIllI;
-        llllllllllllllllIllIIIIllIIIIllI.function = llllllllllllllllIllIIIIllIIIIlII;
-        llllllllllllllllIllIIIIllIIIIllI.args = llllllllllllllllIllIIIIllIIIIIll;
+    FunctionResultContext(Class<?> class_, Function function, Object[] arrobject) {
+        super(class_);
+        this.function = function;
+        this.args = arrobject;
     }
 
     public Object[] getArguments() {
-        FunctionResultContext llllllllllllllllIllIIIIlIllllllI;
-        return llllllllllllllllIllIIIIlIllllllI.args;
+        return this.args;
     }
 }
 

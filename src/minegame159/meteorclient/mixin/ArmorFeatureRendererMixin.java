@@ -33,9 +33,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_970.class})
 public class ArmorFeatureRendererMixin<T extends class_1309, M extends class_572<T>, A extends class_572<T>> {
     @Inject(method={"renderArmor"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onRenderArmor(class_4587 matrices, class_4597 vertexConsumers, T livingEntity, class_1304 equipmentSlot, int i, A bipedEntityModel, CallbackInfo info) {
-        if (livingEntity instanceof class_1657 && Modules.get().get(NoRender.class).noArmor()) {
-            info.cancel();
+    private void onRenderArmor(class_4587 class_45872, class_4597 class_45972, T t, class_1304 class_13042, int n, A a, CallbackInfo callbackInfo) {
+        if (t instanceof class_1657 && Modules.get().get(NoRender.class).noArmor()) {
+            callbackInfo.cancel();
         }
     }
 }

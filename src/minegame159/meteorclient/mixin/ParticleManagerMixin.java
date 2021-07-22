@@ -36,24 +36,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_702.class})
 public class ParticleManagerMixin {
     @Inject(method={"addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)Lnet/minecraft/client/particle/Particle;"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onAddParticle(class_2394 parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, CallbackInfoReturnable<class_703> info) {
-        ParticleEvent event = MeteorClient.EVENT_BUS.post(ParticleEvent.get(parameters));
-        if (event.isCancelled()) {
-            info.cancel();
+    private void onAddParticle(class_2394 class_23942, double d, double d2, double d3, double d4, double d5, double d6, CallbackInfoReturnable<class_703> callbackInfoReturnable) {
+        ParticleEvent particleEvent = MeteorClient.EVENT_BUS.post(ParticleEvent.get(class_23942));
+        if (particleEvent.isCancelled()) {
+            callbackInfoReturnable.cancel();
         }
     }
 
     @Inject(method={"addBlockBreakParticles"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onAddBlockBreakParticles(class_2338 blockPos, class_2680 state, CallbackInfo info) {
+    private void onAddBlockBreakParticles(class_2338 class_23382, class_2680 class_26802, CallbackInfo callbackInfo) {
         if (Modules.get().get(Nuker.class).noParticles() || Modules.get().get(NoRender.class).noBlockBreakParticles()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"addBlockBreakingParticles"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onAddBlockBreakingParticles(class_2338 blockPos, class_2350 direction, CallbackInfo info) {
+    private void onAddBlockBreakingParticles(class_2338 class_23382, class_2350 class_23502, CallbackInfo callbackInfo) {
         if (Modules.get().get(Nuker.class).noParticles() || Modules.get().get(NoRender.class).noBlockBreakParticles()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 }

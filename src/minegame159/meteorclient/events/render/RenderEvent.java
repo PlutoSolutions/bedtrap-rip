@@ -9,28 +9,20 @@ package minegame159.meteorclient.events.render;
 import net.minecraft.class_4587;
 
 public class RenderEvent {
-    private static final /* synthetic */ RenderEvent INSTANCE;
-    public /* synthetic */ float tickDelta;
-    public /* synthetic */ double offsetY;
-    public /* synthetic */ double offsetX;
-    public /* synthetic */ double offsetZ;
-    public /* synthetic */ class_4587 matrices;
+    private static final RenderEvent INSTANCE = new RenderEvent();
+    public float tickDelta;
+    public double offsetY;
+    public double offsetX;
+    public double offsetZ;
+    public class_4587 matrices;
 
-    static {
-        INSTANCE = new RenderEvent();
-    }
-
-    public static RenderEvent get(class_4587 llllllllllllllllllIIIlIllIIlllll, float llllllllllllllllllIIIlIllIlIIIll, double llllllllllllllllllIIIlIllIlIIIlI, double llllllllllllllllllIIIlIllIIlllII, double llllllllllllllllllIIIlIllIIllIll) {
-        RenderEvent.INSTANCE.matrices = llllllllllllllllllIIIlIllIIlllll;
-        RenderEvent.INSTANCE.tickDelta = llllllllllllllllllIIIlIllIlIIIll;
-        RenderEvent.INSTANCE.offsetX = llllllllllllllllllIIIlIllIlIIIlI;
-        RenderEvent.INSTANCE.offsetY = llllllllllllllllllIIIlIllIIlllII;
-        RenderEvent.INSTANCE.offsetZ = llllllllllllllllllIIIlIllIIllIll;
+    public static RenderEvent get(class_4587 class_45872, float f, double d, double d2, double d3) {
+        RenderEvent.INSTANCE.matrices = class_45872;
+        RenderEvent.INSTANCE.tickDelta = f;
+        RenderEvent.INSTANCE.offsetX = d;
+        RenderEvent.INSTANCE.offsetY = d2;
+        RenderEvent.INSTANCE.offsetZ = d3;
         return INSTANCE;
-    }
-
-    public RenderEvent() {
-        RenderEvent llllllllllllllllllIIIlIllIlIlIll;
     }
 }
 

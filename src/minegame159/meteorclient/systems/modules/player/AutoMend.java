@@ -29,77 +29,72 @@ import net.minecraft.class_1893;
 
 public class AutoMend
 extends Module {
-    private /* synthetic */ boolean didMove;
-    private final /* synthetic */ Setting<List<class_1792>> blacklist;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> autoDisable;
-    private final /* synthetic */ Setting<Boolean> force;
+    private boolean didMove;
+    private final Setting<List<class_1792>> blacklist;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> autoDisable;
+    private final Setting<Boolean> force;
 
     private int getEmptySlot() {
-        AutoMend lllllllllllllllllllllIIIIIllIIII;
-        for (int lllllllllllllllllllllIIIIIllIIIl = 0; lllllllllllllllllllllIIIIIllIIIl < lllllllllllllllllllllIIIIIllIIII.mc.field_1724.field_7514.field_7547.size(); ++lllllllllllllllllllllIIIIIllIIIl) {
-            if (!lllllllllllllllllllllIIIIIllIIII.mc.field_1724.field_7514.method_5438(lllllllllllllllllllllIIIIIllIIIl).method_7960()) continue;
-            return lllllllllllllllllllllIIIIIllIIIl;
+        for (int i = 0; i < this.mc.field_1724.field_7514.field_7547.size(); ++i) {
+            if (!this.mc.field_1724.field_7514.method_5438(i).method_7960()) continue;
+            return i;
         }
         return -1;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Pre lllllllllllllllllllllIIIIlIIIlll) {
-        AutoMend lllllllllllllllllllllIIIIlIIIlIl;
-        if (lllllllllllllllllllllIIIIlIIIlIl.shouldWait()) {
+    private void onTick(TickEvent.Pre pre) {
+        if (this.shouldWait()) {
             return;
         }
-        int lllllllllllllllllllllIIIIlIIIllI = lllllllllllllllllllllIIIIlIIIlIl.getSlot();
-        if (lllllllllllllllllllllIIIIlIIIllI == -1) {
-            if (lllllllllllllllllllllIIIIlIIIlIl.autoDisable.get().booleanValue()) {
-                lllllllllllllllllllllIIIIlIIIlIl.info("Repaired all items, disabling", new Object[0]);
-                if (lllllllllllllllllllllIIIIlIIIlIl.didMove) {
-                    int lllllllllllllllllllllIIIIlIIlIIl = lllllllllllllllllllllIIIIlIIIlIl.getEmptySlot();
-                    InvUtils.move().fromOffhand().to(lllllllllllllllllllllIIIIlIIlIIl);
+        int n = this.getSlot();
+        if (n == -1) {
+            if (this.autoDisable.get().booleanValue()) {
+                this.info("Repaired all items, disabling", new Object[0]);
+                if (this.didMove) {
+                    int n2 = this.getEmptySlot();
+                    InvUtils.move().fromOffhand().to(n2);
                 }
-                lllllllllllllllllllllIIIIlIIIlIl.toggle();
+                this.toggle();
             }
         } else {
-            InvUtils.move().from(lllllllllllllllllllllIIIIlIIIllI).toOffhand();
-            lllllllllllllllllllllIIIIlIIIlIl.didMove = true;
+            InvUtils.move().from(n).toOffhand();
+            this.didMove = true;
         }
     }
 
     private int getSlot() {
-        AutoMend lllllllllllllllllllllIIIIIllIlll;
-        for (int lllllllllllllllllllllIIIIIlllIII = 0; lllllllllllllllllllllIIIIIlllIII < lllllllllllllllllllllIIIIIllIlll.mc.field_1724.field_7514.field_7547.size(); ++lllllllllllllllllllllIIIIIlllIII) {
-            class_1799 lllllllllllllllllllllIIIIIlllIIl = lllllllllllllllllllllIIIIIllIlll.mc.field_1724.field_7514.method_5438(lllllllllllllllllllllIIIIIlllIII);
-            if (lllllllllllllllllllllIIIIIllIlll.blacklist.get().contains((Object)lllllllllllllllllllllIIIIIlllIIl.method_7909()) || class_1890.method_8225((class_1887)class_1893.field_9101, (class_1799)lllllllllllllllllllllIIIIIlllIIl) <= 0 || lllllllllllllllllllllIIIIIlllIIl.method_7919() <= 0) continue;
-            return lllllllllllllllllllllIIIIIlllIII;
+        for (int i = 0; i < this.mc.field_1724.field_7514.field_7547.size(); ++i) {
+            class_1799 class_17992 = this.mc.field_1724.field_7514.method_5438(i);
+            if (this.blacklist.get().contains((Object)class_17992.method_7909()) || class_1890.method_8225((class_1887)class_1893.field_9101, (class_1799)class_17992) <= 0 || class_17992.method_7919() <= 0) continue;
+            return i;
         }
         return -1;
     }
 
     public AutoMend() {
         super(Categories.Player, "auto-mend", "Automatically replaces items in your offhand with mending when fully repaired.");
-        AutoMend lllllllllllllllllllllIIIIlIlIIII;
-        lllllllllllllllllllllIIIIlIlIIII.sgGeneral = lllllllllllllllllllllIIIIlIlIIII.settings.getDefaultGroup();
-        lllllllllllllllllllllIIIIlIlIIII.blacklist = lllllllllllllllllllllIIIIlIlIIII.sgGeneral.add(new ItemListSetting.Builder().name("blacklist").description("Item blacklist.").defaultValue(new ArrayList<class_1792>(0)).filter(class_1792::method_7846).build());
-        lllllllllllllllllllllIIIIlIlIIII.force = lllllllllllllllllllllIIIIlIlIIII.sgGeneral.add(new BoolSetting.Builder().name("force").description("Replaces item in offhand even if there is some other non-repairable item.").defaultValue(false).build());
-        lllllllllllllllllllllIIIIlIlIIII.autoDisable = lllllllllllllllllllllIIIIlIlIIII.sgGeneral.add(new BoolSetting.Builder().name("auto-disable").description("Automatically disables when there are no more items to repair.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.blacklist = this.sgGeneral.add(new ItemListSetting.Builder().name("blacklist").description("Item blacklist.").defaultValue(new ArrayList<class_1792>(0)).filter(class_1792::method_7846).build());
+        this.force = this.sgGeneral.add(new BoolSetting.Builder().name("force").description("Replaces item in offhand even if there is some other non-repairable item.").defaultValue(false).build());
+        this.autoDisable = this.sgGeneral.add(new BoolSetting.Builder().name("auto-disable").description("Automatically disables when there are no more items to repair.").defaultValue(true).build());
     }
 
     @Override
     public void onActivate() {
-        lllllllllllllllllllllIIIIlIIlllI.didMove = false;
+        this.didMove = false;
     }
 
     private boolean shouldWait() {
-        AutoMend lllllllllllllllllllllIIIIlIIIIII;
-        class_1799 lllllllllllllllllllllIIIIIllllll = lllllllllllllllllllllIIIIlIIIIII.mc.field_1724.method_6079();
-        if (lllllllllllllllllllllIIIIIllllll.method_7960()) {
+        class_1799 class_17992 = this.mc.field_1724.method_6079();
+        if (class_17992.method_7960()) {
             return false;
         }
-        if (class_1890.method_8225((class_1887)class_1893.field_9101, (class_1799)lllllllllllllllllllllIIIIIllllll) > 0) {
-            return lllllllllllllllllllllIIIIIllllll.method_7919() != 0;
+        if (class_1890.method_8225((class_1887)class_1893.field_9101, (class_1799)class_17992) > 0) {
+            return class_17992.method_7919() != 0;
         }
-        return lllllllllllllllllllllIIIIlIIIIII.force.get() == false;
+        return this.force.get() == false;
     }
 }
 

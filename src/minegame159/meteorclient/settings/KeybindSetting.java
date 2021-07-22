@@ -20,154 +20,149 @@ import minegame159.meteorclient.utils.misc.input.KeyAction;
 import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class KeybindSetting
 extends Setting<Keybind> {
-    private final /* synthetic */ Runnable action;
-    public /* synthetic */ WKeybind widget;
+    private final Runnable action;
+    public WKeybind widget;
 
     @Override
-    public void reset(boolean lllllllllllllllllIlIIIIIIIIlllIl) {
-        KeybindSetting lllllllllllllllllIlIIIIIIIlIIIII;
-        if (lllllllllllllllllIlIIIIIIIlIIIII.value == null) {
-            lllllllllllllllllIlIIIIIIIlIIIII.value = ((Keybind)lllllllllllllllllIlIIIIIIIlIIIII.defaultValue).copy();
+    public void reset(boolean bl) {
+        if (this.value == null) {
+            this.value = ((Keybind)this.defaultValue).copy();
         } else {
-            ((Keybind)lllllllllllllllllIlIIIIIIIlIIIII.value).set((Keybind)lllllllllllllllllIlIIIIIIIlIIIII.defaultValue);
+            ((Keybind)this.value).set((Keybind)this.defaultValue);
         }
-        if (lllllllllllllllllIlIIIIIIIIlllIl) {
-            lllllllllllllllllIlIIIIIIIlIIIII.changed();
+        if (bl) {
+            this.changed();
         }
     }
 
     @Override
-    public Keybind fromTag(class_2487 lllllllllllllllllIlIIIIIIIIIlIlI) {
-        KeybindSetting lllllllllllllllllIlIIIIIIIIIlIll;
-        ((Keybind)lllllllllllllllllIlIIIIIIIIIlIll.get()).fromTag(lllllllllllllllllIlIIIIIIIIIlIlI.method_10562("value"));
-        return (Keybind)lllllllllllllllllIlIIIIIIIIIlIll.get();
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     @Override
-    protected Keybind parseImpl(String lllllllllllllllllIlIIIIIIIIllIII) {
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((Keybind)object);
+    }
+
+    @Override
+    public Keybind fromTag(class_2487 class_24872) {
+        ((Keybind)this.get()).fromTag(class_24872.method_10562("value"));
+        return (Keybind)this.get();
+    }
+
+    @Override
+    protected Keybind parseImpl(String string) {
         try {
-            return Keybind.fromKey(Integer.parseInt(lllllllllllllllllIlIIIIIIIIllIII.trim()));
+            return Keybind.fromKey(Integer.parseInt(string.trim()));
         }
-        catch (NumberFormatException lllllllllllllllllIlIIIIIIIIllIlI) {
+        catch (NumberFormatException numberFormatException) {
             return null;
         }
     }
 
     @EventHandler(priority=100)
-    private void onKey(KeyEvent lllllllllllllllllIlIIIIIIIlIlIIl) {
-        KeybindSetting lllllllllllllllllIlIIIIIIIlIllII;
-        if (lllllllllllllllllIlIIIIIIIlIlIIl.action == KeyAction.Release && ((Keybind)lllllllllllllllllIlIIIIIIIlIllII.get()).matches(true, lllllllllllllllllIlIIIIIIIlIlIIl.key) && lllllllllllllllllIlIIIIIIIlIllII.module.isActive() && lllllllllllllllllIlIIIIIIIlIllII.action != null) {
-            lllllllllllllllllIlIIIIIIIlIllII.action.run();
+    private void onKey(KeyEvent keyEvent) {
+        if (keyEvent.action == KeyAction.Release && ((Keybind)this.get()).matches(true, keyEvent.key) && this.module.isActive() && this.action != null) {
+            this.action.run();
         }
-    }
-
-    @EventHandler(priority=100)
-    private void onMouseButton(MouseButtonEvent lllllllllllllllllIlIIIIIIIlIIIll) {
-        KeybindSetting lllllllllllllllllIlIIIIIIIlIIllI;
-        if (lllllllllllllllllIlIIIIIIIlIIIll.action == KeyAction.Release && ((Keybind)lllllllllllllllllIlIIIIIIIlIIllI.get()).matches(false, lllllllllllllllllIlIIIIIIIlIIIll.button) && lllllllllllllllllIlIIIIIIIlIIllI.module.isActive() && lllllllllllllllllIlIIIIIIIlIIllI.action != null) {
-            lllllllllllllllllIlIIIIIIIlIIllI.action.run();
-        }
-    }
-
-    public KeybindSetting(String lllllllllllllllllIlIIIIIIlIIlIIl, String lllllllllllllllllIlIIIIIIlIIlIII, Keybind lllllllllllllllllIlIIIIIIIllllll, Consumer<Keybind> lllllllllllllllllIlIIIIIIlIIIllI, Consumer<Setting<Keybind>> lllllllllllllllllIlIIIIIIlIIIlIl, IVisible lllllllllllllllllIlIIIIIIIllllII, Runnable lllllllllllllllllIlIIIIIIIlllIll) {
-        super(lllllllllllllllllIlIIIIIIlIIlIIl, lllllllllllllllllIlIIIIIIlIIlIII, lllllllllllllllllIlIIIIIIIllllll, lllllllllllllllllIlIIIIIIlIIIllI, lllllllllllllllllIlIIIIIIlIIIlIl, lllllllllllllllllIlIIIIIIIllllII);
-        KeybindSetting lllllllllllllllllIlIIIIIIlIIIIlI;
-        lllllllllllllllllIlIIIIIIlIIIIlI.action = lllllllllllllllllIlIIIIIIIlllIll;
-        MeteorClient.EVENT_BUS.subscribe(lllllllllllllllllIlIIIIIIlIIIIlI);
     }
 
     @Override
-    protected boolean isValueValid(Keybind lllllllllllllllllIlIIIIIIIIlIlII) {
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    @EventHandler(priority=100)
+    private void onMouseButton(MouseButtonEvent mouseButtonEvent) {
+        if (mouseButtonEvent.action == KeyAction.Release && ((Keybind)this.get()).matches(false, mouseButtonEvent.button) && this.module.isActive() && this.action != null) {
+            this.action.run();
+        }
+    }
+
+    public KeybindSetting(String string, String string2, Keybind keybind, Consumer<Keybind> consumer, Consumer<Setting<Keybind>> consumer2, IVisible iVisible, Runnable runnable) {
+        super(string, string2, keybind, consumer, consumer2, iVisible);
+        this.action = runnable;
+        MeteorClient.EVENT_BUS.subscribe(this);
+    }
+
+    @Override
+    protected boolean isValueValid(Keybind keybind) {
         return true;
     }
 
     @EventHandler(priority=200)
-    private void onMouseButtonBinding(MouseButtonEvent lllllllllllllllllIlIIIIIIIllIIIl) {
-        KeybindSetting lllllllllllllllllIlIIIIIIIllIIII;
-        if (lllllllllllllllllIlIIIIIIIllIIII.widget != null && lllllllllllllllllIlIIIIIIIllIIII.widget.onAction(false, lllllllllllllllllIlIIIIIIIllIIIl.button)) {
-            lllllllllllllllllIlIIIIIIIllIIIl.cancel();
+    private void onMouseButtonBinding(MouseButtonEvent mouseButtonEvent) {
+        if (this.widget != null && this.widget.onAction(false, mouseButtonEvent.button)) {
+            mouseButtonEvent.cancel();
         }
     }
 
     @EventHandler(priority=200)
-    private void onKeyBinding(KeyEvent lllllllllllllllllIlIIIIIIIllIlIl) {
-        KeybindSetting lllllllllllllllllIlIIIIIIIlllIII;
-        if (lllllllllllllllllIlIIIIIIIlllIII.widget != null && lllllllllllllllllIlIIIIIIIlllIII.widget.onAction(true, lllllllllllllllllIlIIIIIIIllIlIl.key)) {
-            lllllllllllllllllIlIIIIIIIllIlIl.cancel();
+    private void onKeyBinding(KeyEvent keyEvent) {
+        if (this.widget != null && this.widget.onAction(true, keyEvent.key)) {
+            keyEvent.cancel();
         }
     }
 
     @Override
     public class_2487 toTag() {
-        KeybindSetting lllllllllllllllllIlIIIIIIIIIllll;
-        class_2487 lllllllllllllllllIlIIIIIIIIlIIII = lllllllllllllllllIlIIIIIIIIIllll.saveGeneral();
-        lllllllllllllllllIlIIIIIIIIlIIII.method_10566("value", (class_2520)((Keybind)lllllllllllllllllIlIIIIIIIIIllll.get()).toTag());
-        return lllllllllllllllllIlIIIIIIIIlIIII;
+        class_2487 class_24872 = this.saveGeneral();
+        class_24872.method_10566("value", (class_2520)((Keybind)this.get()).toTag());
+        return class_24872;
     }
 
     public static class Builder {
-        private /* synthetic */ Runnable action;
-        private /* synthetic */ Consumer<Keybind> onChanged;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ String description;
-        private /* synthetic */ Keybind defaultValue;
-        private /* synthetic */ Consumer<Setting<Keybind>> onModuleActivated;
-        private /* synthetic */ String name;
+        private Runnable action;
+        private Consumer<Keybind> onChanged;
+        private IVisible visible;
+        private String description = "";
+        private Keybind defaultValue = Keybind.fromKey(-1);
+        private Consumer<Setting<Keybind>> onModuleActivated;
+        private String name = "undefined";
 
-        public Builder onChanged(Consumer<Keybind> lllIllllIIIIlIl) {
-            Builder lllIllllIIIlIII;
-            lllIllllIIIlIII.onChanged = lllIllllIIIIlIl;
-            return lllIllllIIIlIII;
+        public Builder onChanged(Consumer<Keybind> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder description(String lllIllllIIlIIll) {
-            Builder lllIllllIIlIIlI;
-            lllIllllIIlIIlI.description = lllIllllIIlIIll;
-            return lllIllllIIlIIlI;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder defaultValue(Keybind lllIllllIIIlIll) {
-            Builder lllIllllIIIllII;
-            lllIllllIIIllII.defaultValue = lllIllllIIIlIll;
-            return lllIllllIIIllII;
+        public Builder defaultValue(Keybind keybind) {
+            this.defaultValue = keybind;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<Keybind>> lllIlllIlllllll) {
-            Builder lllIllllIIIIIlI;
-            lllIllllIIIIIlI.onModuleActivated = lllIlllIlllllll;
-            return lllIllllIIIIIlI;
+        public Builder onModuleActivated(Consumer<Setting<Keybind>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder name(String lllIllllIIlIlll) {
-            Builder lllIllllIIllIII;
-            lllIllllIIllIII.name = lllIllllIIlIlll;
-            return lllIllllIIllIII;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder visible(IVisible lllIlllIllllIIl) {
-            Builder lllIlllIllllIlI;
-            lllIlllIllllIlI.visible = lllIlllIllllIIl;
-            return lllIlllIllllIlI;
-        }
-
-        public Builder() {
-            Builder lllIllllIIllllI;
-            lllIllllIIllllI.name = "undefined";
-            lllIllllIIllllI.description = "";
-            lllIllllIIllllI.defaultValue = Keybind.fromKey(-1);
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
         public KeybindSetting build() {
-            Builder lllIlllIlllIIIl;
-            return new KeybindSetting(lllIlllIlllIIIl.name, lllIlllIlllIIIl.description, lllIlllIlllIIIl.defaultValue, lllIlllIlllIIIl.onChanged, lllIlllIlllIIIl.onModuleActivated, lllIlllIlllIIIl.visible, lllIlllIlllIIIl.action);
+            return new KeybindSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible, this.action);
         }
 
-        public Builder action(Runnable lllIlllIlllIlIl) {
-            Builder lllIlllIlllIlII;
-            lllIlllIlllIlII.action = lllIlllIlllIlIl;
-            return lllIlllIlllIlII;
+        public Builder action(Runnable runnable) {
+            this.action = runnable;
+            return this;
         }
     }
 }

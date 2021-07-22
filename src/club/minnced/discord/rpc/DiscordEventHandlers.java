@@ -13,13 +13,13 @@ import java.util.Objects;
 
 public class DiscordEventHandlers
 extends Structure {
-    public /* synthetic */ OnStatus disconnected;
-    public /* synthetic */ OnStatus errored;
-    public /* synthetic */ OnJoinRequest joinRequest;
-    public /* synthetic */ OnReady ready;
-    private static final /* synthetic */ List<String> FIELD_ORDER;
-    public /* synthetic */ OnGameUpdate spectateGame;
-    public /* synthetic */ OnGameUpdate joinGame;
+    public OnStatus disconnected;
+    public OnStatus errored;
+    public OnJoinRequest joinRequest;
+    public OnReady ready;
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("ready", "disconnected", "errored", "joinGame", "spectateGame", "joinRequest"));
+    public OnGameUpdate spectateGame;
+    public OnGameUpdate joinGame;
 
     @Override
     protected List<String> getFieldOrder() {
@@ -28,29 +28,19 @@ extends Structure {
 
     @Override
     public int hashCode() {
-        DiscordEventHandlers lllllllllllllllllIlIIIIIlIIlIIlI;
-        return Objects.hash(lllllllllllllllllIlIIIIIlIIlIIlI.ready, lllllllllllllllllIlIIIIIlIIlIIlI.disconnected, lllllllllllllllllIlIIIIIlIIlIIlI.errored, lllllllllllllllllIlIIIIIlIIlIIlI.joinGame, lllllllllllllllllIlIIIIIlIIlIIlI.spectateGame, lllllllllllllllllIlIIIIIlIIlIIlI.joinRequest);
-    }
-
-    static {
-        FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("ready", "disconnected", "errored", "joinGame", "spectateGame", "joinRequest"));
+        return Objects.hash(this.ready, this.disconnected, this.errored, this.joinGame, this.spectateGame, this.joinRequest);
     }
 
     @Override
-    public boolean equals(Object lllllllllllllllllIlIIIIIlIIllIIl) {
-        DiscordEventHandlers lllllllllllllllllIlIIIIIlIIlIlll;
-        if (lllllllllllllllllIlIIIIIlIIlIlll == lllllllllllllllllIlIIIIIlIIllIIl) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (!(lllllllllllllllllIlIIIIIlIIllIIl instanceof DiscordEventHandlers)) {
+        if (!(object instanceof DiscordEventHandlers)) {
             return false;
         }
-        DiscordEventHandlers lllllllllllllllllIlIIIIIlIIllIII = (DiscordEventHandlers)lllllllllllllllllIlIIIIIlIIllIIl;
-        return Objects.equals(lllllllllllllllllIlIIIIIlIIlIlll.ready, lllllllllllllllllIlIIIIIlIIllIII.ready) && Objects.equals(lllllllllllllllllIlIIIIIlIIlIlll.disconnected, lllllllllllllllllIlIIIIIlIIllIII.disconnected) && Objects.equals(lllllllllllllllllIlIIIIIlIIlIlll.errored, lllllllllllllllllIlIIIIIlIIllIII.errored) && Objects.equals(lllllllllllllllllIlIIIIIlIIlIlll.joinGame, lllllllllllllllllIlIIIIIlIIllIII.joinGame) && Objects.equals(lllllllllllllllllIlIIIIIlIIlIlll.spectateGame, lllllllllllllllllIlIIIIIlIIllIII.spectateGame) && Objects.equals(lllllllllllllllllIlIIIIIlIIlIlll.joinRequest, lllllllllllllllllIlIIIIIlIIllIII.joinRequest);
-    }
-
-    public DiscordEventHandlers() {
-        DiscordEventHandlers lllllllllllllllllIlIIIIIlIIlllll;
+        DiscordEventHandlers discordEventHandlers = (DiscordEventHandlers)object;
+        return Objects.equals(this.ready, discordEventHandlers.ready) && Objects.equals(this.disconnected, discordEventHandlers.disconnected) && Objects.equals(this.errored, discordEventHandlers.errored) && Objects.equals(this.joinGame, discordEventHandlers.joinGame) && Objects.equals(this.spectateGame, discordEventHandlers.spectateGame) && Objects.equals(this.joinRequest, discordEventHandlers.joinRequest);
     }
 
     public static interface OnStatus

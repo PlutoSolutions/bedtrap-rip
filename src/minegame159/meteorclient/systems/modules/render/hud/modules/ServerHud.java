@@ -17,9 +17,8 @@ extends DoubleTextHudElement {
         return Utils.getWorldName();
     }
 
-    public ServerHud(HUD lIlIIIIIlIlIll) {
-        super(lIlIIIIIlIlIll, "server", "Displays the server you're currently in.", "Server: ");
-        ServerHud lIlIIIIIlIllII;
+    public ServerHud(HUD hUD) {
+        super(hUD, "server", "Displays the server you're currently in.", "Server: ");
     }
 }
 

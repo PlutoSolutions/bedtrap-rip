@@ -18,18 +18,17 @@ import minegame159.meteorclient.utils.entity.fakeplayer.FakePlayerManager;
 
 public class FakePlayer
 extends Module {
-    public final /* synthetic */ Setting<Boolean> copyInv;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    public final /* synthetic */ Setting<String> name;
-    public final /* synthetic */ Setting<Integer> health;
+    public final Setting<Boolean> copyInv;
+    private final SettingGroup sgGeneral;
+    public final Setting<String> name;
+    public final Setting<Integer> health;
 
     public FakePlayer() {
         super(Categories.Player, "fake-player", "Spawns a client-side fake player for testing usages.");
-        FakePlayer llllllllllllllllIllIIIlIllIIIIlI;
-        llllllllllllllllIllIIIlIllIIIIlI.sgGeneral = llllllllllllllllIllIIIlIllIIIIlI.settings.getDefaultGroup();
-        llllllllllllllllIllIIIlIllIIIIlI.name = llllllllllllllllIllIIIlIllIIIIlI.sgGeneral.add(new StringSetting.Builder().name("name").description("The name of the fake player.").defaultValue("seasnail8169").build());
-        llllllllllllllllIllIIIlIllIIIIlI.copyInv = llllllllllllllllIllIIIlIllIIIIlI.sgGeneral.add(new BoolSetting.Builder().name("copy-inv").description("Copies your exact inventory to the fake player.").defaultValue(true).build());
-        llllllllllllllllIllIIIlIllIIIIlI.health = llllllllllllllllIllIIIlIllIIIIlI.sgGeneral.add(new IntSetting.Builder().name("health").description("The fake player's default health.").defaultValue(20).min(1).sliderMax(100).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.name = this.sgGeneral.add(new StringSetting.Builder().name("name").description("The name of the fake player.").defaultValue("seasnail8169").build());
+        this.copyInv = this.sgGeneral.add(new BoolSetting.Builder().name("copy-inv").description("Copies your exact inventory to the fake player.").defaultValue(true).build());
+        this.health = this.sgGeneral.add(new IntSetting.Builder().name("health").description("The fake player's default health.").defaultValue(20).min(1).sliderMax(100).build());
     }
 
     @Override
@@ -38,24 +37,13 @@ extends Module {
     }
 
     @Override
-    public WWidget getWidget(GuiTheme llllllllllllllllIllIIIlIlIlllIIl) {
-        FakePlayer llllllllllllllllIllIIIlIlIlllIlI;
-        WHorizontalList llllllllllllllllIllIIIlIlIlllIII = llllllllllllllllIllIIIlIlIlllIIl.horizontalList();
-        WButton llllllllllllllllIllIIIlIlIllIlll = llllllllllllllllIllIIIlIlIlllIII.add(llllllllllllllllIllIIIlIlIlllIIl.button("Spawn")).widget();
-        llllllllllllllllIllIIIlIlIllIlll.action = () -> {
-            FakePlayer llllllllllllllllIllIIIlIlIlIlIll;
-            if (llllllllllllllllIllIIIlIlIlIlIll.isActive()) {
-                FakePlayerManager.add(llllllllllllllllIllIIIlIlIlIlIll.name.get(), llllllllllllllllIllIIIlIlIlIlIll.health.get().intValue(), llllllllllllllllIllIIIlIlIlIlIll.copyInv.get());
-            }
-        };
-        WButton llllllllllllllllIllIIIlIlIllIllI = llllllllllllllllIllIIIlIlIlllIII.add(llllllllllllllllIllIIIlIlIlllIIl.button("Clear")).widget();
-        llllllllllllllllIllIIIlIlIllIllI.action = () -> {
-            FakePlayer llllllllllllllllIllIIIlIlIlIllIl;
-            if (llllllllllllllllIllIIIlIlIlIllIl.isActive()) {
-                FakePlayerManager.clear();
-            }
-        };
-        return llllllllllllllllIllIIIlIlIlllIII;
+    public WWidget getWidget(GuiTheme guiTheme) {
+        WHorizontalList wHorizontalList = guiTheme.horizontalList();
+        WButton wButton = wHorizontalList.add(guiTheme.button("Spawn")).widget();
+        wButton.action = this::lambda$getWidget$0;
+        WButton wButton2 = wHorizontalList.add(guiTheme.button("Clear")).widget();
+        wButton2.action = this::lambda$getWidget$1;
+        return wHorizontalList;
     }
 
     @Override
@@ -69,6 +57,18 @@ extends Module {
             return String.valueOf(FakePlayerManager.getPlayers().size());
         }
         return null;
+    }
+
+    private void lambda$getWidget$1() {
+        if (this.isActive()) {
+            FakePlayerManager.clear();
+        }
+    }
+
+    private void lambda$getWidget$0() {
+        if (this.isActive()) {
+            FakePlayerManager.add(this.name.get(), this.health.get().intValue(), this.copyInv.get());
+        }
     }
 }
 

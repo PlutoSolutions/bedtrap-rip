@@ -28,72 +28,79 @@ import minegame159.meteorclient.utils.misc.NbtException;
 import net.minecraft.class_2487;
 import net.minecraft.class_320;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class PremiumAccount
 extends Account<PremiumAccount> {
-    private static final /* synthetic */ Gson GSON;
-    private /* synthetic */ String password;
+    private static final Gson GSON = new Gson();
+    private String password;
 
     @Override
-    public PremiumAccount fromTag(class_2487 lllllllllllllllllllIllIIIIlIlIll) {
-        PremiumAccount lllllllllllllllllllIllIIIIlIlIlI;
-        super.fromTag(lllllllllllllllllllIllIIIIlIlIll);
-        if (!lllllllllllllllllllIllIIIIlIlIll.method_10545("password")) {
+    public PremiumAccount fromTag(class_2487 class_24872) {
+        super.fromTag(class_24872);
+        if (!class_24872.method_10545("password")) {
             throw new NbtException();
         }
-        lllllllllllllllllllIllIIIIlIlIlI.password = lllllllllllllllllllIllIIIIlIlIll.method_10558("password");
-        return lllllllllllllllllllIllIIIIlIlIlI;
+        this.password = class_24872.method_10558("password");
+        return this;
     }
 
-    public boolean equals(Object lllllllllllllllllllIllIIIIlIIlIl) {
-        PremiumAccount lllllllllllllllllllIllIIIIlIIllI;
-        if (!(lllllllllllllllllllIllIIIIlIIlIl instanceof PremiumAccount)) {
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public boolean equals(Object object) {
+        if (!(object instanceof PremiumAccount)) {
             return false;
         }
-        return ((PremiumAccount)lllllllllllllllllllIllIIIIlIIlIl).name.equals(lllllllllllllllllllIllIIIIlIIllI.name);
+        return ((PremiumAccount)object).name.equals(this.name);
     }
 
-    public PremiumAccount(String lllllllllllllllllllIllIIIlIlIlIl, String lllllllllllllllllllIllIIIlIlIlII) {
-        super(AccountType.Premium, lllllllllllllllllllIllIIIlIlIlIl);
-        PremiumAccount lllllllllllllllllllIllIIIlIlIllI;
-        lllllllllllllllllllIllIIIlIlIllI.password = lllllllllllllllllllIllIIIlIlIlII;
+    @Override
+    public Account fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public PremiumAccount(String string, String string2) {
+        super(AccountType.Premium, string);
+        this.password = string2;
     }
 
     @Override
     public boolean fetchHead() {
         try {
-            PremiumAccount lllllllllllllllllllIllIIIlIIIllI;
-            return lllllllllllllllllllIllIIIlIIIllI.cache.makeHead(String.valueOf(new StringBuilder().append("https://www.mc-heads.net/avatar/").append(lllllllllllllllllllIllIIIlIIIllI.cache.uuid).append("/8")));
+            return this.cache.makeHead(String.valueOf(new StringBuilder().append("https://www.mc-heads.net/avatar/").append(this.cache.uuid).append("/8")));
         }
-        catch (Exception lllllllllllllllllllIllIIIlIIlIII) {
+        catch (Exception exception) {
             return false;
         }
     }
 
     @Override
     public class_2487 toTag() {
-        PremiumAccount lllllllllllllllllllIllIIIIllIIlI;
-        class_2487 lllllllllllllllllllIllIIIIllIIIl = super.toTag();
-        lllllllllllllllllllIllIIIIllIIIl.method_10582("password", lllllllllllllllllllIllIIIIllIIlI.password);
-        return lllllllllllllllllllIllIIIIllIIIl;
+        class_2487 class_24872 = super.toTag();
+        class_24872.method_10582("password", this.password);
+        return class_24872;
     }
 
     @Override
     public boolean login() {
-        PremiumAccount lllllllllllllllllllIllIIIIllllIl;
         super.login();
-        YggdrasilUserAuthentication lllllllllllllllllllIllIIIIlllllI = lllllllllllllllllllIllIIIIllllIl.getAuth();
+        YggdrasilUserAuthentication yggdrasilUserAuthentication = this.getAuth();
         try {
-            lllllllllllllllllllIllIIIIlllllI.logIn();
-            lllllllllllllllllllIllIIIIllllIl.setSession(new class_320(lllllllllllllllllllIllIIIIlllllI.getSelectedProfile().getName(), lllllllllllllllllllIllIIIIlllllI.getSelectedProfile().getId().toString(), lllllllllllllllllllIllIIIIlllllI.getAuthenticatedToken(), "mojang"));
-            lllllllllllllllllllIllIIIIllllIl.cache.username = lllllllllllllllllllIllIIIIlllllI.getSelectedProfile().getName();
+            yggdrasilUserAuthentication.logIn();
+            this.setSession(new class_320(yggdrasilUserAuthentication.getSelectedProfile().getName(), yggdrasilUserAuthentication.getSelectedProfile().getId().toString(), yggdrasilUserAuthentication.getAuthenticatedToken(), "mojang"));
+            this.cache.username = yggdrasilUserAuthentication.getSelectedProfile().getName();
             return true;
         }
-        catch (AuthenticationUnavailableException lllllllllllllllllllIllIIIlIIIIIl) {
+        catch (AuthenticationUnavailableException authenticationUnavailableException) {
             MeteorClient.LOG.error("Failed to contact the authentication server.");
             return false;
         }
-        catch (AuthenticationException lllllllllllllllllllIllIIIlIIIIII) {
-            if (lllllllllllllllllllIllIIIlIIIIII.getMessage().contains("Invalid username or password") || lllllllllllllllllllIllIIIlIIIIII.getMessage().contains("account migrated")) {
+        catch (AuthenticationException authenticationException) {
+            if (authenticationException.getMessage().contains("Invalid username or password") || authenticationException.getMessage().contains("account migrated")) {
                 MeteorClient.LOG.error("Wrong password.");
             } else {
                 MeteorClient.LOG.error("Failed to contact the authentication server.");
@@ -102,31 +109,25 @@ extends Account<PremiumAccount> {
         }
     }
 
-    static {
-        GSON = new Gson();
-    }
-
     @Override
     public boolean fetchInfo() {
-        PremiumAccount lllllllllllllllllllIllIIIlIIllIl;
-        YggdrasilUserAuthentication lllllllllllllllllllIllIIIlIIlllI = lllllllllllllllllllIllIIIlIIllIl.getAuth();
+        YggdrasilUserAuthentication yggdrasilUserAuthentication = this.getAuth();
         try {
-            lllllllllllllllllllIllIIIlIIlllI.logIn();
-            lllllllllllllllllllIllIIIlIIllIl.cache.username = lllllllllllllllllllIllIIIlIIlllI.getSelectedProfile().getName();
-            lllllllllllllllllllIllIIIlIIllIl.cache.uuid = lllllllllllllllllllIllIIIlIIlllI.getSelectedProfile().getId().toString();
+            yggdrasilUserAuthentication.logIn();
+            this.cache.username = yggdrasilUserAuthentication.getSelectedProfile().getName();
+            this.cache.uuid = yggdrasilUserAuthentication.getSelectedProfile().getId().toString();
             return true;
         }
-        catch (AuthenticationException lllllllllllllllllllIllIIIlIlIIII) {
+        catch (AuthenticationException authenticationException) {
             return false;
         }
     }
 
     public YggdrasilUserAuthentication getAuth() {
-        PremiumAccount lllllllllllllllllllIllIIIIllIllI;
-        YggdrasilUserAuthentication lllllllllllllllllllIllIIIIllIlll = (YggdrasilUserAuthentication)new YggdrasilAuthenticationService(((MinecraftClientAccessor)Utils.mc).getProxy(), "").createUserAuthentication(Agent.MINECRAFT);
-        lllllllllllllllllllIllIIIIllIlll.setUsername(lllllllllllllllllllIllIIIIllIllI.name);
-        lllllllllllllllllllIllIIIIllIlll.setPassword(lllllllllllllllllllIllIIIIllIllI.password);
-        return lllllllllllllllllllIllIIIIllIlll;
+        YggdrasilUserAuthentication yggdrasilUserAuthentication = (YggdrasilUserAuthentication)new YggdrasilAuthenticationService(((MinecraftClientAccessor)Utils.mc).getProxy(), "").createUserAuthentication(Agent.MINECRAFT);
+        yggdrasilUserAuthentication.setUsername(this.name);
+        yggdrasilUserAuthentication.setPassword(this.password);
+        return yggdrasilUserAuthentication;
     }
 }
 

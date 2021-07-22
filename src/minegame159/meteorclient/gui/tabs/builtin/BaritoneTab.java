@@ -24,6 +24,7 @@ import minegame159.meteorclient.settings.BoolSetting;
 import minegame159.meteorclient.settings.ColorSetting;
 import minegame159.meteorclient.settings.DoubleSetting;
 import minegame159.meteorclient.settings.IntSetting;
+import minegame159.meteorclient.settings.Setting;
 import minegame159.meteorclient.settings.SettingGroup;
 import minegame159.meteorclient.settings.Settings;
 import minegame159.meteorclient.utils.render.color.SettingColor;
@@ -31,16 +32,19 @@ import net.minecraft.class_437;
 
 public class BaritoneTab
 extends Tab {
-    private static /* synthetic */ Settings settings;
+    private static Settings settings;
+
+    private static void lambda$getSettings$9(Settings.Setting setting, Setting setting2) {
+        setting2.set(((Long)setting.value).intValue());
+    }
 
     public BaritoneTab() {
         super("Baritone");
-        BaritoneTab llllllllllllllllllIIIlIIlllIIlII;
     }
 
     @Override
-    public boolean isScreen(class_437 llllllllllllllllllIIIlIIllIllIIl) {
-        return llllllllllllllllllIIIlIIllIllIIl instanceof BaritoneScreen;
+    public boolean isScreen(class_437 class_4372) {
+        return class_4372 instanceof BaritoneScreen;
     }
 
     private static Settings getSettings() {
@@ -48,86 +52,123 @@ extends Tab {
             return settings;
         }
         settings = new Settings();
-        SettingGroup llllllllllllllllllIIIlIIllIIIlII = settings.createGroup("Checkboxes");
-        SettingGroup llllllllllllllllllIIIlIIllIIIIll = settings.createGroup("Numbers");
-        SettingGroup llllllllllllllllllIIIlIIllIIIIlI = settings.createGroup("Whole Numbers");
-        SettingGroup llllllllllllllllllIIIlIIllIIIIIl = settings.createGroup("Colors");
+        SettingGroup settingGroup = settings.createGroup("Checkboxes");
+        SettingGroup settingGroup2 = settings.createGroup("Numbers");
+        SettingGroup settingGroup3 = settings.createGroup("Whole Numbers");
+        SettingGroup settingGroup4 = settings.createGroup("Colors");
         try {
-            Class<?> llllllllllllllllllIIIlIIllIIIllI = BaritoneAPI.getSettings().getClass();
-            for (Field llllllllllllllllllIIIlIIllIIIlll : llllllllllllllllllIIIlIIllIIIllI.getDeclaredFields()) {
-                Object llllllllllllllllllIIIlIIllIIlIlI = llllllllllllllllllIIIlIIllIIIlll.get((Object)BaritoneAPI.getSettings());
-                if (!(llllllllllllllllllIIIlIIllIIlIlI instanceof Settings.Setting)) continue;
-                Settings.Setting llllllllllllllllllIIIlIIllIIlIIl = (Settings.Setting)llllllllllllllllllIIIlIIllIIlIlI;
-                Object llllllllllllllllllIIIlIIllIIlIII = llllllllllllllllllIIIlIIllIIlIIl.value;
-                if (llllllllllllllllllIIIlIIllIIlIII instanceof Boolean) {
-                    llllllllllllllllllIIIlIIllIIIlII.add(new BoolSetting.Builder().name(llllllllllllllllllIIIlIIllIIlIIl.getName()).description(llllllllllllllllllIIIlIIllIIlIIl.getName()).defaultValue((Boolean)llllllllllllllllllIIIlIIllIIlIIl.defaultValue).onChanged(llllllllllllllllllIIIlIIIllIllII -> {
-                        llllllllllllllllllIIIlIIIllIllIl.value = llllllllllllllllllIIIlIIIllIllII;
-                    }).onModuleActivated(llllllllllllllllllIIIlIIIlllIlII -> llllllllllllllllllIIIlIIIlllIlII.set((Boolean)llllllllllllllllllIIIlIIIlllIIll.value)).build());
+            Class<?> class_ = BaritoneAPI.getSettings().getClass();
+            for (Field field : class_.getDeclaredFields()) {
+                Object object = field.get((Object)BaritoneAPI.getSettings());
+                if (!(object instanceof Settings.Setting)) continue;
+                Settings.Setting setting = (Settings.Setting)object;
+                Object object2 = setting.value;
+                if (object2 instanceof Boolean) {
+                    settingGroup.add(new BoolSetting.Builder().name(setting.getName()).description(setting.getName()).defaultValue((Boolean)setting.defaultValue).onChanged(arg_0 -> BaritoneTab.lambda$getSettings$0(setting, arg_0)).onModuleActivated(arg_0 -> BaritoneTab.lambda$getSettings$1(setting, arg_0)).build());
                     continue;
                 }
-                if (llllllllllllllllllIIIlIIllIIlIII instanceof Double) {
-                    llllllllllllllllllIIIlIIllIIIIll.add(new DoubleSetting.Builder().name(llllllllllllllllllIIIlIIllIIlIIl.getName()).description(llllllllllllllllllIIIlIIllIIlIIl.getName()).defaultValue((Double)llllllllllllllllllIIIlIIllIIlIIl.defaultValue).onChanged(llllllllllllllllllIIIlIIIllllIlI -> {
-                        llllllllllllllllllIIIlIIIllllIIl.value = llllllllllllllllllIIIlIIIllllIlI;
-                    }).onModuleActivated(llllllllllllllllllIIIlIIlIIIIIII -> llllllllllllllllllIIIlIIlIIIIIII.set((Double)llllllllllllllllllIIIlIIIlllllll.value)).build());
+                if (object2 instanceof Double) {
+                    settingGroup2.add(new DoubleSetting.Builder().name(setting.getName()).description(setting.getName()).defaultValue((Double)setting.defaultValue).onChanged(arg_0 -> BaritoneTab.lambda$getSettings$2(setting, arg_0)).onModuleActivated(arg_0 -> BaritoneTab.lambda$getSettings$3(setting, arg_0)).build());
                     continue;
                 }
-                if (llllllllllllllllllIIIlIIllIIlIII instanceof Float) {
-                    llllllllllllllllllIIIlIIllIIIIll.add(new DoubleSetting.Builder().name(llllllllllllllllllIIIlIIllIIlIIl.getName()).description(llllllllllllllllllIIIlIIllIIlIIl.getName()).defaultValue(((Float)llllllllllllllllllIIIlIIllIIlIIl.defaultValue).doubleValue()).onChanged(llllllllllllllllllIIIlIIlIIIIlII -> {
-                        llllllllllllllllllIIIlIIlIIIIlIl.value = Float.valueOf(llllllllllllllllllIIIlIIlIIIIlII.floatValue());
-                    }).onModuleActivated(llllllllllllllllllIIIlIIlIIIlIlI -> llllllllllllllllllIIIlIIlIIIlIlI.set(((Float)llllllllllllllllllIIIlIIlIIIlIll.value).doubleValue())).build());
+                if (object2 instanceof Float) {
+                    settingGroup2.add(new DoubleSetting.Builder().name(setting.getName()).description(setting.getName()).defaultValue(((Float)setting.defaultValue).doubleValue()).onChanged(arg_0 -> BaritoneTab.lambda$getSettings$4(setting, arg_0)).onModuleActivated(arg_0 -> BaritoneTab.lambda$getSettings$5(setting, arg_0)).build());
                     continue;
                 }
-                if (llllllllllllllllllIIIlIIllIIlIII instanceof Integer) {
-                    llllllllllllllllllIIIlIIllIIIIlI.add(new IntSetting.Builder().name(llllllllllllllllllIIIlIIllIIlIIl.getName()).description(llllllllllllllllllIIIlIIllIIlIIl.getName()).defaultValue((Integer)llllllllllllllllllIIIlIIllIIlIIl.defaultValue).onChanged(llllllllllllllllllIIIlIIlIIlIIII -> {
-                        llllllllllllllllllIIIlIIlIIlIIll.value = llllllllllllllllllIIIlIIlIIlIIII;
-                    }).onModuleActivated(llllllllllllllllllIIIlIIlIIllIII -> llllllllllllllllllIIIlIIlIIllIII.set((Integer)llllllllllllllllllIIIlIIlIIlIlll.value)).build());
+                if (object2 instanceof Integer) {
+                    settingGroup3.add(new IntSetting.Builder().name(setting.getName()).description(setting.getName()).defaultValue((Integer)setting.defaultValue).onChanged(arg_0 -> BaritoneTab.lambda$getSettings$6(setting, arg_0)).onModuleActivated(arg_0 -> BaritoneTab.lambda$getSettings$7(setting, arg_0)).build());
                     continue;
                 }
-                if (llllllllllllllllllIIIlIIllIIlIII instanceof Long) {
-                    llllllllllllllllllIIIlIIllIIIIlI.add(new IntSetting.Builder().name(llllllllllllllllllIIIlIIllIIlIIl.getName()).description(llllllllllllllllllIIIlIIllIIlIIl.getName()).defaultValue(((Long)llllllllllllllllllIIIlIIllIIlIIl.defaultValue).intValue()).onChanged(llllllllllllllllllIIIlIIlIIlllII -> {
-                        llllllllllllllllllIIIlIIlIIlllIl.value = llllllllllllllllllIIIlIIlIIlllII.longValue();
-                    }).onModuleActivated(llllllllllllllllllIIIlIIlIlIIlII -> llllllllllllllllllIIIlIIlIlIIlII.set(((Long)llllllllllllllllllIIIlIIlIlIIIll.value).intValue())).build());
+                if (object2 instanceof Long) {
+                    settingGroup3.add(new IntSetting.Builder().name(setting.getName()).description(setting.getName()).defaultValue(((Long)setting.defaultValue).intValue()).onChanged(arg_0 -> BaritoneTab.lambda$getSettings$8(setting, arg_0)).onModuleActivated(arg_0 -> BaritoneTab.lambda$getSettings$9(setting, arg_0)).build());
                     continue;
                 }
-                if (!(llllllllllllllllllIIIlIIllIIlIII instanceof Color)) continue;
-                Color llllllllllllllllllIIIlIIllIIlIll = (Color)llllllllllllllllllIIIlIIllIIlIIl.value;
-                llllllllllllllllllIIIlIIllIIIIIl.add(new ColorSetting.Builder().name(llllllllllllllllllIIIlIIllIIlIIl.getName()).description(llllllllllllllllllIIIlIIllIIlIIl.getName()).defaultValue(new SettingColor(llllllllllllllllllIIIlIIllIIlIll.getRed(), llllllllllllllllllIIIlIIllIIlIll.getGreen(), llllllllllllllllllIIIlIIllIIlIll.getBlue(), llllllllllllllllllIIIlIIllIIlIll.getAlpha())).onChanged(llllllllllllllllllIIIlIIlIlIlIlI -> {
-                    llllllllllllllllllIIIlIIlIlIlIll.value = new Color(llllllllllllllllllIIIlIIlIlIlIlI.r, llllllllllllllllllIIIlIIlIlIlIlI.g, llllllllllllllllllIIIlIIlIlIlIlI.b, llllllllllllllllllIIIlIIlIlIlIlI.a);
-                }).onModuleActivated(llllllllllllllllllIIIlIIlIlIlllI -> llllllllllllllllllIIIlIIlIlIlllI.set(new SettingColor(llllllllllllllllllIIIlIIllIIlIll.getRed(), llllllllllllllllllIIIlIIllIIlIll.getGreen(), llllllllllllllllllIIIlIIllIIlIll.getBlue(), llllllllllllllllllIIIlIIllIIlIll.getAlpha()))).build());
+                if (!(object2 instanceof Color)) continue;
+                Color color = (Color)setting.value;
+                settingGroup4.add(new ColorSetting.Builder().name(setting.getName()).description(setting.getName()).defaultValue(new SettingColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())).onChanged(arg_0 -> BaritoneTab.lambda$getSettings$10(setting, arg_0)).onModuleActivated(arg_0 -> BaritoneTab.lambda$getSettings$11(color, arg_0)).build());
+                if (3 <= 4) continue;
+                return null;
             }
         }
-        catch (IllegalAccessException llllllllllllllllllIIIlIIllIIIlIl) {
-            llllllllllllllllllIIIlIIllIIIlIl.printStackTrace();
+        catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
         }
         return settings;
     }
 
+    private static void lambda$getSettings$10(Settings.Setting setting, SettingColor settingColor) {
+        setting.value = new Color(settingColor.r, settingColor.g, settingColor.b, settingColor.a);
+    }
+
+    private static void lambda$getSettings$7(Settings.Setting setting, Setting setting2) {
+        setting2.set((Integer)setting.value);
+    }
+
+    private static void lambda$getSettings$8(Settings.Setting setting, Integer n) {
+        setting.value = n.longValue();
+    }
+
+    private static void lambda$getSettings$0(Settings.Setting setting, Boolean bl) {
+        setting.value = bl;
+    }
+
+    private static void lambda$getSettings$4(Settings.Setting setting, Double d) {
+        setting.value = Float.valueOf(d.floatValue());
+    }
+
+    private static void lambda$getSettings$11(Color color, Setting setting) {
+        setting.set(new SettingColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()));
+    }
+
+    private static void lambda$getSettings$5(Settings.Setting setting, Setting setting2) {
+        setting2.set(((Float)setting.value).doubleValue());
+    }
+
+    static Settings access$000() {
+        return BaritoneTab.getSettings();
+    }
+
+    private static void lambda$getSettings$3(Settings.Setting setting, Setting setting2) {
+        setting2.set((Double)setting.value);
+    }
+
+    private static void lambda$getSettings$2(Settings.Setting setting, Double d) {
+        setting.value = d;
+    }
+
+    private static void lambda$getSettings$6(Settings.Setting setting, Integer n) {
+        setting.value = n;
+    }
+
+    private static void lambda$getSettings$1(Settings.Setting setting, Setting setting2) {
+        setting2.set((Boolean)setting.value);
+    }
+
     @Override
-    public TabScreen createScreen(GuiTheme llllllllllllllllllIIIlIIllIlllIl) {
-        BaritoneTab llllllllllllllllllIIIlIIllIllllI;
-        return new BaritoneScreen(llllllllllllllllllIIIlIIllIlllIl, llllllllllllllllllIIIlIIllIllllI);
+    public TabScreen createScreen(GuiTheme guiTheme) {
+        return new BaritoneScreen(guiTheme, this);
     }
 
     private static class BaritoneScreen
     extends WindowTabScreen {
+        private void lambda$new$0(WTextBox wTextBox, GuiTheme guiTheme) {
+            this.clear();
+            this.add(wTextBox);
+            this.add(guiTheme.settings(BaritoneTab.access$000(), wTextBox.get().trim())).expandX();
+        }
+
         @Override
         protected void onClosed() {
             SettingsUtil.save((baritone.api.Settings)BaritoneAPI.getSettings());
         }
 
-        public BaritoneScreen(GuiTheme lllllllllllllllllIIlIIlIlIIIlIIl, Tab lllllllllllllllllIIlIIlIlIIIlIII) {
-            super(lllllllllllllllllIIlIIlIlIIIlIIl, lllllllllllllllllIIlIIlIlIIIlIII);
-            BaritoneScreen lllllllllllllllllIIlIIlIlIIIlllI;
-            WTextBox lllllllllllllllllIIlIIlIlIIIlIll = lllllllllllllllllIIlIIlIlIIIlllI.add(lllllllllllllllllIIlIIlIlIIIlIIl.textBox("")).minWidth(400.0).expandX().widget();
-            lllllllllllllllllIIlIIlIlIIIlIll.setFocused(true);
-            lllllllllllllllllIIlIIlIlIIIlIll.action = () -> {
-                BaritoneScreen lllllllllllllllllIIlIIlIIlllllll;
-                lllllllllllllllllIIlIIlIIlllllll.clear();
-                lllllllllllllllllIIlIIlIIlllllll.add(lllllllllllllllllIIlIIlIlIIIlIll);
-                lllllllllllllllllIIlIIlIIlllllll.add(lllllllllllllllllIIlIIlIlIIIlIIl.settings(BaritoneTab.getSettings(), lllllllllllllllllIIlIIlIlIIIlIll.get().trim())).expandX();
-            };
-            BaritoneTab.getSettings().onActivated();
-            lllllllllllllllllIIlIIlIlIIIlllI.add(lllllllllllllllllIIlIIlIlIIIlIIl.settings(BaritoneTab.getSettings(), lllllllllllllllllIIlIIlIlIIIlIll.get().trim())).expandX();
+        public BaritoneScreen(GuiTheme guiTheme, Tab tab) {
+            super(guiTheme, tab);
+            WTextBox wTextBox = this.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+            wTextBox.setFocused(true);
+            wTextBox.action = () -> this.lambda$new$0(wTextBox, guiTheme);
+            BaritoneTab.access$000().onActivated();
+            this.add(guiTheme.settings(BaritoneTab.access$000(), wTextBox.get().trim())).expandX();
         }
     }
 }

@@ -8,23 +8,15 @@ import minegame159.meteorclient.utils.misc.input.KeyAction;
 
 public class KeyEvent
 extends Cancellable {
-    public /* synthetic */ KeyAction action;
-    public /* synthetic */ int key;
-    private static final /* synthetic */ KeyEvent INSTANCE;
+    public KeyAction action;
+    public int key;
+    private static final KeyEvent INSTANCE = new KeyEvent();
 
-    public static KeyEvent get(int llllllllllllllllllIlIIlIlIlIllIl, KeyAction llllllllllllllllllIlIIlIlIlIllII) {
+    public static KeyEvent get(int n, KeyAction keyAction) {
         INSTANCE.setCancelled(false);
-        KeyEvent.INSTANCE.key = llllllllllllllllllIlIIlIlIlIllIl;
-        KeyEvent.INSTANCE.action = llllllllllllllllllIlIIlIlIlIllII;
+        KeyEvent.INSTANCE.key = n;
+        KeyEvent.INSTANCE.action = keyAction;
         return INSTANCE;
-    }
-
-    public KeyEvent() {
-        KeyEvent llllllllllllllllllIlIIlIlIllIIll;
-    }
-
-    static {
-        INSTANCE = new KeyEvent();
     }
 }
 

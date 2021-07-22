@@ -51,8 +51,8 @@ implements IMatrix4f {
     protected float field_21667;
 
     @Override
-    public void multiplyMatrix(Vec4 v, Vec4 out) {
-        out.set((double)this.field_21652 * v.x + (double)this.field_21653 * v.y + (double)this.field_21654 * v.z + (double)this.field_21655 * v.w, (double)this.field_21656 * v.x + (double)this.field_21657 * v.y + (double)this.field_21658 * v.z + (double)this.field_21659 * v.w, (double)this.field_21660 * v.x + (double)this.field_21661 * v.y + (double)this.field_21662 * v.z + (double)this.field_21663 * v.w, (double)this.field_21664 * v.x + (double)this.field_21665 * v.y + (double)this.field_21666 * v.z + (double)this.field_21667 * v.w);
+    public void multiplyMatrix(Vec4 vec4, Vec4 vec42) {
+        vec42.set((double)this.field_21652 * vec4.x + (double)this.field_21653 * vec4.y + (double)this.field_21654 * vec4.z + (double)this.field_21655 * vec4.w, (double)this.field_21656 * vec4.x + (double)this.field_21657 * vec4.y + (double)this.field_21658 * vec4.z + (double)this.field_21659 * vec4.w, (double)this.field_21660 * vec4.x + (double)this.field_21661 * vec4.y + (double)this.field_21662 * vec4.z + (double)this.field_21663 * vec4.w, (double)this.field_21664 * vec4.x + (double)this.field_21665 * vec4.y + (double)this.field_21666 * vec4.z + (double)this.field_21667 * vec4.w);
     }
 }
 

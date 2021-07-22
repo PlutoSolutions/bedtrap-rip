@@ -31,36 +31,34 @@ import net.minecraft.class_1847;
 
 public class AutoBrewer
 extends Module {
-    private /* synthetic */ int ingredientI;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ boolean first;
-    private /* synthetic */ int timer;
-    private final /* synthetic */ Setting<MyPotion> potion;
+    private int ingredientI;
+    private final SettingGroup sgGeneral;
+    private boolean first;
+    private int timer;
+    private final Setting<MyPotion> potion;
 
-    private boolean insertIngredient(class_1708 llIlIIIllllIIl, class_1792 llIlIIIlllIlII) {
-        AutoBrewer llIlIIIllllIlI;
-        int llIlIIIlllIlll = -1;
-        for (int llIlIIIllllIll = 5; llIlIIIllllIll < llIlIIIllllIIl.field_7761.size(); ++llIlIIIllllIll) {
-            if (((class_1735)llIlIIIllllIIl.field_7761.get(llIlIIIllllIll)).method_7677().method_7909() != llIlIIIlllIlII) continue;
-            llIlIIIlllIlll = llIlIIIllllIll;
+    private boolean insertIngredient(class_1708 class_17082, class_1792 class_17922) {
+        int n = -1;
+        for (int i = 5; i < class_17082.field_7761.size(); ++i) {
+            if (((class_1735)class_17082.field_7761.get(i)).method_7677().method_7909() != class_17922) continue;
+            n = i;
             break;
         }
-        if (llIlIIIlllIlll == -1) {
-            llIlIIIllllIlI.error("You do not have any %s left in your inventory... disabling.", llIlIIIlllIlII.method_7848().getString());
-            llIlIIIllllIlI.toggle();
+        if (n == -1) {
+            this.error("You do not have any %s left in your inventory... disabling.", class_17922.method_7848().getString());
+            this.toggle();
             return true;
         }
-        llIlIIIllllIlI.moveOneItem(llIlIIIllllIIl, llIlIIIlllIlll, 3);
+        this.moveOneItem(class_17082, n, 3);
         return false;
     }
 
-    private boolean takePotions(class_1708 llIlIIIlIIIllI) {
-        for (int llIlIIIlIIlIII = 0; llIlIIIlIIlIII < 3; ++llIlIIIlIIlIII) {
-            AutoBrewer llIlIIIlIIIlll;
-            InvUtils.quickMove().slotId(llIlIIIlIIlIII);
-            if (((class_1735)llIlIIIlIIIllI.field_7761.get(llIlIIIlIIlIII)).method_7677().method_7960()) continue;
-            llIlIIIlIIIlll.error("You do not have a sufficient amount of inventory space... disabling.", new Object[0]);
-            llIlIIIlIIIlll.toggle();
+    private boolean takePotions(class_1708 class_17082) {
+        for (int i = 0; i < 3; ++i) {
+            InvUtils.quickMove().slotId(i);
+            if (((class_1735)class_17082.field_7761.get(i)).method_7677().method_7960()) continue;
+            this.error("You do not have a sufficient amount of inventory space... disabling.", new Object[0]);
+            this.toggle();
             return true;
         }
         return false;
@@ -68,97 +66,95 @@ extends Module {
 
     public AutoBrewer() {
         super(Categories.World, "auto-brewer", "Automatically brews specified potions.");
-        AutoBrewer llIlIIlIIIllIl;
-        llIlIIlIIIllIl.sgGeneral = llIlIIlIIIllIl.settings.getDefaultGroup();
-        llIlIIlIIIllIl.potion = llIlIIlIIIllIl.sgGeneral.add(new PotionSetting.Builder().name("potion").description("The type of potion to brew.").defaultValue(MyPotion.Strength).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.potion = this.sgGeneral.add(new PotionSetting.Builder().name("potion").description("The type of potion to brew.").defaultValue(MyPotion.Strength).build());
     }
 
     @Override
     public void onActivate() {
-        llIlIIlIIIlIll.first = false;
+        this.first = false;
     }
 
-    private void moveOneItem(class_1708 llIlIIIllIIIlI, int llIlIIIllIIIIl, int llIlIIIlIllllI) {
-        InvUtils.move().fromId(llIlIIIllIIIIl).toId(llIlIIIlIllllI);
+    private void moveOneItem(class_1708 class_17082, int n, int n2) {
+        InvUtils.move().fromId(n).toId(n2);
     }
 
-    public void tick(class_1708 llIlIIlIIIIIll) {
-        AutoBrewer llIlIIlIIIIIlI;
-        ++llIlIIlIIIIIlI.timer;
-        if (!llIlIIlIIIIIlI.first) {
-            llIlIIlIIIIIlI.first = true;
-            llIlIIlIIIIIlI.ingredientI = -2;
-            llIlIIlIIIIIlI.timer = 0;
+    public void tick(class_1708 class_17082) {
+        ++this.timer;
+        if (!this.first) {
+            this.first = true;
+            this.ingredientI = -2;
+            this.timer = 0;
         }
-        if (llIlIIlIIIIIll.method_17378() != 0 || llIlIIlIIIIIlI.timer < 5) {
+        if (class_17082.method_17378() != 0 || this.timer < 5) {
             return;
         }
-        if (llIlIIlIIIIIlI.ingredientI == -2) {
-            if (llIlIIlIIIIIlI.takePotions(llIlIIlIIIIIll)) {
+        if (this.ingredientI == -2) {
+            if (this.takePotions(class_17082)) {
                 return;
             }
-            ++llIlIIlIIIIIlI.ingredientI;
-            llIlIIlIIIIIlI.timer = 0;
-        } else if (llIlIIlIIIIIlI.ingredientI == -1) {
-            if (llIlIIlIIIIIlI.insertWaterBottles(llIlIIlIIIIIll)) {
+            ++this.ingredientI;
+            this.timer = 0;
+        } else if (this.ingredientI == -1) {
+            if (this.insertWaterBottles(class_17082)) {
                 return;
             }
-            ++llIlIIlIIIIIlI.ingredientI;
-            llIlIIlIIIIIlI.timer = 0;
-        } else if (llIlIIlIIIIIlI.ingredientI < llIlIIlIIIIIlI.potion.get().ingredients.length) {
-            if (llIlIIlIIIIIlI.checkFuel(llIlIIlIIIIIll)) {
+            ++this.ingredientI;
+            this.timer = 0;
+        } else if (this.ingredientI < this.potion.get().ingredients.length) {
+            if (this.checkFuel(class_17082)) {
                 return;
             }
-            if (llIlIIlIIIIIlI.insertIngredient(llIlIIlIIIIIll, llIlIIlIIIIIlI.potion.get().ingredients[llIlIIlIIIIIlI.ingredientI])) {
+            if (this.insertIngredient(class_17082, this.potion.get().ingredients[this.ingredientI])) {
                 return;
             }
-            ++llIlIIlIIIIIlI.ingredientI;
-            llIlIIlIIIIIlI.timer = 0;
+            ++this.ingredientI;
+            this.timer = 0;
         } else {
-            llIlIIlIIIIIlI.ingredientI = -2;
-            llIlIIlIIIIIlI.timer = 0;
+            this.ingredientI = -2;
+            this.timer = 0;
         }
     }
 
     public void onBrewingStandClose() {
-        llIlIIlIIIIlll.first = false;
+        this.first = false;
     }
 
-    private boolean insertWaterBottles(class_1708 llIlIIIlIlIIlI) {
-        for (int llIlIIIlIlIlII = 0; llIlIIIlIlIlII < 3; ++llIlIIIlIlIlII) {
-            int llIlIIIlIlIlIl = -1;
-            for (int llIlIIIlIlIllI = 5; llIlIIIlIlIllI < llIlIIIlIlIIlI.field_7761.size(); ++llIlIIIlIlIllI) {
-                class_1842 llIlIIIlIlIlll;
-                if (((class_1735)llIlIIIlIlIIlI.field_7761.get(llIlIIIlIlIllI)).method_7677().method_7909() != class_1802.field_8574 || (llIlIIIlIlIlll = class_1844.method_8063((class_1799)((class_1735)llIlIIIlIlIIlI.field_7761.get(llIlIIIlIlIllI)).method_7677())) != class_1847.field_8991) continue;
-                llIlIIIlIlIlIl = llIlIIIlIlIllI;
+    private boolean insertWaterBottles(class_1708 class_17082) {
+        for (int i = 0; i < 3; ++i) {
+            int n = -1;
+            for (int j = 5; j < class_17082.field_7761.size(); ++j) {
+                class_1842 class_18422;
+                if (((class_1735)class_17082.field_7761.get(j)).method_7677().method_7909() != class_1802.field_8574 || (class_18422 = class_1844.method_8063((class_1799)((class_1735)class_17082.field_7761.get(j)).method_7677())) != class_1847.field_8991) continue;
+                n = j;
                 break;
             }
-            if (llIlIIIlIlIlIl == -1) {
-                AutoBrewer llIlIIIlIlIIIl;
-                llIlIIIlIlIIIl.error("You do not have a sufficient amount of water bottles to complete this brew... disabling.", new Object[0]);
-                llIlIIIlIlIIIl.toggle();
+            if (n == -1) {
+                this.error("You do not have a sufficient amount of water bottles to complete this brew... disabling.", new Object[0]);
+                this.toggle();
                 return true;
             }
-            InvUtils.move().fromId(llIlIIIlIlIlIl).toId(llIlIIIlIlIlII);
+            InvUtils.move().fromId(n).toId(i);
+            if (3 <= 4) continue;
+            return false;
         }
         return false;
     }
 
-    private boolean checkFuel(class_1708 llIlIIIllIlIII) {
-        if (llIlIIIllIlIII.method_17377() == 0) {
-            AutoBrewer llIlIIIllIlIIl;
-            int llIlIIIllIllII = -1;
-            for (int llIlIIIllIllIl = 5; llIlIIIllIllIl < llIlIIIllIlIII.field_7761.size(); ++llIlIIIllIllIl) {
-                if (((class_1735)llIlIIIllIlIII.field_7761.get(llIlIIIllIllIl)).method_7677().method_7909() != class_1802.field_8183) continue;
-                llIlIIIllIllII = llIlIIIllIllIl;
+    private boolean checkFuel(class_1708 class_17082) {
+        if (class_17082.method_17377() == 0) {
+            int n = -1;
+            for (int i = 5; i < class_17082.field_7761.size(); ++i) {
+                if (((class_1735)class_17082.field_7761.get(i)).method_7677().method_7909() != class_1802.field_8183) continue;
+                n = i;
                 break;
             }
-            if (llIlIIIllIllII == -1) {
-                llIlIIIllIlIIl.error("You do not have a sufficient amount of blaze powder to use as fuel for the brew... disabling.", new Object[0]);
-                llIlIIIllIlIIl.toggle();
+            if (n == -1) {
+                this.error("You do not have a sufficient amount of blaze powder to use as fuel for the brew... disabling.", new Object[0]);
+                this.toggle();
                 return true;
             }
-            llIlIIIllIlIIl.moveOneItem(llIlIIIllIlIII, llIlIIIllIllII, 4);
+            this.moveOneItem(class_17082, n, 4);
         }
         return false;
     }

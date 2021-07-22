@@ -37,26 +37,26 @@ public abstract class KeyboardMixin {
     private class_310 field_1678;
 
     @Inject(method={"onKey"}, at={@At(value="HEAD")}, cancellable=true)
-    public void onKey(long window, int key, int scancode, int i, int j, CallbackInfo info) {
-        if (key != -1) {
-            if (this.field_1678.field_1755 instanceof WidgetScreen && i == 2) {
-                ((WidgetScreen)this.field_1678.field_1755).keyRepeated(key, j);
+    public void onKey(long l, int n, int n2, int n3, int n4, CallbackInfo callbackInfo) {
+        if (n != -1) {
+            if (this.field_1678.field_1755 instanceof WidgetScreen && n3 == 2) {
+                ((WidgetScreen)this.field_1678.field_1755).keyRepeated(n, n4);
             }
             if (GuiKeyEvents.canUseKeys) {
-                Input.setKeyState(key, i != 0);
-                KeyEvent event = MeteorClient.EVENT_BUS.post(KeyEvent.get(key, KeyAction.get(i)));
-                if (event.isCancelled()) {
-                    info.cancel();
+                Input.setKeyState(n, n3 != 0);
+                KeyEvent keyEvent = MeteorClient.EVENT_BUS.post(KeyEvent.get(n, KeyAction.get(n3)));
+                if (keyEvent.isCancelled()) {
+                    callbackInfo.cancel();
                 }
             }
         }
     }
 
     @Inject(method={"onChar"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onChar(long window, int i, int j, CallbackInfo info) {
-        CharTypedEvent event;
-        if (Utils.canUpdate() && !this.field_1678.method_1493() && (this.field_1678.field_1755 == null || this.field_1678.field_1755 instanceof WidgetScreen) && (event = MeteorClient.EVENT_BUS.post(CharTypedEvent.get((char)i))).isCancelled()) {
-            info.cancel();
+    private void onChar(long l, int n, int n2, CallbackInfo callbackInfo) {
+        CharTypedEvent charTypedEvent;
+        if (Utils.canUpdate() && !this.field_1678.method_1493() && (this.field_1678.field_1755 == null || this.field_1678.field_1755 instanceof WidgetScreen) && (charTypedEvent = MeteorClient.EVENT_BUS.post(CharTypedEvent.get((char)n))).isCancelled()) {
+            callbackInfo.cancel();
         }
     }
 }

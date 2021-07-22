@@ -7,10 +7,6 @@ import com.sun.jna.Callback;
 
 public interface DLLCallback
 extends Callback {
-    public static final /* synthetic */ int DLL_FPTRS;
-
-    static {
-        DLL_FPTRS = 16;
-    }
+    public static final int DLL_FPTRS = 16;
 }
 

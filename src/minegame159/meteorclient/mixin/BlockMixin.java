@@ -36,27 +36,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class BlockMixin
 extends class_4970
 implements class_1935 {
-    public BlockMixin(class_4970.class_2251 settings) {
-        super(settings);
+    public BlockMixin(class_4970.class_2251 class_22512) {
+        super(class_22512);
     }
 
     @Inject(method={"shouldDrawSide"}, at={@At(value="RETURN")}, cancellable=true)
-    private static void onShouldDrawSide(class_2680 state, class_1922 view, class_2338 pos, class_2350 facing, CallbackInfoReturnable<Boolean> info) {
+    private static void onShouldDrawSide(class_2680 class_26802, class_1922 class_19222, class_2338 class_23382, class_2350 class_23502, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         Xray xray = Modules.get().get(Xray.class);
         if (xray.isActive()) {
-            info.setReturnValue((Object)xray.modifyDrawSide(state, view, pos, facing, info.getReturnValueZ()));
+            callbackInfoReturnable.setReturnValue((Object)xray.modifyDrawSide(class_26802, class_19222, class_23382, class_23502, callbackInfoReturnable.getReturnValueZ()));
         }
     }
 
     @Inject(method={"getSlipperiness"}, at={@At(value="RETURN")}, cancellable=true)
-    public void getSlipperiness(CallbackInfoReturnable<Float> info) {
+    public void getSlipperiness(CallbackInfoReturnable<Float> callbackInfoReturnable) {
         if (Modules.get() == null) {
             return;
         }
         Slippy slippy = Modules.get().get(Slippy.class);
-        class_2248 block = (class_2248)this;
-        if (slippy.isActive() && !slippy.blocks.get().contains((Object)block)) {
-            info.setReturnValue((Object)Float.valueOf(slippy.slippness.get().floatValue()));
+        class_2248 class_22482 = (class_2248)this;
+        if (slippy.isActive() && !slippy.blocks.get().contains((Object)class_22482)) {
+            callbackInfoReturnable.setReturnValue((Object)Float.valueOf(slippy.slippness.get().floatValue()));
         }
     }
 }

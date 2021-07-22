@@ -19,36 +19,35 @@ import net.minecraft.class_437;
 public class GuiTab
 extends Tab {
     @Override
-    public TabScreen createScreen(GuiTheme lllllIIIIIIl) {
-        GuiTab lllllIIIIIII;
-        return new GuiScreen(lllllIIIIIIl, lllllIIIIIII);
+    public TabScreen createScreen(GuiTheme guiTheme) {
+        return new GuiScreen(guiTheme, this);
     }
 
     public GuiTab() {
         super("GUI");
-        GuiTab lllllIIIIllI;
     }
 
     @Override
-    public boolean isScreen(class_437 llllIllllIll) {
-        return llllIllllIll instanceof GuiScreen;
+    public boolean isScreen(class_437 class_4372) {
+        return class_4372 instanceof GuiScreen;
     }
 
     private static class GuiScreen
     extends WindowTabScreen {
-        public GuiScreen(GuiTheme lIlIIIIllIlIll, Tab lIlIIIIllIllll) {
-            super(lIlIIIIllIlIll, lIlIIIIllIllll);
-            GuiScreen lIlIIIIlllIIIl;
-            WTable lIlIIIIllIlllI = lIlIIIIlllIIIl.add(lIlIIIIllIlIll.table()).expandX().widget();
-            lIlIIIIllIlllI.add(lIlIIIIllIlIll.label("Theme:"));
-            WDropdown<String> lIlIIIIllIllIl = lIlIIIIllIlllI.add(lIlIIIIllIlIll.dropdown(GuiThemes.getNames(), GuiThemes.get().name)).widget();
-            lIlIIIIllIllIl.action = () -> {
-                GuiThemes.select((String)lIlIIIIllIllIl.get());
-                Utils.mc.method_1507(null);
-                lIlIIIIllIllll.openScreen(GuiThemes.get());
-            };
-            lIlIIIIllIlIll.settings.onActivated();
-            lIlIIIIlllIIIl.add(lIlIIIIllIlIll.settings(lIlIIIIllIlIll.settings)).expandX();
+        public GuiScreen(GuiTheme guiTheme, Tab tab) {
+            super(guiTheme, tab);
+            WTable wTable = this.add(guiTheme.table()).expandX().widget();
+            wTable.add(guiTheme.label("Theme:"));
+            WDropdown<String> wDropdown = wTable.add(guiTheme.dropdown(GuiThemes.getNames(), GuiThemes.get().name)).widget();
+            wDropdown.action = () -> GuiScreen.lambda$new$0(wDropdown, tab);
+            guiTheme.settings.onActivated();
+            this.add(guiTheme.settings(guiTheme.settings)).expandX();
+        }
+
+        private static void lambda$new$0(WDropdown wDropdown, Tab tab) {
+            GuiThemes.select((String)wDropdown.get());
+            Utils.mc.method_1507(null);
+            tab.openScreen(GuiThemes.get());
         }
     }
 }

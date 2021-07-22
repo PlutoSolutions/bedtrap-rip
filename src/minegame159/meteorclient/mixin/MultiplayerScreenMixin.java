@@ -43,34 +43,42 @@ extends class_437 {
     private String loggedInAs;
     private int loggedInAsLength;
 
-    public MultiplayerScreenMixin(class_2561 title) {
-        super(title);
+    public MultiplayerScreenMixin(class_2561 class_25612) {
+        super(class_25612);
     }
 
     @Inject(method={"init"}, at={@At(value="TAIL")})
-    private void onInit(CallbackInfo info) {
+    private void onInit(CallbackInfo callbackInfo) {
         this.textColor1 = Color.fromRGBA(255, 255, 255, 255);
         this.textColor2 = Color.fromRGBA(175, 175, 175, 255);
         this.loggedInAs = "Logged in as ";
         this.loggedInAsLength = this.field_22793.method_1727(this.loggedInAs);
-        this.method_25411((class_339)new class_4185(this.field_22789 - 75 - 3, 3, 75, 20, (class_2561)new class_2585("Accounts"), button -> this.field_22787.method_1507((class_437)GuiThemes.get().accountsScreen())));
-        this.method_25411((class_339)new class_4185(this.field_22789 - 75 - 3 - 75 - 2, 3, 75, 20, (class_2561)new class_2585("Proxies"), button -> this.field_22787.method_1507((class_437)GuiThemes.get().proxiesScreen())));
+        this.method_25411((class_339)new class_4185(this.field_22789 - 75 - 3, 3, 75, 20, (class_2561)new class_2585("Accounts"), this::lambda$onInit$0));
+        this.method_25411((class_339)new class_4185(this.field_22789 - 75 - 3 - 75 - 2, 3, 75, 20, (class_2561)new class_2585("Proxies"), this::lambda$onInit$1));
     }
 
     @Inject(method={"render"}, at={@At(value="TAIL")})
-    private void onRender(class_4587 matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
-        float x = 3.0f;
-        float y = 3.0f;
-        this.field_22793.method_1720(matrices, this.loggedInAs, x, y, this.textColor1);
-        this.field_22793.method_1720(matrices, Modules.get().get(NameProtect.class).getName(this.field_22787.method_1548().method_1676()), x + (float)this.loggedInAsLength, y, this.textColor2);
+    private void onRender(class_4587 class_45872, int n, int n2, float f, CallbackInfo callbackInfo) {
+        float f2 = 3.0f;
+        float f3 = 3.0f;
+        this.field_22793.method_1720(class_45872, this.loggedInAs, f2, f3, this.textColor1);
+        this.field_22793.method_1720(class_45872, Modules.get().get(NameProtect.class).getName(this.field_22787.method_1548().method_1676()), f2 + (float)this.loggedInAsLength, f3, this.textColor2);
         Objects.requireNonNull(this.field_22793);
         Proxy proxy = Proxies.get().getEnabled();
-        String left = proxy != null ? "Using proxy " : "Not using a proxy";
-        String right = proxy != null ? "(" + proxy.name + ") " + proxy.ip + ":" + proxy.port : null;
-        this.field_22793.method_1720(matrices, left, x, y += (float)11, this.textColor1);
-        if (right != null) {
-            this.field_22793.method_1720(matrices, right, x + (float)this.field_22793.method_1727(left), y, this.textColor2);
+        String string = proxy != null ? "Using proxy " : "Not using a proxy";
+        String string2 = proxy != null ? "(" + proxy.name + ") " + proxy.ip + ":" + proxy.port : null;
+        this.field_22793.method_1720(class_45872, string, f2, f3 += (float)11, this.textColor1);
+        if (string2 != null) {
+            this.field_22793.method_1720(class_45872, string2, f2 + (float)this.field_22793.method_1727(string), f3, this.textColor2);
         }
+    }
+
+    private void lambda$onInit$1(class_4185 class_41852) {
+        this.field_22787.method_1507((class_437)GuiThemes.get().proxiesScreen());
+    }
+
+    private void lambda$onInit$0(class_4185 class_41852) {
+        this.field_22787.method_1507((class_437)GuiThemes.get().accountsScreen());
     }
 }
 

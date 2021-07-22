@@ -70,200 +70,219 @@ import net.minecraft.class_4537;
 
 public class Trajectories
 extends Module {
-    private final /* synthetic */ Setting<SettingColor> lineColor;
-    private final /* synthetic */ ProjectileEntitySimulator simulator;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Boolean> accurate;
-    private final /* synthetic */ List<Path> paths;
-    private final /* synthetic */ SettingGroup sgRender;
-    private final /* synthetic */ Setting<List<class_1792>> items;
-    private final /* synthetic */ Setting<SettingColor> sideColor;
-    private final /* synthetic */ Setting<ShapeMode> shapeMode;
-    private final /* synthetic */ Pool<Vec3> vec3s;
+    private final Setting<SettingColor> lineColor;
+    private final ProjectileEntitySimulator simulator;
+    private final SettingGroup sgGeneral;
+    private final Setting<Boolean> accurate;
+    private final List<Path> paths;
+    private final SettingGroup sgRender;
+    private final Setting<List<class_1792>> items;
+    private final Setting<SettingColor> sideColor;
+    private final Setting<ShapeMode> shapeMode;
+    private final Pool<Vec3> vec3s;
 
     private List<class_1792> getDefaultItems() {
-        ArrayList<class_1792> llIllIlIllIllI = new ArrayList<class_1792>();
-        for (class_1792 llIllIlIlllIII : class_2378.field_11142) {
-            Trajectories llIllIlIllIlll;
-            if (!llIllIlIllIlll.itemFilter(llIllIlIlllIII)) continue;
-            llIllIlIllIllI.add(llIllIlIlllIII);
+        ArrayList<class_1792> arrayList = new ArrayList<class_1792>();
+        for (class_1792 class_17922 : class_2378.field_11142) {
+            if (!this.itemFilter(class_17922)) continue;
+            arrayList.add(class_17922);
         }
-        return llIllIlIllIllI;
+        return arrayList;
     }
 
-    private void calculatePath(RenderEvent llIllIlIlIIIlI) {
-        Trajectories llIllIlIlIIIII;
-        for (Path llIllIlIlIIlII : llIllIlIlIIIII.paths) {
-            llIllIlIlIIlII.clear();
+    static Setting access$600(Trajectories trajectories) {
+        return trajectories.shapeMode;
+    }
+
+    static ProjectileEntitySimulator access$300(Trajectories trajectories) {
+        return trajectories.simulator;
+    }
+
+    static Setting access$500(Trajectories trajectories) {
+        return trajectories.sideColor;
+    }
+
+    static Setting access$400(Trajectories trajectories) {
+        return trajectories.lineColor;
+    }
+
+    private void calculatePath(RenderEvent renderEvent) {
+        for (Path path : this.paths) {
+            path.clear();
         }
-        class_1799 llIllIlIlIIIIl = llIllIlIlIIIII.mc.field_1724.method_6047();
-        if (llIllIlIlIIIIl == null) {
-            llIllIlIlIIIIl = llIllIlIlIIIII.mc.field_1724.method_6079();
+        class_1799 class_17992 = this.mc.field_1724.method_6047();
+        if (class_17992 == null) {
+            class_17992 = this.mc.field_1724.method_6079();
         }
-        if (llIllIlIlIIIIl == null) {
+        if (class_17992 == null) {
             return;
         }
-        if (!llIllIlIlIIIII.items.get().contains((Object)llIllIlIlIIIIl.method_7909())) {
+        if (!this.items.get().contains((Object)class_17992.method_7909())) {
             return;
         }
-        if (!llIllIlIlIIIII.simulator.set((class_1297)llIllIlIlIIIII.mc.field_1724, llIllIlIlIIIIl, 0.0, llIllIlIlIIIII.accurate.get(), llIllIlIlIIIlI.tickDelta)) {
+        if (!this.simulator.set((class_1297)this.mc.field_1724, class_17992, 0.0, this.accurate.get(), renderEvent.tickDelta)) {
             return;
         }
-        llIllIlIlIIIII.getEmptyPath().calculate();
-        if (llIllIlIlIIIIl.method_7909() instanceof class_1764 && class_1890.method_8225((class_1887)class_1893.field_9108, (class_1799)llIllIlIlIIIIl) > 0) {
-            if (!llIllIlIlIIIII.simulator.set((class_1297)llIllIlIlIIIII.mc.field_1724, llIllIlIlIIIIl, -10.0, llIllIlIlIIIII.accurate.get(), llIllIlIlIIIlI.tickDelta)) {
+        this.getEmptyPath().calculate();
+        if (class_17992.method_7909() instanceof class_1764 && class_1890.method_8225((class_1887)class_1893.field_9108, (class_1799)class_17992) > 0) {
+            if (!this.simulator.set((class_1297)this.mc.field_1724, class_17992, -10.0, this.accurate.get(), renderEvent.tickDelta)) {
                 return;
             }
-            llIllIlIlIIIII.getEmptyPath().calculate();
-            if (!llIllIlIlIIIII.simulator.set((class_1297)llIllIlIlIIIII.mc.field_1724, llIllIlIlIIIIl, 10.0, llIllIlIlIIIII.accurate.get(), llIllIlIlIIIlI.tickDelta)) {
+            this.getEmptyPath().calculate();
+            if (!this.simulator.set((class_1297)this.mc.field_1724, class_17992, 10.0, this.accurate.get(), renderEvent.tickDelta)) {
                 return;
             }
-            llIllIlIlIIIII.getEmptyPath().calculate();
+            this.getEmptyPath().calculate();
         }
     }
 
     private Path getEmptyPath() {
-        Trajectories llIllIlIlIlIll;
-        for (Path llIllIlIlIlllI : llIllIlIlIlIll.paths) {
-            if (!llIllIlIlIlllI.points.isEmpty()) continue;
-            return llIllIlIlIlllI;
+        for (Path path : this.paths) {
+            if (!Path.access$000(path).isEmpty()) continue;
+            return path;
         }
-        Path llIllIlIlIllII = llIllIlIlIlIll.new Path();
-        llIllIlIlIlIll.paths.add(llIllIlIlIllII);
-        return llIllIlIlIllII;
+        Path path = new Path(this, null);
+        this.paths.add(path);
+        return path;
     }
 
     public Trajectories() {
         super(Categories.Render, "trajectories", "Predicts the trajectory of throwable items.");
-        Trajectories llIllIllIIIIlI;
-        llIllIllIIIIlI.sgGeneral = llIllIllIIIIlI.settings.getDefaultGroup();
-        llIllIllIIIIlI.sgRender = llIllIllIIIIlI.settings.createGroup("Render");
-        llIllIllIIIIlI.items = llIllIllIIIIlI.sgGeneral.add(new ItemListSetting.Builder().name("items").description("Items to display trajectories for.").defaultValue(llIllIllIIIIlI.getDefaultItems()).filter(llIllIllIIIIlI::itemFilter).build());
-        llIllIllIIIIlI.accurate = llIllIllIIIIlI.sgGeneral.add(new BoolSetting.Builder().name("accurate").description("Calculates accurate trajectories while moving.").defaultValue(true).build());
-        llIllIllIIIIlI.shapeMode = llIllIllIIIIlI.sgRender.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
-        llIllIllIIIIlI.sideColor = llIllIllIIIIlI.sgRender.add(new ColorSetting.Builder().name("side-color").description("The side color.").defaultValue(new SettingColor(255, 150, 0, 35)).build());
-        llIllIllIIIIlI.lineColor = llIllIllIIIIlI.sgRender.add(new ColorSetting.Builder().name("line-color").description("The line color.").defaultValue(new SettingColor(255, 150, 0)).build());
-        llIllIllIIIIlI.simulator = new ProjectileEntitySimulator();
-        llIllIllIIIIlI.vec3s = new Pool<Vec3>(Vec3::new);
-        llIllIllIIIIlI.paths = new ArrayList<Path>();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgRender = this.settings.createGroup("Render");
+        this.items = this.sgGeneral.add(new ItemListSetting.Builder().name("items").description("Items to display trajectories for.").defaultValue(this.getDefaultItems()).filter(this::itemFilter).build());
+        this.accurate = this.sgGeneral.add(new BoolSetting.Builder().name("accurate").description("Calculates accurate trajectories while moving.").defaultValue(true).build());
+        this.shapeMode = this.sgRender.add(new EnumSetting.Builder().name("shape-mode").description("How the shapes are rendered.").defaultValue(ShapeMode.Both).build());
+        this.sideColor = this.sgRender.add(new ColorSetting.Builder().name("side-color").description("The side color.").defaultValue(new SettingColor(255, 150, 0, 35)).build());
+        this.lineColor = this.sgRender.add(new ColorSetting.Builder().name("line-color").description("The line color.").defaultValue(new SettingColor(255, 150, 0)).build());
+        this.simulator = new ProjectileEntitySimulator();
+        this.vec3s = new Pool<Vec3>(Vec3::new);
+        this.paths = new ArrayList<Path>();
     }
 
     @EventHandler
-    private void onRender(RenderEvent llIllIlIIlIllI) {
-        Trajectories llIllIlIIlIlll;
-        llIllIlIIlIlll.calculatePath(llIllIlIIlIllI);
-        for (Path llIllIlIIllIII : llIllIlIIlIlll.paths) {
-            llIllIlIIllIII.render(llIllIlIIlIllI);
+    private void onRender(RenderEvent renderEvent) {
+        this.calculatePath(renderEvent);
+        for (Path path : this.paths) {
+            path.render(renderEvent);
         }
     }
 
-    private boolean itemFilter(class_1792 llIllIlIllllIl) {
-        return llIllIlIllllIl instanceof class_1753 || llIllIlIllllIl instanceof class_1764 || llIllIlIllllIl instanceof class_1787 || llIllIlIllllIl instanceof class_1835 || llIllIlIllllIl instanceof class_1823 || llIllIlIllllIl instanceof class_1771 || llIllIlIllllIl instanceof class_1776 || llIllIlIllllIl instanceof class_1779 || llIllIlIllllIl instanceof class_4537;
+    static Pool access$200(Trajectories trajectories) {
+        return trajectories.vec3s;
+    }
+
+    private boolean itemFilter(class_1792 class_17922) {
+        return class_17922 instanceof class_1753 || class_17922 instanceof class_1764 || class_17922 instanceof class_1787 || class_17922 instanceof class_1835 || class_17922 instanceof class_1823 || class_17922 instanceof class_1771 || class_17922 instanceof class_1776 || class_17922 instanceof class_1779 || class_17922 instanceof class_4537;
     }
 
     private class Path {
-        private /* synthetic */ boolean hitQuadHorizontal;
-        private /* synthetic */ class_1297 entity;
-        private /* synthetic */ boolean hitQuad;
-        private /* synthetic */ double hitQuadZ1;
-        private /* synthetic */ double hitQuadY1;
-        private final /* synthetic */ List<Vec3> points;
-        private /* synthetic */ double hitQuadY2;
-        private /* synthetic */ double hitQuadX2;
-        private /* synthetic */ double hitQuadZ2;
-        private /* synthetic */ double hitQuadX1;
+        private boolean hitQuadHorizontal;
+        private class_1297 entity;
+        private boolean hitQuad;
+        private double hitQuadZ1;
+        private double hitQuadY1;
+        private final List<Vec3> points;
+        private double hitQuadY2;
+        private double hitQuadX2;
+        private double hitQuadZ2;
+        final Trajectories this$0;
+        private double hitQuadX1;
 
-        private Path() {
-            Path llIllIIlllllIIl;
-            llIllIIlllllIIl.points = new ArrayList<Vec3>();
+        static List access$000(Path path) {
+            return path.points;
+        }
+
+        private Path(Trajectories trajectories) {
+            this.this$0 = trajectories;
+            this.points = new ArrayList<Vec3>();
+        }
+
+        Path(Trajectories trajectories, 1 var2_2) {
+            this(trajectories);
         }
 
         public void calculate() {
-            class_239 llIllIIlllIllIl;
-            Path llIllIIlllIlIll;
-            llIllIIlllIlIll.addPoint();
+            class_239 class_2392;
+            this.addPoint();
             while (true) {
-                if ((llIllIIlllIllIl = llIllIIlllIlIll.Trajectories.this.simulator.tick()) != null) break;
-                llIllIIlllIlIll.addPoint();
+                if ((class_2392 = Trajectories.access$300(this.this$0).tick()) != null) break;
+                this.addPoint();
             }
-            llIllIIlllIlIll.processHitResult(llIllIIlllIllIl);
+            this.processHitResult(class_2392);
         }
 
-        private void processHitResult(class_239 llIllIIllIlllll) {
-            Path llIllIIlllIIIlI;
-            if (llIllIIllIlllll.method_17783() == class_239.class_240.field_1332) {
-                class_3965 llIllIIlllIIIll = (class_3965)llIllIIllIlllll;
-                llIllIIlllIIIlI.hitQuad = true;
-                llIllIIlllIIIlI.hitQuadX1 = llIllIIlllIIIll.method_17784().field_1352;
-                llIllIIlllIIIlI.hitQuadY1 = llIllIIlllIIIll.method_17784().field_1351;
-                llIllIIlllIIIlI.hitQuadZ1 = llIllIIlllIIIll.method_17784().field_1350;
-                llIllIIlllIIIlI.hitQuadX2 = llIllIIlllIIIll.method_17784().field_1352;
-                llIllIIlllIIIlI.hitQuadY2 = llIllIIlllIIIll.method_17784().field_1351;
-                llIllIIlllIIIlI.hitQuadZ2 = llIllIIlllIIIll.method_17784().field_1350;
-                if (llIllIIlllIIIll.method_17780() == class_2350.field_11036 || llIllIIlllIIIll.method_17780() == class_2350.field_11033) {
-                    llIllIIlllIIIlI.hitQuadHorizontal = true;
-                    llIllIIlllIIIlI.hitQuadX1 -= 0.25;
-                    llIllIIlllIIIlI.hitQuadZ1 -= 0.25;
-                    llIllIIlllIIIlI.hitQuadX2 += 0.25;
-                    llIllIIlllIIIlI.hitQuadZ2 += 0.25;
-                } else if (llIllIIlllIIIll.method_17780() == class_2350.field_11043 || llIllIIlllIIIll.method_17780() == class_2350.field_11035) {
-                    llIllIIlllIIIlI.hitQuadHorizontal = false;
-                    llIllIIlllIIIlI.hitQuadX1 -= 0.25;
-                    llIllIIlllIIIlI.hitQuadY1 -= 0.25;
-                    llIllIIlllIIIlI.hitQuadX2 += 0.25;
-                    llIllIIlllIIIlI.hitQuadY2 += 0.25;
+        private void processHitResult(class_239 class_2392) {
+            if (class_2392.method_17783() == class_239.class_240.field_1332) {
+                class_3965 class_39652 = (class_3965)class_2392;
+                this.hitQuad = true;
+                this.hitQuadX1 = class_39652.method_17784().field_1352;
+                this.hitQuadY1 = class_39652.method_17784().field_1351;
+                this.hitQuadZ1 = class_39652.method_17784().field_1350;
+                this.hitQuadX2 = class_39652.method_17784().field_1352;
+                this.hitQuadY2 = class_39652.method_17784().field_1351;
+                this.hitQuadZ2 = class_39652.method_17784().field_1350;
+                if (class_39652.method_17780() == class_2350.field_11036 || class_39652.method_17780() == class_2350.field_11033) {
+                    this.hitQuadHorizontal = true;
+                    this.hitQuadX1 -= 0.25;
+                    this.hitQuadZ1 -= 0.25;
+                    this.hitQuadX2 += 0.25;
+                    this.hitQuadZ2 += 0.25;
+                } else if (class_39652.method_17780() == class_2350.field_11043 || class_39652.method_17780() == class_2350.field_11035) {
+                    this.hitQuadHorizontal = false;
+                    this.hitQuadX1 -= 0.25;
+                    this.hitQuadY1 -= 0.25;
+                    this.hitQuadX2 += 0.25;
+                    this.hitQuadY2 += 0.25;
                 } else {
-                    llIllIIlllIIIlI.hitQuadHorizontal = false;
-                    llIllIIlllIIIlI.hitQuadZ1 -= 0.25;
-                    llIllIIlllIIIlI.hitQuadY1 -= 0.25;
-                    llIllIIlllIIIlI.hitQuadZ2 += 0.25;
-                    llIllIIlllIIIlI.hitQuadY2 += 0.25;
+                    this.hitQuadHorizontal = false;
+                    this.hitQuadZ1 -= 0.25;
+                    this.hitQuadY1 -= 0.25;
+                    this.hitQuadZ2 += 0.25;
+                    this.hitQuadY2 += 0.25;
                 }
-                llIllIIlllIIIlI.points.add(((Vec3)llIllIIlllIIIlI.Trajectories.this.vec3s.get()).set(llIllIIllIlllll.method_17784()));
-            } else if (llIllIIllIlllll.method_17783() == class_239.class_240.field_1331) {
-                llIllIIlllIIIlI.entity = ((class_3966)llIllIIllIlllll).method_17782();
-                llIllIIlllIIIlI.points.add(((Vec3)llIllIIlllIIIlI.Trajectories.this.vec3s.get()).set(llIllIIllIlllll.method_17784()).add(0.0, llIllIIlllIIIlI.entity.method_17682() / 2.0f, 0.0));
+                this.points.add(((Vec3)Trajectories.access$200(this.this$0).get()).set(class_2392.method_17784()));
+            } else if (class_2392.method_17783() == class_239.class_240.field_1331) {
+                this.entity = ((class_3966)class_2392).method_17782();
+                this.points.add(((Vec3)Trajectories.access$200(this.this$0).get()).set(class_2392.method_17784()).add(0.0, this.entity.method_17682() / 2.0f, 0.0));
             }
         }
 
         public void clear() {
-            Path llIllIIllllIIll;
-            for (Vec3 llIllIIllllIlII : llIllIIllllIIll.points) {
-                llIllIIllllIIll.Trajectories.this.vec3s.free(llIllIIllllIlII);
+            for (Vec3 vec3 : this.points) {
+                Trajectories.access$200(this.this$0).free(vec3);
             }
-            llIllIIllllIIll.points.clear();
-            llIllIIllllIIll.hitQuad = false;
-            llIllIIllllIIll.entity = null;
+            this.points.clear();
+            this.hitQuad = false;
+            this.entity = null;
         }
 
-        public void render(RenderEvent llIllIIllIIllll) {
-            Path llIllIIllIlIIII;
-            Vec3 llIllIIllIIlllI = null;
-            for (Vec3 llIllIIllIlIlIl : llIllIIllIlIIII.points) {
-                if (llIllIIllIIlllI != null) {
-                    Renderer.LINES.line(llIllIIllIIlllI.x, llIllIIllIIlllI.y, llIllIIllIIlllI.z, llIllIIllIlIlIl.x, llIllIIllIlIlIl.y, llIllIIllIlIlIl.z, (Color)llIllIIllIlIIII.Trajectories.this.lineColor.get());
+        public void render(RenderEvent renderEvent) {
+            Vec3 vec3 = null;
+            for (Vec3 vec32 : this.points) {
+                if (vec3 != null) {
+                    Renderer.LINES.line(vec3.x, vec3.y, vec3.z, vec32.x, vec32.y, vec32.z, (Color)Trajectories.access$400(this.this$0).get());
                 }
-                llIllIIllIIlllI = llIllIIllIlIlIl;
+                vec3 = vec32;
             }
-            if (llIllIIllIlIIII.hitQuad) {
-                if (llIllIIllIlIIII.hitQuadHorizontal) {
-                    Renderer.quadWithLinesHorizontal(Renderer.NORMAL, Renderer.LINES, llIllIIllIlIIII.hitQuadX1, llIllIIllIlIIII.hitQuadY1, llIllIIllIlIIII.hitQuadZ1, 0.5, (Color)llIllIIllIlIIII.Trajectories.this.sideColor.get(), (Color)llIllIIllIlIIII.Trajectories.this.lineColor.get(), (ShapeMode)((Object)llIllIIllIlIIII.Trajectories.this.shapeMode.get()));
+            if (this.hitQuad) {
+                if (this.hitQuadHorizontal) {
+                    Renderer.quadWithLinesHorizontal(Renderer.NORMAL, Renderer.LINES, this.hitQuadX1, this.hitQuadY1, this.hitQuadZ1, 0.5, (Color)Trajectories.access$500(this.this$0).get(), (Color)Trajectories.access$400(this.this$0).get(), (ShapeMode)((Object)Trajectories.access$600(this.this$0).get()));
                 } else {
-                    Renderer.quadWithLinesVertical(Renderer.NORMAL, Renderer.LINES, llIllIIllIlIIII.hitQuadX1, llIllIIllIlIIII.hitQuadY1, llIllIIllIlIIII.hitQuadZ1, llIllIIllIlIIII.hitQuadX2, llIllIIllIlIIII.hitQuadY2, llIllIIllIlIIII.hitQuadZ2, (Color)llIllIIllIlIIII.Trajectories.this.sideColor.get(), (Color)llIllIIllIlIIII.Trajectories.this.lineColor.get(), (ShapeMode)((Object)llIllIIllIlIIII.Trajectories.this.shapeMode.get()));
+                    Renderer.quadWithLinesVertical(Renderer.NORMAL, Renderer.LINES, this.hitQuadX1, this.hitQuadY1, this.hitQuadZ1, this.hitQuadX2, this.hitQuadY2, this.hitQuadZ2, (Color)Trajectories.access$500(this.this$0).get(), (Color)Trajectories.access$400(this.this$0).get(), (ShapeMode)((Object)Trajectories.access$600(this.this$0).get()));
                 }
             }
-            if (llIllIIllIlIIII.entity != null) {
-                double llIllIIllIlIlII = (llIllIIllIlIIII.entity.method_23317() - llIllIIllIlIIII.entity.field_6014) * (double)llIllIIllIIllll.tickDelta;
-                double llIllIIllIlIIll = (llIllIIllIlIIII.entity.method_23318() - llIllIIllIlIIII.entity.field_6036) * (double)llIllIIllIIllll.tickDelta;
-                double llIllIIllIlIIlI = (llIllIIllIlIIII.entity.method_23321() - llIllIIllIlIIII.entity.field_5969) * (double)llIllIIllIIllll.tickDelta;
-                class_238 llIllIIllIlIIIl = llIllIIllIlIIII.entity.method_5829();
-                Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, llIllIIllIlIlII + llIllIIllIlIIIl.field_1323, llIllIIllIlIIll + llIllIIllIlIIIl.field_1322, llIllIIllIlIIlI + llIllIIllIlIIIl.field_1321, llIllIIllIlIlII + llIllIIllIlIIIl.field_1320, llIllIIllIlIIll + llIllIIllIlIIIl.field_1325, llIllIIllIlIIlI + llIllIIllIlIIIl.field_1324, (Color)llIllIIllIlIIII.Trajectories.this.sideColor.get(), (Color)llIllIIllIlIIII.Trajectories.this.lineColor.get(), (ShapeMode)((Object)llIllIIllIlIIII.Trajectories.this.shapeMode.get()), 0);
+            if (this.entity != null) {
+                double d = (this.entity.method_23317() - this.entity.field_6014) * (double)renderEvent.tickDelta;
+                double d2 = (this.entity.method_23318() - this.entity.field_6036) * (double)renderEvent.tickDelta;
+                double d3 = (this.entity.method_23321() - this.entity.field_5969) * (double)renderEvent.tickDelta;
+                class_238 class_2383 = this.entity.method_5829();
+                Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, d + class_2383.field_1323, d2 + class_2383.field_1322, d3 + class_2383.field_1321, d + class_2383.field_1320, d2 + class_2383.field_1325, d3 + class_2383.field_1324, (Color)Trajectories.access$500(this.this$0).get(), (Color)Trajectories.access$400(this.this$0).get(), (ShapeMode)((Object)Trajectories.access$600(this.this$0).get()), 0);
             }
         }
 
         private void addPoint() {
-            Path llIllIIlllIIlll;
-            llIllIIlllIIlll.points.add(((Vec3)llIllIIlllIIlll.Trajectories.this.vec3s.get()).set(((Trajectories)llIllIIlllIIlll.Trajectories.this).simulator.pos));
+            this.points.add(((Vec3)Trajectories.access$200(this.this$0).get()).set(Trajectories.access$300((Trajectories)this.this$0).pos));
         }
     }
 }

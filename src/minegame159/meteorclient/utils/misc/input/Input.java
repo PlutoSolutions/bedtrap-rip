@@ -15,31 +15,31 @@ import net.minecraft.class_304;
 import org.lwjgl.glfw.GLFW;
 
 public class Input {
-    private static final /* synthetic */ boolean[] buttons;
-    private static final /* synthetic */ boolean[] keys;
-    private static /* synthetic */ CursorStyle lastCursorStyle;
+    private static final boolean[] buttons;
+    private static final boolean[] keys;
+    private static CursorStyle lastCursorStyle;
 
-    public static void setButtonState(int llllllllllllllllIlIlIIllIIlIlIll, boolean llllllllllllllllIlIlIIllIIlIlIlI) {
-        if (llllllllllllllllIlIlIIllIIlIlIll >= 0 && llllllllllllllllIlIlIIllIIlIlIll < buttons.length) {
-            Input.buttons[llllllllllllllllIlIlIIllIIlIlIll] = llllllllllllllllIlIlIIllIIlIlIlI;
+    public static void setButtonState(int n, boolean bl) {
+        if (n >= 0 && n < buttons.length) {
+            Input.buttons[n] = bl;
         }
     }
 
-    public static boolean isButtonPressed(int llllllllllllllllIlIlIIllIIIllIIl) {
-        if (llllllllllllllllIlIlIIllIIIllIIl == -1) {
+    public static boolean isButtonPressed(int n) {
+        if (n == -1) {
             return false;
         }
-        return llllllllllllllllIlIlIIllIIIllIIl < buttons.length && buttons[llllllllllllllllIlIlIIllIIIllIIl];
+        return n < buttons.length && buttons[n];
     }
 
-    public static boolean isKeyPressed(int llllllllllllllllIlIlIIllIIIlllIl) {
+    public static boolean isKeyPressed(int n) {
         if (!GuiKeyEvents.canUseKeys) {
             return false;
         }
-        if (llllllllllllllllIlIlIIllIIIlllIl == -1) {
+        if (n == -1) {
             return false;
         }
-        return llllllllllllllllIlIlIIllIIIlllIl < keys.length && keys[llllllllllllllllIlIlIIllIIIlllIl];
+        return n < keys.length && keys[n];
     }
 
     static {
@@ -48,29 +48,25 @@ public class Input {
         lastCursorStyle = CursorStyle.Default;
     }
 
-    public Input() {
-        Input llllllllllllllllIlIlIIllIIllIlII;
+    public static boolean isPressed(class_304 class_3042) {
+        return Input.isKeyPressed(KeyBinds.getKey(class_3042));
     }
 
-    public static boolean isPressed(class_304 llllllllllllllllIlIlIIllIIlIIIII) {
-        return Input.isKeyPressed(KeyBinds.getKey(llllllllllllllllIlIlIIllIIlIIIII));
-    }
-
-    public static void setCursorStyle(CursorStyle llllllllllllllllIlIlIIllIIIlIlll) {
-        if (lastCursorStyle != llllllllllllllllIlIlIIllIIIlIlll) {
-            GLFW.glfwSetCursor((long)Utils.mc.method_22683().method_4490(), (long)llllllllllllllllIlIlIIllIIIlIlll.getGlfwCursor());
-            lastCursorStyle = llllllllllllllllIlIlIIllIIIlIlll;
+    public static void setCursorStyle(CursorStyle cursorStyle) {
+        if (lastCursorStyle != cursorStyle) {
+            GLFW.glfwSetCursor((long)Utils.mc.method_22683().method_4490(), (long)cursorStyle.getGlfwCursor());
+            lastCursorStyle = cursorStyle;
         }
     }
 
-    public static void setKeyState(int llllllllllllllllIlIlIIllIIlIllll, boolean llllllllllllllllIlIlIIllIIllIIII) {
-        if (llllllllllllllllIlIlIIllIIlIllll >= 0 && llllllllllllllllIlIlIIllIIlIllll < keys.length) {
-            Input.keys[llllllllllllllllIlIlIIllIIlIllll] = llllllllllllllllIlIlIIllIIllIIII;
+    public static void setKeyState(int n, boolean bl) {
+        if (n >= 0 && n < keys.length) {
+            Input.keys[n] = bl;
         }
     }
 
-    public static void setKeyState(class_304 llllllllllllllllIlIlIIllIIlIIlIl, boolean llllllllllllllllIlIlIIllIIlIIlII) {
-        Input.setKeyState(KeyBinds.getKey(llllllllllllllllIlIlIIllIIlIIlIl), llllllllllllllllIlIlIIllIIlIIlII);
+    public static void setKeyState(class_304 class_3042, boolean bl) {
+        Input.setKeyState(KeyBinds.getKey(class_3042), bl);
     }
 }
 

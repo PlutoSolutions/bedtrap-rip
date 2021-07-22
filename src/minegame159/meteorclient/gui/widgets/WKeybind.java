@@ -11,69 +11,64 @@ import minegame159.meteorclient.utils.misc.Keybind;
 
 public class WKeybind
 extends WHorizontalList {
-    private final /* synthetic */ int defaultValue;
-    private /* synthetic */ WLabel label;
-    public /* synthetic */ Runnable actionOnSet;
-    public /* synthetic */ Runnable action;
-    private final /* synthetic */ Keybind keybind;
-    private /* synthetic */ boolean listening;
+    private final int defaultValue;
+    private WLabel label;
+    public Runnable actionOnSet;
+    public Runnable action;
+    private final Keybind keybind;
+    private boolean listening;
 
     public void reset() {
-        WKeybind llllllIIIllIll;
-        llllllIIIllIll.listening = false;
-        llllllIIIllIll.refreshLabel();
+        this.listening = false;
+        this.refreshLabel();
     }
 
-    public boolean onAction(boolean llllllIIlIIlII, int llllllIIlIIIII) {
-        WKeybind llllllIIlIIIlI;
-        if (llllllIIlIIIlI.listening && llllllIIlIIIlI.keybind.canBindTo(llllllIIlIIlII, llllllIIlIIIII)) {
-            llllllIIlIIIlI.keybind.set(llllllIIlIIlII, llllllIIlIIIII);
-            llllllIIlIIIlI.reset();
-            if (llllllIIlIIIlI.action != null) {
-                llllllIIlIIIlI.action.run();
+    public boolean onAction(boolean bl, int n) {
+        if (this.listening && this.keybind.canBindTo(bl, n)) {
+            this.keybind.set(bl, n);
+            this.reset();
+            if (this.action != null) {
+                this.action.run();
             }
             return true;
         }
         return false;
     }
 
-    public WKeybind(Keybind llllllIIllIIll, int llllllIIllIlIl) {
-        WKeybind llllllIIllIlII;
-        llllllIIllIlII.keybind = llllllIIllIIll;
-        llllllIIllIlII.defaultValue = llllllIIllIlIl;
+    private void lambda$init$0() {
+        this.listening = true;
+        this.label.set(this.appendBindText("..."));
+        if (this.actionOnSet != null) {
+            this.actionOnSet.run();
+        }
     }
 
-    private String appendBindText(String llllllIIIlIIll) {
-        return String.valueOf(new StringBuilder().append("Bind: ").append(llllllIIIlIIll));
+    public WKeybind(Keybind keybind, int n) {
+        this.keybind = keybind;
+        this.defaultValue = n;
+    }
+
+    private String appendBindText(String string) {
+        return String.valueOf(new StringBuilder().append("Bind: ").append(string));
     }
 
     private void refreshLabel() {
-        WKeybind llllllIIIllIII;
-        llllllIIIllIII.label.set(llllllIIIllIII.appendBindText(llllllIIIllIII.keybind.toString()));
+        this.label.set(this.appendBindText(this.keybind.toString()));
     }
 
     @Override
     public void init() {
-        WKeybind llllllIIlIlIll;
-        llllllIIlIlIll.label = llllllIIlIlIll.add(llllllIIlIlIll.theme.label("")).widget();
-        WButton llllllIIlIllIl = llllllIIlIlIll.add(llllllIIlIlIll.theme.button("Set")).widget();
-        llllllIIlIllIl.action = () -> {
-            WKeybind llllllIIIlIIII;
-            llllllIIIlIIII.listening = true;
-            llllllIIIlIIII.label.set(llllllIIIlIIII.appendBindText("..."));
-            if (llllllIIIlIIII.actionOnSet != null) {
-                llllllIIIlIIII.actionOnSet.run();
-            }
-        };
-        WButton llllllIIlIllII = llllllIIlIlIll.add(llllllIIlIlIll.theme.button(GuiRenderer.RESET)).expandCellX().right().widget();
-        llllllIIlIllII.action = llllllIIlIlIll::resetBind;
-        llllllIIlIlIll.refreshLabel();
+        this.label = this.add(this.theme.label("")).widget();
+        WButton wButton = this.add(this.theme.button("Set")).widget();
+        wButton.action = this::lambda$init$0;
+        WButton wButton2 = this.add(this.theme.button(GuiRenderer.RESET)).expandCellX().right().widget();
+        wButton2.action = this::resetBind;
+        this.refreshLabel();
     }
 
     public void resetBind() {
-        WKeybind llllllIIIlllIl;
-        llllllIIIlllIl.keybind.set(true, llllllIIIlllIl.defaultValue);
-        llllllIIIlllIl.reset();
+        this.keybind.set(true, this.defaultValue);
+        this.reset();
     }
 }
 

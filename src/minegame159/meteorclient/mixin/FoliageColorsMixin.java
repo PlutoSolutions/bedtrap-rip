@@ -21,20 +21,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_1926.class})
 public class FoliageColorsMixin {
     @Inject(method={"getBirchColor"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onGetBirchColor(CallbackInfoReturnable<Integer> cir) {
+    private static void onGetBirchColor(CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeFoliageColor.get().booleanValue()) {
-            cir.setReturnValue((Object)ambience.foliageColor.get().getPacked());
-            cir.cancel();
+            callbackInfoReturnable.setReturnValue((Object)ambience.foliageColor.get().getPacked());
+            callbackInfoReturnable.cancel();
         }
     }
 
     @Inject(method={"getSpruceColor"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onGetSpruceColor(CallbackInfoReturnable<Integer> cir) {
+    private static void onGetSpruceColor(CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         Ambience ambience = Modules.get().get(Ambience.class);
         if (ambience.isActive() && ambience.changeFoliageColor.get().booleanValue()) {
-            cir.setReturnValue((Object)ambience.foliageColor.get().getPacked());
-            cir.cancel();
+            callbackInfoReturnable.setReturnValue((Object)ambience.foliageColor.get().getPacked());
+            callbackInfoReturnable.cancel();
         }
     }
 }

@@ -4,18 +4,10 @@
 package minegame159.meteorclient.events.game;
 
 public class GameLeftEvent {
-    private static final /* synthetic */ GameLeftEvent INSTANCE;
-
-    static {
-        INSTANCE = new GameLeftEvent();
-    }
+    private static final GameLeftEvent INSTANCE = new GameLeftEvent();
 
     public static GameLeftEvent get() {
         return INSTANCE;
-    }
-
-    public GameLeftEvent() {
-        GameLeftEvent lllllllllllllllllIIIIlllIIlIIIlI;
     }
 }
 

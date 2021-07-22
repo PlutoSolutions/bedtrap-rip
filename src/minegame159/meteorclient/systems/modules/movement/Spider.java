@@ -17,27 +17,25 @@ import net.minecraft.class_243;
 
 public class Spider
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Double> speed;
+    private final SettingGroup sgGeneral;
+    private final Setting<Double> speed;
 
     @EventHandler
-    private void onTick(TickEvent.Post lllllllllllllllllllllllIIIIIllII) {
-        Spider lllllllllllllllllllllllIIIIIlIlI;
-        if (!lllllllllllllllllllllllIIIIIlIlI.mc.field_1724.field_5976) {
+    private void onTick(TickEvent.Post post) {
+        if (!this.mc.field_1724.field_5976) {
             return;
         }
-        class_243 lllllllllllllllllllllllIIIIIlIll = lllllllllllllllllllllllIIIIIlIlI.mc.field_1724.method_18798();
-        if (lllllllllllllllllllllllIIIIIlIll.field_1351 >= 0.2) {
+        class_243 class_2432 = this.mc.field_1724.method_18798();
+        if (class_2432.field_1351 >= 0.2) {
             return;
         }
-        lllllllllllllllllllllllIIIIIlIlI.mc.field_1724.method_18800(lllllllllllllllllllllllIIIIIlIll.field_1352, lllllllllllllllllllllllIIIIIlIlI.speed.get().doubleValue(), lllllllllllllllllllllllIIIIIlIll.field_1350);
+        this.mc.field_1724.method_18800(class_2432.field_1352, this.speed.get().doubleValue(), class_2432.field_1350);
     }
 
     public Spider() {
         super(Categories.Movement, "spider", "Allows you to climb walls like a spider.");
-        Spider lllllllllllllllllllllllIIIIlIIII;
-        lllllllllllllllllllllllIIIIlIIII.sgGeneral = lllllllllllllllllllllllIIIIlIIII.settings.getDefaultGroup();
-        lllllllllllllllllllllllIIIIlIIII.speed = lllllllllllllllllllllllIIIIlIIII.sgGeneral.add(new DoubleSetting.Builder().name("climb-speed").description("The speed you go up blocks.").defaultValue(0.2).min(0.0).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.speed = this.sgGeneral.add(new DoubleSetting.Builder().name("climb-speed").description("The speed you go up blocks.").defaultValue(0.2).min(0.0).build());
     }
 }
 

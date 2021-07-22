@@ -10,20 +10,18 @@ public class DurabilityHud
 extends DoubleTextHudElement {
     @Override
     protected String getRight() {
-        DurabilityHud llllllllllllllllllllIlIlIIlIlIll;
-        if (llllllllllllllllllllIlIlIIlIlIll.isInEditor()) {
+        if (this.isInEditor()) {
             return "159";
         }
-        Integer llllllllllllllllllllIlIlIIlIllII = null;
-        if (!llllllllllllllllllllIlIlIIlIlIll.mc.field_1724.method_6047().method_7960() && llllllllllllllllllllIlIlIIlIlIll.mc.field_1724.method_6047().method_7963()) {
-            llllllllllllllllllllIlIlIIlIllII = llllllllllllllllllllIlIlIIlIlIll.mc.field_1724.method_6047().method_7936() - llllllllllllllllllllIlIlIIlIlIll.mc.field_1724.method_6047().method_7919();
+        Integer n = null;
+        if (!this.mc.field_1724.method_6047().method_7960() && this.mc.field_1724.method_6047().method_7963()) {
+            n = this.mc.field_1724.method_6047().method_7936() - this.mc.field_1724.method_6047().method_7919();
         }
-        return llllllllllllllllllllIlIlIIlIllII == null ? "" : llllllllllllllllllllIlIlIIlIllII.toString();
+        return n == null ? "" : n.toString();
     }
 
-    public DurabilityHud(HUD llllllllllllllllllllIlIlIIllIIlI) {
-        super(llllllllllllllllllllIlIlIIllIIlI, "durability", "Displays durability of the item you are holding.", "Durability: ");
-        DurabilityHud llllllllllllllllllllIlIlIIllIIll;
+    public DurabilityHud(HUD hUD) {
+        super(hUD, "durability", "Displays durability of the item you are holding.", "Durability: ");
     }
 }
 

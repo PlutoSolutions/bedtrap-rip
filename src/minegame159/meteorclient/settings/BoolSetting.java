@@ -14,35 +14,41 @@ import minegame159.meteorclient.settings.IVisible;
 import minegame159.meteorclient.settings.Setting;
 import net.minecraft.class_2487;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class BoolSetting
 extends Setting<Boolean> {
-    private static final /* synthetic */ List<String> SUGGESTIONS;
+    private static final List<String> SUGGESTIONS = ImmutableList.of((Object)"true", (Object)"false", (Object)"toggle");
 
     @Override
-    protected boolean isValueValid(Boolean lllllllllllllllllIIIlllIlllIIlll) {
+    protected boolean isValueValid(Boolean bl) {
         return true;
     }
 
     @Override
-    public Boolean fromTag(class_2487 lllllllllllllllllIIIlllIllIllIlI) {
-        BoolSetting lllllllllllllllllIIIlllIllIlllIl;
-        lllllllllllllllllIIIlllIllIlllIl.set(lllllllllllllllllIIIlllIllIllIlI.method_10577("value"));
-        return (Boolean)lllllllllllllllllIIIlllIllIlllIl.get();
+    public Boolean fromTag(class_2487 class_24872) {
+        this.set(class_24872.method_10577("value"));
+        return (Boolean)this.get();
     }
 
     @Override
-    protected Boolean parseImpl(String lllllllllllllllllIIIlllIlllIlIIl) {
-        if (lllllllllllllllllIIIlllIlllIlIIl.equalsIgnoreCase("true") || lllllllllllllllllIIIlllIlllIlIIl.equalsIgnoreCase("1")) {
+    protected Boolean parseImpl(String string) {
+        if (string.equalsIgnoreCase("true") || string.equalsIgnoreCase("1")) {
             return true;
         }
-        if (lllllllllllllllllIIIlllIlllIlIIl.equalsIgnoreCase("false") || lllllllllllllllllIIIlllIlllIlIIl.equalsIgnoreCase("0")) {
+        if (string.equalsIgnoreCase("false") || string.equalsIgnoreCase("0")) {
             return false;
         }
-        if (lllllllllllllllllIIIlllIlllIlIIl.equalsIgnoreCase("toggle")) {
-            BoolSetting lllllllllllllllllIIIlllIlllIllII;
-            return (Boolean)lllllllllllllllllIIIlllIlllIllII.get() == false;
+        if (string.equalsIgnoreCase("toggle")) {
+            return (Boolean)this.get() == false;
         }
         return null;
+    }
+
+    @Override
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((Boolean)object);
     }
 
     @Override
@@ -52,74 +58,69 @@ extends Setting<Boolean> {
 
     @Override
     public class_2487 toTag() {
-        BoolSetting lllllllllllllllllIIIlllIlllIIIll;
-        class_2487 lllllllllllllllllIIIlllIlllIIIlI = lllllllllllllllllIIIlllIlllIIIll.saveGeneral();
-        lllllllllllllllllIIIlllIlllIIIlI.method_10556("value", ((Boolean)lllllllllllllllllIIIlllIlllIIIll.get()).booleanValue());
-        return lllllllllllllllllIIIlllIlllIIIlI;
+        class_2487 class_24872 = this.saveGeneral();
+        class_24872.method_10556("value", ((Boolean)this.get()).booleanValue());
+        return class_24872;
     }
 
-    private BoolSetting(String lllllllllllllllllIIIlllIlllllIll, String lllllllllllllllllIIIlllIllllIIll, Boolean lllllllllllllllllIIIlllIllllIIlI, Consumer<Boolean> lllllllllllllllllIIIlllIlllllIII, Consumer<Setting<Boolean>> lllllllllllllllllIIIlllIllllIIII, IVisible lllllllllllllllllIIIlllIllllIllI) {
-        super(lllllllllllllllllIIIlllIlllllIll, lllllllllllllllllIIIlllIllllIIll, lllllllllllllllllIIIlllIllllIIlI, lllllllllllllllllIIIlllIlllllIII, lllllllllllllllllIIIlllIllllIIII, lllllllllllllllllIIIlllIllllIllI);
-        BoolSetting lllllllllllllllllIIIlllIllllllII;
+    private BoolSetting(String string, String string2, Boolean bl, Consumer<Boolean> consumer, Consumer<Setting<Boolean>> consumer2, IVisible iVisible) {
+        super(string, string2, bl, consumer, consumer2, iVisible);
     }
 
-    static {
-        SUGGESTIONS = ImmutableList.of((Object)"true", (Object)"false", (Object)"toggle");
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    BoolSetting(String string, String string2, Boolean bl, Consumer consumer, Consumer consumer2, IVisible iVisible, 1 var7_7) {
+        this(string, string2, bl, consumer, consumer2, iVisible);
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     public static class Builder {
-        private /* synthetic */ String description;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ Boolean defaultValue;
-        private /* synthetic */ Consumer<Boolean> onChanged;
-        private /* synthetic */ String name;
-        private /* synthetic */ Consumer<Setting<Boolean>> onModuleActivated;
+        private String description = "";
+        private IVisible visible;
+        private Boolean defaultValue;
+        private Consumer<Boolean> onChanged;
+        private String name = "undefined";
+        private Consumer<Setting<Boolean>> onModuleActivated;
 
-        public Builder() {
-            Builder llllllllllllllllIllIIIIlllIlllll;
-            llllllllllllllllIllIIIIlllIlllll.name = "undefined";
-            llllllllllllllllIllIIIIlllIlllll.description = "";
+        public Builder defaultValue(boolean bl) {
+            this.defaultValue = bl;
+            return this;
         }
 
-        public Builder defaultValue(boolean llllllllllllllllIllIIIIlllIIllll) {
-            Builder llllllllllllllllIllIIIIlllIlIIII;
-            llllllllllllllllIllIIIIlllIlIIII.defaultValue = llllllllllllllllIllIIIIlllIIllll;
-            return llllllllllllllllIllIIIIlllIlIIII;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder name(String llllllllllllllllIllIIIIlllIllIll) {
-            Builder llllllllllllllllIllIIIIlllIllIlI;
-            llllllllllllllllIllIIIIlllIllIlI.name = llllllllllllllllIllIIIIlllIllIll;
-            return llllllllllllllllIllIIIIlllIllIlI;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
-        public Builder description(String llllllllllllllllIllIIIIlllIlIIll) {
-            Builder llllllllllllllllIllIIIIlllIlIlII;
-            llllllllllllllllIllIIIIlllIlIlII.description = llllllllllllllllIllIIIIlllIlIIll;
-            return llllllllllllllllIllIIIIlllIlIlII;
-        }
-
-        public Builder onModuleActivated(Consumer<Setting<Boolean>> llllllllllllllllIllIIIIlllIIIIll) {
-            Builder llllllllllllllllIllIIIIlllIIIlII;
-            llllllllllllllllIllIIIIlllIIIlII.onModuleActivated = llllllllllllllllIllIIIIlllIIIIll;
-            return llllllllllllllllIllIIIIlllIIIlII;
+        public Builder onModuleActivated(Consumer<Setting<Boolean>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
         public BoolSetting build() {
-            Builder llllllllllllllllIllIIIIllIlllIIl;
-            return new BoolSetting(llllllllllllllllIllIIIIllIlllIIl.name, llllllllllllllllIllIIIIllIlllIIl.description, llllllllllllllllIllIIIIllIlllIIl.defaultValue, llllllllllllllllIllIIIIllIlllIIl.onChanged, llllllllllllllllIllIIIIllIlllIIl.onModuleActivated, llllllllllllllllIllIIIIllIlllIIl.visible);
+            return new BoolSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible, null);
         }
 
-        public Builder visible(IVisible llllllllllllllllIllIIIIllIllllIl) {
-            Builder llllllllllllllllIllIIIIllIlllllI;
-            llllllllllllllllIllIIIIllIlllllI.visible = llllllllllllllllIllIIIIllIllllIl;
-            return llllllllllllllllIllIIIIllIlllllI;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder onChanged(Consumer<Boolean> llllllllllllllllIllIIIIlllIIlIIl) {
-            Builder llllllllllllllllIllIIIIlllIIlIlI;
-            llllllllllllllllIllIIIIlllIIlIlI.onChanged = llllllllllllllllIllIIIIlllIIlIIl;
-            return llllllllllllllllIllIIIIlllIIlIlI;
+        public Builder onChanged(Consumer<Boolean> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
     }
 }

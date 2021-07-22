@@ -8,26 +8,22 @@ import java.util.Queue;
 import minegame159.meteorclient.utils.misc.Producer;
 
 public class Pool<T> {
-    private final /* synthetic */ Producer<T> producer;
-    private final /* synthetic */ Queue<T> items;
+    private final Producer<T> producer;
+    private final Queue<T> items = new ArrayDeque<T>();
 
-    public Pool(Producer<T> lllllllllllllllllIIlIlIlIIlIlIIl) {
-        Pool lllllllllllllllllIIlIlIlIIlIlIlI;
-        lllllllllllllllllIIlIlIlIIlIlIlI.items = new ArrayDeque<T>();
-        lllllllllllllllllIIlIlIlIIlIlIlI.producer = lllllllllllllllllIIlIlIlIIlIlIIl;
+    public Pool(Producer<T> producer) {
+        this.producer = producer;
     }
 
-    public synchronized void free(T lllllllllllllllllIIlIlIlIIIllllI) {
-        Pool lllllllllllllllllIIlIlIlIIlIIIIl;
-        lllllllllllllllllIIlIlIlIIlIIIIl.items.offer(lllllllllllllllllIIlIlIlIIIllllI);
+    public synchronized void free(T t) {
+        this.items.offer(t);
     }
 
     public synchronized T get() {
-        Pool lllllllllllllllllIIlIlIlIIlIIlII;
-        if (lllllllllllllllllIIlIlIlIIlIIlII.items.size() > 0) {
-            return lllllllllllllllllIIlIlIlIIlIIlII.items.poll();
+        if (this.items.size() > 0) {
+            return this.items.poll();
         }
-        return lllllllllllllllllIIlIlIlIIlIIlII.producer.create();
+        return this.producer.create();
     }
 }
 

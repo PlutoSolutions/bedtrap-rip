@@ -7,54 +7,41 @@ import minegame159.meteorclient.utils.render.color.Color;
 
 public class RainbowColor
 extends Color {
-    private /* synthetic */ double speed;
-    private static final /* synthetic */ float[] hsb;
+    private double speed;
+    private static final float[] hsb = new float[3];
 
     public double getSpeed() {
-        RainbowColor lllllllllllllllllIlIIlIIIllllllI;
-        return lllllllllllllllllIlIIlIIIllllllI.speed;
+        return this.speed;
     }
 
-    static {
-        hsb = new float[3];
-    }
-
-    public RainbowColor getNext(double lllllllllllllllllIlIIlIIIllIlllI) {
-        RainbowColor lllllllllllllllllIlIIlIIIllIllIl;
-        if (lllllllllllllllllIlIIlIIIllIllIl.speed > 0.0) {
-            java.awt.Color.RGBtoHSB(lllllllllllllllllIlIIlIIIllIllIl.r, lllllllllllllllllIlIIlIIIllIllIl.g, lllllllllllllllllIlIIlIIIllIllIl.b, hsb);
-            int lllllllllllllllllIlIIlIIIlllIIII = java.awt.Color.HSBtoRGB(hsb[0] + (float)(lllllllllllllllllIlIIlIIIllIllIl.speed * lllllllllllllllllIlIIlIIIllIlllI), 1.0f, 1.0f);
-            lllllllllllllllllIlIIlIIIllIllIl.r = Color.toRGBAR(lllllllllllllllllIlIIlIIIlllIIII);
-            lllllllllllllllllIlIIlIIIllIllIl.g = Color.toRGBAG(lllllllllllllllllIlIIlIIIlllIIII);
-            lllllllllllllllllIlIIlIIIllIllIl.b = Color.toRGBAB(lllllllllllllllllIlIIlIIIlllIIII);
+    public RainbowColor getNext(double d) {
+        if (this.speed > 0.0) {
+            java.awt.Color.RGBtoHSB(this.r, this.g, this.b, hsb);
+            int n = java.awt.Color.HSBtoRGB(hsb[0] + (float)(this.speed * d), 1.0f, 1.0f);
+            this.r = Color.toRGBAR(n);
+            this.g = Color.toRGBAG(n);
+            this.b = Color.toRGBAB(n);
         }
-        return lllllllllllllllllIlIIlIIIllIllIl;
+        return this;
     }
 
-    public RainbowColor setSpeed(double lllllllllllllllllIlIIlIIIllllIIl) {
-        RainbowColor lllllllllllllllllIlIIlIIIllllIlI;
-        lllllllllllllllllIlIIlIIIllllIlI.speed = lllllllllllllllllIlIIlIIIllllIIl;
-        return lllllllllllllllllIlIIlIIIllllIlI;
-    }
-
-    public RainbowColor() {
-        RainbowColor lllllllllllllllllIlIIlIIlIIIIIII;
+    public RainbowColor setSpeed(double d) {
+        this.speed = d;
+        return this;
     }
 
     @Override
-    public RainbowColor set(RainbowColor lllllllllllllllllIlIIlIIIllIIlIl) {
-        RainbowColor lllllllllllllllllIlIIlIIIllIIllI;
-        lllllllllllllllllIlIIlIIIllIIllI.r = lllllllllllllllllIlIIlIIIllIIlIl.r;
-        lllllllllllllllllIlIIlIIIllIIllI.g = lllllllllllllllllIlIIlIIIllIIlIl.g;
-        lllllllllllllllllIlIIlIIIllIIllI.b = lllllllllllllllllIlIIlIIIllIIlIl.b;
-        lllllllllllllllllIlIIlIIIllIIllI.a = lllllllllllllllllIlIIlIIIllIIlIl.a;
-        lllllllllllllllllIlIIlIIIllIIllI.speed = lllllllllllllllllIlIIlIIIllIIlIl.speed;
-        return lllllllllllllllllIlIIlIIIllIIllI;
+    public RainbowColor set(RainbowColor rainbowColor) {
+        this.r = rainbowColor.r;
+        this.g = rainbowColor.g;
+        this.b = rainbowColor.b;
+        this.a = rainbowColor.a;
+        this.speed = rainbowColor.speed;
+        return this;
     }
 
     public RainbowColor getNext() {
-        RainbowColor lllllllllllllllllIlIIlIIIlllIlIl;
-        return lllllllllllllllllIlIIlIIIlllIlIl.getNext(1.0);
+        return this.getNext(1.0);
     }
 }
 

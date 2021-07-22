@@ -11,21 +11,13 @@ import net.minecraft.class_1282;
 import net.minecraft.class_1309;
 
 public class DamageEvent {
-    public /* synthetic */ class_1309 entity;
-    public /* synthetic */ class_1282 source;
-    private static final /* synthetic */ DamageEvent INSTANCE;
+    public class_1309 entity;
+    public class_1282 source;
+    private static final DamageEvent INSTANCE = new DamageEvent();
 
-    static {
-        INSTANCE = new DamageEvent();
-    }
-
-    public DamageEvent() {
-        DamageEvent lIIlIIlllIIIlll;
-    }
-
-    public static DamageEvent get(class_1309 lIIlIIlllIIIIll, class_1282 lIIlIIlllIIIIII) {
-        DamageEvent.INSTANCE.entity = lIIlIIlllIIIIll;
-        DamageEvent.INSTANCE.source = lIIlIIlllIIIIII;
+    public static DamageEvent get(class_1309 class_13092, class_1282 class_12822) {
+        DamageEvent.INSTANCE.entity = class_13092;
+        DamageEvent.INSTANCE.source = class_12822;
         return INSTANCE;
     }
 }

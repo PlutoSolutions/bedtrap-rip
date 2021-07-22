@@ -10,7 +10,6 @@ public class Vanilla
 extends ElytraFlightMode {
     public Vanilla() {
         super(ElytraFlightModes.Vanilla);
-        Vanilla lllllllllllllllllIllIIIlIlIIIIlI;
     }
 }
 

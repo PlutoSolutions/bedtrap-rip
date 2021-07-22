@@ -43,200 +43,188 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 public abstract class Structure {
-    static final /* synthetic */ Map<Class<?>, List<String>> fieldOrder;
-    protected static final /* synthetic */ int CALCULATE_SIZE;
-    private static final /* synthetic */ ThreadLocal<Map<Pointer, Structure>> reads;
-    private /* synthetic */ long typeInfo;
-    private /* synthetic */ String encoding;
-    private final /* synthetic */ Map<String, Object> nativeStrings;
-    private /* synthetic */ Map<String, StructField> structFields;
-    private /* synthetic */ int actualAlignType;
-    private /* synthetic */ TypeMapper typeMapper;
-    private /* synthetic */ boolean readCalled;
-    private static final /* synthetic */ Pointer PLACEHOLDER_MEMORY;
-    public static final /* synthetic */ int ALIGN_MSVC;
-    static final /* synthetic */ Map<Class<?>, LayoutInfo> layoutInfo;
-    public static final /* synthetic */ int ALIGN_DEFAULT;
-    private /* synthetic */ Structure[] array;
-    private /* synthetic */ boolean autoRead;
-    private static final /* synthetic */ ThreadLocal<Set<Structure>> busy;
-    public static final /* synthetic */ int ALIGN_NONE;
-    private /* synthetic */ int alignType;
-    private /* synthetic */ int structAlignment;
-    private /* synthetic */ Pointer memory;
-    public static final /* synthetic */ int ALIGN_GNUC;
-    private /* synthetic */ int size;
-    private /* synthetic */ boolean autoWrite;
+    static final Map<Class<?>, List<String>> fieldOrder;
+    protected static final int CALCULATE_SIZE;
+    private static final ThreadLocal<Map<Pointer, Structure>> reads;
+    private long typeInfo;
+    private String encoding;
+    private final Map<String, Object> nativeStrings = new HashMap<String, Object>();
+    private Map<String, StructField> structFields;
+    private int actualAlignType;
+    private TypeMapper typeMapper;
+    private boolean readCalled;
+    private static final Pointer PLACEHOLDER_MEMORY;
+    public static final int ALIGN_MSVC;
+    static final Map<Class<?>, LayoutInfo> layoutInfo;
+    public static final int ALIGN_DEFAULT;
+    private Structure[] array;
+    private boolean autoRead = true;
+    private static final ThreadLocal<Set<Structure>> busy;
+    public static final int ALIGN_NONE;
+    private int alignType;
+    private int structAlignment;
+    private Pointer memory;
+    public static final int ALIGN_GNUC;
+    private int size = -1;
+    private boolean autoWrite = true;
 
     public String toString() {
-        Structure lllIIIllll;
-        return lllIIIllll.toString(Boolean.getBoolean("jna.dump_memory"));
+        return this.toString(Boolean.getBoolean("jna.dump_memory"));
     }
 
-    Pointer getFieldTypeInfo(StructField llIIIIlIll) {
-        ToNativeConverter llIIIIllIl;
-        Structure llIIIIllII;
-        Class<?> llIIIIlIlI = llIIIIlIll.type;
-        Object llIIIIlIIl = llIIIIllII.getFieldValue(llIIIIlIll.field);
-        if (llIIIIllII.typeMapper != null && (llIIIIllIl = llIIIIllII.typeMapper.getToNativeConverter(llIIIIlIlI)) != null) {
-            llIIIIlIlI = llIIIIllIl.nativeType();
-            llIIIIlIIl = llIIIIllIl.toNative(llIIIIlIIl, new ToNativeContext());
+    Pointer getFieldTypeInfo(StructField structField) {
+        ToNativeConverter toNativeConverter;
+        Class<?> class_ = structField.type;
+        Object object = this.getFieldValue(structField.field);
+        if (this.typeMapper != null && (toNativeConverter = this.typeMapper.getToNativeConverter(class_)) != null) {
+            class_ = toNativeConverter.nativeType();
+            object = toNativeConverter.toNative(object, new ToNativeContext());
         }
-        return FFIType.get(llIIIIlIIl, llIIIIlIlI);
+        return FFIType.access$800(object, class_);
     }
 
-    private void ensureAllocated(boolean lIllIIIIIIl) {
-        Structure lIllIIIIIII;
-        if (lIllIIIIIII.memory == null) {
-            lIllIIIIIII.allocateMemory(lIllIIIIIIl);
-        } else if (lIllIIIIIII.size == -1) {
-            lIllIIIIIII.size = lIllIIIIIII.calculateSize(true, lIllIIIIIIl);
-            if (!(lIllIIIIIII.memory instanceof AutoAllocated)) {
+    private void ensureAllocated(boolean bl) {
+        if (this.memory == null) {
+            this.allocateMemory(bl);
+        } else if (this.size == -1) {
+            this.size = this.calculateSize(true, bl);
+            if (!(this.memory instanceof AutoAllocated)) {
                 try {
-                    lIllIIIIIII.memory = lIllIIIIIII.memory.share(0L, lIllIIIIIII.size);
+                    this.memory = this.memory.share(0L, this.size);
                 }
-                catch (IndexOutOfBoundsException lIllIIIIIll) {
-                    throw new IllegalArgumentException("Structure exceeds provided memory bounds", lIllIIIIIll);
+                catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+                    throw new IllegalArgumentException("Structure exceeds provided memory bounds", indexOutOfBoundsException);
                 }
             }
         }
     }
 
     public boolean getAutoRead() {
-        Structure lIlllIllll;
-        return lIlllIllll.autoRead;
+        return this.autoRead;
     }
 
-    private void allocateMemory(boolean lIlIlllIlIl) {
-        Structure lIlIllllIII;
-        lIlIllllIII.allocateMemory(lIlIllllIII.calculateSize(true, lIlIlllIlIl));
+    private void allocateMemory(boolean bl) {
+        this.allocateMemory(this.calculateSize(true, bl));
     }
 
-    public void setAutoSynch(boolean lIlllllIlI) {
-        Structure lIlllllIIl;
-        lIlllllIIl.setAutoRead(lIlllllIlI);
-        lIlllllIIl.setAutoWrite(lIlllllIlI);
+    public void setAutoSynch(boolean bl) {
+        this.setAutoRead(bl);
+        this.setAutoWrite(bl);
     }
 
-    protected List<Field> getFields(boolean lIIIllIlIlI) {
-        Structure lIIIllIIlIl;
-        List<Field> lIIIllIlIIl = lIIIllIIlIl.getFieldList();
-        HashSet<String> lIIIllIlIII = new HashSet<String>();
-        for (Field lIIIllIllII : lIIIllIlIIl) {
-            lIIIllIlIII.add(lIIIllIllII.getName());
+    protected List<Field> getFields(boolean bl) {
+        List<Field> list = this.getFieldList();
+        HashSet<String> hashSet2 = new HashSet<String>();
+        for (Field hashSet3 : list) {
+            hashSet2.add(hashSet3.getName());
         }
-        List<String> lIIIllIIlll = lIIIllIIlIl.fieldOrder();
-        if (lIIIllIIlll.size() != lIIIllIlIIl.size() && lIIIllIlIIl.size() > 1) {
-            if (lIIIllIlIlI) {
-                throw new Error(String.valueOf(new StringBuilder().append("Structure.getFieldOrder() on ").append(lIIIllIIlIl.getClass()).append(" does not provide enough names [").append(lIIIllIIlll.size()).append("] (").append(Structure.sort(lIIIllIIlll)).append(") to match declared fields [").append(lIIIllIlIIl.size()).append("] (").append(Structure.sort(lIIIllIlIII)).append(")")));
+        List<String> list2 = this.fieldOrder();
+        if (list2.size() != list.size() && list.size() > 1) {
+            if (bl) {
+                throw new Error(String.valueOf(new StringBuilder().append("Structure.getFieldOrder() on ").append(this.getClass()).append(" does not provide enough names [").append(list2.size()).append("] (").append(Structure.sort(list2)).append(") to match declared fields [").append(list.size()).append("] (").append(Structure.sort(hashSet2)).append(")")));
             }
             return null;
         }
-        HashSet<String> lIIIllIIllI = new HashSet<String>(lIIIllIIlll);
-        if (!lIIIllIIllI.equals(lIIIllIlIII)) {
-            throw new Error(String.valueOf(new StringBuilder().append("Structure.getFieldOrder() on ").append(lIIIllIIlIl.getClass()).append(" returns names (").append(Structure.sort(lIIIllIIlll)).append(") which do not match declared field names (").append(Structure.sort(lIIIllIlIII)).append(")")));
+        HashSet hashSet = new HashSet(list2);
+        if (!hashSet.equals(hashSet2)) {
+            throw new Error(String.valueOf(new StringBuilder().append("Structure.getFieldOrder() on ").append(this.getClass()).append(" returns names (").append(Structure.sort(list2)).append(") which do not match declared field names (").append(Structure.sort(hashSet2)).append(")")));
         }
-        lIIIllIIlIl.sortFields(lIIIllIlIIl, lIIIllIIlll);
-        return lIIIllIlIIl;
+        this.sortFields(list, list2);
+        return list;
     }
 
-    private int addPadding(int lllIllIIll) {
-        Structure lllIllIlII;
-        return lllIllIlII.addPadding(lllIllIIll, lllIllIlII.structAlignment);
+    private int addPadding(int n) {
+        return this.addPadding(n, this.structAlignment);
     }
 
-    public static void autoRead(Structure[] lIlIIlllII) {
-        Structure.structureArrayCheck(lIlIIlllII);
-        if (lIlIIlllII[0].array == lIlIIlllII) {
-            lIlIIlllII[0].autoRead();
+    public static void autoRead(Structure[] arrstructure) {
+        Structure.structureArrayCheck(arrstructure);
+        if (arrstructure[0].array == arrstructure) {
+            arrstructure[0].autoRead();
         } else {
-            for (int lIlIIllllI = 0; lIlIIllllI < lIlIIlllII.length; ++lIlIIllllI) {
-                if (lIlIIlllII[lIlIIllllI] == null) continue;
-                lIlIIlllII[lIlIIllllI].autoRead();
+            for (int i = 0; i < arrstructure.length; ++i) {
+                if (arrstructure[i] == null) continue;
+                arrstructure[i].autoRead();
+                if (!false) continue;
+                return;
             }
         }
     }
 
-    public Object readField(String lIlIlIIlIII) {
-        Structure lIlIlIIllII;
-        lIlIlIIllII.ensureAllocated();
-        StructField lIlIlIIlIlI = lIlIlIIllII.fields().get(lIlIlIIlIII);
-        if (lIlIlIIlIlI == null) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(lIlIlIIlIII)));
+    public Object readField(String string) {
+        this.ensureAllocated();
+        StructField structField = this.fields().get(string);
+        if (structField == null) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(string)));
         }
-        return lIlIlIIllII.readField(lIlIlIIlIlI);
+        return this.readField(structField);
     }
 
-    protected void allocateMemory(int lIlIllIllll) {
-        Structure lIlIlllIIlI;
-        if (lIlIllIllll == -1) {
-            lIlIllIllll = lIlIlllIIlI.calculateSize(false);
-        } else if (lIlIllIllll <= 0) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Structure size must be greater than zero: ").append(lIlIllIllll)));
+    protected void allocateMemory(int n) {
+        if (n == -1) {
+            n = this.calculateSize(false);
+        } else if (n <= 0) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Structure size must be greater than zero: ").append(n)));
         }
-        if (lIlIllIllll != -1) {
-            if (lIlIlllIIlI.memory == null || lIlIlllIIlI.memory instanceof AutoAllocated) {
-                lIlIlllIIlI.memory = lIlIlllIIlI.autoAllocate(lIlIllIllll);
+        if (n != -1) {
+            if (this.memory == null || this.memory instanceof AutoAllocated) {
+                this.memory = this.autoAllocate(n);
             }
-            lIlIlllIIlI.size = lIlIllIllll;
+            this.size = n;
         }
     }
 
     public void read() {
-        Structure lIlIlIlllIl;
-        if (lIlIlIlllIl.memory == PLACEHOLDER_MEMORY) {
+        if (this.memory == PLACEHOLDER_MEMORY) {
             return;
         }
-        lIlIlIlllIl.readCalled = true;
-        lIlIlIlllIl.ensureAllocated();
-        if (Structure.busy().contains(lIlIlIlllIl)) {
+        this.readCalled = true;
+        this.ensureAllocated();
+        if (Structure.busy().contains(this)) {
             return;
         }
-        Structure.busy().add(lIlIlIlllIl);
-        if (lIlIlIlllIl instanceof ByReference) {
-            Structure.reading().put(lIlIlIlllIl.getPointer(), lIlIlIlllIl);
+        Structure.busy().add(this);
+        if (this instanceof ByReference) {
+            Structure.reading().put(this.getPointer(), this);
         }
         try {
-            for (StructField lIlIlIllllI : lIlIlIlllIl.fields().values()) {
-                lIlIlIlllIl.readField(lIlIlIllllI);
+            for (StructField structField : this.fields().values()) {
+                this.readField(structField);
             }
         }
         finally {
-            Structure.busy().remove(lIlIlIlllIl);
-            if (Structure.reading().get(lIlIlIlllIl.getPointer()) == lIlIlIlllIl) {
-                Structure.reading().remove(lIlIlIlllIl.getPointer());
+            Structure.busy().remove(this);
+            if (Structure.reading().get(this.getPointer()) == this) {
+                Structure.reading().remove(this.getPointer());
             }
         }
     }
 
-    protected void cacheTypeInfo(Pointer llIIIlIlIl) {
-        llIIIlIllI.typeInfo = llIIIlIlIl.peer;
+    protected void cacheTypeInfo(Pointer pointer) {
+        this.typeInfo = pointer.peer;
     }
 
     @Deprecated
-    protected final void setFieldOrder(String[] lIIllIIIIll) {
+    protected final void setFieldOrder(String[] arrstring) {
         throw new Error("This method is obsolete, use getFieldOrder() instead");
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     * WARNING - void declaration
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    static int size(Class<?> lIIIlIlIIII, Structure lIIIlIIlIll) {
-        void lIIIlIIlllI;
-        int lIIIlIIllIl;
-        Map<Class<?>, LayoutInfo> lIIIlIIlIIl = layoutInfo;
-        synchronized (lIIIlIIlIIl) {
-            LayoutInfo lIIIlIlIIIl = layoutInfo.get(lIIIlIlIIII);
+    static int size(Class<?> class_, Structure structure) {
+        LayoutInfo layoutInfo;
+        Map<Class<?>, LayoutInfo> map = Structure.layoutInfo;
+        synchronized (map) {
+            layoutInfo = Structure.layoutInfo.get(class_);
         }
-        int n = lIIIlIIllIl = lIIIlIIlllI != null && !((LayoutInfo)lIIIlIIlllI).variable ? ((LayoutInfo)lIIIlIIlllI).size : -1;
-        if (lIIIlIIllIl == -1) {
-            if (lIIIlIIlIll == null) {
-                lIIIlIIlIll = Structure.newInstance(lIIIlIlIIII, PLACEHOLDER_MEMORY);
-            }
-            lIIIlIIllIl = lIIIlIIlIll.size();
-        }
-        return lIIIlIIllIl;
+        int n = layoutInfo != null && !LayoutInfo.access$000(layoutInfo) ? LayoutInfo.access$100(layoutInfo) : -1;
+        if (n != -1) return n;
+        if (structure != null) return structure.size();
+        structure = Structure.newInstance(class_, PLACEHOLDER_MEMORY);
+        return structure.size();
     }
 
     static {
@@ -248,13 +236,15 @@ public abstract class Structure {
         layoutInfo = new WeakHashMap();
         fieldOrder = new WeakHashMap();
         reads = new ThreadLocal<Map<Pointer, Structure>>(){
-            {
-                1 lllllllllllllllllIIlIIlIIlIIIIll;
-            }
 
             @Override
             protected synchronized Map<Pointer, Structure> initialValue() {
                 return new HashMap<Pointer, Structure>();
+            }
+
+            @Override
+            protected Object initialValue() {
+                return this.initialValue();
             }
         };
         busy = new ThreadLocal<Set<Structure>>(){
@@ -263,204 +253,196 @@ public abstract class Structure {
             protected synchronized Set<Structure> initialValue() {
                 return new StructureSet();
             }
-            {
-                2 llllllllllllllllllIllllIIIllIlIl;
+
+            @Override
+            protected Object initialValue() {
+                return this.initialValue();
             }
         };
         PLACEHOLDER_MEMORY = new Pointer(0L){
 
             @Override
-            public Pointer share(long llllllllllllllllIlIlllllllIlIllI, long llllllllllllllllIlIlllllllIlIlIl) {
-                3 llllllllllllllllIlIlllllllIlIlll;
-                return llllllllllllllllIlIlllllllIlIlll;
-            }
-            {
-                3 llllllllllllllllIlIlllllllIlllII;
+            public Pointer share(long l, long l2) {
+                return this;
             }
         };
     }
 
     protected int getStructAlignment() {
-        Structure lllIlIIllI;
-        if (lllIlIIllI.size == -1) {
-            lllIlIIllI.calculateSize(true);
+        if (this.size == -1) {
+            this.calculateSize(true);
         }
-        return lllIlIIllI.structAlignment;
+        return this.structAlignment;
     }
 
     protected Structure() {
-        lIllllllIll(0);
-        Structure lIllllllIll;
+        this(0);
     }
 
-    private int addPadding(int lllIlIllII, int lllIlIlIII) {
-        Structure lllIlIlIlI;
-        if (lllIlIlIlI.actualAlignType != 1 && lllIlIllII % lllIlIlIII != 0) {
-            lllIlIllII += lllIlIlIII - lllIlIllII % lllIlIlIII;
+    private int addPadding(int n, int n2) {
+        if (this.actualAlignType != 1 && n % n2 != 0) {
+            n += n2 - n % n2;
         }
-        return lllIlIllII;
+        return n;
     }
 
     private void initializeFields() {
-        Structure llllIIlllI;
-        List<Field> llllIIllll = llllIIlllI.getFieldList();
-        for (Field llllIlIIIl : llllIIllll) {
+        List<Field> list = this.getFieldList();
+        for (Field field : list) {
             try {
-                Object llllIlIIll = llllIlIIIl.get(llllIIlllI);
-                if (llllIlIIll != null) continue;
-                llllIIlllI.initializeField(llllIlIIIl, llllIlIIIl.getType());
+                Object object = field.get(this);
+                if (object != null) continue;
+                this.initializeField(field, field.getType());
             }
-            catch (Exception llllIlIIlI) {
-                throw new Error(String.valueOf(new StringBuilder().append("Exception reading field '").append(llllIlIIIl.getName()).append("' in ").append(llllIIlllI.getClass())), llllIlIIlI);
+            catch (Exception exception) {
+                throw new Error(String.valueOf(new StringBuilder().append("Exception reading field '").append(field.getName()).append("' in ").append(this.getClass())), exception);
             }
         }
     }
 
-    private String toString(int llIllIIlll, boolean llIllIIllI, boolean llIllIIlIl) {
-        Structure llIllIlIII;
-        llIllIlIII.ensureAllocated();
-        String llIllIIlII = System.getProperty("line.separator");
-        String llIllIIIll = String.valueOf(new StringBuilder().append(llIllIlIII.format(llIllIlIII.getClass())).append("(").append(llIllIlIII.getPointer()).append(")"));
-        if (!(llIllIlIII.getPointer() instanceof Memory)) {
-            llIllIIIll = String.valueOf(new StringBuilder().append(llIllIIIll).append(" (").append(llIllIlIII.size()).append(" bytes)"));
+    private String toString(int n, boolean bl, boolean bl2) {
+        Object object;
+        this.ensureAllocated();
+        String string = System.getProperty("line.separator");
+        String string2 = String.valueOf(new StringBuilder().append(this.format(this.getClass())).append("(").append(this.getPointer()).append(")"));
+        if (!(this.getPointer() instanceof Memory)) {
+            string2 = String.valueOf(new StringBuilder().append(string2).append(" (").append(this.size()).append(" bytes)"));
         }
-        String llIllIIIlI = "";
-        for (int llIlllIIIl = 0; llIlllIIIl < llIllIIlll; ++llIlllIIIl) {
-            llIllIIIlI = String.valueOf(new StringBuilder().append(llIllIIIlI).append("  "));
+        String string3 = "";
+        for (int i = 0; i < n; ++i) {
+            string3 = String.valueOf(new StringBuilder().append(string3).append("  "));
+            if (2 > 0) continue;
+            return null;
         }
-        String llIllIIIIl = llIllIIlII;
-        if (!llIllIIllI) {
-            llIllIIIIl = "...}";
+        String string4 = string;
+        if (!bl) {
+            string4 = "...}";
         } else {
-            Iterator<StructField> llIllIllII = llIllIlIII.fields().values().iterator();
-            while (llIllIllII.hasNext()) {
-                StructField llIlllIIII = llIllIllII.next();
-                Object llIllIllll = llIllIlIII.getFieldValue(llIlllIIII.field);
-                String llIllIlllI = llIllIlIII.format(llIlllIIII.type);
-                String llIllIllIl = "";
-                llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append(llIllIIIlI));
-                if (llIlllIIII.type.isArray() && llIllIllll != null) {
-                    llIllIlllI = llIllIlIII.format(llIlllIIII.type.getComponentType());
-                    llIllIllIl = String.valueOf(new StringBuilder().append("[").append(Array.getLength(llIllIllll)).append("]"));
+            Iterator<StructField> iterator = this.fields().values().iterator();
+            while (iterator.hasNext()) {
+                object = iterator.next();
+                Object object2 = this.getFieldValue(((StructField)object).field);
+                String string5 = this.format(((StructField)object).type);
+                String string6 = "";
+                string4 = String.valueOf(new StringBuilder().append(string4).append(string3));
+                if (((StructField)object).type.isArray() && object2 != null) {
+                    string5 = this.format(((StructField)object).type.getComponentType());
+                    string6 = String.valueOf(new StringBuilder().append("[").append(Array.getLength(object2)).append("]"));
                 }
-                llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append("  ").append(llIllIlllI).append(" ").append(llIlllIIII.name).append(llIllIllIl).append("@").append(Integer.toHexString(llIlllIIII.offset)));
-                if (llIllIllll instanceof Structure) {
-                    llIllIllll = ((Structure)llIllIllll).toString(llIllIIlll + 1, !(llIllIllll instanceof ByReference), llIllIIlIl);
+                string4 = String.valueOf(new StringBuilder().append(string4).append("  ").append(string5).append(" ").append(((StructField)object).name).append(string6).append("@").append(Integer.toHexString(((StructField)object).offset)));
+                if (object2 instanceof Structure) {
+                    object2 = ((Structure)object2).toString(n + 1, !(object2 instanceof ByReference), bl2);
                 }
-                llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append("="));
-                llIllIIIIl = llIllIllll instanceof Long ? String.valueOf(new StringBuilder().append(llIllIIIIl).append(Long.toHexString((Long)llIllIllll))) : (llIllIllll instanceof Integer ? String.valueOf(new StringBuilder().append(llIllIIIIl).append(Integer.toHexString((Integer)llIllIllll))) : (llIllIllll instanceof Short ? String.valueOf(new StringBuilder().append(llIllIIIIl).append(Integer.toHexString(((Short)llIllIllll).shortValue()))) : (llIllIllll instanceof Byte ? String.valueOf(new StringBuilder().append(llIllIIIIl).append(Integer.toHexString(((Byte)llIllIllll).byteValue()))) : String.valueOf(new StringBuilder().append(llIllIIIIl).append(String.valueOf(llIllIllll).trim())))));
-                llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append(llIllIIlII));
-                if (llIllIllII.hasNext()) continue;
-                llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append(llIllIIIlI).append("}"));
+                string4 = String.valueOf(new StringBuilder().append(string4).append("="));
+                string4 = object2 instanceof Long ? String.valueOf(new StringBuilder().append(string4).append(Long.toHexString((Long)object2))) : (object2 instanceof Integer ? String.valueOf(new StringBuilder().append(string4).append(Integer.toHexString((Integer)object2))) : (object2 instanceof Short ? String.valueOf(new StringBuilder().append(string4).append(Integer.toHexString(((Short)object2).shortValue()))) : (object2 instanceof Byte ? String.valueOf(new StringBuilder().append(string4).append(Integer.toHexString(((Byte)object2).byteValue()))) : String.valueOf(new StringBuilder().append(string4).append(String.valueOf(object2).trim())))));
+                string4 = String.valueOf(new StringBuilder().append(string4).append(string));
+                if (iterator.hasNext()) continue;
+                string4 = String.valueOf(new StringBuilder().append(string4).append(string3).append("}"));
             }
         }
-        if (llIllIIlll == 0 && llIllIIlIl) {
-            int llIllIlIlI = 4;
-            llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append(llIllIIlII).append("memory dump").append(llIllIIlII));
-            byte[] llIllIlIIl = llIllIlIII.getPointer().getByteArray(0L, llIllIlIII.size());
-            for (int llIllIlIll = 0; llIllIlIll < llIllIlIIl.length; ++llIllIlIll) {
-                if (llIllIlIll % 4 == 0) {
-                    llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append("["));
+        if (n == 0 && bl2) {
+            int n2 = 4;
+            string4 = String.valueOf(new StringBuilder().append(string4).append(string).append("memory dump").append(string));
+            object = this.getPointer().getByteArray(0L, this.size());
+            for (int i = 0; i < ((Object)object).length; ++i) {
+                if (i % 4 == 0) {
+                    string4 = String.valueOf(new StringBuilder().append(string4).append("["));
                 }
-                if (llIllIlIIl[llIllIlIll] >= 0 && llIllIlIIl[llIllIlIll] < 16) {
-                    llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append("0"));
+                if (object[i] >= 0 && object[i] < 16) {
+                    string4 = String.valueOf(new StringBuilder().append(string4).append("0"));
                 }
-                llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append(Integer.toHexString(llIllIlIIl[llIllIlIll] & 0xFF)));
-                if (llIllIlIll % 4 != 3 || llIllIlIll >= llIllIlIIl.length - 1) continue;
-                llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append("]").append(llIllIIlII));
+                string4 = String.valueOf(new StringBuilder().append(string4).append(Integer.toHexString(object[i] & 0xFF)));
+                if (i % 4 != 3 || i >= ((Object)object).length - 1) continue;
+                string4 = String.valueOf(new StringBuilder().append(string4).append("]").append(string));
+                if (-2 <= 0) continue;
+                return null;
             }
-            llIllIIIIl = String.valueOf(new StringBuilder().append(llIllIIIIl).append("]"));
+            string4 = String.valueOf(new StringBuilder().append(string4).append("]"));
         }
-        return String.valueOf(new StringBuilder().append(llIllIIIll).append(" {").append(llIllIIIIl));
+        return String.valueOf(new StringBuilder().append(string2).append(" {").append(string4));
     }
 
-    protected Structure(Pointer lIlllIllIII, int lIlllIllIlI) {
-        lIlllIlllII(lIlllIllIII, lIlllIllIlI, null);
-        Structure lIlllIlllII;
+    protected Structure(Pointer pointer, int n) {
+        this(pointer, n, null);
     }
 
-    public static Structure newInstance(Class<?> lIllIIlIlI, Pointer lIllIIllII) throws IllegalArgumentException {
+    public static Structure newInstance(Class<?> class_, Pointer pointer) throws IllegalArgumentException {
         try {
-            Constructor<?> lIllIlIlII = lIllIIlIlI.getConstructor(Pointer.class);
-            return (Structure)lIllIlIlII.newInstance(lIllIIllII);
+            Constructor<?> constructor = class_.getConstructor(Pointer.class);
+            return (Structure)constructor.newInstance(pointer);
         }
-        catch (NoSuchMethodException lIllIlIlII) {
+        catch (NoSuchMethodException noSuchMethodException) {
         }
-        catch (SecurityException lIllIlIlII) {
+        catch (SecurityException securityException) {
         }
-        catch (InstantiationException lIllIlIIlI) {
-            String lIllIlIIll = String.valueOf(new StringBuilder().append("Can't instantiate ").append(lIllIIlIlI));
-            throw new IllegalArgumentException(lIllIlIIll, lIllIlIIlI);
+        catch (IllegalAccessException | InstantiationException | InvocationTargetException reflectiveOperationException) {
+            String string = String.valueOf(new StringBuilder().append("Can't instantiate ").append(class_));
+            throw new IllegalArgumentException(string, reflectiveOperationException);
         }
-        catch (IllegalAccessException lIllIlIIII) {
-            String lIllIlIIIl = String.valueOf(new StringBuilder().append("Instantiation of ").append(lIllIIlIlI).append(" (Pointer) not allowed, is it public?"));
-            throw new IllegalArgumentException(lIllIlIIIl, lIllIlIIII);
+        Structure structure = Structure.newInstance(class_);
+        if (pointer != PLACEHOLDER_MEMORY) {
+            structure.useMemory(pointer);
         }
-        catch (InvocationTargetException lIllIIlllI) {
-            String lIllIIllll = String.valueOf(new StringBuilder().append("Exception thrown while instantiating an instance of ").append(lIllIIlIlI));
-            lIllIIlllI.printStackTrace();
-            throw new IllegalArgumentException(lIllIIllll, lIllIIlllI);
-        }
-        Structure lIllIIlIll = Structure.newInstance(lIllIIlIlI);
-        if (lIllIIllII != PLACEHOLDER_MEMORY) {
-            lIllIIlIll.useMemory(lIllIIllII);
-        }
-        return lIllIIlIll;
+        return structure;
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
     private List<String> fieldOrder() {
-        Structure lIIlIIlIlII;
-        Class<?> lIIlIIlIIll = lIIlIIlIlII.getClass();
-        Map<Class<?>, List<String>> lIIlIIlIIII = fieldOrder;
-        synchronized (lIIlIIlIIII) {
-            List<String> lIIlIIlIlIl = fieldOrder.get(lIIlIIlIIll);
-            if (lIIlIIlIlIl == null) {
-                lIIlIIlIlIl = lIIlIIlIlII.getFieldOrder();
-                fieldOrder.put(lIIlIIlIIll, lIIlIIlIlIl);
+        Class<?> class_ = this.getClass();
+        Map<Class<?>, List<String>> map = fieldOrder;
+        synchronized (map) {
+            List<String> list = fieldOrder.get(class_);
+            if (list == null) {
+                list = this.getFieldOrder();
+                fieldOrder.put(class_, list);
             }
-            return lIIlIIlIlIl;
+            return list;
         }
     }
 
-    public boolean equals(Object llIIlIIIIl) {
-        Structure llIIlIIIlI;
-        return llIIlIIIIl instanceof Structure && llIIlIIIIl.getClass() == llIIlIIIlI.getClass() && ((Structure)llIIlIIIIl).getPointer().equals(llIIlIIIlI.getPointer());
+    public boolean equals(Object object) {
+        return object instanceof Structure && object.getClass() == this.getClass() && ((Structure)object).getPointer().equals(this.getPointer());
     }
 
-    protected void sortFields(List<Field> lIIlIllIlll, List<String> lIIlIllIllI) {
-        block0: for (int lIIlIlllIIl = 0; lIIlIlllIIl < lIIlIllIllI.size(); ++lIIlIlllIIl) {
-            String lIIlIlllIlI = lIIlIllIllI.get(lIIlIlllIIl);
-            for (int lIIlIlllIll = 0; lIIlIlllIll < lIIlIllIlll.size(); ++lIIlIlllIll) {
-                Field lIIlIllllII = lIIlIllIlll.get(lIIlIlllIll);
-                if (!lIIlIlllIlI.equals(lIIlIllllII.getName())) continue;
-                Collections.swap(lIIlIllIlll, lIIlIlllIIl, lIIlIlllIll);
+    protected void sortFields(List<Field> list, List<String> list2) {
+        block0: for (int i = 0; i < list2.size(); ++i) {
+            String string = list2.get(i);
+            for (int j = 0; j < list.size(); ++j) {
+                Field field = list.get(j);
+                if (!string.equals(field.getName())) continue;
+                Collections.swap(list, i, j);
                 continue block0;
             }
+            if (0 <= 0) continue;
+            return;
         }
     }
 
     public void clear() {
-        Structure lIlIllIlIIl;
-        lIlIllIlIIl.ensureAllocated();
-        lIlIllIlIIl.memory.clear(lIlIllIlIIl.size());
+        this.ensureAllocated();
+        this.memory.clear(this.size());
     }
 
-    public boolean dataEquals(Structure llIIlIlllI, boolean llIIlIllIl) {
-        byte[] llIIlIlIll;
-        byte[] llIIlIllII;
-        Structure llIIlIlIlI;
-        if (llIIlIllIl) {
-            llIIlIlllI.getPointer().clear(llIIlIlllI.size());
-            llIIlIlllI.write();
-            llIIlIlIlI.getPointer().clear(llIIlIlIlI.size());
-            llIIlIlIlI.write();
+    static Pointer access$2000() {
+        return PLACEHOLDER_MEMORY;
+    }
+
+    public boolean dataEquals(Structure structure, boolean bl) {
+        byte[] arrby;
+        byte[] arrby2;
+        if (bl) {
+            structure.getPointer().clear(structure.size());
+            structure.write();
+            this.getPointer().clear(this.size());
+            this.write();
         }
-        if ((llIIlIllII = llIIlIlllI.getPointer().getByteArray(0L, llIIlIlllI.size())).length == (llIIlIlIll = llIIlIlIlI.getPointer().getByteArray(0L, llIIlIlIlI.size())).length) {
-            for (int llIIllIIII = 0; llIIllIIII < llIIlIllII.length; ++llIIllIIII) {
-                if (llIIlIllII[llIIllIIII] == llIIlIlIll[llIIllIIII]) continue;
+        if ((arrby2 = structure.getPointer().getByteArray(0L, structure.size())).length == (arrby = this.getPointer().getByteArray(0L, this.size())).length) {
+            for (int i = 0; i < arrby2.length; ++i) {
+                if (arrby2[i] == arrby[i]) continue;
                 return false;
             }
             return true;
@@ -472,225 +454,216 @@ public abstract class Structure {
         return reads.get();
     }
 
-    private LayoutInfo deriveLayout(boolean lllllIlIIl, boolean lllllIllll) {
-        Structure lllllIlIlI;
-        int lllllIlllI = 0;
-        List<Field> lllllIllIl = lllllIlIlI.getFields(lllllIlIIl);
-        if (lllllIllIl == null) {
+    private LayoutInfo deriveLayout(boolean bl, boolean bl2) {
+        int n = 0;
+        List<Field> list = this.getFields(bl);
+        if (list == null) {
             return null;
         }
-        LayoutInfo lllllIllII = new LayoutInfo();
-        lllllIllII.alignType = lllllIlIlI.alignType;
-        lllllIllII.typeMapper = lllllIlIlI.typeMapper;
-        boolean lllllIlIll = true;
-        for (Field lllllllIlI : lllllIllIl) {
-            int lllllllIIl = lllllllIlI.getModifiers();
-            Class<?> lllllllIII = lllllllIlI.getType();
-            if (lllllllIII.isArray()) {
-                lllllIllII.variable = true;
+        LayoutInfo layoutInfo = new LayoutInfo(null);
+        LayoutInfo.access$202(layoutInfo, this.alignType);
+        LayoutInfo.access$302(layoutInfo, this.typeMapper);
+        boolean bl3 = true;
+        for (Field field : list) {
+            int n2 = field.getModifiers();
+            Class<?> class_ = field.getType();
+            if (class_.isArray()) {
+                LayoutInfo.access$002(layoutInfo, true);
             }
-            StructField llllllIlll = new StructField();
-            llllllIlll.isVolatile = Modifier.isVolatile(lllllllIIl);
-            llllllIlll.isReadOnly = Modifier.isFinal(lllllllIIl);
-            if (llllllIlll.isReadOnly) {
+            StructField structField = new StructField();
+            structField.isVolatile = Modifier.isVolatile(n2);
+            structField.isReadOnly = Modifier.isFinal(n2);
+            if (structField.isReadOnly) {
                 if (!Platform.RO_FIELDS) {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("This VM does not support read-only fields (field '").append(lllllllIlI.getName()).append("' within ").append(lllllIlIlI.getClass()).append(")")));
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("This VM does not support read-only fields (field '").append(field.getName()).append("' within ").append(this.getClass()).append(")")));
                 }
-                lllllllIlI.setAccessible(true);
+                field.setAccessible(true);
             }
-            llllllIlll.field = lllllllIlI;
-            llllllIlll.name = lllllllIlI.getName();
-            llllllIlll.type = lllllllIII;
-            if (Callback.class.isAssignableFrom(lllllllIII) && !lllllllIII.isInterface()) {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Structure Callback field '").append(lllllllIlI.getName()).append("' must be an interface")));
+            structField.field = field;
+            structField.name = field.getName();
+            structField.type = class_;
+            if (Callback.class.isAssignableFrom(class_) && !class_.isInterface()) {
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Structure Callback field '").append(field.getName()).append("' must be an interface")));
             }
-            if (lllllllIII.isArray() && Structure.class.equals(lllllllIII.getComponentType())) {
-                String lIIIIIIIIIl = "Nested Structure arrays must use a derived Structure type so that the size of the elements can be determined";
-                throw new IllegalArgumentException(lIIIIIIIIIl);
+            if (class_.isArray() && Structure.class.equals(class_.getComponentType())) {
+                String string = "Nested Structure arrays must use a derived Structure type so that the size of the elements can be determined";
+                throw new IllegalArgumentException(string);
             }
-            int llllllIllI = 1;
-            if (Modifier.isPublic(lllllllIlI.getModifiers())) {
-                Object llllllIlIl = lllllIlIlI.getFieldValue(llllllIlll.field);
-                if (llllllIlIl == null && lllllllIII.isArray()) {
-                    if (lllllIlIIl) {
+            int n3 = 1;
+            if (Modifier.isPublic(field.getModifiers())) {
+                Object object;
+                ToNativeConverter toNativeConverter;
+                Object object2 = this.getFieldValue(structField.field);
+                if (object2 == null && class_.isArray()) {
+                    if (bl) {
                         throw new IllegalStateException("Array fields must be initialized");
                     }
                     return null;
                 }
-                Class<Object> llllllIlII = lllllllIII;
-                if (NativeMapped.class.isAssignableFrom(lllllllIII)) {
-                    NativeMappedConverter lIIIIIIIIII = NativeMappedConverter.getInstance(lllllllIII);
-                    llllllIlII = lIIIIIIIIII.nativeType();
-                    llllllIlll.writeConverter = lIIIIIIIIII;
-                    llllllIlll.readConverter = lIIIIIIIIII;
-                    llllllIlll.context = new StructureReadContext(lllllIlIlI, lllllllIlI);
-                } else if (lllllIlIlI.typeMapper != null) {
-                    ToNativeConverter lllllllllI = lllllIlIlI.typeMapper.getToNativeConverter(lllllllIII);
-                    FromNativeConverter llllllllIl = lllllIlIlI.typeMapper.getFromNativeConverter(lllllllIII);
-                    if (lllllllllI != null && llllllllIl != null) {
-                        llllllIlII = (llllllIlIl = lllllllllI.toNative(llllllIlIl, new StructureWriteContext(lllllIlIlI, llllllIlll.field))) != null ? llllllIlIl.getClass() : Pointer.class;
-                        llllllIlll.writeConverter = lllllllllI;
-                        llllllIlll.readConverter = llllllllIl;
-                        llllllIlll.context = new StructureReadContext(lllllIlIlI, lllllllIlI);
-                    } else if (lllllllllI != null || llllllllIl != null) {
-                        String llllllllll = String.valueOf(new StringBuilder().append("Structures require bidirectional type conversion for ").append(lllllllIII));
-                        throw new IllegalArgumentException(llllllllll);
+                Class<Object> class_2 = class_;
+                if (NativeMapped.class.isAssignableFrom(class_)) {
+                    toNativeConverter = NativeMappedConverter.getInstance(class_);
+                    class_2 = ((NativeMappedConverter)toNativeConverter).nativeType();
+                    structField.writeConverter = toNativeConverter;
+                    structField.readConverter = toNativeConverter;
+                    structField.context = new StructureReadContext(this, field);
+                } else if (this.typeMapper != null) {
+                    toNativeConverter = this.typeMapper.getToNativeConverter(class_);
+                    object = this.typeMapper.getFromNativeConverter(class_);
+                    if (toNativeConverter != null && object != null) {
+                        class_2 = (object2 = toNativeConverter.toNative(object2, new StructureWriteContext(this, structField.field))) != null ? object2.getClass() : Pointer.class;
+                        structField.writeConverter = toNativeConverter;
+                        structField.readConverter = object;
+                        structField.context = new StructureReadContext(this, field);
+                    } else if (toNativeConverter != null || object != null) {
+                        String string = String.valueOf(new StringBuilder().append("Structures require bidirectional type conversion for ").append(class_));
+                        throw new IllegalArgumentException(string);
                     }
                 }
-                if (llllllIlIl == null) {
-                    llllllIlIl = lllllIlIlI.initializeField(llllllIlll.field, lllllllIII);
+                if (object2 == null) {
+                    object2 = this.initializeField(structField.field, class_);
                 }
                 try {
-                    llllllIlll.size = lllllIlIlI.getNativeSize(llllllIlII, llllllIlIl);
-                    llllllIllI = lllllIlIlI.getNativeAlignment(llllllIlII, llllllIlIl, lllllIlIll);
+                    structField.size = this.getNativeSize(class_2, object2);
+                    n3 = this.getNativeAlignment(class_2, object2, bl3);
                 }
-                catch (IllegalArgumentException lllllllIll) {
-                    if (!lllllIlIIl && lllllIlIlI.typeMapper == null) {
+                catch (IllegalArgumentException illegalArgumentException) {
+                    if (!bl && this.typeMapper == null) {
                         return null;
                     }
-                    String llllllllII = String.valueOf(new StringBuilder().append("Invalid Structure field in ").append(lllllIlIlI.getClass()).append(", field name '").append(llllllIlll.name).append("' (").append(llllllIlll.type).append("): ").append(lllllllIll.getMessage()));
-                    throw new IllegalArgumentException(llllllllII, lllllllIll);
+                    object = String.valueOf(new StringBuilder().append("Invalid Structure field in ").append(this.getClass()).append(", field name '").append(structField.name).append("' (").append(structField.type).append("): ").append(illegalArgumentException.getMessage()));
+                    throw new IllegalArgumentException((String)object, illegalArgumentException);
                 }
-                if (llllllIllI == 0) {
-                    throw new Error(String.valueOf(new StringBuilder().append("Field alignment is zero for field '").append(llllllIlll.name).append("' within ").append(lllllIlIlI.getClass())));
+                if (n3 == 0) {
+                    throw new Error(String.valueOf(new StringBuilder().append("Field alignment is zero for field '").append(structField.name).append("' within ").append(this.getClass())));
                 }
-                lllllIllII.alignment = Math.max(lllllIllII.alignment, llllllIllI);
-                if (lllllIlllI % llllllIllI != 0) {
-                    lllllIlllI += llllllIllI - lllllIlllI % llllllIllI;
+                LayoutInfo.access$402(layoutInfo, Math.max(LayoutInfo.access$400(layoutInfo), n3));
+                if (n % n3 != 0) {
+                    n += n3 - n % n3;
                 }
-                if (lllllIlIlI instanceof Union) {
-                    llllllIlll.offset = 0;
-                    lllllIlllI = Math.max(lllllIlllI, llllllIlll.size);
+                if (this instanceof Union) {
+                    structField.offset = 0;
+                    n = Math.max(n, structField.size);
                 } else {
-                    llllllIlll.offset = lllllIlllI;
-                    lllllIlllI += llllllIlll.size;
+                    structField.offset = n;
+                    n += structField.size;
                 }
-                lllllIllII.fields.put(llllllIlll.name, llllllIlll);
-                if (lllllIllII.typeInfoField == null || ((LayoutInfo)lllllIllII).typeInfoField.size < llllllIlll.size || ((LayoutInfo)lllllIllII).typeInfoField.size == llllllIlll.size && Structure.class.isAssignableFrom(llllllIlll.type)) {
-                    lllllIllII.typeInfoField = llllllIlll;
+                LayoutInfo.access$500(layoutInfo).put(structField.name, structField);
+                if (LayoutInfo.access$700(layoutInfo) == null || LayoutInfo.access$700((LayoutInfo)layoutInfo).size < structField.size || LayoutInfo.access$700((LayoutInfo)layoutInfo).size == structField.size && Structure.class.isAssignableFrom(structField.type)) {
+                    LayoutInfo.access$702(layoutInfo, structField);
                 }
             }
-            lllllIlIll = false;
+            bl3 = false;
         }
-        if (lllllIlllI > 0) {
-            int llllllIIlI = lllllIlIlI.addPadding(lllllIlllI, lllllIllII.alignment);
-            if (lllllIlIlI instanceof ByValue && !lllllIllll) {
-                lllllIlIlI.getTypeInfo();
+        if (n > 0) {
+            int n4 = this.addPadding(n, LayoutInfo.access$400(layoutInfo));
+            if (this instanceof ByValue && !bl2) {
+                this.getTypeInfo();
             }
-            lllllIllII.size = llllllIIlI;
-            return lllllIllII;
+            LayoutInfo.access$102(layoutInfo, n4);
+            return layoutInfo;
         }
-        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Structure ").append(lllllIlIlI.getClass()).append(" has unknown or zero size (ensure all fields are public)")));
+        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Structure ").append(this.getClass()).append(" has unknown or zero size (ensure all fields are public)")));
     }
 
-    private void initializeTypeMapper(TypeMapper lIllIllllll) {
-        Structure lIlllIIIIII;
-        if (lIllIllllll == null) {
-            lIllIllllll = Native.getTypeMapper(lIlllIIIIII.getClass());
+    private void initializeTypeMapper(TypeMapper typeMapper) {
+        if (typeMapper == null) {
+            typeMapper = Native.getTypeMapper(this.getClass());
         }
-        lIlllIIIIII.typeMapper = lIllIllllll;
-        lIlllIIIIII.layoutChanged();
+        this.typeMapper = typeMapper;
+        this.layoutChanged();
     }
 
-    public static Structure newInstance(Class<?> lIlIllllIl) throws IllegalArgumentException {
+    public static Structure newInstance(Class<?> class_) throws IllegalArgumentException {
         try {
-            Structure lIllIIIIll = (Structure)lIlIllllIl.newInstance();
-            if (lIllIIIIll instanceof ByValue) {
-                lIllIIIIll.allocateMemory();
+            Structure structure = (Structure)class_.newInstance();
+            if (structure instanceof ByValue) {
+                structure.allocateMemory();
             }
-            return lIllIIIIll;
+            return structure;
         }
-        catch (InstantiationException lIllIIIIIl) {
-            String lIllIIIIlI = String.valueOf(new StringBuilder().append("Can't instantiate ").append(lIlIllllIl));
-            throw new IllegalArgumentException(lIllIIIIlI, lIllIIIIIl);
-        }
-        catch (IllegalAccessException lIlIllllll) {
-            String lIllIIIIII = String.valueOf(new StringBuilder().append("Instantiation of ").append(lIlIllllIl).append(" not allowed, is it public?"));
-            throw new IllegalArgumentException(lIllIIIIII, lIlIllllll);
+        catch (IllegalAccessException | InstantiationException reflectiveOperationException) {
+            String string = String.valueOf(new StringBuilder().append("Can't instantiate ").append(class_));
+            throw new IllegalArgumentException(string, reflectiveOperationException);
         }
     }
 
-    protected Structure(Pointer lIlllIIllIl, int lIlllIlIIII, TypeMapper lIlllIIlIll) {
-        Structure lIlllIlIIlI;
-        lIlllIlIIlI.size = -1;
-        lIlllIlIIlI.nativeStrings = new HashMap<String, Object>();
-        lIlllIlIIlI.autoRead = true;
-        lIlllIlIIlI.autoWrite = true;
-        lIlllIlIIlI.setAlignType(lIlllIlIIII);
-        lIlllIlIIlI.setStringEncoding(Native.getStringEncoding(lIlllIlIIlI.getClass()));
-        lIlllIlIIlI.initializeTypeMapper(lIlllIIlIll);
-        lIlllIlIIlI.validateFields();
-        if (lIlllIIllIl != null) {
-            lIlllIlIIlI.useMemory(lIlllIIllIl, 0, true);
+    static void access$1900(Structure structure, boolean bl) {
+        structure.ensureAllocated(bl);
+    }
+
+    protected Structure(Pointer pointer, int n, TypeMapper typeMapper) {
+        this.setAlignType(n);
+        this.setStringEncoding(Native.getStringEncoding(this.getClass()));
+        this.initializeTypeMapper(typeMapper);
+        this.validateFields();
+        if (pointer != null) {
+            this.useMemory(pointer, 0, true);
         } else {
-            lIlllIlIIlI.allocateMemory(-1);
+            this.allocateMemory(-1);
         }
-        lIlllIlIIlI.initializeFields();
+        this.initializeFields();
     }
 
-    private String format(Class<?> lllIIIIIIl) {
-        String lllIIIIIll = lllIIIIIIl.getName();
-        int lllIIIIIlI = lllIIIIIll.lastIndexOf(".");
-        return lllIIIIIll.substring(lllIIIIIlI + 1);
+    private String format(Class<?> class_) {
+        String string = class_.getName();
+        int n = string.lastIndexOf(".");
+        return string.substring(n + 1);
     }
 
-    static int size(Class<?> lIIIlIlIlll) {
-        return Structure.size(lIIIlIlIlll, null);
+    static int size(Class<?> class_) {
+        return Structure.size(class_, null);
     }
 
-    public void setAutoWrite(boolean lIlllIlIIl) {
-        lIlllIllII.autoWrite = lIlllIlIIl;
+    public void setAutoWrite(boolean bl) {
+        this.autoWrite = bl;
     }
 
     void conditionalAutoRead() {
-        Structure lIlIllIIlII;
-        if (!lIlIllIIlII.readCalled) {
-            lIlIllIIlII.autoRead();
+        if (!this.readCalled) {
+            this.autoRead();
         }
     }
 
-    protected int getNativeSize(Class<?> lIIlllllIl, Object lIIllllllI) {
-        return Native.getNativeSize(lIIlllllIl, lIIllllllI);
+    protected int getNativeSize(Class<?> class_, Object object) {
+        return Native.getNativeSize(class_, object);
     }
 
-    protected void useMemory(Pointer lIllIIllllI, int lIllIIlllIl) {
-        Structure lIllIIlllll;
-        lIllIIlllll.useMemory(lIllIIllllI, lIllIIlllIl, false);
+    protected void useMemory(Pointer pointer, int n) {
+        this.useMemory(pointer, n, false);
     }
 
-    static Structure updateStructureByReference(Class<?> lIlIIIllIlI, Structure lIlIIIlllII, Pointer lIlIIIllIII) {
-        if (lIlIIIllIII == null) {
-            lIlIIIlllII = null;
-        } else if (lIlIIIlllII == null || !lIlIIIllIII.equals(lIlIIIlllII.getPointer())) {
-            Structure lIlIIIllllI = Structure.reading().get(lIlIIIllIII);
-            if (lIlIIIllllI != null && lIlIIIllIlI.equals(lIlIIIllllI.getClass())) {
-                lIlIIIlllII = lIlIIIllllI;
-                lIlIIIlllII.autoRead();
+    static Structure updateStructureByReference(Class<?> class_, Structure structure, Pointer pointer) {
+        if (pointer == null) {
+            structure = null;
+        } else if (structure == null || !pointer.equals(structure.getPointer())) {
+            Structure structure2 = Structure.reading().get(pointer);
+            if (structure2 != null && class_.equals(structure2.getClass())) {
+                structure = structure2;
+                structure.autoRead();
             } else {
-                lIlIIIlllII = Structure.newInstance(lIlIIIllIlI, lIlIIIllIII);
-                lIlIIIlllII.conditionalAutoRead();
+                structure = Structure.newInstance(class_, pointer);
+                structure.conditionalAutoRead();
             }
         } else {
-            lIlIIIlllII.autoRead();
+            structure.autoRead();
         }
-        return lIlIIIlllII;
+        return structure;
     }
 
-    public String toString(boolean lllIIIlIll) {
-        Structure lllIIIlIlI;
-        return lllIIIlIlI.toString(0, true, lllIIIlIll);
+    public String toString(boolean bl) {
+        return this.toString(0, true, bl);
     }
 
-    protected Structure(int lIllllIllll) {
-        lIlllllIIII(null, lIllllIllll);
-        Structure lIlllllIIII;
+    protected Structure(int n) {
+        this(null, n);
     }
 
-    public static List<String> createFieldsOrder(List<String> lIIlIIIIIIl, List<String> lIIlIIIIIII) {
-        ArrayList<String> lIIlIIIIIlI = new ArrayList<String>(lIIlIIIIIIl.size() + lIIlIIIIIII.size());
-        lIIlIIIIIlI.addAll(lIIlIIIIIIl);
-        lIIlIIIIIlI.addAll(lIIlIIIIIII);
-        return Collections.unmodifiableList(lIIlIIIIIlI);
+    public static List<String> createFieldsOrder(List<String> list, List<String> list2) {
+        ArrayList<String> arrayList = new ArrayList<String>(list.size() + list2.size());
+        arrayList.addAll(list);
+        arrayList.addAll(list2);
+        return Collections.unmodifiableList(arrayList);
     }
 
     static Set<Structure> busy() {
@@ -698,592 +671,557 @@ public abstract class Structure {
     }
 
     public void autoRead() {
-        Structure lIlIIlIllI;
-        if (lIlIIlIllI.getAutoRead()) {
-            lIlIIlIllI.read();
-            if (lIlIIlIllI.array != null) {
-                for (int lIlIIllIII = 1; lIlIIllIII < lIlIIlIllI.array.length; ++lIlIIllIII) {
-                    lIlIIlIllI.array[lIlIIllIII].autoRead();
+        if (this.getAutoRead()) {
+            this.read();
+            if (this.array != null) {
+                for (int i = 1; i < this.array.length; ++i) {
+                    this.array[i].autoRead();
+                    if (0 <= 3) continue;
+                    return;
                 }
             }
         }
     }
 
-    protected int calculateSize(boolean lIIIlIllIlI) {
-        Structure lIIIlIlllIl;
-        return lIIIlIlllIl.calculateSize(lIIIlIllIlI, false);
+    protected int calculateSize(boolean bl) {
+        return this.calculateSize(bl, false);
     }
 
-    protected void setStringEncoding(String lIllIllIllI) {
-        lIllIllIlll.encoding = lIllIllIllI;
+    protected void setStringEncoding(String string) {
+        this.encoding = string;
     }
 
-    protected Object readField(StructField lIlIIIIIlII) {
-        Object lIlIIIIIllI;
-        Structure lIlIIIIIlIl;
-        Object lIlIIIIIlll;
-        int lIlIIIIlIlI = lIlIIIIIlII.offset;
-        Class<?> lIlIIIIlIIl = lIlIIIIIlII.type;
-        FromNativeConverter lIlIIIIlIII = lIlIIIIIlII.readConverter;
-        if (lIlIIIIlIII != null) {
-            lIlIIIIlIIl = lIlIIIIlIII.nativeType();
+    protected Object readField(StructField structField) {
+        Pointer pointer;
+        Object object;
+        int n = structField.offset;
+        Class<?> class_ = structField.type;
+        FromNativeConverter fromNativeConverter = structField.readConverter;
+        if (fromNativeConverter != null) {
+            class_ = fromNativeConverter.nativeType();
         }
-        Object object = lIlIIIIIlll = Structure.class.isAssignableFrom(lIlIIIIlIIl) || Callback.class.isAssignableFrom(lIlIIIIlIIl) || Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(lIlIIIIlIIl) || Pointer.class.isAssignableFrom(lIlIIIIlIIl) || NativeMapped.class.isAssignableFrom(lIlIIIIlIIl) || lIlIIIIlIIl.isArray() ? lIlIIIIIlIl.getFieldValue(lIlIIIIIlII.field) : null;
-        if (lIlIIIIlIIl == String.class) {
-            Pointer lIlIIIIlllI = lIlIIIIIlIl.memory.getPointer(lIlIIIIlIlI);
-            String lIlIIIIllIl = lIlIIIIlllI == null ? null : lIlIIIIlllI.getString(0L, lIlIIIIIlIl.encoding);
-        } else {
-            lIlIIIIIllI = lIlIIIIIlIl.memory.getValue(lIlIIIIlIlI, lIlIIIIlIIl, lIlIIIIIlll);
-        }
-        if (lIlIIIIlIII != null) {
-            lIlIIIIIllI = lIlIIIIlIII.fromNative(lIlIIIIIllI, lIlIIIIIlII.context);
-            if (lIlIIIIIlll != null && lIlIIIIIlll.equals(lIlIIIIIllI)) {
-                lIlIIIIIllI = lIlIIIIIlll;
+        Object object2 = object = Structure.class.isAssignableFrom(class_) || Callback.class.isAssignableFrom(class_) || Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(class_) || Pointer.class.isAssignableFrom(class_) || NativeMapped.class.isAssignableFrom(class_) || class_.isArray() ? this.getFieldValue(structField.field) : null;
+        Object object3 = class_ == String.class ? ((pointer = this.memory.getPointer(n)) == null ? null : pointer.getString(0L, this.encoding)) : this.memory.getValue(n, class_, object);
+        if (fromNativeConverter != null) {
+            object3 = fromNativeConverter.fromNative(object3, structField.context);
+            if (object != null && object.equals(object3)) {
+                object3 = object;
             }
         }
-        if (lIlIIIIlIIl.equals(String.class) || lIlIIIIlIIl.equals(WString.class)) {
-            lIlIIIIIlIl.nativeStrings.put(String.valueOf(new StringBuilder().append(lIlIIIIIlII.name).append(".ptr")), lIlIIIIIlIl.memory.getPointer(lIlIIIIlIlI));
-            lIlIIIIIlIl.nativeStrings.put(String.valueOf(new StringBuilder().append(lIlIIIIIlII.name).append(".val")), lIlIIIIIllI);
+        if (class_.equals(String.class) || class_.equals(WString.class)) {
+            this.nativeStrings.put(String.valueOf(new StringBuilder().append(structField.name).append(".ptr")), this.memory.getPointer(n));
+            this.nativeStrings.put(String.valueOf(new StringBuilder().append(structField.name).append(".val")), object3);
         }
-        lIlIIIIIlIl.setFieldValue(lIlIIIIIlII.field, lIlIIIIIllI, true);
-        return lIlIIIIIllI;
+        this.setFieldValue(structField.field, object3, true);
+        return object3;
     }
 
-    public Structure[] toArray(Structure[] llIlIIlIII) {
-        Structure llIlIIlIIl;
-        llIlIIlIIl.ensureAllocated();
-        if (llIlIIlIIl.memory instanceof AutoAllocated) {
-            Memory llIlIIllll = (Memory)llIlIIlIIl.memory;
-            int llIlIIlllI = llIlIIlIII.length * llIlIIlIIl.size();
-            if (llIlIIllll.size() < (long)llIlIIlllI) {
-                llIlIIlIIl.useMemory(llIlIIlIIl.autoAllocate(llIlIIlllI));
+    public Structure[] toArray(Structure[] arrstructure) {
+        int n;
+        this.ensureAllocated();
+        if (this.memory instanceof AutoAllocated) {
+            Memory memory = (Memory)this.memory;
+            n = arrstructure.length * this.size();
+            if (memory.size() < (long)n) {
+                this.useMemory(this.autoAllocate(n));
             }
         }
-        llIlIIlIII[0] = llIlIIlIIl;
-        int llIlIIlIlI = llIlIIlIIl.size();
-        for (int llIlIIllIl = 1; llIlIIllIl < llIlIIlIII.length; ++llIlIIllIl) {
-            llIlIIlIII[llIlIIllIl] = Structure.newInstance(llIlIIlIIl.getClass(), llIlIIlIIl.memory.share(llIlIIllIl * llIlIIlIlI, llIlIIlIlI));
-            llIlIIlIII[llIlIIllIl].conditionalAutoRead();
+        arrstructure[0] = this;
+        int n2 = this.size();
+        for (n = 1; n < arrstructure.length; ++n) {
+            arrstructure[n] = Structure.newInstance(this.getClass(), this.memory.share(n * n2, n2));
+            arrstructure[n].conditionalAutoRead();
+            if (2 > 0) continue;
+            return null;
         }
-        if (!(llIlIIlIIl instanceof ByValue)) {
-            llIlIIlIIl.array = llIlIIlIII;
+        if (!(this instanceof ByValue)) {
+            this.array = arrstructure;
         }
-        return llIlIIlIII;
+        return arrstructure;
     }
 
-    private void validateField(String lIIIIlIIIlI, Class<?> lIIIIlIIlII) {
-        ToNativeConverter lIIIIlIlIIl;
-        Structure lIIIIlIIllI;
-        if (lIIIIlIIllI.typeMapper != null && (lIIIIlIlIIl = lIIIIlIIllI.typeMapper.getToNativeConverter(lIIIIlIIlII)) != null) {
-            lIIIIlIIllI.validateField(lIIIIlIIIlI, lIIIIlIlIIl.nativeType());
+    private void validateField(String string, Class<?> class_) {
+        ToNativeConverter toNativeConverter;
+        if (this.typeMapper != null && (toNativeConverter = this.typeMapper.getToNativeConverter(class_)) != null) {
+            this.validateField(string, toNativeConverter.nativeType());
             return;
         }
-        if (lIIIIlIIlII.isArray()) {
-            lIIIIlIIllI.validateField(lIIIIlIIIlI, lIIIIlIIlII.getComponentType());
+        if (class_.isArray()) {
+            this.validateField(string, class_.getComponentType());
         } else {
             try {
-                lIIIIlIIllI.getNativeSize(lIIIIlIIlII);
+                this.getNativeSize(class_);
             }
-            catch (IllegalArgumentException lIIIIlIIlll) {
-                String lIIIIlIlIII = String.valueOf(new StringBuilder().append("Invalid Structure field in ").append(lIIIIlIIllI.getClass()).append(", field name '").append(lIIIIlIIIlI).append("' (").append(lIIIIlIIlII).append("): ").append(lIIIIlIIlll.getMessage()));
-                throw new IllegalArgumentException(lIIIIlIlIII, lIIIIlIIlll);
+            catch (IllegalArgumentException illegalArgumentException) {
+                String string2 = String.valueOf(new StringBuilder().append("Invalid Structure field in ").append(this.getClass()).append(", field name '").append(string).append("' (").append(class_).append("): ").append(illegalArgumentException.getMessage()));
+                throw new IllegalArgumentException(string2, illegalArgumentException);
             }
         }
     }
 
     protected void allocateMemory() {
-        Structure lIlIlllllII;
-        lIlIlllllII.allocateMemory(false);
+        this.allocateMemory(false);
     }
 
-    public static List<String> createFieldsOrder(List<String> lIIlIIIlIIl, String ... lIIlIIIlIlI) {
-        return Structure.createFieldsOrder(lIIlIIIlIIl, Arrays.asList(lIIlIIIlIlI));
+    public static List<String> createFieldsOrder(List<String> list, String ... arrstring) {
+        return Structure.createFieldsOrder(list, Arrays.asList(arrstring));
     }
 
-    static void validate(Class<?> lIIllllIIl) {
-        Structure.newInstance(lIIllllIIl, PLACEHOLDER_MEMORY);
+    static void validate(Class<?> class_) {
+        Structure.newInstance(class_, PLACEHOLDER_MEMORY);
     }
 
-    public static void autoWrite(Structure[] lIlIIlIIIl) {
-        Structure.structureArrayCheck(lIlIIlIIIl);
-        if (lIlIIlIIIl[0].array == lIlIIlIIIl) {
-            lIlIIlIIIl[0].autoWrite();
+    public static void autoWrite(Structure[] arrstructure) {
+        Structure.structureArrayCheck(arrstructure);
+        if (arrstructure[0].array == arrstructure) {
+            arrstructure[0].autoWrite();
         } else {
-            for (int lIlIIlIIlI = 0; lIlIIlIIlI < lIlIIlIIIl.length; ++lIlIIlIIlI) {
-                if (lIlIIlIIIl[lIlIIlIIlI] == null) continue;
-                lIlIIlIIIl[lIlIIlIIlI].autoWrite();
+            for (int i = 0; i < arrstructure.length; ++i) {
+                if (arrstructure[i] == null) continue;
+                arrstructure[i].autoWrite();
             }
         }
     }
 
     private void validateFields() {
-        Structure lIIIIIllIIl;
-        List<Field> lIIIIIllIII = lIIIIIllIIl.getFieldList();
-        for (Field lIIIIIllIlI : lIIIIIllIII) {
-            lIIIIIllIIl.validateField(lIIIIIllIlI.getName(), lIIIIIllIlI.getType());
+        List<Field> list = this.getFieldList();
+        for (Field field : list) {
+            this.validateField(field.getName(), field.getType());
         }
     }
 
-    public static List<String> createFieldsOrder(String lIIIlllllIl) {
-        return Collections.unmodifiableList(Collections.singletonList(lIIIlllllIl));
+    public static List<String> createFieldsOrder(String string) {
+        return Collections.unmodifiableList(Collections.singletonList(string));
     }
 
     Pointer getTypeInfo() {
-        Structure lIllllllll;
-        Pointer llIIIIIIII = Structure.getTypeInfo(lIllllllll);
-        lIllllllll.cacheTypeInfo(llIIIIIIII);
-        return llIIIIIIII;
+        Pointer pointer = Structure.getTypeInfo(this);
+        this.cacheTypeInfo(pointer);
+        return pointer;
     }
 
     protected String getStringEncoding() {
-        Structure lIllIllIIll;
-        return lIllIllIIll.encoding;
+        return this.encoding;
     }
 
-    private Object initializeField(Field lllIlllIll, Class<?> lllIlllllI) {
-        Structure llllIIIIII;
-        Object lllIllllIl = null;
-        if (Structure.class.isAssignableFrom(lllIlllllI) && !ByReference.class.isAssignableFrom(lllIlllllI)) {
+    private Object initializeField(Field field, Class<?> class_) {
+        Object object = null;
+        if (Structure.class.isAssignableFrom(class_) && !ByReference.class.isAssignableFrom(class_)) {
             try {
-                lllIllllIl = Structure.newInstance(lllIlllllI, PLACEHOLDER_MEMORY);
-                llllIIIIII.setFieldValue(lllIlllIll, lllIllllIl);
+                object = Structure.newInstance(class_, PLACEHOLDER_MEMORY);
+                this.setFieldValue(field, object);
             }
-            catch (IllegalArgumentException llllIIIIlI) {
-                String llllIIIIll = "Can't determine size of nested structure";
-                throw new IllegalArgumentException(llllIIIIll, llllIIIIlI);
+            catch (IllegalArgumentException illegalArgumentException) {
+                String string = "Can't determine size of nested structure";
+                throw new IllegalArgumentException(string, illegalArgumentException);
             }
-        } else if (NativeMapped.class.isAssignableFrom(lllIlllllI)) {
-            NativeMappedConverter llllIIIIIl = NativeMappedConverter.getInstance(lllIlllllI);
-            lllIllllIl = llllIIIIIl.defaultValue();
-            llllIIIIII.setFieldValue(lllIlllIll, lllIllllIl);
+        } else if (NativeMapped.class.isAssignableFrom(class_)) {
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+            object = nativeMappedConverter.defaultValue();
+            this.setFieldValue(field, object);
         }
-        return lllIllllIl;
+        return object;
     }
 
-    private static Structure newInstance(Class<?> lIllIllIll, long lIllIlllII) {
+    private static Structure newInstance(Class<?> class_, long l) {
         try {
-            Structure lIllIlllll = Structure.newInstance(lIllIllIll, lIllIlllII == 0L ? PLACEHOLDER_MEMORY : new Pointer(lIllIlllII));
-            if (lIllIlllII != 0L) {
-                lIllIlllll.conditionalAutoRead();
+            Structure structure = Structure.newInstance(class_, l == 0L ? PLACEHOLDER_MEMORY : new Pointer(l));
+            if (l != 0L) {
+                structure.conditionalAutoRead();
             }
-            return lIllIlllll;
+            return structure;
         }
-        catch (Throwable lIllIllllI) {
-            System.err.println(String.valueOf(new StringBuilder().append("JNA: Error creating structure: ").append(lIllIllllI)));
+        catch (Throwable throwable) {
+            System.err.println(String.valueOf(new StringBuilder().append("JNA: Error creating structure: ").append(throwable)));
             return null;
         }
     }
 
-    protected void writeField(StructField lIIllIIlIll) {
-        Structure lIIllIIllII;
-        if (lIIllIIlIll.isReadOnly) {
+    protected void writeField(StructField structField) {
+        CharSequence charSequence;
+        if (structField.isReadOnly) {
             return;
         }
-        int lIIllIlIIII = lIIllIIlIll.offset;
-        Object lIIllIIllll = lIIllIIllII.getFieldValue(lIIllIIlIll.field);
-        Class<?> lIIllIIlllI = lIIllIIlIll.type;
-        ToNativeConverter lIIllIIllIl = lIIllIIlIll.writeConverter;
-        if (lIIllIIllIl != null) {
-            lIIllIIllll = lIIllIIllIl.toNative(lIIllIIllll, new StructureWriteContext(lIIllIIllII, lIIllIIlIll.field));
-            lIIllIIlllI = lIIllIIllIl.nativeType();
+        int n = structField.offset;
+        Object object = this.getFieldValue(structField.field);
+        Class<?> class_ = structField.type;
+        ToNativeConverter toNativeConverter = structField.writeConverter;
+        if (toNativeConverter != null) {
+            object = toNativeConverter.toNative(object, new StructureWriteContext(this, structField.field));
+            class_ = toNativeConverter.nativeType();
         }
-        if (String.class == lIIllIIlllI || WString.class == lIIllIIlllI) {
-            boolean lIIllIlIlIl;
-            boolean bl = lIIllIlIlIl = lIIllIIlllI == WString.class;
-            if (lIIllIIllll != null) {
-                if (lIIllIIllII.nativeStrings.containsKey(String.valueOf(new StringBuilder().append(lIIllIIlIll.name).append(".ptr"))) && lIIllIIllll.equals(lIIllIIllII.nativeStrings.get(String.valueOf(new StringBuilder().append(lIIllIIlIll.name).append(".val"))))) {
+        if (String.class == class_ || WString.class == class_) {
+            boolean bl;
+            boolean bl2 = bl = class_ == WString.class;
+            if (object != null) {
+                if (this.nativeStrings.containsKey(String.valueOf(new StringBuilder().append(structField.name).append(".ptr"))) && object.equals(this.nativeStrings.get(String.valueOf(new StringBuilder().append(structField.name).append(".val"))))) {
                     return;
                 }
-                NativeString lIIllIlIllI = lIIllIlIlIl ? new NativeString(lIIllIIllll.toString(), true) : new NativeString(lIIllIIllll.toString(), lIIllIIllII.encoding);
-                lIIllIIllII.nativeStrings.put(lIIllIIlIll.name, lIIllIlIllI);
-                lIIllIIllll = lIIllIlIllI.getPointer();
+                charSequence = bl ? new NativeString(object.toString(), true) : new NativeString(object.toString(), this.encoding);
+                this.nativeStrings.put(structField.name, charSequence);
+                object = ((NativeString)charSequence).getPointer();
             } else {
-                lIIllIIllII.nativeStrings.remove(lIIllIIlIll.name);
+                this.nativeStrings.remove(structField.name);
             }
-            lIIllIIllII.nativeStrings.remove(String.valueOf(new StringBuilder().append(lIIllIIlIll.name).append(".ptr")));
-            lIIllIIllII.nativeStrings.remove(String.valueOf(new StringBuilder().append(lIIllIIlIll.name).append(".val")));
+            this.nativeStrings.remove(String.valueOf(new StringBuilder().append(structField.name).append(".ptr")));
+            this.nativeStrings.remove(String.valueOf(new StringBuilder().append(structField.name).append(".val")));
         }
         try {
-            lIIllIIllII.memory.setValue(lIIllIlIIII, lIIllIIllll, lIIllIIlllI);
+            this.memory.setValue(n, object, class_);
         }
-        catch (IllegalArgumentException lIIllIlIIll) {
-            String lIIllIlIlII = String.valueOf(new StringBuilder().append("Structure field \"").append(lIIllIIlIll.name).append("\" was declared as ").append(lIIllIIlIll.type).append(lIIllIIlIll.type == lIIllIIlllI ? "" : String.valueOf(new StringBuilder().append(" (native type ").append(lIIllIIlllI).append(")"))).append(", which is not supported within a Structure"));
-            throw new IllegalArgumentException(lIIllIlIlII, lIIllIlIIll);
+        catch (IllegalArgumentException illegalArgumentException) {
+            charSequence = String.valueOf(new StringBuilder().append("Structure field \"").append(structField.name).append("\" was declared as ").append(structField.type).append(structField.type == class_ ? "" : String.valueOf(new StringBuilder().append(" (native type ").append(class_).append(")"))).append(", which is not supported within a Structure"));
+            throw new IllegalArgumentException((String)charSequence, illegalArgumentException);
         }
     }
 
-    protected Structure(Pointer lIllllIIIII) {
-        lIllllIIIll(lIllllIIIII, 0);
-        Structure lIllllIIIll;
+    protected Structure(Pointer pointer) {
+        this(pointer, 0);
     }
 
     protected abstract List<String> getFieldOrder();
 
-    public boolean dataEquals(Structure llIIllIlll) {
-        Structure llIIlllIlI;
-        return llIIlllIlI.dataEquals(llIIllIlll, false);
+    public boolean dataEquals(Structure structure) {
+        return this.dataEquals(structure, false);
     }
 
-    protected Structure(TypeMapper lIlllllIlIl) {
-        lIlllllIllI(null, 0, lIlllllIlIl);
-        Structure lIlllllIllI;
+    protected Structure(TypeMapper typeMapper) {
+        this(null, 0, typeMapper);
     }
 
     public boolean getAutoWrite() {
-        Structure lIlllIIlll;
-        return lIlllIIlll.autoWrite;
+        return this.autoWrite;
     }
 
     public int hashCode() {
-        Structure llIIIllIlI;
-        Pointer llIIIllIll = llIIIllIlI.getPointer();
-        if (llIIIllIll != null) {
-            return llIIIllIlI.getPointer().hashCode();
+        Pointer pointer = this.getPointer();
+        if (pointer != null) {
+            return this.getPointer().hashCode();
         }
-        return llIIIllIlI.getClass().hashCode();
+        return this.getClass().hashCode();
     }
 
-    public void setAutoRead(boolean lIllllIIlI) {
-        lIllllIIll.autoRead = lIllllIIlI;
+    public void setAutoRead(boolean bl) {
+        this.autoRead = bl;
     }
 
-    protected Structure(int lIllllIIlll, TypeMapper lIllllIlIIl) {
-        lIllllIlIll(null, lIllllIIlll, lIllllIlIIl);
-        Structure lIllllIlIll;
+    protected Structure(int n, TypeMapper typeMapper) {
+        this(null, n, typeMapper);
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     * WARNING - void declaration
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     * Converted monitor instructions to comments
+     * Lifted jumps to return sites
      */
     StructField typeInfoField() {
-        void lIlIllIlII;
-        Map<Class<?>, LayoutInfo> lIlIllIIIl = layoutInfo;
-        synchronized (lIlIllIIIl) {
-            Structure lIlIllIlIl;
-            LayoutInfo lIlIllIllI = layoutInfo.get(lIlIllIlIl.getClass());
-        }
-        if (lIlIllIlII != null) {
-            return ((LayoutInfo)lIlIllIlII).typeInfoField;
-        }
-        return null;
+        Map<Class<?>, LayoutInfo> map = layoutInfo;
+        // MONITORENTER : map
+        LayoutInfo layoutInfo = Structure.layoutInfo.get(this.getClass());
+        // MONITOREXIT : map
+        if (layoutInfo == null) return null;
+        return LayoutInfo.access$700(layoutInfo);
     }
 
-    private static <T extends Comparable<T>> List<T> sort(Collection<? extends T> lIIIlllIlII) {
-        ArrayList<? extends T> lIIIlllIlIl = new ArrayList<T>(lIIIlllIlII);
-        Collections.sort(lIIIlllIlIl);
-        return lIIIlllIlIl;
+    private static <T extends Comparable<T>> List<T> sort(Collection<? extends T> collection) {
+        ArrayList<? extends T> arrayList = new ArrayList<T>(collection);
+        Collections.sort(arrayList);
+        return arrayList;
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
+     * Converted monitor instructions to comments
+     * Lifted jumps to return sites
      */
-    int calculateSize(boolean lIIIIllllII, boolean lIIIIllIlIl) {
-        LayoutInfo lIIIIlllIII;
-        Structure lIIIIllllIl;
-        int lIIIIlllIlI = -1;
-        Class<?> lIIIIlllIIl = lIIIIllllIl.getClass();
-        Map<Class<?>, LayoutInfo> lIIIIllIIIl = layoutInfo;
-        synchronized (lIIIIllIIIl) {
-            LayoutInfo lIIIIlllllI = layoutInfo.get(lIIIIlllIIl);
+    int calculateSize(boolean bl, boolean bl2) {
+        int n = -1;
+        Class<?> class_ = this.getClass();
+        Map<Class<?>, LayoutInfo> map = layoutInfo;
+        // MONITORENTER : map
+        LayoutInfo layoutInfo = Structure.layoutInfo.get(class_);
+        // MONITOREXIT : map
+        if (layoutInfo == null || this.alignType != LayoutInfo.access$200(layoutInfo) || this.typeMapper != LayoutInfo.access$300(layoutInfo)) {
+            layoutInfo = this.deriveLayout(bl, bl2);
         }
-        if (lIIIIlllIII == null || lIIIIllllIl.alignType != lIIIIlllIII.alignType || lIIIIllllIl.typeMapper != lIIIIlllIII.typeMapper) {
-            lIIIIlllIII = lIIIIllllIl.deriveLayout(lIIIIllllII, lIIIIllIlIl);
+        if (layoutInfo == null) return n;
+        this.structAlignment = LayoutInfo.access$400(layoutInfo);
+        this.structFields = LayoutInfo.access$500(layoutInfo);
+        if (LayoutInfo.access$000(layoutInfo)) return LayoutInfo.access$100(layoutInfo);
+        map = Structure.layoutInfo;
+        // MONITORENTER : map
+        if (!Structure.layoutInfo.containsKey(class_) || this.alignType != 0 || this.typeMapper != null) {
+            Structure.layoutInfo.put(class_, layoutInfo);
         }
-        if (lIIIIlllIII != null) {
-            lIIIIllllIl.structAlignment = lIIIIlllIII.alignment;
-            lIIIIllllIl.structFields = lIIIIlllIII.fields;
-            if (!lIIIIlllIII.variable) {
-                lIIIIllIIIl = layoutInfo;
-                synchronized (lIIIIllIIIl) {
-                    if (!layoutInfo.containsKey(lIIIIlllIIl) || lIIIIllllIl.alignType != 0 || lIIIIllllIl.typeMapper != null) {
-                        layoutInfo.put(lIIIIlllIIl, lIIIIlllIII);
-                    }
-                }
-            }
-            lIIIIlllIlI = lIIIIlllIII.size;
-        }
-        return lIIIIlllIlI;
+        // MONITOREXIT : map
+        return LayoutInfo.access$100(layoutInfo);
     }
 
-    protected Memory autoAllocate(int lIllIlIlIlI) {
-        return new AutoAllocated(lIllIlIlIlI);
+    protected Memory autoAllocate(int n) {
+        return new AutoAllocated(n);
     }
 
     public void autoWrite() {
-        Structure lIlIIIlIlI;
-        if (lIlIIIlIlI.getAutoWrite()) {
-            lIlIIIlIlI.write();
-            if (lIlIIIlIlI.array != null) {
-                for (int lIlIIIllII = 1; lIlIIIllII < lIlIIIlIlI.array.length; ++lIlIIIllII) {
-                    lIlIIIlIlI.array[lIlIIIllII].autoWrite();
+        if (this.getAutoWrite()) {
+            this.write();
+            if (this.array != null) {
+                for (int i = 1; i < this.array.length; ++i) {
+                    this.array[i].autoWrite();
+                    if (null == null) continue;
+                    return;
                 }
             }
         }
     }
 
-    protected void setAlignType(int lIllIlIllIl) {
-        Structure lIllIlIlllI;
-        lIllIlIlllI.alignType = lIllIlIllIl;
-        if (lIllIlIllIl == 0 && (lIllIlIllIl = Native.getStructureAlignment(lIllIlIlllI.getClass())) == 0) {
-            lIllIlIllIl = Platform.isWindows() ? 3 : 2;
+    protected void setAlignType(int n) {
+        this.alignType = n;
+        if (n == 0 && (n = Native.getStructureAlignment(this.getClass())) == 0) {
+            n = Platform.isWindows() ? 3 : 2;
         }
-        lIllIlIlllI.actualAlignType = lIllIlIllIl;
-        lIllIlIlllI.layoutChanged();
+        this.actualAlignType = n;
+        this.layoutChanged();
     }
 
-    void useMemory(Pointer lIllIIIllIl, int lIllIIIllII, boolean lIllIIIllll) {
+    void useMemory(Pointer pointer, int n, boolean bl) {
         try {
-            Structure lIllIIlIIlI;
-            lIllIIlIIlI.nativeStrings.clear();
-            if (lIllIIlIIlI instanceof ByValue && !lIllIIIllll) {
-                byte[] lIllIIlIlII = new byte[lIllIIlIIlI.size()];
-                lIllIIIllIl.read(0L, lIllIIlIlII, 0, lIllIIlIlII.length);
-                lIllIIlIIlI.memory.write(0L, lIllIIlIlII, 0, lIllIIlIlII.length);
+            this.nativeStrings.clear();
+            if (this instanceof ByValue && !bl) {
+                byte[] arrby = new byte[this.size()];
+                pointer.read(0L, arrby, 0, arrby.length);
+                this.memory.write(0L, arrby, 0, arrby.length);
             } else {
-                lIllIIlIIlI.memory = lIllIIIllIl.share(lIllIIIllII);
-                if (lIllIIlIIlI.size == -1) {
-                    lIllIIlIIlI.size = lIllIIlIIlI.calculateSize(false);
+                this.memory = pointer.share(n);
+                if (this.size == -1) {
+                    this.size = this.calculateSize(false);
                 }
-                if (lIllIIlIIlI.size != -1) {
-                    lIllIIlIIlI.memory = lIllIIIllIl.share(lIllIIIllII, lIllIIlIIlI.size);
+                if (this.size != -1) {
+                    this.memory = pointer.share(n, this.size);
                 }
             }
-            lIllIIlIIlI.array = null;
-            lIllIIlIIlI.readCalled = false;
+            this.array = null;
+            this.readCalled = false;
+            return;
         }
-        catch (IndexOutOfBoundsException lIllIIlIIll) {
-            throw new IllegalArgumentException("Structure exceeds provided memory bounds", lIllIIlIIll);
+        catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            throw new IllegalArgumentException("Structure exceeds provided memory bounds", indexOutOfBoundsException);
         }
     }
 
     public void write() {
-        Structure lIIlllllIII;
-        if (lIIlllllIII.memory == PLACEHOLDER_MEMORY) {
+        if (this.memory == PLACEHOLDER_MEMORY) {
             return;
         }
-        lIIlllllIII.ensureAllocated();
-        if (lIIlllllIII instanceof ByValue) {
-            lIIlllllIII.getTypeInfo();
+        this.ensureAllocated();
+        if (this instanceof ByValue) {
+            this.getTypeInfo();
         }
-        if (Structure.busy().contains(lIIlllllIII)) {
+        if (Structure.busy().contains(this)) {
             return;
         }
-        Structure.busy().add(lIIlllllIII);
+        Structure.busy().add(this);
         try {
-            for (StructField lIIlllllIIl : lIIlllllIII.fields().values()) {
-                if (lIIlllllIIl.isVolatile) continue;
-                lIIlllllIII.writeField(lIIlllllIIl);
+            for (StructField structField : this.fields().values()) {
+                if (structField.isVolatile) continue;
+                this.writeField(structField);
             }
         }
         finally {
-            Structure.busy().remove(lIIlllllIII);
+            Structure.busy().remove(this);
         }
     }
 
-    protected int fieldOffset(String lIlIlIlIIIl) {
-        Structure lIlIlIlIlIl;
-        lIlIlIlIlIl.ensureAllocated();
-        StructField lIlIlIlIIll = lIlIlIlIlIl.fields().get(lIlIlIlIIIl);
-        if (lIlIlIlIIll == null) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(lIlIlIlIIIl)));
+    protected int fieldOffset(String string) {
+        this.ensureAllocated();
+        StructField structField = this.fields().get(string);
+        if (structField == null) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(string)));
         }
-        return lIlIlIlIIll.offset;
+        return structField.offset;
     }
 
-    public static List<String> createFieldsOrder(String ... lIIIllllIlI) {
-        return Collections.unmodifiableList(Arrays.asList(lIIIllllIlI));
+    public static List<String> createFieldsOrder(String ... arrstring) {
+        return Collections.unmodifiableList(Arrays.asList(arrstring));
     }
 
     Map<String, StructField> fields() {
-        Structure lIlllIIlIII;
-        return lIlllIIlIII.structFields;
+        return this.structFields;
     }
 
     public int size() {
-        Structure lIlIllIllII;
-        lIlIllIllII.ensureAllocated();
-        return lIlIllIllII.size;
+        this.ensureAllocated();
+        return this.size;
     }
 
-    protected void useMemory(Pointer lIllIlIIIll) {
-        Structure lIllIlIIllI;
-        lIllIlIIllI.useMemory(lIllIlIIIll, 0);
+    protected void useMemory(Pointer pointer) {
+        this.useMemory(pointer, 0);
     }
 
     protected List<Field> getFieldList() {
-        Structure lIIlIlIIIll;
-        ArrayList<Field> lIIlIlIIIlI = new ArrayList<Field>();
-        Class<?> lIIlIlIIlII = lIIlIlIIIll.getClass();
-        while (!lIIlIlIIlII.equals(Structure.class)) {
-            ArrayList<Field> lIIlIlIIllI = new ArrayList<Field>();
-            Field[] lIIlIlIIlIl = lIIlIlIIlII.getDeclaredFields();
-            for (int lIIlIlIIlll = 0; lIIlIlIIlll < lIIlIlIIlIl.length; ++lIIlIlIIlll) {
-                int lIIlIlIlIII = lIIlIlIIlIl[lIIlIlIIlll].getModifiers();
-                if (Modifier.isStatic(lIIlIlIlIII) || !Modifier.isPublic(lIIlIlIlIII)) continue;
-                lIIlIlIIllI.add(lIIlIlIIlIl[lIIlIlIIlll]);
+        ArrayList<Field> arrayList = new ArrayList<Field>();
+        Class<?> class_ = this.getClass();
+        while (!class_.equals(Structure.class)) {
+            ArrayList<Field> arrayList2 = new ArrayList<Field>();
+            Field[] arrfield = class_.getDeclaredFields();
+            for (int i = 0; i < arrfield.length; ++i) {
+                int n = arrfield[i].getModifiers();
+                if (Modifier.isStatic(n) || !Modifier.isPublic(n)) continue;
+                arrayList2.add(arrfield[i]);
+                if (2 >= 0) continue;
+                return null;
             }
-            lIIlIlIIIlI.addAll(0, lIIlIlIIllI);
-            lIIlIlIIlII = lIIlIlIIlII.getSuperclass();
+            arrayList.addAll(0, arrayList2);
+            class_ = class_.getSuperclass();
         }
-        return lIIlIlIIIlI;
+        return arrayList;
     }
 
-    void setFieldValue(Field lIlIIllIllI, Object lIlIIlllIII) {
-        Structure lIlIIllIlll;
-        lIlIIllIlll.setFieldValue(lIlIIllIllI, lIlIIlllIII, false);
+    void setFieldValue(Field field, Object object) {
+        this.setFieldValue(field, object, false);
     }
 
     private Class<?> baseClass() {
-        Structure llIIllllIl;
-        if ((llIIllllIl instanceof ByReference || llIIllllIl instanceof ByValue) && Structure.class.isAssignableFrom(llIIllllIl.getClass().getSuperclass())) {
-            return llIIllllIl.getClass().getSuperclass();
+        if ((this instanceof ByReference || this instanceof ByValue) && Structure.class.isAssignableFrom(this.getClass().getSuperclass())) {
+            return this.getClass().getSuperclass();
         }
-        return llIIllllIl.getClass();
+        return this.getClass();
     }
 
-    private void setFieldValue(Field lIlIIlIIlll, Object lIlIIlIlIlI, boolean lIlIIlIIlIl) {
-        Structure lIlIIlIllII;
+    private void setFieldValue(Field field, Object object, boolean bl) {
         try {
-            lIlIIlIIlll.set(lIlIIlIllII, lIlIIlIlIlI);
+            field.set(this, object);
         }
-        catch (IllegalAccessException lIlIIlIllIl) {
-            int lIlIIlIlllI = lIlIIlIIlll.getModifiers();
-            if (Modifier.isFinal(lIlIIlIlllI)) {
-                if (lIlIIlIIlIl) {
-                    throw new UnsupportedOperationException(String.valueOf(new StringBuilder().append("This VM does not support Structures with final fields (field '").append(lIlIIlIIlll.getName()).append("' within ").append(lIlIIlIllII.getClass()).append(")")), lIlIIlIllIl);
+        catch (IllegalAccessException illegalAccessException) {
+            int n = field.getModifiers();
+            if (Modifier.isFinal(n)) {
+                if (bl) {
+                    throw new UnsupportedOperationException(String.valueOf(new StringBuilder().append("This VM does not support Structures with final fields (field '").append(field.getName()).append("' within ").append(this.getClass()).append(")")), illegalAccessException);
                 }
-                throw new UnsupportedOperationException(String.valueOf(new StringBuilder().append("Attempt to write to read-only field '").append(lIlIIlIIlll.getName()).append("' within ").append(lIlIIlIllII.getClass())), lIlIIlIllIl);
+                throw new UnsupportedOperationException(String.valueOf(new StringBuilder().append("Attempt to write to read-only field '").append(field.getName()).append("' within ").append(this.getClass())), illegalAccessException);
             }
-            throw new Error(String.valueOf(new StringBuilder().append("Unexpectedly unable to write to field '").append(lIlIIlIIlll.getName()).append("' within ").append(lIlIIlIllII.getClass())), lIlIIlIllIl);
+            throw new Error(String.valueOf(new StringBuilder().append("Unexpectedly unable to write to field '").append(field.getName()).append("' within ").append(this.getClass())), illegalAccessException);
         }
     }
 
-    static Pointer getTypeInfo(Object lIlllIIIll) {
-        return FFIType.get(lIlllIIIll);
+    static Pointer getTypeInfo(Object object) {
+        return FFIType.get(object);
     }
 
-    protected int getNativeSize(Class<?> lIlIIIIlIl) {
-        Structure lIlIIIIlII;
-        return lIlIIIIlII.getNativeSize(lIlIIIIlIl, null);
+    protected int getNativeSize(Class<?> class_) {
+        return this.getNativeSize(class_, null);
     }
 
-    public Structure[] toArray(int llIlIIIIII) {
-        Structure llIlIIIIIl;
-        return llIlIIIIIl.toArray((Structure[])Array.newInstance(llIlIIIIIl.getClass(), llIlIIIIII));
+    public Structure[] toArray(int n) {
+        return this.toArray((Structure[])Array.newInstance(this.getClass(), n));
     }
 
     TypeMapper getTypeMapper() {
-        Structure lIlllIIIlIl;
-        return lIlllIIIlIl.typeMapper;
+        return this.typeMapper;
     }
 
-    private static void structureArrayCheck(Structure[] lIlIlIIlIl) {
-        if (ByReference[].class.isAssignableFrom(lIlIlIIlIl.getClass())) {
+    private static void structureArrayCheck(Structure[] arrstructure) {
+        if (ByReference[].class.isAssignableFrom(arrstructure.getClass())) {
             return;
         }
-        Pointer lIlIlIIlll = lIlIlIIlIl[0].getPointer();
-        int lIlIlIIllI = lIlIlIIlIl[0].size();
-        for (int lIlIlIlIIl = 1; lIlIlIlIIl < lIlIlIIlIl.length; ++lIlIlIlIIl) {
-            if (lIlIlIIlIl[lIlIlIlIIl].getPointer().peer == lIlIlIIlll.peer + (long)(lIlIlIIllI * lIlIlIlIIl)) continue;
-            String lIlIlIlIlI = String.valueOf(new StringBuilder().append("Structure array elements must use contiguous memory (bad backing address at Structure array index ").append(lIlIlIlIIl).append(")"));
-            throw new IllegalArgumentException(lIlIlIlIlI);
+        Pointer pointer = arrstructure[0].getPointer();
+        int n = arrstructure[0].size();
+        for (int i = 1; i < arrstructure.length; ++i) {
+            if (arrstructure[i].getPointer().peer == pointer.peer + (long)(n * i)) continue;
+            String string = String.valueOf(new StringBuilder().append("Structure array elements must use contiguous memory (bad backing address at Structure array index ").append(i).append(")"));
+            throw new IllegalArgumentException(string);
         }
     }
 
     protected void ensureAllocated() {
-        Structure lIllIIIIlll;
-        lIllIIIIlll.ensureAllocated(false);
+        this.ensureAllocated(false);
     }
 
-    public void writeField(String lIIlllIllll) {
-        Structure lIIllllIIII;
-        lIIllllIIII.ensureAllocated();
-        StructField lIIlllIlllI = lIIllllIIII.fields().get(lIIlllIllll);
-        if (lIIlllIlllI == null) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(lIIlllIllll)));
+    public void writeField(String string) {
+        this.ensureAllocated();
+        StructField structField = this.fields().get(string);
+        if (structField == null) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(string)));
         }
-        lIIllllIIII.writeField(lIIlllIlllI);
+        this.writeField(structField);
     }
 
-    public void writeField(String lIIlllIIIIl, Object lIIlllIIlII) {
-        Structure lIIlllIIIlI;
-        lIIlllIIIlI.ensureAllocated();
-        StructField lIIlllIIIll = lIIlllIIIlI.fields().get(lIIlllIIIIl);
-        if (lIIlllIIIll == null) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(lIIlllIIIIl)));
+    public void writeField(String string, Object object) {
+        this.ensureAllocated();
+        StructField structField = this.fields().get(string);
+        if (structField == null) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No such field: ").append(string)));
         }
-        lIIlllIIIlI.setFieldValue(lIIlllIIIll.field, lIIlllIIlII);
-        lIIlllIIIlI.writeField(lIIlllIIIll);
+        this.setFieldValue(structField.field, object);
+        this.writeField(structField);
     }
 
-    Object getFieldValue(Field lIlIlIIIIIl) {
-        Structure lIlIlIIIIlI;
+    Object getFieldValue(Field field) {
         try {
-            return lIlIlIIIIIl.get(lIlIlIIIIlI);
+            return field.get(this);
         }
-        catch (Exception lIlIlIIIIll) {
-            throw new Error(String.valueOf(new StringBuilder().append("Exception reading field '").append(lIlIlIIIIIl.getName()).append("' in ").append(lIlIlIIIIlI.getClass())), lIlIlIIIIll);
+        catch (Exception exception) {
+            throw new Error(String.valueOf(new StringBuilder().append("Exception reading field '").append(field.getName()).append("' in ").append(this.getClass())), exception);
         }
     }
 
     private void layoutChanged() {
-        Structure lIllIllllIl;
-        if (lIllIllllIl.size != -1) {
-            lIllIllllIl.size = -1;
-            if (lIllIllllIl.memory instanceof AutoAllocated) {
-                lIllIllllIl.memory = null;
+        if (this.size != -1) {
+            this.size = -1;
+            if (this.memory instanceof AutoAllocated) {
+                this.memory = null;
             }
-            lIllIllllIl.ensureAllocated();
+            this.ensureAllocated();
         }
     }
 
     public Pointer getPointer() {
-        Structure lIlIllIIlll;
-        lIlIllIIlll.ensureAllocated();
-        return lIlIllIIlll.memory;
+        this.ensureAllocated();
+        return this.memory;
     }
 
-    protected int getNativeAlignment(Class<?> lllIIlllII, Object lllIIlIlIl, boolean lllIIlIlII) {
-        Structure lllIIlllIl;
-        int lllIIllIIl = 1;
-        if (NativeMapped.class.isAssignableFrom(lllIIlllII)) {
-            NativeMappedConverter lllIIllllI = NativeMappedConverter.getInstance(lllIIlllII);
-            lllIIlllII = lllIIllllI.nativeType();
-            lllIIlIlIl = lllIIllllI.toNative(lllIIlIlIl, new ToNativeContext());
+    protected int getNativeAlignment(Class<?> class_, Object object, boolean bl) {
+        int n = 1;
+        if (NativeMapped.class.isAssignableFrom(class_)) {
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+            class_ = nativeMappedConverter.nativeType();
+            object = nativeMappedConverter.toNative(object, new ToNativeContext());
         }
-        int lllIIllIII = Native.getNativeSize(lllIIlllII, lllIIlIlIl);
-        if (lllIIlllII.isPrimitive() || Long.class == lllIIlllII || Integer.class == lllIIlllII || Short.class == lllIIlllII || Character.class == lllIIlllII || Byte.class == lllIIlllII || Boolean.class == lllIIlllII || Float.class == lllIIlllII || Double.class == lllIIlllII) {
-            lllIIllIIl = lllIIllIII;
-        } else if (Pointer.class.isAssignableFrom(lllIIlllII) && !Function.class.isAssignableFrom(lllIIlllII) || Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(lllIIlllII) || Callback.class.isAssignableFrom(lllIIlllII) || WString.class == lllIIlllII || String.class == lllIIlllII) {
-            lllIIllIIl = Pointer.SIZE;
-        } else if (Structure.class.isAssignableFrom(lllIIlllII)) {
-            if (ByReference.class.isAssignableFrom(lllIIlllII)) {
-                lllIIllIIl = Pointer.SIZE;
+        int n2 = Native.getNativeSize(class_, object);
+        if (class_.isPrimitive() || Long.class == class_ || Integer.class == class_ || Short.class == class_ || Character.class == class_ || Byte.class == class_ || Boolean.class == class_ || Float.class == class_ || Double.class == class_) {
+            n = n2;
+        } else if (Pointer.class.isAssignableFrom(class_) && !Function.class.isAssignableFrom(class_) || Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(class_) || Callback.class.isAssignableFrom(class_) || WString.class == class_ || String.class == class_) {
+            n = Pointer.SIZE;
+        } else if (Structure.class.isAssignableFrom(class_)) {
+            if (ByReference.class.isAssignableFrom(class_)) {
+                n = Pointer.SIZE;
             } else {
-                if (lllIIlIlIl == null) {
-                    lllIIlIlIl = Structure.newInstance(lllIIlllII, PLACEHOLDER_MEMORY);
+                if (object == null) {
+                    object = Structure.newInstance(class_, PLACEHOLDER_MEMORY);
                 }
-                lllIIllIIl = ((Structure)lllIIlIlIl).getStructAlignment();
+                n = ((Structure)object).getStructAlignment();
             }
-        } else if (lllIIlllII.isArray()) {
-            lllIIllIIl = lllIIlllIl.getNativeAlignment(lllIIlllII.getComponentType(), null, lllIIlIlII);
+        } else if (class_.isArray()) {
+            n = this.getNativeAlignment(class_.getComponentType(), null, bl);
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Type ").append(lllIIlllII).append(" has unknown native alignment")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Type ").append(class_).append(" has unknown native alignment")));
         }
-        if (lllIIlllIl.actualAlignType == 1) {
-            lllIIllIIl = 1;
-        } else if (lllIIlllIl.actualAlignType == 3) {
-            lllIIllIIl = Math.min(8, lllIIllIIl);
-        } else if (lllIIlllIl.actualAlignType == 2) {
-            if (!(lllIIlIlII && Platform.isMac() && Platform.isPPC())) {
-                lllIIllIIl = Math.min(Native.MAX_ALIGNMENT, lllIIllIIl);
+        if (this.actualAlignType == 1) {
+            n = 1;
+        } else if (this.actualAlignType == 3) {
+            n = Math.min(8, n);
+        } else if (this.actualAlignType == 2) {
+            if (!(bl && Platform.isMac() && Platform.isPPC())) {
+                n = Math.min(Native.MAX_ALIGNMENT, n);
             }
-            if (!lllIIlIlII && Platform.isAIX() && (lllIIlllII == Double.TYPE || lllIIlllII == Double.class)) {
-                lllIIllIIl = 4;
+            if (!bl && Platform.isAIX() && (class_ == Double.TYPE || class_ == Double.class)) {
+                n = 4;
             }
         }
-        return lllIIllIIl;
+        return n;
     }
 
     public static interface ByReference {
@@ -1292,81 +1230,77 @@ public abstract class Structure {
     static class StructureSet
     extends AbstractCollection<Structure>
     implements Set<Structure> {
-        /* synthetic */ Structure[] elements;
-        private /* synthetic */ int count;
+        Structure[] elements;
+        private int count;
 
         StructureSet() {
-            StructureSet llllllllllllllllIllIllllIIIIlIII;
         }
 
         @Override
         public int size() {
-            StructureSet llllllllllllllllIllIlllIlllllIIl;
-            return llllllllllllllllIllIlllIlllllIIl.count;
+            return this.count;
         }
 
-        private void ensureCapacity(int llllllllllllllllIllIllllIIIIIIII) {
-            StructureSet llllllllllllllllIllIllllIIIIIIIl;
-            if (llllllllllllllllIllIllllIIIIIIIl.elements == null) {
-                llllllllllllllllIllIllllIIIIIIIl.elements = new Structure[llllllllllllllllIllIllllIIIIIIII * 3 / 2];
-            } else if (llllllllllllllllIllIllllIIIIIIIl.elements.length < llllllllllllllllIllIllllIIIIIIII) {
-                Structure[] llllllllllllllllIllIllllIIIIIlII = new Structure[llllllllllllllllIllIllllIIIIIIII * 3 / 2];
-                System.arraycopy(llllllllllllllllIllIllllIIIIIIIl.elements, 0, llllllllllllllllIllIllllIIIIIlII, 0, llllllllllllllllIllIllllIIIIIIIl.elements.length);
-                llllllllllllllllIllIllllIIIIIIIl.elements = llllllllllllllllIllIllllIIIIIlII;
+        private void ensureCapacity(int n) {
+            if (this.elements == null) {
+                this.elements = new Structure[n * 3 / 2];
+            } else if (this.elements.length < n) {
+                Structure[] arrstructure = new Structure[n * 3 / 2];
+                System.arraycopy(this.elements, 0, arrstructure, 0, this.elements.length);
+                this.elements = arrstructure;
             }
         }
 
         @Override
         public Iterator<Structure> iterator() {
-            StructureSet llllllllllllllllIllIlllIllIlIIll;
-            Structure[] llllllllllllllllIllIlllIllIlIlII = new Structure[llllllllllllllllIllIlllIllIlIIll.count];
-            if (llllllllllllllllIllIlllIllIlIIll.count > 0) {
-                System.arraycopy(llllllllllllllllIllIlllIllIlIIll.elements, 0, llllllllllllllllIllIlllIllIlIlII, 0, llllllllllllllllIllIlllIllIlIIll.count);
+            Structure[] arrstructure = new Structure[this.count];
+            if (this.count > 0) {
+                System.arraycopy(this.elements, 0, arrstructure, 0, this.count);
             }
-            return Arrays.asList(llllllllllllllllIllIlllIllIlIlII).iterator();
+            return Arrays.asList(arrstructure).iterator();
         }
 
         @Override
-        public boolean contains(Object llllllllllllllllIllIlllIllllIlIl) {
-            StructureSet llllllllllllllllIllIlllIllllIllI;
-            return llllllllllllllllIllIlllIllllIllI.indexOf((Structure)llllllllllllllllIllIlllIllllIlIl) != -1;
+        public boolean contains(Object object) {
+            return this.indexOf((Structure)object) != -1;
         }
 
         public Structure[] getElements() {
-            StructureSet llllllllllllllllIllIlllIllllllII;
-            return llllllllllllllllIllIlllIllllllII.elements;
+            return this.elements;
         }
 
         @Override
-        public boolean remove(Object llllllllllllllllIllIlllIllIlllII) {
-            StructureSet llllllllllllllllIllIlllIllIllIlI;
-            int llllllllllllllllIllIlllIllIllIll = llllllllllllllllIllIlllIllIllIlI.indexOf((Structure)llllllllllllllllIllIlllIllIlllII);
-            if (llllllllllllllllIllIlllIllIllIll != -1) {
-                if (--llllllllllllllllIllIlllIllIllIlI.count >= 0) {
-                    llllllllllllllllIllIlllIllIllIlI.elements[llllllllllllllllIllIlllIllIllIll] = llllllllllllllllIllIlllIllIllIlI.elements[llllllllllllllllIllIlllIllIllIlI.count];
-                    llllllllllllllllIllIlllIllIllIlI.elements[llllllllllllllllIllIlllIllIllIlI.count] = null;
+        public boolean remove(Object object) {
+            int n = this.indexOf((Structure)object);
+            if (n != -1) {
+                if (--this.count >= 0) {
+                    this.elements[n] = this.elements[this.count];
+                    this.elements[this.count] = null;
                 }
                 return true;
             }
             return false;
         }
 
-        private int indexOf(Structure llllllllllllllllIllIlllIlllIIIll) {
-            StructureSet llllllllllllllllIllIlllIlllIIllI;
-            for (int llllllllllllllllIllIlllIlllIIlll = 0; llllllllllllllllIllIlllIlllIIlll < llllllllllllllllIllIlllIlllIIllI.count; ++llllllllllllllllIllIlllIlllIIlll) {
-                Structure llllllllllllllllIllIlllIlllIlIII = llllllllllllllllIllIlllIlllIIllI.elements[llllllllllllllllIllIlllIlllIIlll];
-                if (llllllllllllllllIllIlllIlllIIIll != llllllllllllllllIllIlllIlllIlIII && (llllllllllllllllIllIlllIlllIIIll.getClass() != llllllllllllllllIllIlllIlllIlIII.getClass() || llllllllllllllllIllIlllIlllIIIll.size() != llllllllllllllllIllIlllIlllIlIII.size() || !llllllllllllllllIllIlllIlllIIIll.getPointer().equals(llllllllllllllllIllIlllIlllIlIII.getPointer()))) continue;
-                return llllllllllllllllIllIlllIlllIIlll;
+        private int indexOf(Structure structure) {
+            for (int i = 0; i < this.count; ++i) {
+                Structure structure2 = this.elements[i];
+                if (structure != structure2 && (structure.getClass() != structure2.getClass() || structure.size() != structure2.size() || !structure.getPointer().equals(structure2.getPointer()))) continue;
+                return i;
             }
             return -1;
         }
 
         @Override
-        public boolean add(Structure llllllllllllllllIllIlllIlllIllll) {
-            StructureSet llllllllllllllllIllIlllIlllIlllI;
-            if (!llllllllllllllllIllIlllIlllIlllI.contains(llllllllllllllllIllIlllIlllIllll)) {
-                llllllllllllllllIllIlllIlllIlllI.ensureCapacity(llllllllllllllllIllIlllIlllIlllI.count + 1);
-                llllllllllllllllIllIlllIlllIlllI.elements[llllllllllllllllIllIlllIlllIlllI.count++] = llllllllllllllllIllIlllIlllIllll;
+        public boolean add(Object object) {
+            return this.add((Structure)object);
+        }
+
+        @Override
+        public boolean add(Structure structure) {
+            if (!this.contains(structure)) {
+                this.ensureCapacity(this.count + 1);
+                this.elements[this.count++] = structure;
             }
             return true;
         }
@@ -1374,15 +1308,13 @@ public abstract class Structure {
 
     private static class AutoAllocated
     extends Memory {
-        public AutoAllocated(int llIllIIIllIlIlI) {
-            super(llIllIIIllIlIlI);
-            AutoAllocated llIllIIIllIllIl;
+        public AutoAllocated(int n) {
+            super(n);
             super.clear();
         }
 
         @Override
         public String toString() {
-            AutoAllocated llIllIIIllIIlll;
             return String.valueOf(new StringBuilder().append("auto-").append(super.toString()));
         }
     }
@@ -1391,141 +1323,201 @@ public abstract class Structure {
     }
 
     protected static class StructField {
-        public /* synthetic */ ToNativeConverter writeConverter;
-        public /* synthetic */ Class<?> type;
-        public /* synthetic */ FromNativeConverter readConverter;
-        public /* synthetic */ String name;
-        public /* synthetic */ FromNativeContext context;
-        public /* synthetic */ boolean isVolatile;
-        public /* synthetic */ Field field;
-        public /* synthetic */ int size;
-        public /* synthetic */ int offset;
-        public /* synthetic */ boolean isReadOnly;
+        public ToNativeConverter writeConverter;
+        public Class<?> type;
+        public FromNativeConverter readConverter;
+        public String name;
+        public FromNativeContext context;
+        public boolean isVolatile;
+        public Field field;
+        public int size = -1;
+        public int offset = -1;
+        public boolean isReadOnly;
 
         public String toString() {
-            StructField llllllllllllllllIlllllIIIlIIlIlI;
-            return String.valueOf(new StringBuilder().append(llllllllllllllllIlllllIIIlIIlIlI.name).append("@").append(llllllllllllllllIlllllIIIlIIlIlI.offset).append("[").append(llllllllllllllllIlllllIIIlIIlIlI.size).append("] (").append(llllllllllllllllIlllllIIIlIIlIlI.type).append(")"));
+            return String.valueOf(new StringBuilder().append(this.name).append("@").append(this.offset).append("[").append(this.size).append("] (").append(this.type).append(")"));
         }
 
         protected StructField() {
-            StructField llllllllllllllllIlllllIIIlIIllIl;
-            llllllllllllllllIlllllIIIlIIllIl.size = -1;
-            llllllllllllllllIlllllIIIlIIllIl.offset = -1;
         }
     }
 
     private static class LayoutInfo {
-        private /* synthetic */ boolean variable;
-        private /* synthetic */ TypeMapper typeMapper;
-        private /* synthetic */ int alignType;
-        private /* synthetic */ StructField typeInfoField;
-        private /* synthetic */ int size;
-        private final /* synthetic */ Map<String, StructField> fields;
-        private /* synthetic */ int alignment;
+        private boolean variable;
+        private TypeMapper typeMapper;
+        private int alignType = 0;
+        private StructField typeInfoField;
+        private int size = -1;
+        private final Map<String, StructField> fields = Collections.synchronizedMap(new LinkedHashMap());
+        private int alignment = 1;
+
+        static int access$100(LayoutInfo layoutInfo) {
+            return layoutInfo.size;
+        }
+
+        static boolean access$000(LayoutInfo layoutInfo) {
+            return layoutInfo.variable;
+        }
+
+        static int access$200(LayoutInfo layoutInfo) {
+            return layoutInfo.alignType;
+        }
+
+        static TypeMapper access$300(LayoutInfo layoutInfo) {
+            return layoutInfo.typeMapper;
+        }
+
+        static Map access$500(LayoutInfo layoutInfo) {
+            return layoutInfo.fields;
+        }
+
+        static TypeMapper access$302(LayoutInfo layoutInfo, TypeMapper typeMapper) {
+            layoutInfo.typeMapper = typeMapper;
+            return typeMapper;
+        }
+
+        static StructField access$700(LayoutInfo layoutInfo) {
+            return layoutInfo.typeInfoField;
+        }
+
+        LayoutInfo(1 var1_1) {
+            this();
+        }
+
+        static StructField access$702(LayoutInfo layoutInfo, StructField structField) {
+            layoutInfo.typeInfoField = structField;
+            return structField;
+        }
 
         private LayoutInfo() {
-            LayoutInfo llllllllllllllllIlIlIlIIIIlIllIl;
-            llllllllllllllllIlIlIlIIIIlIllIl.size = -1;
-            llllllllllllllllIlIlIlIIIIlIllIl.alignment = 1;
-            llllllllllllllllIlIlIlIIIIlIllIl.fields = Collections.synchronizedMap(new LinkedHashMap());
-            llllllllllllllllIlIlIlIIIIlIllIl.alignType = 0;
+        }
+
+        static int access$102(LayoutInfo layoutInfo, int n) {
+            layoutInfo.size = n;
+            return n;
+        }
+
+        static int access$202(LayoutInfo layoutInfo, int n) {
+            layoutInfo.alignType = n;
+            return n;
+        }
+
+        static int access$400(LayoutInfo layoutInfo) {
+            return layoutInfo.alignment;
+        }
+
+        static boolean access$002(LayoutInfo layoutInfo, boolean bl) {
+            layoutInfo.variable = bl;
+            return bl;
+        }
+
+        static int access$402(LayoutInfo layoutInfo, int n) {
+            layoutInfo.alignment = n;
+            return n;
         }
     }
 
     static class FFIType
     extends Structure {
-        private static final /* synthetic */ int FFI_TYPE_STRUCT;
-        public /* synthetic */ size_t size;
-        public /* synthetic */ short alignment;
-        public /* synthetic */ short type;
-        public /* synthetic */ Pointer elements;
-        private static final /* synthetic */ Map<Object, Object> typeInfoMap;
+        private static final int FFI_TYPE_STRUCT = 13;
+        public size_t size;
+        public short alignment;
+        public short type = (short)13;
+        public Pointer elements;
+        private static final Map<Object, Object> typeInfoMap = new WeakHashMap<Object, Object>();
 
-        private static Pointer get(Object llIIIIIIIIIlII, Class<?> llIIIIIIIIIllI) {
-            ToNativeConverter llIIIIIIIIllII;
-            TypeMapper llIIIIIIIIIlIl = Native.getTypeMapper(llIIIIIIIIIllI);
-            if (llIIIIIIIIIlIl != null && (llIIIIIIIIllII = llIIIIIIIIIlIl.getToNativeConverter(llIIIIIIIIIllI)) != null) {
-                llIIIIIIIIIllI = llIIIIIIIIllII.nativeType();
+        private static Pointer get(Object object, Class<?> class_) {
+            Object object2;
+            TypeMapper typeMapper = Native.getTypeMapper(class_);
+            if (typeMapper != null && (object2 = typeMapper.getToNativeConverter(class_)) != null) {
+                class_ = object2.nativeType();
             }
-            Map<Object, Object> map = typeInfoMap;
-            synchronized (map) {
-                Object llIIIIIIIIlIII = typeInfoMap.get(llIIIIIIIIIllI);
-                if (llIIIIIIIIlIII instanceof Pointer) {
-                    return (Pointer)llIIIIIIIIlIII;
-                }
-                if (llIIIIIIIIlIII instanceof FFIType) {
-                    return ((FFIType)llIIIIIIIIlIII).getPointer();
-                }
-                if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(llIIIIIIIIIllI) || Callback.class.isAssignableFrom(llIIIIIIIIIllI)) {
-                    typeInfoMap.put(llIIIIIIIIIllI, FFITypes.ffi_type_pointer);
-                    return FFITypes.ffi_type_pointer;
-                }
-                if (Structure.class.isAssignableFrom(llIIIIIIIIIllI)) {
-                    if (llIIIIIIIIIlII == null) {
-                        llIIIIIIIIIlII = FFIType.newInstance(llIIIIIIIIIllI, PLACEHOLDER_MEMORY);
+            object2 = typeInfoMap;
+            synchronized (object2) {
+                block15: {
+                    block14: {
+                        block13: {
+                            Object object3;
+                            block12: {
+                                object3 = typeInfoMap.get(class_);
+                                if (!(object3 instanceof Pointer)) break block12;
+                                return (Pointer)object3;
+                            }
+                            if (object3 instanceof FFIType) {
+                                return ((FFIType)object3).getPointer();
+                            }
+                            if ((!Platform.HAS_BUFFERS || !Buffer.class.isAssignableFrom(class_)) && !Callback.class.isAssignableFrom(class_)) break block13;
+                            typeInfoMap.put(class_, FFITypes.access$1800());
+                            return FFITypes.access$1800();
+                        }
+                        if (!Structure.class.isAssignableFrom(class_)) break block14;
+                        if (object == null) {
+                            object = FFIType.newInstance(class_, Structure.access$2000());
+                        }
+                        if (ByReference.class.isAssignableFrom(class_)) {
+                            typeInfoMap.put(class_, FFITypes.access$1800());
+                            return FFITypes.access$1800();
+                        }
+                        FFIType fFIType = new FFIType((Structure)object);
+                        typeInfoMap.put(class_, fFIType);
+                        return fFIType.getPointer();
                     }
-                    if (ByReference.class.isAssignableFrom(llIIIIIIIIIllI)) {
-                        typeInfoMap.put(llIIIIIIIIIllI, FFITypes.ffi_type_pointer);
-                        return FFITypes.ffi_type_pointer;
-                    }
-                    FFIType llIIIIIIIIlIll = new FFIType((Structure)llIIIIIIIIIlII);
-                    typeInfoMap.put(llIIIIIIIIIllI, llIIIIIIIIlIll);
-                    return llIIIIIIIIlIll.getPointer();
+                    if (!NativeMapped.class.isAssignableFrom(class_)) break block15;
+                    NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+                    return FFIType.get(nativeMappedConverter.toNative(object, new ToNativeContext()), nativeMappedConverter.nativeType());
                 }
-                if (NativeMapped.class.isAssignableFrom(llIIIIIIIIIllI)) {
-                    NativeMappedConverter llIIIIIIIIlIlI = NativeMappedConverter.getInstance(llIIIIIIIIIllI);
-                    return FFIType.get(llIIIIIIIIlIlI.toNative(llIIIIIIIIIlII, new ToNativeContext()), llIIIIIIIIlIlI.nativeType());
+                if (class_.isArray()) {
+                    FFIType fFIType = new FFIType(object, class_);
+                    typeInfoMap.put(object, fFIType);
+                    return fFIType.getPointer();
                 }
-                if (llIIIIIIIIIllI.isArray()) {
-                    FFIType llIIIIIIIIlIIl = new FFIType(llIIIIIIIIIlII, llIIIIIIIIIllI);
-                    typeInfoMap.put(llIIIIIIIIIlII, llIIIIIIIIlIIl);
-                    return llIIIIIIIIlIIl.getPointer();
-                }
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported type ").append(llIIIIIIIIIllI)));
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported type ").append(class_)));
             }
         }
 
         static {
-            FFI_TYPE_STRUCT = 13;
-            typeInfoMap = new WeakHashMap<Object, Object>();
             if (Native.POINTER_SIZE == 0) {
                 throw new Error("Native library not initialized");
             }
-            if (FFITypes.ffi_type_void == null) {
+            if (FFITypes.access$900() == null) {
                 throw new Error("FFI types not initialized");
             }
-            typeInfoMap.put(Void.TYPE, FFITypes.ffi_type_void);
-            typeInfoMap.put(Void.class, FFITypes.ffi_type_void);
-            typeInfoMap.put(Float.TYPE, FFITypes.ffi_type_float);
-            typeInfoMap.put(Float.class, FFITypes.ffi_type_float);
-            typeInfoMap.put(Double.TYPE, FFITypes.ffi_type_double);
-            typeInfoMap.put(Double.class, FFITypes.ffi_type_double);
-            typeInfoMap.put(Long.TYPE, FFITypes.ffi_type_sint64);
-            typeInfoMap.put(Long.class, FFITypes.ffi_type_sint64);
-            typeInfoMap.put(Integer.TYPE, FFITypes.ffi_type_sint32);
-            typeInfoMap.put(Integer.class, FFITypes.ffi_type_sint32);
-            typeInfoMap.put(Short.TYPE, FFITypes.ffi_type_sint16);
-            typeInfoMap.put(Short.class, FFITypes.ffi_type_sint16);
-            Pointer lIllllllllIllI = Native.WCHAR_SIZE == 2 ? FFITypes.ffi_type_uint16 : FFITypes.ffi_type_uint32;
-            typeInfoMap.put(Character.TYPE, lIllllllllIllI);
-            typeInfoMap.put(Character.class, lIllllllllIllI);
-            typeInfoMap.put(Byte.TYPE, FFITypes.ffi_type_sint8);
-            typeInfoMap.put(Byte.class, FFITypes.ffi_type_sint8);
-            typeInfoMap.put(Pointer.class, FFITypes.ffi_type_pointer);
-            typeInfoMap.put(String.class, FFITypes.ffi_type_pointer);
-            typeInfoMap.put(WString.class, FFITypes.ffi_type_pointer);
-            typeInfoMap.put(Boolean.TYPE, FFITypes.ffi_type_uint32);
-            typeInfoMap.put(Boolean.class, FFITypes.ffi_type_uint32);
+            typeInfoMap.put(Void.TYPE, FFITypes.access$900());
+            typeInfoMap.put(Void.class, FFITypes.access$900());
+            typeInfoMap.put(Float.TYPE, FFITypes.access$1000());
+            typeInfoMap.put(Float.class, FFITypes.access$1000());
+            typeInfoMap.put(Double.TYPE, FFITypes.access$1100());
+            typeInfoMap.put(Double.class, FFITypes.access$1100());
+            typeInfoMap.put(Long.TYPE, FFITypes.access$1200());
+            typeInfoMap.put(Long.class, FFITypes.access$1200());
+            typeInfoMap.put(Integer.TYPE, FFITypes.access$1300());
+            typeInfoMap.put(Integer.class, FFITypes.access$1300());
+            typeInfoMap.put(Short.TYPE, FFITypes.access$1400());
+            typeInfoMap.put(Short.class, FFITypes.access$1400());
+            Pointer pointer = Native.WCHAR_SIZE == 2 ? FFITypes.access$1500() : FFITypes.access$1600();
+            typeInfoMap.put(Character.TYPE, pointer);
+            typeInfoMap.put(Character.class, pointer);
+            typeInfoMap.put(Byte.TYPE, FFITypes.access$1700());
+            typeInfoMap.put(Byte.class, FFITypes.access$1700());
+            typeInfoMap.put(Pointer.class, FFITypes.access$1800());
+            typeInfoMap.put(String.class, FFITypes.access$1800());
+            typeInfoMap.put(WString.class, FFITypes.access$1800());
+            typeInfoMap.put(Boolean.TYPE, FFITypes.access$1600());
+            typeInfoMap.put(Boolean.class, FFITypes.access$1600());
         }
 
-        static Pointer get(Object llIIIIIIIlIlIl) {
-            if (llIIIIIIIlIlIl == null) {
-                return FFITypes.ffi_type_pointer;
+        static Pointer access$800(Object object, Class class_) {
+            return FFIType.get(object, class_);
+        }
+
+        static Pointer get(Object object) {
+            if (object == null) {
+                return FFITypes.access$1800();
             }
-            if (llIIIIIIIlIlIl instanceof Class) {
-                return FFIType.get(null, (Class)llIIIIIIIlIlIl);
+            if (object instanceof Class) {
+                return FFIType.get(null, (Class)object);
             }
-            return FFIType.get(llIIIIIIIlIlIl, llIIIIIIIlIlIl.getClass());
+            return FFIType.get(object, object.getClass());
         }
 
         @Override
@@ -1533,75 +1525,109 @@ public abstract class Structure {
             return Arrays.asList("size", "alignment", "type", "elements");
         }
 
-        private void init(Pointer[] llIIIIIIIlIlll) {
-            FFIType llIIIIIIIllIlI;
-            llIIIIIIIllIlI.elements = new Memory(Pointer.SIZE * llIIIIIIIlIlll.length);
-            llIIIIIIIllIlI.elements.write(0L, llIIIIIIIlIlll, 0, llIIIIIIIlIlll.length);
-            llIIIIIIIllIlI.write();
+        private void init(Pointer[] arrpointer) {
+            this.elements = new Memory(Pointer.SIZE * arrpointer.length);
+            this.elements.write(0L, arrpointer, 0, arrpointer.length);
+            this.write();
         }
 
-        private FFIType(Object llIIIIIIlIIIll, Class<?> llIIIIIIlIlIII) {
-            FFIType llIIIIIIlIlIlI;
-            llIIIIIIlIlIlI.type = (short)13;
-            int llIIIIIIlIIlll = Array.getLength(llIIIIIIlIIIll);
-            Pointer[] llIIIIIIlIIllI = new Pointer[llIIIIIIlIIlll + 1];
-            Pointer llIIIIIIlIIlIl = FFIType.get(null, llIIIIIIlIlIII.getComponentType());
-            for (int llIIIIIIlIlIll = 0; llIIIIIIlIlIll < llIIIIIIlIIlll; ++llIIIIIIlIlIll) {
-                llIIIIIIlIIllI[llIIIIIIlIlIll] = llIIIIIIlIIlIl;
+        private FFIType(Object object, Class<?> class_) {
+            int n = Array.getLength(object);
+            Pointer[] arrpointer = new Pointer[n + 1];
+            Pointer pointer = FFIType.get(null, class_.getComponentType());
+            for (int i = 0; i < n; ++i) {
+                arrpointer[i] = pointer;
+                if (0 >= -1) continue;
+                throw null;
             }
-            llIIIIIIlIlIlI.init(llIIIIIIlIIllI);
+            this.init(arrpointer);
         }
 
-        private FFIType(Structure llIIIIIIlllIlI) {
-            Pointer[] llIIIIIIlllIIl;
-            FFIType llIIIIIIlllIll;
-            llIIIIIIlllIll.type = (short)13;
-            llIIIIIIlllIlI.ensureAllocated(true);
-            if (llIIIIIIlllIlI instanceof Union) {
-                StructField llIIIIIIllllll = ((Union)llIIIIIIlllIlI).typeInfoField();
-                Pointer[] llIIIIIIlllllI = new Pointer[]{FFIType.get(llIIIIIIlllIlI.getFieldValue(llIIIIIIllllll.field), llIIIIIIllllll.type), null};
+        private FFIType(Structure structure) {
+            Pointer[] arrpointer;
+            Structure.access$1900(structure, true);
+            if (structure instanceof Union) {
+                StructField structField = ((Union)structure).typeInfoField();
+                arrpointer = new Pointer[]{FFIType.get(structure.getFieldValue(structField.field), structField.type), null};
             } else {
-                llIIIIIIlllIIl = new Pointer[llIIIIIIlllIlI.fields().size() + 1];
-                int llIIIIIIllllII = 0;
-                for (StructField llIIIIIIllllIl : llIIIIIIlllIlI.fields().values()) {
-                    llIIIIIIlllIIl[llIIIIIIllllII++] = llIIIIIIlllIlI.getFieldTypeInfo(llIIIIIIllllIl);
+                arrpointer = new Pointer[structure.fields().size() + 1];
+                int n = 0;
+                for (StructField structField : structure.fields().values()) {
+                    arrpointer[n++] = structure.getFieldTypeInfo(structField);
                 }
             }
-            llIIIIIIlllIll.init(llIIIIIIlllIIl);
+            this.init(arrpointer);
         }
 
         public static class size_t
         extends IntegerType {
-            private static final /* synthetic */ long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-            public size_t(long lIllIllllIlIIl) {
-                super(Native.SIZE_T_SIZE, lIllIllllIlIIl);
-                size_t lIllIllllIlIlI;
+            public size_t(long l) {
+                super(Native.SIZE_T_SIZE, l);
             }
 
             public size_t() {
-                lIllIllllIlllI(0L);
-                size_t lIllIllllIlllI;
+                this(0L);
             }
         }
 
         private static class FFITypes {
-            private static /* synthetic */ Pointer ffi_type_double;
-            private static /* synthetic */ Pointer ffi_type_uint16;
-            private static /* synthetic */ Pointer ffi_type_sint64;
-            private static /* synthetic */ Pointer ffi_type_sint8;
-            private static /* synthetic */ Pointer ffi_type_float;
-            private static /* synthetic */ Pointer ffi_type_sint32;
-            private static /* synthetic */ Pointer ffi_type_void;
-            private static /* synthetic */ Pointer ffi_type_sint16;
-            private static /* synthetic */ Pointer ffi_type_uint64;
-            private static /* synthetic */ Pointer ffi_type_pointer;
-            private static /* synthetic */ Pointer ffi_type_longdouble;
-            private static /* synthetic */ Pointer ffi_type_uint8;
-            private static /* synthetic */ Pointer ffi_type_uint32;
+            private static Pointer ffi_type_double;
+            private static Pointer ffi_type_uint16;
+            private static Pointer ffi_type_sint64;
+            private static Pointer ffi_type_sint8;
+            private static Pointer ffi_type_float;
+            private static Pointer ffi_type_sint32;
+            private static Pointer ffi_type_void;
+            private static Pointer ffi_type_sint16;
+            private static Pointer ffi_type_uint64;
+            private static Pointer ffi_type_pointer;
+            private static Pointer ffi_type_longdouble;
+            private static Pointer ffi_type_uint8;
+            private static Pointer ffi_type_uint32;
+
+            static Pointer access$1400() {
+                return ffi_type_sint16;
+            }
 
             private FFITypes() {
-                FFITypes llllllllllllllllllIlIllIllIIlIll;
+            }
+
+            static Pointer access$1300() {
+                return ffi_type_sint32;
+            }
+
+            static Pointer access$1000() {
+                return ffi_type_float;
+            }
+
+            static Pointer access$900() {
+                return ffi_type_void;
+            }
+
+            static Pointer access$1800() {
+                return ffi_type_pointer;
+            }
+
+            static Pointer access$1200() {
+                return ffi_type_sint64;
+            }
+
+            static Pointer access$1600() {
+                return ffi_type_uint32;
+            }
+
+            static Pointer access$1700() {
+                return ffi_type_sint8;
+            }
+
+            static Pointer access$1100() {
+                return ffi_type_double;
+            }
+
+            static Pointer access$1500() {
+                return ffi_type_uint16;
             }
         }
     }

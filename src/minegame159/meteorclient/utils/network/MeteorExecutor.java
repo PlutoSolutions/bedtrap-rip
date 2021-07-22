@@ -7,18 +7,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MeteorExecutor {
-    private static /* synthetic */ ExecutorService executor;
+    private static ExecutorService executor;
 
     public static void init() {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    public MeteorExecutor() {
-        MeteorExecutor llIIlIIIIIIIIIl;
-    }
-
-    public static void execute(Runnable llIIIlllllllllI) {
-        executor.execute(llIIIlllllllllI);
+    public static void execute(Runnable runnable) {
+        executor.execute(runnable);
     }
 }
 

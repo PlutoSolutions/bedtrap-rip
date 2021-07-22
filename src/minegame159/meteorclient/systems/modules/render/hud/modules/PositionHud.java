@@ -12,66 +12,62 @@ import minegame159.meteorclient.utils.player.PlayerUtils;
 
 public class PositionHud
 extends HudElement {
-    private /* synthetic */ double left2Width;
-    private /* synthetic */ double left1Width;
-    private /* synthetic */ String right1;
-    private final /* synthetic */ String left1 = "Pos: ";
-    private /* synthetic */ String left2;
-    private /* synthetic */ String right2;
+    private double left2Width;
+    private double left1Width;
+    private String right1;
+    private final String left1 = "Pos: ";
+    private String left2;
+    private String right2;
 
     @Override
-    public void update(HudRenderer llllllllllllllllIllIlllIIlllIIll) {
-        PositionHud llllllllllllllllIllIlllIIlllIlII;
-        llllllllllllllllIllIlllIIlllIlII.left1Width = llllllllllllllllIllIlllIIlllIIll.textWidth("Pos: ");
-        llllllllllllllllIllIlllIIlllIlII.left2 = null;
-        if (llllllllllllllllIllIlllIIlllIlII.isInEditor()) {
-            llllllllllllllllIllIlllIIlllIlII.right1 = "0,0 0,0 0,0";
-            llllllllllllllllIllIlllIIlllIlII.box.setSize(llllllllllllllllIllIlllIIlllIlII.left1Width + llllllllllllllllIllIlllIIlllIIll.textWidth(llllllllllllllllIllIlllIIlllIlII.right1), llllllllllllllllIllIlllIIlllIIll.textHeight() * 2.0 + 2.0);
+    public void update(HudRenderer hudRenderer) {
+        this.left1Width = hudRenderer.textWidth("Pos: ");
+        this.left2 = null;
+        if (this.isInEditor()) {
+            this.right1 = "0,0 0,0 0,0";
+            this.box.setSize(this.left1Width + hudRenderer.textWidth(this.right1), hudRenderer.textHeight() * 2.0 + 2.0);
             return;
         }
-        Freecam llllllllllllllllIllIlllIIlllIIlI = Modules.get().get(Freecam.class);
-        double llllllllllllllllIllIlllIIlllIIIl = llllllllllllllllIllIlllIIlllIIlI.isActive() ? llllllllllllllllIllIlllIIlllIlII.mc.field_1773.method_19418().method_19326().field_1352 : llllllllllllllllIllIlllIIlllIlII.mc.field_1724.method_23317();
-        double llllllllllllllllIllIlllIIlllIIII = llllllllllllllllIllIlllIIlllIIlI.isActive() ? llllllllllllllllIllIlllIIlllIlII.mc.field_1773.method_19418().method_19326().field_1351 - (double)llllllllllllllllIllIlllIIlllIlII.mc.field_1724.method_18381(llllllllllllllllIllIlllIIlllIlII.mc.field_1724.method_18376()) : llllllllllllllllIllIlllIIlllIlII.mc.field_1724.method_23318();
-        double llllllllllllllllIllIlllIIllIllll = llllllllllllllllIllIlllIIlllIIlI.isActive() ? llllllllllllllllIllIlllIIlllIlII.mc.field_1773.method_19418().method_19326().field_1350 : llllllllllllllllIllIlllIIlllIlII.mc.field_1724.method_23321();
-        llllllllllllllllIllIlllIIlllIlII.right1 = String.format("%.1f %.1f %.1f", llllllllllllllllIllIlllIIlllIIIl, llllllllllllllllIllIlllIIlllIIII, llllllllllllllllIllIlllIIllIllll);
-        switch (PlayerUtils.getDimension()) {
-            case Overworld: {
-                llllllllllllllllIllIlllIIlllIlII.left2 = "Nether Pos: ";
-                llllllllllllllllIllIlllIIlllIlII.right2 = String.format("%.1f %.1f %.1f", llllllllllllllllIllIlllIIlllIIIl / 8.0, llllllllllllllllIllIlllIIlllIIII, llllllllllllllllIllIlllIIllIllll / 8.0);
+        Freecam freecam = Modules.get().get(Freecam.class);
+        double d = freecam.isActive() ? this.mc.field_1773.method_19418().method_19326().field_1352 : this.mc.field_1724.method_23317();
+        double d2 = freecam.isActive() ? this.mc.field_1773.method_19418().method_19326().field_1351 - (double)this.mc.field_1724.method_18381(this.mc.field_1724.method_18376()) : this.mc.field_1724.method_23318();
+        double d3 = freecam.isActive() ? this.mc.field_1773.method_19418().method_19326().field_1350 : this.mc.field_1724.method_23321();
+        this.right1 = String.format("%.1f %.1f %.1f", d, d2, d3);
+        switch (1.$SwitchMap$minegame159$meteorclient$utils$world$Dimension[PlayerUtils.getDimension().ordinal()]) {
+            case 1: {
+                this.left2 = "Nether Pos: ";
+                this.right2 = String.format("%.1f %.1f %.1f", d / 8.0, d2, d3 / 8.0);
                 break;
             }
-            case Nether: {
-                llllllllllllllllIllIlllIIlllIlII.left2 = "Overworld Pos: ";
-                llllllllllllllllIllIlllIIlllIlII.right2 = String.format("%.1f %.1f %.1f", llllllllllllllllIllIlllIIlllIIIl * 8.0, llllllllllllllllIllIlllIIlllIIII, llllllllllllllllIllIlllIIllIllll * 8.0);
+            case 2: {
+                this.left2 = "Overworld Pos: ";
+                this.right2 = String.format("%.1f %.1f %.1f", d * 8.0, d2, d3 * 8.0);
             }
         }
-        double llllllllllllllllIllIlllIIllIlllI = llllllllllllllllIllIlllIIlllIlII.left1Width + llllllllllllllllIllIlllIIlllIIll.textWidth(llllllllllllllllIllIlllIIlllIlII.right1);
-        if (llllllllllllllllIllIlllIIlllIlII.left2 != null) {
-            llllllllllllllllIllIlllIIlllIlII.left2Width = llllllllllllllllIllIlllIIlllIIll.textWidth(llllllllllllllllIllIlllIIlllIlII.left2);
-            llllllllllllllllIllIlllIIllIlllI = Math.max(llllllllllllllllIllIlllIIllIlllI, llllllllllllllllIllIlllIIlllIlII.left2Width + llllllllllllllllIllIlllIIlllIIll.textWidth(llllllllllllllllIllIlllIIlllIlII.right2));
+        double d4 = this.left1Width + hudRenderer.textWidth(this.right1);
+        if (this.left2 != null) {
+            this.left2Width = hudRenderer.textWidth(this.left2);
+            d4 = Math.max(d4, this.left2Width + hudRenderer.textWidth(this.right2));
         }
-        llllllllllllllllIllIlllIIlllIlII.box.setSize(llllllllllllllllIllIlllIIllIlllI, llllllllllllllllIllIlllIIlllIIll.textHeight() * 2.0 + 2.0);
+        this.box.setSize(d4, hudRenderer.textHeight() * 2.0 + 2.0);
     }
 
     @Override
-    public void render(HudRenderer llllllllllllllllIllIlllIIlIllIIl) {
-        PositionHud llllllllllllllllIllIlllIIllIIIII;
-        double llllllllllllllllIllIlllIIlIllllI = llllllllllllllllIllIlllIIllIIIII.box.getX();
-        double llllllllllllllllIllIlllIIlIlllIl = llllllllllllllllIllIlllIIllIIIII.box.getY();
-        if (llllllllllllllllIllIlllIIllIIIII.left2 != null) {
-            llllllllllllllllIllIlllIIlIllIIl.text(llllllllllllllllIllIlllIIllIIIII.left2, llllllllllllllllIllIlllIIlIllllI, llllllllllllllllIllIlllIIlIlllIl, llllllllllllllllIllIlllIIllIIIII.hud.primaryColor.get());
-            llllllllllllllllIllIlllIIlIllIIl.text(llllllllllllllllIllIlllIIllIIIII.right2, llllllllllllllllIllIlllIIlIllllI + llllllllllllllllIllIlllIIllIIIII.left2Width, llllllllllllllllIllIlllIIlIlllIl, llllllllllllllllIllIlllIIllIIIII.hud.secondaryColor.get());
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX();
+        double d2 = this.box.getY();
+        if (this.left2 != null) {
+            hudRenderer.text(this.left2, d, d2, this.hud.primaryColor.get());
+            hudRenderer.text(this.right2, d + this.left2Width, d2, this.hud.secondaryColor.get());
         }
-        double llllllllllllllllIllIlllIIlIlllII = llllllllllllllllIllIlllIIllIIIII.box.alignX(llllllllllllllllIllIlllIIllIIIII.left1Width + llllllllllllllllIllIlllIIlIllIIl.textWidth(llllllllllllllllIllIlllIIllIIIII.right1));
-        double llllllllllllllllIllIlllIIlIllIll = llllllllllllllllIllIlllIIlIllIIl.textHeight() + 2.0;
-        llllllllllllllllIllIlllIIlIllIIl.text("Pos: ", llllllllllllllllIllIlllIIlIllllI + llllllllllllllllIllIlllIIlIlllII, llllllllllllllllIllIlllIIlIlllIl + llllllllllllllllIllIlllIIlIllIll, llllllllllllllllIllIlllIIllIIIII.hud.primaryColor.get());
-        llllllllllllllllIllIlllIIlIllIIl.text(llllllllllllllllIllIlllIIllIIIII.right1, llllllllllllllllIllIlllIIlIllllI + llllllllllllllllIllIlllIIlIlllII + llllllllllllllllIllIlllIIllIIIII.left1Width, llllllllllllllllIllIlllIIlIlllIl + llllllllllllllllIllIlllIIlIllIll, llllllllllllllllIllIlllIIllIIIII.hud.secondaryColor.get());
+        double d3 = this.box.alignX(this.left1Width + hudRenderer.textWidth(this.right1));
+        double d4 = hudRenderer.textHeight() + 2.0;
+        hudRenderer.text("Pos: ", d + d3, d2 + d4, this.hud.primaryColor.get());
+        hudRenderer.text(this.right1, d + d3 + this.left1Width, d2 + d4, this.hud.secondaryColor.get());
     }
 
-    public PositionHud(HUD llllllllllllllllIllIlllIIllllllI) {
-        super(llllllllllllllllIllIlllIIllllllI, "coords", "Displays your coordinates in the world.");
-        PositionHud llllllllllllllllIllIlllIIlllllll;
-        llllllllllllllllIllIlllIIlllllll.left1 = "Pos: ";
+    public PositionHud(HUD hUD) {
+        super(hUD, "coords", "Displays your coordinates in the world.");
     }
 }
 

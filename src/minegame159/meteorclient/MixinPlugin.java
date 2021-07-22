@@ -19,6 +19,7 @@
 package minegame159.meteorclient;
 
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -36,60 +37,54 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 public class MixinPlugin
 implements IMixinConfigPlugin {
-    private /* synthetic */ String getFovDesc;
-    private /* synthetic */ String gameRenderer;
-    private /* synthetic */ boolean isResourceLoaderPresent;
+    private String getFovDesc;
+    private String gameRenderer;
+    private boolean isResourceLoaderPresent = false;
 
-    public void postApply(String lllllllllllllllllIIlIIIIlIllllll, ClassNode lllllllllllllllllIIlIIIIlIlllllI, String lllllllllllllllllIIlIIIIlIllllIl, IMixinInfo lllllllllllllllllIIlIIIIlIllllII) {
+    public void postApply(String string, ClassNode classNode, String string2, IMixinInfo iMixinInfo) {
     }
 
-    public void preApply(String lllllllllllllllllIIlIIIIllIIlIII, ClassNode lllllllllllllllllIIlIIIIllIIIlll, String lllllllllllllllllIIlIIIIllIIlIll, IMixinInfo lllllllllllllllllIIlIIIIllIIlIlI) {
-        MixinPlugin lllllllllllllllllIIlIIIIllIIlIIl;
-        if (lllllllllllllllllIIlIIIIllIIlIII.equals(lllllllllllllllllIIlIIIIllIIlIIl.gameRenderer)) {
-            MethodNode lllllllllllllllllIIlIIIIllIlIIll = lllllllllllllllllIIlIIIIllIIlIIl.getMethod(lllllllllllllllllIIlIIIIllIIIlll, lllllllllllllllllIIlIIIIllIIlIIl.getFovDesc);
-            if (lllllllllllllllllIIlIIIIllIlIIll == null) {
+    public void preApply(String string, ClassNode classNode, String string2, IMixinInfo iMixinInfo) {
+        if (string.equals(this.gameRenderer)) {
+            MethodNode methodNode = this.getMethod(classNode, this.getFovDesc);
+            if (methodNode == null) {
                 throw new RuntimeException("[Meteor Client] Could not find method GameRenderer.getFov()");
             }
-            AbstractInsnNode lllllllllllllllllIIlIIIIllIlIIlI = null;
-            AbstractInsnNode lllllllllllllllllIIlIIIIllIlIIIl = null;
-            VarInsnNode lllllllllllllllllIIlIIIIllIlIIII = null;
-            for (AbstractInsnNode lllllllllllllllllIIlIIIIllIlIlII : lllllllllllllllllIIlIIIIllIlIIll.instructions) {
-                if (lllllllllllllllllIIlIIIIllIlIlII.getOpcode() == 175 && lllllllllllllllllIIlIIIIllIlIIlI instanceof VarInsnNode && lllllllllllllllllIIlIIIIllIlIIlI.getOpcode() == 24 && lllllllllllllllllIIlIIIIllIlIIIl != null) {
-                    lllllllllllllllllIIlIIIIllIlIIII = (VarInsnNode)lllllllllllllllllIIlIIIIllIlIIlI;
+            AbstractInsnNode abstractInsnNode = null;
+            AbstractInsnNode abstractInsnNode2 = null;
+            VarInsnNode varInsnNode = null;
+            for (AbstractInsnNode abstractInsnNode3 : methodNode.instructions) {
+                if (abstractInsnNode3.getOpcode() == 175 && abstractInsnNode instanceof VarInsnNode && abstractInsnNode.getOpcode() == 24 && abstractInsnNode2 != null) {
+                    varInsnNode = (VarInsnNode)abstractInsnNode;
                     break;
                 }
-                lllllllllllllllllIIlIIIIllIlIIlI = lllllllllllllllllIIlIIIIllIlIlII;
-                if (!(lllllllllllllllllIIlIIIIllIlIlII instanceof LabelNode)) continue;
-                lllllllllllllllllIIlIIIIllIlIIIl = lllllllllllllllllIIlIIIIllIlIIlI;
+                abstractInsnNode = abstractInsnNode3;
+                if (!(abstractInsnNode3 instanceof LabelNode)) continue;
+                abstractInsnNode2 = abstractInsnNode;
             }
-            if (lllllllllllllllllIIlIIIIllIlIIII == null) {
+            if (varInsnNode == null) {
                 throw new RuntimeException("[Meteor Client] Could not find injection point for GameRenderer.getFov()");
             }
-            InsnList lllllllllllllllllIIlIIIIllIIllll = new InsnList();
-            lllllllllllllllllIIlIIIIllIIllll.add((AbstractInsnNode)new FieldInsnNode(178, "minegame159/meteorclient/MeteorClient", "EVENT_BUS", "Lmeteordevelopment/orbit/IEventBus;"));
-            lllllllllllllllllIIlIIIIllIIllll.add((AbstractInsnNode)new VarInsnNode(24, lllllllllllllllllIIlIIIIllIlIIII.var));
-            lllllllllllllllllIIlIIIIllIIllll.add((AbstractInsnNode)new MethodInsnNode(184, "minegame159/meteorclient/events/render/GetFovEvent", "get", "(D)Lminegame159/meteorclient/events/render/GetFovEvent;"));
-            lllllllllllllllllIIlIIIIllIIllll.add((AbstractInsnNode)new MethodInsnNode(185, "meteordevelopment/orbit/IEventBus", "post", "(Ljava/lang/Object;)Ljava/lang/Object;"));
-            lllllllllllllllllIIlIIIIllIIllll.add((AbstractInsnNode)new TypeInsnNode(192, "minegame159/meteorclient/events/render/GetFovEvent"));
-            lllllllllllllllllIIlIIIIllIIllll.add((AbstractInsnNode)new FieldInsnNode(180, "minegame159/meteorclient/events/render/GetFovEvent", "fov", "D"));
-            lllllllllllllllllIIlIIIIllIlIIll.instructions.insert((AbstractInsnNode)lllllllllllllllllIIlIIIIllIlIIII, lllllllllllllllllIIlIIIIllIIllll);
-            lllllllllllllllllIIlIIIIllIlIIll.instructions.remove((AbstractInsnNode)lllllllllllllllllIIlIIIIllIlIIII);
+            ListIterator listIterator = new InsnList();
+            listIterator.add((AbstractInsnNode)new FieldInsnNode(178, "minegame159/meteorclient/MeteorClient", "EVENT_BUS", "Lmeteordevelopment/orbit/IEventBus;"));
+            listIterator.add((AbstractInsnNode)new VarInsnNode(24, varInsnNode.var));
+            listIterator.add((AbstractInsnNode)new MethodInsnNode(184, "minegame159/meteorclient/events/render/GetFovEvent", "get", "(D)Lminegame159/meteorclient/events/render/GetFovEvent;"));
+            listIterator.add((AbstractInsnNode)new MethodInsnNode(185, "meteordevelopment/orbit/IEventBus", "post", "(Ljava/lang/Object;)Ljava/lang/Object;"));
+            listIterator.add((AbstractInsnNode)new TypeInsnNode(192, "minegame159/meteorclient/events/render/GetFovEvent"));
+            listIterator.add((AbstractInsnNode)new FieldInsnNode(180, "minegame159/meteorclient/events/render/GetFovEvent", "fov", "D"));
+            methodNode.instructions.insert((AbstractInsnNode)varInsnNode, (InsnList)listIterator);
+            methodNode.instructions.remove((AbstractInsnNode)varInsnNode);
         }
-    }
-
-    public MixinPlugin() {
-        MixinPlugin lllllllllllllllllIIlIIIIllllIIll;
-        lllllllllllllllllIIlIIIIllllIIll.isResourceLoaderPresent = false;
     }
 
     public String getRefMapperConfig() {
         return null;
     }
 
-    private MethodNode getMethod(ClassNode lllllllllllllllllIIlIIIIlIllIlIl, String lllllllllllllllllIIlIIIIlIllIIlI) {
-        for (MethodNode lllllllllllllllllIIlIIIIlIllIlll : lllllllllllllllllIIlIIIIlIllIlIl.methods) {
-            if (!lllllllllllllllllIIlIIIIlIllIlll.desc.equals(lllllllllllllllllIIlIIIIlIllIIlI)) continue;
-            return lllllllllllllllllIIlIIIIlIllIlll;
+    private MethodNode getMethod(ClassNode classNode, String string) {
+        for (MethodNode methodNode : classNode.methods) {
+            if (!methodNode.desc.equals(string)) continue;
+            return methodNode;
         }
         return null;
     }
@@ -98,25 +93,24 @@ implements IMixinConfigPlugin {
         return null;
     }
 
-    public boolean shouldApplyMixin(String lllllllllllllllllIIlIIIIlllIIlIl, String lllllllllllllllllIIlIIIIlllIIIlI) {
-        if (lllllllllllllllllIIlIIIIlllIIIlI.endsWith("NamespaceResourceManagerMixin") || lllllllllllllllllIIlIIIIlllIIIlI.endsWith("ReloadableResourceManagerImplMixin")) {
-            MixinPlugin lllllllllllllllllIIlIIIIlllIIllI;
-            return !lllllllllllllllllIIlIIIIlllIIllI.isResourceLoaderPresent;
+    public boolean shouldApplyMixin(String string, String string2) {
+        if (string2.endsWith("NamespaceResourceManagerMixin") || string2.endsWith("ReloadableResourceManagerImplMixin")) {
+            return !this.isResourceLoaderPresent;
         }
         return true;
     }
 
-    public void acceptTargets(Set<String> lllllllllllllllllIIlIIIIlllIIIII, Set<String> lllllllllllllllllIIlIIIIllIlllll) {
+    public void acceptTargets(Set<String> set, Set<String> set2) {
     }
 
-    public void onLoad(String lllllllllllllllllIIlIIIIlllIllIl) {
-        for (ModContainer lllllllllllllllllIIlIIIIlllIllll : FabricLoader.getInstance().getAllMods()) {
-            if (!lllllllllllllllllIIlIIIIlllIllll.getMetadata().getId().startsWith("fabric-resource-loader")) continue;
-            lllllllllllllllllIIlIIIIlllIllII.isResourceLoaderPresent = true;
+    public void onLoad(String string) {
+        for (ModContainer modContainer : FabricLoader.getInstance().getAllMods()) {
+            if (!modContainer.getMetadata().getId().startsWith("fabric-resource-loader")) continue;
+            this.isResourceLoaderPresent = true;
             break;
         }
-        lllllllllllllllllIIlIIIIlllIllII.gameRenderer = FabricLoader.getInstance().getMappingResolver().mapClassName("intermediary", "net.minecraft.class_757");
-        lllllllllllllllllIIlIIIIlllIllII.getFovDesc = String.valueOf(new StringBuilder().append("(L").append(FabricLoader.getInstance().getMappingResolver().mapClassName("intermediary", "net.minecraft.class_4184").replace('.', '/')).append(";FZ)D"));
+        this.gameRenderer = FabricLoader.getInstance().getMappingResolver().mapClassName("intermediary", "net.minecraft.class_757");
+        this.getFovDesc = String.valueOf(new StringBuilder().append("(L").append(FabricLoader.getInstance().getMappingResolver().mapClassName("intermediary", "net.minecraft.class_4184").replace('.', '/')).append(";FZ)D"));
     }
 }
 

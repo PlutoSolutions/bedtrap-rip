@@ -29,103 +29,97 @@ import net.minecraft.class_3532;
 
 public class Anchor
 extends Module {
-    private /* synthetic */ int holeX;
-    public /* synthetic */ double deltaX;
-    private final /* synthetic */ Setting<Integer> maxHeight;
-    private final /* synthetic */ Setting<Boolean> pull;
-    private /* synthetic */ int holeZ;
-    private final /* synthetic */ Setting<Boolean> cancelMove;
-    public /* synthetic */ boolean cancelJump;
-    public /* synthetic */ double deltaZ;
-    public /* synthetic */ boolean controlMovement;
-    private /* synthetic */ boolean foundHole;
-    private final /* synthetic */ Setting<Double> pullSpeed;
-    private /* synthetic */ boolean wasInHole;
-    private final /* synthetic */ class_2338.class_2339 blockPos;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Integer> minPitch;
+    private int holeX;
+    public double deltaX;
+    private final Setting<Integer> maxHeight;
+    private final Setting<Boolean> pull;
+    private int holeZ;
+    private final Setting<Boolean> cancelMove;
+    public boolean cancelJump;
+    public double deltaZ;
+    public boolean controlMovement;
+    private boolean foundHole;
+    private final Setting<Double> pullSpeed;
+    private boolean wasInHole;
+    private final class_2338.class_2339 blockPos;
+    private final SettingGroup sgGeneral;
+    private final Setting<Integer> minPitch;
 
     @EventHandler
-    private void onPostTick(TickEvent.Post lllllllllllllllllIlIlIlIIIllIIIl) {
-        int lllllllllllllllllIlIlIlIIIlIlllI;
-        int lllllllllllllllllIlIlIlIIIlIllll;
-        Anchor lllllllllllllllllIlIlIlIIIllIIlI;
-        lllllllllllllllllIlIlIlIIIllIIlI.controlMovement = false;
-        int lllllllllllllllllIlIlIlIIIllIIII = class_3532.method_15357((double)lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.method_23317());
-        if (lllllllllllllllllIlIlIlIIIllIIlI.isHole(lllllllllllllllllIlIlIlIIIllIIII, lllllllllllllllllIlIlIlIIIlIllll = class_3532.method_15357((double)lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.method_23318()), lllllllllllllllllIlIlIlIIIlIlllI = class_3532.method_15357((double)lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.method_23321()))) {
-            lllllllllllllllllIlIlIlIIIllIIlI.wasInHole = true;
-            lllllllllllllllllIlIlIlIIIllIIlI.holeX = lllllllllllllllllIlIlIlIIIllIIII;
-            lllllllllllllllllIlIlIlIIIllIIlI.holeZ = lllllllllllllllllIlIlIlIIIlIlllI;
+    private void onPostTick(TickEvent.Post post) {
+        int n;
+        int n2;
+        this.controlMovement = false;
+        int n3 = class_3532.method_15357((double)this.mc.field_1724.method_23317());
+        if (this.isHole(n3, n2 = class_3532.method_15357((double)this.mc.field_1724.method_23318()), n = class_3532.method_15357((double)this.mc.field_1724.method_23321()))) {
+            this.wasInHole = true;
+            this.holeX = n3;
+            this.holeZ = n;
             return;
         }
-        if (lllllllllllllllllIlIlIlIIIllIIlI.wasInHole && lllllllllllllllllIlIlIlIIIllIIlI.holeX == lllllllllllllllllIlIlIlIIIllIIII && lllllllllllllllllIlIlIlIIIllIIlI.holeZ == lllllllllllllllllIlIlIlIIIlIlllI) {
+        if (this.wasInHole && this.holeX == n3 && this.holeZ == n) {
             return;
         }
-        if (lllllllllllllllllIlIlIlIIIllIIlI.wasInHole) {
-            lllllllllllllllllIlIlIlIIIllIIlI.wasInHole = false;
+        if (this.wasInHole) {
+            this.wasInHole = false;
         }
-        if (lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.field_5965 < (float)lllllllllllllllllIlIlIlIIIllIIlI.minPitch.get().intValue()) {
+        if (this.mc.field_1724.field_5965 < (float)this.minPitch.get().intValue()) {
             return;
         }
-        lllllllllllllllllIlIlIlIIIllIIlI.foundHole = false;
-        double lllllllllllllllllIlIlIlIIIlIllIl = 0.0;
-        double lllllllllllllllllIlIlIlIIIlIllII = 0.0;
-        for (int lllllllllllllllllIlIlIlIIIllIIll = 0; lllllllllllllllllIlIlIlIIIllIIll < lllllllllllllllllIlIlIlIIIllIIlI.maxHeight.get() && --lllllllllllllllllIlIlIlIIIlIllll > 0 && lllllllllllllllllIlIlIlIIIllIIlI.isAir(lllllllllllllllllIlIlIlIIIllIIII, lllllllllllllllllIlIlIlIIIlIllll, lllllllllllllllllIlIlIlIIIlIlllI); ++lllllllllllllllllIlIlIlIIIllIIll) {
-            if (!lllllllllllllllllIlIlIlIIIllIIlI.isHole(lllllllllllllllllIlIlIlIIIllIIII, lllllllllllllllllIlIlIlIIIlIllll, lllllllllllllllllIlIlIlIIIlIlllI)) continue;
-            lllllllllllllllllIlIlIlIIIllIIlI.foundHole = true;
-            lllllllllllllllllIlIlIlIIIlIllIl = (double)lllllllllllllllllIlIlIlIIIllIIII + 0.5;
-            lllllllllllllllllIlIlIlIIIlIllII = (double)lllllllllllllllllIlIlIlIIIlIlllI + 0.5;
+        this.foundHole = false;
+        double d = 0.0;
+        double d2 = 0.0;
+        for (int i = 0; i < this.maxHeight.get() && --n2 > 0 && this.isAir(n3, n2, n); ++i) {
+            if (!this.isHole(n3, n2, n)) continue;
+            this.foundHole = true;
+            d = (double)n3 + 0.5;
+            d2 = (double)n + 0.5;
             break;
         }
-        if (lllllllllllllllllIlIlIlIIIllIIlI.foundHole) {
-            lllllllllllllllllIlIlIlIIIllIIlI.controlMovement = true;
-            lllllllllllllllllIlIlIlIIIllIIlI.deltaX = Utils.clamp(lllllllllllllllllIlIlIlIIIlIllIl - lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.method_23317(), -0.05, 0.05);
-            lllllllllllllllllIlIlIlIIIllIIlI.deltaZ = Utils.clamp(lllllllllllllllllIlIlIlIIIlIllII - lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.method_23321(), -0.05, 0.05);
-            ((IVec3d)lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.method_18798()).set(lllllllllllllllllIlIlIlIIIllIIlI.deltaX, lllllllllllllllllIlIlIlIIIllIIlI.mc.field_1724.method_18798().field_1351 - (lllllllllllllllllIlIlIlIIIllIIlI.pull.get() != false ? lllllllllllllllllIlIlIlIIIllIIlI.pullSpeed.get() : 0.0), lllllllllllllllllIlIlIlIIIllIIlI.deltaZ);
+        if (this.foundHole) {
+            this.controlMovement = true;
+            this.deltaX = Utils.clamp(d - this.mc.field_1724.method_23317(), -0.05, 0.05);
+            this.deltaZ = Utils.clamp(d2 - this.mc.field_1724.method_23321(), -0.05, 0.05);
+            ((IVec3d)this.mc.field_1724.method_18798()).set(this.deltaX, this.mc.field_1724.method_18798().field_1351 - (this.pull.get() != false ? this.pullSpeed.get() : 0.0), this.deltaZ);
         }
     }
 
-    private boolean isAir(int lllllllllllllllllIlIlIlIIIIIIlII, int lllllllllllllllllIlIlIlIIIIIIIll, int lllllllllllllllllIlIlIIllllllllI) {
-        Anchor lllllllllllllllllIlIlIlIIIIIIlIl;
-        lllllllllllllllllIlIlIlIIIIIIlIl.blockPos.method_10103(lllllllllllllllllIlIlIlIIIIIIlII, lllllllllllllllllIlIlIlIIIIIIIll, lllllllllllllllllIlIlIIllllllllI);
-        return !((AbstractBlockAccessor)lllllllllllllllllIlIlIlIIIIIIlIl.mc.field_1687.method_8320((class_2338)lllllllllllllllllIlIlIlIIIIIIlIl.blockPos).method_26204()).isCollidable();
+    private boolean isAir(int n, int n2, int n3) {
+        this.blockPos.method_10103(n, n2, n3);
+        return !((AbstractBlockAccessor)this.mc.field_1687.method_8320((class_2338)this.blockPos).method_26204()).isCollidable();
     }
 
     @EventHandler
-    private void onPreTick(TickEvent.Pre lllllllllllllllllIlIlIlIIIllllII) {
-        Anchor lllllllllllllllllIlIlIlIIIlllIll;
-        lllllllllllllllllIlIlIlIIIlllIll.cancelJump = lllllllllllllllllIlIlIlIIIlllIll.foundHole && lllllllllllllllllIlIlIlIIIlllIll.cancelMove.get() != false && lllllllllllllllllIlIlIlIIIlllIll.mc.field_1724.field_5965 >= (float)lllllllllllllllllIlIlIlIIIlllIll.minPitch.get().intValue();
+    private void onPreTick(TickEvent.Pre pre) {
+        this.cancelJump = this.foundHole && this.cancelMove.get() != false && this.mc.field_1724.field_5965 >= (float)this.minPitch.get().intValue();
     }
 
     public Anchor() {
         super(Categories.Movement, "anchor", "Helps you get into holes by stopping your movement completely over a hole.");
-        Anchor lllllllllllllllllIlIlIlIIlIIIIll;
-        lllllllllllllllllIlIlIlIIlIIIIll.sgGeneral = lllllllllllllllllIlIlIlIIlIIIIll.settings.getDefaultGroup();
-        lllllllllllllllllIlIlIlIIlIIIIll.maxHeight = lllllllllllllllllIlIlIlIIlIIIIll.sgGeneral.add(new IntSetting.Builder().name("max-height").description("The maximum height Anchor will work at.").defaultValue(10).min(0).max(255).sliderMax(20).build());
-        lllllllllllllllllIlIlIlIIlIIIIll.minPitch = lllllllllllllllllIlIlIlIIlIIIIll.sgGeneral.add(new IntSetting.Builder().name("min-pitch").description("The minimum pitch at which anchor will work.").defaultValue(-90).min(-90).max(90).sliderMin(-90).sliderMax(90).build());
-        lllllllllllllllllIlIlIlIIlIIIIll.cancelMove = lllllllllllllllllIlIlIlIIlIIIIll.sgGeneral.add(new BoolSetting.Builder().name("cancel-jump-in-hole").description("Prevents you from jumping when Anchor is active and Min Pitch is met.").defaultValue(false).build());
-        lllllllllllllllllIlIlIlIIlIIIIll.pull = lllllllllllllllllIlIlIlIIlIIIIll.sgGeneral.add(new BoolSetting.Builder().name("pull").description("The pull strength of Anchor.").defaultValue(false).build());
-        lllllllllllllllllIlIlIlIIlIIIIll.pullSpeed = lllllllllllllllllIlIlIlIIlIIIIll.sgGeneral.add(new DoubleSetting.Builder().name("pull-speed").description("How fast to pull towards the hole in blocks per second.").defaultValue(0.3).min(0.0).sliderMax(5.0).build());
-        lllllllllllllllllIlIlIlIIlIIIIll.blockPos = new class_2338.class_2339();
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.maxHeight = this.sgGeneral.add(new IntSetting.Builder().name("max-height").description("The maximum height Anchor will work at.").defaultValue(10).min(0).max(255).sliderMax(20).build());
+        this.minPitch = this.sgGeneral.add(new IntSetting.Builder().name("min-pitch").description("The minimum pitch at which anchor will work.").defaultValue(-90).min(-90).max(90).sliderMin(-90).sliderMax(90).build());
+        this.cancelMove = this.sgGeneral.add(new BoolSetting.Builder().name("cancel-jump-in-hole").description("Prevents you from jumping when Anchor is active and Min Pitch is met.").defaultValue(false).build());
+        this.pull = this.sgGeneral.add(new BoolSetting.Builder().name("pull").description("The pull strength of Anchor.").defaultValue(false).build());
+        this.pullSpeed = this.sgGeneral.add(new DoubleSetting.Builder().name("pull-speed").description("How fast to pull towards the hole in blocks per second.").defaultValue(0.3).min(0.0).sliderMax(5.0).build());
+        this.blockPos = new class_2338.class_2339();
     }
 
     @Override
     public void onActivate() {
-        lllllllllllllllllIlIlIlIIIllllll.wasInHole = false;
-        lllllllllllllllllIlIlIlIIIllllll.holeZ = 0;
-        lllllllllllllllllIlIlIlIIIllllll.holeX = 0;
+        this.wasInHole = false;
+        this.holeZ = 0;
+        this.holeX = 0;
     }
 
-    private boolean isHoleBlock(int lllllllllllllllllIlIlIlIIIIlIIlI, int lllllllllllllllllIlIlIlIIIIIllII, int lllllllllllllllllIlIlIlIIIIlIIII) {
-        Anchor lllllllllllllllllIlIlIlIIIIIlllI;
-        lllllllllllllllllIlIlIlIIIIIlllI.blockPos.method_10103(lllllllllllllllllIlIlIlIIIIlIIlI, lllllllllllllllllIlIlIlIIIIIllII, lllllllllllllllllIlIlIlIIIIlIIII);
-        class_2248 lllllllllllllllllIlIlIlIIIIIllll = lllllllllllllllllIlIlIlIIIIIlllI.mc.field_1687.method_8320((class_2338)lllllllllllllllllIlIlIlIIIIIlllI.blockPos).method_26204();
-        return lllllllllllllllllIlIlIlIIIIIllll == class_2246.field_9987 || lllllllllllllllllIlIlIlIIIIIllll == class_2246.field_10540 || lllllllllllllllllIlIlIlIIIIIllll == class_2246.field_22423;
+    private boolean isHoleBlock(int n, int n2, int n3) {
+        this.blockPos.method_10103(n, n2, n3);
+        class_2248 class_22482 = this.mc.field_1687.method_8320((class_2338)this.blockPos).method_26204();
+        return class_22482 == class_2246.field_9987 || class_22482 == class_2246.field_10540 || class_22482 == class_2246.field_22423;
     }
 
-    private boolean isHole(int lllllllllllllllllIlIlIlIIIIllIll, int lllllllllllllllllIlIlIlIIIIllllI, int lllllllllllllllllIlIlIlIIIIlllIl) {
-        Anchor lllllllllllllllllIlIlIlIIIlIIIII;
-        return lllllllllllllllllIlIlIlIIIlIIIII.isHoleBlock(lllllllllllllllllIlIlIlIIIIllIll, lllllllllllllllllIlIlIlIIIIllllI - 1, lllllllllllllllllIlIlIlIIIIlllIl) && lllllllllllllllllIlIlIlIIIlIIIII.isHoleBlock(lllllllllllllllllIlIlIlIIIIllIll + 1, lllllllllllllllllIlIlIlIIIIllllI, lllllllllllllllllIlIlIlIIIIlllIl) && lllllllllllllllllIlIlIlIIIlIIIII.isHoleBlock(lllllllllllllllllIlIlIlIIIIllIll - 1, lllllllllllllllllIlIlIlIIIIllllI, lllllllllllllllllIlIlIlIIIIlllIl) && lllllllllllllllllIlIlIlIIIlIIIII.isHoleBlock(lllllllllllllllllIlIlIlIIIIllIll, lllllllllllllllllIlIlIlIIIIllllI, lllllllllllllllllIlIlIlIIIIlllIl + 1) && lllllllllllllllllIlIlIlIIIlIIIII.isHoleBlock(lllllllllllllllllIlIlIlIIIIllIll, lllllllllllllllllIlIlIlIIIIllllI, lllllllllllllllllIlIlIlIIIIlllIl - 1);
+    private boolean isHole(int n, int n2, int n3) {
+        return this.isHoleBlock(n, n2 - 1, n3) && this.isHoleBlock(n + 1, n2, n3) && this.isHoleBlock(n - 1, n2, n3) && this.isHoleBlock(n, n2, n3 + 1) && this.isHoleBlock(n, n2, n3 - 1);
     }
 }
 

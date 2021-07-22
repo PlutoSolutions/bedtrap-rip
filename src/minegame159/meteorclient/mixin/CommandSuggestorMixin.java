@@ -56,31 +56,36 @@ public abstract class CommandSuggestorMixin {
     private CompletableFuture<Suggestions> field_21611;
     @Shadow
     private class_4717.class_464 field_21612;
+    static final boolean $assertionsDisabled = !CommandSuggestorMixin.class.desiredAssertionStatus();
 
     @Shadow
     protected abstract void method_23937();
 
     @Inject(method={"refresh"}, at={@At(value="INVOKE", target="Lcom/mojang/brigadier/StringReader;canRead()Z", remap=false)}, cancellable=true, locals=LocalCapture.CAPTURE_FAILHARD)
-    public void onRefresh(CallbackInfo ci, String string, StringReader reader) {
-        String prefix = Config.get().prefix;
-        int length = prefix.length();
-        if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor())) {
-            int cursor;
-            reader.setCursor(reader.getCursor() + length);
-            assert (this.field_21597.field_1724 != null);
+    public void onRefresh(CallbackInfo callbackInfo, String string, StringReader stringReader) {
+        String string2 = Config.get().prefix;
+        int n = string2.length();
+        if (stringReader.canRead(n) && stringReader.getString().startsWith(string2, stringReader.getCursor())) {
+            int n2;
+            stringReader.setCursor(stringReader.getCursor() + n);
+            if (!$assertionsDisabled && this.field_21597.field_1724 == null) {
+                throw new AssertionError();
+            }
             CommandDispatcher<class_2172> commandDispatcher = Commands.get().getDispatcher();
             if (this.field_21610 == null) {
-                this.field_21610 = commandDispatcher.parse(reader, (Object)Commands.get().getCommandSource());
+                this.field_21610 = commandDispatcher.parse(stringReader, (Object)Commands.get().getCommandSource());
             }
-            if (!((cursor = this.field_21599.method_1881()) < 1 || this.field_21612 != null && this.field_21614)) {
-                this.field_21611 = commandDispatcher.getCompletionSuggestions(this.field_21610, cursor);
-                this.field_21611.thenRun(() -> {
-                    if (this.field_21611.isDone()) {
-                        this.method_23937();
-                    }
-                });
+            if (!((n2 = this.field_21599.method_1881()) < 1 || this.field_21612 != null && this.field_21614)) {
+                this.field_21611 = commandDispatcher.getCompletionSuggestions(this.field_21610, n2);
+                this.field_21611.thenRun(this::lambda$onRefresh$0);
             }
-            ci.cancel();
+            callbackInfo.cancel();
+        }
+    }
+
+    private void lambda$onRefresh$0() {
+        if (this.field_21611.isDone()) {
+            this.method_23937();
         }
     }
 }

@@ -12,7 +12,6 @@ package minegame159.meteorclient.rendering.gl;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import minegame159.meteorclient.MeteorClient;
@@ -22,96 +21,84 @@ import net.minecraft.class_2960;
 import org.lwjgl.opengl.GL30C;
 
 public class Shader {
-    private final /* synthetic */ Object2IntMap<String> locations;
-    private /* synthetic */ int id;
+    private final Object2IntMap<String> locations = new Object2IntOpenHashMap();
+    private int id;
 
-    public Shader(String lIIlllIIIIlIIlI, String lIIlllIIIIlIIIl) {
-        boolean lIIlllIIIIIllll;
-        Shader lIIlllIIIIlIIll;
-        lIIlllIIIIlIIll.locations = new Object2IntOpenHashMap();
-        int lIIlllIIIIlIIII = GL30C.glCreateShader((int)35633);
-        GL30C.glShaderSource((int)lIIlllIIIIlIIII, (CharSequence)lIIlllIIIIlIIll.read(lIIlllIIIIlIIlI));
-        GL30C.glCompileShader((int)lIIlllIIIIlIIII);
-        boolean bl = lIIlllIIIIIllll = GL30C.glGetShaderi((int)lIIlllIIIIlIIII, (int)35713) == 1;
-        if (!lIIlllIIIIIllll) {
-            String lIIlllIIIIlIlIl = GL30C.glGetShaderInfoLog((int)lIIlllIIIIlIIII);
-            MeteorClient.LOG.error("Failed to compile vertex shader ({}):\n{}", (Object)lIIlllIIIIlIIlI, (Object)lIIlllIIIIlIlIl);
+    public Shader(String string, String string2) {
+        boolean bl;
+        int n = GL30C.glCreateShader((int)35633);
+        GL30C.glShaderSource((int)n, (CharSequence)this.read(string));
+        GL30C.glCompileShader((int)n);
+        boolean bl2 = bl = GL30C.glGetShaderi((int)n, (int)35713) == 1;
+        if (!bl) {
+            String string3 = GL30C.glGetShaderInfoLog((int)n);
+            MeteorClient.LOG.error("Failed to compile vertex shader ({}):\n{}", (Object)string, (Object)string3);
             return;
         }
-        int lIIlllIIIIIlllI = GL30C.glCreateShader((int)35632);
-        GL30C.glShaderSource((int)lIIlllIIIIIlllI, (CharSequence)lIIlllIIIIlIIll.read(lIIlllIIIIlIIIl));
-        GL30C.glCompileShader((int)lIIlllIIIIIlllI);
-        boolean bl2 = lIIlllIIIIIllll = GL30C.glGetShaderi((int)lIIlllIIIIIlllI, (int)35713) == 1;
-        if (!lIIlllIIIIIllll) {
-            String lIIlllIIIIlIlII = GL30C.glGetShaderInfoLog((int)lIIlllIIIIIlllI);
-            MeteorClient.LOG.error("Failed to compile fragment shader ({}):\n{}", (Object)lIIlllIIIIlIIIl, (Object)lIIlllIIIIlIlII);
+        int n2 = GL30C.glCreateShader((int)35632);
+        GL30C.glShaderSource((int)n2, (CharSequence)this.read(string2));
+        GL30C.glCompileShader((int)n2);
+        boolean bl3 = bl = GL30C.glGetShaderi((int)n2, (int)35713) == 1;
+        if (!bl) {
+            String string4 = GL30C.glGetShaderInfoLog((int)n2);
+            MeteorClient.LOG.error("Failed to compile fragment shader ({}):\n{}", (Object)string2, (Object)string4);
             return;
         }
-        lIIlllIIIIlIIll.id = GL30C.glCreateProgram();
-        GL30C.glAttachShader((int)lIIlllIIIIlIIll.id, (int)lIIlllIIIIlIIII);
-        GL30C.glAttachShader((int)lIIlllIIIIlIIll.id, (int)lIIlllIIIIIlllI);
-        GL30C.glLinkProgram((int)lIIlllIIIIlIIll.id);
-        GL30C.glDeleteShader((int)lIIlllIIIIlIIII);
-        GL30C.glDeleteShader((int)lIIlllIIIIIlllI);
+        this.id = GL30C.glCreateProgram();
+        GL30C.glAttachShader((int)this.id, (int)n);
+        GL30C.glAttachShader((int)this.id, (int)n2);
+        GL30C.glLinkProgram((int)this.id);
+        GL30C.glDeleteShader((int)n);
+        GL30C.glDeleteShader((int)n2);
     }
 
-    private int getLocation(String lIIllIllllllIll) {
-        Shader lIIllIllllllllI;
-        if (!lIIllIllllllllI.locations.containsKey((Object)lIIllIllllllIll)) {
-            int lIIllIlllllllll = GL30C.glGetUniformLocation((int)lIIllIllllllllI.id, (CharSequence)lIIllIllllllIll);
-            lIIllIllllllllI.locations.put((Object)lIIllIllllllIll, lIIllIlllllllll);
-            return lIIllIlllllllll;
+    private int getLocation(String string) {
+        if (!this.locations.containsKey((Object)string)) {
+            int n = GL30C.glGetUniformLocation((int)this.id, (CharSequence)string);
+            this.locations.put((Object)string, n);
+            return n;
         }
-        return lIIllIllllllllI.locations.getInt((Object)lIIllIllllllIll);
+        return this.locations.getInt((Object)string);
     }
 
     public void unbind() {
         GL30C.glUseProgram((int)0);
     }
 
-    public void set(String lIIllIlllIllllI, float lIIllIlllIlllIl, float lIIllIllllIIIII) {
-        Shader lIIllIlllIlllll;
-        GL30C.glUniform2f((int)lIIllIlllIlllll.getLocation(lIIllIlllIllllI), (float)lIIllIlllIlllIl, (float)lIIllIllllIIIII);
+    public void set(String string, float f, float f2) {
+        GL30C.glUniform2f((int)this.getLocation(string), (float)f, (float)f2);
     }
 
-    public void set(String lIIllIlllllIlIl, int lIIllIlllllIlII) {
-        Shader lIIllIlllllIIll;
-        GL30C.glUniform1i((int)lIIllIlllllIIll.getLocation(lIIllIlllllIlIl), (int)lIIllIlllllIlII);
+    private static void lambda$read$0(StringBuilder stringBuilder, String string) {
+        stringBuilder.append(string).append('\n');
     }
 
-    public void set(String lIIllIllllIllII, float lIIllIllllIlIII) {
-        Shader lIIllIllllIlIlI;
-        GL30C.glUniform1f((int)lIIllIllllIlIlI.getLocation(lIIllIllllIllII), (float)lIIllIllllIlIII);
+    public void set(String string, int n) {
+        GL30C.glUniform1i((int)this.getLocation(string), (int)n);
     }
 
-    private String read(String lIIllIllIllIlIl) {
-        try {
-            InputStream lIIllIllIlllIIl = Utils.mc.method_1478().method_14486(new class_2960("meteor-client", lIIllIllIllIlIl)).method_14482();
-            StringBuilder lIIllIllIlllIII = new StringBuilder();
-            try (BufferedReader lIIllIllIlllIlI = new BufferedReader(new InputStreamReader(lIIllIllIlllIIl));){
-                lIIllIllIlllIlI.lines().forEach(lIIllIllIlIlIIl -> lIIllIllIlllIII.append((String)lIIllIllIlIlIIl).append('\n'));
-            }
-            return String.valueOf(lIIllIllIlllIII);
-        }
-        catch (IOException lIIllIllIllIlll) {
-            lIIllIllIllIlll.printStackTrace();
-            return "";
+    public void set(String string, float f) {
+        GL30C.glUniform1f((int)this.getLocation(string), (float)f);
+    }
+
+    private String read(String string) {
+        InputStream inputStream = Utils.mc.method_1478().method_14486(new class_2960("meteor-client", string)).method_14482();
+        StringBuilder stringBuilder = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));){
+            bufferedReader.lines().forEach(arg_0 -> Shader.lambda$read$0(stringBuilder, arg_0));
         }
     }
 
-    public void set(String lIIllIlllIIIlIl, Color lIIllIlllIIIIIl) {
-        Shader lIIllIlllIIIIll;
-        lIIllIlllIIIIll.set(lIIllIlllIIIlIl, (float)lIIllIlllIIIIIl.r / 255.0f, (float)lIIllIlllIIIIIl.g / 255.0f, (float)lIIllIlllIIIIIl.b / 255.0f, (float)lIIllIlllIIIIIl.a / 255.0f);
+    public void set(String string, Color color) {
+        this.set(string, (float)color.r / 255.0f, (float)color.g / 255.0f, (float)color.b / 255.0f, (float)color.a / 255.0f);
     }
 
-    public void set(String lIIllIlllIIlllI, float lIIllIlllIIllIl, float lIIllIlllIlIIlI, float lIIllIlllIIlIll, float lIIllIlllIlIIII) {
-        Shader lIIllIlllIlIlIl;
-        GL30C.glUniform4f((int)lIIllIlllIlIlIl.getLocation(lIIllIlllIIlllI), (float)lIIllIlllIIllIl, (float)lIIllIlllIlIIlI, (float)lIIllIlllIIlIll, (float)lIIllIlllIlIIII);
+    public void set(String string, float f, float f2, float f3, float f4) {
+        GL30C.glUniform4f((int)this.getLocation(string), (float)f, (float)f2, (float)f3, (float)f4);
     }
 
     public void bind() {
-        Shader lIIlllIIIIIIlIl;
-        GL30C.glUseProgram((int)lIIlllIIIIIIlIl.id);
+        GL30C.glUseProgram((int)this.id);
     }
 }
 

@@ -22,6 +22,7 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -35,44 +36,43 @@ import minegame159.meteorclient.utils.network.MeteorExecutor;
 import net.minecraft.class_1657;
 
 public class MeteorPlayers {
-    private static final /* synthetic */ List<UUID> toCheck;
-    private static final /* synthetic */ Type uuidBooleanMapType;
-    private static final /* synthetic */ Object2BooleanMap<UUID> players;
-    private static final /* synthetic */ Gson gson;
-    private static /* synthetic */ int checkTimer;
+    private static final List<UUID> toCheck;
+    private static final Type uuidBooleanMapType;
+    private static final Object2BooleanMap<UUID> players;
+    private static final Gson gson;
+    private static int checkTimer;
 
     static {
-        uuidBooleanMapType = new TypeToken<Map<UUID, Boolean>>(){
-            {
-                1 llllllllllllllllllIIlIIIIIlIIIlI;
-            }
-        }.getType();
+        uuidBooleanMapType = new TypeToken<Map<UUID, Boolean>>(){}.getType();
         players = new Object2BooleanOpenHashMap();
         toCheck = new ArrayList<UUID>();
         gson = new GsonBuilder().registerTypeAdapter(UUID.class, (Object)new UUIDSerializer()).create();
     }
 
-    public static boolean get(class_1657 lllllllllllllllllIIllllIllIIllIl) {
-        return MeteorPlayers.get(lllllllllllllllllIIllllIllIIllIl.method_7334().getId());
+    public static boolean get(class_1657 class_16572) {
+        return MeteorPlayers.get(class_16572.method_7334().getId());
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
     @EventHandler
-    private static void onGameLeft(GameLeftEvent lllllllllllllllllIIllllIllllIIII) {
-        Object lllllllllllllllllIIllllIlllIllll = players;
-        synchronized (lllllllllllllllllIIllllIlllIllll) {
+    private static void onGameLeft(GameLeftEvent gameLeftEvent) {
+        Object object = players;
+        synchronized (object) {
             players.clear();
         }
-        lllllllllllllllllIIllllIlllIllll = toCheck;
-        synchronized (lllllllllllllllllIIllllIlllIllll) {
+        object = toCheck;
+        synchronized (object) {
             toCheck.clear();
+            return;
         }
     }
 
     @EventHandler
-    private static void onTick(TickEvent.Post lllllllllllllllllIIllllIlllIllII) {
+    private static void onTick(TickEvent.Post post) {
         if (toCheck.isEmpty()) {
             return;
         }
@@ -85,23 +85,27 @@ public class MeteorPlayers {
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     * WARNING - void declaration
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
     private static void check() {
-        void lllllllllllllllllIIllllIlllIIIlI;
-        List<UUID> lllllllllllllllllIIllllIllIllllI = toCheck;
-        synchronized (lllllllllllllllllIIllllIllIllllI) {
-            String lllllllllllllllllIIllllIlllIIlII = gson.toJson(toCheck);
+        String string;
+        Object object = toCheck;
+        synchronized (object) {
+            string = gson.toJson(toCheck);
             toCheck.clear();
         }
-        InputStream lllllllllllllllllIIllllIlllIIIIl = HttpUtils.post("http://meteorclient.com/api/online/usingMeteor", (String)lllllllllllllllllIIllllIlllIIIlI);
-        Map lllllllllllllllllIIllllIlllIIIII = (Map)gson.fromJson((Reader)new InputStreamReader(lllllllllllllllllIIllllIlllIIIIl, StandardCharsets.UTF_8), uuidBooleanMapType);
-        Object2BooleanMap<UUID> lllllllllllllllllIIllllIllIlllII = players;
-        synchronized (lllllllllllllllllIIllllIllIlllII) {
-            for (UUID lllllllllllllllllIIllllIlllIIIll : lllllllllllllllllIIllllIlllIIIII.keySet()) {
-                players.put((Object)lllllllllllllllllIIllllIlllIIIll, (Boolean)lllllllllllllllllIIllllIlllIIIII.get(lllllllllllllllllIIllllIlllIIIll));
+        object = HttpUtils.post("http://meteorclient.com/api/online/usingMeteor", string);
+        Map map = (Map)gson.fromJson((Reader)new InputStreamReader((InputStream)object, StandardCharsets.UTF_8), uuidBooleanMapType);
+        Object2BooleanMap<UUID> object2BooleanMap = players;
+        synchronized (object2BooleanMap) {
+            Iterator iterator = map.keySet().iterator();
+            while (iterator.hasNext()) {
+                UUID uUID = (UUID)iterator.next();
+                players.put((Object)uUID, (Boolean)map.get(uUID));
             }
+            return;
         }
     }
 
@@ -110,25 +114,23 @@ public class MeteorPlayers {
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    public static boolean get(UUID lllllllllllllllllIIllllIllIlIlII) {
-        if (players.containsKey((Object)lllllllllllllllllIIllllIllIlIlII)) {
-            return players.getBoolean((Object)lllllllllllllllllIIllllIllIlIlII);
+    public static boolean get(UUID uUID) {
+        if (players.containsKey((Object)uUID)) {
+            return players.getBoolean((Object)uUID);
         }
-        List<UUID> lllllllllllllllllIIllllIllIlIIlI = toCheck;
-        synchronized (lllllllllllllllllIIllllIllIlIIlI) {
-            toCheck.add(lllllllllllllllllIIllllIllIlIlII);
+        List<UUID> list = toCheck;
+        synchronized (list) {
+            toCheck.add(uUID);
         }
-        lllllllllllllllllIIllllIllIlIIlI = players;
-        synchronized (lllllllllllllllllIIllllIllIlIIlI) {
-            players.put((Object)lllllllllllllllllIIllllIllIlIlII, false);
+        list = players;
+        synchronized (list) {
+            players.put((Object)uUID, false);
+            return false;
         }
-        return false;
-    }
-
-    public MeteorPlayers() {
-        MeteorPlayers lllllllllllllllllIIllllIllllIlII;
     }
 }
 

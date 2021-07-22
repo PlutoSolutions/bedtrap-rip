@@ -27,23 +27,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_4603.class})
 public class InGameOverlayRendererMixin {
     @Inject(method={"renderFireOverlay"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onRenderFireOverlay(class_310 minecraftClient, class_4587 matrixStack, CallbackInfo info) {
+    private static void onRenderFireOverlay(class_310 class_3102, class_4587 class_45872, CallbackInfo callbackInfo) {
         if (Modules.get().get(NoRender.class).noFireOverlay()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"renderUnderwaterOverlay"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void onRenderUnderwaterOverlay(class_310 minecraftClient, class_4587 matrixStack, CallbackInfo info) {
+    private static void onRenderUnderwaterOverlay(class_310 class_3102, class_4587 class_45872, CallbackInfo callbackInfo) {
         if (Modules.get().get(NoRender.class).noWaterOverlay()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"renderInWallOverlay"}, at={@At(value="HEAD")}, cancellable=true)
-    private static void render(class_310 minecraftClient, class_1058 sprite, class_4587 matrixStack, CallbackInfo info) {
+    private static void render(class_310 class_3102, class_1058 class_10582, class_4587 class_45872, CallbackInfo callbackInfo) {
         if (Modules.get().get(NoRender.class).noInWallOverlay()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 }

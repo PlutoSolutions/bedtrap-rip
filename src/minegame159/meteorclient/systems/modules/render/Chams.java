@@ -26,68 +26,62 @@ import net.minecraft.class_2960;
 
 public class Chams
 extends Module {
-    private final /* synthetic */ SettingGroup sgHand;
-    public final /* synthetic */ Setting<SettingColor> playersColor;
-    public final /* synthetic */ Setting<Boolean> renderFrame2;
-    public final /* synthetic */ Setting<Double> crystalsScale;
-    public final /* synthetic */ Setting<Double> playersScale;
-    public static final /* synthetic */ class_2960 BLANK;
-    public final /* synthetic */ Setting<Boolean> renderFrame1;
-    public final /* synthetic */ Setting<Boolean> handTexture;
-    private final /* synthetic */ SettingGroup sgCrystals;
-    public final /* synthetic */ Setting<Double> crystalsBounce;
-    public final /* synthetic */ Setting<SettingColor> handColor;
-    public final /* synthetic */ Setting<Boolean> players;
-    private final /* synthetic */ SettingGroup sgPlayers;
-    public final /* synthetic */ Setting<Boolean> playersTexture;
-    private final /* synthetic */ SettingGroup sgThroughWalls;
-    public final /* synthetic */ Setting<Boolean> hand;
-    public final /* synthetic */ Setting<Boolean> crystals;
-    public final /* synthetic */ Setting<SettingColor> crystalsCoreColor;
-    public final /* synthetic */ Setting<Boolean> crystalsTexture;
-    private final /* synthetic */ Setting<Object2BooleanMap<class_1299<?>>> entities;
-    public final /* synthetic */ Setting<SettingColor> crystalsFrame2Color;
-    public final /* synthetic */ Setting<SettingColor> crystalsFrame1Color;
-    public final /* synthetic */ Setting<Boolean> ignoreSelf;
-    public final /* synthetic */ Setting<Boolean> renderCore;
-    public final /* synthetic */ Setting<Double> crystalsRotationSpeed;
+    private final SettingGroup sgHand;
+    public final Setting<SettingColor> playersColor;
+    public final Setting<Boolean> renderFrame2;
+    public final Setting<Double> crystalsScale;
+    public final Setting<Double> playersScale;
+    public static final class_2960 BLANK = new class_2960("meteor-client", "textures/blank.png");
+    public final Setting<Boolean> renderFrame1;
+    public final Setting<Boolean> handTexture;
+    private final SettingGroup sgCrystals;
+    public final Setting<Double> crystalsBounce;
+    public final Setting<SettingColor> handColor;
+    public final Setting<Boolean> players;
+    private final SettingGroup sgPlayers;
+    public final Setting<Boolean> playersTexture;
+    private final SettingGroup sgThroughWalls;
+    public final Setting<Boolean> hand;
+    public final Setting<Boolean> crystals;
+    public final Setting<SettingColor> crystalsCoreColor;
+    public final Setting<Boolean> crystalsTexture;
+    private final Setting<Object2BooleanMap<class_1299<?>>> entities;
+    public final Setting<SettingColor> crystalsFrame2Color;
+    public final Setting<SettingColor> crystalsFrame1Color;
+    public final Setting<Boolean> ignoreSelf;
+    public final Setting<Boolean> renderCore;
+    public final Setting<Double> crystalsRotationSpeed;
 
     public Chams() {
         super(Categories.Render, "chams", "Tweaks rendering of entities.");
-        Chams lllIIlIIlIlII;
-        lllIIlIIlIlII.sgThroughWalls = lllIIlIIlIlII.settings.createGroup("Through Walls");
-        lllIIlIIlIlII.sgPlayers = lllIIlIIlIlII.settings.createGroup("Players");
-        lllIIlIIlIlII.sgCrystals = lllIIlIIlIlII.settings.createGroup("Crystals");
-        lllIIlIIlIlII.sgHand = lllIIlIIlIlII.settings.createGroup("Hand");
-        lllIIlIIlIlII.entities = lllIIlIIlIlII.sgThroughWalls.add(new EntityTypeListSetting.Builder().name("entities").description("Select entities to show through walls.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
-        lllIIlIIlIlII.players = lllIIlIIlIlII.sgPlayers.add(new BoolSetting.Builder().name("players").description("Enables model tweaks for players.").defaultValue(true).build());
-        lllIIlIIlIlII.ignoreSelf = lllIIlIIlIlII.sgPlayers.add(new BoolSetting.Builder().name("ignore-self").description("Ignores yourself when tweaking player models.").defaultValue(true).visible(lllIIlIIlIlII.players::get).build());
-        lllIIlIIlIlII.playersScale = lllIIlIIlIlII.sgPlayers.add(new DoubleSetting.Builder().name("scale").description("Players scale.").defaultValue(1.0).min(0.0).visible(lllIIlIIlIlII.players::get).build());
-        lllIIlIIlIlII.playersTexture = lllIIlIIlIlII.sgPlayers.add(new BoolSetting.Builder().name("texture").description("Enables player model textures.").defaultValue(false).visible(lllIIlIIlIlII.players::get).build());
-        lllIIlIIlIlII.playersColor = lllIIlIIlIlII.sgPlayers.add(new ColorSetting.Builder().name("color").description("The color of player models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(lllIIlIIlIlII.players::get).build());
-        lllIIlIIlIlII.crystals = lllIIlIIlIlII.sgCrystals.add(new BoolSetting.Builder().name("crystals").description("Enables model tweaks for end crystals.").defaultValue(true).build());
-        lllIIlIIlIlII.crystalsScale = lllIIlIIlIlII.sgCrystals.add(new DoubleSetting.Builder().name("scale").description("Crystal scale.").defaultValue(0.6).min(0.0).visible(lllIIlIIlIlII.crystals::get).build());
-        lllIIlIIlIlII.crystalsBounce = lllIIlIIlIlII.sgCrystals.add(new DoubleSetting.Builder().name("bounce").description("How high crystals bounce.").defaultValue(0.3).min(0.0).visible(lllIIlIIlIlII.crystals::get).build());
-        lllIIlIIlIlII.crystalsRotationSpeed = lllIIlIIlIlII.sgCrystals.add(new DoubleSetting.Builder().name("rotation-speed").description("Multiplies the roation speed of the crystal.").defaultValue(3.0).min(0.0).visible(lllIIlIIlIlII.crystals::get).build());
-        lllIIlIIlIlII.crystalsTexture = lllIIlIIlIlII.sgCrystals.add(new BoolSetting.Builder().name("texture").description("Whether to render crystal model textures.").defaultValue(false).visible(lllIIlIIlIlII.crystals::get).build());
-        lllIIlIIlIlII.renderCore = lllIIlIIlIlII.sgCrystals.add(new BoolSetting.Builder().name("render-core").description("Enables rendering of the core of the crystal.").defaultValue(false).visible(lllIIlIIlIlII.crystals::get).build());
-        lllIIlIIlIlII.crystalsCoreColor = lllIIlIIlIlII.sgCrystals.add(new ColorSetting.Builder().name("core-color").description("The color of end crystal models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(lllIIlIIlIlII.renderCore::get).build());
-        lllIIlIIlIlII.renderFrame1 = lllIIlIIlIlII.sgCrystals.add(new BoolSetting.Builder().name("render-inner-frame").description("Enables rendering of the frame of the crystal.").defaultValue(true).visible(lllIIlIIlIlII.crystals::get).build());
-        lllIIlIIlIlII.crystalsFrame1Color = lllIIlIIlIlII.sgCrystals.add(new ColorSetting.Builder().name("inner-frame-color").description("The color of end crystal models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(lllIIlIIlIlII.renderFrame1::get).build());
-        lllIIlIIlIlII.renderFrame2 = lllIIlIIlIlII.sgCrystals.add(new BoolSetting.Builder().name("render-outer-frame").description("Enables rendering of the frame of the crystal.").defaultValue(true).visible(lllIIlIIlIlII.crystals::get).build());
-        lllIIlIIlIlII.crystalsFrame2Color = lllIIlIIlIlII.sgCrystals.add(new ColorSetting.Builder().name("outer-frame-color").description("The color of end crystal models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(lllIIlIIlIlII.renderFrame2::get).build());
-        lllIIlIIlIlII.hand = lllIIlIIlIlII.sgHand.add(new BoolSetting.Builder().name("enabled").description("Enables tweaks of hand rendering.").defaultValue(true).build());
-        lllIIlIIlIlII.handTexture = lllIIlIIlIlII.sgHand.add(new BoolSetting.Builder().name("texture").description("Whether to render hand textures.").defaultValue(false).build());
-        lllIIlIIlIlII.handColor = lllIIlIIlIlII.sgHand.add(new ColorSetting.Builder().name("hand-color").description("The color of your hand.").defaultValue(new SettingColor(0, 255, 255, 100)).build());
+        this.sgThroughWalls = this.settings.createGroup("Through Walls");
+        this.sgPlayers = this.settings.createGroup("Players");
+        this.sgCrystals = this.settings.createGroup("Crystals");
+        this.sgHand = this.settings.createGroup("Hand");
+        this.entities = this.sgThroughWalls.add(new EntityTypeListSetting.Builder().name("entities").description("Select entities to show through walls.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
+        this.players = this.sgPlayers.add(new BoolSetting.Builder().name("players").description("Enables model tweaks for players.").defaultValue(true).build());
+        this.ignoreSelf = this.sgPlayers.add(new BoolSetting.Builder().name("ignore-self").description("Ignores yourself when tweaking player models.").defaultValue(true).visible(this.players::get).build());
+        this.playersScale = this.sgPlayers.add(new DoubleSetting.Builder().name("scale").description("Players scale.").defaultValue(1.0).min(0.0).visible(this.players::get).build());
+        this.playersTexture = this.sgPlayers.add(new BoolSetting.Builder().name("texture").description("Enables player model textures.").defaultValue(false).visible(this.players::get).build());
+        this.playersColor = this.sgPlayers.add(new ColorSetting.Builder().name("color").description("The color of player models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(this.players::get).build());
+        this.crystals = this.sgCrystals.add(new BoolSetting.Builder().name("crystals").description("Enables model tweaks for end crystals.").defaultValue(true).build());
+        this.crystalsScale = this.sgCrystals.add(new DoubleSetting.Builder().name("scale").description("Crystal scale.").defaultValue(0.6).min(0.0).visible(this.crystals::get).build());
+        this.crystalsBounce = this.sgCrystals.add(new DoubleSetting.Builder().name("bounce").description("How high crystals bounce.").defaultValue(0.3).min(0.0).visible(this.crystals::get).build());
+        this.crystalsRotationSpeed = this.sgCrystals.add(new DoubleSetting.Builder().name("rotation-speed").description("Multiplies the roation speed of the crystal.").defaultValue(3.0).min(0.0).visible(this.crystals::get).build());
+        this.crystalsTexture = this.sgCrystals.add(new BoolSetting.Builder().name("texture").description("Whether to render crystal model textures.").defaultValue(false).visible(this.crystals::get).build());
+        this.renderCore = this.sgCrystals.add(new BoolSetting.Builder().name("render-core").description("Enables rendering of the core of the crystal.").defaultValue(false).visible(this.crystals::get).build());
+        this.crystalsCoreColor = this.sgCrystals.add(new ColorSetting.Builder().name("core-color").description("The color of end crystal models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(this.renderCore::get).build());
+        this.renderFrame1 = this.sgCrystals.add(new BoolSetting.Builder().name("render-inner-frame").description("Enables rendering of the frame of the crystal.").defaultValue(true).visible(this.crystals::get).build());
+        this.crystalsFrame1Color = this.sgCrystals.add(new ColorSetting.Builder().name("inner-frame-color").description("The color of end crystal models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(this.renderFrame1::get).build());
+        this.renderFrame2 = this.sgCrystals.add(new BoolSetting.Builder().name("render-outer-frame").description("Enables rendering of the frame of the crystal.").defaultValue(true).visible(this.crystals::get).build());
+        this.crystalsFrame2Color = this.sgCrystals.add(new ColorSetting.Builder().name("outer-frame-color").description("The color of end crystal models.").defaultValue(new SettingColor(0, 255, 255, 100)).visible(this.renderFrame2::get).build());
+        this.hand = this.sgHand.add(new BoolSetting.Builder().name("enabled").description("Enables tweaks of hand rendering.").defaultValue(true).build());
+        this.handTexture = this.sgHand.add(new BoolSetting.Builder().name("texture").description("Whether to render hand textures.").defaultValue(false).build());
+        this.handColor = this.sgHand.add(new ColorSetting.Builder().name("hand-color").description("The color of your hand.").defaultValue(new SettingColor(0, 255, 255, 100)).build());
     }
 
-    public boolean shouldRender(class_1297 lllIIlIIIlllI) {
-        Chams lllIIlIIIllll;
-        return lllIIlIIIllll.isActive() && lllIIlIIIllll.entities.get().getBoolean((Object)lllIIlIIIlllI.method_5864());
-    }
-
-    static {
-        BLANK = new class_2960("meteor-client", "textures/blank.png");
+    public boolean shouldRender(class_1297 class_12972) {
+        return this.isActive() && this.entities.get().getBoolean((Object)class_12972.method_5864());
     }
 }
 

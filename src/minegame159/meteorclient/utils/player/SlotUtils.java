@@ -69,20 +69,20 @@ import net.minecraft.class_3971;
 import net.minecraft.class_481;
 
 public class SlotUtils {
-    public static final /* synthetic */ int OFFHAND;
-    public static final /* synthetic */ int ARMOR_END;
-    public static final /* synthetic */ int MAIN_END;
-    public static final /* synthetic */ int ARMOR_START;
-    public static final /* synthetic */ int HOTBAR_START;
-    public static final /* synthetic */ int HOTBAR_END;
-    public static final /* synthetic */ int MAIN_START;
+    public static final int OFFHAND;
+    public static final int ARMOR_END;
+    public static final int MAIN_END;
+    public static final int ARMOR_START;
+    public static final int HOTBAR_START;
+    public static final int HOTBAR_END;
+    public static final int MAIN_START;
 
-    private static int stonecutter(int lllllllllllllllllIIlIIlIlIllIIIl) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlIllIIIl)) {
-            return 29 + lllllllllllllllllIIlIIlIlIllIIIl;
+    private static int stonecutter(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 29 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlIllIIIl)) {
-            return 2 + (lllllllllllllllllIIlIIlIlIllIIIl - 9);
+        if (SlotUtils.isMain(n)) {
+            return 2 + (n - 9);
         }
         return -1;
     }
@@ -91,89 +91,89 @@ public class SlotUtils {
         return -1;
     }
 
-    private static int genericContainer(int lllllllllllllllllIIlIIlIlllIIlll, int lllllllllllllllllIIlIIlIlllIIllI) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlllIIlll)) {
-            return (lllllllllllllllllIIlIIlIlllIIllI + 3) * 9 + lllllllllllllllllIIlIIlIlllIIlll;
+    private static int genericContainer(int n, int n2) {
+        if (SlotUtils.isHotbar(n)) {
+            return (n2 + 3) * 9 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlllIIlll)) {
-            return lllllllllllllllllIIlIIlIlllIIllI * 9 + (lllllllllllllllllIIlIIlIlllIIlll - 9);
+        if (SlotUtils.isMain(n)) {
+            return n2 * 9 + (n - 9);
         }
         return -1;
     }
 
-    public static int indexToId(int lllllllllllllllllIIlIIlIllllIIll) {
+    public static int indexToId(int n) {
         if (Utils.mc.field_1724 == null) {
             return -1;
         }
-        class_1703 lllllllllllllllllIIlIIlIllllIIlI = Utils.mc.field_1724.field_7512;
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1723) {
-            return SlotUtils.survivalInventory(lllllllllllllllllIIlIIlIllllIIll);
+        class_1703 class_17032 = Utils.mc.field_1724.field_7512;
+        if (class_17032 instanceof class_1723) {
+            return SlotUtils.survivalInventory(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_481.class_483) {
-            return SlotUtils.creativeInventory(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_481.class_483) {
+            return SlotUtils.creativeInventory(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1707) {
-            return SlotUtils.genericContainer(lllllllllllllllllIIlIIlIllllIIll, ((class_1707)lllllllllllllllllIIlIIlIllllIIlI).method_17388());
+        if (class_17032 instanceof class_1707) {
+            return SlotUtils.genericContainer(n, ((class_1707)class_17032).method_17388());
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1714) {
-            return SlotUtils.craftingTable(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1714) {
+            return SlotUtils.craftingTable(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_3858) {
-            return SlotUtils.furnace(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_3858) {
+            return SlotUtils.furnace(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_3705) {
-            return SlotUtils.furnace(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_3705) {
+            return SlotUtils.furnace(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_3706) {
-            return SlotUtils.furnace(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_3706) {
+            return SlotUtils.furnace(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1716) {
-            return SlotUtils.generic3x3(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1716) {
+            return SlotUtils.generic3x3(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1718) {
-            return SlotUtils.enchantmentTable(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1718) {
+            return SlotUtils.enchantmentTable(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1708) {
-            return SlotUtils.brewingStand(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1708) {
+            return SlotUtils.brewingStand(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1728) {
-            return SlotUtils.villager(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1728) {
+            return SlotUtils.villager(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1704) {
-            return SlotUtils.beacon(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1704) {
+            return SlotUtils.beacon(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1706) {
-            return SlotUtils.anvil(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1706) {
+            return SlotUtils.anvil(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1722) {
-            return SlotUtils.hopper(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1722) {
+            return SlotUtils.hopper(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1733) {
-            return SlotUtils.genericContainer(lllllllllllllllllIIlIIlIllllIIll, 3);
+        if (class_17032 instanceof class_1733) {
+            return SlotUtils.genericContainer(n, 3);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1724) {
-            return SlotUtils.horse(lllllllllllllllllIIlIIlIllllIIlI, lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1724) {
+            return SlotUtils.horse(class_17032, n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_3910) {
-            return SlotUtils.cartographyTable(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_3910) {
+            return SlotUtils.cartographyTable(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_3803) {
-            return SlotUtils.grindstone(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_3803) {
+            return SlotUtils.grindstone(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_3916) {
+        if (class_17032 instanceof class_3916) {
             return SlotUtils.lectern();
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_1726) {
-            return SlotUtils.loom(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_1726) {
+            return SlotUtils.loom(n);
         }
-        if (lllllllllllllllllIIlIIlIllllIIlI instanceof class_3971) {
-            return SlotUtils.stonecutter(lllllllllllllllllIIlIIlIllllIIll);
+        if (class_17032 instanceof class_3971) {
+            return SlotUtils.stonecutter(n);
         }
         return -1;
     }
 
-    private static boolean isArmor(int lllllllllllllllllIIlIIlIlIlIIlll) {
-        return lllllllllllllllllIIlIIlIlIlIIlll >= 36 && lllllllllllllllllIIlIIlIlIlIIlll <= 39;
+    private static boolean isArmor(int n) {
+        return n >= 36 && n <= 39;
     }
 
     static {
@@ -186,179 +186,175 @@ public class SlotUtils {
         OFFHAND = 45;
     }
 
-    private static int craftingTable(int lllllllllllllllllIIlIIlIlllIIIIl) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlllIIIIl)) {
-            return 37 + lllllllllllllllllIIlIIlIlllIIIIl;
+    private static int craftingTable(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 37 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlllIIIIl)) {
-            return lllllllllllllllllIIlIIlIlllIIIIl + 1;
-        }
-        return -1;
-    }
-
-    private static int brewingStand(int lllllllllllllllllIIlIIlIllIlIlIl) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIlIlIl)) {
-            return 32 + lllllllllllllllllIIlIIlIllIlIlIl;
-        }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIlIlIl)) {
-            return 5 + (lllllllllllllllllIIlIIlIllIlIlIl - 9);
+        if (SlotUtils.isMain(n)) {
+            return n + 1;
         }
         return -1;
     }
 
-    private static int loom(int lllllllllllllllllIIlIIlIlIllIIll) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlIllIIll)) {
-            return 31 + lllllllllllllllllIIlIIlIlIllIIll;
+    private static int brewingStand(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 32 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlIllIIll)) {
-            return 4 + (lllllllllllllllllIIlIIlIlIllIIll - 9);
-        }
-        return -1;
-    }
-
-    private static int furnace(int lllllllllllllllllIIlIIlIllIllllI) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIllllI)) {
-            return 30 + lllllllllllllllllIIlIIlIllIllllI;
-        }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIllllI)) {
-            return 3 + (lllllllllllllllllIIlIIlIllIllllI - 9);
+        if (SlotUtils.isMain(n)) {
+            return 5 + (n - 9);
         }
         return -1;
     }
 
-    private static boolean isMain(int lllllllllllllllllIIlIIlIlIlIlIll) {
-        return lllllllllllllllllIIlIIlIlIlIlIll >= 9 && lllllllllllllllllIIlIIlIlIlIlIll <= 35;
-    }
-
-    private static int cartographyTable(int lllllllllllllllllIIlIIlIlIlllIIl) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlIlllIIl)) {
-            return 30 + lllllllllllllllllIIlIIlIlIlllIIl;
+    private static int loom(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 31 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlIlllIIl)) {
-            return 3 + (lllllllllllllllllIIlIIlIlIlllIIl - 9);
+        if (SlotUtils.isMain(n)) {
+            return 4 + (n - 9);
         }
         return -1;
     }
 
-    private static int generic3x3(int lllllllllllllllllIIlIIlIllIllIll) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIllIll)) {
-            return 36 + lllllllllllllllllIIlIIlIllIllIll;
+    private static int furnace(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 30 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIllIll)) {
-            return lllllllllllllllllIIlIIlIllIllIll;
-        }
-        return -1;
-    }
-
-    private static int enchantmentTable(int lllllllllllllllllIIlIIlIllIllIII) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIllIII)) {
-            return 29 + lllllllllllllllllIIlIIlIllIllIII;
-        }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIllIII)) {
-            return 2 + (lllllllllllllllllIIlIIlIllIllIII - 9);
+        if (SlotUtils.isMain(n)) {
+            return 3 + (n - 9);
         }
         return -1;
     }
 
-    private static int creativeInventory(int lllllllllllllllllIIlIIlIlllIlIlI) {
+    private static boolean isMain(int n) {
+        return n >= 9 && n <= 35;
+    }
+
+    private static int cartographyTable(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 30 + n;
+        }
+        if (SlotUtils.isMain(n)) {
+            return 3 + (n - 9);
+        }
+        return -1;
+    }
+
+    private static int generic3x3(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 36 + n;
+        }
+        if (SlotUtils.isMain(n)) {
+            return n;
+        }
+        return -1;
+    }
+
+    private static int enchantmentTable(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 29 + n;
+        }
+        if (SlotUtils.isMain(n)) {
+            return 2 + (n - 9);
+        }
+        return -1;
+    }
+
+    private static int creativeInventory(int n) {
         if (!(Utils.mc.field_1755 instanceof class_481) || ((CreativeInventoryScreenAccessor)Utils.mc.field_1755).getSelectedTab() != class_1761.field_7918.method_7741()) {
             return -1;
         }
-        return SlotUtils.survivalInventory(lllllllllllllllllIIlIIlIlllIlIlI);
+        return SlotUtils.survivalInventory(n);
     }
 
-    private static int grindstone(int lllllllllllllllllIIlIIlIlIllIllI) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlIllIllI)) {
-            return 30 + lllllllllllllllllIIlIIlIlIllIllI;
+    private static int grindstone(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 30 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlIllIllI)) {
-            return 3 + (lllllllllllllllllIIlIIlIlIllIllI - 9);
+        if (SlotUtils.isMain(n)) {
+            return 3 + (n - 9);
         }
         return -1;
     }
 
-    private static boolean isHotbar(int lllllllllllllllllIIlIIlIlIlIllIl) {
-        return lllllllllllllllllIIlIIlIlIlIllIl >= 0 && lllllllllllllllllIIlIIlIlIlIllIl <= 8;
+    private static boolean isHotbar(int n) {
+        return n >= 0 && n <= 8;
     }
 
-    private static int hopper(int lllllllllllllllllIIlIIlIllIIlIlI) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIIlIlI)) {
-            return 32 + lllllllllllllllllIIlIIlIllIIlIlI;
+    private static int hopper(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 32 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIIlIlI)) {
-            return 5 + (lllllllllllllllllIIlIIlIllIIlIlI - 9);
+        if (SlotUtils.isMain(n)) {
+            return 5 + (n - 9);
         }
         return -1;
     }
 
-    public SlotUtils() {
-        SlotUtils lllllllllllllllllIIlIIlIllllIllI;
+    private static int survivalInventory(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 36 + n;
+        }
+        if (SlotUtils.isArmor(n)) {
+            return 5 + (n - 36);
+        }
+        return n;
     }
 
-    private static int survivalInventory(int lllllllllllllllllIIlIIlIlllIllIl) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlllIllIl)) {
-            return 36 + lllllllllllllllllIIlIIlIlllIllIl;
+    private static int villager(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 30 + n;
         }
-        if (SlotUtils.isArmor(lllllllllllllllllIIlIIlIlllIllIl)) {
-            return 5 + (lllllllllllllllllIIlIIlIlllIllIl - 36);
-        }
-        return lllllllllllllllllIIlIIlIlllIllIl;
-    }
-
-    private static int villager(int lllllllllllllllllIIlIIlIllIlIIll) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIlIIll)) {
-            return 30 + lllllllllllllllllIIlIIlIllIlIIll;
-        }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIlIIll)) {
-            return 3 + (lllllllllllllllllIIlIIlIllIlIIll - 9);
+        if (SlotUtils.isMain(n)) {
+            return 3 + (n - 9);
         }
         return -1;
     }
 
-    private static int beacon(int lllllllllllllllllIIlIIlIllIlIIII) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIlIIII)) {
-            return 28 + lllllllllllllllllIIlIIlIllIlIIII;
+    private static int beacon(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 28 + n;
         }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIlIIII)) {
-            return 1 + (lllllllllllllllllIIlIIlIllIlIIII - 9);
-        }
-        return -1;
-    }
-
-    private static int anvil(int lllllllllllllllllIIlIIlIllIIllIl) {
-        if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIllIIllIl)) {
-            return 30 + lllllllllllllllllIIlIIlIllIIllIl;
-        }
-        if (SlotUtils.isMain(lllllllllllllllllIIlIIlIllIIllIl)) {
-            return 3 + (lllllllllllllllllIIlIIlIllIIllIl - 9);
+        if (SlotUtils.isMain(n)) {
+            return 1 + (n - 9);
         }
         return -1;
     }
 
-    private static int horse(class_1703 lllllllllllllllllIIlIIlIlIllllll, int lllllllllllllllllIIlIIlIlIlllllI) {
-        class_1496 lllllllllllllllllIIlIIlIllIIIIII = ((HorseScreenHandlerAccessor)lllllllllllllllllIIlIIlIlIllllll).getEntity();
-        if (lllllllllllllllllIIlIIlIllIIIIII instanceof class_1501) {
-            int lllllllllllllllllIIlIIlIllIIIlII = ((class_1501)lllllllllllllllllIIlIIlIllIIIIII).method_6803();
-            if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlIlllllI)) {
-                return 2 + 3 * lllllllllllllllllIIlIIlIllIIIlII + 28 + lllllllllllllllllIIlIIlIlIlllllI;
+    private static int anvil(int n) {
+        if (SlotUtils.isHotbar(n)) {
+            return 30 + n;
+        }
+        if (SlotUtils.isMain(n)) {
+            return 3 + (n - 9);
+        }
+        return -1;
+    }
+
+    private static int horse(class_1703 class_17032, int n) {
+        class_1496 class_14962 = ((HorseScreenHandlerAccessor)class_17032).getEntity();
+        if (class_14962 instanceof class_1501) {
+            int n2 = ((class_1501)class_14962).method_6803();
+            if (SlotUtils.isHotbar(n)) {
+                return 2 + 3 * n2 + 28 + n;
             }
-            if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlIlllllI)) {
-                return 2 + 3 * lllllllllllllllllIIlIIlIllIIIlII + 1 + (lllllllllllllllllIIlIIlIlIlllllI - 9);
+            if (SlotUtils.isMain(n)) {
+                return 2 + 3 * n2 + 1 + (n - 9);
             }
-        } else if (lllllllllllllllllIIlIIlIllIIIIII instanceof class_1498 || lllllllllllllllllIIlIIlIllIIIIII instanceof class_1506 || lllllllllllllllllIIlIIlIllIIIIII instanceof class_1507) {
-            if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlIlllllI)) {
-                return 29 + lllllllllllllllllIIlIIlIlIlllllI;
+        } else if (class_14962 instanceof class_1498 || class_14962 instanceof class_1506 || class_14962 instanceof class_1507) {
+            if (SlotUtils.isHotbar(n)) {
+                return 29 + n;
             }
-            if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlIlllllI)) {
-                return 2 + (lllllllllllllllllIIlIIlIlIlllllI - 9);
+            if (SlotUtils.isMain(n)) {
+                return 2 + (n - 9);
             }
-        } else if (lllllllllllllllllIIlIIlIllIIIIII instanceof class_1492) {
-            boolean lllllllllllllllllIIlIIlIllIIIIll = ((class_1492)lllllllllllllllllIIlIIlIllIIIIII).method_6703();
-            if (SlotUtils.isHotbar(lllllllllllllllllIIlIIlIlIlllllI)) {
-                return (lllllllllllllllllIIlIIlIllIIIIll ? 44 : 29) + lllllllllllllllllIIlIIlIlIlllllI;
+        } else if (class_14962 instanceof class_1492) {
+            boolean bl = ((class_1492)class_14962).method_6703();
+            if (SlotUtils.isHotbar(n)) {
+                return (bl ? 44 : 29) + n;
             }
-            if (SlotUtils.isMain(lllllllllllllllllIIlIIlIlIlllllI)) {
-                return (lllllllllllllllllIIlIIlIllIIIIll ? 17 : 2) + (lllllllllllllllllIIlIIlIlIlllllI - 9);
+            if (SlotUtils.isMain(n)) {
+                return (bl ? 17 : 2) + (n - 9);
             }
         }
         return -1;

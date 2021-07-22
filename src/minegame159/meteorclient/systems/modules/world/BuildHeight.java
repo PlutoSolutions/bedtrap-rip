@@ -19,17 +19,16 @@ public class BuildHeight
 extends Module {
     public BuildHeight() {
         super(Categories.World, "build-height", "Allows you to interact with objects at the build limit.");
-        BuildHeight llIllIlIIlIIlll;
     }
 
     @EventHandler
-    private void onSendPacket(PacketEvent.Send llIllIlIIlIIIII) {
-        if (!(llIllIlIIlIIIII.packet instanceof class_2885)) {
+    private void onSendPacket(PacketEvent.Send send) {
+        if (!(send.packet instanceof class_2885)) {
             return;
         }
-        class_2885 llIllIlIIlIIIIl = (class_2885)llIllIlIIlIIIII.packet;
-        if (llIllIlIIlIIIIl.method_12543().method_17784().field_1351 >= 255.0 && llIllIlIIlIIIIl.method_12543().method_17780() == class_2350.field_11036) {
-            ((BlockHitResultAccessor)llIllIlIIlIIIIl.method_12543()).setSide(class_2350.field_11033);
+        class_2885 class_28852 = (class_2885)send.packet;
+        if (class_28852.method_12543().method_17784().field_1351 >= 255.0 && class_28852.method_12543().method_17780() == class_2350.field_11036) {
+            ((BlockHitResultAccessor)class_28852.method_12543()).setSide(class_2350.field_11033);
         }
     }
 }

@@ -19,23 +19,24 @@ import net.minecraft.class_310;
 
 public class Fullbright
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    public final /* synthetic */ Setting<Mode> mode;
+    private final SettingGroup sgGeneral;
+    public final Setting<Mode> mode;
 
     public static void disable() {
-        StaticListener.timesEnabled--;
+        StaticListener.access$010();
     }
 
     public Fullbright() {
         super(Categories.Render, "fullbright", "Lights up your world!");
-        Fullbright lIIlIlIllIIlIll;
-        lIIlIlIllIIlIll.sgGeneral = lIIlIlIllIIlIll.settings.getDefaultGroup();
-        lIIlIlIllIIlIll.mode = lIIlIlIllIIlIll.sgGeneral.add(new EnumSetting.Builder().name("mode").description("The mode to use for Fullbright.").defaultValue(Mode.Luminance).onChanged(lIIlIlIllIIIIlI -> {
-            if (lIIlIlIllIIIIlI == Mode.Luminance) {
-                lIIlIlIllIIIlIl.mc.field_1690.field_1840 = StaticListener.prevGamma;
-            }
-        }).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("The mode to use for Fullbright.").defaultValue(Mode.Luminance).onChanged(this::lambda$new$0).build());
         MeteorClient.EVENT_BUS.subscribe(StaticListener.class);
+    }
+
+    private void lambda$new$0(Mode mode) {
+        if (mode == Mode.Luminance) {
+            this.mc.field_1690.field_1840 = StaticListener.access$100();
+        }
     }
 
     @Override
@@ -44,11 +45,11 @@ extends Module {
     }
 
     public static void enable() {
-        StaticListener.timesEnabled++;
+        StaticListener.access$008();
     }
 
     public static boolean isEnabled() {
-        return StaticListener.timesEnabled > 0;
+        return StaticListener.access$000() > 0;
     }
 
     @Override
@@ -60,27 +61,26 @@ extends Module {
         Gamma,
         Luminance;
 
-
-        private Mode() {
-            Mode lIIlIllIIlllll;
-        }
     }
 
     private static class StaticListener {
-        private static final /* synthetic */ class_310 mc;
-        private static /* synthetic */ int lastTimesEnabled;
-        private static /* synthetic */ double prevGamma;
-        private static final /* synthetic */ Fullbright fullbright;
-        private static /* synthetic */ int timesEnabled;
+        private static final class_310 mc = class_310.method_1551();
+        private static int lastTimesEnabled;
+        private static double prevGamma;
+        private static final Fullbright fullbright;
+        private static int timesEnabled;
 
         static {
-            mc = class_310.method_1551();
             fullbright = Modules.get().get(Fullbright.class);
             prevGamma = StaticListener.mc.field_1690.field_1840;
         }
 
+        static double access$100() {
+            return prevGamma;
+        }
+
         @EventHandler
-        private static void onTick(TickEvent.Post lIIllIIIllIIlll) {
+        private static void onTick(TickEvent.Post post) {
             if (timesEnabled > 0 && lastTimesEnabled == 0) {
                 prevGamma = StaticListener.mc.field_1690.field_1840;
             } else if (timesEnabled == 0 && lastTimesEnabled > 0 && StaticListener.fullbright.mode.get() == Mode.Gamma) {
@@ -92,8 +92,19 @@ extends Module {
             lastTimesEnabled = timesEnabled;
         }
 
+        static int access$000() {
+            return timesEnabled;
+        }
+
         private StaticListener() {
-            StaticListener lIIllIIIllIlIIl;
+        }
+
+        static int access$008() {
+            return timesEnabled++;
+        }
+
+        static int access$010() {
+            return timesEnabled--;
         }
     }
 }

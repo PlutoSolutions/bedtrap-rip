@@ -11,45 +11,42 @@ import java.util.Objects;
 
 public class DiscordRichPresence
 extends Structure {
-    public /* synthetic */ String partyId;
-    public /* synthetic */ String state;
-    public /* synthetic */ String largeImageKey;
-    public /* synthetic */ String smallImageKey;
-    public /* synthetic */ String smallImageText;
-    public /* synthetic */ String details;
-    public /* synthetic */ byte instance;
-    public /* synthetic */ String joinSecret;
-    public /* synthetic */ long endTimestamp;
-    public /* synthetic */ long startTimestamp;
-    public /* synthetic */ String spectateSecret;
-    public /* synthetic */ int partySize;
-    private static final /* synthetic */ List<String> FIELD_ORDER;
-    public /* synthetic */ int partyMax;
-    public /* synthetic */ String largeImageText;
-    public /* synthetic */ String matchSecret;
+    public String partyId;
+    public String state;
+    public String largeImageKey;
+    public String smallImageKey;
+    public String smallImageText;
+    public String details;
+    public byte instance;
+    public String joinSecret;
+    public long endTimestamp;
+    public long startTimestamp;
+    public String spectateSecret;
+    public int partySize;
+    private static final List<String> FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("state", "details", "startTimestamp", "endTimestamp", "largeImageKey", "largeImageText", "smallImageKey", "smallImageText", "partyId", "partySize", "partyMax", "matchSecret", "joinSecret", "spectateSecret", "instance"));
+    public int partyMax;
+    public String largeImageText;
+    public String matchSecret;
 
     @Override
     public int hashCode() {
-        DiscordRichPresence lllllllllllllllllIIIIlIlIIIIlIII;
-        return Objects.hash(lllllllllllllllllIIIIlIlIIIIlIII.state, lllllllllllllllllIIIIlIlIIIIlIII.details, lllllllllllllllllIIIIlIlIIIIlIII.startTimestamp, lllllllllllllllllIIIIlIlIIIIlIII.endTimestamp, lllllllllllllllllIIIIlIlIIIIlIII.largeImageKey, lllllllllllllllllIIIIlIlIIIIlIII.largeImageText, lllllllllllllllllIIIIlIlIIIIlIII.smallImageKey, lllllllllllllllllIIIIlIlIIIIlIII.smallImageText, lllllllllllllllllIIIIlIlIIIIlIII.partyId, lllllllllllllllllIIIIlIlIIIIlIII.partySize, lllllllllllllllllIIIIlIlIIIIlIII.partyMax, lllllllllllllllllIIIIlIlIIIIlIII.matchSecret, lllllllllllllllllIIIIlIlIIIIlIII.joinSecret, lllllllllllllllllIIIIlIlIIIIlIII.spectateSecret, lllllllllllllllllIIIIlIlIIIIlIII.instance);
+        return Objects.hash(this.state, this.details, this.startTimestamp, this.endTimestamp, this.largeImageKey, this.largeImageText, this.smallImageKey, this.smallImageText, this.partyId, this.partySize, this.partyMax, this.matchSecret, this.joinSecret, this.spectateSecret, this.instance);
     }
 
-    public DiscordRichPresence(String lllllllllllllllllIIIIlIlIIIlIllI) {
-        DiscordRichPresence lllllllllllllllllIIIIlIlIIIllIIl;
-        lllllllllllllllllIIIIlIlIIIllIIl.setStringEncoding(lllllllllllllllllIIIIlIlIIIlIllI);
+    public DiscordRichPresence(String string) {
+        this.setStringEncoding(string);
     }
 
     @Override
-    public boolean equals(Object lllllllllllllllllIIIIlIlIIIIlIll) {
-        DiscordRichPresence lllllllllllllllllIIIIlIlIIIIllII;
-        if (lllllllllllllllllIIIIlIlIIIIllII == lllllllllllllllllIIIIlIlIIIIlIll) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (!(lllllllllllllllllIIIIlIlIIIIlIll instanceof DiscordRichPresence)) {
+        if (!(object instanceof DiscordRichPresence)) {
             return false;
         }
-        DiscordRichPresence lllllllllllllllllIIIIlIlIIIIllIl = (DiscordRichPresence)lllllllllllllllllIIIIlIlIIIIlIll;
-        return lllllllllllllllllIIIIlIlIIIIllII.startTimestamp == lllllllllllllllllIIIIlIlIIIIllIl.startTimestamp && lllllllllllllllllIIIIlIlIIIIllII.endTimestamp == lllllllllllllllllIIIIlIlIIIIllIl.endTimestamp && lllllllllllllllllIIIIlIlIIIIllII.partySize == lllllllllllllllllIIIIlIlIIIIllIl.partySize && lllllllllllllllllIIIIlIlIIIIllII.partyMax == lllllllllllllllllIIIIlIlIIIIllIl.partyMax && lllllllllllllllllIIIIlIlIIIIllII.instance == lllllllllllllllllIIIIlIlIIIIllIl.instance && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.state, lllllllllllllllllIIIIlIlIIIIllIl.state) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.details, lllllllllllllllllIIIIlIlIIIIllIl.details) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.largeImageKey, lllllllllllllllllIIIIlIlIIIIllIl.largeImageKey) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.largeImageText, lllllllllllllllllIIIIlIlIIIIllIl.largeImageText) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.smallImageKey, lllllllllllllllllIIIIlIlIIIIllIl.smallImageKey) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.smallImageText, lllllllllllllllllIIIIlIlIIIIllIl.smallImageText) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.partyId, lllllllllllllllllIIIIlIlIIIIllIl.partyId) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.matchSecret, lllllllllllllllllIIIIlIlIIIIllIl.matchSecret) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.joinSecret, lllllllllllllllllIIIIlIlIIIIllIl.joinSecret) && Objects.equals(lllllllllllllllllIIIIlIlIIIIllII.spectateSecret, lllllllllllllllllIIIIlIlIIIIllIl.spectateSecret);
+        DiscordRichPresence discordRichPresence = (DiscordRichPresence)object;
+        return this.startTimestamp == discordRichPresence.startTimestamp && this.endTimestamp == discordRichPresence.endTimestamp && this.partySize == discordRichPresence.partySize && this.partyMax == discordRichPresence.partyMax && this.instance == discordRichPresence.instance && Objects.equals(this.state, discordRichPresence.state) && Objects.equals(this.details, discordRichPresence.details) && Objects.equals(this.largeImageKey, discordRichPresence.largeImageKey) && Objects.equals(this.largeImageText, discordRichPresence.largeImageText) && Objects.equals(this.smallImageKey, discordRichPresence.smallImageKey) && Objects.equals(this.smallImageText, discordRichPresence.smallImageText) && Objects.equals(this.partyId, discordRichPresence.partyId) && Objects.equals(this.matchSecret, discordRichPresence.matchSecret) && Objects.equals(this.joinSecret, discordRichPresence.joinSecret) && Objects.equals(this.spectateSecret, discordRichPresence.spectateSecret);
     }
 
     @Override
@@ -58,12 +55,7 @@ extends Structure {
     }
 
     public DiscordRichPresence() {
-        lllllllllllllllllIIIIlIlIIIlIIll("UTF-8");
-        DiscordRichPresence lllllllllllllllllIIIIlIlIIIlIIll;
-    }
-
-    static {
-        FIELD_ORDER = Collections.unmodifiableList(Arrays.asList("state", "details", "startTimestamp", "endTimestamp", "largeImageKey", "largeImageText", "smallImageKey", "smallImageText", "partyId", "partySize", "partyMax", "matchSecret", "joinSecret", "spectateSecret", "instance"));
+        this("UTF-8");
     }
 }
 

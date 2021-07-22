@@ -53,73 +53,73 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_1309.class})
 public abstract class LivingEntityMixin
 extends class_1297 {
-    public LivingEntityMixin(class_1299<?> type, class_1937 world) {
-        super(type, world);
+    public LivingEntityMixin(class_1299<?> class_12992, class_1937 class_19372) {
+        super(class_12992, class_19372);
     }
 
     @Inject(method={"damage"}, at={@At(value="HEAD")})
-    private void onDamageHead(class_1282 source, float amount, CallbackInfoReturnable<Boolean> info) {
+    private void onDamageHead(class_1282 class_12822, float f, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Utils.canUpdate()) {
-            MeteorClient.EVENT_BUS.post(DamageEvent.get((class_1309)this, source));
+            MeteorClient.EVENT_BUS.post(DamageEvent.get((class_1309)this, class_12822));
         }
     }
 
     @Inject(method={"damage"}, at={@At(value="TAIL")})
-    private void onDamageTail(class_1282 source, float amount, CallbackInfoReturnable<Boolean> info) {
+    private void onDamageTail(class_1282 class_12822, float f, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
         if (Utils.canUpdate()) {
-            MeteorClient.EVENT_BUS.post(TookDamageEvent.get((class_1309)this, source));
+            MeteorClient.EVENT_BUS.post(TookDamageEvent.get((class_1309)this, class_12822));
         }
     }
 
     @Inject(method={"canWalkOnFluid"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onCanWalkOnFluid(class_3611 fluid, CallbackInfoReturnable<Boolean> info) {
-        CanWalkOnFluidEvent event = MeteorClient.EVENT_BUS.post(CanWalkOnFluidEvent.get((class_1309)this, fluid));
-        if (event.walkOnFluid) {
-            info.setReturnValue((Object)true);
+    private void onCanWalkOnFluid(class_3611 class_36112, CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        CanWalkOnFluidEvent canWalkOnFluidEvent = MeteorClient.EVENT_BUS.post(CanWalkOnFluidEvent.get((class_1309)this, class_36112));
+        if (canWalkOnFluidEvent.walkOnFluid) {
+            callbackInfoReturnable.setReturnValue((Object)true);
         }
     }
 
     @Redirect(method={"travel"}, at=@At(value="INVOKE", target="Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z"))
-    private boolean travelHasStatusEffectProxy(class_1309 self, class_1291 statusEffect) {
-        if (statusEffect == class_1294.field_5902 && Modules.get().isActive(AntiLevitation.class)) {
+    private boolean travelHasStatusEffectProxy(class_1309 class_13092, class_1291 class_12912) {
+        if (class_12912 == class_1294.field_5902 && Modules.get().isActive(AntiLevitation.class)) {
             return false;
         }
-        return self.method_6059(statusEffect);
+        return class_13092.method_6059(class_12912);
     }
 
     @Redirect(method={"travel"}, at=@At(value="INVOKE", target="Lnet/minecraft/entity/LivingEntity;hasNoGravity()Z"))
-    private boolean travelHasNoGravityProxy(class_1309 self) {
-        if (self.method_6059(class_1294.field_5902) && Modules.get().isActive(AntiLevitation.class)) {
+    private boolean travelHasNoGravityProxy(class_1309 class_13092) {
+        if (class_13092.method_6059(class_1294.field_5902) && Modules.get().isActive(AntiLevitation.class)) {
             return !Modules.get().get(AntiLevitation.class).isApplyGravity();
         }
-        return self.method_5740();
+        return class_13092.method_5740();
     }
 
     @Inject(method={"spawnItemParticles"}, at={@At(value="HEAD")}, cancellable=true)
-    private void spawnItemParticles(class_1799 stack, int count, CallbackInfo info) {
+    private void spawnItemParticles(class_1799 class_17992, int n, CallbackInfo callbackInfo) {
         NoRender noRender = Modules.get().get(NoRender.class);
-        if (noRender.noEatParticles() && stack.method_19267()) {
-            info.cancel();
+        if (noRender.noEatParticles() && class_17992.method_19267()) {
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"onEquipStack"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onEquipStack(class_1799 stack, CallbackInfo info) {
+    private void onEquipStack(class_1799 class_17992, CallbackInfo callbackInfo) {
         if (this == Utils.mc.field_1724 && Modules.get().get(OffhandCrash.class).isAntiCrash()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @ModifyArg(method={"swingHand(Lnet/minecraft/util/Hand;)V"}, at=@At(value="INVOKE", target="Lnet/minecraft/entity/LivingEntity;swingHand(Lnet/minecraft/util/Hand;Z)V"))
-    private class_1268 setHand(class_1268 hand) {
+    private class_1268 setHand(class_1268 class_12682) {
         HandView handView = Modules.get().get(HandView.class);
         if (this == Utils.mc.field_1724 && handView.isActive()) {
             if (handView.swingMode.get() == HandView.SwingMode.None) {
-                return hand;
+                return class_12682;
             }
             return handView.swingMode.get() == HandView.SwingMode.Offhand ? class_1268.field_5810 : class_1268.field_5808;
         }
-        return hand;
+        return class_12682;
     }
 }
 

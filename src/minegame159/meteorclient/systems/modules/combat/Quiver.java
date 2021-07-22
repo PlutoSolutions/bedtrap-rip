@@ -37,217 +37,212 @@ import net.minecraft.class_2828;
 
 public class Quiver
 extends Module {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ boolean shooting;
-    private final /* synthetic */ Setting<Integer> charge;
-    private final /* synthetic */ Setting<Boolean> chatInfo;
-    private /* synthetic */ boolean foundSpeed;
-    private /* synthetic */ boolean shotStrength;
-    private final /* synthetic */ Setting<Boolean> checkEffects;
-    private /* synthetic */ int speedSlot;
-    private /* synthetic */ int prevSlot;
-    private /* synthetic */ ArrowType shootingArrow;
-    private /* synthetic */ boolean shouldShoot;
-    private /* synthetic */ boolean foundStrength;
-    private /* synthetic */ int strengthSlot;
-    private /* synthetic */ boolean shotSpeed;
+    private final SettingGroup sgGeneral;
+    private boolean shooting;
+    private final Setting<Integer> charge;
+    static final boolean $assertionsDisabled = !Quiver.class.desiredAssertionStatus();
+    private final Setting<Boolean> chatInfo;
+    private boolean foundSpeed;
+    private boolean shotStrength;
+    private final Setting<Boolean> checkEffects;
+    private int speedSlot;
+    private int prevSlot;
+    private ArrowType shootingArrow;
+    private boolean shouldShoot;
+    private boolean foundStrength;
+    private int strengthSlot;
+    private boolean shotSpeed;
 
     private Map<ArrowType, Integer> getAllArrows() {
-        Quiver llllllllllllllllllllllIIlIlllIIl;
-        HashMap<ArrowType, Integer> llllllllllllllllllllllIIlIllllII = new HashMap<ArrowType, Integer>();
-        boolean llllllllllllllllllllllIIlIlllIll = llllllllllllllllllllllIIlIlllIIl.mc.field_1724.method_6088().containsKey((Object)class_1294.field_5910);
-        boolean llllllllllllllllllllllIIlIlllIlI = llllllllllllllllllllllIIlIlllIIl.mc.field_1724.method_6088().containsKey((Object)class_1294.field_5904);
-        for (int llllllllllllllllllllllIIlIlllllI = 35; llllllllllllllllllllllIIlIlllllI >= 0; --llllllllllllllllllllllIIlIlllllI) {
-            if (llllllllllllllllllllllIIlIlllIIl.mc.field_1724.field_7514.method_5438(llllllllllllllllllllllIIlIlllllI).method_7909() != class_1802.field_8087 || llllllllllllllllllllllIIlIlllllI == llllllllllllllllllllllIIlIlllIIl.mc.field_1724.field_7514.field_7545) continue;
-            if (llllllllllllllllllllllIIlIlllIIl.checkEffects.get().booleanValue()) {
-                if (llllllllllllllllllllllIIlIlllIIl.isType("effect.minecraft.strength", llllllllllllllllllllllIIlIlllllI) && !llllllllllllllllllllllIIlIlllIll) {
-                    llllllllllllllllllllllIIlIllllII.put(ArrowType.Strength, llllllllllllllllllllllIIlIlllllI);
+        HashMap<ArrowType, Integer> hashMap = new HashMap<ArrowType, Integer>();
+        boolean bl = this.mc.field_1724.method_6088().containsKey((Object)class_1294.field_5910);
+        boolean bl2 = this.mc.field_1724.method_6088().containsKey((Object)class_1294.field_5904);
+        for (int i = 35; i >= 0; --i) {
+            if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_1802.field_8087 || i == this.mc.field_1724.field_7514.field_7545) continue;
+            if (this.checkEffects.get().booleanValue()) {
+                if (this.isType("effect.minecraft.strength", i) && !bl) {
+                    hashMap.put(ArrowType.Strength, i);
                     continue;
                 }
-                if (!llllllllllllllllllllllIIlIlllIIl.isType("effect.minecraft.speed", llllllllllllllllllllllIIlIlllllI) || llllllllllllllllllllllIIlIlllIlI) continue;
-                llllllllllllllllllllllIIlIllllII.put(ArrowType.Speed, llllllllllllllllllllllIIlIlllllI);
+                if (!this.isType("effect.minecraft.speed", i) || bl2) continue;
+                hashMap.put(ArrowType.Speed, i);
                 continue;
             }
-            if (llllllllllllllllllllllIIlIlllIIl.isType("effect.minecraft.strength", llllllllllllllllllllllIIlIlllllI)) {
-                llllllllllllllllllllllIIlIllllII.put(ArrowType.Strength, llllllllllllllllllllllIIlIlllllI);
+            if (this.isType("effect.minecraft.strength", i)) {
+                hashMap.put(ArrowType.Strength, i);
                 continue;
             }
-            if (!llllllllllllllllllllllIIlIlllIIl.isType("effect.minecraft.speed", llllllllllllllllllllllIIlIlllllI)) continue;
-            llllllllllllllllllllllIIlIllllII.put(ArrowType.Speed, llllllllllllllllllllllIIlIlllllI);
+            if (!this.isType("effect.minecraft.speed", i)) continue;
+            hashMap.put(ArrowType.Speed, i);
+            if (3 != 0) continue;
+            return null;
         }
-        return llllllllllllllllllllllIIlIllllII;
+        return hashMap;
     }
 
-    private void endShooting(int llllllllllllllllllllllIIllIIIlII) {
-        Quiver llllllllllllllllllllllIIllIIIlIl;
-        llllllllllllllllllllllIIllIIIlIl.setPressed(false);
-        llllllllllllllllllllllIIllIIIlIl.mc.field_1724.method_6075();
-        llllllllllllllllllllllIIllIIIlIl.mc.field_1761.method_2897((class_1657)llllllllllllllllllllllIIllIIIlIl.mc.field_1724);
-        if (llllllllllllllllllllllIIllIIIlII != 9) {
-            llllllllllllllllllllllIIllIIIlIl.moveItems(9, llllllllllllllllllllllIIllIIIlII);
+    private void endShooting(int n) {
+        this.setPressed(false);
+        this.mc.field_1724.method_6075();
+        this.mc.field_1761.method_2897((class_1657)this.mc.field_1724);
+        if (n != 9) {
+            this.moveItems(9, n);
         }
-        llllllllllllllllllllllIIllIIIlIl.shooting = false;
+        this.shooting = false;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llllllllllllllllllllllIIllIlIIll) {
-        Quiver llllllllllllllllllllllIIllIlIlII;
-        llllllllllllllllllllllIIllIlIlII.mc.field_1724.field_3944.method_2883((class_2596)new class_2828.class_2831(llllllllllllllllllllllIIllIlIlII.mc.field_1724.field_6031, -90.0f, llllllllllllllllllllllIIllIlIlII.mc.field_1724.method_24828()));
-        Rotations.setCamRotation(llllllllllllllllllllllIIllIlIlII.mc.field_1724.field_6031, -90.0);
-        boolean llllllllllllllllllllllIIllIlIIlI = false;
-        if (llllllllllllllllllllllIIllIlIlII.shooting && llllllllllllllllllllllIIllIlIlII.mc.field_1724.method_6048() >= llllllllllllllllllllllIIllIlIlII.charge.get()) {
-            if (llllllllllllllllllllllIIllIlIlII.shootingArrow == ArrowType.Strength) {
-                llllllllllllllllllllllIIllIlIlII.endShooting(llllllllllllllllllllllIIllIlIlII.strengthSlot);
+    private void onTick(TickEvent.Post post) {
+        this.mc.field_1724.field_3944.method_2883((class_2596)new class_2828.class_2831(this.mc.field_1724.field_6031, -90.0f, this.mc.field_1724.method_24828()));
+        Rotations.setCamRotation(this.mc.field_1724.field_6031, -90.0);
+        boolean bl = false;
+        if (this.shooting && this.mc.field_1724.method_6048() >= this.charge.get()) {
+            if (this.shootingArrow == ArrowType.Strength) {
+                this.endShooting(this.strengthSlot);
             }
-            if (llllllllllllllllllllllIIllIlIlII.shootingArrow == ArrowType.Speed) {
-                llllllllllllllllllllllIIllIlIlII.endShooting(llllllllllllllllllllllIIllIlIlII.speedSlot);
+            if (this.shootingArrow == ArrowType.Speed) {
+                this.endShooting(this.speedSlot);
             }
-            llllllllllllllllllllllIIllIlIIlI = true;
+            bl = true;
         }
-        if (llllllllllllllllllllllIIllIlIlII.shotStrength && llllllllllllllllllllllIIllIlIlII.shotSpeed && llllllllllllllllllllllIIllIlIIlI) {
-            if (llllllllllllllllllllllIIllIlIlII.chatInfo.get().booleanValue()) {
-                llllllllllllllllllllllIIllIlIlII.info("Quiver complete... disabling.", new Object[0]);
+        if (this.shotStrength && this.shotSpeed && bl) {
+            if (this.chatInfo.get().booleanValue()) {
+                this.info("Quiver complete... disabling.", new Object[0]);
             }
-            llllllllllllllllllllllIIllIlIlII.toggle();
+            this.toggle();
             return;
         }
-        if (llllllllllllllllllllllIIllIlIlII.shouldShoot) {
-            if (!llllllllllllllllllllllIIllIlIlII.shooting && !llllllllllllllllllllllIIllIlIlII.shotStrength && llllllllllllllllllllllIIllIlIlII.foundStrength) {
-                llllllllllllllllllllllIIllIlIlII.shoot(llllllllllllllllllllllIIllIlIlII.strengthSlot);
-                llllllllllllllllllllllIIllIlIlII.shootingArrow = ArrowType.Strength;
-                if (llllllllllllllllllllllIIllIlIlII.chatInfo.get().booleanValue()) {
-                    llllllllllllllllllllllIIllIlIlII.info("Quivering a strength arrow.", new Object[0]);
+        if (this.shouldShoot) {
+            if (!this.shooting && !this.shotStrength && this.foundStrength) {
+                this.shoot(this.strengthSlot);
+                this.shootingArrow = ArrowType.Strength;
+                if (this.chatInfo.get().booleanValue()) {
+                    this.info("Quivering a strength arrow.", new Object[0]);
                 }
-                llllllllllllllllllllllIIllIlIlII.shotStrength = true;
+                this.shotStrength = true;
             }
-            if (!llllllllllllllllllllllIIllIlIlII.shooting && !llllllllllllllllllllllIIllIlIlII.shotSpeed && llllllllllllllllllllllIIllIlIlII.foundSpeed && llllllllllllllllllllllIIllIlIlII.shotStrength) {
-                llllllllllllllllllllllIIllIlIlII.shoot(llllllllllllllllllllllIIllIlIlII.speedSlot);
-                llllllllllllllllllllllIIllIlIlII.shootingArrow = ArrowType.Speed;
-                if (llllllllllllllllllllllIIllIlIlII.chatInfo.get().booleanValue()) {
-                    llllllllllllllllllllllIIllIlIlII.info("Quivering a speed arrow.", new Object[0]);
+            if (!this.shooting && !this.shotSpeed && this.foundSpeed && this.shotStrength) {
+                this.shoot(this.speedSlot);
+                this.shootingArrow = ArrowType.Speed;
+                if (this.chatInfo.get().booleanValue()) {
+                    this.info("Quivering a speed arrow.", new Object[0]);
                 }
-                llllllllllllllllllllllIIllIlIlII.shotSpeed = true;
+                this.shotSpeed = true;
             }
         }
     }
 
     public Quiver() {
         super(Categories.Combat, "quiver", "Automatically shoots positive effect arrows at you.");
-        Quiver llllllllllllllllllllllIIlllIlIIl;
-        llllllllllllllllllllllIIlllIlIIl.sgGeneral = llllllllllllllllllllllIIlllIlIIl.settings.getDefaultGroup();
-        llllllllllllllllllllllIIlllIlIIl.charge = llllllllllllllllllllllIIlllIlIIl.sgGeneral.add(new IntSetting.Builder().name("charge-delay").description("The amount of delay for bow charging in ticks.").defaultValue(6).min(5).max(20).sliderMin(5).sliderMax(20).build());
-        llllllllllllllllllllllIIlllIlIIl.checkEffects = llllllllllllllllllllllIIlllIlIIl.sgGeneral.add(new BoolSetting.Builder().name("check-effects").description("Won't shoot you with effects you already have active.").defaultValue(true).build());
-        llllllllllllllllllllllIIlllIlIIl.chatInfo = llllllllllllllllllllllIIlllIlIIl.sgGeneral.add(new BoolSetting.Builder().name("chat-info").description("Sends you information about the module when toggled.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.charge = this.sgGeneral.add(new IntSetting.Builder().name("charge-delay").description("The amount of delay for bow charging in ticks.").defaultValue(6).min(5).max(20).sliderMin(5).sliderMax(20).build());
+        this.checkEffects = this.sgGeneral.add(new BoolSetting.Builder().name("check-effects").description("Won't shoot you with effects you already have active.").defaultValue(true).build());
+        this.chatInfo = this.sgGeneral.add(new BoolSetting.Builder().name("chat-info").description("Sends you information about the module when toggled.").defaultValue(true).build());
     }
 
     private int findBow() {
-        Quiver llllllllllllllllllllllIIlIIlIIIl;
-        int llllllllllllllllllllllIIlIIlIIII = -1;
-        assert (llllllllllllllllllllllIIlIIlIIIl.mc.field_1724 != null);
-        for (int llllllllllllllllllllllIIlIIlIIlI = 0; llllllllllllllllllllllIIlIIlIIlI < 9; ++llllllllllllllllllllllIIlIIlIIlI) {
-            if (llllllllllllllllllllllIIlIIlIIIl.mc.field_1724.field_7514.method_5438(llllllllllllllllllllllIIlIIlIIlI).method_7909() != class_1802.field_8102) continue;
-            llllllllllllllllllllllIIlIIlIIII = llllllllllllllllllllllIIlIIlIIlI;
+        int n = -1;
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
         }
-        return llllllllllllllllllllllIIlIIlIIII;
+        for (int i = 0; i < 9; ++i) {
+            if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_1802.field_8102) continue;
+            n = i;
+            if (-1 < 4) continue;
+            return 0;
+        }
+        return n;
     }
 
-    private void shoot(int llllllllllllllllllllllIIllIIllII) {
-        Quiver llllllllllllllllllllllIIllIIllIl;
-        if (llllllllllllllllllllllIIllIIllII != 9) {
-            llllllllllllllllllllllIIllIIllIl.moveItems(llllllllllllllllllllllIIllIIllII, 9);
+    private void shoot(int n) {
+        if (n != 9) {
+            this.moveItems(n, 9);
         }
-        llllllllllllllllllllllIIllIIllIl.setPressed(true);
-        llllllllllllllllllllllIIllIIllIl.shooting = true;
+        this.setPressed(true);
+        this.shooting = true;
     }
 
     @Override
     public void onActivate() {
-        Quiver llllllllllllllllllllllIIllIllllI;
-        llllllllllllllllllllllIIllIllllI.shooting = false;
-        int llllllllllllllllllllllIIlllIIIII = 0;
-        llllllllllllllllllllllIIllIllllI.prevSlot = llllllllllllllllllllllIIllIllllI.mc.field_1724.field_7514.field_7545;
-        llllllllllllllllllllllIIllIllllI.shotStrength = false;
-        llllllllllllllllllllllIIllIllllI.shotSpeed = false;
-        llllllllllllllllllllllIIllIllllI.foundStrength = false;
-        llllllllllllllllllllllIIllIllllI.foundSpeed = false;
-        llllllllllllllllllllllIIllIllllI.shootingArrow = null;
-        llllllllllllllllllllllIIllIllllI.strengthSlot = -1;
-        llllllllllllllllllllllIIllIllllI.speedSlot = -1;
-        int llllllllllllllllllllllIIllIlllll = llllllllllllllllllllllIIllIllllI.findBow();
-        if (llllllllllllllllllllllIIllIlllll == -1) {
-            if (llllllllllllllllllllllIIllIllllI.chatInfo.get().booleanValue()) {
-                llllllllllllllllllllllIIllIllllI.error("No bow found... disabling.", new Object[0]);
+        this.shooting = false;
+        int n = 0;
+        this.prevSlot = this.mc.field_1724.field_7514.field_7545;
+        this.shotStrength = false;
+        this.shotSpeed = false;
+        this.foundStrength = false;
+        this.foundSpeed = false;
+        this.shootingArrow = null;
+        this.strengthSlot = -1;
+        this.speedSlot = -1;
+        int n2 = this.findBow();
+        if (n2 == -1) {
+            if (this.chatInfo.get().booleanValue()) {
+                this.error("No bow found... disabling.", new Object[0]);
             }
-            llllllllllllllllllllllIIllIllllI.toggle();
+            this.toggle();
             return;
         }
-        InvUtils.swap(llllllllllllllllllllllIIllIlllll);
-        for (Map.Entry<ArrowType, Integer> llllllllllllllllllllllIIlllIIIlI : llllllllllllllllllllllIIllIllllI.getAllArrows().entrySet()) {
-            if (llllllllllllllllllllllIIlllIIIlI.getKey() == ArrowType.Strength && !llllllllllllllllllllllIIllIllllI.foundStrength) {
-                llllllllllllllllllllllIIllIllllI.strengthSlot = llllllllllllllllllllllIIlllIIIlI.getValue();
-                llllllllllllllllllllllIIllIllllI.foundStrength = true;
+        InvUtils.swap(n2);
+        for (Map.Entry<ArrowType, Integer> entry : this.getAllArrows().entrySet()) {
+            if (entry.getKey() == ArrowType.Strength && !this.foundStrength) {
+                this.strengthSlot = entry.getValue();
+                this.foundStrength = true;
             }
-            if (llllllllllllllllllllllIIlllIIIlI.getKey() != ArrowType.Speed || llllllllllllllllllllllIIllIllllI.foundSpeed) continue;
-            llllllllllllllllllllllIIllIllllI.speedSlot = llllllllllllllllllllllIIlllIIIlI.getValue();
-            llllllllllllllllllllllIIllIllllI.foundSpeed = true;
+            if (entry.getKey() != ArrowType.Speed || this.foundSpeed) continue;
+            this.speedSlot = entry.getValue();
+            this.foundSpeed = true;
         }
-        if (llllllllllllllllllllllIIllIllllI.strengthSlot != -1) {
-            ++llllllllllllllllllllllIIlllIIIII;
+        if (this.strengthSlot != -1) {
+            ++n;
         }
-        if (llllllllllllllllllllllIIllIllllI.speedSlot != -1) {
-            ++llllllllllllllllllllllIIlllIIIII;
+        if (this.speedSlot != -1) {
+            ++n;
         }
-        if (llllllllllllllllllllllIIlllIIIII == 0) {
-            if (llllllllllllllllllllllIIllIllllI.chatInfo.get().booleanValue()) {
-                llllllllllllllllllllllIIllIllllI.error("No appropriate arrows found... disabling.", new Object[0]);
+        if (n == 0) {
+            if (this.chatInfo.get().booleanValue()) {
+                this.error("No appropriate arrows found... disabling.", new Object[0]);
             }
-            llllllllllllllllllllllIIllIllllI.toggle();
+            this.toggle();
             return;
         }
-        llllllllllllllllllllllIIllIllllI.shouldShoot = true;
-        if (!llllllllllllllllllllllIIllIllllI.foundSpeed) {
-            llllllllllllllllllllllIIllIllllI.shotSpeed = true;
+        this.shouldShoot = true;
+        if (!this.foundSpeed) {
+            this.shotSpeed = true;
         }
-        if (!llllllllllllllllllllllIIllIllllI.foundStrength) {
-            llllllllllllllllllllllIIllIllllI.shotStrength = true;
+        if (!this.foundStrength) {
+            this.shotStrength = true;
         }
     }
 
-    private boolean isType(String llllllllllllllllllllllIIlIlIIlll, int llllllllllllllllllllllIIlIlIlIlI) {
-        List llllllllllllllllllllllIIlIlIllIl;
-        Quiver llllllllllllllllllllllIIlIlIllII;
-        assert (llllllllllllllllllllllIIlIlIllII.mc.field_1724 != null);
-        class_1799 llllllllllllllllllllllIIlIlIlIIl = llllllllllllllllllllllIIlIlIllII.mc.field_1724.field_7514.method_5438(llllllllllllllllllllllIIlIlIlIlI);
-        if (llllllllllllllllllllllIIlIlIlIIl.method_7909() == class_1802.field_8087 && (llllllllllllllllllllllIIlIlIllIl = class_1844.method_8063((class_1799)llllllllllllllllllllllIIlIlIlIIl).method_8049()).size() > 0) {
-            class_1293 llllllllllllllllllllllIIlIlIlllI = (class_1293)llllllllllllllllllllllIIlIlIllIl.get(0);
-            return llllllllllllllllllllllIIlIlIlllI.method_5586().equals(llllllllllllllllllllllIIlIlIIlll);
+    private boolean isType(String string, int n) {
+        List list;
+        if (!$assertionsDisabled && this.mc.field_1724 == null) {
+            throw new AssertionError();
+        }
+        class_1799 class_17992 = this.mc.field_1724.field_7514.method_5438(n);
+        if (class_17992.method_7909() == class_1802.field_8087 && (list = class_1844.method_8063((class_1799)class_17992).method_8049()).size() > 0) {
+            class_1293 class_12932 = (class_1293)list.get(0);
+            return class_12932.method_5586().equals(string);
         }
         return false;
     }
 
     @Override
     public void onDeactivate() {
-        Quiver llllllllllllllllllllllIIllIlIlll;
-        InvUtils.swap(llllllllllllllllllllllIIllIlIlll.prevSlot);
+        InvUtils.swap(this.prevSlot);
     }
 
-    private void setPressed(boolean llllllllllllllllllllllIIlIIlllIl) {
-        Quiver llllllllllllllllllllllIIlIIllllI;
-        llllllllllllllllllllllIIlIIllllI.mc.field_1690.field_1904.method_23481(llllllllllllllllllllllIIlIIlllIl);
+    private void setPressed(boolean bl) {
+        this.mc.field_1690.field_1904.method_23481(bl);
     }
 
-    private void moveItems(int llllllllllllllllllllllIIlIIlIlll, int llllllllllllllllllllllIIlIIllIII) {
-        InvUtils.move().from(llllllllllllllllllllllIIlIIlIlll).to(llllllllllllllllllllllIIlIIllIII);
+    private void moveItems(int n, int n2) {
+        InvUtils.move().from(n).to(n2);
     }
 
     public static enum ArrowType {
         Strength,
         Speed;
 
-
-        private ArrowType() {
-            ArrowType llllllllllllllllIlllIIlIlIlIlllI;
-        }
     }
 }
 

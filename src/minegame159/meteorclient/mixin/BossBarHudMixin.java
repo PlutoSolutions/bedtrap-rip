@@ -35,28 +35,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_337.class})
 public class BossBarHudMixin {
     @Inject(method={"render"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onRender(CallbackInfo info) {
+    private void onRender(CallbackInfo callbackInfo) {
         if (Modules.get().get(NoRender.class).noBossBar()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Ljava/util/Collection;iterator()Ljava/util/Iterator;"))
     public Iterator<class_345> onRender(Collection<class_345> collection) {
-        RenderBossBarEvent.BossIterator event = MeteorClient.EVENT_BUS.post(RenderBossBarEvent.BossIterator.get(collection.iterator()));
-        return event.iterator;
+        RenderBossBarEvent.BossIterator bossIterator = MeteorClient.EVENT_BUS.post(RenderBossBarEvent.BossIterator.get(collection.iterator()));
+        return bossIterator.iterator;
     }
 
     @Redirect(method={"render"}, at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/hud/ClientBossBar;getName()Lnet/minecraft/text/Text;"))
-    public class_2561 onAsFormattedString(class_345 clientBossBar) {
-        RenderBossBarEvent.BossText event = MeteorClient.EVENT_BUS.post(RenderBossBarEvent.BossText.get(clientBossBar, clientBossBar.method_5414()));
-        return event.name;
+    public class_2561 onAsFormattedString(class_345 class_3452) {
+        RenderBossBarEvent.BossText bossText = MeteorClient.EVENT_BUS.post(RenderBossBarEvent.BossText.get(class_3452, class_3452.method_5414()));
+        return bossText.name;
     }
 
     @ModifyConstant(method={"render"}, constant={@Constant(intValue=9, ordinal=1)})
-    public int modifySpacingConstant(int j) {
-        RenderBossBarEvent.BossSpacing event = MeteorClient.EVENT_BUS.post(RenderBossBarEvent.BossSpacing.get(j));
-        return event.spacing;
+    public int modifySpacingConstant(int n) {
+        RenderBossBarEvent.BossSpacing bossSpacing = MeteorClient.EVENT_BUS.post(RenderBossBarEvent.BossSpacing.get(n));
+        return bossSpacing.spacing;
     }
 }
 

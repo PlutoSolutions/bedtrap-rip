@@ -9,15 +9,10 @@ public abstract class WPlus
 extends WPressable {
     @Override
     protected void onCalculateSize() {
-        WPlus lllllllllllllllllIlIlIllIlIIIIII;
-        double lllllllllllllllllIlIlIllIIllllll = lllllllllllllllllIlIlIllIlIIIIII.pad();
-        double lllllllllllllllllIlIlIllIIlllllI = lllllllllllllllllIlIlIllIlIIIIII.theme.textHeight();
-        lllllllllllllllllIlIlIllIlIIIIII.width = lllllllllllllllllIlIlIllIIllllll + lllllllllllllllllIlIlIllIIlllllI + lllllllllllllllllIlIlIllIIllllll;
-        lllllllllllllllllIlIlIllIlIIIIII.height = lllllllllllllllllIlIlIllIIllllll + lllllllllllllllllIlIlIllIIlllllI + lllllllllllllllllIlIlIllIIllllll;
-    }
-
-    public WPlus() {
-        WPlus lllllllllllllllllIlIlIllIlIIIlII;
+        double d = this.pad();
+        double d2 = this.theme.textHeight();
+        this.width = d + d2 + d;
+        this.height = d + d2 + d;
     }
 }
 

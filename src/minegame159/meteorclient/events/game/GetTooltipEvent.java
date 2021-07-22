@@ -14,53 +14,33 @@ import net.minecraft.class_2561;
 import net.minecraft.class_4587;
 
 public class GetTooltipEvent {
-    public /* synthetic */ class_1799 itemStack;
-    public /* synthetic */ List<class_2561> list;
-
-    public GetTooltipEvent() {
-        GetTooltipEvent lllllllllllllllllIIIIllIlIlIllll;
-    }
+    public class_1799 itemStack;
+    public List<class_2561> list;
 
     public static class Append
     extends GetTooltipEvent {
-        private static final /* synthetic */ Append INSTANCE;
+        private static final Append INSTANCE = new Append();
 
-        public Append() {
-            Append lIllllIlIIIlIll;
-        }
-
-        static {
-            INSTANCE = new Append();
-        }
-
-        public static Append get(class_1799 lIllllIlIIIlIII, List<class_2561> lIllllIlIIIIlIl) {
-            Append.INSTANCE.itemStack = lIllllIlIIIlIII;
-            Append.INSTANCE.list = lIllllIlIIIIlIl;
+        public static Append get(class_1799 class_17992, List<class_2561> list) {
+            Append.INSTANCE.itemStack = class_17992;
+            Append.INSTANCE.list = list;
             return INSTANCE;
         }
     }
 
     public static class Modify
     extends GetTooltipEvent {
-        public /* synthetic */ int x;
-        public /* synthetic */ int y;
-        public /* synthetic */ class_4587 matrixStack;
-        private static final /* synthetic */ Modify INSTANCE;
+        public int x;
+        public int y;
+        public class_4587 matrixStack;
+        private static final Modify INSTANCE = new Modify();
 
-        static {
-            INSTANCE = new Modify();
-        }
-
-        public Modify() {
-            Modify llllllllllllllllllIllIIllIllIIlI;
-        }
-
-        public static Modify get(class_1799 llllllllllllllllllIllIIllIlIllII, List<class_2561> llllllllllllllllllIllIIllIlIlIll, class_4587 llllllllllllllllllIllIIllIlIIlIl, int llllllllllllllllllIllIIllIlIIlII, int llllllllllllllllllIllIIllIlIlIII) {
-            Modify.INSTANCE.itemStack = llllllllllllllllllIllIIllIlIllII;
-            Modify.INSTANCE.list = llllllllllllllllllIllIIllIlIlIll;
-            Modify.INSTANCE.matrixStack = llllllllllllllllllIllIIllIlIIlIl;
-            Modify.INSTANCE.x = llllllllllllllllllIllIIllIlIIlII;
-            Modify.INSTANCE.y = llllllllllllllllllIllIIllIlIlIII;
+        public static Modify get(class_1799 class_17992, List<class_2561> list, class_4587 class_45872, int n, int n2) {
+            Modify.INSTANCE.itemStack = class_17992;
+            Modify.INSTANCE.list = list;
+            Modify.INSTANCE.matrixStack = class_45872;
+            Modify.INSTANCE.x = n;
+            Modify.INSTANCE.y = n2;
             return INSTANCE;
         }
     }

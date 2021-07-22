@@ -9,19 +9,11 @@ package minegame159.meteorclient.events.entity;
 import net.minecraft.class_1297;
 
 public class EntityDestroyEvent {
-    public /* synthetic */ class_1297 entity;
-    private static final /* synthetic */ EntityDestroyEvent INSTANCE;
+    public class_1297 entity;
+    private static final EntityDestroyEvent INSTANCE = new EntityDestroyEvent();
 
-    static {
-        INSTANCE = new EntityDestroyEvent();
-    }
-
-    public EntityDestroyEvent() {
-        EntityDestroyEvent lllllllllllllllllIIIIlIlIlIIIlll;
-    }
-
-    public static EntityDestroyEvent get(class_1297 lllllllllllllllllIIIIlIlIlIIIlII) {
-        EntityDestroyEvent.INSTANCE.entity = lllllllllllllllllIIIIlIlIlIIIlII;
+    public static EntityDestroyEvent get(class_1297 class_12972) {
+        EntityDestroyEvent.INSTANCE.entity = class_12972;
         return INSTANCE;
     }
 }

@@ -21,153 +21,142 @@ import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 import net.minecraft.class_290;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Waypoint
 implements ISerializable<Waypoint> {
-    public /* synthetic */ boolean overworld;
-    public /* synthetic */ boolean visible;
-    private static final /* synthetic */ MeshBuilder MB;
-    public /* synthetic */ Dimension actualDimension;
-    public /* synthetic */ boolean nether;
-    public /* synthetic */ String icon;
-    public /* synthetic */ SettingColor color;
-    public /* synthetic */ String name;
-    public /* synthetic */ int x;
-    public /* synthetic */ int maxVisibleDistance;
-    public /* synthetic */ int y;
-    public /* synthetic */ double scale;
-    public /* synthetic */ int z;
-    public /* synthetic */ boolean end;
+    public boolean overworld;
+    public boolean visible = true;
+    private static final MeshBuilder MB = new MeshBuilder(128);
+    public Dimension actualDimension;
+    public boolean nether;
+    public String icon = "Square";
+    public SettingColor color = new SettingColor(225, 25, 25);
+    public String name = "BedTrap on Crack!";
+    public int x;
+    public int maxVisibleDistance = 1000;
+    public int y;
+    public double scale = 1.0;
+    public int z;
+    public boolean end;
 
-    private int correctIconIndex(int llllllllllllllllllIIllllIllIllIl) {
-        if (llllllllllllllllllIIllllIllIllIl < 0) {
-            return Waypoints.get().icons.size() + llllllllllllllllllIIllllIllIllIl;
+    private int correctIconIndex(int n) {
+        if (n < 0) {
+            return Waypoints.get().icons.size() + n;
         }
-        if (llllllllllllllllllIIllllIllIllIl >= Waypoints.get().icons.size()) {
-            return llllllllllllllllllIIllllIllIllIl - Waypoints.get().icons.size();
+        if (n >= Waypoints.get().icons.size()) {
+            return n - Waypoints.get().icons.size();
         }
-        return llllllllllllllllllIIllllIllIllIl;
+        return n;
     }
 
-    private String getIcon(int llllllllllllllllllIIllllIllIIIlI) {
-        Waypoint llllllllllllllllllIIllllIllIIllI;
-        llllllllllllllllllIIllllIllIIIlI = llllllllllllllllllIIllllIllIIllI.correctIconIndex(llllllllllllllllllIIllllIllIIIlI);
-        int llllllllllllllllllIIllllIllIIlII = 0;
-        for (String llllllllllllllllllIIllllIllIIlll : Waypoints.get().icons.keySet()) {
-            if (llllllllllllllllllIIllllIllIIlII == llllllllllllllllllIIllllIllIIIlI) {
-                return llllllllllllllllllIIllllIllIIlll;
+    private String getIcon(int n) {
+        n = this.correctIconIndex(n);
+        int n2 = 0;
+        for (String string : Waypoints.get().icons.keySet()) {
+            if (n2 == n) {
+                return string;
             }
-            ++llllllllllllllllllIIllllIllIIlII;
+            ++n2;
         }
         return "Square";
     }
 
     private int findIconIndex() {
-        int llllllllllllllllllIIllllIlllIlIl = 0;
-        for (String llllllllllllllllllIIllllIlllIlll : Waypoints.get().icons.keySet()) {
-            Waypoint llllllllllllllllllIIllllIlllIllI;
-            if (llllllllllllllllllIIllllIlllIllI.icon.equals(llllllllllllllllllIIllllIlllIlll)) {
-                return llllllllllllllllllIIllllIlllIlIl;
+        int n = 0;
+        for (String string : Waypoints.get().icons.keySet()) {
+            if (this.icon.equals(string)) {
+                return n;
             }
-            ++llllllllllllllllllIIllllIlllIlIl;
+            ++n;
         }
         return -1;
     }
 
     @Override
-    public Waypoint fromTag(class_2487 llllllllllllllllllIIllllIlIIllll) {
-        Waypoint llllllllllllllllllIIllllIlIlIIII;
-        llllllllllllllllllIIllllIlIlIIII.name = llllllllllllllllllIIllllIlIIllll.method_10558("name");
-        llllllllllllllllllIIllllIlIlIIII.icon = llllllllllllllllllIIllllIlIIllll.method_10558("icon");
-        llllllllllllllllllIIllllIlIlIIII.color.fromTag(llllllllllllllllllIIllllIlIIllll.method_10562("color"));
-        llllllllllllllllllIIllllIlIlIIII.x = llllllllllllllllllIIllllIlIIllll.method_10550("x");
-        llllllllllllllllllIIllllIlIlIIII.y = llllllllllllllllllIIllllIlIIllll.method_10550("y");
-        llllllllllllllllllIIllllIlIlIIII.z = llllllllllllllllllIIllllIlIIllll.method_10550("z");
-        llllllllllllllllllIIllllIlIlIIII.visible = llllllllllllllllllIIllllIlIIllll.method_10577("visible");
-        llllllllllllllllllIIllllIlIlIIII.maxVisibleDistance = llllllllllllllllllIIllllIlIIllll.method_10550("maxVisibleDistance");
-        llllllllllllllllllIIllllIlIlIIII.scale = llllllllllllllllllIIllllIlIIllll.method_10574("scale");
-        llllllllllllllllllIIllllIlIlIIII.actualDimension = Dimension.valueOf(llllllllllllllllllIIllllIlIIllll.method_10558("dimension"));
-        llllllllllllllllllIIllllIlIlIIII.overworld = llllllllllllllllllIIllllIlIIllll.method_10577("overworld");
-        llllllllllllllllllIIllllIlIlIIII.nether = llllllllllllllllllIIllllIlIIllll.method_10577("nether");
-        llllllllllllllllllIIllllIlIlIIII.end = llllllllllllllllllIIllllIlIIllll.method_10577("end");
-        if (!Waypoints.get().icons.containsKey(llllllllllllllllllIIllllIlIlIIII.icon)) {
-            llllllllllllllllllIIllllIlIlIIII.icon = "Square";
+    public Waypoint fromTag(class_2487 class_24872) {
+        this.name = class_24872.method_10558("name");
+        this.icon = class_24872.method_10558("icon");
+        this.color.fromTag(class_24872.method_10562("color"));
+        this.x = class_24872.method_10550("x");
+        this.y = class_24872.method_10550("y");
+        this.z = class_24872.method_10550("z");
+        this.visible = class_24872.method_10577("visible");
+        this.maxVisibleDistance = class_24872.method_10550("maxVisibleDistance");
+        this.scale = class_24872.method_10574("scale");
+        this.actualDimension = Dimension.valueOf(class_24872.method_10558("dimension"));
+        this.overworld = class_24872.method_10577("overworld");
+        this.nether = class_24872.method_10577("nether");
+        this.end = class_24872.method_10577("end");
+        if (!Waypoints.get().icons.containsKey(this.icon)) {
+            this.icon = "Square";
         }
-        return llllllllllllllllllIIllllIlIlIIII;
+        return this;
     }
 
-    public void renderIcon(double llllllllllllllllllIIlllllIIIlIlI, double llllllllllllllllllIIlllllIIIlIIl, double llllllllllllllllllIIlllllIIIlIII, double llllllllllllllllllIIlllllIIIIlll, double llllllllllllllllllIIllllIllllllI) {
-        Waypoint llllllllllllllllllIIlllllIIIIIll;
-        llllllllllllllllllIIlllllIIIIIll.validateIcon();
-        class_1044 llllllllllllllllllIIlllllIIIIlIl = Waypoints.get().icons.get(llllllllllllllllllIIlllllIIIIIll.icon);
-        if (llllllllllllllllllIIlllllIIIIlIl == null) {
+    public void renderIcon(double d, double d2, double d3, double d4, double d5) {
+        this.validateIcon();
+        class_1044 class_10442 = Waypoints.get().icons.get(this.icon);
+        if (class_10442 == null) {
             return;
         }
         MB.begin(null, DrawMode.Triangles, class_290.field_1575);
-        int llllllllllllllllllIIlllllIIIIlII = llllllllllllllllllIIlllllIIIIIll.color.a;
-        llllllllllllllllllIIlllllIIIIIll.color.a = (int)((double)llllllllllllllllllIIlllllIIIIIll.color.a * llllllllllllllllllIIlllllIIIIlll);
-        MB.pos(llllllllllllllllllIIlllllIIIlIlI, llllllllllllllllllIIlllllIIIlIIl, llllllllllllllllllIIlllllIIIlIII).texture(0.0, 0.0).color(llllllllllllllllllIIlllllIIIIIll.color).endVertex();
-        MB.pos(llllllllllllllllllIIlllllIIIlIlI + llllllllllllllllllIIllllIllllllI, llllllllllllllllllIIlllllIIIlIIl, llllllllllllllllllIIlllllIIIlIII).texture(1.0, 0.0).color(llllllllllllllllllIIlllllIIIIIll.color).endVertex();
-        MB.pos(llllllllllllllllllIIlllllIIIlIlI + llllllllllllllllllIIllllIllllllI, llllllllllllllllllIIlllllIIIlIIl + llllllllllllllllllIIllllIllllllI, llllllllllllllllllIIlllllIIIlIII).texture(1.0, 1.0).color(llllllllllllllllllIIlllllIIIIIll.color).endVertex();
-        MB.pos(llllllllllllllllllIIlllllIIIlIlI, llllllllllllllllllIIlllllIIIlIIl, llllllllllllllllllIIlllllIIIlIII).texture(0.0, 0.0).color(llllllllllllllllllIIlllllIIIIIll.color).endVertex();
-        MB.pos(llllllllllllllllllIIlllllIIIlIlI + llllllllllllllllllIIllllIllllllI, llllllllllllllllllIIlllllIIIlIIl + llllllllllllllllllIIllllIllllllI, llllllllllllllllllIIlllllIIIlIII).texture(1.0, 1.0).color(llllllllllllllllllIIlllllIIIIIll.color).endVertex();
-        MB.pos(llllllllllllllllllIIlllllIIIlIlI, llllllllllllllllllIIlllllIIIlIIl + llllllllllllllllllIIllllIllllllI, llllllllllllllllllIIlllllIIIlIII).texture(0.0, 1.0).color(llllllllllllllllllIIlllllIIIIIll.color).endVertex();
-        llllllllllllllllllIIlllllIIIIlIl.method_23207();
+        int n = this.color.a;
+        this.color.a = (int)((double)this.color.a * d4);
+        MB.pos(d, d2, d3).texture(0.0, 0.0).color(this.color).endVertex();
+        MB.pos(d + d5, d2, d3).texture(1.0, 0.0).color(this.color).endVertex();
+        MB.pos(d + d5, d2 + d5, d3).texture(1.0, 1.0).color(this.color).endVertex();
+        MB.pos(d, d2, d3).texture(0.0, 0.0).color(this.color).endVertex();
+        MB.pos(d + d5, d2 + d5, d3).texture(1.0, 1.0).color(this.color).endVertex();
+        MB.pos(d, d2 + d5, d3).texture(0.0, 1.0).color(this.color).endVertex();
+        class_10442.method_23207();
         MB.end();
-        llllllllllllllllllIIlllllIIIIIll.color.a = llllllllllllllllllIIlllllIIIIlII;
+        this.color.a = n;
     }
 
     public void nextIcon() {
-        Waypoint llllllllllllllllllIIllllIlIllIIl;
-        llllllllllllllllllIIllllIlIllIIl.icon = llllllllllllllllllIIllllIlIllIIl.getIcon(llllllllllllllllllIIllllIlIllIIl.findIconIndex() + 1);
+        this.icon = this.getIcon(this.findIconIndex() + 1);
     }
 
     public void validateIcon() {
-        Waypoint llllllllllllllllllIIlllllIIlIllI;
-        Map<String, class_1044> llllllllllllllllllIIlllllIIllIII = Waypoints.get().icons;
-        class_1044 llllllllllllllllllIIlllllIIlIlll = llllllllllllllllllIIlllllIIllIII.get(llllllllllllllllllIIlllllIIlIllI.icon);
-        if (llllllllllllllllllIIlllllIIlIlll == null && !llllllllllllllllllIIlllllIIllIII.isEmpty()) {
-            llllllllllllllllllIIlllllIIlIllI.icon = llllllllllllllllllIIlllllIIllIII.keySet().iterator().next();
+        Map<String, class_1044> map = Waypoints.get().icons;
+        class_1044 class_10442 = map.get(this.icon);
+        if (class_10442 == null && !map.isEmpty()) {
+            this.icon = map.keySet().iterator().next();
         }
     }
 
     @Override
     public class_2487 toTag() {
-        Waypoint llllllllllllllllllIIllllIlIlIlII;
-        class_2487 llllllllllllllllllIIllllIlIlIlIl = new class_2487();
-        llllllllllllllllllIIllllIlIlIlIl.method_10582("name", llllllllllllllllllIIllllIlIlIlII.name);
-        llllllllllllllllllIIllllIlIlIlIl.method_10582("icon", llllllllllllllllllIIllllIlIlIlII.icon);
-        llllllllllllllllllIIllllIlIlIlIl.method_10566("color", (class_2520)llllllllllllllllllIIllllIlIlIlII.color.toTag());
-        llllllllllllllllllIIllllIlIlIlIl.method_10569("x", llllllllllllllllllIIllllIlIlIlII.x);
-        llllllllllllllllllIIllllIlIlIlIl.method_10569("y", llllllllllllllllllIIllllIlIlIlII.y);
-        llllllllllllllllllIIllllIlIlIlIl.method_10569("z", llllllllllllllllllIIllllIlIlIlII.z);
-        llllllllllllllllllIIllllIlIlIlIl.method_10556("visible", llllllllllllllllllIIllllIlIlIlII.visible);
-        llllllllllllllllllIIllllIlIlIlIl.method_10569("maxVisibleDistance", llllllllllllllllllIIllllIlIlIlII.maxVisibleDistance);
-        llllllllllllllllllIIllllIlIlIlIl.method_10549("scale", llllllllllllllllllIIllllIlIlIlII.scale);
-        llllllllllllllllllIIllllIlIlIlIl.method_10582("dimension", llllllllllllllllllIIllllIlIlIlII.actualDimension.name());
-        llllllllllllllllllIIllllIlIlIlIl.method_10556("overworld", llllllllllllllllllIIllllIlIlIlII.overworld);
-        llllllllllllllllllIIllllIlIlIlIl.method_10556("nether", llllllllllllllllllIIllllIlIlIlII.nether);
-        llllllllllllllllllIIllllIlIlIlIl.method_10556("end", llllllllllllllllllIIllllIlIlIlII.end);
-        return llllllllllllllllllIIllllIlIlIlIl;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10582("name", this.name);
+        class_24872.method_10582("icon", this.icon);
+        class_24872.method_10566("color", (class_2520)this.color.toTag());
+        class_24872.method_10569("x", this.x);
+        class_24872.method_10569("y", this.y);
+        class_24872.method_10569("z", this.z);
+        class_24872.method_10556("visible", this.visible);
+        class_24872.method_10569("maxVisibleDistance", this.maxVisibleDistance);
+        class_24872.method_10549("scale", this.scale);
+        class_24872.method_10582("dimension", this.actualDimension.name());
+        class_24872.method_10556("overworld", this.overworld);
+        class_24872.method_10556("nether", this.nether);
+        class_24872.method_10556("end", this.end);
+        return class_24872;
     }
 
     static {
-        MB = new MeshBuilder(128);
         Waypoint.MB.texture = true;
     }
 
-    public void prevIcon() {
-        Waypoint llllllllllllllllllIIllllIlIlllII;
-        llllllllllllllllllIIllllIlIlllII.icon = llllllllllllllllllIIllllIlIlllII.getIcon(llllllllllllllllllIIllllIlIlllII.findIconIndex() - 1);
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
-    public Waypoint() {
-        Waypoint llllllllllllllllllIIlllllIIllllI;
-        llllllllllllllllllIIlllllIIllllI.name = "BedTrap on Crack!";
-        llllllllllllllllllIIlllllIIllllI.icon = "Square";
-        llllllllllllllllllIIlllllIIllllI.color = new SettingColor(225, 25, 25);
-        llllllllllllllllllIIlllllIIllllI.visible = true;
-        llllllllllllllllllIIlllllIIllllI.maxVisibleDistance = 1000;
-        llllllllllllllllllIIlllllIIllllI.scale = 1.0;
+    public void prevIcon() {
+        this.icon = this.getIcon(this.findIconIndex() - 1);
     }
 }
 

@@ -22,89 +22,91 @@ import minegame159.meteorclient.utils.misc.input.KeyAction;
 import net.minecraft.class_2487;
 import net.minecraft.class_2520;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Macros
 extends System<Macros>
 implements Iterable<Macro> {
-    private /* synthetic */ List<Macro> macros;
+    private List<Macro> macros = new ArrayList<Macro>();
 
     @EventHandler(priority=100)
-    private void onButton(MouseButtonEvent lIlIllIlllllllI) {
-        Macros lIlIllIllllllll;
-        if (lIlIllIlllllllI.action == KeyAction.Release) {
+    private void onButton(MouseButtonEvent mouseButtonEvent) {
+        if (mouseButtonEvent.action == KeyAction.Release) {
             return;
         }
-        for (Macro lIlIlllIIIIIIlI : lIlIllIllllllll.macros) {
-            if (!lIlIlllIIIIIIlI.onAction(false, lIlIllIlllllllI.button)) continue;
+        for (Macro macro : this.macros) {
+            if (!macro.onAction(false, mouseButtonEvent.button)) continue;
             return;
         }
     }
 
     @EventHandler(priority=100)
-    private void onKey(KeyEvent lIlIlllIIIIlIll) {
-        Macros lIlIlllIIIIllII;
-        if (lIlIlllIIIIlIll.action == KeyAction.Release) {
+    private void onKey(KeyEvent keyEvent) {
+        if (keyEvent.action == KeyAction.Release) {
             return;
         }
-        for (Macro lIlIlllIIIIllIl : lIlIlllIIIIllII.macros) {
-            if (!lIlIlllIIIIllIl.onAction(true, lIlIlllIIIIlIll.key)) continue;
+        for (Macro macro : this.macros) {
+            if (!macro.onAction(true, keyEvent.key)) continue;
             return;
         }
     }
 
     @Override
     public Iterator<Macro> iterator() {
-        Macros lIlIllIlllllIIl;
-        return lIlIllIlllllIIl.macros.iterator();
+        return this.macros.iterator();
     }
 
     public Macros() {
         super("macros");
-        Macros lIlIlllIIlIIIlI;
-        lIlIlllIIlIIIlI.macros = new ArrayList<Macro>();
     }
 
     @Override
     public class_2487 toTag() {
-        Macros lIlIllIllllIllI;
-        class_2487 lIlIllIllllIlIl = new class_2487();
-        lIlIllIllllIlIl.method_10566("macros", (class_2520)NbtUtils.listToTag(lIlIllIllllIllI.macros));
-        return lIlIllIllllIlIl;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10566("macros", (class_2520)NbtUtils.listToTag(this.macros));
+        return class_24872;
     }
 
     @Override
-    public Macros fromTag(class_2487 lIlIllIlllIlIll) {
-        Macros lIlIllIlllIlIlI;
-        for (Macro lIlIllIlllIlllI : lIlIllIlllIlIlI.macros) {
-            MeteorClient.EVENT_BUS.unsubscribe(lIlIllIlllIlllI);
+    public Macros fromTag(class_2487 class_24872) {
+        for (Macro macro : this.macros) {
+            MeteorClient.EVENT_BUS.unsubscribe(macro);
         }
-        lIlIllIlllIlIlI.macros = NbtUtils.listFromTag(lIlIllIlllIlIll.method_10554("macros", 10), lIlIllIllIlllll -> new Macro().fromTag((class_2487)lIlIllIllIlllll));
-        for (Macro lIlIllIlllIllIl : lIlIllIlllIlIlI.macros) {
-            MeteorClient.EVENT_BUS.subscribe(lIlIllIlllIllIl);
+        this.macros = NbtUtils.listFromTag(class_24872.method_10554("macros", 10), Macros::lambda$fromTag$0);
+        for (Macro macro : this.macros) {
+            MeteorClient.EVENT_BUS.subscribe(macro);
         }
-        return lIlIllIlllIlIlI;
+        return this;
     }
 
     public static Macros get() {
         return Systems.get(Macros.class);
     }
 
-    public void add(Macro lIlIlllIIIllIll) {
-        Macros lIlIlllIIIlllII;
-        lIlIlllIIIlllII.macros.add(lIlIlllIIIllIll);
-        MeteorClient.EVENT_BUS.subscribe(lIlIlllIIIllIll);
-        lIlIlllIIIlllII.save();
+    public void add(Macro macro) {
+        this.macros.add(macro);
+        MeteorClient.EVENT_BUS.subscribe(macro);
+        this.save();
     }
 
     public List<Macro> getAll() {
-        Macros lIlIlllIIIllIII;
-        return lIlIlllIIIllIII.macros;
+        return this.macros;
     }
 
-    public void remove(Macro lIlIlllIIIlIIlI) {
-        Macros lIlIlllIIIlIIll;
-        if (lIlIlllIIIlIIll.macros.remove(lIlIlllIIIlIIlI)) {
-            MeteorClient.EVENT_BUS.unsubscribe(lIlIlllIIIlIIlI);
-            lIlIlllIIIlIIll.save();
+    private static Macro lambda$fromTag$0(class_2520 class_25202) {
+        return new Macro().fromTag((class_2487)class_25202);
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public void remove(Macro macro) {
+        if (this.macros.remove(macro)) {
+            MeteorClient.EVENT_BUS.unsubscribe(macro);
+            this.save();
         }
     }
 }

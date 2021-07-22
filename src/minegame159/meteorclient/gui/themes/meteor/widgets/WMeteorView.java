@@ -10,15 +10,10 @@ import minegame159.meteorclient.gui.widgets.containers.WView;
 public class WMeteorView
 extends WView
 implements MeteorWidget {
-    public WMeteorView() {
-        WMeteorView lIIllIlIllIlIlI;
-    }
-
     @Override
-    protected void onRender(GuiRenderer lIIllIlIllIIIIl, double lIIllIlIllIIlIl, double lIIllIlIllIIlII, double lIIllIlIllIIIll) {
-        WMeteorView lIIllIlIllIIIlI;
-        if (lIIllIlIllIIIlI.canScroll && lIIllIlIllIIIlI.hasScrollBar) {
-            lIIllIlIllIIIIl.quad(lIIllIlIllIIIlI.handleX(), lIIllIlIllIIIlI.handleY(), lIIllIlIllIIIlI.handleWidth(), lIIllIlIllIIIlI.handleHeight(), lIIllIlIllIIIlI.theme().scrollbarColor.get(lIIllIlIllIIIlI.handlePressed, lIIllIlIllIIIlI.handleMouseOver));
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (this.canScroll && this.hasScrollBar) {
+            guiRenderer.quad(this.handleX(), this.handleY(), this.handleWidth(), this.handleHeight(), this.theme().scrollbarColor.get(this.handlePressed, this.handleMouseOver));
         }
     }
 }

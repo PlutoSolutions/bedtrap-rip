@@ -10,165 +10,144 @@ import minegame159.meteorclient.gui.widgets.WRoot;
 
 public abstract class WWidget
 implements BaseWidget {
-    public /* synthetic */ double width;
-    public /* synthetic */ String tooltip;
-    protected /* synthetic */ double mouseOverTimer;
-    public /* synthetic */ boolean visible;
-    public /* synthetic */ double minWidth;
-    public /* synthetic */ GuiTheme theme;
-    public /* synthetic */ double x;
-    public /* synthetic */ boolean mouseOver;
-    public /* synthetic */ double y;
-    public /* synthetic */ WWidget parent;
-    public /* synthetic */ double height;
+    public double width;
+    public String tooltip;
+    protected double mouseOverTimer;
+    public boolean visible = true;
+    public double minWidth;
+    public GuiTheme theme;
+    public double x;
+    public boolean mouseOver;
+    public double y;
+    public WWidget parent;
+    public double height;
 
-    public boolean onKeyRepeated(int llllllllllllllllllllIllIlIlllllI, int llllllllllllllllllllIllIlIllllIl) {
+    public boolean onKeyRepeated(int n, int n2) {
         return false;
     }
 
     public double pad() {
-        WWidget llllllllllllllllllllIlllIIllllII;
-        return llllllllllllllllllllIlllIIllllII.theme.pad();
+        return this.theme.pad();
     }
 
     protected void onCalculateSize() {
     }
 
-    public void move(double llllllllllllllllllllIlllIlIIIlIl, double llllllllllllllllllllIlllIlIIIIIl) {
-        WWidget llllllllllllllllllllIlllIlIIIllI;
-        llllllllllllllllllllIlllIlIIIllI.x = Math.round(llllllllllllllllllllIlllIlIIIllI.x + llllllllllllllllllllIlllIlIIIlIl);
-        llllllllllllllllllllIlllIlIIIllI.y = Math.round(llllllllllllllllllllIlllIlIIIllI.y + llllllllllllllllllllIlllIlIIIIIl);
+    public void move(double d, double d2) {
+        this.x = Math.round(this.x + d);
+        this.y = Math.round(this.y + d2);
     }
 
-    public boolean onMouseClicked(double llllllllllllllllllllIlllIIIIlIll, double llllllllllllllllllllIlllIIIIlIlI, int llllllllllllllllllllIlllIIIIlIIl, boolean llllllllllllllllllllIlllIIIIlIII) {
+    public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
         return false;
     }
 
     public void calculateSize() {
-        WWidget llllllllllllllllllllIlllIIllIllI;
-        llllllllllllllllllllIlllIIllIllI.onCalculateSize();
-        double llllllllllllllllllllIlllIIllIlll = llllllllllllllllllllIlllIIllIllI.theme.scale(llllllllllllllllllllIlllIIllIllI.minWidth);
-        if (llllllllllllllllllllIlllIIllIllI.width < llllllllllllllllllllIlllIIllIlll) {
-            llllllllllllllllllllIlllIIllIllI.width = llllllllllllllllllllIlllIIllIlll;
+        this.onCalculateSize();
+        double d = this.theme.scale(this.minWidth);
+        if (this.width < d) {
+            this.width = d;
         }
-        llllllllllllllllllllIlllIIllIllI.width = Math.round(llllllllllllllllllllIlllIIllIllI.width);
-        llllllllllllllllllllIlllIIllIllI.height = Math.round(llllllllllllllllllllIlllIIllIllI.height);
+        this.width = Math.round(this.width);
+        this.height = Math.round(this.height);
     }
 
     public void init() {
     }
 
-    public boolean render(GuiRenderer llllllllllllllllllllIlllIIlIIlII, double llllllllllllllllllllIlllIIlIIIll, double llllllllllllllllllllIlllIIlIIlll, double llllllllllllllllllllIlllIIlIIIIl) {
-        WWidget llllllllllllllllllllIlllIIlIlIlI;
-        if (!llllllllllllllllllllIlllIIlIlIlI.visible) {
+    public boolean render(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        if (!this.visible) {
             return true;
         }
-        if (llllllllllllllllllllIlllIIlIlIlI.isOver(llllllllllllllllllllIlllIIlIIIll, llllllllllllllllllllIlllIIlIIlll)) {
-            llllllllllllllllllllIlllIIlIlIlI.mouseOverTimer += llllllllllllllllllllIlllIIlIIIIl;
-            if (llllllllllllllllllllIlllIIlIlIlI.mouseOverTimer >= 1.0 && llllllllllllllllllllIlllIIlIlIlI.tooltip != null) {
-                llllllllllllllllllllIlllIIlIIlII.tooltip(llllllllllllllllllllIlllIIlIlIlI.tooltip);
+        if (this.isOver(d, d2)) {
+            this.mouseOverTimer += d3;
+            if (this.mouseOverTimer >= 1.0 && this.tooltip != null) {
+                guiRenderer.tooltip(this.tooltip);
             }
         } else {
-            llllllllllllllllllllIlllIIlIlIlI.mouseOverTimer = 0.0;
+            this.mouseOverTimer = 0.0;
         }
-        llllllllllllllllllllIlllIIlIlIlI.onRender(llllllllllllllllllllIlllIIlIIlII, llllllllllllllllllllIlllIIlIIIll, llllllllllllllllllllIlllIIlIIlll, llllllllllllllllllllIlllIIlIIIIl);
+        this.onRender(guiRenderer, d, d2, d3);
         return false;
     }
 
-    public boolean mouseReleased(double llllllllllllllllllllIlllIIIIIIlI, double llllllllllllllllllllIlllIIIIIIIl, int llllllllllllllllllllIllIllllllII) {
-        WWidget llllllllllllllllllllIllIllllllll;
-        return llllllllllllllllllllIllIllllllll.onMouseReleased(llllllllllllllllllllIlllIIIIIIlI, llllllllllllllllllllIlllIIIIIIIl, llllllllllllllllllllIllIllllllII);
+    public boolean mouseReleased(double d, double d2, int n) {
+        return this.onMouseReleased(d, d2, n);
     }
 
-    public void onMouseScrolled(double llllllllllllllllllllIllIllIlllII) {
+    public void onMouseScrolled(double d) {
     }
 
-    public boolean keyRepeated(int llllllllllllllllllllIllIllIIlIII, int llllllllllllllllllllIllIllIIIIll) {
-        WWidget llllllllllllllllllllIllIllIIlIIl;
-        return llllllllllllllllllllIllIllIIlIIl.onKeyRepeated(llllllllllllllllllllIllIllIIlIII, llllllllllllllllllllIllIllIIIIll);
+    public boolean keyRepeated(int n, int n2) {
+        return this.onKeyRepeated(n, n2);
     }
 
-    public boolean onMouseReleased(double llllllllllllllllllllIllIlllllIlI, double llllllllllllllllllllIllIlllllIIl, int llllllllllllllllllllIllIlllllIII) {
+    public boolean onMouseReleased(double d, double d2, int n) {
         return false;
     }
 
-    public boolean keyPressed(int llllllllllllllllllllIllIllIlIlII, int llllllllllllllllllllIllIllIlIllI) {
-        WWidget llllllllllllllllllllIllIllIllIII;
-        return llllllllllllllllllllIllIllIllIII.onKeyPressed(llllllllllllllllllllIllIllIlIlII, llllllllllllllllllllIllIllIlIllI);
+    public boolean keyPressed(int n, int n2) {
+        return this.onKeyPressed(n, n2);
     }
 
     protected WWidget getRoot() {
-        WWidget llllllllllllllllllllIllIlIIlllll;
-        return llllllllllllllllllllIllIlIIlllll.parent != null ? llllllllllllllllllllIllIlIIlllll.parent.getRoot() : (llllllllllllllllllllIllIlIIlllll instanceof WRoot ? llllllllllllllllllllIllIlIIlllll : null);
+        return this.parent != null ? this.parent.getRoot() : (this instanceof WRoot ? this : null);
     }
 
-    public boolean onCharTyped(char llllllllllllllllllllIllIlIlIllll) {
+    public boolean onCharTyped(char c) {
         return false;
     }
 
-    public boolean mouseClicked(double llllllllllllllllllllIlllIIIlIIII, double llllllllllllllllllllIlllIIIlIlII, int llllllllllllllllllllIlllIIIlIIll, boolean llllllllllllllllllllIlllIIIlIIlI) {
-        WWidget llllllllllllllllllllIlllIIIlIIIl;
-        return llllllllllllllllllllIlllIIIlIIIl.onMouseClicked(llllllllllllllllllllIlllIIIlIIII, llllllllllllllllllllIlllIIIlIlII, llllllllllllllllllllIlllIIIlIIll, llllllllllllllllllllIlllIIIlIIlI);
+    public boolean mouseClicked(double d, double d2, int n, boolean bl) {
+        return this.onMouseClicked(d, d2, n, bl);
     }
 
-    protected void onRender(GuiRenderer llllllllllllllllllllIlllIIIlllll, double llllllllllllllllllllIlllIIIllllI, double llllllllllllllllllllIlllIIIlllIl, double llllllllllllllllllllIlllIIIlllII) {
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
     }
 
-    public boolean onKeyPressed(int llllllllllllllllllllIllIllIlIIII, int llllllllllllllllllllIllIllIIlllI) {
+    public boolean onKeyPressed(int n, int n2) {
         return false;
     }
 
-    public void mouseScrolled(double llllllllllllllllllllIllIllIllllI) {
-        WWidget llllllllllllllllllllIllIlllIIIIl;
-        llllllllllllllllllllIllIlllIIIIl.onMouseScrolled(llllllllllllllllllllIllIllIllllI);
+    public void mouseScrolled(double d) {
+        this.onMouseScrolled(d);
     }
 
-    public void onMouseMoved(double llllllllllllllllllllIllIlllIIlll, double llllllllllllllllllllIllIlllIIllI, double llllllllllllllllllllIllIlllIIlIl, double llllllllllllllllllllIllIlllIIlII) {
+    public void onMouseMoved(double d, double d2, double d3, double d4) {
     }
 
     protected void onCalculateWidgetPositions() {
     }
 
     public void invalidate() {
-        WWidget llllllllllllllllllllIllIlIlIlIIl;
-        WWidget llllllllllllllllllllIllIlIlIlIll = llllllllllllllllllllIllIlIlIlIIl.getRoot();
-        if (llllllllllllllllllllIllIlIlIlIll != null) {
-            llllllllllllllllllllIllIlIlIlIll.invalidate();
+        WWidget wWidget = this.getRoot();
+        if (wWidget != null) {
+            wWidget.invalidate();
         }
     }
 
-    public boolean isOver(double llllllllllllllllllllIllIlIIlIlII, double llllllllllllllllllllIllIlIIlIIII) {
-        WWidget llllllllllllllllllllIllIlIIlIIlI;
-        return llllllllllllllllllllIllIlIIlIlII >= llllllllllllllllllllIllIlIIlIIlI.x && llllllllllllllllllllIllIlIIlIlII <= llllllllllllllllllllIllIlIIlIIlI.x + llllllllllllllllllllIllIlIIlIIlI.width && llllllllllllllllllllIllIlIIlIIII >= llllllllllllllllllllIllIlIIlIIlI.y && llllllllllllllllllllIllIlIIlIIII <= llllllllllllllllllllIllIlIIlIIlI.y + llllllllllllllllllllIllIlIIlIIlI.height;
+    public boolean isOver(double d, double d2) {
+        return d >= this.x && d <= this.x + this.width && d2 >= this.y && d2 <= this.y + this.height;
     }
 
     @Override
     public GuiTheme getTheme() {
-        WWidget llllllllllllllllllllIlllIIllllll;
-        return llllllllllllllllllllIlllIIllllll.theme;
+        return this.theme;
     }
 
-    public boolean charTyped(char llllllllllllllllllllIllIlIllIIIl) {
-        WWidget llllllllllllllllllllIllIlIllIlII;
-        return llllllllllllllllllllIllIlIllIlII.onCharTyped(llllllllllllllllllllIllIlIllIIIl);
+    public boolean charTyped(char c) {
+        return this.onCharTyped(c);
     }
 
-    public WWidget() {
-        WWidget llllllllllllllllllllIlllIlIIllII;
-        llllllllllllllllllllIlllIlIIllII.visible = true;
-    }
-
-    public void mouseMoved(double llllllllllllllllllllIllIllllIIIl, double llllllllllllllllllllIllIllllIIII, double llllllllllllllllllllIllIlllIllll, double llllllllllllllllllllIllIlllIlllI) {
-        WWidget llllllllllllllllllllIllIllllIIlI;
-        llllllllllllllllllllIllIllllIIlI.mouseOver = llllllllllllllllllllIllIllllIIlI.isOver(llllllllllllllllllllIllIllllIIIl, llllllllllllllllllllIllIllllIIII);
-        llllllllllllllllllllIllIllllIIlI.onMouseMoved(llllllllllllllllllllIllIllllIIIl, llllllllllllllllllllIllIllllIIII, llllllllllllllllllllIllIlllIllll, llllllllllllllllllllIllIlllIlllI);
+    public void mouseMoved(double d, double d2, double d3, double d4) {
+        this.mouseOver = this.isOver(d, d2);
+        this.onMouseMoved(d, d2, d3, d4);
     }
 
     public void calculateWidgetPositions() {
-        WWidget llllllllllllllllllllIlllIIllIIIl;
-        llllllllllllllllllllIlllIIllIIIl.x = Math.round(llllllllllllllllllllIlllIIllIIIl.x);
-        llllllllllllllllllllIlllIIllIIIl.y = Math.round(llllllllllllllllllllIlllIIllIIIl.y);
-        llllllllllllllllllllIlllIIllIIIl.onCalculateWidgetPositions();
+        this.x = Math.round(this.x);
+        this.y = Math.round(this.y);
+        this.onCalculateWidgetPositions();
     }
 }
 

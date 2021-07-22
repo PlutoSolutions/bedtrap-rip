@@ -16,17 +16,15 @@ public class AutoRespawn
 extends Module {
     public AutoRespawn() {
         super(Categories.Player, "auto-respawn", "Automatically respawns after death.");
-        AutoRespawn llllllllllllllllIlIlIllIlIllIllI;
     }
 
     @EventHandler
-    private void onOpenScreenEvent(OpenScreenEvent llllllllllllllllIlIlIllIlIllIIII) {
-        AutoRespawn llllllllllllllllIlIlIllIlIllIIll;
-        if (!(llllllllllllllllIlIlIllIlIllIIII.screen instanceof class_418)) {
+    private void onOpenScreenEvent(OpenScreenEvent openScreenEvent) {
+        if (!(openScreenEvent.screen instanceof class_418)) {
             return;
         }
-        llllllllllllllllIlIlIllIlIllIIll.mc.field_1724.method_7331();
-        llllllllllllllllIlIlIllIlIllIIII.cancel();
+        this.mc.field_1724.method_7331();
+        openScreenEvent.cancel();
     }
 }
 

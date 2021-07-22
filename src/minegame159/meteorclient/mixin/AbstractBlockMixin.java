@@ -32,19 +32,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_4970.class})
 public class AbstractBlockMixin {
     @Inject(method={"getAmbientOcclusionLightLevel"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetAmbientOcclusionLightLevel(class_2680 state, class_1922 world, class_2338 pos, CallbackInfoReturnable<Float> info) {
-        AmbientOcclusionEvent event = MeteorClient.EVENT_BUS.post(AmbientOcclusionEvent.get());
-        if (event.lightLevel != -1.0f) {
-            info.setReturnValue((Object)Float.valueOf(event.lightLevel));
+    private void onGetAmbientOcclusionLightLevel(class_2680 class_26802, class_1922 class_19222, class_2338 class_23382, CallbackInfoReturnable<Float> callbackInfoReturnable) {
+        AmbientOcclusionEvent ambientOcclusionEvent = MeteorClient.EVENT_BUS.post(AmbientOcclusionEvent.get());
+        if (ambientOcclusionEvent.lightLevel != -1.0f) {
+            callbackInfoReturnable.setReturnValue((Object)Float.valueOf(ambientOcclusionEvent.lightLevel));
         }
     }
 
     @Inject(method={"getCollisionShape"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetCollisionShape(class_2680 state, class_1922 view, class_2338 pos, class_3726 context, CallbackInfoReturnable<class_265> info) {
-        if (!state.method_26227().method_15769()) {
-            FluidCollisionShapeEvent event = MeteorClient.EVENT_BUS.post(FluidCollisionShapeEvent.get(state.method_26227().method_15759()));
-            if (event.shape != null) {
-                info.setReturnValue((Object)event.shape);
+    private void onGetCollisionShape(class_2680 class_26802, class_1922 class_19222, class_2338 class_23382, class_3726 class_37262, CallbackInfoReturnable<class_265> callbackInfoReturnable) {
+        if (!class_26802.method_26227().method_15769()) {
+            FluidCollisionShapeEvent fluidCollisionShapeEvent = MeteorClient.EVENT_BUS.post(FluidCollisionShapeEvent.get(class_26802.method_26227().method_15759()));
+            if (fluidCollisionShapeEvent.shape != null) {
+                callbackInfoReturnable.setReturnValue((Object)fluidCollisionShapeEvent.shape);
             }
         }
     }

@@ -24,28 +24,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value={class_128.class})
 public class CrashReportMixin {
     @Inject(method={"addStackTrace"}, at={@At(value="TAIL")})
-    private void onAddStackTrace(StringBuilder sb, CallbackInfo info) {
+    private void onAddStackTrace(StringBuilder stringBuilder, CallbackInfo callbackInfo) {
         if (Modules.get() != null) {
-            sb.append("\n\n");
-            sb.append("-- Meteor Client --\n");
-            sb.append("Version: ").append(Config.get().version.getOriginalString()).append("\n");
+            stringBuilder.append("\n\n");
+            stringBuilder.append("-- Meteor Client --\n");
+            stringBuilder.append("Version: ").append(Config.get().version.getOriginalString()).append("\n");
             if (!Config.get().devBuild.isEmpty()) {
-                sb.append("Dev Build: ").append(Config.get().devBuild).append("\n");
+                stringBuilder.append("Dev Build: ").append(Config.get().devBuild).append("\n");
             }
             for (Category category : Modules.loopCategories()) {
-                List<Module> modules = Modules.get().getGroup(category);
-                boolean active = false;
-                for (Module module : modules) {
+                List<Module> list = Modules.get().getGroup(category);
+                boolean bl = false;
+                for (Module module : list) {
                     if (!(module instanceof Module) || !module.isActive()) continue;
-                    active = true;
+                    bl = true;
                     break;
                 }
-                if (!active) continue;
-                sb.append("\n");
-                sb.append("[").append(category).append("]:").append("\n");
-                for (Module module : modules) {
+                if (!bl) continue;
+                stringBuilder.append("\n");
+                stringBuilder.append("[").append(category).append("]:").append("\n");
+                for (Module module : list) {
                     if (!(module instanceof Module) || !module.isActive()) continue;
-                    sb.append(module.title).append(" (").append(module.name).append(")\n");
+                    stringBuilder.append(module.title).append(" (").append(module.name).append(")\n");
                 }
             }
         }

@@ -11,21 +11,13 @@ import net.minecraft.class_437;
 
 public class OpenScreenEvent
 extends Cancellable {
-    private static final /* synthetic */ OpenScreenEvent INSTANCE;
-    public /* synthetic */ class_437 screen;
+    private static final OpenScreenEvent INSTANCE = new OpenScreenEvent();
+    public class_437 screen;
 
-    public static OpenScreenEvent get(class_437 lIllIlIIlIlIIIl) {
+    public static OpenScreenEvent get(class_437 class_4372) {
         INSTANCE.setCancelled(false);
-        OpenScreenEvent.INSTANCE.screen = lIllIlIIlIlIIIl;
+        OpenScreenEvent.INSTANCE.screen = class_4372;
         return INSTANCE;
-    }
-
-    public OpenScreenEvent() {
-        OpenScreenEvent lIllIlIIlIlIlIl;
-    }
-
-    static {
-        INSTANCE = new OpenScreenEvent();
     }
 }
 

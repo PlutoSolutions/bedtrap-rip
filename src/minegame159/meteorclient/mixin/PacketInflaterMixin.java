@@ -44,31 +44,36 @@ public class PacketInflaterMixin {
     private Inflater field_11622;
 
     @Inject(method={"decode"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onDecode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list, CallbackInfo info) throws DataFormatException {
-        if (!Modules.get().isActive(AntiPacketKick.class)) {
-            return;
-        }
-        info.cancel();
-        if (byteBuf.readableBytes() != 0) {
-            class_2540 packetByteBuf = new class_2540(byteBuf);
-            int i = packetByteBuf.method_10816();
-            if (i == 0) {
-                list.add((Object)packetByteBuf.readBytes(packetByteBuf.readableBytes()));
-            } else {
-                if (i < this.field_11623) {
-                    throw new DecoderException("Badly compressed packet - size of " + i + " is below server threshold of " + this.field_11623);
+    private void onDecode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list, CallbackInfo callbackInfo) throws DataFormatException {
+        block3: {
+            int n;
+            class_2540 class_25402;
+            block4: {
+                block2: {
+                    if (!Modules.get().isActive(AntiPacketKick.class)) break block2;
+                    callbackInfo.cancel();
+                    if (byteBuf.readableBytes() == 0) break block3;
+                    class_25402 = new class_2540(byteBuf);
+                    n = class_25402.method_10816();
+                    if (n != 0) break block4;
+                    list.add((Object)class_25402.readBytes(class_25402.readableBytes()));
+                    break block3;
                 }
-                if (i > 0x200000) {
-                    throw new DecoderException("Badly compressed packet - size of " + i + " is larger than protocol maximum of " + 0x200000);
-                }
-                byte[] bs = new byte[packetByteBuf.readableBytes()];
-                packetByteBuf.readBytes(bs);
-                this.field_11622.setInput(bs);
-                byte[] cs = new byte[i];
-                this.field_11622.inflate(cs);
-                list.add((Object)Unpooled.wrappedBuffer((byte[])cs));
-                this.field_11622.reset();
+                return;
             }
+            if (n < this.field_11623) {
+                throw new DecoderException("Badly compressed packet - size of " + n + " is below server threshold of " + this.field_11623);
+            }
+            if (n > 0x200000) {
+                throw new DecoderException("Badly compressed packet - size of " + n + " is larger than protocol maximum of " + 0x200000);
+            }
+            byte[] arrby = new byte[class_25402.readableBytes()];
+            class_25402.readBytes(arrby);
+            this.field_11622.setInput(arrby);
+            byte[] arrby2 = new byte[n];
+            this.field_11622.inflate(arrby2);
+            list.add((Object)Unpooled.wrappedBuffer((byte[])arrby2));
+            this.field_11622.reset();
         }
     }
 }

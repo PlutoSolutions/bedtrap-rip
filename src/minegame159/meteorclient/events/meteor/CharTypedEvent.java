@@ -7,20 +7,12 @@ import minegame159.meteorclient.events.Cancellable;
 
 public class CharTypedEvent
 extends Cancellable {
-    public /* synthetic */ char c;
-    private static final /* synthetic */ CharTypedEvent INSTANCE;
+    public char c;
+    private static final CharTypedEvent INSTANCE = new CharTypedEvent();
 
-    public CharTypedEvent() {
-        CharTypedEvent lllllllllllllllllIIllllllIlIlIll;
-    }
-
-    static {
-        INSTANCE = new CharTypedEvent();
-    }
-
-    public static CharTypedEvent get(char lllllllllllllllllIIllllllIlIlIIl) {
+    public static CharTypedEvent get(char c) {
         INSTANCE.setCancelled(false);
-        CharTypedEvent.INSTANCE.c = lllllllllllllllllIIllllllIlIlIIl;
+        CharTypedEvent.INSTANCE.c = c;
         return INSTANCE;
     }
 }

@@ -22,32 +22,29 @@ import net.minecraft.class_1935;
 
 public class TotemHud
 extends HudElement {
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Double> scale;
+    private final SettingGroup sgGeneral;
+    private final Setting<Double> scale;
 
     @Override
-    public void render(HudRenderer llllllllllllllllIlIlllllIIlIlllI) {
-        TotemHud llllllllllllllllIlIlllllIIlIlIll;
-        double llllllllllllllllIlIlllllIIlIllIl = llllllllllllllllIlIlllllIIlIlIll.box.getX();
-        double llllllllllllllllIlIlllllIIlIllII = llllllllllllllllIlIlllllIIlIlIll.box.getY();
-        if (llllllllllllllllIlIlllllIIlIlIll.isInEditor()) {
-            RenderUtils.drawItem(class_1802.field_8288.method_7854(), (int)llllllllllllllllIlIlllllIIlIllIl, (int)llllllllllllllllIlIlllllIIlIllII, llllllllllllllllIlIlllllIIlIlIll.scale.get(), true);
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX();
+        double d2 = this.box.getY();
+        if (this.isInEditor()) {
+            RenderUtils.drawItem(class_1802.field_8288.method_7854(), (int)d, (int)d2, this.scale.get(), true);
         } else if (InvUtils.find(class_1802.field_8288).getCount() > 0) {
-            RenderUtils.drawItem(new class_1799((class_1935)class_1802.field_8288, InvUtils.find(class_1802.field_8288).getCount()), (int)llllllllllllllllIlIlllllIIlIllIl, (int)llllllllllllllllIlIlllllIIlIllII, llllllllllllllllIlIlllllIIlIlIll.scale.get(), true);
+            RenderUtils.drawItem(new class_1799((class_1935)class_1802.field_8288, InvUtils.find(class_1802.field_8288).getCount()), (int)d, (int)d2, this.scale.get(), true);
         }
     }
 
     @Override
-    public void update(HudRenderer llllllllllllllllIlIlllllIIllIlII) {
-        TotemHud llllllllllllllllIlIlllllIIllIlIl;
-        llllllllllllllllIlIlllllIIllIlIl.box.setSize(16.0 * llllllllllllllllIlIlllllIIllIlIl.scale.get(), 16.0 * llllllllllllllllIlIlllllIIllIlIl.scale.get());
+    public void update(HudRenderer hudRenderer) {
+        this.box.setSize(16.0 * this.scale.get(), 16.0 * this.scale.get());
     }
 
-    public TotemHud(HUD llllllllllllllllIlIlllllIIllIlll) {
-        super(llllllllllllllllIlIlllllIIllIlll, "totems", "Displays the amount of totems in your inventory.", false);
-        TotemHud llllllllllllllllIlIlllllIIlllIII;
-        llllllllllllllllIlIlllllIIlllIII.sgGeneral = llllllllllllllllIlIlllllIIlllIII.settings.getDefaultGroup();
-        llllllllllllllllIlIlllllIIlllIII.scale = llllllllllllllllIlIlllllIIlllIII.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of totem counter.").defaultValue(3.0).min(1.0).sliderMin(1.0).sliderMax(4.0).build());
+    public TotemHud(HUD hUD) {
+        super(hUD, "totems", "Displays the amount of totems in your inventory.", false);
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of totem counter.").defaultValue(3.0).min(1.0).sliderMin(1.0).sliderMax(4.0).build());
     }
 }
 

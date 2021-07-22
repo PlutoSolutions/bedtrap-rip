@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,65 +30,70 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class NativeLibrary {
-    final /* synthetic */ int callFlags;
-    private static final /* synthetic */ List<String> librarySearchPath;
-    final /* synthetic */ Map<String, ?> options;
-    private static final /* synthetic */ int DEFAULT_OPEN_OPTIONS;
-    private final /* synthetic */ Map<String, Function> functions;
-    private final /* synthetic */ String libraryName;
-    private static final /* synthetic */ Map<String, List<String>> searchPaths;
-    private /* synthetic */ String encoding;
-    private /* synthetic */ long handle;
-    private final /* synthetic */ String libraryPath;
-    private static final /* synthetic */ Map<String, Reference<NativeLibrary>> libraries;
+    final int callFlags;
+    private static final List<String> librarySearchPath;
+    final Map<String, ?> options;
+    private static final int DEFAULT_OPEN_OPTIONS;
+    private final Map<String, Function> functions = new HashMap<String, Function>();
+    private final String libraryName;
+    private static final Map<String, List<String>> searchPaths;
+    private String encoding;
+    private long handle;
+    private final String libraryPath;
+    private static final Map<String, Reference<NativeLibrary>> libraries;
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    public Function getFunction(String llllllllllllllllIllIllIlIIllllIl, int llllllllllllllllIllIllIlIIlllIII, String llllllllllllllllIllIllIlIIllIlll) {
-        NativeLibrary llllllllllllllllIllIllIlIIlllIlI;
-        if (llllllllllllllllIllIllIlIIllllIl == null) {
+    public Function getFunction(String string, int n, String string2) {
+        if (string == null) {
             throw new NullPointerException("Function name may not be null");
         }
-        Map<String, Function> llllllllllllllllIllIllIlIIllIllI = llllllllllllllllIllIllIlIIlllIlI.functions;
-        synchronized (llllllllllllllllIllIllIlIIllIllI) {
-            String llllllllllllllllIllIllIlIlIIIIII = NativeLibrary.functionKey(llllllllllllllllIllIllIlIIllllIl, llllllllllllllllIllIllIlIIlllIII, llllllllllllllllIllIllIlIIllIlll);
-            Function llllllllllllllllIllIllIlIIllllll = llllllllllllllllIllIllIlIIlllIlI.functions.get(llllllllllllllllIllIllIlIlIIIIII);
-            if (llllllllllllllllIllIllIlIIllllll == null) {
-                llllllllllllllllIllIllIlIIllllll = new Function(llllllllllllllllIllIllIlIIlllIlI, llllllllllllllllIllIllIlIIllllIl, llllllllllllllllIllIllIlIIlllIII, llllllllllllllllIllIllIlIIllIlll);
-                llllllllllllllllIllIllIlIIlllIlI.functions.put(llllllllllllllllIllIllIlIlIIIIII, llllllllllllllllIllIllIlIIllllll);
+        Map<String, Function> map = this.functions;
+        synchronized (map) {
+            String string3 = NativeLibrary.functionKey(string, n, string2);
+            Function function = this.functions.get(string3);
+            if (function == null) {
+                function = new Function(this, string, n, string2);
+                this.functions.put(string3, function);
             }
-            return llllllllllllllllIllIllIlIIllllll;
+            return function;
         }
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
-     * WARNING - void declaration
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
     static void disposeAll() {
-        void llllllllllllllllIllIllIlIIIIllIl;
-        Map<String, Reference<NativeLibrary>> llllllllllllllllIllIllIlIIIIlIll = libraries;
-        synchronized (llllllllllllllllIllIllIlIIIIlIll) {
-            LinkedHashSet<Reference<NativeLibrary>> llllllllllllllllIllIllIlIIIlIIII = new LinkedHashSet<Reference<NativeLibrary>>(libraries.values());
+        LinkedHashSet<Reference<NativeLibrary>> linkedHashSet;
+        Object object = libraries;
+        synchronized (object) {
+            linkedHashSet = new LinkedHashSet<Reference<NativeLibrary>>(libraries.values());
         }
-        for (Reference llllllllllllllllIllIllIlIIIIlllI : llllllllllllllllIllIllIlIIIIllIl) {
-            NativeLibrary llllllllllllllllIllIllIlIIIIllll = (NativeLibrary)llllllllllllllllIllIllIlIIIIlllI.get();
-            if (llllllllllllllllIllIllIlIIIIllll == null) continue;
-            llllllllllllllllIllIllIlIIIIllll.dispose();
+        object = linkedHashSet.iterator();
+        while (object.hasNext()) {
+            Reference reference = (Reference)object.next();
+            NativeLibrary nativeLibrary = (NativeLibrary)reference.get();
+            if (nativeLibrary == null) continue;
+            nativeLibrary.dispose();
         }
+        return;
     }
 
-    public static final NativeLibrary getInstance(String llllllllllllllllIllIllIllIIllIIl, ClassLoader llllllllllllllllIllIllIllIIlIllI) {
-        return NativeLibrary.getInstance(llllllllllllllllIllIllIllIIllIIl, Collections.singletonMap("classloader", llllllllllllllllIllIllIllIIlIllI));
+    public static final NativeLibrary getInstance(String string, ClassLoader classLoader) {
+        return NativeLibrary.getInstance(string, Collections.singletonMap("classloader", classLoader));
     }
 
-    private static boolean isVersionedName(String llllllllllllllllIllIllIIllIIIllI) {
-        int llllllllllllllllIllIllIIllIIIlll;
-        if (llllllllllllllllIllIllIIllIIIllI.startsWith("lib") && (llllllllllllllllIllIllIIllIIIlll = llllllllllllllllIllIllIIllIIIllI.lastIndexOf(".so.")) != -1 && llllllllllllllllIllIllIIllIIIlll + 4 < llllllllllllllllIllIllIIllIIIllI.length()) {
-            for (int llllllllllllllllIllIllIIllIIlIII = llllllllllllllllIllIllIIllIIIlll + 4; llllllllllllllllIllIllIIllIIlIII < llllllllllllllllIllIllIIllIIIllI.length(); ++llllllllllllllllIllIllIIllIIlIII) {
-                char llllllllllllllllIllIllIIllIIlIIl = llllllllllllllllIllIllIIllIIIllI.charAt(llllllllllllllllIllIllIIllIIlIII);
-                if (Character.isDigit(llllllllllllllllIllIllIIllIIlIIl) || llllllllllllllllIllIllIIllIIlIIl == '.') continue;
+    private static boolean isVersionedName(String string) {
+        int n;
+        if (string.startsWith("lib") && (n = string.lastIndexOf(".so.")) != -1 && n + 4 < string.length()) {
+            for (int i = n + 4; i < string.length(); ++i) {
+                char c = string.charAt(i);
+                if (Character.isDigit(c) || c == '.') continue;
                 return false;
             }
             return true;
@@ -95,585 +101,604 @@ public class NativeLibrary {
         return false;
     }
 
-    public static final NativeLibrary getInstance(String llllllllllllllllIllIllIllIIlllIl) {
-        return NativeLibrary.getInstance(llllllllllllllllIllIllIllIIlllIl, Collections.emptyMap());
+    public static final NativeLibrary getInstance(String string) {
+        return NativeLibrary.getInstance(string, Collections.emptyMap());
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    private static NativeLibrary loadLibrary(String llllllllllllllllIllIllIlllIllIll, Map<String, ?> llllllllllllllllIllIllIlllIlIIIl) {
-        long llllllllllllllllIllIllIlllIlIIll;
-        String llllllllllllllllIllIllIlllIlIlII;
-        block51: {
-            List<String> llllllllllllllllIllIllIlllIlIlIl;
+    private static NativeLibrary loadLibrary(String string, Map<String, ?> map) {
+        long l;
+        Object object;
+        block50: {
+            List<String> list;
             if (Native.DEBUG_LOAD) {
-                System.out.println(String.valueOf(new StringBuilder().append("Looking for library '").append(llllllllllllllllIllIllIlllIllIll).append("'")));
+                System.out.println(String.valueOf(new StringBuilder().append("Looking for library '").append(string).append("'")));
             }
-            boolean llllllllllllllllIllIllIlllIllIIl = new File(llllllllllllllllIllIllIlllIllIll).isAbsolute();
-            ArrayList<String> llllllllllllllllIllIllIlllIllIII = new ArrayList<String>();
-            int llllllllllllllllIllIllIlllIlIlll = NativeLibrary.openFlags(llllllllllllllllIllIllIlllIlIIIl);
-            String llllllllllllllllIllIllIlllIlIllI = Native.getWebStartLibraryPath(llllllllllllllllIllIllIlllIllIll);
-            if (llllllllllllllllIllIllIlllIlIllI != null) {
+            boolean bl = new File(string).isAbsolute();
+            ArrayList<String> arrayList = new ArrayList<String>();
+            int n = NativeLibrary.openFlags(map);
+            String string2 = Native.getWebStartLibraryPath(string);
+            if (string2 != null) {
                 if (Native.DEBUG_LOAD) {
-                    System.out.println(String.valueOf(new StringBuilder().append("Adding web start path ").append(llllllllllllllllIllIllIlllIlIllI)));
+                    System.out.println(String.valueOf(new StringBuilder().append("Adding web start path ").append(string2)));
                 }
-                llllllllllllllllIllIllIlllIllIII.add(llllllllllllllllIllIllIlllIlIllI);
+                arrayList.add(string2);
             }
-            if ((llllllllllllllllIllIllIlllIlIlIl = searchPaths.get(llllllllllllllllIllIllIlllIllIll)) != null) {
-                List<String> llllllllllllllllIllIllIlllIIlIll = llllllllllllllllIllIllIlllIlIlIl;
-                synchronized (llllllllllllllllIllIllIlllIIlIll) {
-                    llllllllllllllllIllIllIlllIllIII.addAll(0, llllllllllllllllIllIllIlllIlIlIl);
+            if ((list = searchPaths.get(string)) != null) {
+                object = list;
+                synchronized (object) {
+                    arrayList.addAll(0, list);
                 }
             }
             if (Native.DEBUG_LOAD) {
                 System.out.println(String.valueOf(new StringBuilder().append("Adding paths from jna.library.path: ").append(System.getProperty("jna.library.path"))));
             }
-            llllllllllllllllIllIllIlllIllIII.addAll(NativeLibrary.initPaths("jna.library.path"));
-            llllllllllllllllIllIllIlllIlIlII = NativeLibrary.findLibraryPath(llllllllllllllllIllIllIlllIllIll, llllllllllllllllIllIllIlllIllIII);
-            llllllllllllllllIllIllIlllIlIIll = 0L;
+            arrayList.addAll(NativeLibrary.initPaths("jna.library.path"));
+            object = NativeLibrary.findLibraryPath(string, arrayList);
+            l = 0L;
             try {
                 if (Native.DEBUG_LOAD) {
-                    System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIllIllIlllIlIlII)));
+                    System.out.println(String.valueOf(new StringBuilder().append("Trying ").append((String)object)));
                 }
-                llllllllllllllllIllIllIlllIlIIll = Native.open(llllllllllllllllIllIllIlllIlIlII, llllllllllllllllIllIllIlllIlIlll);
+                l = Native.open((String)object, n);
             }
-            catch (UnsatisfiedLinkError llllllllllllllllIllIllIllllIIIll) {
+            catch (UnsatisfiedLinkError unsatisfiedLinkError) {
                 if (Native.DEBUG_LOAD) {
                     System.out.println(String.valueOf(new StringBuilder().append("Adding system paths: ").append(librarySearchPath)));
                 }
-                llllllllllllllllIllIllIlllIllIII.addAll(librarySearchPath);
+                arrayList.addAll(librarySearchPath);
             }
             try {
-                if (llllllllllllllllIllIllIlllIlIIll == 0L) {
-                    llllllllllllllllIllIllIlllIlIlII = NativeLibrary.findLibraryPath(llllllllllllllllIllIllIlllIllIll, llllllllllllllllIllIllIlllIllIII);
+                if (l == 0L) {
+                    object = NativeLibrary.findLibraryPath(string, arrayList);
                     if (Native.DEBUG_LOAD) {
-                        System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIllIllIlllIlIlII)));
+                        System.out.println(String.valueOf(new StringBuilder().append("Trying ").append((String)object)));
                     }
-                    if ((llllllllllllllllIllIllIlllIlIIll = Native.open(llllllllllllllllIllIllIlllIlIlII, llllllllllllllllIllIllIlllIlIlll)) == 0L) {
-                        throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Failed to load library '").append(llllllllllllllllIllIllIlllIllIll).append("'")));
+                    if ((l = Native.open((String)object, n)) == 0L) {
+                        throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Failed to load library '").append(string).append("'")));
                     }
                 }
             }
-            catch (UnsatisfiedLinkError llllllllllllllllIllIllIlllIlllII) {
+            catch (UnsatisfiedLinkError unsatisfiedLinkError) {
+                UnsatisfiedLinkError unsatisfiedLinkError2;
                 if (Platform.isAndroid()) {
                     try {
                         if (Native.DEBUG_LOAD) {
-                            System.out.println(String.valueOf(new StringBuilder().append("Preload (via System.loadLibrary) ").append(llllllllllllllllIllIllIlllIllIll)));
+                            System.out.println(String.valueOf(new StringBuilder().append("Preload (via System.loadLibrary) ").append(string)));
                         }
-                        System.loadLibrary(llllllllllllllllIllIllIlllIllIll);
-                        llllllllllllllllIllIllIlllIlIIll = Native.open(llllllllllllllllIllIllIlllIlIlII, llllllllllllllllIllIllIlllIlIlll);
+                        System.loadLibrary(string);
+                        l = Native.open((String)object, n);
                     }
-                    catch (UnsatisfiedLinkError llllllllllllllllIllIllIllllIIIlI) {
-                        llllllllllllllllIllIllIlllIlllII = llllllllllllllllIllIllIllllIIIlI;
+                    catch (UnsatisfiedLinkError unsatisfiedLinkError3) {
+                        unsatisfiedLinkError2 = unsatisfiedLinkError3;
                     }
                 } else if (Platform.isLinux() || Platform.isFreeBSD()) {
                     if (Native.DEBUG_LOAD) {
                         System.out.println("Looking for version variants");
                     }
-                    if ((llllllllllllllllIllIllIlllIlIlII = NativeLibrary.matchLibrary(llllllllllllllllIllIllIlllIllIll, llllllllllllllllIllIllIlllIllIII)) != null) {
+                    if ((object = NativeLibrary.matchLibrary(string, arrayList)) != null) {
                         if (Native.DEBUG_LOAD) {
-                            System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIllIllIlllIlIlII)));
+                            System.out.println(String.valueOf(new StringBuilder().append("Trying ").append((String)object)));
                         }
                         try {
-                            llllllllllllllllIllIllIlllIlIIll = Native.open(llllllllllllllllIllIllIlllIlIlII, llllllllllllllllIllIllIlllIlIlll);
+                            l = Native.open((String)object, n);
                         }
-                        catch (UnsatisfiedLinkError llllllllllllllllIllIllIllllIIIIl) {
-                            llllllllllllllllIllIllIlllIlllII = llllllllllllllllIllIllIllllIIIIl;
+                        catch (UnsatisfiedLinkError unsatisfiedLinkError4) {
+                            unsatisfiedLinkError2 = unsatisfiedLinkError4;
                         }
                     }
-                } else if (Platform.isMac() && !llllllllllllllllIllIllIlllIllIll.endsWith(".dylib")) {
+                } else if (Platform.isMac() && !string.endsWith(".dylib")) {
                     if (Native.DEBUG_LOAD) {
                         System.out.println("Looking for matching frameworks");
                     }
-                    if ((llllllllllllllllIllIllIlllIlIlII = NativeLibrary.matchFramework(llllllllllllllllIllIllIlllIllIll)) != null) {
+                    if ((object = NativeLibrary.matchFramework(string)) != null) {
                         try {
                             if (Native.DEBUG_LOAD) {
-                                System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIllIllIlllIlIlII)));
+                                System.out.println(String.valueOf(new StringBuilder().append("Trying ").append((String)object)));
                             }
-                            llllllllllllllllIllIllIlllIlIIll = Native.open(llllllllllllllllIllIllIlllIlIlII, llllllllllllllllIllIllIlllIlIlll);
+                            l = Native.open((String)object, n);
                         }
-                        catch (UnsatisfiedLinkError llllllllllllllllIllIllIllllIIIII) {
-                            llllllllllllllllIllIllIlllIlllII = llllllllllllllllIllIllIllllIIIII;
+                        catch (UnsatisfiedLinkError unsatisfiedLinkError5) {
+                            unsatisfiedLinkError2 = unsatisfiedLinkError5;
                         }
                     }
-                } else if (Platform.isWindows() && !llllllllllllllllIllIllIlllIllIIl) {
+                } else if (Platform.isWindows() && !bl) {
                     if (Native.DEBUG_LOAD) {
                         System.out.println("Looking for lib- prefix");
                     }
-                    if ((llllllllllllllllIllIllIlllIlIlII = NativeLibrary.findLibraryPath(String.valueOf(new StringBuilder().append("lib").append(llllllllllllllllIllIllIlllIllIll)), llllllllllllllllIllIllIlllIllIII)) != null) {
+                    if ((object = NativeLibrary.findLibraryPath(String.valueOf(new StringBuilder().append("lib").append(string)), arrayList)) != null) {
                         if (Native.DEBUG_LOAD) {
-                            System.out.println(String.valueOf(new StringBuilder().append("Trying ").append(llllllllllllllllIllIllIlllIlIlII)));
+                            System.out.println(String.valueOf(new StringBuilder().append("Trying ").append((String)object)));
                         }
                         try {
-                            llllllllllllllllIllIllIlllIlIIll = Native.open(llllllllllllllllIllIllIlllIlIlII, llllllllllllllllIllIllIlllIlIlll);
+                            l = Native.open((String)object, n);
                         }
-                        catch (UnsatisfiedLinkError llllllllllllllllIllIllIlllIlllll) {
-                            llllllllllllllllIllIllIlllIlllII = llllllllllllllllIllIllIlllIlllll;
+                        catch (UnsatisfiedLinkError unsatisfiedLinkError6) {
+                            unsatisfiedLinkError2 = unsatisfiedLinkError6;
                         }
                     }
                 }
-                if (llllllllllllllllIllIllIlllIlIIll == 0L) {
+                if (l == 0L) {
                     try {
-                        File llllllllllllllllIllIllIlllIllllI = Native.extractFromResourcePath(llllllllllllllllIllIllIlllIllIll, (ClassLoader)llllllllllllllllIllIllIlllIlIIIl.get("classloader"));
+                        File file = Native.extractFromResourcePath(string, (ClassLoader)map.get("classloader"));
                         try {
-                            llllllllllllllllIllIllIlllIlIIll = Native.open(llllllllllllllllIllIllIlllIllllI.getAbsolutePath(), llllllllllllllllIllIllIlllIlIlll);
-                            llllllllllllllllIllIllIlllIlIlII = llllllllllllllllIllIllIlllIllllI.getAbsolutePath();
+                            l = Native.open(file.getAbsolutePath(), n);
+                            object = file.getAbsolutePath();
                         }
                         finally {
-                            if (Native.isUnpacked(llllllllllllllllIllIllIlllIllllI)) {
-                                Native.deleteLibrary(llllllllllllllllIllIllIlllIllllI);
+                            if (Native.isUnpacked(file)) {
+                                Native.deleteLibrary(file);
                             }
                         }
                     }
-                    catch (IOException llllllllllllllllIllIllIlllIlllIl) {
-                        llllllllllllllllIllIllIlllIlllII = new UnsatisfiedLinkError(llllllllllllllllIllIllIlllIlllIl.getMessage());
+                    catch (IOException iOException) {
+                        unsatisfiedLinkError2 = new UnsatisfiedLinkError(iOException.getMessage());
                     }
                 }
-                if (llllllllllllllllIllIllIlllIlIIll != 0L) break block51;
-                throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Unable to load library '").append(llllllllllllllllIllIllIlllIllIll).append("': ").append(llllllllllllllllIllIllIlllIlllII.getMessage())));
+                if (l != 0L) break block50;
+                throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Unable to load library '").append(string).append("': ").append(unsatisfiedLinkError2.getMessage())));
             }
         }
         if (Native.DEBUG_LOAD) {
-            System.out.println(String.valueOf(new StringBuilder().append("Found library '").append(llllllllllllllllIllIllIlllIllIll).append("' at ").append(llllllllllllllllIllIllIlllIlIlII)));
+            System.out.println(String.valueOf(new StringBuilder().append("Found library '").append(string).append("' at ").append((String)object)));
         }
-        return new NativeLibrary(llllllllllllllllIllIllIlllIllIll, llllllllllllllllIllIllIlllIlIlII, llllllllllllllllIllIllIlllIlIIll, llllllllllllllllIllIllIlllIlIIIl);
+        return new NativeLibrary(string, (String)object, l, map);
     }
 
-    public Pointer getGlobalVariableAddress(String llllllllllllllllIllIllIlIIlIlIlI) {
+    public Pointer getGlobalVariableAddress(String string) {
         try {
-            NativeLibrary llllllllllllllllIllIllIlIIlIlIll;
-            return new Pointer(llllllllllllllllIllIllIlIIlIlIll.getSymbolAddress(llllllllllllllllIllIllIlIIlIlIlI));
+            return new Pointer(this.getSymbolAddress(string));
         }
-        catch (UnsatisfiedLinkError llllllllllllllllIllIllIlIIlIllII) {
-            throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Error looking up '").append(llllllllllllllllIllIllIlIIlIlIlI).append("': ").append(llllllllllllllllIllIllIlIIlIllII.getMessage())));
+        catch (UnsatisfiedLinkError unsatisfiedLinkError) {
+            throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Error looking up '").append(string).append("': ").append(unsatisfiedLinkError.getMessage())));
         }
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    public static final void addSearchPath(String llllllllllllllllIllIllIlIlllIllI, String llllllllllllllllIllIllIlIlllIlIl) {
-        Map<String, List<String>> llllllllllllllllIllIllIlIlllIIlI = searchPaths;
-        synchronized (llllllllllllllllIllIllIlIlllIIlI) {
-            List<String> llllllllllllllllIllIllIlIlllIlll = searchPaths.get(llllllllllllllllIllIllIlIlllIllI);
-            if (llllllllllllllllIllIllIlIlllIlll == null) {
-                llllllllllllllllIllIllIlIlllIlll = Collections.synchronizedList(new ArrayList());
-                searchPaths.put(llllllllllllllllIllIllIlIlllIllI, llllllllllllllllIllIllIlIlllIlll);
+    public static final void addSearchPath(String string, String string2) {
+        Map<String, List<String>> map = searchPaths;
+        synchronized (map) {
+            List<String> list = searchPaths.get(string);
+            if (list == null) {
+                list = Collections.synchronizedList(new ArrayList());
+                searchPaths.put(string, list);
             }
-            llllllllllllllllIllIllIlIlllIlll.add(llllllllllllllllIllIllIlIlllIlIl);
+            list.add(string2);
+            return;
         }
     }
 
-    private static String functionKey(String llllllllllllllllIllIlllIIIIlIlll, int llllllllllllllllIllIlllIIIIlIIll, String llllllllllllllllIllIlllIIIIlIlIl) {
-        return String.valueOf(new StringBuilder().append(llllllllllllllllIllIlllIIIIlIlll).append("|").append(llllllllllllllllIllIlllIIIIlIIll).append("|").append(llllllllllllllllIllIlllIIIIlIlIl));
+    private static String functionKey(String string, int n, String string2) {
+        return String.valueOf(new StringBuilder().append(string).append("|").append(n).append("|").append(string2));
     }
 
-    public Function getFunction(String llllllllllllllllIllIllIlIllIlIlI) {
-        NativeLibrary llllllllllllllllIllIllIlIllIlIll;
-        return llllllllllllllllIllIllIlIllIlIll.getFunction(llllllllllllllllIllIllIlIllIlIlI, llllllllllllllllIllIllIlIllIlIll.callFlags);
+    public Function getFunction(String string) {
+        return this.getFunction(string, this.callFlags);
     }
 
     static {
-        DEFAULT_OPEN_OPTIONS = -1;
-        libraries = new HashMap<String, Reference<NativeLibrary>>();
-        searchPaths = Collections.synchronizedMap(new HashMap());
-        librarySearchPath = new ArrayList<String>();
-        if (Native.POINTER_SIZE == 0) {
-            throw new Error("Native library not initialized");
-        }
-        String llllllllllllllllIllIllIIIlIlIlII = Native.getWebStartLibraryPath("jnidispatch");
-        if (llllllllllllllllIllIllIIIlIlIlII != null) {
-            librarySearchPath.add(llllllllllllllllIllIllIIIlIlIlII);
-        }
-        if (System.getProperty("jna.platform.library.path") == null && !Platform.isWindows()) {
-            String llllllllllllllllIllIllIIIlIllIII = "";
-            String llllllllllllllllIllIllIIIlIlIlll = "";
-            String llllllllllllllllIllIllIIIlIlIllI = "";
-            if (Platform.isLinux() || Platform.isSolaris() || Platform.isFreeBSD() || Platform.iskFreeBSD()) {
-                llllllllllllllllIllIllIIIlIlIllI = String.valueOf(new StringBuilder().append(Platform.isSolaris() ? "/" : "").append(Pointer.SIZE * 8));
+        block10: {
+            DEFAULT_OPEN_OPTIONS = -1;
+            libraries = new HashMap<String, Reference<NativeLibrary>>();
+            searchPaths = Collections.synchronizedMap(new HashMap());
+            librarySearchPath = new ArrayList<String>();
+            if (Native.POINTER_SIZE == 0) {
+                throw new Error("Native library not initialized");
             }
-            String[] llllllllllllllllIllIllIIIlIlIlIl = new String[]{String.valueOf(new StringBuilder().append("/usr/lib").append(llllllllllllllllIllIllIIIlIlIllI)), String.valueOf(new StringBuilder().append("/lib").append(llllllllllllllllIllIllIIIlIlIllI)), "/usr/lib", "/lib"};
-            if (Platform.isLinux() || Platform.iskFreeBSD() || Platform.isGNU()) {
-                String llllllllllllllllIllIllIIIlIllllI = NativeLibrary.getMultiArchPath();
-                llllllllllllllllIllIllIIIlIlIlIl = new String[]{String.valueOf(new StringBuilder().append("/usr/lib/").append(llllllllllllllllIllIllIIIlIllllI)), String.valueOf(new StringBuilder().append("/lib/").append(llllllllllllllllIllIllIIIlIllllI)), String.valueOf(new StringBuilder().append("/usr/lib").append(llllllllllllllllIllIllIIIlIlIllI)), String.valueOf(new StringBuilder().append("/lib").append(llllllllllllllllIllIllIIIlIlIllI)), "/usr/lib", "/lib"};
+            String string = Native.getWebStartLibraryPath("jnidispatch");
+            if (string != null) {
+                librarySearchPath.add(string);
             }
-            if (Platform.isLinux()) {
-                ArrayList<String> llllllllllllllllIllIllIIIlIllIll = NativeLibrary.getLinuxLdPaths();
-                for (int llllllllllllllllIllIllIIIlIlllII = llllllllllllllllIllIllIIIlIlIlIl.length - 1; 0 <= llllllllllllllllIllIllIIIlIlllII; --llllllllllllllllIllIllIIIlIlllII) {
-                    int llllllllllllllllIllIllIIIlIlllIl = llllllllllllllllIllIllIIIlIllIll.indexOf(llllllllllllllllIllIllIIIlIlIlIl[llllllllllllllllIllIllIIIlIlllII]);
-                    if (llllllllllllllllIllIllIIIlIlllIl != -1) {
-                        llllllllllllllllIllIllIIIlIllIll.remove(llllllllllllllllIllIllIIIlIlllIl);
-                    }
-                    llllllllllllllllIllIllIIIlIllIll.add(0, llllllllllllllllIllIllIIIlIlIlIl[llllllllllllllllIllIllIIIlIlllII]);
+            if (System.getProperty("jna.platform.library.path") == null && !Platform.isWindows()) {
+                Object object;
+                String string2 = "";
+                String string3 = "";
+                String string4 = "";
+                if (Platform.isLinux() || Platform.isSolaris() || Platform.isFreeBSD() || Platform.iskFreeBSD()) {
+                    string4 = String.valueOf(new StringBuilder().append(Platform.isSolaris() ? "/" : "").append(Pointer.SIZE * 8));
                 }
-                llllllllllllllllIllIllIIIlIlIlIl = llllllllllllllllIllIllIIIlIllIll.toArray(new String[llllllllllllllllIllIllIIIlIllIll.size()]);
+                String[] arrstring = new String[]{String.valueOf(new StringBuilder().append("/usr/lib").append(string4)), String.valueOf(new StringBuilder().append("/lib").append(string4)), "/usr/lib", "/lib"};
+                if (Platform.isLinux() || Platform.iskFreeBSD() || Platform.isGNU()) {
+                    object = NativeLibrary.getMultiArchPath();
+                    arrstring = new String[]{String.valueOf(new StringBuilder().append("/usr/lib/").append((String)object)), String.valueOf(new StringBuilder().append("/lib/").append((String)object)), String.valueOf(new StringBuilder().append("/usr/lib").append(string4)), String.valueOf(new StringBuilder().append("/lib").append(string4)), "/usr/lib", "/lib"};
+                }
+                if (Platform.isLinux()) {
+                    object = NativeLibrary.getLinuxLdPaths();
+                    for (int i = arrstring.length - 1; 0 <= i; --i) {
+                        int n = ((ArrayList)object).indexOf(arrstring[i]);
+                        if (n != -1) {
+                            ((ArrayList)object).remove(n);
+                        }
+                        ((ArrayList)object).add(0, arrstring[i]);
+                    }
+                    arrstring = ((ArrayList)object).toArray(new String[((ArrayList)object).size()]);
+                }
+                for (int i = 0; i < arrstring.length; ++i) {
+                    File file = new File(arrstring[i]);
+                    if (!file.exists() || !file.isDirectory()) continue;
+                    string2 = String.valueOf(new StringBuilder().append(string2).append(string3).append(arrstring[i]));
+                    string3 = File.pathSeparator;
+                    if (-2 <= 0) continue;
+                    break block10;
+                }
+                if (!"".equals(string2)) {
+                    System.setProperty("jna.platform.library.path", string2);
+                }
             }
-            for (int llllllllllllllllIllIllIIIlIllIIl = 0; llllllllllllllllIllIllIIIlIllIIl < llllllllllllllllIllIllIIIlIlIlIl.length; ++llllllllllllllllIllIllIIIlIllIIl) {
-                File llllllllllllllllIllIllIIIlIllIlI = new File(llllllllllllllllIllIllIIIlIlIlIl[llllllllllllllllIllIllIIIlIllIIl]);
-                if (!llllllllllllllllIllIllIIIlIllIlI.exists() || !llllllllllllllllIllIllIIIlIllIlI.isDirectory()) continue;
-                llllllllllllllllIllIllIIIlIllIII = String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIIIlIllIII).append(llllllllllllllllIllIllIIIlIlIlll).append(llllllllllllllllIllIllIIIlIlIlIl[llllllllllllllllIllIllIIIlIllIIl]));
-                llllllllllllllllIllIllIIIlIlIlll = File.pathSeparator;
-            }
-            if (!"".equals(llllllllllllllllIllIllIIIlIllIII)) {
-                System.setProperty("jna.platform.library.path", llllllllllllllllIllIllIIIlIllIII);
-            }
+            librarySearchPath.addAll(NativeLibrary.initPaths("jna.platform.library.path"));
         }
-        librarySearchPath.addAll(NativeLibrary.initPaths("jna.platform.library.path"));
+    }
+
+    static boolean access$000(String string) {
+        return NativeLibrary.isVersionedName(string);
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
     public void dispose() {
-        NativeLibrary llllllllllllllllIllIllIIllllllIl;
-        HashSet<String> llllllllllllllllIllIllIIllllllII = new HashSet<String>();
-        Object llllllllllllllllIllIllIIlllllIIl = libraries;
-        synchronized (llllllllllllllllIllIllIIlllllIIl) {
-            for (Map.Entry<String, Reference<NativeLibrary>> llllllllllllllllIllIllIIllllllll : libraries.entrySet()) {
-                Reference<NativeLibrary> llllllllllllllllIllIllIlIIIIIIII = llllllllllllllllIllIllIIllllllll.getValue();
-                if (llllllllllllllllIllIllIlIIIIIIII.get() != llllllllllllllllIllIllIIllllllIl) continue;
-                llllllllllllllllIllIllIIllllllII.add(llllllllllllllllIllIllIIllllllll.getKey());
+        HashSet hashSet = new HashSet();
+        Object object = libraries;
+        synchronized (object) {
+            for (Map.Entry<String, Reference<NativeLibrary>> entry : libraries.entrySet()) {
+                Reference<NativeLibrary> reference = entry.getValue();
+                if (reference.get() != this) continue;
+                hashSet.add(entry.getKey());
             }
-            for (String llllllllllllllllIllIllIIlllllllI : llllllllllllllllIllIllIIllllllII) {
-                libraries.remove(llllllllllllllllIllIllIIlllllllI);
-            }
-        }
-        llllllllllllllllIllIllIIlllllIIl = llllllllllllllllIllIllIIllllllIl;
-        synchronized (llllllllllllllllIllIllIIlllllIIl) {
-            if (llllllllllllllllIllIllIIllllllIl.handle != 0L) {
-                Native.close(llllllllllllllllIllIllIIllllllIl.handle);
-                llllllllllllllllIllIllIIllllllIl.handle = 0L;
+            Iterator<Map.Entry<String, Reference<NativeLibrary>>> iterator = hashSet.iterator();
+            while (true) {
+                Map.Entry<String, Reference<NativeLibrary>> entry;
+                if (!iterator.hasNext()) {
+                    // MONITOREXIT [2, 5, 6] lbl15 : MonitorExitStatement: MONITOREXIT : var2_2
+                    object = this;
+                    synchronized (object) {
+                        if (this.handle == 0L) return;
+                        Native.close(this.handle);
+                        this.handle = 0L;
+                        return;
+                    }
+                }
+                entry = (String)((Object)iterator.next());
+                libraries.remove(entry);
             }
         }
     }
 
     public File getFile() {
-        NativeLibrary llllllllllllllllIllIllIlIIIllIIl;
-        if (llllllllllllllllIllIllIlIIIllIIl.libraryPath == null) {
+        if (this.libraryPath == null) {
             return null;
         }
-        return new File(llllllllllllllllIllIllIlIIIllIIl.libraryPath);
+        return new File(this.libraryPath);
     }
 
-    private static List<String> initPaths(String llllllllllllllllIllIllIIlllIlIIl) {
-        String llllllllllllllllIllIllIIlllIllII = System.getProperty(llllllllllllllllIllIllIIlllIlIIl, "");
-        if ("".equals(llllllllllllllllIllIllIIlllIllII)) {
+    private static List<String> initPaths(String string) {
+        String string2 = System.getProperty(string, "");
+        if ("".equals(string2)) {
             return Collections.emptyList();
         }
-        StringTokenizer llllllllllllllllIllIllIIlllIlIll = new StringTokenizer(llllllllllllllllIllIllIIlllIllII, File.pathSeparator);
-        ArrayList<String> llllllllllllllllIllIllIIlllIlIlI = new ArrayList<String>();
-        while (llllllllllllllllIllIllIIlllIlIll.hasMoreTokens()) {
-            String llllllllllllllllIllIllIIlllIlllI = llllllllllllllllIllIllIIlllIlIll.nextToken();
-            if ("".equals(llllllllllllllllIllIllIIlllIlllI)) continue;
-            llllllllllllllllIllIllIIlllIlIlI.add(llllllllllllllllIllIllIIlllIlllI);
+        StringTokenizer stringTokenizer = new StringTokenizer(string2, File.pathSeparator);
+        ArrayList<String> arrayList = new ArrayList<String>();
+        while (stringTokenizer.hasMoreTokens()) {
+            String string3 = stringTokenizer.nextToken();
+            if ("".equals(string3)) continue;
+            arrayList.add(string3);
         }
-        return llllllllllllllllIllIllIIlllIlIlI;
+        return arrayList;
     }
 
     private static ArrayList<String> getLinuxLdPaths() {
-        ArrayList<String> llllllllllllllllIllIllIIIlllIIIl = new ArrayList<String>();
+        ArrayList<String> arrayList = new ArrayList<String>();
         try {
-            Process llllllllllllllllIllIllIIIlllIlII = Runtime.getRuntime().exec("/sbin/ldconfig -p");
-            BufferedReader llllllllllllllllIllIllIIIlllIIll = new BufferedReader(new InputStreamReader(llllllllllllllllIllIllIIIlllIlII.getInputStream()));
-            String llllllllllllllllIllIllIIIlllIIlI = "";
-            while ((llllllllllllllllIllIllIIIlllIIlI = llllllllllllllllIllIllIIIlllIIll.readLine()) != null) {
-                String llllllllllllllllIllIllIIIlllIlll;
-                int llllllllllllllllIllIllIIIlllIllI = llllllllllllllllIllIllIIIlllIIlI.indexOf(" => ");
-                int llllllllllllllllIllIllIIIlllIlIl = llllllllllllllllIllIllIIIlllIIlI.lastIndexOf(47);
-                if (llllllllllllllllIllIllIIIlllIllI == -1 || llllllllllllllllIllIllIIIlllIlIl == -1 || llllllllllllllllIllIllIIIlllIllI >= llllllllllllllllIllIllIIIlllIlIl || llllllllllllllllIllIllIIIlllIIIl.contains(llllllllllllllllIllIllIIIlllIlll = llllllllllllllllIllIllIIIlllIIlI.substring(llllllllllllllllIllIllIIIlllIllI + 4, llllllllllllllllIllIllIIIlllIlIl))) continue;
-                llllllllllllllllIllIllIIIlllIIIl.add(llllllllllllllllIllIllIIIlllIlll);
+            Process process = Runtime.getRuntime().exec("/sbin/ldconfig -p");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String string = "";
+            while ((string = bufferedReader.readLine()) != null) {
+                String string2;
+                int n = string.indexOf(" => ");
+                int n2 = string.lastIndexOf(47);
+                if (n == -1 || n2 == -1 || n >= n2 || arrayList.contains(string2 = string.substring(n + 4, n2))) continue;
+                arrayList.add(string2);
             }
-            llllllllllllllllIllIllIIIlllIIll.close();
+            bufferedReader.close();
         }
         catch (Exception exception) {
             // empty catch block
         }
-        return llllllllllllllllIllIllIIIlllIIIl;
+        return arrayList;
     }
 
     private static String getMultiArchPath() {
-        String llllllllllllllllIllIllIIlIIIIlII = Platform.ARCH;
-        String llllllllllllllllIllIllIIlIIIIIll = Platform.iskFreeBSD() ? "-kfreebsd" : (Platform.isGNU() ? "" : "-linux");
-        String llllllllllllllllIllIllIIlIIIIIlI = "-gnu";
+        String string = Platform.ARCH;
+        String string2 = Platform.iskFreeBSD() ? "-kfreebsd" : (Platform.isGNU() ? "" : "-linux");
+        String string3 = "-gnu";
         if (Platform.isIntel()) {
-            llllllllllllllllIllIllIIlIIIIlII = Platform.is64Bit() ? "x86_64" : "i386";
+            string = Platform.is64Bit() ? "x86_64" : "i386";
         } else if (Platform.isPPC()) {
-            llllllllllllllllIllIllIIlIIIIlII = Platform.is64Bit() ? "powerpc64" : "powerpc";
+            string = Platform.is64Bit() ? "powerpc64" : "powerpc";
         } else if (Platform.isARM()) {
-            llllllllllllllllIllIllIIlIIIIlII = "arm";
-            llllllllllllllllIllIllIIlIIIIIlI = "-gnueabi";
+            string = "arm";
+            string3 = "-gnueabi";
         }
-        return String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIIlIIIIlII).append(llllllllllllllllIllIllIIlIIIIIll).append(llllllllllllllllIllIllIIlIIIIIlI));
+        return String.valueOf(new StringBuilder().append(string).append(string2).append(string3));
     }
 
-    static double parseVersion(String llllllllllllllllIllIllIIlIIlIIIl) {
-        double llllllllllllllllIllIllIIlIIlIIII = 0.0;
-        double llllllllllllllllIllIllIIlIIIllll = 1.0;
-        int llllllllllllllllIllIllIIlIIIlllI = llllllllllllllllIllIllIIlIIlIIIl.indexOf(".");
-        while (llllllllllllllllIllIllIIlIIlIIIl != null) {
-            String llllllllllllllllIllIllIIlIIlIIlI;
-            if (llllllllllllllllIllIllIIlIIIlllI != -1) {
-                String llllllllllllllllIllIllIIlIIlIlII = llllllllllllllllIllIllIIlIIlIIIl.substring(0, llllllllllllllllIllIllIIlIIIlllI);
-                llllllllllllllllIllIllIIlIIlIIIl = llllllllllllllllIllIllIIlIIlIIIl.substring(llllllllllllllllIllIllIIlIIIlllI + 1);
-                llllllllllllllllIllIllIIlIIIlllI = llllllllllllllllIllIllIIlIIlIIIl.indexOf(".");
+    static double parseVersion(String string) {
+        double d = 0.0;
+        double d2 = 1.0;
+        int n = string.indexOf(".");
+        while (string != null) {
+            String string2;
+            if (n != -1) {
+                string2 = string.substring(0, n);
+                string = string.substring(n + 1);
+                n = string.indexOf(".");
             } else {
-                llllllllllllllllIllIllIIlIIlIIlI = llllllllllllllllIllIllIIlIIlIIIl;
-                llllllllllllllllIllIllIIlIIlIIIl = null;
+                string2 = string;
+                string = null;
             }
             try {
-                llllllllllllllllIllIllIIlIIlIIII += (double)Integer.parseInt(llllllllllllllllIllIllIIlIIlIIlI) / llllllllllllllllIllIllIIlIIIllll;
+                d += (double)Integer.parseInt(string2) / d2;
             }
-            catch (NumberFormatException llllllllllllllllIllIllIIlIIlIIll) {
+            catch (NumberFormatException numberFormatException) {
                 return 0.0;
             }
-            llllllllllllllllIllIllIIlIIIllll *= 100.0;
+            d2 *= 100.0;
         }
-        return llllllllllllllllIllIllIIlIIlIIII;
+        return d;
     }
 
-    static String matchLibrary(final String llllllllllllllllIllIllIIlIlIIlll, List<String> llllllllllllllllIllIllIIlIlIIllI) {
-        File llllllllllllllllIllIllIIlIlIllII = new File(llllllllllllllllIllIllIIlIlIIlll);
-        if (llllllllllllllllIllIllIIlIlIllII.isAbsolute()) {
-            llllllllllllllllIllIllIIlIlIIllI = Arrays.asList(llllllllllllllllIllIllIIlIlIllII.getParent());
+    static String matchLibrary(String string, List<String> list) {
+        Object object;
+        File file = new File(string);
+        if (file.isAbsolute()) {
+            list = Arrays.asList(file.getParent());
         }
-        FilenameFilter llllllllllllllllIllIllIIlIlIlIll = new FilenameFilter(){
+        FilenameFilter filenameFilter = new FilenameFilter(string){
+            final String val$libName;
             {
-                2 lllIIlllIIlllIl;
+                this.val$libName = string;
             }
 
             @Override
-            public boolean accept(File lllIIlllIIlIlll, String lllIIlllIIlIllI) {
-                2 lllIIlllIIllIII;
-                return (lllIIlllIIlIllI.startsWith(String.valueOf(new StringBuilder().append("lib").append(lllIIlllIIllIII.llllllllllllllllIllIllIIlIlIIlll).append(".so"))) || lllIIlllIIlIllI.startsWith(String.valueOf(new StringBuilder().append(lllIIlllIIllIII.llllllllllllllllIllIllIIlIlIIlll).append(".so"))) && lllIIlllIIllIII.llllllllllllllllIllIllIIlIlIIlll.startsWith("lib")) && NativeLibrary.isVersionedName(lllIIlllIIlIllI);
+            public boolean accept(File file, String string) {
+                return (string.startsWith(String.valueOf(new StringBuilder().append("lib").append(this.val$libName).append(".so"))) || string.startsWith(String.valueOf(new StringBuilder().append(this.val$libName).append(".so"))) && this.val$libName.startsWith("lib")) && NativeLibrary.access$000(string);
             }
         };
-        LinkedList<File> llllllllllllllllIllIllIIlIlIlIlI = new LinkedList<File>();
-        for (String llllllllllllllllIllIllIIlIllIIll : llllllllllllllllIllIllIIlIlIIllI) {
-            File[] llllllllllllllllIllIllIIlIllIlII = new File(llllllllllllllllIllIllIIlIllIIll).listFiles(llllllllllllllllIllIllIIlIlIlIll);
-            if (llllllllllllllllIllIllIIlIllIlII == null || llllllllllllllllIllIllIIlIllIlII.length <= 0) continue;
-            llllllllllllllllIllIllIIlIlIlIlI.addAll(Arrays.asList(llllllllllllllllIllIllIIlIllIlII));
+        LinkedList<File> linkedList = new LinkedList<File>();
+        for (String string2 : list) {
+            object = new File(string2).listFiles(filenameFilter);
+            if (object == null || ((File[])object).length <= 0) continue;
+            linkedList.addAll(Arrays.asList(object));
         }
-        double llllllllllllllllIllIllIIlIlIlIIl = -1.0;
-        String llllllllllllllllIllIllIIlIlIlIII = null;
-        for (File llllllllllllllllIllIllIIlIlIllll : llllllllllllllllIllIllIIlIlIlIlI) {
-            String llllllllllllllllIllIllIIlIllIIlI = llllllllllllllllIllIllIIlIlIllll.getAbsolutePath();
-            String llllllllllllllllIllIllIIlIllIIIl = llllllllllllllllIllIllIIlIllIIlI.substring(llllllllllllllllIllIllIIlIllIIlI.lastIndexOf(".so.") + 4);
-            double llllllllllllllllIllIllIIlIllIIII = NativeLibrary.parseVersion(llllllllllllllllIllIllIIlIllIIIl);
-            if (!(llllllllllllllllIllIllIIlIllIIII > llllllllllllllllIllIllIIlIlIlIIl)) continue;
-            llllllllllllllllIllIllIIlIlIlIIl = llllllllllllllllIllIllIIlIllIIII;
-            llllllllllllllllIllIllIIlIlIlIII = llllllllllllllllIllIllIIlIllIIlI;
+        double d = -1.0;
+        object = null;
+        for (File file2 : linkedList) {
+            String string3 = file2.getAbsolutePath();
+            String string4 = string3.substring(string3.lastIndexOf(".so.") + 4);
+            double d2 = NativeLibrary.parseVersion(string4);
+            if (!(d2 > d)) continue;
+            d = d2;
+            object = string3;
         }
-        return llllllllllllllllIllIllIIlIlIlIII;
+        return object;
     }
 
-    private static int openFlags(Map<String, ?> llllllllllllllllIllIllIlllllIIll) {
-        Object llllllllllllllllIllIllIlllllIIlI = llllllllllllllllIllIllIlllllIIll.get("open-flags");
-        if (llllllllllllllllIllIllIlllllIIlI instanceof Number) {
-            return ((Number)llllllllllllllllIllIllIlllllIIlI).intValue();
+    private static int openFlags(Map<String, ?> map) {
+        Object obj = map.get("open-flags");
+        if (obj instanceof Number) {
+            return ((Number)obj).intValue();
         }
         return -1;
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    public static final NativeLibrary getInstance(String llllllllllllllllIllIllIllIIIlIlI, Map<String, ?> llllllllllllllllIllIllIllIIIlIIl) {
-        HashMap llllllllllllllllIllIllIllIIIlIII = new HashMap(llllllllllllllllIllIllIllIIIlIIl);
-        if (llllllllllllllllIllIllIllIIIlIII.get("calling-convention") == null) {
-            llllllllllllllllIllIllIllIIIlIII.put("calling-convention", 0);
+    public static final NativeLibrary getInstance(String string, Map<String, ?> map) {
+        HashMap hashMap = new HashMap(map);
+        if (hashMap.get("calling-convention") == null) {
+            hashMap.put("calling-convention", 0);
         }
-        if ((Platform.isLinux() || Platform.isFreeBSD() || Platform.isAIX()) && Platform.C_LIBRARY_NAME.equals(llllllllllllllllIllIllIllIIIlIlI)) {
-            llllllllllllllllIllIllIllIIIlIlI = null;
+        if ((Platform.isLinux() || Platform.isFreeBSD() || Platform.isAIX()) && Platform.C_LIBRARY_NAME.equals(string)) {
+            string = null;
         }
-        Map<String, Reference<NativeLibrary>> llllllllllllllllIllIllIllIIIIlII = libraries;
-        synchronized (llllllllllllllllIllIllIllIIIIlII) {
-            NativeLibrary llllllllllllllllIllIllIllIIIlIll;
-            Reference<NativeLibrary> llllllllllllllllIllIllIllIIIllII = libraries.get(String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIllIIIlIlI).append(llllllllllllllllIllIllIllIIIlIII)));
-            NativeLibrary nativeLibrary = llllllllllllllllIllIllIllIIIlIll = llllllllllllllllIllIllIllIIIllII != null ? llllllllllllllllIllIllIllIIIllII.get() : null;
-            if (llllllllllllllllIllIllIllIIIlIll == null) {
-                llllllllllllllllIllIllIllIIIlIll = llllllllllllllllIllIllIllIIIlIlI == null ? new NativeLibrary("<process>", null, Native.open(null, NativeLibrary.openFlags(llllllllllllllllIllIllIllIIIlIII)), llllllllllllllllIllIllIllIIIlIII) : NativeLibrary.loadLibrary(llllllllllllllllIllIllIllIIIlIlI, llllllllllllllllIllIllIllIIIlIII);
-                llllllllllllllllIllIllIllIIIllII = new WeakReference<NativeLibrary>(llllllllllllllllIllIllIllIIIlIll);
-                libraries.put(String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIllIIIlIll.getName()).append(llllllllllllllllIllIllIllIIIlIII)), llllllllllllllllIllIllIllIIIllII);
-                File llllllllllllllllIllIllIllIIIllIl = llllllllllllllllIllIllIllIIIlIll.getFile();
-                if (llllllllllllllllIllIllIllIIIllIl != null) {
-                    libraries.put(String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIllIIIllIl.getAbsolutePath()).append(llllllllllllllllIllIllIllIIIlIII)), llllllllllllllllIllIllIllIIIllII);
-                    libraries.put(String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIllIIIllIl.getName()).append(llllllllllllllllIllIllIllIIIlIII)), llllllllllllllllIllIllIllIIIllII);
+        Map<String, Reference<NativeLibrary>> map2 = libraries;
+        synchronized (map2) {
+            NativeLibrary nativeLibrary;
+            Reference<NativeLibrary> reference = libraries.get(String.valueOf(new StringBuilder().append(string).append(hashMap)));
+            NativeLibrary nativeLibrary2 = nativeLibrary = reference != null ? reference.get() : null;
+            if (nativeLibrary == null) {
+                nativeLibrary = string == null ? new NativeLibrary("<process>", null, Native.open(null, NativeLibrary.openFlags(hashMap)), hashMap) : NativeLibrary.loadLibrary(string, hashMap);
+                reference = new WeakReference<NativeLibrary>(nativeLibrary);
+                libraries.put(String.valueOf(new StringBuilder().append(nativeLibrary.getName()).append(hashMap)), reference);
+                File file = nativeLibrary.getFile();
+                if (file != null) {
+                    libraries.put(String.valueOf(new StringBuilder().append(file.getAbsolutePath()).append(hashMap)), reference);
+                    libraries.put(String.valueOf(new StringBuilder().append(file.getName()).append(hashMap)), reference);
                 }
             }
-            return llllllllllllllllIllIllIllIIIlIll;
+            return nativeLibrary;
         }
     }
 
-    Function getFunction(String llllllllllllllllIllIllIlIlIlllll, Method llllllllllllllllIllIllIlIlIllllI) {
-        String llllllllllllllllIllIllIlIlIlllII;
-        NativeLibrary llllllllllllllllIllIllIlIllIIIII;
-        FunctionMapper llllllllllllllllIllIllIlIlIlllIl = (FunctionMapper)llllllllllllllllIllIllIlIllIIIII.options.get("function-mapper");
-        if (llllllllllllllllIllIllIlIlIlllIl != null) {
-            llllllllllllllllIllIllIlIlIlllll = llllllllllllllllIllIllIlIlIlllIl.getFunctionName(llllllllllllllllIllIllIlIllIIIII, llllllllllllllllIllIllIlIlIllllI);
+    Function getFunction(String string, Method method) {
+        String string2;
+        FunctionMapper functionMapper = (FunctionMapper)this.options.get("function-mapper");
+        if (functionMapper != null) {
+            string = functionMapper.getFunctionName(this, method);
         }
-        if (llllllllllllllllIllIllIlIlIlllll.startsWith(llllllllllllllllIllIllIlIlIlllII = System.getProperty("jna.profiler.prefix", "$$YJP$$"))) {
-            llllllllllllllllIllIllIlIlIlllll = llllllllllllllllIllIllIlIlIlllll.substring(llllllllllllllllIllIllIlIlIlllII.length());
+        if (string.startsWith(string2 = System.getProperty("jna.profiler.prefix", "$$YJP$$"))) {
+            string = string.substring(string2.length());
         }
-        int llllllllllllllllIllIllIlIlIllIll = llllllllllllllllIllIllIlIllIIIII.callFlags;
-        Class<?>[] llllllllllllllllIllIllIlIlIllIlI = llllllllllllllllIllIllIlIlIllllI.getExceptionTypes();
-        for (int llllllllllllllllIllIllIlIllIIIIl = 0; llllllllllllllllIllIllIlIllIIIIl < llllllllllllllllIllIllIlIlIllIlI.length; ++llllllllllllllllIllIllIlIllIIIIl) {
-            if (!LastErrorException.class.isAssignableFrom(llllllllllllllllIllIllIlIlIllIlI[llllllllllllllllIllIllIlIllIIIIl])) continue;
-            llllllllllllllllIllIllIlIlIllIll |= 0x40;
+        int n = this.callFlags;
+        Class<?>[] arrclass = method.getExceptionTypes();
+        for (int i = 0; i < arrclass.length; ++i) {
+            if (!LastErrorException.class.isAssignableFrom(arrclass[i])) continue;
+            n |= 0x40;
+            if (3 > 0) continue;
+            return null;
         }
-        return llllllllllllllllIllIllIlIllIIIII.getFunction(llllllllllllllllIllIllIlIlIlllll, llllllllllllllllIllIllIlIlIllIll);
+        return this.getFunction(string, n);
     }
 
-    private String getLibraryName(String llllllllllllllllIllIllIllIlIllII) {
-        String llllllllllllllllIllIllIllIlIIlll;
-        int llllllllllllllllIllIllIllIlIIllI;
-        String llllllllllllllllIllIllIllIlIlIll = llllllllllllllllIllIllIllIlIllII;
-        String llllllllllllllllIllIllIllIlIlIlI = "---";
-        String llllllllllllllllIllIllIllIlIlIIl = NativeLibrary.mapSharedLibraryName("---");
-        int llllllllllllllllIllIllIllIlIlIII = llllllllllllllllIllIllIllIlIlIIl.indexOf("---");
-        if (llllllllllllllllIllIllIllIlIlIII > 0 && llllllllllllllllIllIllIllIlIlIll.startsWith(llllllllllllllllIllIllIllIlIlIIl.substring(0, llllllllllllllllIllIllIllIlIlIII))) {
-            llllllllllllllllIllIllIllIlIlIll = llllllllllllllllIllIllIllIlIlIll.substring(llllllllllllllllIllIllIllIlIlIII);
+    private String getLibraryName(String string) {
+        String string2;
+        int n;
+        String string3 = string;
+        String string4 = "---";
+        String string5 = NativeLibrary.mapSharedLibraryName("---");
+        int n2 = string5.indexOf("---");
+        if (n2 > 0 && string3.startsWith(string5.substring(0, n2))) {
+            string3 = string3.substring(n2);
         }
-        if ((llllllllllllllllIllIllIllIlIIllI = llllllllllllllllIllIllIllIlIlIll.indexOf(llllllllllllllllIllIllIllIlIIlll = llllllllllllllllIllIllIllIlIlIIl.substring(llllllllllllllllIllIllIllIlIlIII + "---".length()))) != -1) {
-            llllllllllllllllIllIllIllIlIlIll = llllllllllllllllIllIllIllIlIlIll.substring(0, llllllllllllllllIllIllIllIlIIllI);
+        if ((n = string3.indexOf(string2 = string5.substring(n2 + "---".length()))) != -1) {
+            string3 = string3.substring(0, n);
         }
-        return llllllllllllllllIllIllIllIlIlIll;
+        return string3;
     }
 
-    static String matchFramework(String llllllllllllllllIllIllIllIlllIlI) {
-        File llllllllllllllllIllIllIllIlllIll = new File(llllllllllllllllIllIllIllIlllIlI);
-        if (llllllllllllllllIllIllIllIlllIll.isAbsolute()) {
-            if (llllllllllllllllIllIllIllIlllIlI.indexOf(".framework") != -1 && llllllllllllllllIllIllIllIlllIll.exists()) {
-                return llllllllllllllllIllIllIllIlllIll.getAbsolutePath();
+    static String matchFramework(String string) {
+        File file = new File(string);
+        if (file.isAbsolute()) {
+            if (string.indexOf(".framework") != -1 && file.exists()) {
+                return file.getAbsolutePath();
             }
-            if ((llllllllllllllllIllIllIllIlllIll = new File(new File(llllllllllllllllIllIllIllIlllIll.getParentFile(), String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIllIlllIll.getName()).append(".framework"))), llllllllllllllllIllIllIllIlllIll.getName())).exists()) {
-                return llllllllllllllllIllIllIllIlllIll.getAbsolutePath();
+            if ((file = new File(new File(file.getParentFile(), String.valueOf(new StringBuilder().append(file.getName()).append(".framework"))), file.getName())).exists()) {
+                return file.getAbsolutePath();
             }
         } else {
-            String[] llllllllllllllllIllIllIllIlllllI = new String[]{System.getProperty("user.home"), "", "/System"};
-            String llllllllllllllllIllIllIllIllllIl = llllllllllllllllIllIllIllIlllIlI.indexOf(".framework") == -1 ? String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIllIlllIlI).append(".framework/").append(llllllllllllllllIllIllIllIlllIlI)) : llllllllllllllllIllIllIllIlllIlI;
-            for (int llllllllllllllllIllIllIllIllllll = 0; llllllllllllllllIllIllIllIllllll < llllllllllllllllIllIllIllIlllllI.length; ++llllllllllllllllIllIllIllIllllll) {
-                String llllllllllllllllIllIllIlllIIIIII = String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIllIlllllI[llllllllllllllllIllIllIllIllllll]).append("/Library/Frameworks/").append(llllllllllllllllIllIllIllIllllIl));
-                if (!new File(llllllllllllllllIllIllIlllIIIIII).exists()) continue;
-                return llllllllllllllllIllIllIlllIIIIII;
+            String[] arrstring = new String[]{System.getProperty("user.home"), "", "/System"};
+            String string2 = string.indexOf(".framework") == -1 ? String.valueOf(new StringBuilder().append(string).append(".framework/").append(string)) : string;
+            for (int i = 0; i < arrstring.length; ++i) {
+                String string3 = String.valueOf(new StringBuilder().append(arrstring[i]).append("/Library/Frameworks/").append(string2));
+                if (!new File(string3).exists()) continue;
+                return string3;
             }
         }
         return null;
     }
 
     public Map<String, ?> getOptions() {
-        NativeLibrary llllllllllllllllIllIllIlIIllIIIl;
-        return llllllllllllllllIllIllIlIIllIIIl.options;
+        return this.options;
     }
 
-    private static String findLibraryPath(String llllllllllllllllIllIllIIllIllIIl, List<String> llllllllllllllllIllIllIIllIllIll) {
-        if (new File(llllllllllllllllIllIllIIllIllIIl).isAbsolute()) {
-            return llllllllllllllllIllIllIIllIllIIl;
+    private static String findLibraryPath(String string, List<String> list) {
+        if (new File(string).isAbsolute()) {
+            return string;
         }
-        String llllllllllllllllIllIllIIllIllIlI = NativeLibrary.mapSharedLibraryName(llllllllllllllllIllIllIIllIllIIl);
-        for (String llllllllllllllllIllIllIIllIlllIl : llllllllllllllllIllIllIIllIllIll) {
-            File llllllllllllllllIllIllIIllIllllI = new File(llllllllllllllllIllIllIIllIlllIl, llllllllllllllllIllIllIIllIllIlI);
-            if (llllllllllllllllIllIllIIllIllllI.exists()) {
-                return llllllllllllllllIllIllIIllIllllI.getAbsolutePath();
+        String string2 = NativeLibrary.mapSharedLibraryName(string);
+        for (String string3 : list) {
+            File file = new File(string3, string2);
+            if (file.exists()) {
+                return file.getAbsolutePath();
             }
-            if (!Platform.isMac() || !llllllllllllllllIllIllIIllIllIlI.endsWith(".dylib") || !(llllllllllllllllIllIllIIllIllllI = new File(llllllllllllllllIllIllIIllIlllIl, String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIIllIllIlI.substring(0, llllllllllllllllIllIllIIllIllIlI.lastIndexOf(".dylib"))).append(".jnilib")))).exists()) continue;
-            return llllllllllllllllIllIllIIllIllllI.getAbsolutePath();
+            if (!Platform.isMac() || !string2.endsWith(".dylib") || !(file = new File(string3, String.valueOf(new StringBuilder().append(string2.substring(0, string2.lastIndexOf(".dylib"))).append(".jnilib")))).exists()) continue;
+            return file.getAbsolutePath();
         }
-        return llllllllllllllllIllIllIIllIllIlI;
+        return string2;
     }
 
-    public Function getFunction(String llllllllllllllllIllIllIlIlIIlIlI, int llllllllllllllllIllIllIlIlIIllII) {
-        NativeLibrary llllllllllllllllIllIllIlIlIIlIll;
-        return llllllllllllllllIllIllIlIlIIlIll.getFunction(llllllllllllllllIllIllIlIlIIlIlI, llllllllllllllllIllIllIlIlIIllII, llllllllllllllllIllIllIlIlIIlIll.encoding);
+    public Function getFunction(String string, int n) {
+        return this.getFunction(string, n, this.encoding);
     }
 
-    long getSymbolAddress(String llllllllllllllllIllIllIlIIlIIIIl) {
-        NativeLibrary llllllllllllllllIllIllIlIIlIIlII;
-        if (llllllllllllllllIllIllIlIIlIIlII.handle == 0L) {
+    long getSymbolAddress(String string) {
+        if (this.handle == 0L) {
             throw new UnsatisfiedLinkError("Library has been unloaded");
         }
-        return Native.findSymbol(llllllllllllllllIllIllIlIIlIIlII.handle, llllllllllllllllIllIllIlIIlIIIIl);
+        return Native.findSymbol(this.handle, string);
     }
 
     protected void finalize() {
-        NativeLibrary llllllllllllllllIllIllIlIIIlIlIl;
-        llllllllllllllllIllIllIlIIIlIlIl.dispose();
+        this.dispose();
     }
 
     public String toString() {
-        NativeLibrary llllllllllllllllIllIllIlIIIlllll;
-        return String.valueOf(new StringBuilder().append("Native Library <").append(llllllllllllllllIllIllIlIIIlllll.libraryPath).append("@").append(llllllllllllllllIllIllIlIIIlllll.handle).append(">"));
+        return String.valueOf(new StringBuilder().append("Native Library <").append(this.libraryPath).append("@").append(this.handle).append(">"));
     }
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Enabled aggressive block sorting
+     * Enabled unnecessary exception pruning
+     * Enabled aggressive exception aggregation
      */
-    private NativeLibrary(String llllllllllllllllIllIllIllllllllI, String llllllllllllllllIllIlllIIIIIIlII, long llllllllllllllllIllIllIlllllllII, Map<String, ?> llllllllllllllllIllIllIllllllIll) {
-        int llllllllllllllllIllIlllIIIIIIIII;
-        NativeLibrary llllllllllllllllIllIlllIIIIIIllI;
-        llllllllllllllllIllIlllIIIIIIllI.functions = new HashMap<String, Function>();
-        llllllllllllllllIllIlllIIIIIIllI.libraryName = llllllllllllllllIllIlllIIIIIIllI.getLibraryName(llllllllllllllllIllIllIllllllllI);
-        llllllllllllllllIllIlllIIIIIIllI.libraryPath = llllllllllllllllIllIlllIIIIIIlII;
-        llllllllllllllllIllIlllIIIIIIllI.handle = llllllllllllllllIllIllIlllllllII;
-        Object llllllllllllllllIllIlllIIIIIIIIl = llllllllllllllllIllIllIllllllIll.get("calling-convention");
-        llllllllllllllllIllIlllIIIIIIllI.callFlags = llllllllllllllllIllIlllIIIIIIIII = llllllllllllllllIllIlllIIIIIIIIl instanceof Number ? ((Number)llllllllllllllllIllIlllIIIIIIIIl).intValue() : 0;
-        llllllllllllllllIllIlllIIIIIIllI.options = llllllllllllllllIllIllIllllllIll;
-        llllllllllllllllIllIlllIIIIIIllI.encoding = (String)llllllllllllllllIllIllIllllllIll.get("string-encoding");
-        if (llllllllllllllllIllIlllIIIIIIllI.encoding == null) {
-            llllllllllllllllIllIlllIIIIIIllI.encoding = Native.getDefaultStringEncoding();
+    private NativeLibrary(String string, String string2, long l, Map<String, ?> map) {
+        int n;
+        this.libraryName = this.getLibraryName(string);
+        this.libraryPath = string2;
+        this.handle = l;
+        Object obj = map.get("calling-convention");
+        this.callFlags = n = obj instanceof Number ? ((Number)obj).intValue() : 0;
+        this.options = map;
+        this.encoding = (String)map.get("string-encoding");
+        if (this.encoding == null) {
+            this.encoding = Native.getDefaultStringEncoding();
         }
-        if (Platform.isWindows() && "kernel32".equals(llllllllllllllllIllIlllIIIIIIllI.libraryName.toLowerCase())) {
-            Map<String, Function> llllllllllllllllIllIllIllllllIII = llllllllllllllllIllIlllIIIIIIllI.functions;
-            synchronized (llllllllllllllllIllIllIllllllIII) {
-                Function llllllllllllllllIllIlllIIIIIIlll = new Function(llllllllllllllllIllIlllIIIIIIllI, "GetLastError", 63, llllllllllllllllIllIlllIIIIIIllI.encoding){
-                    {
-                        1 llllllllllllllllllllllIlIlIllIll;
-                        super(llllllllllllllllllllllIlIlIllIIl, llllllllllllllllllllllIlIlIllIII, llllllllllllllllllllllIlIlIlllIl, llllllllllllllllllllllIlIlIlllII);
-                    }
+        if (!Platform.isWindows()) return;
+        if (!"kernel32".equals(this.libraryName.toLowerCase())) return;
+        Map<String, Function> map2 = this.functions;
+        synchronized (map2) {
+            Function function = new Function(this, this, "GetLastError", 63, this.encoding){
+                final NativeLibrary this$0;
+                {
+                    this.this$0 = nativeLibrary;
+                    super(nativeLibrary2, string, n, string2);
+                }
 
-                    @Override
-                    Object invoke(Method llllllllllllllllllllllIlIlIIllll, Class<?>[] llllllllllllllllllllllIlIlIIlllI, Class<?> llllllllllllllllllllllIlIlIIllIl, Object[] llllllllllllllllllllllIlIlIIllII, Map<String, ?> llllllllllllllllllllllIlIlIIlIll) {
-                        return Native.getLastError();
-                    }
+                @Override
+                Object invoke(Method method, Class<?>[] arrclass, Class<?> class_, Object[] arrobject, Map<String, ?> map) {
+                    return Native.getLastError();
+                }
 
-                    @Override
-                    Object invoke(Object[] llllllllllllllllllllllIlIlIlIlII, Class<?> llllllllllllllllllllllIlIlIlIIll, boolean llllllllllllllllllllllIlIlIlIIlI, int llllllllllllllllllllllIlIlIlIIIl) {
-                        return Native.getLastError();
-                    }
-                };
-                llllllllllllllllIllIlllIIIIIIllI.functions.put(NativeLibrary.functionKey("GetLastError", llllllllllllllllIllIlllIIIIIIllI.callFlags, llllllllllllllllIllIlllIIIIIIllI.encoding), llllllllllllllllIllIlllIIIIIIlll);
-            }
+                @Override
+                Object invoke(Object[] arrobject, Class<?> class_, boolean bl, int n) {
+                    return Native.getLastError();
+                }
+            };
+            this.functions.put(NativeLibrary.functionKey("GetLastError", this.callFlags, this.encoding), function);
+            return;
         }
     }
 
     public String getName() {
-        NativeLibrary llllllllllllllllIllIllIlIIIllIll;
-        return llllllllllllllllIllIllIlIIIllIll.libraryName;
+        return this.libraryName;
     }
 
-    public static final synchronized NativeLibrary getProcess(Map<String, ?> llllllllllllllllIllIllIlIlllllIl) {
-        return NativeLibrary.getInstance(null, llllllllllllllllIllIllIlIlllllIl);
+    public static final synchronized NativeLibrary getProcess(Map<String, ?> map) {
+        return NativeLibrary.getInstance(null, map);
     }
 
     public static final synchronized NativeLibrary getProcess() {
         return NativeLibrary.getInstance(null);
     }
 
-    static String mapSharedLibraryName(String llllllllllllllllIllIllIIllIlIIII) {
+    static String mapSharedLibraryName(String string) {
         if (Platform.isMac()) {
-            if (llllllllllllllllIllIllIIllIlIIII.startsWith("lib") && (llllllllllllllllIllIllIIllIlIIII.endsWith(".dylib") || llllllllllllllllIllIllIIllIlIIII.endsWith(".jnilib"))) {
-                return llllllllllllllllIllIllIIllIlIIII;
+            if (string.startsWith("lib") && (string.endsWith(".dylib") || string.endsWith(".jnilib"))) {
+                return string;
             }
-            String llllllllllllllllIllIllIIllIlIIIl = System.mapLibraryName(llllllllllllllllIllIllIIllIlIIII);
-            if (llllllllllllllllIllIllIIllIlIIIl.endsWith(".jnilib")) {
-                return String.valueOf(new StringBuilder().append(llllllllllllllllIllIllIIllIlIIIl.substring(0, llllllllllllllllIllIllIIllIlIIIl.lastIndexOf(".jnilib"))).append(".dylib"));
+            String string2 = System.mapLibraryName(string);
+            if (string2.endsWith(".jnilib")) {
+                return String.valueOf(new StringBuilder().append(string2.substring(0, string2.lastIndexOf(".jnilib"))).append(".dylib"));
             }
-            return llllllllllllllllIllIllIIllIlIIIl;
+            return string2;
         }
-        if (Platform.isLinux() || Platform.isFreeBSD() ? NativeLibrary.isVersionedName(llllllllllllllllIllIllIIllIlIIII) || llllllllllllllllIllIllIIllIlIIII.endsWith(".so") : (Platform.isAIX() ? llllllllllllllllIllIllIIllIlIIII.startsWith("lib") : Platform.isWindows() && (llllllllllllllllIllIllIIllIlIIII.endsWith(".drv") || llllllllllllllllIllIllIIllIlIIII.endsWith(".dll")))) {
-            return llllllllllllllllIllIllIIllIlIIII;
+        if (Platform.isLinux() || Platform.isFreeBSD() ? NativeLibrary.isVersionedName(string) || string.endsWith(".so") : (Platform.isAIX() ? string.startsWith("lib") : Platform.isWindows() && (string.endsWith(".drv") || string.endsWith(".dll")))) {
+            return string;
         }
-        return System.mapLibraryName(llllllllllllllllIllIllIIllIlIIII);
+        return System.mapLibraryName(string);
     }
 }
 

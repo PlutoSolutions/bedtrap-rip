@@ -7,40 +7,35 @@ import java.util.Objects;
 import minegame159.meteorclient.utils.render.color.Color;
 
 public class ColoredText {
-    private final /* synthetic */ String text;
-    private final /* synthetic */ Color color;
+    private final String text;
+    private final Color color;
 
-    public boolean equals(Object llllllllllllllllllIlIlIIllIIllll) {
-        ColoredText llllllllllllllllllIlIlIIllIlIIll;
-        if (llllllllllllllllllIlIlIIllIlIIll == llllllllllllllllllIlIlIIllIIllll) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
-        if (llllllllllllllllllIlIlIIllIIllll == null || llllllllllllllllllIlIlIIllIlIIll.getClass() != llllllllllllllllllIlIlIIllIIllll.getClass()) {
+        if (object == null || this.getClass() != object.getClass()) {
             return false;
         }
-        ColoredText llllllllllllllllllIlIlIIllIlIIIl = (ColoredText)llllllllllllllllllIlIlIIllIIllll;
-        return llllllllllllllllllIlIlIIllIlIIll.text.equals(llllllllllllllllllIlIlIIllIlIIIl.text) && llllllllllllllllllIlIlIIllIlIIll.color.equals(llllllllllllllllllIlIlIIllIlIIIl.color);
+        ColoredText coloredText = (ColoredText)object;
+        return this.text.equals(coloredText.text) && this.color.equals(coloredText.color);
     }
 
     public Color getColor() {
-        ColoredText llllllllllllllllllIlIlIIllIlIlll;
-        return llllllllllllllllllIlIlIIllIlIlll.color;
+        return this.color;
     }
 
     public String getText() {
-        ColoredText llllllllllllllllllIlIlIIllIllIll;
-        return llllllllllllllllllIlIlIIllIllIll.text;
+        return this.text;
     }
 
     public int hashCode() {
-        ColoredText llllllllllllllllllIlIlIIllIIlIll;
-        return Objects.hash(llllllllllllllllllIlIlIIllIIlIll.text, llllllllllllllllllIlIlIIllIIlIll.color);
+        return Objects.hash(this.text, this.color);
     }
 
-    public ColoredText(String llllllllllllllllllIlIlIIllIllllI, Color llllllllllllllllllIlIlIIllIlllIl) {
-        ColoredText llllllllllllllllllIlIlIIlllIIIlI;
-        llllllllllllllllllIlIlIIlllIIIlI.text = llllllllllllllllllIlIlIIllIllllI;
-        llllllllllllllllllIlIlIIlllIIIlI.color = llllllllllllllllllIlIlIIllIlllIl;
+    public ColoredText(String string, Color color) {
+        this.text = string;
+        this.color = color;
     }
 }
 

@@ -36,128 +36,130 @@ import net.minecraft.class_1657;
 
 public class Tracers
 extends Module {
-    private final /* synthetic */ Setting<SettingColor> monstersColor;
-    private /* synthetic */ int count;
-    private final /* synthetic */ Setting<Boolean> stem;
-    private final /* synthetic */ Setting<SettingColor> playersColor;
-    private final /* synthetic */ Setting<Integer> maxDist;
-    private final /* synthetic */ Setting<SettingColor> ambientColor;
-    private final /* synthetic */ Setting<SettingColor> waterAnimalsColor;
-    private final /* synthetic */ Color distanceColor;
-    private final /* synthetic */ SettingGroup sgColors;
-    private final /* synthetic */ Setting<Object2BooleanMap<class_1299<?>>> entities;
-    private final /* synthetic */ Setting<Target> target;
-    private final /* synthetic */ SettingGroup sgAppearance;
-    private final /* synthetic */ Setting<SettingColor> animalsColor;
-    public final /* synthetic */ Setting<Boolean> showInvis;
-    private final /* synthetic */ Setting<SettingColor> miscColor;
-    public final /* synthetic */ Setting<Boolean> distance;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<SettingColor> monstersColor;
+    private int count;
+    private final Setting<Boolean> stem;
+    private final Setting<SettingColor> playersColor;
+    private final Setting<Integer> maxDist;
+    private final Setting<SettingColor> ambientColor;
+    private final Setting<SettingColor> waterAnimalsColor;
+    private final Color distanceColor;
+    private final SettingGroup sgColors;
+    private final Setting<Object2BooleanMap<class_1299<?>>> entities;
+    private final Setting<Target> target;
+    private final SettingGroup sgAppearance;
+    private final Setting<SettingColor> animalsColor;
+    public final Setting<Boolean> showInvis;
+    private final Setting<SettingColor> miscColor;
+    public final Setting<Boolean> distance;
+    private final SettingGroup sgGeneral;
 
-    private Color getColorFromDistance(class_1657 lllllIlllllIlIl) {
-        int lllllIlllllIIlI;
-        int lllllIlllllIIIl;
-        Tracers lllllIlllllIllI;
-        double lllllIlllllIlII = lllllIlllllIllI.mc.field_1724.method_5739((class_1297)lllllIlllllIlIl);
-        double lllllIlllllIIll = lllllIlllllIlII / 60.0;
-        if (lllllIlllllIIll < 0.0 || lllllIlllllIIll > 1.0) {
-            lllllIlllllIllI.distanceColor.set(0, 255, 0, 255);
-            return lllllIlllllIllI.distanceColor;
+    private boolean lambda$new$3() {
+        return this.distance.get() == false;
+    }
+
+    private boolean lambda$new$0() {
+        return this.distance.get() == false;
+    }
+
+    private Color getColorFromDistance(class_1657 class_16572) {
+        int n;
+        int n2;
+        double d = this.mc.field_1724.method_5739((class_1297)class_16572);
+        double d2 = d / 60.0;
+        if (d2 < 0.0 || d2 > 1.0) {
+            this.distanceColor.set(0, 255, 0, 255);
+            return this.distanceColor;
         }
-        if (lllllIlllllIIll < 0.5) {
-            int lllllIllllllIII = 255;
-            int lllllIlllllIlll = (int)(255.0 * lllllIlllllIIll / 0.5);
+        if (d2 < 0.5) {
+            n2 = 255;
+            n = (int)(255.0 * d2 / 0.5);
         } else {
-            lllllIlllllIIIl = 255;
-            lllllIlllllIIlI = 255 - (int)(255.0 * (lllllIlllllIIll - 0.5) / 0.5);
+            n = 255;
+            n2 = 255 - (int)(255.0 * (d2 - 0.5) / 0.5);
         }
-        lllllIlllllIllI.distanceColor.set(lllllIlllllIIlI, lllllIlllllIIIl, 0, 255);
-        return lllllIlllllIllI.distanceColor;
+        this.distanceColor.set(n2, n, 0, 255);
+        return this.distanceColor;
+    }
+
+    private boolean lambda$new$2() {
+        return this.distance.get() == false;
     }
 
     public Tracers() {
         super(Categories.Render, "tracers", "Displays tracer lines to specified entities.");
-        Tracers llllllIIIIlIlII;
-        llllllIIIIlIlII.sgGeneral = llllllIIIIlIlII.settings.getDefaultGroup();
-        llllllIIIIlIlII.sgAppearance = llllllIIIIlIlII.settings.createGroup("Appearance");
-        llllllIIIIlIlII.sgColors = llllllIIIIlIlII.settings.createGroup("Colors");
-        llllllIIIIlIlII.entities = llllllIIIIlIlII.sgGeneral.add(new EntityTypeListSetting.Builder().name("entites").description("Select specific entities.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
-        llllllIIIIlIlII.target = llllllIIIIlIlII.sgAppearance.add(new EnumSetting.Builder().name("target").description("What part of the entity to target.").defaultValue(Target.Body).build());
-        llllllIIIIlIlII.stem = llllllIIIIlIlII.sgAppearance.add(new BoolSetting.Builder().name("stem").description("Draw a line through the center of the tracer target.").defaultValue(true).build());
-        llllllIIIIlIlII.maxDist = llllllIIIIlIlII.sgAppearance.add(new IntSetting.Builder().name("max-distance").description("Maximum distance for tracers to show.").defaultValue(256).min(0).sliderMax(256).build());
-        llllllIIIIlIlII.showInvis = llllllIIIIlIlII.sgGeneral.add(new BoolSetting.Builder().name("show-invisible").description("Shows invisibile entities.").defaultValue(true).build());
-        llllllIIIIlIlII.distance = llllllIIIIlIlII.sgColors.add(new BoolSetting.Builder().name("distance-colors").description("Changes the color of tracers depending on distance.").defaultValue(false).build());
-        llllllIIIIlIlII.playersColor = llllllIIIIlIlII.sgColors.add(new ColorSetting.Builder().name("players-colors").description("The player's color.").defaultValue(new SettingColor(205, 205, 205, 127)).visible(() -> {
-            Tracers lllllIlllIlIllI;
-            return lllllIlllIlIllI.distance.get() == false;
-        }).build());
-        llllllIIIIlIlII.animalsColor = llllllIIIIlIlII.sgColors.add(new ColorSetting.Builder().name("animals-color").description("The animal's color.").defaultValue(new SettingColor(145, 255, 145, 127)).visible(() -> {
-            Tracers lllllIlllIllIIl;
-            return lllllIlllIllIIl.distance.get() == false;
-        }).build());
-        llllllIIIIlIlII.waterAnimalsColor = llllllIIIIlIlII.sgColors.add(new ColorSetting.Builder().name("water-animals-color").description("The water animal's color.").defaultValue(new SettingColor(145, 145, 255, 127)).visible(() -> {
-            Tracers lllllIlllIlllII;
-            return lllllIlllIlllII.distance.get() == false;
-        }).build());
-        llllllIIIIlIlII.monstersColor = llllllIIIIlIlII.sgColors.add(new ColorSetting.Builder().name("monsters-color").description("The monster's color.").defaultValue(new SettingColor(255, 145, 145, 127)).visible(() -> {
-            Tracers lllllIlllIlllll;
-            return lllllIlllIlllll.distance.get() == false;
-        }).build());
-        llllllIIIIlIlII.ambientColor = llllllIIIIlIlII.sgColors.add(new ColorSetting.Builder().name("ambient-color").description("The ambient color.").defaultValue(new SettingColor(75, 75, 75, 127)).visible(() -> {
-            Tracers lllllIllllIIIlI;
-            return lllllIllllIIIlI.distance.get() == false;
-        }).build());
-        llllllIIIIlIlII.miscColor = llllllIIIIlIlII.sgColors.add(new ColorSetting.Builder().name("misc-color").description("The misc color.").defaultValue(new SettingColor(145, 145, 145, 127)).visible(() -> {
-            Tracers lllllIllllIIllI;
-            return lllllIllllIIllI.distance.get() == false;
-        }).build());
-        llllllIIIIlIlII.distanceColor = new Color(255, 255, 255);
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.sgAppearance = this.settings.createGroup("Appearance");
+        this.sgColors = this.settings.createGroup("Colors");
+        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entites").description("Select specific entities.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
+        this.target = this.sgAppearance.add(new EnumSetting.Builder().name("target").description("What part of the entity to target.").defaultValue(Target.Body).build());
+        this.stem = this.sgAppearance.add(new BoolSetting.Builder().name("stem").description("Draw a line through the center of the tracer target.").defaultValue(true).build());
+        this.maxDist = this.sgAppearance.add(new IntSetting.Builder().name("max-distance").description("Maximum distance for tracers to show.").defaultValue(256).min(0).sliderMax(256).build());
+        this.showInvis = this.sgGeneral.add(new BoolSetting.Builder().name("show-invisible").description("Shows invisibile entities.").defaultValue(true).build());
+        this.distance = this.sgColors.add(new BoolSetting.Builder().name("distance-colors").description("Changes the color of tracers depending on distance.").defaultValue(false).build());
+        this.playersColor = this.sgColors.add(new ColorSetting.Builder().name("players-colors").description("The player's color.").defaultValue(new SettingColor(205, 205, 205, 127)).visible(this::lambda$new$0).build());
+        this.animalsColor = this.sgColors.add(new ColorSetting.Builder().name("animals-color").description("The animal's color.").defaultValue(new SettingColor(145, 255, 145, 127)).visible(this::lambda$new$1).build());
+        this.waterAnimalsColor = this.sgColors.add(new ColorSetting.Builder().name("water-animals-color").description("The water animal's color.").defaultValue(new SettingColor(145, 145, 255, 127)).visible(this::lambda$new$2).build());
+        this.monstersColor = this.sgColors.add(new ColorSetting.Builder().name("monsters-color").description("The monster's color.").defaultValue(new SettingColor(255, 145, 145, 127)).visible(this::lambda$new$3).build());
+        this.ambientColor = this.sgColors.add(new ColorSetting.Builder().name("ambient-color").description("The ambient color.").defaultValue(new SettingColor(75, 75, 75, 127)).visible(this::lambda$new$4).build());
+        this.miscColor = this.sgColors.add(new ColorSetting.Builder().name("misc-color").description("The misc color.").defaultValue(new SettingColor(145, 145, 145, 127)).visible(this::lambda$new$5).build());
+        this.distanceColor = new Color(255, 255, 255);
+    }
+
+    private boolean lambda$new$5() {
+        return this.distance.get() == false;
+    }
+
+    private boolean lambda$new$4() {
+        return this.distance.get() == false;
+    }
+
+    private boolean lambda$new$1() {
+        return this.distance.get() == false;
     }
 
     @EventHandler
-    private void onRender(RenderEvent llllllIIIIIIlII) {
-        Tracers llllllIIIIIIIll;
-        llllllIIIIIIIll.count = 0;
-        for (class_1297 llllllIIIIIIllI : llllllIIIIIIIll.mc.field_1687.method_18112()) {
-            Color llllllIIIIIIlll;
-            if (llllllIIIIIIIll.mc.field_1724.method_5739(llllllIIIIIIllI) > (float)llllllIIIIIIIll.maxDist.get().intValue() || !Modules.get().isActive(Freecam.class) && llllllIIIIIIllI == llllllIIIIIIIll.mc.field_1724 || !llllllIIIIIIIll.entities.get().getBoolean((Object)llllllIIIIIIllI.method_5864()) || !llllllIIIIIIIll.showInvis.get().booleanValue() && llllllIIIIIIllI.method_5767() || !EntityUtils.isInRenderDistance(llllllIIIIIIllI)) continue;
-            if (llllllIIIIIIIll.distance.get().booleanValue() && llllllIIIIIIllI instanceof class_1657) {
-                Color llllllIIIIIllIl = llllllIIIIIIIll.getColorFromDistance((class_1657)llllllIIIIIIllI);
-            } else if (llllllIIIIIIllI instanceof class_1657) {
-                Color llllllIIIIIllII = PlayerUtils.getPlayerColor((class_1657)llllllIIIIIIllI, llllllIIIIIIIll.playersColor.get());
+    private void onRender(RenderEvent renderEvent) {
+        this.count = 0;
+        for (class_1297 class_12972 : this.mc.field_1687.method_18112()) {
+            Color color;
+            if (this.mc.field_1724.method_5739(class_12972) > (float)this.maxDist.get().intValue() || !Modules.get().isActive(Freecam.class) && class_12972 == this.mc.field_1724 || !this.entities.get().getBoolean((Object)class_12972.method_5864()) || !this.showInvis.get().booleanValue() && class_12972.method_5767() || !EntityUtils.isInRenderDistance(class_12972)) continue;
+            if (this.distance.get().booleanValue() && class_12972 instanceof class_1657) {
+                color = this.getColorFromDistance((class_1657)class_12972);
+            } else if (class_12972 instanceof class_1657) {
+                color = PlayerUtils.getPlayerColor((class_1657)class_12972, this.playersColor.get());
             } else {
-                switch (llllllIIIIIIllI.method_5864().method_5891()) {
-                    case field_6294: {
-                        Color llllllIIIIIlIll = llllllIIIIIIIll.animalsColor.get();
+                switch (1.$SwitchMap$net$minecraft$entity$SpawnGroup[class_12972.method_5864().method_5891().ordinal()]) {
+                    case 1: {
+                        color = this.animalsColor.get();
                         break;
                     }
-                    case field_24460: 
-                    case field_6300: {
-                        Color llllllIIIIIlIlI = llllllIIIIIIIll.waterAnimalsColor.get();
+                    case 2: 
+                    case 3: {
+                        color = this.waterAnimalsColor.get();
                         break;
                     }
-                    case field_6302: {
-                        Color llllllIIIIIlIIl = llllllIIIIIIIll.monstersColor.get();
+                    case 4: {
+                        color = this.monstersColor.get();
                         break;
                     }
-                    case field_6303: {
-                        Color llllllIIIIIlIII = llllllIIIIIIIll.ambientColor.get();
+                    case 5: {
+                        color = this.ambientColor.get();
                         break;
                     }
                     default: {
-                        llllllIIIIIIlll = llllllIIIIIIIll.miscColor.get();
+                        color = this.miscColor.get();
                     }
                 }
             }
-            RenderUtils.drawTracerToEntity(llllllIIIIIIlII, llllllIIIIIIllI, llllllIIIIIIlll, llllllIIIIIIIll.target.get(), llllllIIIIIIIll.stem.get());
-            ++llllllIIIIIIIll.count;
+            RenderUtils.drawTracerToEntity(renderEvent, class_12972, color, this.target.get(), this.stem.get());
+            ++this.count;
         }
     }
 
     @Override
     public String getInfoString() {
-        Tracers lllllIllllIlIII;
-        return Integer.toString(lllllIllllIlIII.count);
+        return Integer.toString(this.count);
     }
 }
 

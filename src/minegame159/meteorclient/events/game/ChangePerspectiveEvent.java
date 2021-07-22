@@ -11,20 +11,12 @@ import net.minecraft.class_5498;
 
 public class ChangePerspectiveEvent
 extends Cancellable {
-    private static final /* synthetic */ ChangePerspectiveEvent INSTANCE;
-    public /* synthetic */ class_5498 perspective;
+    private static final ChangePerspectiveEvent INSTANCE = new ChangePerspectiveEvent();
+    public class_5498 perspective;
 
-    public ChangePerspectiveEvent() {
-        ChangePerspectiveEvent lIIIIIIIIllIIII;
-    }
-
-    static {
-        INSTANCE = new ChangePerspectiveEvent();
-    }
-
-    public static ChangePerspectiveEvent get(class_5498 lIIIIIIIIlIllII) {
+    public static ChangePerspectiveEvent get(class_5498 class_54982) {
         INSTANCE.setCancelled(false);
-        ChangePerspectiveEvent.INSTANCE.perspective = lIIIIIIIIlIllII;
+        ChangePerspectiveEvent.INSTANCE.perspective = class_54982;
         return INSTANCE;
     }
 }

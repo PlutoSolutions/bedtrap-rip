@@ -23,16 +23,15 @@ import net.minecraft.class_1802;
 
 public class ArmorHud
 extends HudElement {
-    private final /* synthetic */ Setting<Orientation> orientation;
-    private final /* synthetic */ Setting<Boolean> flipOrder;
-    private final /* synthetic */ Setting<Double> scale;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<Durability> durability;
+    private final Setting<Orientation> orientation;
+    private final Setting<Boolean> flipOrder;
+    private final Setting<Double> scale;
+    private final SettingGroup sgGeneral;
+    private final Setting<Durability> durability;
 
-    private class_1799 getItem(int llllllllllllllllllIIIIlIllllIlll) {
-        ArmorHud llllllllllllllllllIIIIlIlllllIlI;
-        if (llllllllllllllllllIIIIlIlllllIlI.isInEditor()) {
-            switch (llllllllllllllllllIIIIlIllllIlll) {
+    private class_1799 getItem(int n) {
+        if (this.isInEditor()) {
+            switch (n) {
                 default: {
                     return class_1802.field_22030.method_7854();
                 }
@@ -46,79 +45,76 @@ extends HudElement {
             }
             return class_1802.field_22027.method_7854();
         }
-        return llllllllllllllllllIIIIlIlllllIlI.mc.field_1724.field_7514.method_7372(llllllllllllllllllIIIIlIllllIlll);
+        return this.mc.field_1724.field_7514.method_7372(n);
     }
 
-    public ArmorHud(HUD llllllllllllllllllIIIIllIIlIIlII) {
-        super(llllllllllllllllllIIIIllIIlIIlII, "armor", "Displays information about your armor.");
-        ArmorHud llllllllllllllllllIIIIllIIlIIlIl;
-        llllllllllllllllllIIIIllIIlIIlIl.sgGeneral = llllllllllllllllllIIIIllIIlIIlIl.settings.getDefaultGroup();
-        llllllllllllllllllIIIIllIIlIIlIl.flipOrder = llllllllllllllllllIIIIllIIlIIlIl.sgGeneral.add(new BoolSetting.Builder().name("flip-order").description("Flips the order of armor items.").defaultValue(true).build());
-        llllllllllllllllllIIIIllIIlIIlIl.orientation = llllllllllllllllllIIIIllIIlIIlIl.sgGeneral.add(new EnumSetting.Builder().name("orientation").description("How to display armor.").defaultValue(Orientation.Horizontal).build());
-        llllllllllllllllllIIIIllIIlIIlIl.durability = llllllllllllllllllIIIIllIIlIIlIl.sgGeneral.add(new EnumSetting.Builder().name("durability").description("How to display armor durability.").defaultValue(Durability.Default).build());
-        llllllllllllllllllIIIIllIIlIIlIl.scale = llllllllllllllllllIIIIllIIlIIlIl.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of armor.").defaultValue(3.0).min(1.0).sliderMin(1.0).sliderMax(5.0).build());
+    public ArmorHud(HUD hUD) {
+        super(hUD, "armor", "Displays information about your armor.");
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.flipOrder = this.sgGeneral.add(new BoolSetting.Builder().name("flip-order").description("Flips the order of armor items.").defaultValue(true).build());
+        this.orientation = this.sgGeneral.add(new EnumSetting.Builder().name("orientation").description("How to display armor.").defaultValue(Orientation.Horizontal).build());
+        this.durability = this.sgGeneral.add(new EnumSetting.Builder().name("durability").description("How to display armor durability.").defaultValue(Durability.Default).build());
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("Scale of armor.").defaultValue(3.0).min(1.0).sliderMin(1.0).sliderMax(5.0).build());
     }
 
     @Override
-    public void render(HudRenderer llllllllllllllllllIIIIllIIIIIllI) {
-        ArmorHud llllllllllllllllllIIIIllIIIIllII;
-        double llllllllllllllllllIIIIllIIIIlIlI = llllllllllllllllllIIIIllIIIIllII.box.getX();
-        double llllllllllllllllllIIIIllIIIIlIIl = llllllllllllllllllIIIIllIIIIllII.box.getY();
-        int llllllllllllllllllIIIIllIIIIlIII = llllllllllllllllllIIIIllIIIIllII.flipOrder.get() != false ? 3 : 0;
-        for (int llllllllllllllllllIIIIllIIIIllIl = 0; llllllllllllllllllIIIIllIIIIllIl < 4; ++llllllllllllllllllIIIIllIIIIllIl) {
-            double llllllllllllllllllIIIIllIIIIlllI;
-            double llllllllllllllllllIIIIllIIIIllll;
-            class_1799 llllllllllllllllllIIIIllIIIlIIII = llllllllllllllllllIIIIllIIIIllII.getItem(llllllllllllllllllIIIIllIIIIlIII);
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX();
+        double d2 = this.box.getY();
+        int n = this.flipOrder.get() != false ? 3 : 0;
+        for (int i = 0; i < 4; ++i) {
+            double d3;
+            double d4;
+            class_1799 class_17992 = this.getItem(n);
             RenderSystem.pushMatrix();
-            RenderSystem.scaled((double)llllllllllllllllllIIIIllIIIIllII.scale.get(), (double)llllllllllllllllllIIIIllIIIIllII.scale.get(), (double)1.0);
-            if (llllllllllllllllllIIIIllIIIIllII.orientation.get() == Orientation.Vertical) {
-                double llllllllllllllllllIIIIllIIIlIlII = llllllllllllllllllIIIIllIIIIlIlI / llllllllllllllllllIIIIllIIIIllII.scale.get();
-                double llllllllllllllllllIIIIllIIIlIIll = llllllllllllllllllIIIIllIIIIlIIl / llllllllllllllllllIIIIllIIIIllII.scale.get() + (double)(llllllllllllllllllIIIIllIIIIllIl * 18);
+            RenderSystem.scaled((double)this.scale.get(), (double)this.scale.get(), (double)1.0);
+            if (this.orientation.get() == Orientation.Vertical) {
+                d4 = d / this.scale.get();
+                d3 = d2 / this.scale.get() + (double)(i * 18);
             } else {
-                llllllllllllllllllIIIIllIIIIllll = llllllllllllllllllIIIIllIIIIlIlI / llllllllllllllllllIIIIllIIIIllII.scale.get() + (double)(llllllllllllllllllIIIIllIIIIllIl * 18);
-                llllllllllllllllllIIIIllIIIIlllI = llllllllllllllllllIIIIllIIIIlIIl / llllllllllllllllllIIIIllIIIIllII.scale.get();
+                d4 = d / this.scale.get() + (double)(i * 18);
+                d3 = d2 / this.scale.get();
             }
-            RenderUtils.drawItem(llllllllllllllllllIIIIllIIIlIIII, (int)llllllllllllllllllIIIIllIIIIllll, (int)llllllllllllllllllIIIIllIIIIlllI, llllllllllllllllllIIIIllIIIlIIII.method_7963() && llllllllllllllllllIIIIllIIIIllII.durability.get() == Durability.Default);
-            if (llllllllllllllllllIIIIllIIIlIIII.method_7963() && !llllllllllllllllllIIIIllIIIIllII.isInEditor() && llllllllllllllllllIIIIllIIIIllII.durability.get() != Durability.Default && llllllllllllllllllIIIIllIIIIllII.durability.get() != Durability.None) {
-                String llllllllllllllllllIIIIllIIIlIIlI = "err";
-                switch (llllllllllllllllllIIIIllIIIIllII.durability.get()) {
+            RenderUtils.drawItem(class_17992, (int)d4, (int)d3, class_17992.method_7963() && this.durability.get() == Durability.Default);
+            if (class_17992.method_7963() && !this.isInEditor() && this.durability.get() != Durability.Default && this.durability.get() != Durability.None) {
+                String string = "err";
+                switch (this.durability.get()) {
                     case Numbers: {
-                        llllllllllllllllllIIIIllIIIlIIlI = Integer.toString(llllllllllllllllllIIIIllIIIlIIII.method_7936() - llllllllllllllllllIIIIllIIIlIIII.method_7919());
+                        string = Integer.toString(class_17992.method_7936() - class_17992.method_7919());
                         break;
                     }
                     case Percentage: {
-                        llllllllllllllllllIIIIllIIIlIIlI = Integer.toString(Math.round((float)(llllllllllllllllllIIIIllIIIlIIII.method_7936() - llllllllllllllllllIIIIllIIIlIIII.method_7919()) * 100.0f / (float)llllllllllllllllllIIIIllIIIlIIII.method_7936()));
+                        string = Integer.toString(Math.round((float)(class_17992.method_7936() - class_17992.method_7919()) * 100.0f / (float)class_17992.method_7936()));
                     }
                 }
-                double llllllllllllllllllIIIIllIIIlIIIl = llllllllllllllllllIIIIllIIIIIllI.textWidth(llllllllllllllllllIIIIllIIIlIIlI);
-                if (llllllllllllllllllIIIIllIIIIllII.orientation.get() == Orientation.Vertical) {
-                    llllllllllllllllllIIIIllIIIIllll = llllllllllllllllllIIIIllIIIIlIlI + 8.0 * llllllllllllllllllIIIIllIIIIllII.scale.get() - llllllllllllllllllIIIIllIIIlIIIl / 2.0;
-                    llllllllllllllllllIIIIllIIIIlllI = llllllllllllllllllIIIIllIIIIlIIl + (double)(18 * llllllllllllllllllIIIIllIIIIllIl) * llllllllllllllllllIIIIllIIIIllII.scale.get() + (18.0 * llllllllllllllllllIIIIllIIIIllII.scale.get() - llllllllllllllllllIIIIllIIIIIllI.textHeight());
+                double d5 = hudRenderer.textWidth(string);
+                if (this.orientation.get() == Orientation.Vertical) {
+                    d4 = d + 8.0 * this.scale.get() - d5 / 2.0;
+                    d3 = d2 + (double)(18 * i) * this.scale.get() + (18.0 * this.scale.get() - hudRenderer.textHeight());
                 } else {
-                    llllllllllllllllllIIIIllIIIIllll = llllllllllllllllllIIIIllIIIIlIlI + (double)(18 * llllllllllllllllllIIIIllIIIIllIl) * llllllllllllllllllIIIIllIIIIllII.scale.get() + 8.0 * llllllllllllllllllIIIIllIIIIllII.scale.get() - llllllllllllllllllIIIIllIIIlIIIl / 2.0;
-                    llllllllllllllllllIIIIllIIIIlllI = llllllllllllllllllIIIIllIIIIlIIl + (llllllllllllllllllIIIIllIIIIllII.box.height - llllllllllllllllllIIIIllIIIIIllI.textHeight());
+                    d4 = d + (double)(18 * i) * this.scale.get() + 8.0 * this.scale.get() - d5 / 2.0;
+                    d3 = d2 + (this.box.height - hudRenderer.textHeight());
                 }
-                llllllllllllllllllIIIIllIIIIIllI.text(llllllllllllllllllIIIIllIIIlIIlI, llllllllllllllllllIIIIllIIIIllll, llllllllllllllllllIIIIllIIIIlllI, llllllllllllllllllIIIIllIIIIllII.hud.primaryColor.get());
+                hudRenderer.text(string, d4, d3, this.hud.primaryColor.get());
             }
             RenderSystem.popMatrix();
-            if (llllllllllllllllllIIIIllIIIIllII.flipOrder.get().booleanValue()) {
-                --llllllllllllllllllIIIIllIIIIlIII;
+            if (this.flipOrder.get().booleanValue()) {
+                --n;
                 continue;
             }
-            ++llllllllllllllllllIIIIllIIIIlIII;
+            ++n;
         }
     }
 
     @Override
-    public void update(HudRenderer llllllllllllllllllIIIIllIIlIIIIl) {
-        ArmorHud llllllllllllllllllIIIIllIIlIIIII;
-        switch (llllllllllllllllllIIIIllIIlIIIII.orientation.get()) {
+    public void update(HudRenderer hudRenderer) {
+        switch (this.orientation.get()) {
             case Horizontal: {
-                llllllllllllllllllIIIIllIIlIIIII.box.setSize(16.0 * llllllllllllllllllIIIIllIIlIIIII.scale.get() * 4.0 + 8.0, 16.0 * llllllllllllllllllIIIIllIIlIIIII.scale.get());
+                this.box.setSize(16.0 * this.scale.get() * 4.0 + 8.0, 16.0 * this.scale.get());
                 break;
             }
             case Vertical: {
-                llllllllllllllllllIIIIllIIlIIIII.box.setSize(16.0 * llllllllllllllllllIIIIllIIlIIIII.scale.get(), 16.0 * llllllllllllllllllIIIIllIIlIIIII.scale.get() * 4.0 + 8.0);
+                this.box.setSize(16.0 * this.scale.get(), 16.0 * this.scale.get() * 4.0 + 8.0);
             }
         }
     }
@@ -129,20 +125,12 @@ extends HudElement {
         Numbers,
         Percentage;
 
-
-        private Durability() {
-            Durability lIIllIIlIlIIllI;
-        }
     }
 
     public static enum Orientation {
         Horizontal,
         Vertical;
 
-
-        private Orientation() {
-            Orientation lllllllllllllllllllIIllIllIllIIl;
-        }
     }
 }
 

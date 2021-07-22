@@ -13,29 +13,26 @@ import minegame159.meteorclient.systems.modules.Module;
 
 public class Sprint
 extends Module {
-    private final /* synthetic */ Setting<Boolean> whenStationary;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Boolean> whenStationary;
+    private final SettingGroup sgGeneral;
 
     @Override
     public void onDeactivate() {
-        Sprint llIllIIIIIlllII;
-        llIllIIIIIlllII.mc.field_1724.method_5728(false);
+        this.mc.field_1724.method_5728(false);
     }
 
     public Sprint() {
         super(Categories.Movement, "sprint", "Automatically sprints.");
-        Sprint llIllIIIIIlllll;
-        llIllIIIIIlllll.sgGeneral = llIllIIIIIlllll.settings.getDefaultGroup();
-        llIllIIIIIlllll.whenStationary = llIllIIIIIlllll.sgGeneral.add(new BoolSetting.Builder().name("when-stationary").description("Continues sprinting even if you do not move.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.whenStationary = this.sgGeneral.add(new BoolSetting.Builder().name("when-stationary").description("Continues sprinting even if you do not move.").defaultValue(true).build());
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llIllIIIIIllIII) {
-        Sprint llIllIIIIIllIIl;
-        if (llIllIIIIIllIIl.mc.field_1724.field_6250 > 0.0f && !llIllIIIIIllIIl.whenStationary.get().booleanValue()) {
-            llIllIIIIIllIIl.mc.field_1724.method_5728(true);
-        } else if (llIllIIIIIllIIl.whenStationary.get().booleanValue()) {
-            llIllIIIIIllIIl.mc.field_1724.method_5728(true);
+    private void onTick(TickEvent.Post post) {
+        if (this.mc.field_1724.field_6250 > 0.0f && !this.whenStationary.get().booleanValue()) {
+            this.mc.field_1724.method_5728(true);
+        } else if (this.whenStationary.get().booleanValue()) {
+            this.mc.field_1724.method_5728(true);
         }
     }
 }

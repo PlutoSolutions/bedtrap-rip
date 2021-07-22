@@ -16,11 +16,13 @@ import minegame159.meteorclient.gui.tabs.Tab;
 import minegame159.meteorclient.gui.tabs.TabScreen;
 import minegame159.meteorclient.gui.tabs.WindowTabScreen;
 import minegame159.meteorclient.gui.widgets.WKeybind;
+import minegame159.meteorclient.gui.widgets.WWidget;
 import minegame159.meteorclient.gui.widgets.containers.WTable;
 import minegame159.meteorclient.gui.widgets.input.WTextBox;
 import minegame159.meteorclient.gui.widgets.pressable.WButton;
 import minegame159.meteorclient.gui.widgets.pressable.WMinus;
 import minegame159.meteorclient.gui.widgets.pressable.WPlus;
+import minegame159.meteorclient.gui.widgets.pressable.WPressable;
 import minegame159.meteorclient.systems.macros.Macro;
 import minegame159.meteorclient.systems.macros.Macros;
 import minegame159.meteorclient.utils.Utils;
@@ -29,169 +31,173 @@ import net.minecraft.class_437;
 public class MacrosTab
 extends Tab {
     @Override
-    public TabScreen createScreen(GuiTheme lIlIIIIllIIl) {
-        MacrosTab lIlIIIIllIlI;
-        return new MacrosScreen(lIlIIIIllIIl, lIlIIIIllIlI);
+    public TabScreen createScreen(GuiTheme guiTheme) {
+        return new MacrosScreen(guiTheme, this);
     }
 
     public MacrosTab() {
         super("Macros");
-        MacrosTab lIlIIIIlllIl;
     }
 
     @Override
-    public boolean isScreen(class_437 lIlIIIIlIlII) {
-        return lIlIIIIlIlII instanceof MacrosScreen;
+    public boolean isScreen(class_437 class_4372) {
+        return class_4372 instanceof MacrosScreen;
     }
 
     private static class MacrosScreen
     extends WindowTabScreen {
         @Override
         protected void method_25426() {
-            MacrosScreen llllllllllllllllllIIlIIlllllIlll;
             super.method_25426();
-            llllllllllllllllllIIlIIlllllIlll.clear();
-            llllllllllllllllllIIlIIlllllIlll.initWidgets();
+            this.clear();
+            this.initWidgets();
         }
 
         private void initWidgets() {
-            MacrosScreen llllllllllllllllllIIlIIllllIllII;
+            WWidget wWidget;
             if (Macros.get().getAll().size() > 0) {
-                WTable llllllllllllllllllIIlIIllllIllIl = llllllllllllllllllIIlIIllllIllII.add(llllllllllllllllllIIlIIllllIllII.theme.table()).expandX().widget();
-                for (Macro llllllllllllllllllIIlIIllllIlllI : Macros.get()) {
-                    llllllllllllllllllIIlIIllllIllIl.add(llllllllllllllllllIIlIIllllIllII.theme.label(String.valueOf(new StringBuilder().append(llllllllllllllllllIIlIIllllIlllI.name).append(" (").append(llllllllllllllllllIIlIIllllIlllI.keybind).append(")"))));
-                    WButton llllllllllllllllllIIlIIlllllIIII = llllllllllllllllllIIlIIllllIllIl.add(llllllllllllllllllIIlIIllllIllII.theme.button(GuiRenderer.EDIT)).expandCellX().right().widget();
-                    llllllllllllllllllIIlIIlllllIIII.action = () -> {
-                        MacrosScreen llllllllllllllllllIIlIIlllIllIIl;
-                        Utils.mc.method_1507((class_437)new MacroEditorScreen(llllllllllllllllllIIlIIlllIllIIl.theme, llllllllllllllllllIIlIIllllIlllI));
-                    };
-                    WMinus llllllllllllllllllIIlIIllllIllll = llllllllllllllllllIIlIIllllIllIl.add(llllllllllllllllllIIlIIllllIllII.theme.minus()).widget();
-                    llllllllllllllllllIIlIIllllIllll.action = () -> {
-                        MacrosScreen llllllllllllllllllIIlIIlllIlllIl;
-                        Macros.get().remove(llllllllllllllllllIIlIIllllIlllI);
-                        llllllllllllllllllIIlIIlllIlllIl.clear();
-                        llllllllllllllllllIIlIIlllIlllIl.initWidgets();
-                    };
-                    llllllllllllllllllIIlIIllllIllIl.row();
+                wWidget = this.add(this.theme.table()).expandX().widget();
+                for (Macro macro : Macros.get()) {
+                    ((WTable)wWidget).add(this.theme.label(String.valueOf(new StringBuilder().append(macro.name).append(" (").append(macro.keybind).append(")"))));
+                    WButton wButton = ((WTable)wWidget).add(this.theme.button(GuiRenderer.EDIT)).expandCellX().right().widget();
+                    wButton.action = () -> this.lambda$initWidgets$0(macro);
+                    WMinus wMinus = ((WTable)wWidget).add(this.theme.minus()).widget();
+                    wMinus.action = () -> this.lambda$initWidgets$1(macro);
+                    ((WTable)wWidget).row();
                 }
             }
-            WButton llllllllllllllllllIIlIIllllIlIll = llllllllllllllllllIIlIIllllIllII.add(llllllllllllllllllIIlIIllllIllII.theme.button("Create")).expandX().widget();
-            llllllllllllllllllIIlIIllllIlIll.action = () -> {
-                MacrosScreen llllllllllllllllllIIlIIllllIIIll;
-                Utils.mc.method_1507((class_437)new MacroEditorScreen(llllllllllllllllllIIlIIllllIIIll.theme, null));
-            };
+            wWidget = this.add(this.theme.button("Create")).expandX().widget();
+            ((WButton)wWidget).action = this::lambda$initWidgets$2;
         }
 
-        public MacrosScreen(GuiTheme llllllllllllllllllIIlIIllllllIll, Tab llllllllllllllllllIIlIIlllllllIl) {
-            super(llllllllllllllllllIIlIIllllllIll, llllllllllllllllllIIlIIlllllllIl);
-            MacrosScreen llllllllllllllllllIIlIIlllllllll;
+        private void lambda$initWidgets$0(Macro macro) {
+            Utils.mc.method_1507((class_437)new MacroEditorScreen(this.theme, macro));
+        }
+
+        public MacrosScreen(GuiTheme guiTheme, Tab tab) {
+            super(guiTheme, tab);
+        }
+
+        private void lambda$initWidgets$1(Macro macro) {
+            Macros.get().remove(macro);
+            this.clear();
+            this.initWidgets();
+        }
+
+        private void lambda$initWidgets$2() {
+            Utils.mc.method_1507((class_437)new MacroEditorScreen(this.theme, null));
         }
     }
 
     private static class MacroEditorScreen
     extends WindowScreen {
-        private /* synthetic */ boolean binding;
-        private final /* synthetic */ Macro macro;
-        private final /* synthetic */ boolean isNewMacro;
-        private /* synthetic */ WKeybind keybind;
+        private boolean binding;
+        private final Macro macro;
+        private final boolean isNewMacro;
+        private WKeybind keybind;
 
-        private void fillMessagesTable(WTable llllllllllllllllllIIllIllIllllIl) {
-            MacroEditorScreen llllllllllllllllllIIllIllIlllllI;
-            if (llllllllllllllllllIIllIllIlllllI.macro.messages.isEmpty()) {
-                llllllllllllllllllIIllIllIlllllI.macro.addMessage("");
+        private void fillMessagesTable(WTable wTable) {
+            if (this.macro.messages.isEmpty()) {
+                this.macro.addMessage("");
             }
-            for (int llllllllllllllllllIIllIlllIIIIIl = 0; llllllllllllllllllIIllIlllIIIIIl < llllllllllllllllllIIllIllIlllllI.macro.messages.size(); ++llllllllllllllllllIIllIlllIIIIIl) {
-                int llllllllllllllllllIIllIlllIIIIll = llllllllllllllllllIIllIlllIIIIIl;
-                WTextBox llllllllllllllllllIIllIlllIIIIlI = llllllllllllllllllIIllIllIllllIl.add(llllllllllllllllllIIllIllIlllllI.theme.textBox(llllllllllllllllllIIllIllIlllllI.macro.messages.get(llllllllllllllllllIIllIlllIIIIIl))).minWidth(400.0).expandX().widget();
-                llllllllllllllllllIIllIlllIIIIlI.action = () -> {
-                    MacroEditorScreen llllllllllllllllllIIllIllIIlIlll;
-                    llllllllllllllllllIIllIllIIlIlll.macro.messages.set(llllllllllllllllllIIllIlllIIIIll, llllllllllllllllllIIllIlllIIIIlI.get().trim());
-                };
-                if (llllllllllllllllllIIllIlllIIIIIl != llllllllllllllllllIIllIllIlllllI.macro.messages.size() - 1) {
-                    WMinus llllllllllllllllllIIllIlllIIIlIl = llllllllllllllllllIIllIllIllllIl.add(llllllllllllllllllIIllIllIlllllI.theme.minus()).widget();
-                    llllllllllllllllllIIllIlllIIIlIl.action = () -> {
-                        MacroEditorScreen llllllllllllllllllIIllIllIIllllI;
-                        llllllllllllllllllIIllIllIIllllI.macro.removeMessage(llllllllllllllllllIIllIlllIIIIll);
-                        llllllllllllllllllIIllIllIIllllI.clear();
-                        llllllllllllllllllIIllIllIIllllI.initWidgets(llllllllllllllllllIIllIllIIllllI.macro);
-                    };
+            for (int i = 0; i < this.macro.messages.size(); ++i) {
+                WPressable wPressable;
+                int n = i;
+                WTextBox wTextBox = wTable.add(this.theme.textBox(this.macro.messages.get(i))).minWidth(400.0).expandX().widget();
+                wTextBox.action = () -> this.lambda$fillMessagesTable$3(n, wTextBox);
+                if (i != this.macro.messages.size() - 1) {
+                    wPressable = wTable.add(this.theme.minus()).widget();
+                    wPressable.action = () -> this.lambda$fillMessagesTable$4(n);
                 } else {
-                    WPlus llllllllllllllllllIIllIlllIIIlII = llllllllllllllllllIIllIllIllllIl.add(llllllllllllllllllIIllIllIlllllI.theme.plus()).widget();
-                    llllllllllllllllllIIllIlllIIIlII.action = () -> {
-                        MacroEditorScreen llllllllllllllllllIIllIllIlIIIlI;
-                        llllllllllllllllllIIllIllIlIIIlI.macro.addMessage("");
-                        llllllllllllllllllIIllIllIlIIIlI.clear();
-                        llllllllllllllllllIIllIllIlIIIlI.initWidgets(llllllllllllllllllIIllIllIlIIIlI.macro);
-                    };
+                    wPressable = wTable.add(this.theme.plus()).widget();
+                    ((WPlus)wPressable).action = this::lambda$fillMessagesTable$5;
                 }
-                llllllllllllllllllIIllIllIllllIl.row();
+                wTable.row();
+                if (-3 <= 0) continue;
+                return;
             }
         }
 
-        private boolean onAction(boolean llllllllllllllllllIIllIllIlIlIII, int llllllllllllllllllIIllIllIlIIlII) {
-            MacroEditorScreen llllllllllllllllllIIllIllIlIIllI;
-            if (llllllllllllllllllIIllIllIlIIllI.binding) {
-                llllllllllllllllllIIllIllIlIIllI.keybind.onAction(llllllllllllllllllIIllIllIlIlIII, llllllllllllllllllIIllIllIlIIlII);
-                llllllllllllllllllIIllIllIlIIllI.binding = false;
+        private boolean onAction(boolean bl, int n) {
+            if (this.binding) {
+                this.keybind.onAction(bl, n);
+                this.binding = false;
                 return true;
             }
             return false;
         }
 
         @EventHandler(priority=200)
-        private void onButton(MouseButtonEvent llllllllllllllllllIIllIllIlIllIl) {
-            MacroEditorScreen llllllllllllllllllIIllIllIlIlllI;
-            if (llllllllllllllllllIIllIllIlIlllI.onAction(false, llllllllllllllllllIIllIllIlIllIl.button)) {
-                llllllllllllllllllIIllIllIlIllIl.cancel();
+        private void onButton(MouseButtonEvent mouseButtonEvent) {
+            if (this.onAction(false, mouseButtonEvent.button)) {
+                mouseButtonEvent.cancel();
             }
         }
 
-        private void initWidgets(Macro llllllllllllllllllIIllIlllIlIllI) {
-            MacroEditorScreen llllllllllllllllllIIllIlllIlIIIl;
-            WTable llllllllllllllllllIIllIlllIlIlIl = llllllllllllllllllIIllIlllIlIIIl.add(llllllllllllllllllIIllIlllIlIIIl.theme.table()).widget();
-            llllllllllllllllllIIllIlllIlIlIl.add(llllllllllllllllllIIllIlllIlIIIl.theme.label("Name:"));
-            WTextBox llllllllllllllllllIIllIlllIlIlII = llllllllllllllllllIIllIlllIlIlIl.add(llllllllllllllllllIIllIlllIlIIIl.theme.textBox(llllllllllllllllllIIllIlllIlIllI == null ? "" : llllllllllllllllllIIllIlllIlIIIl.macro.name)).minWidth(400.0).expandX().widget();
-            llllllllllllllllllIIllIlllIlIlII.setFocused(true);
-            llllllllllllllllllIIllIlllIlIlII.action = () -> {
-                llllllllllllllllllIIllIllIIIIlll.macro.name = llllllllllllllllllIIllIlllIlIlII.get().trim();
-            };
-            llllllllllllllllllIIllIlllIlIlIl.row();
-            llllllllllllllllllIIllIlllIlIlIl.add(llllllllllllllllllIIllIlllIlIIIl.theme.label("Messages:")).padTop(4.0).top();
-            WTable llllllllllllllllllIIllIlllIlIIll = llllllllllllllllllIIllIlllIlIlIl.add(llllllllllllllllllIIllIlllIlIIIl.theme.table()).widget();
-            llllllllllllllllllIIllIlllIlIIIl.fillMessagesTable(llllllllllllllllllIIllIlllIlIIll);
-            llllllllllllllllllIIllIlllIlIIIl.keybind = llllllllllllllllllIIllIlllIlIIIl.add(llllllllllllllllllIIllIlllIlIIIl.theme.keybind(llllllllllllllllllIIllIlllIlIIIl.macro.keybind)).expandX().widget();
-            llllllllllllllllllIIllIlllIlIIIl.keybind.actionOnSet = () -> {
-                llllllllllllllllllIIllIllIIIllIl.binding = true;
-            };
-            WButton llllllllllllllllllIIllIlllIlIIlI = llllllllllllllllllIIllIlllIlIIIl.add(llllllllllllllllllIIllIlllIlIIIl.theme.button(llllllllllllllllllIIllIlllIlIIIl.isNewMacro ? "Add" : "Apply")).expandX().widget();
-            llllllllllllllllllIIllIlllIlIIIl.enterAction = llllllllllllllllllIIllIlllIlIIlI.action = () -> {
-                MacroEditorScreen llllllllllllllllllIIllIllIIIllll;
-                if (llllllllllllllllllIIllIllIIIllll.isNewMacro) {
-                    if (llllllllllllllllllIIllIllIIIllll.macro.name != null && !llllllllllllllllllIIllIllIIIllll.macro.name.isEmpty() && llllllllllllllllllIIllIllIIIllll.macro.messages.size() > 0 && llllllllllllllllllIIllIllIIIllll.macro.keybind.isSet()) {
-                        Macros.get().add(llllllllllllllllllIIllIllIIIllll.macro);
-                        llllllllllllllllllIIllIllIIIllll.method_25419();
-                    }
-                } else {
-                    Macros.get().save();
-                    llllllllllllllllllIIllIllIIIllll.method_25419();
+        private void initWidgets(Macro macro) {
+            WTable wTable = this.add(this.theme.table()).widget();
+            wTable.add(this.theme.label("Name:"));
+            WTextBox wTextBox = wTable.add(this.theme.textBox(macro == null ? "" : this.macro.name)).minWidth(400.0).expandX().widget();
+            wTextBox.setFocused(true);
+            wTextBox.action = () -> this.lambda$initWidgets$0(wTextBox);
+            wTable.row();
+            wTable.add(this.theme.label("Messages:")).padTop(4.0).top();
+            WTable wTable2 = wTable.add(this.theme.table()).widget();
+            this.fillMessagesTable(wTable2);
+            this.keybind = this.add(this.theme.keybind(this.macro.keybind)).expandX().widget();
+            this.keybind.actionOnSet = this::lambda$initWidgets$1;
+            WButton wButton = this.add(this.theme.button(this.isNewMacro ? "Add" : "Apply")).expandX().widget();
+            this.enterAction = wButton.action = this::lambda$initWidgets$2;
+        }
+
+        private void lambda$fillMessagesTable$4(int n) {
+            this.macro.removeMessage(n);
+            this.clear();
+            this.initWidgets(this.macro);
+        }
+
+        private void lambda$initWidgets$2() {
+            if (this.isNewMacro) {
+                if (this.macro.name != null && !this.macro.name.isEmpty() && this.macro.messages.size() > 0 && this.macro.keybind.isSet()) {
+                    Macros.get().add(this.macro);
+                    this.method_25419();
                 }
-            };
+            } else {
+                Macros.get().save();
+                this.method_25419();
+            }
         }
 
         @EventHandler(priority=200)
-        private void onKey(KeyEvent llllllllllllllllllIIllIllIllIlIl) {
-            MacroEditorScreen llllllllllllllllllIIllIllIllIlII;
-            if (llllllllllllllllllIIllIllIllIlII.onAction(true, llllllllllllllllllIIllIllIllIlIl.key)) {
-                llllllllllllllllllIIllIllIllIlIl.cancel();
+        private void onKey(KeyEvent keyEvent) {
+            if (this.onAction(true, keyEvent.key)) {
+                keyEvent.cancel();
             }
         }
 
-        public MacroEditorScreen(GuiTheme llllllllllllllllllIIllIlllIlllll, Macro llllllllllllllllllIIllIllllIIIIl) {
-            super(llllllllllllllllllIIllIlllIlllll, llllllllllllllllllIIllIllllIIIIl == null ? "Create Macro" : "Edit Macro");
-            MacroEditorScreen llllllllllllllllllIIllIllllIIIll;
-            llllllllllllllllllIIllIllllIIIll.isNewMacro = llllllllllllllllllIIllIllllIIIIl == null;
-            llllllllllllllllllIIllIllllIIIll.macro = llllllllllllllllllIIllIllllIIIll.isNewMacro ? new Macro() : llllllllllllllllllIIllIllllIIIIl;
-            llllllllllllllllllIIllIllllIIIll.initWidgets(llllllllllllllllllIIllIllllIIIIl);
+        private void lambda$fillMessagesTable$5() {
+            this.macro.addMessage("");
+            this.clear();
+            this.initWidgets(this.macro);
+        }
+
+        private void lambda$fillMessagesTable$3(int n, WTextBox wTextBox) {
+            this.macro.messages.set(n, wTextBox.get().trim());
+        }
+
+        private void lambda$initWidgets$1() {
+            this.binding = true;
+        }
+
+        private void lambda$initWidgets$0(WTextBox wTextBox) {
+            this.macro.name = wTextBox.get().trim();
+        }
+
+        public MacroEditorScreen(GuiTheme guiTheme, Macro macro) {
+            super(guiTheme, macro == null ? "Create Macro" : "Edit Macro");
+            this.isNewMacro = macro == null;
+            this.macro = this.isNewMacro ? new Macro() : macro;
+            this.initWidgets(macro);
         }
     }
 }

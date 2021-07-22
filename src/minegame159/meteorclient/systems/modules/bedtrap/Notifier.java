@@ -73,288 +73,287 @@ import org.apache.commons.io.IOUtils;
 
 public class Notifier
 extends Module {
-    private /* synthetic */ class_2338 prevBreakPos;
-    private final /* synthetic */ Setting<Integer> minDistance;
-    private final /* synthetic */ Setting<Boolean> portal;
-    private /* synthetic */ boolean bLeggings;
-    private final /* synthetic */ Setting<Boolean> wither;
-    private final /* synthetic */ Setting<Boolean> antiVanish;
-    private final /* synthetic */ Setting<Boolean> dragon;
-    private final /* synthetic */ SettingGroup sExploit;
-    private final /* synthetic */ List<class_1657> burrowedPlayers;
-    private static final /* synthetic */ class_310 mc;
-    private final /* synthetic */ Setting<Integer> msgNum;
-    private final /* synthetic */ SettingGroup sVanish;
-    private final /* synthetic */ SettingGroup sSurround;
-    /* synthetic */ Boolean obb;
-    private /* synthetic */ long lastTick;
-    private final /* synthetic */ Setting<Boolean> tpExploit;
-    private final /* synthetic */ Setting<Boolean> armorDurability;
-    private final /* synthetic */ Setting<Boolean> coordExploit;
-    private /* synthetic */ boolean bBoots;
-    private final /* synthetic */ Setting<Boolean> surroundBreak;
-    private final /* synthetic */ Setting<Integer> damage;
-    private final /* synthetic */ SettingGroup sGroup;
-    private /* synthetic */ int num;
-    private /* synthetic */ boolean bHead;
-    private /* synthetic */ boolean bArmor;
-    private final /* synthetic */ Queue<UUID> toLookup;
+    private class_2338 prevBreakPos;
+    private final Setting<Integer> minDistance;
+    private final Setting<Boolean> portal;
+    private boolean bLeggings;
+    static final boolean $assertionsDisabled = !Notifier.class.desiredAssertionStatus();
+    private final Setting<Boolean> wither;
+    private final Setting<Boolean> antiVanish;
+    private final Setting<Boolean> dragon;
+    private final SettingGroup sExploit;
+    private final List<class_1657> burrowedPlayers;
+    private static final class_310 mc = class_310.method_1551();
+    private final Setting<Integer> msgNum;
+    private final SettingGroup sVanish;
+    private final SettingGroup sSurround;
+    Boolean obb;
+    private long lastTick;
+    private final Setting<Boolean> tpExploit;
+    private final Setting<Boolean> armorDurability;
+    private final Setting<Boolean> coordExploit;
+    private boolean bBoots;
+    private final Setting<Boolean> surroundBreak;
+    private final Setting<Integer> damage;
+    private final SettingGroup sGroup;
+    private int num;
+    private boolean bHead;
+    private boolean bArmor;
+    private final Queue<UUID> toLookup;
+
+    static class_310 access$000() {
+        return mc;
+    }
 
     @EventHandler
-    public void coordExploit(PacketEvent.Receive llllllllllllllllIllIIlllIlIlIIIl) {
+    public void coordExploit(PacketEvent.Receive receive) {
         if (Notifier.mc.field_1724 != null) {
-            class_2673 llllllllllllllllIllIIlllIlIlIlII;
-            PacketEvent.Receive llllllllllllllllIllIIlllIlIlIIll = llllllllllllllllIllIIlllIlIlIIIl;
-            if (llllllllllllllllIllIIlllIlIlIIll.packet instanceof class_2673 && (llllllllllllllllIllIIlllIlIlIlII = (class_2673)llllllllllllllllIllIIlllIlIlIIll.packet).method_11533()) {
-                System.out.println(llllllllllllllllIllIIlllIlIlIlII.method_11532());
-                switch (llllllllllllllllIllIIlllIlIlIlII.method_11532()) {
+            class_2673 class_26732;
+            PacketEvent.Receive receive2 = receive;
+            if (receive2.packet instanceof class_2673 && (class_26732 = (class_2673)receive2.packet).method_11533()) {
+                System.out.println(class_26732.method_11532());
+                switch (class_26732.method_11532()) {
                     case 1023: {
-                        Notifier llllllllllllllllIllIIlllIlIlIIlI;
-                        if (!llllllllllllllllIllIIlllIlIlIIlI.wither.get().booleanValue()) break;
-                        ChatUtils.info(String.valueOf(new StringBuilder().append("Wither spawned at: ").append(llllllllllllllllIllIIlllIlIlIlII.method_11531().method_23854())), new Object[0]);
+                        if (!this.wither.get().booleanValue()) break;
+                        ChatUtils.info(String.valueOf(new StringBuilder().append("Wither spawned at: ").append(class_26732.method_11531().method_23854())), new Object[0]);
                         break;
                     }
                     case 1038: {
-                        Notifier llllllllllllllllIllIIlllIlIlIIlI;
-                        if (!llllllllllllllllIllIIlllIlIlIIlI.portal.get().booleanValue()) break;
-                        ChatUtils.info(String.valueOf(new StringBuilder().append("End Portal Activated at: ").append(llllllllllllllllIllIIlllIlIlIlII.method_11531().method_23854())), new Object[0]);
+                        if (!this.portal.get().booleanValue()) break;
+                        ChatUtils.info(String.valueOf(new StringBuilder().append("End Portal Activated at: ").append(class_26732.method_11531().method_23854())), new Object[0]);
                         break;
                     }
                     case 1028: {
-                        Notifier llllllllllllllllIllIIlllIlIlIIlI;
-                        if (!llllllllllllllllIllIIlllIlIlIIlI.dragon.get().booleanValue()) break;
-                        ChatUtils.info(String.valueOf(new StringBuilder().append("Ender Dragon killed at: ").append(llllllllllllllllIllIIlllIlIlIlII.method_11531().method_23854())), new Object[0]);
+                        if (!this.dragon.get().booleanValue()) break;
+                        ChatUtils.info(String.valueOf(new StringBuilder().append("Ender Dragon killed at: ").append(class_26732.method_11531().method_23854())), new Object[0]);
                         break;
                     }
                     default: {
-                        ChatUtils.info(String.valueOf(new StringBuilder().append("Unknown global event at: ").append(llllllllllllllllIllIIlllIlIlIlII.method_11531().method_23854())), new Object[0]);
+                        ChatUtils.info(String.valueOf(new StringBuilder().append("Unknown global event at: ").append(class_26732.method_11531().method_23854())), new Object[0]);
                     }
                 }
             }
         }
     }
 
-    static {
-        mc = class_310.method_1551();
-    }
-
     @Override
     public void onDeactivate() {
-        Notifier llllllllllllllllIllIIlllllIIIIIl;
-        if (llllllllllllllllIllIIlllllIIIIIl.antiVanish.get().booleanValue()) {
-            llllllllllllllllIllIIlllllIIIIIl.toLookup.clear();
+        if (this.antiVanish.get().booleanValue()) {
+            this.toLookup.clear();
         }
     }
 
     public Notifier() {
         super(Categories.BedTrap, "notifier+", "Notifies you on triggered event.");
-        Notifier llllllllllllllllIllIIlllllIIIllI;
-        llllllllllllllllIllIIlllllIIIllI.sGroup = llllllllllllllllIllIIlllllIIIllI.settings.createGroup("Armor Break");
-        llllllllllllllllIllIIlllllIIIllI.sVanish = llllllllllllllllIllIIlllllIIIllI.settings.createGroup("Anti Vanish");
-        llllllllllllllllIllIIlllllIIIllI.sSurround = llllllllllllllllIllIIlllllIIIllI.settings.createGroup("Surround Break");
-        llllllllllllllllIllIIlllllIIIllI.sExploit = llllllllllllllllIllIIlllllIIIllI.settings.createGroup("Tp Exploit");
-        llllllllllllllllIllIIlllllIIIllI.armorDurability = llllllllllllllllIllIIlllllIIIllI.sGroup.add(new BoolSetting.Builder().name("armor-durability").description("yes").defaultValue(true).build());
-        llllllllllllllllIllIIlllllIIIllI.damage = llllllllllllllllIllIIlllllIIIllI.sGroup.add(new IntSetting.Builder().name("damage").description("What damage should an armor item have to be notified.").defaultValue(100).visible(llllllllllllllllIllIIlllllIIIllI.armorDurability::get).build());
-        llllllllllllllllIllIIlllllIIIllI.msgNum = llllllllllllllllIllIIlllllIIIllI.sGroup.add(new IntSetting.Builder().name("messages").description("What damage should an armor item have to be notified.").defaultValue(5).visible(llllllllllllllllIllIIlllllIIIllI.armorDurability::get).build());
-        llllllllllllllllIllIIlllllIIIllI.antiVanish = llllllllllllllllIllIIlllllIIIllI.sVanish.add(new BoolSetting.Builder().name("anti-vanish").description("Place obsidian on TNT position.").defaultValue(true).build());
-        llllllllllllllllIllIIlllllIIIllI.surroundBreak = llllllllllllllllIllIIlllllIIIllI.sSurround.add(new BoolSetting.Builder().name("surround-break").description("Place obsidian on TNT position.").defaultValue(true).build());
-        llllllllllllllllIllIIlllllIIIllI.coordExploit = llllllllllllllllIllIIlllllIIIllI.sExploit.add(new BoolSetting.Builder().name("coord-exploit").description("Place obsidian on TNT position.").defaultValue(true).build());
-        llllllllllllllllIllIIlllllIIIllI.wither = llllllllllllllllIllIIlllllIIIllI.sExploit.add(new BoolSetting.Builder().name("wither-boss").description("Place obsidian on TNT position.").defaultValue(true).visible(llllllllllllllllIllIIlllllIIIllI.coordExploit::get).build());
-        llllllllllllllllIllIIlllllIIIllI.portal = llllllllllllllllIllIIlllllIIIllI.sExploit.add(new BoolSetting.Builder().name("end-portal").description("Place obsidian on TNT position.").defaultValue(true).visible(llllllllllllllllIllIIlllllIIIllI.coordExploit::get).build());
-        llllllllllllllllIllIIlllllIIIllI.dragon = llllllllllllllllIllIIlllllIIIllI.sExploit.add(new BoolSetting.Builder().name("end-dragon").description("Place obsidian on TNT position.").defaultValue(true).visible(llllllllllllllllIllIIlllllIIIllI.coordExploit::get).build());
-        llllllllllllllllIllIIlllllIIIllI.tpExploit = llllllllllllllllIllIIlllllIIIllI.sExploit.add(new BoolSetting.Builder().name("tp-exploit").description("Place obsidian on TNT position.").defaultValue(true).visible(llllllllllllllllIllIIlllllIIIllI.coordExploit::get).build());
-        llllllllllllllllIllIIlllllIIIllI.minDistance = llllllllllllllllIllIIlllllIIIllI.sExploit.add(new IntSetting.Builder().name("min-distance").description("Minimal distance for tp exploit.").defaultValue(6).min(0).max(10000).sliderMax(10000).visible(llllllllllllllllIllIIlllllIIIllI.tpExploit::get).build());
-        llllllllllllllllIllIIlllllIIIllI.num = 0;
-        llllllllllllllllIllIIlllllIIIllI.bBoots = false;
-        llllllllllllllllIllIIlllllIIIllI.bLeggings = false;
-        llllllllllllllllIllIIlllllIIIllI.bArmor = false;
-        llllllllllllllllIllIIlllllIIIllI.bHead = false;
-        llllllllllllllllIllIIlllllIIIllI.toLookup = new ConcurrentLinkedQueue<UUID>();
-        llllllllllllllllIllIIlllllIIIllI.burrowedPlayers = new ArrayList<class_1657>();
-        llllllllllllllllIllIIlllllIIIllI.lastTick = 0L;
+        this.sGroup = this.settings.createGroup("Armor Break");
+        this.sVanish = this.settings.createGroup("Anti Vanish");
+        this.sSurround = this.settings.createGroup("Surround Break");
+        this.sExploit = this.settings.createGroup("Tp Exploit");
+        this.armorDurability = this.sGroup.add(new BoolSetting.Builder().name("armor-durability").description("yes").defaultValue(true).build());
+        this.damage = this.sGroup.add(new IntSetting.Builder().name("damage").description("What damage should an armor item have to be notified.").defaultValue(100).visible(this.armorDurability::get).build());
+        this.msgNum = this.sGroup.add(new IntSetting.Builder().name("messages").description("What damage should an armor item have to be notified.").defaultValue(5).visible(this.armorDurability::get).build());
+        this.antiVanish = this.sVanish.add(new BoolSetting.Builder().name("anti-vanish").description("Place obsidian on TNT position.").defaultValue(true).build());
+        this.surroundBreak = this.sSurround.add(new BoolSetting.Builder().name("surround-break").description("Place obsidian on TNT position.").defaultValue(true).build());
+        this.coordExploit = this.sExploit.add(new BoolSetting.Builder().name("coord-exploit").description("Place obsidian on TNT position.").defaultValue(true).build());
+        this.wither = this.sExploit.add(new BoolSetting.Builder().name("wither-boss").description("Place obsidian on TNT position.").defaultValue(true).visible(this.coordExploit::get).build());
+        this.portal = this.sExploit.add(new BoolSetting.Builder().name("end-portal").description("Place obsidian on TNT position.").defaultValue(true).visible(this.coordExploit::get).build());
+        this.dragon = this.sExploit.add(new BoolSetting.Builder().name("end-dragon").description("Place obsidian on TNT position.").defaultValue(true).visible(this.coordExploit::get).build());
+        this.tpExploit = this.sExploit.add(new BoolSetting.Builder().name("tp-exploit").description("Place obsidian on TNT position.").defaultValue(true).visible(this.coordExploit::get).build());
+        this.minDistance = this.sExploit.add(new IntSetting.Builder().name("min-distance").description("Minimal distance for tp exploit.").defaultValue(6).min(0).max(10000).sliderMax(10000).visible(this.tpExploit::get).build());
+        this.num = 0;
+        this.bBoots = false;
+        this.bLeggings = false;
+        this.bArmor = false;
+        this.bHead = false;
+        this.toLookup = new ConcurrentLinkedQueue<UUID>();
+        this.burrowedPlayers = new ArrayList<class_1657>();
+        this.lastTick = 0L;
     }
 
     @Override
     public void onActivate() {
-        llllllllllllllllIllIIlllllIIIlII.num = 1;
-        llllllllllllllllIllIIlllllIIIlII.bBoots = false;
-        llllllllllllllllIllIIlllllIIIlII.bLeggings = false;
-        llllllllllllllllIllIIlllllIIIlII.bArmor = false;
-        llllllllllllllllIllIIlllllIIIlII.bHead = false;
+        this.num = 1;
+        this.bBoots = false;
+        this.bLeggings = false;
+        this.bArmor = false;
+        this.bHead = false;
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post llllllllllllllllIllIIllllIllIIIl) {
-        Notifier llllllllllllllllIllIIllllIllIIlI;
-        assert (Notifier.mc.field_1724 != null);
-        assert (Notifier.mc.field_1687 != null);
-        class_1799 llllllllllllllllIllIIllllIllIIII = Notifier.mc.field_1724.field_7514.method_7372(0);
-        int llllllllllllllllIllIIllllIlIllll = llllllllllllllllIllIIllllIllIIII.method_7936() - llllllllllllllllIllIIllllIllIIII.method_7919();
-        class_1799 llllllllllllllllIllIIllllIlIlllI = Notifier.mc.field_1724.field_7514.method_7372(1);
-        int llllllllllllllllIllIIllllIlIllIl = llllllllllllllllIllIIllllIlIlllI.method_7936() - llllllllllllllllIllIIllllIlIlllI.method_7919();
-        class_1799 llllllllllllllllIllIIllllIlIllII = Notifier.mc.field_1724.field_7514.method_7372(2);
-        int llllllllllllllllIllIIllllIlIlIll = llllllllllllllllIllIIllllIlIllII.method_7936() - llllllllllllllllIllIIllllIlIllII.method_7919();
-        class_1799 llllllllllllllllIllIIllllIlIlIlI = Notifier.mc.field_1724.field_7514.method_7372(3);
-        int llllllllllllllllIllIIllllIlIlIIl = llllllllllllllllIllIIllllIlIlIlI.method_7936() - llllllllllllllllIllIIllllIlIlIlI.method_7919();
-        if (llllllllllllllllIllIIllllIlIllll < llllllllllllllllIllIIllllIllIIlI.damage.get() && !llllllllllllllllIllIIllllIllIIlI.bBoots) {
+    private void onTick(TickEvent.Post post) {
+        if (!$assertionsDisabled && Notifier.mc.field_1724 == null) {
+            throw new AssertionError();
+        }
+        if (!$assertionsDisabled && Notifier.mc.field_1687 == null) {
+            throw new AssertionError();
+        }
+        class_1799 class_17992 = Notifier.mc.field_1724.field_7514.method_7372(0);
+        int n = class_17992.method_7936() - class_17992.method_7919();
+        class_1799 class_17993 = Notifier.mc.field_1724.field_7514.method_7372(1);
+        int n2 = class_17993.method_7936() - class_17993.method_7919();
+        class_1799 class_17994 = Notifier.mc.field_1724.field_7514.method_7372(2);
+        int n3 = class_17994.method_7936() - class_17994.method_7919();
+        class_1799 class_17995 = Notifier.mc.field_1724.field_7514.method_7372(3);
+        int n4 = class_17995.method_7936() - class_17995.method_7919();
+        if (n < this.damage.get() && !this.bBoots) {
             if (Notifier.mc.field_1724.field_7514.method_7372(0).method_7960()) {
                 ChatUtils.warning("Your Boots slot is empty!", new Object[0]);
-                llllllllllllllllIllIIllllIllIIlI.bBoots = true;
-                llllllllllllllllIllIIllllIllIIlI.num = 0;
+                this.bBoots = true;
+                this.num = 0;
                 return;
             }
             ChatUtils.warning("Your Boots is about to break.", new Object[0]);
-            if (llllllllllllllllIllIIllllIllIIlI.num < llllllllllllllllIllIIllllIllIIlI.msgNum.get()) {
-                ++llllllllllllllllIllIIllllIllIIlI.num;
+            if (this.num < this.msgNum.get()) {
+                ++this.num;
                 return;
             }
-            llllllllllllllllIllIIllllIllIIlI.bBoots = true;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
-        } else if (llllllllllllllllIllIIllllIlIllll > llllllllllllllllIllIIllllIllIIlI.damage.get() && llllllllllllllllIllIIllllIllIIlI.bBoots) {
-            llllllllllllllllIllIIllllIllIIlI.bBoots = false;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
+            this.bBoots = true;
+            this.num = 1;
+        } else if (n > this.damage.get() && this.bBoots) {
+            this.bBoots = false;
+            this.num = 1;
         }
-        if (llllllllllllllllIllIIllllIlIllIl < llllllllllllllllIllIIllllIllIIlI.damage.get() && !llllllllllllllllIllIIllllIllIIlI.bLeggings) {
+        if (n2 < this.damage.get() && !this.bLeggings) {
             if (Notifier.mc.field_1724.field_7514.method_7372(1).method_7960()) {
                 ChatUtils.warning("Your Leggings slot is empty!", new Object[0]);
-                llllllllllllllllIllIIllllIllIIlI.bLeggings = true;
-                llllllllllllllllIllIIllllIllIIlI.num = 0;
+                this.bLeggings = true;
+                this.num = 0;
                 return;
             }
             ChatUtils.warning("Your Leggings is about to break.", new Object[0]);
-            if (llllllllllllllllIllIIllllIllIIlI.num < llllllllllllllllIllIIllllIllIIlI.msgNum.get()) {
-                ++llllllllllllllllIllIIllllIllIIlI.num;
+            if (this.num < this.msgNum.get()) {
+                ++this.num;
                 return;
             }
-            llllllllllllllllIllIIllllIllIIlI.bLeggings = true;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
-        } else if (llllllllllllllllIllIIllllIlIllIl > llllllllllllllllIllIIllllIllIIlI.damage.get() && llllllllllllllllIllIIllllIllIIlI.bLeggings) {
-            llllllllllllllllIllIIllllIllIIlI.bLeggings = false;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
+            this.bLeggings = true;
+            this.num = 1;
+        } else if (n2 > this.damage.get() && this.bLeggings) {
+            this.bLeggings = false;
+            this.num = 1;
         }
-        if (llllllllllllllllIllIIllllIlIlIll < llllllllllllllllIllIIllllIllIIlI.damage.get() && !llllllllllllllllIllIIllllIllIIlI.bArmor) {
+        if (n3 < this.damage.get() && !this.bArmor) {
             if (Notifier.mc.field_1724.field_7514.method_7372(2).method_7960()) {
                 ChatUtils.warning("Your Chestplate slot is empty!", new Object[0]);
-                llllllllllllllllIllIIllllIllIIlI.bArmor = true;
-                llllllllllllllllIllIIllllIllIIlI.num = 0;
+                this.bArmor = true;
+                this.num = 0;
                 return;
             }
             ChatUtils.warning("Your Chestplate is about to break.", new Object[0]);
-            if (llllllllllllllllIllIIllllIllIIlI.num < llllllllllllllllIllIIllllIllIIlI.msgNum.get()) {
-                ++llllllllllllllllIllIIllllIllIIlI.num;
+            if (this.num < this.msgNum.get()) {
+                ++this.num;
                 return;
             }
-            llllllllllllllllIllIIllllIllIIlI.bArmor = true;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
-        } else if (llllllllllllllllIllIIllllIlIlIll > llllllllllllllllIllIIllllIllIIlI.damage.get() && llllllllllllllllIllIIllllIllIIlI.bArmor) {
-            llllllllllllllllIllIIllllIllIIlI.bArmor = false;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
+            this.bArmor = true;
+            this.num = 1;
+        } else if (n3 > this.damage.get() && this.bArmor) {
+            this.bArmor = false;
+            this.num = 1;
         }
-        if (llllllllllllllllIllIIllllIlIlIIl < llllllllllllllllIllIIllllIllIIlI.damage.get() && !llllllllllllllllIllIIllllIllIIlI.bHead) {
+        if (n4 < this.damage.get() && !this.bHead) {
             if (Notifier.mc.field_1724.field_7514.method_7372(3).method_7960()) {
                 ChatUtils.warning("Your Helmet slot is empty!", new Object[0]);
-                llllllllllllllllIllIIllllIllIIlI.bHead = true;
-                llllllllllllllllIllIIllllIllIIlI.num = 0;
+                this.bHead = true;
+                this.num = 0;
                 return;
             }
             ChatUtils.warning("Your Helmet is about to break.", new Object[0]);
-            if (llllllllllllllllIllIIllllIllIIlI.num < llllllllllllllllIllIIllllIllIIlI.msgNum.get()) {
-                ++llllllllllllllllIllIIllllIllIIlI.num;
+            if (this.num < this.msgNum.get()) {
+                ++this.num;
                 return;
             }
-            llllllllllllllllIllIIllllIllIIlI.bHead = true;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
-        } else if (llllllllllllllllIllIIllllIlIlIIl > llllllllllllllllIllIIllllIllIIlI.damage.get() && llllllllllllllllIllIIllllIllIIlI.bHead) {
-            llllllllllllllllIllIIllllIllIIlI.bHead = false;
-            llllllllllllllllIllIIllllIllIIlI.num = 1;
+            this.bHead = true;
+            this.num = 1;
+        } else if (n4 > this.damage.get() && this.bHead) {
+            this.bHead = false;
+            this.num = 1;
         }
     }
 
     @EventHandler
-    public void onBreakPacket(PacketEvent.Receive llllllllllllllllIllIIlllIllIllIl) {
-        Notifier llllllllllllllllIllIIlllIlllIIII;
-        if (llllllllllllllllIllIIlllIlllIIII.surroundBreak.get().booleanValue()) {
-            assert (Notifier.mc.field_1687 != null);
-            assert (Notifier.mc.field_1724 != null);
-            if (llllllllllllllllIllIIlllIllIllIl.packet instanceof class_2620) {
-                class_2620 llllllllllllllllIllIIlllIlllIlII = (class_2620)llllllllllllllllIllIIlllIllIllIl.packet;
-                class_2338 llllllllllllllllIllIIlllIlllIIll = llllllllllllllllIllIIlllIlllIlII.method_11277();
-                if (llllllllllllllllIllIIlllIlllIIll.equals((Object)llllllllllllllllIllIIlllIlllIIII.prevBreakPos) && llllllllllllllllIllIIlllIlllIlII.method_11278() > 0) {
+    public void onBreakPacket(PacketEvent.Receive receive) {
+        if (this.surroundBreak.get().booleanValue()) {
+            if (!$assertionsDisabled && Notifier.mc.field_1687 == null) {
+                throw new AssertionError();
+            }
+            if (!$assertionsDisabled && Notifier.mc.field_1724 == null) {
+                throw new AssertionError();
+            }
+            if (receive.packet instanceof class_2620) {
+                class_2620 class_26202 = (class_2620)receive.packet;
+                class_2338 class_23382 = class_26202.method_11277();
+                if (class_23382.equals((Object)this.prevBreakPos) && class_26202.method_11278() > 0) {
                     return;
                 }
-                class_1657 llllllllllllllllIllIIlllIlllIIlI = (class_1657)Notifier.mc.field_1687.method_8469(llllllllllllllllIllIIlllIlllIlII.method_11280());
-                class_2338 llllllllllllllllIllIIlllIlllIIIl = Notifier.mc.field_1724.method_24515();
-                llllllllllllllllIllIIlllIlllIIII.obb = Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlllIIll).method_26204() == class_2246.field_10540;
-                if (llllllllllllllllIllIIlllIlllIIlI.equals((Object)Notifier.mc.field_1724)) {
+                class_1657 class_16572 = (class_1657)Notifier.mc.field_1687.method_8469(class_26202.method_11280());
+                class_2338 class_23383 = Notifier.mc.field_1724.method_24515();
+                this.obb = Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_10540;
+                if (class_16572.equals((Object)Notifier.mc.field_1724)) {
                     return;
                 }
-                if (llllllllllllllllIllIIlllIlllIIII.obb.booleanValue() && llllllllllllllllIllIIlllIlllIIll.equals((Object)llllllllllllllllIllIIlllIlllIIIl.method_10095())) {
-                    llllllllllllllllIllIIlllIlllIIII.notifySurroundBreak(class_2350.field_11043, llllllllllllllllIllIIlllIlllIIlI);
-                } else if (llllllllllllllllIllIIlllIlllIIII.obb.booleanValue() && llllllllllllllllIllIIlllIlllIIll.equals((Object)llllllllllllllllIllIIlllIlllIIIl.method_10078())) {
-                    llllllllllllllllIllIIlllIlllIIII.notifySurroundBreak(class_2350.field_11034, llllllllllllllllIllIIlllIlllIIlI);
-                } else if (llllllllllllllllIllIIlllIlllIIII.obb.booleanValue() && llllllllllllllllIllIIlllIlllIIll.equals((Object)llllllllllllllllIllIIlllIlllIIIl.method_10072())) {
-                    llllllllllllllllIllIIlllIlllIIII.notifySurroundBreak(class_2350.field_11035, llllllllllllllllIllIIlllIlllIIlI);
-                } else if (llllllllllllllllIllIIlllIlllIIII.obb.booleanValue() && llllllllllllllllIllIIlllIlllIIll.equals((Object)llllllllllllllllIllIIlllIlllIIIl.method_10067())) {
-                    llllllllllllllllIllIIlllIlllIIII.notifySurroundBreak(class_2350.field_11039, llllllllllllllllIllIIlllIlllIIlI);
+                if (this.obb.booleanValue() && class_23382.equals((Object)class_23383.method_10095())) {
+                    this.notifySurroundBreak(class_2350.field_11043, class_16572);
+                } else if (this.obb.booleanValue() && class_23382.equals((Object)class_23383.method_10078())) {
+                    this.notifySurroundBreak(class_2350.field_11034, class_16572);
+                } else if (this.obb.booleanValue() && class_23382.equals((Object)class_23383.method_10072())) {
+                    this.notifySurroundBreak(class_2350.field_11035, class_16572);
+                } else if (this.obb.booleanValue() && class_23382.equals((Object)class_23383.method_10067())) {
+                    this.notifySurroundBreak(class_2350.field_11039, class_16572);
                 }
-                llllllllllllllllIllIIlllIlllIIII.prevBreakPos = llllllllllllllllIllIIlllIlllIIll;
+                this.prevBreakPos = class_23382;
             }
         }
     }
 
-    public static String getPlayerNameFromUUID(UUID llllllllllllllllIllIIlllIllllllI) {
+    public static String getPlayerNameFromUUID(UUID uUID) {
         try {
-            NameLookup llllllllllllllllIllIIllllIIIIIIl = new NameLookup(llllllllllllllllIllIIlllIllllllI);
-            Thread llllllllllllllllIllIIllllIIIIIII = new Thread(llllllllllllllllIllIIllllIIIIIIl);
-            llllllllllllllllIllIIllllIIIIIII.start();
-            llllllllllllllllIllIIllllIIIIIII.join();
-            return llllllllllllllllIllIIllllIIIIIIl.getName();
+            NameLookup nameLookup = new NameLookup(uUID);
+            Thread thread = new Thread(nameLookup);
+            thread.start();
+            thread.join();
+            return nameLookup.getName();
         }
-        catch (Exception llllllllllllllllIllIIlllIlllllll) {
+        catch (Exception exception) {
             return null;
         }
     }
 
-    public class_2554 formatMessage(String llllllllllllllllIllIIlllIIlIlIIl, class_2338 llllllllllllllllIllIIlllIIlIlIll) {
-        Notifier llllllllllllllllIllIIlllIIlIlIlI;
-        return llllllllllllllllIllIIlllIIlIlIlI.formatMessage(llllllllllllllllIllIIlllIIlIlIIl, new class_243((double)llllllllllllllllIllIIlllIIlIlIll.method_10263(), (double)llllllllllllllllIllIIlllIIlIlIll.method_10264(), (double)llllllllllllllllIllIIlllIIlIlIll.method_10260()));
+    public class_2554 formatMessage(String string, class_2338 class_23382) {
+        return this.formatMessage(string, new class_243((double)class_23382.method_10263(), (double)class_23382.method_10264(), (double)class_23382.method_10260()));
     }
 
-    private void notifySurroundBreak(class_2350 llllllllllllllllIllIIlllIllIIIIl, class_1657 llllllllllllllllIllIIlllIllIIIll) {
-        Notifier llllllllllllllllIllIIlllIllIIlIl;
-        if (llllllllllllllllIllIIlllIllIIlIl.surroundBreak.get().booleanValue()) {
-            switch (llllllllllllllllIllIIlllIllIIIIl) {
-                case field_11043: {
-                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(llllllllllllllllIllIIlllIllIIIll.method_5820())), new Object[0]);
+    private void notifySurroundBreak(class_2350 class_23502, class_1657 class_16572) {
+        if (this.surroundBreak.get().booleanValue()) {
+            switch (1.$SwitchMap$net$minecraft$util$math$Direction[class_23502.ordinal()]) {
+                case 1: {
+                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(class_16572.method_5820())), new Object[0]);
                     break;
                 }
-                case field_11034: {
-                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(llllllllllllllllIllIIlllIllIIIll.method_5820())), new Object[0]);
+                case 2: {
+                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(class_16572.method_5820())), new Object[0]);
                     break;
                 }
-                case field_11035: {
-                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(llllllllllllllllIllIIlllIllIIIll.method_5820())), new Object[0]);
+                case 3: {
+                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(class_16572.method_5820())), new Object[0]);
                     break;
                 }
-                case field_11039: {
-                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(llllllllllllllllIllIIlllIllIIIll.method_5820())), new Object[0]);
+                case 4: {
+                    ChatUtils.warning(String.valueOf(new StringBuilder().append("Your surround is being broken by ").append(class_16572.method_5820())), new Object[0]);
                 }
             }
         }
     }
 
     @EventHandler
-    private void onPacketReceive(PacketEvent.Receive llllllllllllllllIllIIlllIIllllll) {
-        if (llllllllllllllllIllIIlllIIllllll.packet instanceof class_2777) {
-            class_2777 llllllllllllllllIllIIlllIlIIIIll = (class_2777)llllllllllllllllIllIIlllIIllllll.packet;
+    private void onPacketReceive(PacketEvent.Receive receive) {
+        if (receive.packet instanceof class_2777) {
+            class_2777 class_27772 = (class_2777)receive.packet;
             try {
-                Notifier llllllllllllllllIllIIlllIlIIIIlI;
-                class_1297 llllllllllllllllIllIIlllIlIIIlII = Notifier.mc.field_1687.method_8469(llllllllllllllllIllIIlllIlIIIIll.method_11916());
-                if (llllllllllllllllIllIIlllIlIIIlII.method_5864().equals((Object)class_1299.field_6097) && llllllllllllllllIllIIlllIlIIIIlI.tpExploit.get().booleanValue()) {
-                    class_243 llllllllllllllllIllIIlllIlIIIllI = new class_243(llllllllllllllllIllIIlllIlIIIIll.method_11917(), llllllllllllllllIllIIlllIlIIIIll.method_11919(), llllllllllllllllIllIIlllIlIIIIll.method_11918());
-                    class_243 llllllllllllllllIllIIlllIlIIIlIl = llllllllllllllllIllIIlllIlIIIlII.method_19538();
-                    if (llllllllllllllllIllIIlllIlIIIlIl.method_1022(llllllllllllllllIllIIlllIlIIIllI) >= (double)llllllllllllllllIllIIlllIlIIIIlI.minDistance.get().intValue()) {
-                        llllllllllllllllIllIIlllIlIIIIlI.info((class_2561)llllllllllllllllIllIIlllIlIIIIlI.formatMessage(String.valueOf(new StringBuilder().append("Player '").append(llllllllllllllllIllIIlllIlIIIlII.method_5820()).append("' has teleported to ")), llllllllllllllllIllIIlllIlIIIllI));
+                class_1297 class_12972 = Notifier.mc.field_1687.method_8469(class_27772.method_11916());
+                if (class_12972.method_5864().equals((Object)class_1299.field_6097) && this.tpExploit.get().booleanValue()) {
+                    class_243 class_2432 = new class_243(class_27772.method_11917(), class_27772.method_11919(), class_27772.method_11918());
+                    class_243 class_2433 = class_12972.method_19538();
+                    if (class_2433.method_1022(class_2432) >= (double)this.minDistance.get().intValue()) {
+                        this.info((class_2561)this.formatMessage(String.valueOf(new StringBuilder().append("Player '").append(class_12972.method_5820()).append("' has teleported to ")), class_2432));
                         return;
                     }
                 }
@@ -365,113 +364,105 @@ extends Module {
         }
     }
 
-    public class_2554 formatMessage(String llllllllllllllllIllIIlllIIllIllI, class_243 llllllllllllllllIllIIlllIIllIIlI) {
-        class_2585 llllllllllllllllIllIIlllIIllIlII = new class_2585(llllllllllllllllIllIIlllIIllIllI);
-        llllllllllllllllIllIIlllIIllIlII.method_10852((class_2561)ChatUtils.formatCoords(llllllllllllllllIllIIlllIIllIIlI));
-        llllllllllllllllIllIIlllIIllIlII.method_27693(String.valueOf(new StringBuilder().append(class_124.field_1080.toString()).append(".")));
-        return llllllllllllllllIllIIlllIIllIlII;
+    public class_2554 formatMessage(String string, class_243 class_2432) {
+        class_2585 class_25852 = new class_2585(string);
+        class_25852.method_10852((class_2561)ChatUtils.formatCoords(class_2432));
+        class_25852.method_27693(String.valueOf(new StringBuilder().append(class_124.field_1080.toString()).append(".")));
+        return class_25852;
     }
 
     @EventHandler
-    public void onLeave(GameLeftEvent llllllllllllllllIllIIllllIllllIl) {
-        Notifier llllllllllllllllIllIIllllIllllII;
-        if (llllllllllllllllIllIIllllIllllII.antiVanish.get().booleanValue()) {
-            llllllllllllllllIllIIllllIllllII.toLookup.clear();
+    public void onLeave(GameLeftEvent gameLeftEvent) {
+        if (this.antiVanish.get().booleanValue()) {
+            this.toLookup.clear();
         }
     }
 
-    private boolean isInBurrow(class_1657 llllllllllllllllIllIIlllIlIlllII) {
-        class_2338 llllllllllllllllIllIIlllIlIllIll = new class_2338(llllllllllllllllIllIIlllIlIlllII.method_23317(), llllllllllllllllIllIIlllIlIlllII.method_23318(), llllllllllllllllIllIIlllIlIlllII.method_23321());
-        return Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_10540 || Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_10443 || Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_22423 || Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_22108 || Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_22109 || Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_23152 || Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_10485 || Notifier.mc.field_1687.method_8320(llllllllllllllllIllIIlllIlIllIll).method_26204() == class_2246.field_10535;
+    private boolean isInBurrow(class_1657 class_16572) {
+        class_2338 class_23382 = new class_2338(class_16572.method_23317(), class_16572.method_23318(), class_16572.method_23321());
+        return Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_10540 || Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_10443 || Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_22423 || Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_22108 || Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_22109 || Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_23152 || Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_10485 || Notifier.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_10535;
     }
 
     @EventHandler
-    public void onPacket(PacketEvent.Receive llllllllllllllllIllIIllllIIlIlll) {
-        class_2703 llllllllllllllllIllIIllllIIllIIl;
-        Notifier llllllllllllllllIllIIllllIIllIII;
-        if (llllllllllllllllIllIIllllIIllIII.antiVanish.get().booleanValue() && llllllllllllllllIllIIllllIIlIlll.packet instanceof class_2703 && (llllllllllllllllIllIIllllIIllIIl = (class_2703)llllllllllllllllIllIIllllIIlIlll.packet).method_11723() == class_2703.class_2704.field_12371) {
+    public void onPacket(PacketEvent.Receive receive) {
+        class_2703 class_27032;
+        if (this.antiVanish.get().booleanValue() && receive.packet instanceof class_2703 && (class_27032 = (class_2703)receive.packet).method_11723() == class_2703.class_2704.field_12371) {
             try {
-                for (class_2703.class_2705 llllllllllllllllIllIIllllIIllIlI : llllllllllllllllIllIIllllIIllIIl.method_11722()) {
-                    if (mc.method_1562().method_2871(llllllllllllllllIllIIllllIIllIlI.method_11726().getId()) != null) continue;
-                    llllllllllllllllIllIIllllIIllIII.toLookup.add(llllllllllllllllIllIIllllIIllIlI.method_11726().getId());
-                }
-            }
-            catch (Exception llllllllllllllllIllIIllllIIlIIll) {
-                // empty catch block
-            }
-        }
-    }
-
-    @EventHandler
-    public void antiVanesh(TickEvent.Post llllllllllllllllIllIIllllIIIlIIl) {
-        UUID llllllllllllllllIllIIllllIIIlIll;
-        long llllllllllllllllIllIIllllIIIllII;
-        Notifier llllllllllllllllIllIIllllIIIlIII;
-        if (llllllllllllllllIllIIllllIIIlIII.antiVanish.get().booleanValue() && Math.abs(llllllllllllllllIllIIllllIIIlIII.lastTick - (llllllllllllllllIllIIllllIIIllII = Notifier.mc.field_1687.method_8510())) > 100L && (llllllllllllllllIllIIllllIIIlIll = llllllllllllllllIllIIllllIIIlIII.toLookup.poll()) != null) {
-            try {
-                String llllllllllllllllIllIIllllIIIllIl = Notifier.getPlayerNameFromUUID(llllllllllllllllIllIIllllIIIlIll);
-                if (llllllllllllllllIllIIllllIIIllIl != null) {
-                    ChatUtils.warning(String.valueOf(new StringBuilder().append(llllllllllllllllIllIIllllIIIllIl).append(" has gone into vanish.")), new Object[0]);
+                for (class_2703.class_2705 class_27052 : class_27032.method_11722()) {
+                    if (mc.method_1562().method_2871(class_27052.method_11726().getId()) != null) continue;
+                    this.toLookup.add(class_27052.method_11726().getId());
                 }
             }
             catch (Exception exception) {
                 // empty catch block
             }
-            llllllllllllllllIllIIllllIIIlIII.lastTick = llllllllllllllllIllIIllllIIIllII;
+        }
+    }
+
+    @EventHandler
+    public void antiVanesh(TickEvent.Post post) {
+        UUID uUID;
+        long l;
+        if (this.antiVanish.get().booleanValue() && Math.abs(this.lastTick - (l = Notifier.mc.field_1687.method_8510())) > 100L && (uUID = this.toLookup.poll()) != null) {
+            try {
+                String string = Notifier.getPlayerNameFromUUID(uUID);
+                if (string != null) {
+                    ChatUtils.warning(String.valueOf(new StringBuilder().append(string).append(" has gone into vanish.")), new Object[0]);
+                }
+            }
+            catch (Exception exception) {
+                // empty catch block
+            }
+            this.lastTick = l;
         }
     }
 
     public static class NameLookup
     implements Runnable {
-        private final /* synthetic */ String uuidstr;
-        private final /* synthetic */ UUID uuid;
-        private volatile /* synthetic */ String name;
+        private final String uuidstr;
+        private final UUID uuid;
+        private String name;
 
-        public NameLookup(UUID lIIlIlIlIlllll) {
-            NameLookup lIIlIlIllIIIlI;
-            lIIlIlIllIIIlI.uuid = lIIlIlIlIlllll;
-            lIIlIlIllIIIlI.uuidstr = lIIlIlIlIlllll.toString();
+        public NameLookup(UUID uUID) {
+            this.uuid = uUID;
+            this.uuidstr = uUID.toString();
         }
 
         public String getName() {
-            NameLookup lIIlIlIIlllllI;
-            return lIIlIlIIlllllI.name;
+            return this.name;
         }
 
         public String lookUpName() {
-            NameLookup lIIlIlIlIIlIII;
-            class_1657 lIIlIlIlIIlIIl = null;
-            if (mc.field_1687 != null) {
-                lIIlIlIlIIlIIl = mc.field_1687.method_18470(lIIlIlIlIIlIII.uuid);
+            class_1657 class_16572 = null;
+            if (Notifier.access$000().field_1687 != null) {
+                class_16572 = Notifier.access$000().field_1687.method_18470(this.uuid);
             }
-            if (lIIlIlIlIIlIIl == null) {
-                String lIIlIlIlIIlIll = String.valueOf(new StringBuilder().append("https://api.mojang.com/user/profiles/").append(lIIlIlIlIIlIII.uuidstr.replace("-", "")).append("/names"));
+            if (class_16572 == null) {
+                String string = String.valueOf(new StringBuilder().append("https://api.mojang.com/user/profiles/").append(this.uuidstr.replace("-", "")).append("/names"));
                 try {
-                    JsonParser lIIlIlIlIlIIlI = new JsonParser();
-                    String lIIlIlIlIlIIIl = IOUtils.toString((URL)new URL(lIIlIlIlIIlIll), (Charset)StandardCharsets.UTF_8);
-                    JsonElement lIIlIlIlIlIIII = lIIlIlIlIlIIlI.parse(lIIlIlIlIlIIIl);
-                    JsonArray lIIlIlIlIIllll = lIIlIlIlIlIIII.getAsJsonArray();
-                    String lIIlIlIlIIlllI = lIIlIlIlIIllll.get(lIIlIlIlIIllll.size() - 1).toString();
-                    JsonObject lIIlIlIlIIllIl = lIIlIlIlIlIIlI.parse(lIIlIlIlIIlllI).getAsJsonObject();
-                    return lIIlIlIlIIllIl.get("name").toString();
+                    JsonParser jsonParser = new JsonParser();
+                    String string2 = IOUtils.toString((URL)new URL(string), (Charset)StandardCharsets.UTF_8);
+                    JsonElement jsonElement = jsonParser.parse(string2);
+                    JsonArray jsonArray = jsonElement.getAsJsonArray();
+                    String string3 = jsonArray.get(jsonArray.size() - 1).toString();
+                    JsonObject jsonObject = jsonParser.parse(string3).getAsJsonObject();
+                    return jsonObject.get("name").toString();
                 }
-                catch (Exception lIIlIlIlIIllII) {
+                catch (Exception exception) {
                     return null;
                 }
             }
-            return lIIlIlIlIIlIIl.method_5477().method_10851();
+            return class_16572.method_5477().method_10851();
         }
 
         @Override
         public void run() {
-            NameLookup lIIlIlIlIlllIl;
-            lIIlIlIlIlllIl.name = lIIlIlIlIlllIl.lookUpName();
+            this.name = this.lookUpName();
         }
 
-        public NameLookup(String lIIlIlIllIIlll) {
-            NameLookup lIIlIlIllIlIII;
-            lIIlIlIllIlIII.uuidstr = lIIlIlIllIIlll;
-            lIIlIlIllIlIII.uuid = UUID.fromString(lIIlIlIllIIlll);
+        public NameLookup(String string) {
+            this.uuidstr = string;
+            this.uuid = UUID.fromString(string);
         }
     }
 }

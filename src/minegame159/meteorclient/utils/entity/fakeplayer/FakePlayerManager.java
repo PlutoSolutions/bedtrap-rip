@@ -8,7 +8,7 @@ import java.util.List;
 import minegame159.meteorclient.utils.entity.fakeplayer.FakePlayerEntity;
 
 public class FakePlayerManager {
-    private static final /* synthetic */ List<FakePlayerEntity> fakePlayers;
+    private static final List<FakePlayerEntity> fakePlayers = new ArrayList<FakePlayerEntity>();
 
     public static void clear() {
         if (fakePlayers.isEmpty()) {
@@ -22,21 +22,13 @@ public class FakePlayerManager {
         return fakePlayers;
     }
 
-    public FakePlayerManager() {
-        FakePlayerManager lllllllllllllllllIllIIIlIIllIllI;
-    }
-
     public static int size() {
         return fakePlayers.size();
     }
 
-    static {
-        fakePlayers = new ArrayList<FakePlayerEntity>();
-    }
-
-    public static void add(String lllllllllllllllllIllIIIlIIlIllII, float lllllllllllllllllIllIIIlIIlIllll, boolean lllllllllllllllllIllIIIlIIlIlIlI) {
-        FakePlayerEntity lllllllllllllllllIllIIIlIIlIllIl = new FakePlayerEntity(lllllllllllllllllIllIIIlIIlIllII, lllllllllllllllllIllIIIlIIlIllll, lllllllllllllllllIllIIIlIIlIlIlI);
-        fakePlayers.add(lllllllllllllllllIllIIIlIIlIllIl);
+    public static void add(String string, float f, boolean bl) {
+        FakePlayerEntity fakePlayerEntity = new FakePlayerEntity(string, f, bl);
+        fakePlayers.add(fakePlayerEntity);
     }
 }
 

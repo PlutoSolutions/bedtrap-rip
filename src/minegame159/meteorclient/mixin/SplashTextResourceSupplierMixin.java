@@ -27,18 +27,18 @@ public class SplashTextResourceSupplierMixin {
     private final List<String> meteorSplashes = SplashTextResourceSupplierMixin.getMeteorSplashes();
 
     @Inject(method={"get"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onApply(CallbackInfoReturnable<String> cir) {
+    private void onApply(CallbackInfoReturnable<String> callbackInfoReturnable) {
         if (Config.get() == null || !Config.get().titleScreenSplashes) {
             return;
         }
         if (this.override) {
-            cir.setReturnValue((Object)this.meteorSplashes.get(this.random.nextInt(this.meteorSplashes.size())));
+            callbackInfoReturnable.setReturnValue((Object)this.meteorSplashes.get(this.random.nextInt(this.meteorSplashes.size())));
         }
         this.override = !this.override;
     }
 
     private static List<String> getMeteorSplashes() {
-        return Arrays.asList("BedTrap on Top", "https://discord.gg/4cupzRkP29!");
+        return Arrays.asList("BedTrap on Bottom", "https://discord.gg/buster!");
     }
 }
 

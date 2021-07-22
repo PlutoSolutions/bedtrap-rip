@@ -34,70 +34,65 @@ import net.minecraft.class_2680;
 
 public class Xray
 extends Module {
-    private final /* synthetic */ Setting<List<class_2248>> blocks;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<List<class_2248>> blocks;
+    private final SettingGroup sgGeneral;
 
     @EventHandler
-    private void onChunkOcclusion(ChunkOcclusionEvent lllIIlllllllll) {
-        lllIIlllllllll.cancel();
+    private void onChunkOcclusion(ChunkOcclusionEvent chunkOcclusionEvent) {
+        chunkOcclusionEvent.cancel();
     }
 
     public Xray() {
         super(Categories.Render, "xray", "Only renders specified blocks. Good for mining.");
-        Xray lllIlIIIIlIIII;
-        lllIlIIIIlIIII.sgGeneral = lllIlIIIIlIIII.settings.getDefaultGroup();
-        lllIlIIIIlIIII.blocks = lllIlIIIIlIIII.sgGeneral.add(new BlockListSetting.Builder().name("blocks").description("Blocks.").defaultValue(Arrays.asList(new class_2248[]{class_2246.field_10418, class_2246.field_10212, class_2246.field_10571, class_2246.field_10090, class_2246.field_10080, class_2246.field_10442, class_2246.field_10013, class_2246.field_23077, class_2246.field_10213, class_2246.field_22109})).onChanged(lllIIlllIllIlI -> {
-            Xray lllIIlllIllIIl;
-            if (lllIIlllIllIIl.isActive()) {
-                lllIIlllIllIIl.mc.field_1769.method_3279();
-            }
-        }).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.blocks = this.sgGeneral.add(new BlockListSetting.Builder().name("blocks").description("Blocks.").defaultValue(Arrays.asList(new class_2248[]{class_2246.field_10418, class_2246.field_10212, class_2246.field_10571, class_2246.field_10090, class_2246.field_10080, class_2246.field_10442, class_2246.field_10013, class_2246.field_23077, class_2246.field_10213, class_2246.field_22109})).onChanged(this::lambda$new$0).build());
     }
 
-    public boolean modifyDrawSide(class_2680 lllIIllllIlIIl, class_1922 lllIIllllIlIII, class_2338 lllIIllllIIlll, class_2350 lllIIllllIllII, boolean lllIIllllIlIll) {
-        Xray lllIIlllllIIII;
-        if (lllIIllllIlIll) {
-            if (lllIIlllllIIII.isBlocked(lllIIllllIlIIl.method_26204())) {
+    public boolean modifyDrawSide(class_2680 class_26802, class_1922 class_19222, class_2338 class_23382, class_2350 class_23502, boolean bl) {
+        if (bl) {
+            if (this.isBlocked(class_26802.method_26204())) {
                 return false;
             }
-        } else if (!lllIIlllllIIII.isBlocked(lllIIllllIlIIl.method_26204())) {
-            class_2338 lllIIlllllIIlI = lllIIllllIIlll.method_10093(lllIIllllIllII);
-            class_2680 lllIIlllllIIIl = lllIIllllIlIII.method_8320(lllIIlllllIIlI);
-            return lllIIlllllIIIl.method_26173(lllIIllllIlIII, lllIIlllllIIlI, lllIIllllIllII.method_10153()) != class_259.method_1077() || lllIIlllllIIIl.method_26204() != lllIIllllIlIIl.method_26204();
+        } else if (!this.isBlocked(class_26802.method_26204())) {
+            class_2338 class_23383 = class_23382.method_10093(class_23502);
+            class_2680 class_26803 = class_19222.method_8320(class_23383);
+            return class_26803.method_26173(class_19222, class_23383, class_23502.method_10153()) != class_259.method_1077() || class_26803.method_26204() != class_26802.method_26204();
         }
-        return lllIIllllIlIll;
+        return bl;
     }
 
     @Override
     public void onDeactivate() {
-        Xray lllIlIIIIIlIIl;
         Fullbright.disable();
-        lllIlIIIIIlIIl.mc.field_1769.method_3279();
+        this.mc.field_1769.method_3279();
     }
 
     @EventHandler
-    private void onRenderBlockEntity(RenderBlockEntityEvent lllIlIIIIIIlIl) {
-        Xray lllIlIIIIIIlII;
-        if (lllIlIIIIIIlII.isBlocked(lllIlIIIIIIlIl.blockEntity.method_11010().method_26204())) {
-            lllIlIIIIIIlIl.cancel();
+    private void onRenderBlockEntity(RenderBlockEntityEvent renderBlockEntityEvent) {
+        if (this.isBlocked(renderBlockEntityEvent.blockEntity.method_11010().method_26204())) {
+            renderBlockEntityEvent.cancel();
         }
     }
 
-    public boolean isBlocked(class_2248 lllIIlllIlllIl) {
-        Xray lllIIllllIIIII;
-        return !lllIIllllIIIII.blocks.get().contains((Object)lllIIlllIlllIl);
+    public boolean isBlocked(class_2248 class_22482) {
+        return !this.blocks.get().contains((Object)class_22482);
     }
 
     @EventHandler
-    private void onAmbientOcclusion(AmbientOcclusionEvent lllIIlllllllII) {
-        lllIIlllllllII.lightLevel = 1.0f;
+    private void onAmbientOcclusion(AmbientOcclusionEvent ambientOcclusionEvent) {
+        ambientOcclusionEvent.lightLevel = 1.0f;
+    }
+
+    private void lambda$new$0(List list) {
+        if (this.isActive()) {
+            this.mc.field_1769.method_3279();
+        }
     }
 
     @Override
     public void onActivate() {
-        Xray lllIlIIIIIllII;
         Fullbright.enable();
-        lllIlIIIIIllII.mc.field_1769.method_3279();
+        this.mc.field_1769.method_3279();
     }
 }
 

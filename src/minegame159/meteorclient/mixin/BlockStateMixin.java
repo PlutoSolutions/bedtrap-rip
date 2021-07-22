@@ -35,13 +35,13 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(value={class_2680.class})
 public abstract class BlockStateMixin
 extends class_4970.class_4971 {
-    public BlockStateMixin(class_2248 block, ImmutableMap<class_2769<?>, Comparable<?>> propertyMap, MapCodec<class_2680> mapCodec) {
-        super(block, propertyMap, mapCodec);
+    public BlockStateMixin(class_2248 class_22482, ImmutableMap<class_2769<?>, Comparable<?>> immutableMap, MapCodec<class_2680> mapCodec) {
+        super(class_22482, immutableMap, mapCodec);
     }
 
-    public class_1269 method_26174(class_1937 world, class_1657 player, class_1268 hand, class_3965 hit) {
+    public class_1269 method_26174(class_1937 class_19372, class_1657 class_16572, class_1268 class_12682, class_3965 class_39652) {
         MeteorClient.EVENT_BUS.post(BlockActivateEvent.get((class_2680)this));
-        return super.method_26174(world, player, hand, hit);
+        return super.method_26174(class_19372, class_16572, class_12682, class_39652);
     }
 }
 

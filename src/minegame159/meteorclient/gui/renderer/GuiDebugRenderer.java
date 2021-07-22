@@ -15,16 +15,15 @@ import minegame159.meteorclient.utils.render.color.Color;
 import net.minecraft.class_290;
 
 public class GuiDebugRenderer {
-    private final /* synthetic */ MeshBuilder mb;
-    private static final /* synthetic */ Color WIDGET_COLOR;
-    private static final /* synthetic */ Color CELL_COLOR;
+    private final MeshBuilder mb = new MeshBuilder();
+    private static final Color WIDGET_COLOR;
+    private static final Color CELL_COLOR;
 
-    private void lineBox(double lIIIIIlllIlI, double lIIIIIlllIIl, double lIIIIIllIIlI, double lIIIIIllIlll, Color lIIIIIllIllI) {
-        GuiDebugRenderer lIIIIIlllIll;
-        lIIIIIlllIll.line(lIIIIIlllIlI, lIIIIIlllIIl, lIIIIIlllIlI + lIIIIIllIIlI, lIIIIIlllIIl, lIIIIIllIllI);
-        lIIIIIlllIll.line(lIIIIIlllIlI + lIIIIIllIIlI, lIIIIIlllIIl, lIIIIIlllIlI + lIIIIIllIIlI, lIIIIIlllIIl + lIIIIIllIlll, lIIIIIllIllI);
-        lIIIIIlllIll.line(lIIIIIlllIlI, lIIIIIlllIIl, lIIIIIlllIlI, lIIIIIlllIIl + lIIIIIllIlll, lIIIIIllIllI);
-        lIIIIIlllIll.line(lIIIIIlllIlI, lIIIIIlllIIl + lIIIIIllIlll, lIIIIIlllIlI + lIIIIIllIIlI, lIIIIIlllIIl + lIIIIIllIlll, lIIIIIllIllI);
+    private void lineBox(double d, double d2, double d3, double d4, Color color) {
+        this.line(d, d2, d + d3, d2, color);
+        this.line(d + d3, d2, d + d3, d2 + d4, color);
+        this.line(d, d2, d, d2 + d4, color);
+        this.line(d, d2 + d4, d + d3, d2 + d4, color);
     }
 
     static {
@@ -32,36 +31,28 @@ public class GuiDebugRenderer {
         WIDGET_COLOR = new Color(25, 25, 225);
     }
 
-    private void renderWidget(WWidget lIIIIlIIIllI) {
-        GuiDebugRenderer lIIIIlIIIlIl;
-        lIIIIlIIIlIl.lineBox(lIIIIlIIIllI.x, lIIIIlIIIllI.y, lIIIIlIIIllI.width, lIIIIlIIIllI.height, WIDGET_COLOR);
-        if (lIIIIlIIIllI instanceof WContainer) {
-            for (Cell<?> lIIIIlIIlIII : ((WContainer)lIIIIlIIIllI).cells) {
-                lIIIIlIIIlIl.lineBox(lIIIIlIIlIII.x, lIIIIlIIlIII.y, lIIIIlIIlIII.width, lIIIIlIIlIII.height, CELL_COLOR);
-                lIIIIlIIIlIl.renderWidget((WWidget)lIIIIlIIlIII.widget());
+    private void renderWidget(WWidget wWidget) {
+        this.lineBox(wWidget.x, wWidget.y, wWidget.width, wWidget.height, WIDGET_COLOR);
+        if (wWidget instanceof WContainer) {
+            for (Cell<?> cell : ((WContainer)wWidget).cells) {
+                this.lineBox(cell.x, cell.y, cell.width, cell.height, CELL_COLOR);
+                this.renderWidget((WWidget)cell.widget());
             }
         }
     }
 
-    private void line(double lIIIIIlIIIlI, double lIIIIIlIIIIl, double lIIIIIlIIIII, double lIIIIIIlllll, Color lIIIIIIllllI) {
-        GuiDebugRenderer lIIIIIlIlIIl;
-        lIIIIIlIlIIl.mb.pos(lIIIIIlIIIlI, lIIIIIlIIIIl, 0.0).color(lIIIIIIllllI).endVertex();
-        lIIIIIlIlIIl.mb.pos(lIIIIIlIIIII, lIIIIIIlllll, 0.0).color(lIIIIIIllllI).endVertex();
+    private void line(double d, double d2, double d3, double d4, Color color) {
+        this.mb.pos(d, d2, 0.0).color(color).endVertex();
+        this.mb.pos(d3, d4, 0.0).color(color).endVertex();
     }
 
-    public GuiDebugRenderer() {
-        GuiDebugRenderer lIIIIlIlIIll;
-        lIIIIlIlIIll.mb = new MeshBuilder();
-    }
-
-    public void render(WWidget lIIIIlIIllll) {
-        GuiDebugRenderer lIIIIlIlIIII;
-        if (lIIIIlIIllll == null) {
+    public void render(WWidget wWidget) {
+        if (wWidget == null) {
             return;
         }
-        lIIIIlIlIIII.mb.begin(null, DrawMode.Lines, class_290.field_1576);
-        lIIIIlIlIIII.renderWidget(lIIIIlIIllll);
-        lIIIIlIlIIII.mb.end();
+        this.mb.begin(null, DrawMode.Lines, class_290.field_1576);
+        this.renderWidget(wWidget);
+        this.mb.end();
     }
 }
 

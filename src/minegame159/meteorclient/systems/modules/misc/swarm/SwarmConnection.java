@@ -10,60 +10,56 @@ import minegame159.meteorclient.utils.player.ChatUtils;
 
 public class SwarmConnection
 extends Thread {
-    public final /* synthetic */ Socket socket;
-    public /* synthetic */ String messageToSend;
+    public final Socket socket;
+    public String messageToSend;
 
-    public SwarmConnection(Socket lllllIIIIllIl) {
-        SwarmConnection lllllIIIIlllI;
-        lllllIIIIlllI.socket = lllllIIIIllIl;
-        lllllIIIIlllI.start();
+    public SwarmConnection(Socket socket) {
+        this.socket = socket;
+        this.start();
     }
 
-    private String getIp(String llllIllllIlII) {
-        return llllIllllIlII.equals("127.0.0.1") ? "localhost" : llllIllllIlII;
+    private String getIp(String string) {
+        return string.equals("127.0.0.1") ? "localhost" : string;
     }
 
     public String getConnection() {
-        SwarmConnection llllIlllllIIl;
-        return String.valueOf(new StringBuilder().append(llllIlllllIIl.getIp(llllIlllllIIl.socket.getInetAddress().getHostAddress())).append(":").append(llllIlllllIIl.socket.getPort()));
+        return String.valueOf(new StringBuilder().append(this.getIp(this.socket.getInetAddress().getHostAddress())).append(":").append(this.socket.getPort()));
     }
 
     @Override
     public void run() {
-        SwarmConnection lllllIIIIIIll;
-        ChatUtils.info("Swarm", "New worker connected on %s.", lllllIIIIIIll.getIp(lllllIIIIIIll.socket.getInetAddress().getHostAddress()));
+        ChatUtils.info("Swarm", "New worker connected on %s.", this.getIp(this.socket.getInetAddress().getHostAddress()));
         try {
-            DataOutputStream lllllIIIIIllI = new DataOutputStream(lllllIIIIIIll.socket.getOutputStream());
-            while (!lllllIIIIIIll.isInterrupted()) {
-                if (lllllIIIIIIll.messageToSend == null) continue;
+            DataOutputStream dataOutputStream = new DataOutputStream(this.socket.getOutputStream());
+            while (!this.isInterrupted()) {
+                if (this.messageToSend == null) continue;
                 try {
-                    lllllIIIIIllI.writeUTF(lllllIIIIIIll.messageToSend);
-                    lllllIIIIIllI.flush();
+                    dataOutputStream.writeUTF(this.messageToSend);
+                    dataOutputStream.flush();
                 }
-                catch (Exception lllllIIIIIlll) {
+                catch (Exception exception) {
                     ChatUtils.error("Swarm", "Encountered error when sending command.", new Object[0]);
-                    lllllIIIIIlll.printStackTrace();
+                    exception.printStackTrace();
                 }
-                lllllIIIIIIll.messageToSend = null;
+                this.messageToSend = null;
             }
-            lllllIIIIIllI.close();
+            dataOutputStream.close();
         }
-        catch (IOException lllllIIIIIlIl) {
-            ChatUtils.info("Swarm", "Error creating a connection with %s on port %s.", lllllIIIIIIll.getIp(lllllIIIIIIll.socket.getInetAddress().getHostAddress()), lllllIIIIIIll.socket.getPort());
-            lllllIIIIIlIl.printStackTrace();
+        catch (IOException iOException) {
+            ChatUtils.info("Swarm", "Error creating a connection with %s on port %s.", this.getIp(this.socket.getInetAddress().getHostAddress()), this.socket.getPort());
+            iOException.printStackTrace();
         }
     }
 
     public void disconnect() {
-        SwarmConnection llllIllllllII;
         try {
-            llllIllllllII.socket.close();
+            this.socket.close();
         }
-        catch (IOException llllIlllllllI) {
-            llllIlllllllI.printStackTrace();
+        catch (IOException iOException) {
+            iOException.printStackTrace();
         }
-        ChatUtils.info("Swarm", "Worker disconnected on ip: %s.", llllIllllllII.socket.getInetAddress().getHostAddress());
-        llllIllllllII.interrupt();
+        ChatUtils.info("Swarm", "Worker disconnected on ip: %s.", this.socket.getInetAddress().getHostAddress());
+        this.interrupt();
     }
 }
 

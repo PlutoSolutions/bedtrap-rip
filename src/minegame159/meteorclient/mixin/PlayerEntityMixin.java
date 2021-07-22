@@ -34,34 +34,34 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_1657.class})
 public class PlayerEntityMixin {
     @Inject(method={"clipAtLedge"}, at={@At(value="HEAD")}, cancellable=true)
-    protected void clipAtLedge(CallbackInfoReturnable<Boolean> info) {
-        ClipAtLedgeEvent event = MeteorClient.EVENT_BUS.post(ClipAtLedgeEvent.get());
-        if (event.isSet()) {
-            info.setReturnValue((Object)event.isClip());
+    protected void clipAtLedge(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
+        ClipAtLedgeEvent clipAtLedgeEvent = MeteorClient.EVENT_BUS.post(ClipAtLedgeEvent.get());
+        if (clipAtLedgeEvent.isSet()) {
+            callbackInfoReturnable.setReturnValue((Object)clipAtLedgeEvent.isClip());
         }
     }
 
     @Inject(method={"dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onDropItem(class_1799 stack, boolean bl, boolean bl2, CallbackInfoReturnable<class_1542> info) {
-        if (Utils.mc.field_1687.field_9236 && MeteorClient.EVENT_BUS.post(DropItemsEvent.get(stack)).isCancelled()) {
-            info.cancel();
+    private void onDropItem(class_1799 class_17992, boolean bl, boolean bl2, CallbackInfoReturnable<class_1542> callbackInfoReturnable) {
+        if (Utils.mc.field_1687.field_9236 && MeteorClient.EVENT_BUS.post(DropItemsEvent.get(class_17992)).isCancelled()) {
+            callbackInfoReturnable.cancel();
         }
     }
 
     @Inject(method={"getBlockBreakingSpeed"}, at={@At(value="RETURN")}, cancellable=true)
-    public void onGetBlockBreakingSpeed(class_2680 block, CallbackInfoReturnable<Float> cir) {
-        SpeedMine module = Modules.get().get(SpeedMine.class);
-        if (!module.isActive() || module.mode.get() != SpeedMine.Mode.Normal) {
+    public void onGetBlockBreakingSpeed(class_2680 class_26802, CallbackInfoReturnable<Float> callbackInfoReturnable) {
+        SpeedMine speedMine = Modules.get().get(SpeedMine.class);
+        if (!speedMine.isActive() || speedMine.mode.get() != SpeedMine.Mode.Normal) {
             return;
         }
-        cir.setReturnValue((Object)Float.valueOf((float)((double)((Float)cir.getReturnValue()).floatValue() * module.modifier.get())));
+        callbackInfoReturnable.setReturnValue((Object)Float.valueOf((float)((double)((Float)callbackInfoReturnable.getReturnValue()).floatValue() * speedMine.modifier.get())));
     }
 
     @Inject(method={"jump"}, at={@At(value="HEAD")}, cancellable=true)
-    public void dontJump(CallbackInfo info) {
-        Anchor module = Modules.get().get(Anchor.class);
-        if (module.isActive() && module.cancelJump) {
-            info.cancel();
+    public void dontJump(CallbackInfo callbackInfo) {
+        Anchor anchor = Modules.get().get(Anchor.class);
+        if (anchor.isActive() && anchor.cancelJump) {
+            callbackInfo.cancel();
         }
     }
 }

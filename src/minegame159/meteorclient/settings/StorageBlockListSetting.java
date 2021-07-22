@@ -42,58 +42,62 @@ import org.jetbrains.annotations.Nullable;
 
 public class StorageBlockListSetting
 extends Setting<List<class_2591<?>>> {
-    public static final /* synthetic */ class_2378<class_2591<?>> REGISTRY;
-    public static final /* synthetic */ class_2591<?>[] STORAGE_BLOCKS;
+    public static final class_2378<class_2591<?>> REGISTRY;
+    public static final class_2591<?>[] STORAGE_BLOCKS;
 
     @Override
-    protected List<class_2591<?>> parseImpl(String llIlIlIllllIlII) {
-        String[] llIlIlIllllIIll = llIlIlIllllIlII.split(",");
-        ArrayList llIlIlIllllIIlI = new ArrayList(llIlIlIllllIIll.length);
+    protected List<class_2591<?>> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        ArrayList arrayList = new ArrayList(arrstring.length);
         try {
-            for (String llIlIlIllllIllI : llIlIlIllllIIll) {
-                class_2591 llIlIlIllllIlll = (class_2591)StorageBlockListSetting.parseId(class_2378.field_11137, llIlIlIllllIllI);
-                if (llIlIlIllllIlll == null) continue;
-                llIlIlIllllIIlI.add(llIlIlIllllIlll);
+            for (String string2 : arrstring) {
+                class_2591 class_25912 = (class_2591)StorageBlockListSetting.parseId(class_2378.field_11137, string2);
+                if (class_25912 == null) continue;
+                arrayList.add(class_25912);
+                if (-1 != 3) continue;
+                return null;
             }
         }
-        catch (Exception llIlIlIlllIlllI) {
+        catch (Exception exception) {
             // empty catch block
         }
-        return llIlIlIllllIIlI;
-    }
-
-    public StorageBlockListSetting(String llIlIllIIIIlIll, String llIlIllIIIlIIIl, List<class_2591<?>> llIlIllIIIIlIIl, Consumer<List<class_2591<?>>> llIlIllIIIIllll, Consumer<Setting<List<class_2591<?>>>> llIlIllIIIIIlll, IVisible llIlIllIIIIIllI) {
-        super(llIlIllIIIIlIll, llIlIllIIIlIIIl, llIlIllIIIIlIIl, llIlIllIIIIllll, llIlIllIIIIIlll, llIlIllIIIIIllI);
-        StorageBlockListSetting llIlIllIIIlIIll;
-        llIlIllIIIlIIll.value = new ArrayList(llIlIllIIIIlIIl);
+        return arrayList;
     }
 
     @Override
-    public List<class_2591<?>> fromTag(class_2487 llIlIlIllIIlIIl) {
-        StorageBlockListSetting llIlIlIllIIllIl;
-        ((List)llIlIlIllIIllIl.get()).clear();
-        class_2499 llIlIlIllIIlIll = llIlIlIllIIlIIl.method_10554("value", 8);
-        for (class_2520 llIlIlIllIIlllI : llIlIlIllIIlIll) {
-            class_2591 llIlIlIllIIllll = (class_2591)class_2378.field_11137.method_10223(new class_2960(llIlIlIllIIlllI.method_10714()));
-            if (llIlIlIllIIllll == null) continue;
-            ((List)llIlIlIllIIllIl.get()).add(llIlIlIllIIllll);
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    public StorageBlockListSetting(String string, String string2, List<class_2591<?>> list, Consumer<List<class_2591<?>>> consumer, Consumer<Setting<List<class_2591<?>>>> consumer2, IVisible iVisible) {
+        super(string, string2, list, consumer, consumer2, iVisible);
+        this.value = new ArrayList(list);
+    }
+
+    @Override
+    public List<class_2591<?>> fromTag(class_2487 class_24872) {
+        ((List)this.get()).clear();
+        class_2499 class_24992 = class_24872.method_10554("value", 8);
+        for (class_2520 class_25202 : class_24992) {
+            class_2591 class_25912 = (class_2591)class_2378.field_11137.method_10223(new class_2960(class_25202.method_10714()));
+            if (class_25912 == null) continue;
+            ((List)this.get()).add(class_25912);
         }
-        llIlIlIllIIllIl.changed();
-        return (List)llIlIlIllIIllIl.get();
+        this.changed();
+        return (List)this.get();
     }
 
     @Override
     public class_2487 toTag() {
-        StorageBlockListSetting llIlIlIllIllllI;
-        class_2487 llIlIlIllIlllIl = llIlIlIllIllllI.saveGeneral();
-        class_2499 llIlIlIllIlllII = new class_2499();
-        for (class_2591 llIlIlIllIlllll : (List)llIlIlIllIllllI.get()) {
-            class_2960 llIlIlIlllIIIII = class_2378.field_11137.method_10221((Object)llIlIlIllIlllll);
-            if (llIlIlIlllIIIII == null) continue;
-            llIlIlIllIlllII.add((Object)class_2519.method_23256((String)llIlIlIlllIIIII.toString()));
+        class_2487 class_24872 = this.saveGeneral();
+        class_2499 class_24992 = new class_2499();
+        for (class_2591 class_25912 : (List)this.get()) {
+            class_2960 class_29602 = class_2378.field_11137.method_10221((Object)class_25912);
+            if (class_29602 == null) continue;
+            class_24992.add((Object)class_2519.method_23256((String)class_29602.toString()));
         }
-        llIlIlIllIlllIl.method_10566("value", (class_2520)llIlIlIllIlllII);
-        return llIlIlIllIlllIl;
+        class_24872.method_10566("value", (class_2520)class_24992);
+        return class_24872;
     }
 
     @Override
@@ -107,21 +111,39 @@ extends Setting<List<class_2591<?>>> {
     }
 
     @Override
-    public void reset(boolean llIlIllIIIIIIlI) {
-        StorageBlockListSetting llIlIllIIIIIIll;
-        llIlIllIIIIIIll.value = new ArrayList((Collection)llIlIllIIIIIIll.defaultValue);
-        if (llIlIllIIIIIIlI) {
-            llIlIllIIIIIIll.changed();
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((List)object);
+    }
+
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    @Override
+    public void reset(boolean bl) {
+        this.value = new ArrayList((Collection)this.defaultValue);
+        if (bl) {
+            this.changed();
         }
     }
 
     @Override
-    protected boolean isValueValid(List<class_2591<?>> llIlIlIlllIlIII) {
+    protected boolean isValueValid(List<class_2591<?>> list) {
         return true;
     }
 
     private static class SRegistry
     extends class_2378<class_2591<?>> {
+        public int method_10206(@Nullable Object object) {
+            return this.getRawId((class_2591)object);
+        }
+
+        @Nullable
+        public Object method_10223(@Nullable class_2960 class_29602) {
+            return this.get(class_29602);
+        }
+
         public Set<class_2960> method_10235() {
             return null;
         }
@@ -133,11 +155,10 @@ extends Setting<List<class_2591<?>>> {
 
         public SRegistry() {
             super(class_5321.method_29180((class_2960)new class_2960("meteor-client", "storage-blocks")), Lifecycle.stable());
-            SRegistry llllllllllllllllllIIIlIIIlIIIllI;
         }
 
         @Nullable
-        public class_2960 getId(class_2591<?> llllllllllllllllllIIIlIIIlIIIIll) {
+        public class_2960 getId(class_2591<?> class_25912) {
             return null;
         }
 
@@ -145,12 +166,30 @@ extends Setting<List<class_2591<?>>> {
             return null;
         }
 
-        public int getRawId(@Nullable class_2591<?> llllllllllllllllllIIIlIIIIllllll) {
+        @Nullable
+        public class_2960 method_10221(Object object) {
+            return this.getId((class_2591)object);
+        }
+
+        @Nullable
+        public Object method_29107(@Nullable class_5321 class_53212) {
+            return this.get(class_53212);
+        }
+
+        public int getRawId(@Nullable class_2591<?> class_25912) {
             return 0;
         }
 
-        public boolean method_10250(class_2960 llllllllllllllllllIIIlIIIIllIlII) {
+        public boolean method_10250(class_2960 class_29602) {
             return false;
+        }
+
+        public Optional method_29113(Object object) {
+            return this.getKey((class_2591)object);
+        }
+
+        protected Lifecycle method_31139(Object object) {
+            return this.getEntryLifecycle((class_2591)object);
         }
 
         public Lifecycle method_31138() {
@@ -158,82 +197,74 @@ extends Setting<List<class_2591<?>>> {
         }
 
         @Nullable
-        public class_2591<?> get(@Nullable class_2960 llllllllllllllllllIIIlIIIIlllIll) {
+        public class_2591<?> get(@Nullable class_2960 class_29602) {
             return null;
         }
 
         @Nullable
-        public class_2591<?> get(int llllllllllllllllllIIIlIIIIllIIlI) {
+        public Object method_10200(int n) {
+            return this.get(n);
+        }
+
+        @Nullable
+        public class_2591<?> get(int n) {
             return null;
         }
 
         @Nullable
-        public class_2591<?> get(@Nullable class_5321<class_2591<?>> llllllllllllllllllIIIlIIIIllllIl) {
+        public class_2591<?> get(@Nullable class_5321<class_2591<?>> class_53212) {
             return null;
         }
 
-        protected Lifecycle getEntryLifecycle(class_2591<?> llllllllllllllllllIIIlIIIIlllIIl) {
+        protected Lifecycle getEntryLifecycle(class_2591<?> class_25912) {
             return null;
         }
 
-        public Optional<class_5321<class_2591<?>>> getKey(class_2591<?> llllllllllllllllllIIIlIIIlIIIIIl) {
+        public Optional<class_5321<class_2591<?>>> getKey(class_2591<?> class_25912) {
             return Optional.empty();
         }
     }
 
     public static class Builder {
-        private /* synthetic */ Consumer<Setting<List<class_2591<?>>>> onModuleActivated;
-        private /* synthetic */ Consumer<List<class_2591<?>>> onChanged;
-        private /* synthetic */ String description;
-        private /* synthetic */ List<class_2591<?>> defaultValue;
-        private /* synthetic */ String name;
-        private /* synthetic */ IVisible visible;
+        private Consumer<Setting<List<class_2591<?>>>> onModuleActivated;
+        private Consumer<List<class_2591<?>>> onChanged;
+        private String description = "";
+        private List<class_2591<?>> defaultValue;
+        private String name = "undefined";
+        private IVisible visible;
 
-        public Builder onModuleActivated(Consumer<Setting<List<class_2591<?>>>> llIIlIIlIlIllII) {
-            Builder llIIlIIlIlIllIl;
-            llIIlIIlIlIllIl.onModuleActivated = llIIlIIlIlIllII;
-            return llIIlIIlIlIllIl;
+        public Builder onModuleActivated(Consumer<Setting<List<class_2591<?>>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder name(String llIIlIIllIIIIlI) {
-            Builder llIIlIIllIIIIll;
-            llIIlIIllIIIIll.name = llIIlIIllIIIIlI;
-            return llIIlIIllIIIIll;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder defaultValue(List<class_2591<?>> llIIlIIlIllIllI) {
-            Builder llIIlIIlIllIlll;
-            llIIlIIlIllIlll.defaultValue = llIIlIIlIllIllI;
-            return llIIlIIlIllIlll;
+        public Builder defaultValue(List<class_2591<?>> list) {
+            this.defaultValue = list;
+            return this;
         }
 
-        public Builder visible(IVisible llIIlIIlIlIIllI) {
-            Builder llIIlIIlIlIIlIl;
-            llIIlIIlIlIIlIl.visible = llIIlIIlIlIIllI;
-            return llIIlIIlIlIIlIl;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder() {
-            Builder llIIlIIllIIlIIl;
-            llIIlIIllIIlIIl.name = "undefined";
-            llIIlIIllIIlIIl.description = "";
-        }
-
-        public Builder onChanged(Consumer<List<class_2591<?>>> llIIlIIlIllIIII) {
-            Builder llIIlIIlIllIIll;
-            llIIlIIlIllIIll.onChanged = llIIlIIlIllIIII;
-            return llIIlIIlIllIIll;
+        public Builder onChanged(Consumer<List<class_2591<?>>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
         public StorageBlockListSetting build() {
-            Builder llIIlIIlIlIIIlI;
-            return new StorageBlockListSetting(llIIlIIlIlIIIlI.name, llIIlIIlIlIIIlI.description, llIIlIIlIlIIIlI.defaultValue, llIIlIIlIlIIIlI.onChanged, llIIlIIlIlIIIlI.onModuleActivated, llIIlIIlIlIIIlI.visible);
+            return new StorageBlockListSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
 
-        public Builder description(String llIIlIIlIlllllI) {
-            Builder llIIlIIlIllllIl;
-            llIIlIIlIllllIl.description = llIIlIIlIlllllI;
-            return llIIlIIlIllllIl;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
     }
 }

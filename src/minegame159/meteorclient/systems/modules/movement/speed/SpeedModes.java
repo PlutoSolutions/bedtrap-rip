@@ -7,9 +7,5 @@ public enum SpeedModes {
     Strafe,
     Vanilla;
 
-
-    private SpeedModes() {
-        SpeedModes lIIlIlllIIlIlll;
-    }
 }
 

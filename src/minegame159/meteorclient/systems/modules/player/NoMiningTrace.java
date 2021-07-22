@@ -15,23 +15,21 @@ import net.minecraft.class_1810;
 
 public class NoMiningTrace
 extends Module {
-    private final /* synthetic */ Setting<Boolean> onlyWhenHoldingPickaxe;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Boolean> onlyWhenHoldingPickaxe;
+    private final SettingGroup sgGeneral;
 
     public NoMiningTrace() {
         super(Categories.Player, "no-mining-trace", "Allows you to mine blocks through entities.");
-        NoMiningTrace lIlIIIIlIIIlIlI;
-        lIlIIIIlIIIlIlI.sgGeneral = lIlIIIIlIIIlIlI.settings.getDefaultGroup();
-        lIlIIIIlIIIlIlI.onlyWhenHoldingPickaxe = lIlIIIIlIIIlIlI.sgGeneral.add(new BoolSetting.Builder().name("only-when-holding-a-pickaxe").description("Whether or not to work only when holding a pickaxe.").defaultValue(true).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.onlyWhenHoldingPickaxe = this.sgGeneral.add(new BoolSetting.Builder().name("only-when-holding-a-pickaxe").description("Whether or not to work only when holding a pickaxe.").defaultValue(true).build());
     }
 
     public boolean canWork() {
-        NoMiningTrace lIlIIIIlIIIlIII;
-        if (!lIlIIIIlIIIlIII.isActive()) {
+        if (!this.isActive()) {
             return false;
         }
-        if (lIlIIIIlIIIlIII.onlyWhenHoldingPickaxe.get().booleanValue()) {
-            return lIlIIIIlIIIlIII.mc.field_1724.method_6047().method_7909() instanceof class_1810 || lIlIIIIlIIIlIII.mc.field_1724.method_6079().method_7909() instanceof class_1810;
+        if (this.onlyWhenHoldingPickaxe.get().booleanValue()) {
+            return this.mc.field_1724.method_6047().method_7909() instanceof class_1810 || this.mc.field_1724.method_6079().method_7909() instanceof class_1810;
         }
         return true;
     }

@@ -9,24 +9,20 @@ import com.sun.jna.ptr.ByReference;
 public class PointerByReference
 extends ByReference {
     public PointerByReference() {
-        lllllllllllllllllIllIllIIIIIIIll(null);
-        PointerByReference lllllllllllllllllIllIllIIIIIIIll;
+        this(null);
     }
 
     public Pointer getValue() {
-        PointerByReference lllllllllllllllllIllIlIlllllIlII;
-        return lllllllllllllllllIllIlIlllllIlII.getPointer().getPointer(0L);
+        return this.getPointer().getPointer(0L);
     }
 
-    public void setValue(Pointer lllllllllllllllllIllIlIlllllIlll) {
-        PointerByReference lllllllllllllllllIllIlIllllllIlI;
-        lllllllllllllllllIllIlIllllllIlI.getPointer().setPointer(0L, lllllllllllllllllIllIlIlllllIlll);
+    public void setValue(Pointer pointer) {
+        this.getPointer().setPointer(0L, pointer);
     }
 
-    public PointerByReference(Pointer lllllllllllllllllIllIlIlllllllIl) {
+    public PointerByReference(Pointer pointer) {
         super(Pointer.SIZE);
-        PointerByReference lllllllllllllllllIllIllIIIIIIIII;
-        lllllllllllllllllIllIllIIIIIIIII.setValue(lllllllllllllllllIllIlIlllllllIl);
+        this.setValue(pointer);
     }
 }
 

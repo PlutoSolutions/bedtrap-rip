@@ -11,25 +11,22 @@ import minegame159.meteorclient.gui.widgets.containers.WWindow;
 
 public abstract class WindowScreen
 extends WidgetScreen {
-    private final /* synthetic */ WWindow window;
+    private final WWindow window;
 
     @Override
-    public <W extends WWidget> Cell<W> add(W llllllllllllllllllllIlIIIIIlllII) {
-        WindowScreen llllllllllllllllllllIlIIIIIlllll;
-        return llllllllllllllllllllIlIIIIIlllll.window.add(llllllllllllllllllllIlIIIIIlllII);
+    public <W extends WWidget> Cell<W> add(W w) {
+        return this.window.add(w);
     }
 
-    public WindowScreen(GuiTheme llllllllllllllllllllIlIIIIlIIllI, String llllllllllllllllllllIlIIIIlIIlIl) {
-        super(llllllllllllllllllllIlIIIIlIIllI, llllllllllllllllllllIlIIIIlIIlIl);
-        WindowScreen llllllllllllllllllllIlIIIIlIIlll;
-        llllllllllllllllllllIlIIIIlIIlll.window = super.add(llllllllllllllllllllIlIIIIlIIllI.window(llllllllllllllllllllIlIIIIlIIlIl)).center().widget();
-        llllllllllllllllllllIlIIIIlIIlll.window.view.scrollOnlyWhenMouseOver = false;
+    public WindowScreen(GuiTheme guiTheme, String string) {
+        super(guiTheme, string);
+        this.window = super.add(guiTheme.window(string)).center().widget();
+        this.window.view.scrollOnlyWhenMouseOver = false;
     }
 
     @Override
     public void clear() {
-        WindowScreen llllllllllllllllllllIlIIIIIllIIl;
-        llllllllllllllllllllIlIIIIIllIIl.window.clear();
+        this.window.clear();
     }
 }
 

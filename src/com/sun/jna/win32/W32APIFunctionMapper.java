@@ -9,33 +9,26 @@ import java.lang.reflect.Method;
 
 public class W32APIFunctionMapper
 implements FunctionMapper {
-    public static final /* synthetic */ FunctionMapper UNICODE;
-    private final /* synthetic */ String suffix;
-    public static final /* synthetic */ FunctionMapper ASCII;
+    public static final FunctionMapper UNICODE = new W32APIFunctionMapper(true);
+    private final String suffix;
+    public static final FunctionMapper ASCII = new W32APIFunctionMapper(false);
 
-    static {
-        UNICODE = new W32APIFunctionMapper(true);
-        ASCII = new W32APIFunctionMapper(false);
-    }
-
-    protected W32APIFunctionMapper(boolean llllllllllllllllIlIlllIlIIIlIlII) {
-        W32APIFunctionMapper llllllllllllllllIlIlllIlIIIlIlll;
-        llllllllllllllllIlIlllIlIIIlIlll.suffix = llllllllllllllllIlIlllIlIIIlIlII ? "W" : "A";
+    protected W32APIFunctionMapper(boolean bl) {
+        this.suffix = bl ? "W" : "A";
     }
 
     @Override
-    public String getFunctionName(NativeLibrary llllllllllllllllIlIlllIlIIIIlIIl, Method llllllllllllllllIlIlllIlIIIIlIII) {
-        String llllllllllllllllIlIlllIlIIIIlIll = llllllllllllllllIlIlllIlIIIIlIII.getName();
-        if (!llllllllllllllllIlIlllIlIIIIlIll.endsWith("W") && !llllllllllllllllIlIlllIlIIIIlIll.endsWith("A")) {
+    public String getFunctionName(NativeLibrary nativeLibrary, Method method) {
+        String string = method.getName();
+        if (!string.endsWith("W") && !string.endsWith("A")) {
             try {
-                W32APIFunctionMapper llllllllllllllllIlIlllIlIIIIlIlI;
-                llllllllllllllllIlIlllIlIIIIlIll = llllllllllllllllIlIlllIlIIIIlIIl.getFunction(String.valueOf(new StringBuilder().append(llllllllllllllllIlIlllIlIIIIlIll).append(llllllllllllllllIlIlllIlIIIIlIlI.suffix)), 63).getName();
+                string = nativeLibrary.getFunction(String.valueOf(new StringBuilder().append(string).append(this.suffix)), 63).getName();
             }
-            catch (UnsatisfiedLinkError llllllllllllllllIlIlllIlIIIIIllI) {
+            catch (UnsatisfiedLinkError unsatisfiedLinkError) {
                 // empty catch block
             }
         }
-        return llllllllllllllllIlIlllIlIIIIlIll;
+        return string;
     }
 }
 

@@ -27,188 +27,184 @@ import net.minecraft.class_265;
 import net.minecraft.class_2680;
 
 public class SBlock {
-    public static final /* synthetic */ int BO_RI;
-    private /* synthetic */ class_2680 state;
-    public static final /* synthetic */ int BO_FO;
-    public static final /* synthetic */ int BA;
-    public static final /* synthetic */ int TO_FO;
-    public static final /* synthetic */ int LE;
-    public static final /* synthetic */ int BO;
-    public static final /* synthetic */ int BA_RI;
-    public /* synthetic */ boolean loaded;
-    public /* synthetic */ int neighbours;
-    public static final /* synthetic */ int FO_RI;
-    public static final /* synthetic */ int FO;
-    public static final /* synthetic */ int RI;
-    private static final /* synthetic */ class_2338.class_2339 blockPos;
-    public final /* synthetic */ int y;
-    public static final /* synthetic */ int[] SIDES;
-    public static final /* synthetic */ int FO_LE;
-    public static final /* synthetic */ int TO;
-    public static final /* synthetic */ int BO_BA;
-    public static final /* synthetic */ int TO_RI;
-    public static final /* synthetic */ int TO_LE;
-    public static final /* synthetic */ int TO_BA;
-    public final /* synthetic */ int z;
-    public final /* synthetic */ int x;
-    public /* synthetic */ SGroup group;
-    public static final /* synthetic */ int BO_LE;
-    private static final /* synthetic */ Search search;
-    public static final /* synthetic */ int BA_LE;
+    public static final int BO_RI;
+    private class_2680 state;
+    public static final int BO_FO;
+    public static final int BA;
+    public static final int TO_FO;
+    public static final int LE;
+    public static final int BO;
+    public static final int BA_RI;
+    public boolean loaded = true;
+    public int neighbours;
+    public static final int FO_RI;
+    public static final int FO;
+    public static final int RI;
+    private static final class_2338.class_2339 blockPos;
+    public final int y;
+    public static final int[] SIDES;
+    public static final int FO_LE;
+    public static final int TO;
+    public static final int BO_BA;
+    public static final int TO_RI;
+    public static final int TO_LE;
+    public static final int TO_BA;
+    public final int z;
+    public final int x;
+    public SGroup group;
+    public static final int BO_LE;
+    private static final Search search;
+    public static final int BA_LE;
 
-    public SBlock(int llllllllllllllllIllIIIlIIllIlIlI, int llllllllllllllllIllIIIlIIllIIlIl, int llllllllllllllllIllIIIlIIllIlIII) {
-        SBlock llllllllllllllllIllIIIlIIllIIlll;
-        llllllllllllllllIllIIIlIIllIIlll.loaded = true;
-        llllllllllllllllIllIIIlIIllIIlll.x = llllllllllllllllIllIIIlIIllIlIlI;
-        llllllllllllllllIllIIIlIIllIIlll.y = llllllllllllllllIllIIIlIIllIIlIl;
-        llllllllllllllllIllIIIlIIllIIlll.z = llllllllllllllllIllIIIlIIllIlIII;
+    public SBlock(int n, int n2, int n3) {
+        this.x = n;
+        this.y = n2;
+        this.z = n3;
     }
 
     public void render() {
-        SBlock llllllllllllllllIllIIIlIIIIlIlIl;
-        double llllllllllllllllIllIIIlIIIlIIIII = llllllllllllllllIllIIIlIIIIlIlIl.x;
-        double llllllllllllllllIllIIIlIIIIlllll = llllllllllllllllIllIIIlIIIIlIlIl.y;
-        double llllllllllllllllIllIIIlIIIIllllI = llllllllllllllllIllIIIlIIIIlIlIl.z;
-        double llllllllllllllllIllIIIlIIIIlllIl = llllllllllllllllIllIIIlIIIIlIlIl.x + 1;
-        double llllllllllllllllIllIIIlIIIIlllII = llllllllllllllllIllIIIlIIIIlIlIl.y + 1;
-        double llllllllllllllllIllIIIlIIIIllIll = llllllllllllllllIllIIIlIIIIlIlIl.z + 1;
-        class_265 llllllllllllllllIllIIIlIIIIllIlI = llllllllllllllllIllIIIlIIIIlIlIl.state.method_26218((class_1922)Utils.mc.field_1687, (class_2338)blockPos);
-        if (!llllllllllllllllIllIIIlIIIIllIlI.method_1110()) {
-            llllllllllllllllIllIIIlIIIlIIIII = (double)llllllllllllllllIllIIIlIIIIlIlIl.x + llllllllllllllllIllIIIlIIIIllIlI.method_1091(class_2350.class_2351.field_11048);
-            llllllllllllllllIllIIIlIIIIlllll = (double)llllllllllllllllIllIIIlIIIIlIlIl.y + llllllllllllllllIllIIIlIIIIllIlI.method_1091(class_2350.class_2351.field_11052);
-            llllllllllllllllIllIIIlIIIIllllI = (double)llllllllllllllllIllIIIlIIIIlIlIl.z + llllllllllllllllIllIIIlIIIIllIlI.method_1091(class_2350.class_2351.field_11051);
-            llllllllllllllllIllIIIlIIIIlllIl = (double)llllllllllllllllIllIIIlIIIIlIlIl.x + llllllllllllllllIllIIIlIIIIllIlI.method_1105(class_2350.class_2351.field_11048);
-            llllllllllllllllIllIIIlIIIIlllII = (double)llllllllllllllllIllIIIlIIIIlIlIl.y + llllllllllllllllIllIIIlIIIIllIlI.method_1105(class_2350.class_2351.field_11052);
-            llllllllllllllllIllIIIlIIIIllIll = (double)llllllllllllllllIllIIIlIIIIlIlIl.z + llllllllllllllllIllIIIlIIIIllIlI.method_1105(class_2350.class_2351.field_11051);
+        double d = this.x;
+        double d2 = this.y;
+        double d3 = this.z;
+        double d4 = this.x + 1;
+        double d5 = this.y + 1;
+        double d6 = this.z + 1;
+        class_265 class_2652 = this.state.method_26218((class_1922)Utils.mc.field_1687, (class_2338)blockPos);
+        if (!class_2652.method_1110()) {
+            d = (double)this.x + class_2652.method_1091(class_2350.class_2351.field_11048);
+            d2 = (double)this.y + class_2652.method_1091(class_2350.class_2351.field_11052);
+            d3 = (double)this.z + class_2652.method_1091(class_2350.class_2351.field_11051);
+            d4 = (double)this.x + class_2652.method_1105(class_2350.class_2351.field_11048);
+            d5 = (double)this.y + class_2652.method_1105(class_2350.class_2351.field_11052);
+            d6 = (double)this.z + class_2652.method_1105(class_2350.class_2351.field_11051);
         }
-        SBlockData llllllllllllllllIllIIIlIIIIllIIl = search.getBlockData(llllllllllllllllIllIIIlIIIIlIlIl.state.method_26204());
-        ShapeMode llllllllllllllllIllIIIlIIIIllIII = llllllllllllllllIllIIIlIIIIllIIl.shapeMode;
-        SettingColor llllllllllllllllIllIIIlIIIIlIlll = llllllllllllllllIllIIIlIIIIllIIl.lineColor;
-        SettingColor llllllllllllllllIllIIIlIIIIlIllI = llllllllllllllllIllIIIlIIIIllIIl.sideColor;
-        if (llllllllllllllllIllIIIlIIIIlIlIl.neighbours == 0) {
-            Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIllI, llllllllllllllllIllIIIlIIIIlIlll, llllllllllllllllIllIIIlIIIIllIII, 0);
+        SBlockData sBlockData = search.getBlockData(this.state.method_26204());
+        ShapeMode shapeMode = sBlockData.shapeMode;
+        SettingColor settingColor = sBlockData.lineColor;
+        SettingColor settingColor2 = sBlockData.sideColor;
+        if (this.neighbours == 0) {
+            Renderer.boxWithLines(Renderer.NORMAL, Renderer.LINES, d, d2, d3, d4, d5, d6, settingColor2, settingColor, shapeMode, 0);
         } else {
-            if (llllllllllllllllIllIIIlIIIIllIII != ShapeMode.Sides) {
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) != 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) != 32 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) == 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) == 32 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x40) != 64) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlIlll);
+            if (shapeMode != ShapeMode.Sides) {
+                if ((this.neighbours & 0x80) != 128 && (this.neighbours & 0x20) != 32 || (this.neighbours & 0x80) == 128 && (this.neighbours & 0x20) == 32 && (this.neighbours & 0x40) != 64) {
+                    Renderer.LINES.line(d, d2, d3, d, d5, d3, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) != 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) != 2 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) == 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) == 2 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x100) != 256) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 0x80) != 128 && (this.neighbours & 2) != 2 || (this.neighbours & 0x80) == 128 && (this.neighbours & 2) == 2 && (this.neighbours & 0x100) != 256) {
+                    Renderer.LINES.line(d, d2, d6, d, d5, d6, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) != 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) != 32 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) == 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) == 32 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x10) != 16) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 8) != 8 && (this.neighbours & 0x20) != 32 || (this.neighbours & 8) == 8 && (this.neighbours & 0x20) == 32 && (this.neighbours & 0x10) != 16) {
+                    Renderer.LINES.line(d4, d2, d3, d4, d5, d3, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) != 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) != 2 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) == 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) == 2 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 4) != 4) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 8) != 8 && (this.neighbours & 2) != 2 || (this.neighbours & 8) == 8 && (this.neighbours & 2) == 2 && (this.neighbours & 4) != 4) {
+                    Renderer.LINES.line(d4, d2, d6, d4, d5, d6, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) != 32 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x4000) != 16384 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) != 32 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x10000) == 65536) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 0x20) != 32 && (this.neighbours & 0x4000) != 16384 || (this.neighbours & 0x20) != 32 && (this.neighbours & 0x10000) == 65536) {
+                    Renderer.LINES.line(d, d2, d3, d4, d2, d3, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) != 2 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x4000) != 16384 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) != 2 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x8000) == 32768) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 2) != 2 && (this.neighbours & 0x4000) != 16384 || (this.neighbours & 2) != 2 && (this.neighbours & 0x8000) == 32768) {
+                    Renderer.LINES.line(d, d2, d6, d4, d2, d6, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) != 32 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x200) != 512 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) != 32 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x800) == 2048) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 0x20) != 32 && (this.neighbours & 0x200) != 512 || (this.neighbours & 0x20) != 32 && (this.neighbours & 0x800) == 2048) {
+                    Renderer.LINES.line(d, d5, d3, d4, d5, d3, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) != 2 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x200) != 512 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) != 2 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x400) == 1024) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 2) != 2 && (this.neighbours & 0x200) != 512 || (this.neighbours & 2) != 2 && (this.neighbours & 0x400) == 1024) {
+                    Renderer.LINES.line(d, d5, d6, d4, d5, d6, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) != 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x4000) != 16384 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) != 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x40000) == 262144) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 0x80) != 128 && (this.neighbours & 0x4000) != 16384 || (this.neighbours & 0x80) != 128 && (this.neighbours & 0x40000) == 262144) {
+                    Renderer.LINES.line(d, d2, d3, d, d2, d6, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) != 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x4000) != 16384 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) != 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20000) == 131072) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 8) != 8 && (this.neighbours & 0x4000) != 16384 || (this.neighbours & 8) != 8 && (this.neighbours & 0x20000) == 131072) {
+                    Renderer.LINES.line(d4, d2, d3, d4, d2, d6, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) != 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x200) != 512 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) != 128 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x2000) == 8192) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 0x80) != 128 && (this.neighbours & 0x200) != 512 || (this.neighbours & 0x80) != 128 && (this.neighbours & 0x2000) == 8192) {
+                    Renderer.LINES.line(d, d5, d3, d, d5, d6, settingColor);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) != 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x200) != 512 || (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) != 8 && (llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x1000) == 4096) {
-                    Renderer.LINES.line(llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIlll);
+                if ((this.neighbours & 8) != 8 && (this.neighbours & 0x200) != 512 || (this.neighbours & 8) != 8 && (this.neighbours & 0x1000) == 4096) {
+                    Renderer.LINES.line(d4, d5, d3, d4, d5, d6, settingColor);
                 }
             }
-            if (llllllllllllllllIllIIIlIIIIllIII != ShapeMode.Lines) {
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x4000) != 16384) {
-                    Renderer.NORMAL.horizontalQuad(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIlIllI);
+            if (shapeMode != ShapeMode.Lines) {
+                if ((this.neighbours & 0x4000) != 16384) {
+                    Renderer.NORMAL.horizontalQuad(d, d3, d4, d6, d2, settingColor2);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x200) != 512) {
-                    Renderer.NORMAL.horizontalQuad(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIlIllI);
+                if ((this.neighbours & 0x200) != 512) {
+                    Renderer.NORMAL.horizontalQuad(d, d3, d4, d6, d5, settingColor2);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 2) != 2) {
-                    Renderer.NORMAL.verticalQuad(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIllI);
+                if ((this.neighbours & 2) != 2) {
+                    Renderer.NORMAL.verticalQuad(d, d2, d6, d4, d5, d6, settingColor2);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x20) != 32) {
-                    Renderer.NORMAL.verticalQuad(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlIllI);
+                if ((this.neighbours & 0x20) != 32) {
+                    Renderer.NORMAL.verticalQuad(d, d2, d3, d4, d5, d3, settingColor2);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 8) != 8) {
-                    Renderer.NORMAL.verticalQuad(llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIIlllIl, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIllI);
+                if ((this.neighbours & 8) != 8) {
+                    Renderer.NORMAL.verticalQuad(d4, d2, d3, d4, d5, d6, settingColor2);
                 }
-                if ((llllllllllllllllIllIIIlIIIIlIlIl.neighbours & 0x80) != 128) {
-                    Renderer.NORMAL.verticalQuad(llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllll, llllllllllllllllIllIIIlIIIIllllI, llllllllllllllllIllIIIlIIIlIIIII, llllllllllllllllIllIIIlIIIIlllII, llllllllllllllllIllIIIlIIIIllIll, llllllllllllllllIllIIIlIIIIlIllI);
+                if ((this.neighbours & 0x80) != 128) {
+                    Renderer.NORMAL.verticalQuad(d, d2, d3, d, d5, d6, settingColor2);
                 }
             }
         }
     }
 
     public void update() {
-        SBlock llllllllllllllllIllIIIlIIlIIlIIl;
-        llllllllllllllllIllIIIlIIlIIlIIl.state = Utils.mc.field_1687.method_8320((class_2338)blockPos.method_10103(llllllllllllllllIllIIIlIIlIIlIIl.x, llllllllllllllllIllIIIlIIlIIlIIl.y, llllllllllllllllIllIIIlIIlIIlIIl.z));
-        llllllllllllllllIllIIIlIIlIIlIIl.neighbours = 0;
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbour(class_2350.field_11035)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 2;
+        this.state = Utils.mc.field_1687.method_8320((class_2338)blockPos.method_10103(this.x, this.y, this.z));
+        this.neighbours = 0;
+        if (this.isNeighbour(class_2350.field_11035)) {
+            this.neighbours |= 2;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(1.0, 0.0, 1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 4;
+        if (this.isNeighbourDiagonal(1.0, 0.0, 1.0)) {
+            this.neighbours |= 4;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbour(class_2350.field_11034)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 8;
+        if (this.isNeighbour(class_2350.field_11034)) {
+            this.neighbours |= 8;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(1.0, 0.0, -1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x10;
+        if (this.isNeighbourDiagonal(1.0, 0.0, -1.0)) {
+            this.neighbours |= 0x10;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbour(class_2350.field_11043)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x20;
+        if (this.isNeighbour(class_2350.field_11043)) {
+            this.neighbours |= 0x20;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(-1.0, 0.0, -1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x40;
+        if (this.isNeighbourDiagonal(-1.0, 0.0, -1.0)) {
+            this.neighbours |= 0x40;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbour(class_2350.field_11039)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x80;
+        if (this.isNeighbour(class_2350.field_11039)) {
+            this.neighbours |= 0x80;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(-1.0, 0.0, 1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x100;
+        if (this.isNeighbourDiagonal(-1.0, 0.0, 1.0)) {
+            this.neighbours |= 0x100;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbour(class_2350.field_11036)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x200;
+        if (this.isNeighbour(class_2350.field_11036)) {
+            this.neighbours |= 0x200;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(0.0, 1.0, 1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x400;
+        if (this.isNeighbourDiagonal(0.0, 1.0, 1.0)) {
+            this.neighbours |= 0x400;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(0.0, 1.0, -1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x800;
+        if (this.isNeighbourDiagonal(0.0, 1.0, -1.0)) {
+            this.neighbours |= 0x800;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(1.0, 1.0, 0.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x1000;
+        if (this.isNeighbourDiagonal(1.0, 1.0, 0.0)) {
+            this.neighbours |= 0x1000;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(-1.0, 1.0, 0.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x2000;
+        if (this.isNeighbourDiagonal(-1.0, 1.0, 0.0)) {
+            this.neighbours |= 0x2000;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbour(class_2350.field_11033)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x4000;
+        if (this.isNeighbour(class_2350.field_11033)) {
+            this.neighbours |= 0x4000;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(0.0, -1.0, 1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x8000;
+        if (this.isNeighbourDiagonal(0.0, -1.0, 1.0)) {
+            this.neighbours |= 0x8000;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(0.0, -1.0, -1.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x10000;
+        if (this.isNeighbourDiagonal(0.0, -1.0, -1.0)) {
+            this.neighbours |= 0x10000;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(1.0, -1.0, 0.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x20000;
+        if (this.isNeighbourDiagonal(1.0, -1.0, 0.0)) {
+            this.neighbours |= 0x20000;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.isNeighbourDiagonal(-1.0, -1.0, 0.0)) {
-            llllllllllllllllIllIIIlIIlIIlIIl.neighbours |= 0x40000;
+        if (this.isNeighbourDiagonal(-1.0, -1.0, 0.0)) {
+            this.neighbours |= 0x40000;
         }
-        if (llllllllllllllllIllIIIlIIlIIlIIl.group == null) {
-            llllllllllllllllIllIIIlIIlIIlIIl.assignGroup();
+        if (this.group == null) {
+            this.assignGroup();
         }
     }
 
@@ -236,105 +232,98 @@ public class SBlock {
         SIDES = new int[]{2, 32, 128, 8, 512, 16384};
     }
 
-    public static long getKey(int llllllllllllllllIllIIIlIIIIIIllI, int llllllllllllllllIllIIIlIIIIIIIlI, int llllllllllllllllIllIIIlIIIIIIlII) {
-        return (long)llllllllllllllllIllIIIlIIIIIIIlI << 16 | (long)(llllllllllllllllIllIIIlIIIIIIlII & 0xF) << 8 | (long)(llllllllllllllllIllIIIlIIIIIIllI & 0xF);
+    public static long getKey(int n, int n2, int n3) {
+        return (long)n2 << 16 | (long)(n3 & 0xF) << 8 | (long)(n & 0xF);
     }
 
-    public SBlock getSideBlock(int llllllllllllllllIllIIIlIIlIllllI) {
-        switch (llllllllllllllllIllIIIlIIlIllllI) {
+    public SBlock getSideBlock(int n) {
+        switch (n) {
             case 2: {
-                SBlock llllllllllllllllIllIIIlIIllIIIIl;
-                return search.getBlock(llllllllllllllllIllIIIlIIllIIIIl.x, llllllllllllllllIllIIIlIIllIIIIl.y, llllllllllllllllIllIIIlIIllIIIIl.z + 1);
+                return search.getBlock(this.x, this.y, this.z + 1);
             }
             case 32: {
-                SBlock llllllllllllllllIllIIIlIIllIIIIl;
-                return search.getBlock(llllllllllllllllIllIIIlIIllIIIIl.x, llllllllllllllllIllIIIlIIllIIIIl.y, llllllllllllllllIllIIIlIIllIIIIl.z - 1);
+                return search.getBlock(this.x, this.y, this.z - 1);
             }
             case 128: {
-                SBlock llllllllllllllllIllIIIlIIllIIIIl;
-                return search.getBlock(llllllllllllllllIllIIIlIIllIIIIl.x - 1, llllllllllllllllIllIIIlIIllIIIIl.y, llllllllllllllllIllIIIlIIllIIIIl.z);
+                return search.getBlock(this.x - 1, this.y, this.z);
             }
             case 8: {
-                SBlock llllllllllllllllIllIIIlIIllIIIIl;
-                return search.getBlock(llllllllllllllllIllIIIlIIllIIIIl.x + 1, llllllllllllllllIllIIIlIIllIIIIl.y, llllllllllllllllIllIIIlIIllIIIIl.z);
+                return search.getBlock(this.x + 1, this.y, this.z);
             }
             case 512: {
-                SBlock llllllllllllllllIllIIIlIIllIIIIl;
-                return search.getBlock(llllllllllllllllIllIIIlIIllIIIIl.x, llllllllllllllllIllIIIlIIllIIIIl.y + 1, llllllllllllllllIllIIIlIIllIIIIl.z);
+                return search.getBlock(this.x, this.y + 1, this.z);
             }
             case 16384: {
-                SBlock llllllllllllllllIllIIIlIIllIIIIl;
-                return search.getBlock(llllllllllllllllIllIIIlIIllIIIIl.x, llllllllllllllllIllIIIlIIllIIIIl.y - 1, llllllllllllllllIllIIIlIIllIIIIl.z);
+                return search.getBlock(this.x, this.y - 1, this.z);
             }
         }
         return null;
     }
 
-    public static long getKey(class_2338 llllllllllllllllIllIIIIlllllllll) {
-        return SBlock.getKey(llllllllllllllllIllIIIIlllllllll.method_10263(), llllllllllllllllIllIIIIlllllllll.method_10264(), llllllllllllllllIllIIIIlllllllll.method_10260());
+    public static long getKey(class_2338 class_23382) {
+        return SBlock.getKey(class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260());
     }
 
-    private boolean isNeighbour(class_2350 llllllllllllllllIllIIIlIIIllllIl) {
-        SBlock llllllllllllllllIllIIIlIIIlllllI;
-        blockPos.method_10103(llllllllllllllllIllIIIlIIIlllllI.x + llllllllllllllllIllIIIlIIIllllIl.method_10148(), llllllllllllllllIllIIIlIIIlllllI.y + llllllllllllllllIllIIIlIIIllllIl.method_10164(), llllllllllllllllIllIIIlIIIlllllI.z + llllllllllllllllIllIIIlIIIllllIl.method_10165());
-        class_2680 llllllllllllllllIllIIIlIIlIIIIIl = Utils.mc.field_1687.method_8320((class_2338)blockPos);
-        if (llllllllllllllllIllIIIlIIlIIIIIl.method_26204() != llllllllllllllllIllIIIlIIIlllllI.state.method_26204()) {
+    private boolean isNeighbour(class_2350 class_23502) {
+        blockPos.method_10103(this.x + class_23502.method_10148(), this.y + class_23502.method_10164(), this.z + class_23502.method_10165());
+        class_2680 class_26802 = Utils.mc.field_1687.method_8320((class_2338)blockPos);
+        if (class_26802.method_26204() != this.state.method_26204()) {
             return false;
         }
-        class_265 llllllllllllllllIllIIIlIIlIIIIII = llllllllllllllllIllIIIlIIIlllllI.state.method_26218((class_1922)Utils.mc.field_1687, (class_2338)blockPos);
-        class_265 llllllllllllllllIllIIIlIIIllllll = llllllllllllllllIllIIIlIIlIIIIIl.method_26218((class_1922)Utils.mc.field_1687, (class_2338)blockPos);
-        switch (llllllllllllllllIllIIIlIIIllllIl) {
-            case field_11035: {
-                if (llllllllllllllllIllIIIlIIlIIIIII.method_1105(class_2350.class_2351.field_11051) != 1.0 || llllllllllllllllIllIIIlIIIllllll.method_1091(class_2350.class_2351.field_11051) != 0.0) break;
+        class_265 class_2652 = this.state.method_26218((class_1922)Utils.mc.field_1687, (class_2338)blockPos);
+        class_265 class_2654 = class_26802.method_26218((class_1922)Utils.mc.field_1687, (class_2338)blockPos);
+        switch (1.$SwitchMap$net$minecraft$util$math$Direction[class_23502.ordinal()]) {
+            case 1: {
+                if (class_2652.method_1105(class_2350.class_2351.field_11051) != 1.0 || class_2654.method_1091(class_2350.class_2351.field_11051) != 0.0) break;
                 return true;
             }
-            case field_11043: {
-                if (llllllllllllllllIllIIIlIIlIIIIII.method_1091(class_2350.class_2351.field_11051) != 0.0 || llllllllllllllllIllIIIlIIIllllll.method_1105(class_2350.class_2351.field_11051) != 1.0) break;
+            case 2: {
+                if (class_2652.method_1091(class_2350.class_2351.field_11051) != 0.0 || class_2654.method_1105(class_2350.class_2351.field_11051) != 1.0) break;
                 return true;
             }
-            case field_11034: {
-                if (llllllllllllllllIllIIIlIIlIIIIII.method_1105(class_2350.class_2351.field_11048) != 1.0 || llllllllllllllllIllIIIlIIIllllll.method_1091(class_2350.class_2351.field_11048) != 0.0) break;
+            case 3: {
+                if (class_2652.method_1105(class_2350.class_2351.field_11048) != 1.0 || class_2654.method_1091(class_2350.class_2351.field_11048) != 0.0) break;
                 return true;
             }
-            case field_11039: {
-                if (llllllllllllllllIllIIIlIIlIIIIII.method_1091(class_2350.class_2351.field_11048) != 0.0 || llllllllllllllllIllIIIlIIIllllll.method_1105(class_2350.class_2351.field_11048) != 1.0) break;
+            case 4: {
+                if (class_2652.method_1091(class_2350.class_2351.field_11048) != 0.0 || class_2654.method_1105(class_2350.class_2351.field_11048) != 1.0) break;
                 return true;
             }
-            case field_11036: {
-                if (llllllllllllllllIllIIIlIIlIIIIII.method_1105(class_2350.class_2351.field_11052) != 1.0 || llllllllllllllllIllIIIlIIIllllll.method_1091(class_2350.class_2351.field_11052) != 0.0) break;
+            case 5: {
+                if (class_2652.method_1105(class_2350.class_2351.field_11052) != 1.0 || class_2654.method_1091(class_2350.class_2351.field_11052) != 0.0) break;
                 return true;
             }
-            case field_11033: {
-                if (llllllllllllllllIllIIIlIIlIIIIII.method_1091(class_2350.class_2351.field_11052) != 0.0 || llllllllllllllllIllIIIlIIIllllll.method_1105(class_2350.class_2351.field_11052) != 1.0) break;
+            case 6: {
+                if (class_2652.method_1091(class_2350.class_2351.field_11052) != 0.0 || class_2654.method_1105(class_2350.class_2351.field_11052) != 1.0) break;
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isNeighbourDiagonal(double llllllllllllllllIllIIIlIIIllIlII, double llllllllllllllllIllIIIlIIIlIllll, double llllllllllllllllIllIIIlIIIlIlllI) {
-        SBlock llllllllllllllllIllIIIlIIIllIlIl;
-        blockPos.method_10102((double)llllllllllllllllIllIIIlIIIllIlIl.x + llllllllllllllllIllIIIlIIIllIlII, (double)llllllllllllllllIllIIIlIIIllIlIl.y + llllllllllllllllIllIIIlIIIlIllll, (double)llllllllllllllllIllIIIlIIIllIlIl.z + llllllllllllllllIllIIIlIIIlIlllI);
-        return llllllllllllllllIllIIIlIIIllIlIl.state.method_26204() == Utils.mc.field_1687.method_8320((class_2338)blockPos).method_26204();
+    private boolean isNeighbourDiagonal(double d, double d2, double d3) {
+        blockPos.method_10102((double)this.x + d, (double)this.y + d2, (double)this.z + d3);
+        return this.state.method_26204() == Utils.mc.field_1687.method_8320((class_2338)blockPos).method_26204();
     }
 
     private void assignGroup() {
-        SBlock llllllllllllllllIllIIIlIIlIlIIlI;
-        SGroup llllllllllllllllIllIIIlIIlIlIIll = null;
-        for (int llllllllllllllllIllIIIlIIlIlIlIl : SIDES) {
-            SBlock llllllllllllllllIllIIIlIIlIlIllI;
-            if ((llllllllllllllllIllIIIlIIlIlIIlI.neighbours & llllllllllllllllIllIIIlIIlIlIlIl) != llllllllllllllllIllIIIlIIlIlIlIl || (llllllllllllllllIllIIIlIIlIlIllI = llllllllllllllllIllIIIlIIlIlIIlI.getSideBlock(llllllllllllllllIllIIIlIIlIlIlIl)) == null || llllllllllllllllIllIIIlIIlIlIllI.group == null) continue;
-            if (llllllllllllllllIllIIIlIIlIlIIll == null) {
-                llllllllllllllllIllIIIlIIlIlIIll = llllllllllllllllIllIIIlIIlIlIllI.group;
+        SGroup sGroup = null;
+        for (int n : SIDES) {
+            SBlock sBlock;
+            if ((this.neighbours & n) != n || (sBlock = this.getSideBlock(n)) == null || sBlock.group == null) continue;
+            if (sGroup == null) {
+                sGroup = sBlock.group;
                 continue;
             }
-            if (llllllllllllllllIllIIIlIIlIlIIll == llllllllllllllllIllIIIlIIlIlIllI.group) continue;
-            llllllllllllllllIllIIIlIIlIlIIll.merge(llllllllllllllllIllIIIlIIlIlIllI.group);
+            if (sGroup == sBlock.group) continue;
+            sGroup.merge(sBlock.group);
+            if (1 < 4) continue;
+            return;
         }
-        if (llllllllllllllllIllIIIlIIlIlIIll == null) {
-            llllllllllllllllIllIIIlIIlIlIIll = search.newGroup(llllllllllllllllIllIIIlIIlIlIIlI.state.method_26204());
+        if (sGroup == null) {
+            sGroup = search.newGroup(this.state.method_26204());
         }
-        llllllllllllllllIllIIIlIIlIlIIll.add(llllllllllllllllIllIIIlIIlIlIIlI);
+        sGroup.add(this);
     }
 }
 

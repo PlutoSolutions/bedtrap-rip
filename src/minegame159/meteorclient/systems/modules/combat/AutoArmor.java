@@ -11,6 +11,7 @@
  *  net.minecraft.class_1802
  *  net.minecraft.class_1887
  *  net.minecraft.class_1893
+ *  net.minecraft.class_310
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -40,152 +41,187 @@ import net.minecraft.class_1799;
 import net.minecraft.class_1802;
 import net.minecraft.class_1887;
 import net.minecraft.class_1893;
+import net.minecraft.class_310;
 
 public class AutoArmor
 extends Module {
-    private final /* synthetic */ ArmorPiece leggings;
-    private /* synthetic */ int timer;
-    private final /* synthetic */ ArmorPiece helmet;
-    private final /* synthetic */ ArmorPiece boots;
-    private final /* synthetic */ Object2IntMap<class_1887> enchantments;
-    private final /* synthetic */ ArmorPiece chestplate;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private final /* synthetic */ Setting<List<class_1887>> avoidedEnchantments;
-    private final /* synthetic */ Setting<Boolean> antiBreak;
-    private final /* synthetic */ Setting<Boolean> blastLeggings;
-    private final /* synthetic */ ArmorPiece[] armorPieces;
-    private final /* synthetic */ Setting<Boolean> ignoreElytra;
-    private final /* synthetic */ Setting<Integer> delay;
-    private final /* synthetic */ Setting<Protection> preferredProtection;
+    private final ArmorPiece leggings;
+    private int timer;
+    private final ArmorPiece helmet;
+    private final ArmorPiece boots;
+    private final Object2IntMap<class_1887> enchantments;
+    private final ArmorPiece chestplate;
+    private final SettingGroup sgGeneral;
+    private final Setting<List<class_1887>> avoidedEnchantments;
+    private final Setting<Boolean> antiBreak;
+    private final Setting<Boolean> blastLeggings;
+    private final ArmorPiece[] armorPieces;
+    private final Setting<Boolean> ignoreElytra;
+    private final Setting<Integer> delay;
+    private final Setting<Protection> preferredProtection;
+
+    static int access$100(AutoArmor autoArmor, class_1799 class_17992) {
+        return autoArmor.getScore(class_17992);
+    }
 
     private boolean hasAvoidedEnchantment() {
-        AutoArmor lllIllIIllIlIl;
-        for (class_1887 lllIllIIllIlll : lllIllIIllIlIl.avoidedEnchantments.get()) {
-            if (!lllIllIIllIlIl.enchantments.containsKey((Object)lllIllIIllIlll)) continue;
+        for (class_1887 class_18872 : this.avoidedEnchantments.get()) {
+            if (!this.enchantments.containsKey((Object)class_18872)) continue;
             return true;
         }
         return false;
     }
 
     private boolean cannotSwap() {
-        AutoArmor lllIllIIlIIIII;
-        return lllIllIIlIIIII.timer > 0;
+        return this.timer > 0;
+    }
+
+    static class_310 access$300(AutoArmor autoArmor) {
+        return autoArmor.mc;
     }
 
     public AutoArmor() {
         super(Categories.Combat, "auto-armor", "Automatically equips armor.");
-        AutoArmor lllIllIlIIllll;
-        lllIllIlIIllll.sgGeneral = lllIllIlIIllll.settings.getDefaultGroup();
-        lllIllIlIIllll.preferredProtection = lllIllIlIIllll.sgGeneral.add(new EnumSetting.Builder().name("preferred-protection").description("Which type of protection to prefer.").defaultValue(Protection.Protection).build());
-        lllIllIlIIllll.delay = lllIllIlIIllll.sgGeneral.add(new IntSetting.Builder().name("swap-delay").description("The delay between equipping armor pieces.").defaultValue(1).min(0).sliderMax(5).build());
-        lllIllIlIIllll.avoidedEnchantments = lllIllIlIIllll.sgGeneral.add(new EnchListSetting.Builder().name("avoided-enchantments").description("Enchantments that should be avoided.").defaultValue(Lists.newArrayList((Object[])new class_1887[]{class_1893.field_9113, class_1893.field_9122})).build());
-        lllIllIlIIllll.blastLeggings = lllIllIlIIllll.sgGeneral.add(new BoolSetting.Builder().name("blast-prot-leggings").description("Uses blast protection for leggings regardless of preferred protection.").defaultValue(true).build());
-        lllIllIlIIllll.antiBreak = lllIllIlIIllll.sgGeneral.add(new BoolSetting.Builder().name("anti-break").description("Takes off armor if it is about to break.").defaultValue(false).build());
-        lllIllIlIIllll.ignoreElytra = lllIllIlIIllll.sgGeneral.add(new BoolSetting.Builder().name("ignore-elytra").description("Will not replace your elytra if you have it equipped.").defaultValue(true).build());
-        lllIllIlIIllll.enchantments = new Object2IntOpenHashMap();
-        lllIllIlIIllll.armorPieces = new ArmorPiece[4];
-        lllIllIlIIllll.helmet = lllIllIlIIllll.new ArmorPiece(3);
-        lllIllIlIIllll.chestplate = lllIllIlIIllll.new ArmorPiece(2);
-        lllIllIlIIllll.leggings = lllIllIlIIllll.new ArmorPiece(1);
-        lllIllIlIIllll.boots = lllIllIlIIllll.new ArmorPiece(0);
-        lllIllIlIIllll.armorPieces[0] = lllIllIlIIllll.helmet;
-        lllIllIlIIllll.armorPieces[1] = lllIllIlIIllll.chestplate;
-        lllIllIlIIllll.armorPieces[2] = lllIllIlIIllll.leggings;
-        lllIllIlIIllll.armorPieces[3] = lllIllIlIIllll.boots;
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.preferredProtection = this.sgGeneral.add(new EnumSetting.Builder().name("preferred-protection").description("Which type of protection to prefer.").defaultValue(Protection.Protection).build());
+        this.delay = this.sgGeneral.add(new IntSetting.Builder().name("swap-delay").description("The delay between equipping armor pieces.").defaultValue(1).min(0).sliderMax(5).build());
+        this.avoidedEnchantments = this.sgGeneral.add(new EnchListSetting.Builder().name("avoided-enchantments").description("Enchantments that should be avoided.").defaultValue(Lists.newArrayList((Object[])new class_1887[]{class_1893.field_9113, class_1893.field_9122})).build());
+        this.blastLeggings = this.sgGeneral.add(new BoolSetting.Builder().name("blast-prot-leggings").description("Uses blast protection for leggings regardless of preferred protection.").defaultValue(true).build());
+        this.antiBreak = this.sgGeneral.add(new BoolSetting.Builder().name("anti-break").description("Takes off armor if it is about to break.").defaultValue(false).build());
+        this.ignoreElytra = this.sgGeneral.add(new BoolSetting.Builder().name("ignore-elytra").description("Will not replace your elytra if you have it equipped.").defaultValue(true).build());
+        this.enchantments = new Object2IntOpenHashMap();
+        this.armorPieces = new ArmorPiece[4];
+        this.helmet = new ArmorPiece(this, 3);
+        this.chestplate = new ArmorPiece(this, 2);
+        this.leggings = new ArmorPiece(this, 1);
+        this.boots = new ArmorPiece(this, 0);
+        this.armorPieces[0] = this.helmet;
+        this.armorPieces[1] = this.chestplate;
+        this.armorPieces[2] = this.leggings;
+        this.armorPieces[3] = this.boots;
     }
 
-    private void swap(int lllIllIIIllIII, int lllIllIIIlIlll) {
-        AutoArmor lllIllIIIllIIl;
-        InvUtils.move().from(lllIllIIIllIII).toArmor(lllIllIIIlIlll);
-        lllIllIIIllIIl.timer = lllIllIIIllIIl.delay.get();
+    private void swap(int n, int n2) {
+        InvUtils.move().from(n).toArmor(n2);
+        this.timer = this.delay.get();
     }
 
-    private int getItemSlotId(class_1799 lllIllIIllIIII) {
-        if (lllIllIIllIIII.method_7909() instanceof class_1770) {
+    private int getItemSlotId(class_1799 class_17992) {
+        if (class_17992.method_7909() instanceof class_1770) {
             return 2;
         }
-        return ((class_1738)lllIllIIllIIII.method_7909()).method_7685().method_5927();
+        return ((class_1738)class_17992.method_7909()).method_7685().method_5927();
     }
 
-    private void moveToEmpty(int lllIllIIIIllll) {
-        AutoArmor lllIllIIIlIIlI;
-        for (int lllIllIIIlIIll = 0; lllIllIIIlIIll < lllIllIIIlIIlI.mc.field_1724.field_7514.field_7547.size(); ++lllIllIIIlIIll) {
-            if (!lllIllIIIlIIlI.mc.field_1724.field_7514.method_5438(lllIllIIIlIIll).method_7960()) continue;
-            InvUtils.move().fromArmor(lllIllIIIIllll).to(lllIllIIIlIIll);
-            lllIllIIIlIIlI.timer = lllIllIIIlIIlI.delay.get();
+    static Object2IntMap access$500(AutoArmor autoArmor) {
+        return autoArmor.enchantments;
+    }
+
+    static Setting access$900(AutoArmor autoArmor) {
+        return autoArmor.avoidedEnchantments;
+    }
+
+    static void access$700(AutoArmor autoArmor, int n, int n2) {
+        autoArmor.swap(n, n2);
+    }
+
+    static Setting access$600(AutoArmor autoArmor) {
+        return autoArmor.antiBreak;
+    }
+
+    static void access$800(AutoArmor autoArmor, int n) {
+        autoArmor.moveToEmpty(n);
+    }
+
+    private void moveToEmpty(int n) {
+        for (int i = 0; i < this.mc.field_1724.field_7514.field_7547.size(); ++i) {
+            if (!this.mc.field_1724.field_7514.method_5438(i).method_7960()) continue;
+            InvUtils.move().fromArmor(n).to(i);
+            this.timer = this.delay.get();
             break;
         }
     }
 
     @Override
     public void onActivate() {
-        lllIllIlIIllIl.timer = 0;
+        this.timer = 0;
+    }
+
+    static Setting access$400(AutoArmor autoArmor) {
+        return autoArmor.ignoreElytra;
+    }
+
+    static boolean access$200(AutoArmor autoArmor) {
+        return autoArmor.cannotSwap();
     }
 
     @EventHandler
-    private void onPreTick(TickEvent.Pre lllIllIlIIIIII) {
-        AutoArmor lllIllIlIIIIIl;
-        if (lllIllIlIIIIIl.timer > 0) {
-            --lllIllIlIIIIIl.timer;
+    private void onPreTick(TickEvent.Pre pre) {
+        if (this.timer > 0) {
+            --this.timer;
             return;
         }
-        ArmorPiece[] lllIllIIlllllI = lllIllIlIIIIIl.armorPieces;
-        int lllIllIIllllIl = lllIllIIlllllI.length;
-        for (int lllIllIIllllII = 0; lllIllIIllllII < lllIllIIllllIl; ++lllIllIIllllII) {
-            ArmorPiece lllIllIlIIIllI = lllIllIIlllllI[lllIllIIllllII];
-            lllIllIlIIIllI.reset();
+        for (ArmorPiece armorPiece : this.armorPieces) {
+            armorPiece.reset();
+            if (-3 <= 0) continue;
+            return;
         }
-        block7: for (int lllIllIlIIIlII = 0; lllIllIlIIIlII < lllIllIlIIIIIl.mc.field_1724.field_7514.field_7547.size(); ++lllIllIlIIIlII) {
-            class_1799 lllIllIlIIIlIl = lllIllIlIIIIIl.mc.field_1724.field_7514.method_5438(lllIllIlIIIlII);
-            if (lllIllIlIIIlIl.method_7960() || !(lllIllIlIIIlIl.method_7909() instanceof class_1738) || lllIllIlIIIIIl.antiBreak.get().booleanValue() && lllIllIlIIIlIl.method_7963() && lllIllIlIIIlIl.method_7936() - lllIllIlIIIlIl.method_7919() <= 10) continue;
-            Utils.getEnchantments(lllIllIlIIIlIl, lllIllIlIIIIIl.enchantments);
-            if (lllIllIlIIIIIl.hasAvoidedEnchantment()) continue;
-            switch (lllIllIlIIIIIl.getItemSlotId(lllIllIlIIIlIl)) {
+        block7: for (int i = 0; i < this.mc.field_1724.field_7514.field_7547.size(); ++i) {
+            class_1799 class_17992 = this.mc.field_1724.field_7514.method_5438(i);
+            if (class_17992.method_7960() || !(class_17992.method_7909() instanceof class_1738) || this.antiBreak.get().booleanValue() && class_17992.method_7963() && class_17992.method_7936() - class_17992.method_7919() <= 10) continue;
+            Utils.getEnchantments(class_17992, this.enchantments);
+            if (this.hasAvoidedEnchantment()) continue;
+            switch (this.getItemSlotId(class_17992)) {
                 case 0: {
-                    lllIllIlIIIIIl.boots.add(lllIllIlIIIlIl, lllIllIlIIIlII);
+                    this.boots.add(class_17992, i);
                     continue block7;
                 }
                 case 1: {
-                    lllIllIlIIIIIl.leggings.add(lllIllIlIIIlIl, lllIllIlIIIlII);
+                    this.leggings.add(class_17992, i);
                     continue block7;
                 }
                 case 2: {
-                    lllIllIlIIIIIl.chestplate.add(lllIllIlIIIlIl, lllIllIlIIIlII);
+                    this.chestplate.add(class_17992, i);
                     continue block7;
                 }
                 case 3: {
-                    lllIllIlIIIIIl.helmet.add(lllIllIlIIIlIl, lllIllIlIIIlII);
+                    this.helmet.add(class_17992, i);
                 }
             }
+            if (null == null) continue;
+            return;
         }
-        for (ArmorPiece lllIllIlIIIIll : lllIllIlIIIIIl.armorPieces) {
-            lllIllIlIIIIll.calculate();
+        for (ArmorPiece armorPiece : this.armorPieces) {
+            armorPiece.calculate();
+            if (-3 < 0) continue;
+            return;
         }
-        Arrays.sort(lllIllIlIIIIIl.armorPieces, Comparator.comparingInt(ArmorPiece::getSortScore));
-        for (ArmorPiece lllIllIlIIIIlI : lllIllIlIIIIIl.armorPieces) {
-            lllIllIlIIIIlI.apply();
+        Arrays.sort(this.armorPieces, Comparator.comparingInt(ArmorPiece::getSortScore));
+        for (ArmorPiece armorPiece : this.armorPieces) {
+            armorPiece.apply();
+            if (-1 == -1) continue;
+            return;
         }
     }
 
-    private int getScore(class_1799 lllIllIIlIlIIl) {
-        AutoArmor lllIllIIlIIllI;
-        if (lllIllIIlIlIIl.method_7960()) {
+    private int getScore(class_1799 class_17992) {
+        if (class_17992.method_7960()) {
             return 0;
         }
-        int lllIllIIlIlIII = 0;
-        class_1887 lllIllIIlIIlll = lllIllIIlIIllI.preferredProtection.get().enchantment;
-        if (lllIllIIlIlIIl.method_7909() instanceof class_1738 && lllIllIIlIIllI.blastLeggings.get().booleanValue() && lllIllIIlIIllI.getItemSlotId(lllIllIIlIlIIl) == 1) {
-            lllIllIIlIIlll = class_1893.field_9107;
+        int n = 0;
+        class_1887 class_18872 = Protection.access$000(this.preferredProtection.get());
+        if (class_17992.method_7909() instanceof class_1738 && this.blastLeggings.get().booleanValue() && this.getItemSlotId(class_17992) == 1) {
+            class_18872 = class_1893.field_9107;
         }
-        lllIllIIlIlIII += 3 * lllIllIIlIIllI.enchantments.getInt((Object)lllIllIIlIIlll);
-        lllIllIIlIlIII += lllIllIIlIIllI.enchantments.getInt((Object)class_1893.field_9111);
-        lllIllIIlIlIII += lllIllIIlIIllI.enchantments.getInt((Object)class_1893.field_9107);
-        lllIllIIlIlIII += lllIllIIlIIllI.enchantments.getInt((Object)class_1893.field_9095);
-        lllIllIIlIlIII += lllIllIIlIIllI.enchantments.getInt((Object)class_1893.field_9096);
-        lllIllIIlIlIII += lllIllIIlIIllI.enchantments.getInt((Object)class_1893.field_9119);
-        lllIllIIlIlIII += 2 * lllIllIIlIIllI.enchantments.getInt((Object)class_1893.field_9101);
-        lllIllIIlIlIII = (int)((float)(lllIllIIlIlIII += lllIllIIlIlIIl.method_7909() instanceof class_1738 ? ((class_1738)lllIllIIlIlIIl.method_7909()).method_7687() : 0) + (lllIllIIlIlIIl.method_7909() instanceof class_1738 ? ((class_1738)lllIllIIlIlIIl.method_7909()).method_26353() : 0.0f));
-        return lllIllIIlIlIII;
+        n += 3 * this.enchantments.getInt((Object)class_18872);
+        n += this.enchantments.getInt((Object)class_1893.field_9111);
+        n += this.enchantments.getInt((Object)class_1893.field_9107);
+        n += this.enchantments.getInt((Object)class_1893.field_9095);
+        n += this.enchantments.getInt((Object)class_1893.field_9096);
+        n += this.enchantments.getInt((Object)class_1893.field_9119);
+        n += 2 * this.enchantments.getInt((Object)class_1893.field_9101);
+        n = (int)((float)(n += class_17992.method_7909() instanceof class_1738 ? ((class_1738)class_17992.method_7909()).method_7687() : 0) + (class_17992.method_7909() instanceof class_1738 ? ((class_1738)class_17992.method_7909()).method_26353() : 0.0f));
+        return n;
     }
 
     public static enum Protection {
@@ -194,99 +230,97 @@ extends Module {
         FireProtection(class_1893.field_9095),
         ProjectileProtection(class_1893.field_9096);
 
-        private final /* synthetic */ class_1887 enchantment;
+        private final class_1887 enchantment;
 
-        private Protection(class_1887 lllIIlIlllIlIlI) {
-            Protection lllIIlIlllIllll;
-            lllIIlIlllIllll.enchantment = lllIIlIlllIlIlI;
+        private Protection(class_1887 class_18872) {
+            this.enchantment = class_18872;
+        }
+
+        static class_1887 access$000(Protection protection) {
+            return protection.enchantment;
         }
     }
 
     private class ArmorPiece {
-        private /* synthetic */ int score;
-        private /* synthetic */ int durability;
-        private /* synthetic */ int bestSlot;
-        private final /* synthetic */ int id;
-        private /* synthetic */ int bestScore;
+        private int score;
+        private int durability;
+        private int bestSlot;
+        private final int id;
+        final AutoArmor this$0;
+        private int bestScore;
 
-        private int decreaseScoreByAvoidedEnchantments(int lllllllllllllllllIlllIIllIllIIIl) {
-            ArmorPiece lllllllllllllllllIlllIIllIllIIII;
-            for (class_1887 lllllllllllllllllIlllIIllIllIIll : (List)lllllllllllllllllIlllIIllIllIIII.AutoArmor.this.avoidedEnchantments.get()) {
-                lllllllllllllllllIlllIIllIllIIIl -= 2 * lllllllllllllllllIlllIIllIllIIII.AutoArmor.this.enchantments.getInt((Object)lllllllllllllllllIlllIIllIllIIll);
+        private int decreaseScoreByAvoidedEnchantments(int n) {
+            for (class_1887 class_18872 : (List)AutoArmor.access$900(this.this$0).get()) {
+                n -= 2 * AutoArmor.access$500(this.this$0).getInt((Object)class_18872);
             }
-            return lllllllllllllllllIlllIIllIllIIIl;
+            return n;
         }
 
         public void calculate() {
-            ArmorPiece lllllllllllllllllIlllIIllIllllll;
-            if (lllllllllllllllllIlllIIllIllllll.AutoArmor.this.cannotSwap()) {
+            if (AutoArmor.access$200(this.this$0)) {
                 return;
             }
-            class_1799 lllllllllllllllllIlllIIlllIIIIII = ((AutoArmor)lllllllllllllllllIlllIIllIllllll.AutoArmor.this).mc.field_1724.field_7514.method_7372(lllllllllllllllllIlllIIllIllllll.id);
-            if ((((Boolean)lllllllllllllllllIlllIIllIllllll.AutoArmor.this.ignoreElytra.get()).booleanValue() || Modules.get().isActive(ChestSwap.class)) && lllllllllllllllllIlllIIlllIIIIII.method_7909() == class_1802.field_8833) {
-                lllllllllllllllllIlllIIllIllllll.score = Integer.MAX_VALUE;
+            class_1799 class_17992 = AutoArmor.access$300((AutoArmor)this.this$0).field_1724.field_7514.method_7372(this.id);
+            if ((((Boolean)AutoArmor.access$400(this.this$0).get()).booleanValue() || Modules.get().isActive(ChestSwap.class)) && class_17992.method_7909() == class_1802.field_8833) {
+                this.score = Integer.MAX_VALUE;
                 return;
             }
-            Utils.getEnchantments(lllllllllllllllllIlllIIlllIIIIII, (Object2IntMap<class_1887>)lllllllllllllllllIlllIIllIllllll.AutoArmor.this.enchantments);
-            if (lllllllllllllllllIlllIIllIllllll.AutoArmor.this.enchantments.containsKey((Object)class_1893.field_9113)) {
-                lllllllllllllllllIlllIIllIllllll.score = Integer.MAX_VALUE;
+            Utils.getEnchantments(class_17992, (Object2IntMap<class_1887>)AutoArmor.access$500(this.this$0));
+            if (AutoArmor.access$500(this.this$0).containsKey((Object)class_1893.field_9113)) {
+                this.score = Integer.MAX_VALUE;
                 return;
             }
-            lllllllllllllllllIlllIIllIllllll.score = lllllllllllllllllIlllIIllIllllll.AutoArmor.this.getScore(lllllllllllllllllIlllIIlllIIIIII);
-            lllllllllllllllllIlllIIllIllllll.score = lllllllllllllllllIlllIIllIllllll.decreaseScoreByAvoidedEnchantments(lllllllllllllllllIlllIIllIllllll.score);
-            lllllllllllllllllIlllIIllIllllll.score = lllllllllllllllllIlllIIllIllllll.applyAntiBreakScore(lllllllllllllllllIlllIIllIllllll.score, lllllllllllllllllIlllIIlllIIIIII);
-            if (!lllllllllllllllllIlllIIlllIIIIII.method_7960()) {
-                lllllllllllllllllIlllIIllIllllll.durability = lllllllllllllllllIlllIIlllIIIIII.method_7936() - lllllllllllllllllIlllIIlllIIIIII.method_7919();
+            this.score = AutoArmor.access$100(this.this$0, class_17992);
+            this.score = this.decreaseScoreByAvoidedEnchantments(this.score);
+            this.score = this.applyAntiBreakScore(this.score, class_17992);
+            if (!class_17992.method_7960()) {
+                this.durability = class_17992.method_7936() - class_17992.method_7919();
             }
         }
 
-        private int applyAntiBreakScore(int lllllllllllllllllIlllIIllIlIIlIl, class_1799 lllllllllllllllllIlllIIllIlIIlll) {
-            ArmorPiece lllllllllllllllllIlllIIllIlIIllI;
-            if (((Boolean)lllllllllllllllllIlllIIllIlIIllI.AutoArmor.this.antiBreak.get()).booleanValue() && lllllllllllllllllIlllIIllIlIIlll.method_7963() && lllllllllllllllllIlllIIllIlIIlll.method_7936() - lllllllllllllllllIlllIIllIlIIlll.method_7919() <= 10) {
+        private int applyAntiBreakScore(int n, class_1799 class_17992) {
+            if (((Boolean)AutoArmor.access$600(this.this$0).get()).booleanValue() && class_17992.method_7963() && class_17992.method_7936() - class_17992.method_7919() <= 10) {
                 return -1;
             }
-            return lllllllllllllllllIlllIIllIlIIlIl;
+            return n;
         }
 
         public void apply() {
-            ArmorPiece lllllllllllllllllIlllIIllIlllIIl;
-            if (lllllllllllllllllIlllIIllIlllIIl.AutoArmor.this.cannotSwap() || lllllllllllllllllIlllIIllIlllIIl.score == Integer.MAX_VALUE) {
+            if (AutoArmor.access$200(this.this$0) || this.score == Integer.MAX_VALUE) {
                 return;
             }
-            if (lllllllllllllllllIlllIIllIlllIIl.bestScore > lllllllllllllllllIlllIIllIlllIIl.score) {
-                lllllllllllllllllIlllIIllIlllIIl.AutoArmor.this.swap(lllllllllllllllllIlllIIllIlllIIl.bestSlot, lllllllllllllllllIlllIIllIlllIIl.id);
-            } else if (((Boolean)lllllllllllllllllIlllIIllIlllIIl.AutoArmor.this.antiBreak.get()).booleanValue() && lllllllllllllllllIlllIIllIlllIIl.durability <= 10) {
-                lllllllllllllllllIlllIIllIlllIIl.AutoArmor.this.moveToEmpty(lllllllllllllllllIlllIIllIlllIIl.id);
+            if (this.bestScore > this.score) {
+                AutoArmor.access$700(this.this$0, this.bestSlot, this.id);
+            } else if (((Boolean)AutoArmor.access$600(this.this$0).get()).booleanValue() && this.durability <= 10) {
+                AutoArmor.access$800(this.this$0, this.id);
             }
         }
 
         public void reset() {
-            lllllllllllllllllIlllIIlllIlIIIl.bestSlot = -1;
-            lllllllllllllllllIlllIIlllIlIIIl.bestScore = -1;
-            lllllllllllllllllIlllIIlllIlIIIl.score = -1;
-            lllllllllllllllllIlllIIlllIlIIIl.durability = Integer.MAX_VALUE;
+            this.bestSlot = -1;
+            this.bestScore = -1;
+            this.score = -1;
+            this.durability = Integer.MAX_VALUE;
         }
 
-        public ArmorPiece(int lllllllllllllllllIlllIIlllIlIllI) {
-            ArmorPiece lllllllllllllllllIlllIIlllIlIlll;
-            lllllllllllllllllIlllIIlllIlIlll.id = lllllllllllllllllIlllIIlllIlIllI;
+        public ArmorPiece(AutoArmor autoArmor, int n) {
+            this.this$0 = autoArmor;
+            this.id = n;
         }
 
-        public void add(class_1799 lllllllllllllllllIlllIIlllIIlIlI, int lllllllllllllllllIlllIIlllIIIlIl) {
-            ArmorPiece lllllllllllllllllIlllIIlllIIIlll;
-            int lllllllllllllllllIlllIIlllIIlIII = lllllllllllllllllIlllIIlllIIIlll.AutoArmor.this.getScore(lllllllllllllllllIlllIIlllIIlIlI);
-            if (lllllllllllllllllIlllIIlllIIlIII > lllllllllllllllllIlllIIlllIIIlll.bestScore) {
-                lllllllllllllllllIlllIIlllIIIlll.bestScore = lllllllllllllllllIlllIIlllIIlIII;
-                lllllllllllllllllIlllIIlllIIIlll.bestSlot = lllllllllllllllllIlllIIlllIIIlIl;
+        public void add(class_1799 class_17992, int n) {
+            int n2 = AutoArmor.access$100(this.this$0, class_17992);
+            if (n2 > this.bestScore) {
+                this.bestScore = n2;
+                this.bestSlot = n;
             }
         }
 
         public int getSortScore() {
-            ArmorPiece lllllllllllllllllIlllIIllIlllIll;
-            if (((Boolean)lllllllllllllllllIlllIIllIlllIll.AutoArmor.this.antiBreak.get()).booleanValue() && lllllllllllllllllIlllIIllIlllIll.durability <= 10) {
+            if (((Boolean)AutoArmor.access$600(this.this$0).get()).booleanValue() && this.durability <= 10) {
                 return -1;
             }
-            return lllllllllllllllllIlllIIllIlllIll.bestScore;
+            return this.bestScore;
         }
     }
 }

@@ -31,12 +31,12 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(value={class_775.class})
 public class FluidRendererMixin {
     @ModifyVariable(method={"render"}, at=@At(value="STORE", ordinal=0), index=8)
-    private int modifyColorIfLava(int color, class_1920 world, class_2338 pos, class_4588 vertexConsumer, class_3610 state) {
+    private int modifyColorIfLava(int n, class_1920 class_19202, class_2338 class_23382, class_4588 class_45882, class_3610 class_36102) {
         Ambience ambience = Modules.get().get(Ambience.class);
-        if (ambience.isActive() && ambience.changeLavaColor.get().booleanValue() && state.method_15767((class_3494)class_3486.field_15518)) {
+        if (ambience.isActive() && ambience.changeLavaColor.get().booleanValue() && class_36102.method_15767((class_3494)class_3486.field_15518)) {
             return ambience.lavaColor.get().getPacked();
         }
-        return color;
+        return n;
     }
 }
 

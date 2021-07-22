@@ -11,17 +11,13 @@ import minegame159.meteorclient.systems.modules.Modules;
 import net.minecraft.class_1802;
 
 public class Categories {
-    public static final /* synthetic */ Category Render;
-    public static final /* synthetic */ Category Movement;
-    public static final /* synthetic */ Category Misc;
-    public static final /* synthetic */ Category BedTrap;
-    public static final /* synthetic */ Category Combat;
-    public static final /* synthetic */ Category Player;
-    public static final /* synthetic */ Category World;
-
-    public Categories() {
-        Categories llllllllllllllllllllllIlIIlIIIlI;
-    }
+    public static final Category Render;
+    public static final Category Movement;
+    public static final Category Misc;
+    public static final Category BedTrap;
+    public static final Category Combat;
+    public static final Category Player;
+    public static final Category World;
 
     public static void register() {
         Modules.registerCategory(Combat);

@@ -12,30 +12,27 @@ import net.minecraft.class_1044;
 
 public class WTexture
 extends WWidget {
-    private final /* synthetic */ class_1044 texture;
-    private final /* synthetic */ double rotation;
-    private final /* synthetic */ double width;
-    private final /* synthetic */ double height;
+    private final class_1044 texture;
+    private final double rotation;
+    private final double width;
+    private final double height;
 
-    public WTexture(double llllllllllllllllllIllIIlllIIIlII, double llllllllllllllllllIllIIlllIIlIII, double llllllllllllllllllIllIIlllIIIlll, class_1044 llllllllllllllllllIllIIlllIIIIIl) {
-        WTexture llllllllllllllllllIllIIlllIIlIlI;
-        llllllllllllllllllIllIIlllIIlIlI.width = llllllllllllllllllIllIIlllIIIlII;
-        llllllllllllllllllIllIIlllIIlIlI.height = llllllllllllllllllIllIIlllIIlIII;
-        llllllllllllllllllIllIIlllIIlIlI.rotation = llllllllllllllllllIllIIlllIIIlll;
-        llllllllllllllllllIllIIlllIIlIlI.texture = llllllllllllllllllIllIIlllIIIIIl;
+    public WTexture(double d, double d2, double d3, class_1044 class_10442) {
+        this.width = d;
+        this.height = d2;
+        this.rotation = d3;
+        this.texture = class_10442;
     }
 
     @Override
-    protected void onRender(GuiRenderer llllllllllllllllllIllIIllIllIlIl, double llllllllllllllllllIllIIllIlllIIl, double llllllllllllllllllIllIIllIlllIII, double llllllllllllllllllIllIIllIllIlll) {
-        WTexture llllllllllllllllllIllIIllIllIllI;
-        llllllllllllllllllIllIIllIllIlIl.texture(llllllllllllllllllIllIIllIllIllI.x, llllllllllllllllllIllIIllIllIllI.y, ((WWidget)llllllllllllllllllIllIIllIllIllI).width, ((WWidget)llllllllllllllllllIllIIllIllIllI).height, llllllllllllllllllIllIIllIllIllI.rotation, llllllllllllllllllIllIIllIllIllI.texture);
+    protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        guiRenderer.texture(this.x, this.y, ((WWidget)this).width, ((WWidget)this).height, this.rotation, this.texture);
     }
 
     @Override
     protected void onCalculateSize() {
-        WTexture llllllllllllllllllIllIIllIllllll;
-        ((WWidget)llllllllllllllllllIllIIllIllllll).width = llllllllllllllllllIllIIllIllllll.theme.scale(llllllllllllllllllIllIIllIllllll.width);
-        ((WWidget)llllllllllllllllllIllIIllIllllll).height = llllllllllllllllllIllIIllIllllll.theme.scale(llllllllllllllllllIllIIllIllllll.height);
+        ((WWidget)this).width = this.theme.scale(this.width);
+        ((WWidget)this).height = this.theme.scale(this.height);
     }
 }
 

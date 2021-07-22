@@ -12,170 +12,160 @@ import minegame159.meteorclient.utils.Utils;
 
 public abstract class WDropdown<T>
 extends WPressable {
-    protected /* synthetic */ boolean expanded;
-    protected /* synthetic */ double maxValueWidth;
-    protected /* synthetic */ double animProgress;
-    public /* synthetic */ Runnable action;
-    protected /* synthetic */ T[] values;
-    protected /* synthetic */ T value;
-    protected /* synthetic */ WDropdownRoot root;
+    protected boolean expanded;
+    protected double maxValueWidth;
+    protected double animProgress;
+    public Runnable action;
+    protected T[] values;
+    protected T value;
+    protected WDropdownRoot root;
 
     @Override
-    public boolean render(GuiRenderer lllllllllllllllllIIllIllIIIIIlll, double lllllllllllllllllIIllIllIIIIIllI, double lllllllllllllllllIIllIllIIIIIlIl, double lllllllllllllllllIIllIlIlllllllI) {
-        WDropdown lllllllllllllllllIIllIllIIIIIIlI;
-        boolean lllllllllllllllllIIllIllIIIIIIll = super.render(lllllllllllllllllIIllIllIIIIIlll, lllllllllllllllllIIllIllIIIIIllI, lllllllllllllllllIIllIllIIIIIlIl, lllllllllllllllllIIllIlIlllllllI);
-        lllllllllllllllllIIllIllIIIIIIlI.animProgress += (double)(lllllllllllllllllIIllIllIIIIIIlI.expanded ? 1 : -1) * lllllllllllllllllIIllIlIlllllllI * 14.0;
-        lllllllllllllllllIIllIllIIIIIIlI.animProgress = Utils.clamp(lllllllllllllllllIIllIllIIIIIIlI.animProgress, 0.0, 1.0);
-        if (!lllllllllllllllllIIllIllIIIIIIll && lllllllllllllllllIIllIllIIIIIIlI.animProgress > 0.0) {
-            lllllllllllllllllIIllIllIIIIIlll.absolutePost(() -> {
-                WDropdown lllllllllllllllllIIllIlIlIlIlIlI;
-                lllllllllllllllllIIllIllIIIIIlll.scissorStart(lllllllllllllllllIIllIlIlIlIlIlI.x, lllllllllllllllllIIllIlIlIlIlIlI.y + lllllllllllllllllIIllIlIlIlIlIlI.height, lllllllllllllllllIIllIlIlIlIlIlI.width, lllllllllllllllllIIllIlIlIlIlIlI.root.height * lllllllllllllllllIIllIlIlIlIlIlI.animProgress);
-                lllllllllllllllllIIllIlIlIlIlIlI.root.render(lllllllllllllllllIIllIllIIIIIlll, lllllllllllllllllIIllIllIIIIIllI, lllllllllllllllllIIllIllIIIIIlIl, lllllllllllllllllIIllIlIlllllllI);
-                lllllllllllllllllIIllIllIIIIIlll.scissorEnd();
-            });
+    public boolean render(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        boolean bl = super.render(guiRenderer, d, d2, d3);
+        this.animProgress += (double)(this.expanded ? 1 : -1) * d3 * 14.0;
+        this.animProgress = Utils.clamp(this.animProgress, 0.0, 1.0);
+        if (!bl && this.animProgress > 0.0) {
+            guiRenderer.absolutePost(() -> this.lambda$render$0(guiRenderer, d, d2, d3));
         }
-        if (lllllllllllllllllIIllIllIIIIIIlI.expanded && lllllllllllllllllIIllIllIIIIIIlI.root.mouseOver) {
-            lllllllllllllllllIIllIllIIIIIIlI.theme.disableHoverColor = true;
+        if (this.expanded && this.root.mouseOver) {
+            this.theme.disableHoverColor = true;
         }
-        return lllllllllllllllllIIllIllIIIIIIll;
+        return bl;
     }
 
     @Override
-    public boolean onMouseReleased(double lllllllllllllllllIIllIlIlllIIlII, double lllllllllllllllllIIllIlIlllIIIll, int lllllllllllllllllIIllIlIlllIIIlI) {
-        WDropdown lllllllllllllllllIIllIlIlllIlIIl;
-        if (super.onMouseReleased(lllllllllllllllllIIllIlIlllIIlII, lllllllllllllllllIIllIlIlllIIIll, lllllllllllllllllIIllIlIlllIIIlI)) {
+    public boolean onMouseReleased(double d, double d2, int n) {
+        if (super.onMouseReleased(d, d2, n)) {
             return true;
         }
-        return lllllllllllllllllIIllIlIlllIlIIl.expanded && lllllllllllllllllIIllIlIlllIlIIl.root.mouseReleased(lllllllllllllllllIIllIlIlllIIlII, lllllllllllllllllIIllIlIlllIIIll, lllllllllllllllllIIllIlIlllIIIlI);
+        return this.expanded && this.root.mouseReleased(d, d2, n);
+    }
+
+    private void lambda$render$0(GuiRenderer guiRenderer, double d, double d2, double d3) {
+        guiRenderer.scissorStart(this.x, this.y + this.height, this.width, this.root.height * this.animProgress);
+        this.root.render(guiRenderer, d, d2, d3);
+        guiRenderer.scissorEnd();
     }
 
     @Override
-    public boolean onCharTyped(char lllllllllllllllllIIllIlIlIllIlll) {
-        WDropdown lllllllllllllllllIIllIlIlIllIllI;
-        if (super.onCharTyped(lllllllllllllllllIIllIlIlIllIlll)) {
+    public boolean onCharTyped(char c) {
+        if (super.onCharTyped(c)) {
             return true;
         }
-        return lllllllllllllllllIIllIlIlIllIllI.expanded && lllllllllllllllllIIllIlIlIllIllI.root.charTyped(lllllllllllllllllIIllIlIlIllIlll);
+        return this.expanded && this.root.charTyped(c);
     }
 
     protected abstract WDropdownRoot createRootWidget();
 
     @Override
-    public boolean onKeyRepeated(int lllllllllllllllllIIllIlIlIllllll, int lllllllllllllllllIIllIlIlIlllIll) {
-        WDropdown lllllllllllllllllIIllIlIllIIIIII;
-        if (super.onKeyRepeated(lllllllllllllllllIIllIlIlIllllll, lllllllllllllllllIIllIlIlIlllIll)) {
+    public boolean onKeyRepeated(int n, int n2) {
+        if (super.onKeyRepeated(n, n2)) {
             return true;
         }
-        return lllllllllllllllllIIllIlIllIIIIII.expanded && lllllllllllllllllIIllIlIllIIIIII.root.keyRepeated(lllllllllllllllllIIllIlIlIllllll, lllllllllllllllllIIllIlIlIlllIll);
+        return this.expanded && this.root.keyRepeated(n, n2);
     }
 
-    public WDropdown(T[] lllllllllllllllllIIllIllIlIIIlll, T lllllllllllllllllIIllIllIlIIlIIl) {
-        WDropdown lllllllllllllllllIIllIllIlIIlIII;
-        lllllllllllllllllIIllIllIlIIlIII.values = lllllllllllllllllIIllIllIlIIIlll;
-        lllllllllllllllllIIllIllIlIIlIII.set(lllllllllllllllllIIllIllIlIIlIIl);
-    }
-
-    @Override
-    public void move(double lllllllllllllllllIIllIllIIIlIIII, double lllllllllllllllllIIllIllIIIlIIlI) {
-        WDropdown lllllllllllllllllIIllIllIIIlIIIl;
-        super.move(lllllllllllllllllIIllIllIIIlIIII, lllllllllllllllllIIllIllIIIlIIlI);
-        lllllllllllllllllIIllIllIIIlIIIl.root.move(lllllllllllllllllIIllIllIIIlIIII, lllllllllllllllllIIllIllIIIlIIlI);
+    public WDropdown(T[] arrT, T t) {
+        this.values = arrT;
+        this.set(t);
     }
 
     @Override
-    public boolean onMouseClicked(double lllllllllllllllllIIllIlIllllIllI, double lllllllllllllllllIIllIlIllllIIII, int lllllllllllllllllIIllIlIlllIllll, boolean lllllllllllllllllIIllIlIlllIlllI) {
-        WDropdown lllllllllllllllllIIllIlIllllIIlI;
-        if (!lllllllllllllllllIIllIlIllllIIlI.mouseOver && !lllllllllllllllllIIllIlIllllIIlI.root.mouseOver) {
-            lllllllllllllllllIIllIlIllllIIlI.expanded = false;
-        }
-        if (super.onMouseClicked(lllllllllllllllllIIllIlIllllIllI, lllllllllllllllllIIllIlIllllIIII, lllllllllllllllllIIllIlIlllIllll, lllllllllllllllllIIllIlIlllIlllI)) {
-            lllllllllllllllllIIllIlIlllIlllI = true;
-        }
-        if (lllllllllllllllllIIllIlIllllIIlI.expanded && lllllllllllllllllIIllIlIllllIIlI.root.mouseClicked(lllllllllllllllllIIllIlIllllIllI, lllllllllllllllllIIllIlIllllIIII, lllllllllllllllllIIllIlIlllIllll, lllllllllllllllllIIllIlIlllIlllI)) {
-            lllllllllllllllllIIllIlIlllIlllI = true;
-        }
-        return lllllllllllllllllIIllIlIlllIlllI;
+    public void move(double d, double d2) {
+        super.move(d, d2);
+        this.root.move(d, d2);
     }
 
     @Override
-    public boolean onKeyPressed(int lllllllllllllllllIIllIlIllIIIlIl, int lllllllllllllllllIIllIlIllIIIlll) {
-        WDropdown lllllllllllllllllIIllIlIllIIlIIl;
-        if (super.onKeyPressed(lllllllllllllllllIIllIlIllIIIlIl, lllllllllllllllllIIllIlIllIIIlll)) {
+    public boolean onMouseClicked(double d, double d2, int n, boolean bl) {
+        if (!this.mouseOver && !this.root.mouseOver) {
+            this.expanded = false;
+        }
+        if (super.onMouseClicked(d, d2, n, bl)) {
+            bl = true;
+        }
+        if (this.expanded && this.root.mouseClicked(d, d2, n, bl)) {
+            bl = true;
+        }
+        return bl;
+    }
+
+    @Override
+    public boolean onKeyPressed(int n, int n2) {
+        if (super.onKeyPressed(n, n2)) {
             return true;
         }
-        return lllllllllllllllllIIllIlIllIIlIIl.expanded && lllllllllllllllllIIllIlIllIIlIIl.root.keyPressed(lllllllllllllllllIIllIlIllIIIlIl, lllllllllllllllllIIllIlIllIIIlll);
+        return this.expanded && this.root.keyPressed(n, n2);
     }
 
-    public void set(T lllllllllllllllllIIllIllIIIllIII) {
-        lllllllllllllllllIIllIllIIIllIll.value = lllllllllllllllllIIllIllIIIllIII;
+    public void set(T t) {
+        this.value = t;
     }
 
     @Override
     protected void onCalculateWidgetPositions() {
-        WDropdown lllllllllllllllllIIllIllIIlIIllI;
         super.onCalculateWidgetPositions();
-        lllllllllllllllllIIllIllIIlIIllI.root.x = lllllllllllllllllIIllIllIIlIIllI.x;
-        lllllllllllllllllIIllIllIIlIIllI.root.y = lllllllllllllllllIIllIllIIlIIllI.y + lllllllllllllllllIIllIllIIlIIllI.height;
-        lllllllllllllllllIIllIllIIlIIllI.root.calculateWidgetPositions();
+        this.root.x = this.x;
+        this.root.y = this.y + this.height;
+        this.root.calculateWidgetPositions();
     }
 
     @Override
-    protected void onPressed(int lllllllllllllllllIIllIllIIlIIIlI) {
-        WDropdown lllllllllllllllllIIllIllIIlIIIIl;
-        lllllllllllllllllIIllIllIIlIIIIl.expanded = !lllllllllllllllllIIllIllIIlIIIIl.expanded;
+    protected void onPressed(int n) {
+        this.expanded = !this.expanded;
     }
 
     @Override
     public void init() {
-        WDropdown lllllllllllllllllIIllIllIIlllllI;
-        lllllllllllllllllIIllIllIIlllllI.root = lllllllllllllllllIIllIllIIlllllI.createRootWidget();
-        lllllllllllllllllIIllIllIIlllllI.root.theme = lllllllllllllllllIIllIllIIlllllI.theme;
-        lllllllllllllllllIIllIllIIlllllI.root.spacing = 0.0;
-        for (int lllllllllllllllllIIllIllIIllllll = 0; lllllllllllllllllIIllIllIIllllll < lllllllllllllllllIIllIllIIlllllI.values.length; ++lllllllllllllllllIIllIllIIllllll) {
-            WDropdownValue lllllllllllllllllIIllIllIlIIIIIl = lllllllllllllllllIIllIllIIlllllI.createValueWidget();
-            lllllllllllllllllIIllIllIlIIIIIl.theme = lllllllllllllllllIIllIllIIlllllI.theme;
-            lllllllllllllllllIIllIllIlIIIIIl.value = lllllllllllllllllIIllIllIIlllllI.values[lllllllllllllllllIIllIllIIllllll];
-            Cell<WDropdownValue> lllllllllllllllllIIllIllIlIIIIII = lllllllllllllllllIIllIllIIlllllI.root.add(lllllllllllllllllIIllIllIlIIIIIl).padHorizontal(2.0).expandWidgetX();
-            if (lllllllllllllllllIIllIllIIllllll < lllllllllllllllllIIllIllIIlllllI.values.length - 1) continue;
-            lllllllllllllllllIIllIllIlIIIIII.padBottom(2.0);
+        this.root = this.createRootWidget();
+        this.root.theme = this.theme;
+        this.root.spacing = 0.0;
+        for (int i = 0; i < this.values.length; ++i) {
+            WDropdownValue wDropdownValue = this.createValueWidget();
+            wDropdownValue.theme = this.theme;
+            wDropdownValue.value = this.values[i];
+            Cell<WDropdownValue> cell = this.root.add(wDropdownValue).padHorizontal(2.0).expandWidgetX();
+            if (i < this.values.length - 1) continue;
+            cell.padBottom(2.0);
+            if (-1 < 0) continue;
+            return;
         }
     }
 
     @Override
     protected void onCalculateSize() {
-        WDropdown lllllllllllllllllIIllIllIIllIIII;
-        double lllllllllllllllllIIllIllIIlIllll = lllllllllllllllllIIllIllIIllIIII.pad();
-        lllllllllllllllllIIllIllIIllIIII.maxValueWidth = 0.0;
-        for (T lllllllllllllllllIIllIllIIllIIIl : lllllllllllllllllIIllIllIIllIIII.values) {
-            double lllllllllllllllllIIllIllIIllIIlI = lllllllllllllllllIIllIllIIllIIII.theme.textWidth(lllllllllllllllllIIllIllIIllIIIl.toString());
-            lllllllllllllllllIIllIllIIllIIII.maxValueWidth = Math.max(lllllllllllllllllIIllIllIIllIIII.maxValueWidth, lllllllllllllllllIIllIllIIllIIlI);
+        double d = this.pad();
+        this.maxValueWidth = 0.0;
+        for (T t : this.values) {
+            double d2 = this.theme.textWidth(t.toString());
+            this.maxValueWidth = Math.max(this.maxValueWidth, d2);
+            if (3 >= 0) continue;
+            return;
         }
-        lllllllllllllllllIIllIllIIllIIII.root.calculateSize();
-        lllllllllllllllllIIllIllIIllIIII.width = lllllllllllllllllIIllIllIIlIllll + lllllllllllllllllIIllIllIIllIIII.maxValueWidth + lllllllllllllllllIIllIllIIlIllll + lllllllllllllllllIIllIllIIllIIII.theme.textHeight() + lllllllllllllllllIIllIllIIlIllll;
-        lllllllllllllllllIIllIllIIllIIII.height = lllllllllllllllllIIllIllIIlIllll + lllllllllllllllllIIllIllIIllIIII.theme.textHeight() + lllllllllllllllllIIllIllIIlIllll;
-        lllllllllllllllllIIllIllIIllIIII.root.width = lllllllllllllllllIIllIllIIllIIII.width;
+        this.root.calculateSize();
+        this.width = d + this.maxValueWidth + d + this.theme.textHeight() + d;
+        this.height = d + this.theme.textHeight() + d;
+        this.root.width = this.width;
     }
 
     public T get() {
-        WDropdown lllllllllllllllllIIllIllIIIlllll;
-        return lllllllllllllllllIIllIllIIIlllll.value;
+        return this.value;
     }
 
     @Override
-    public void onMouseScrolled(double lllllllllllllllllIIllIlIllIIllll) {
-        WDropdown lllllllllllllllllIIllIlIllIIlllI;
-        super.onMouseScrolled(lllllllllllllllllIIllIlIllIIllll);
-        if (lllllllllllllllllIIllIlIllIIlllI.expanded) {
-            lllllllllllllllllIIllIlIllIIlllI.root.mouseScrolled(lllllllllllllllllIIllIlIllIIllll);
+    public void onMouseScrolled(double d) {
+        super.onMouseScrolled(d);
+        if (this.expanded) {
+            this.root.mouseScrolled(d);
         }
     }
 
     @Override
-    public void onMouseMoved(double lllllllllllllllllIIllIlIllIlIllI, double lllllllllllllllllIIllIlIllIlIlIl, double lllllllllllllllllIIllIlIllIllIIl, double lllllllllllllllllIIllIlIllIlIIll) {
-        WDropdown lllllllllllllllllIIllIlIllIlllII;
-        super.onMouseMoved(lllllllllllllllllIIllIlIllIlIllI, lllllllllllllllllIIllIlIllIlIlIl, lllllllllllllllllIIllIlIllIllIIl, lllllllllllllllllIIllIlIllIlIIll);
-        if (lllllllllllllllllIIllIlIllIlllII.expanded) {
-            lllllllllllllllllIIllIlIllIlllII.root.mouseMoved(lllllllllllllllllIIllIlIllIlIllI, lllllllllllllllllIIllIlIllIlIlIl, lllllllllllllllllIIllIlIllIllIIl, lllllllllllllllllIIllIlIllIlIIll);
+    public void onMouseMoved(double d, double d2, double d3, double d4) {
+        super.onMouseMoved(d, d2, d3, d4);
+        if (this.expanded) {
+            this.root.mouseMoved(d, d2, d3, d4);
         }
     }
 
@@ -189,26 +179,25 @@ extends WPressable {
         }
 
         protected WDropdownRoot() {
-            WDropdownRoot lIIlIllIIIlllI;
         }
     }
 
     protected abstract class WDropdownValue
     extends WPressable {
-        protected /* synthetic */ T value;
+        protected T value;
+        final WDropdown this$0;
 
-        protected WDropdownValue() {
-            WDropdownValue llllllllllllllllllllIlllIlIllllI;
+        protected WDropdownValue(WDropdown wDropdown) {
+            this.this$0 = wDropdown;
         }
 
         @Override
-        protected void onPressed(int llllllllllllllllllllIlllIlIlIlll) {
-            WDropdownValue llllllllllllllllllllIlllIlIllIII;
-            boolean llllllllllllllllllllIlllIlIlIllI = !llllllllllllllllllllIlllIlIllIII.WDropdown.this.value.equals(llllllllllllllllllllIlllIlIllIII.value);
-            llllllllllllllllllllIlllIlIllIII.WDropdown.this.value = llllllllllllllllllllIlllIlIllIII.value;
-            llllllllllllllllllllIlllIlIllIII.WDropdown.this.expanded = false;
-            if (llllllllllllllllllllIlllIlIlIllI && llllllllllllllllllllIlllIlIllIII.WDropdown.this.action != null) {
-                llllllllllllllllllllIlllIlIllIII.WDropdown.this.action.run();
+        protected void onPressed(int n) {
+            boolean bl = !this.this$0.value.equals(this.value);
+            this.this$0.value = this.value;
+            this.this$0.expanded = false;
+            if (bl && this.this$0.action != null) {
+                this.this$0.action.run();
             }
         }
     }

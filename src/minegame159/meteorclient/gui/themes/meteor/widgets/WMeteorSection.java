@@ -13,41 +13,50 @@ public class WMeteorSection
 extends WSection {
     @Override
     protected WSection.WHeader createHeader() {
-        WMeteorSection lllllllllllllllllIllIlIIIIlllllI;
-        return lllllllllllllllllIllIlIIIIlllllI.new WMeteorHeader(lllllllllllllllllIllIlIIIIlllllI.title);
+        return new WMeteorHeader(this, this.title);
     }
 
-    public WMeteorSection(String lllllllllllllllllIllIlIIIlIIIIll, boolean lllllllllllllllllIllIlIIIlIIIllI, WWidget lllllllllllllllllIllIlIIIlIIIIIl) {
-        super(lllllllllllllllllIllIlIIIlIIIIll, lllllllllllllllllIllIlIIIlIIIllI, lllllllllllllllllIllIlIIIlIIIIIl);
-        WMeteorSection lllllllllllllllllIllIlIIIlIIlIII;
+    public WMeteorSection(String string, boolean bl, WWidget wWidget) {
+        super(string, bl, wWidget);
+    }
+
+    static WWidget access$100(WMeteorSection wMeteorSection) {
+        return wMeteorSection.headerWidget;
+    }
+
+    static double access$200(WMeteorSection wMeteorSection) {
+        return wMeteorSection.animProgress;
+    }
+
+    static WWidget access$000(WMeteorSection wMeteorSection) {
+        return wMeteorSection.headerWidget;
     }
 
     protected class WMeteorHeader
     extends WSection.WHeader {
-        private /* synthetic */ WTriangle triangle;
+        final WMeteorSection this$0;
+        private WTriangle triangle;
 
         @Override
         public void init() {
-            WMeteorHeader lllllllllllllllllllIlIllIllIlIIl;
-            lllllllllllllllllllIlIllIllIlIIl.add(lllllllllllllllllllIlIllIllIlIIl.theme.horizontalSeparator(lllllllllllllllllllIlIllIllIlIIl.title)).expandX();
-            if (lllllllllllllllllllIlIllIllIlIIl.WMeteorSection.this.headerWidget != null) {
-                lllllllllllllllllllIlIllIllIlIIl.add(lllllllllllllllllllIlIllIllIlIIl.WMeteorSection.this.headerWidget);
+            this.add(this.theme.horizontalSeparator(this.title)).expandX();
+            if (WMeteorSection.access$000(this.this$0) != null) {
+                this.add(WMeteorSection.access$100(this.this$0));
             }
-            lllllllllllllllllllIlIllIllIlIIl.triangle = new WHeaderTriangle();
-            lllllllllllllllllllIlIllIllIlIIl.triangle.theme = lllllllllllllllllllIlIllIllIlIIl.theme;
-            lllllllllllllllllllIlIllIllIlIIl.triangle.action = lllllllllllllllllllIlIllIllIlIIl::onClick;
-            lllllllllllllllllllIlIllIllIlIIl.add(lllllllllllllllllllIlIllIllIlIIl.triangle);
+            this.triangle = new WHeaderTriangle();
+            this.triangle.theme = this.theme;
+            this.triangle.action = this::onClick;
+            this.add(this.triangle);
         }
 
-        public WMeteorHeader(String lllllllllllllllllllIlIllIllIllll) {
-            WMeteorHeader lllllllllllllllllllIlIllIllIlllI;
-            super(lllllllllllllllllllIlIllIllIlllI.WMeteorSection.this, lllllllllllllllllllIlIllIllIllll);
+        public WMeteorHeader(WMeteorSection wMeteorSection, String string) {
+            this.this$0 = wMeteorSection;
+            super(wMeteorSection, string);
         }
 
         @Override
-        protected void onRender(GuiRenderer lllllllllllllllllllIIIIllIIIlIll, double lllllllllllllllllllIIIIllIIIlIlI, double lllllllllllllllllllIIIIllIIIlIIl, double lllllllllllllllllllIIIIllIIIlIII) {
-            WMeteorHeader lllllllllllllllllllIIIIllIIIIlll;
-            lllllllllllllllllllIIIIllIIIIlll.triangle.rotation = (1.0 - lllllllllllllllllllIIIIllIIIIlll.WMeteorSection.this.animProgress) * -90.0;
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            this.triangle.rotation = (1.0 - WMeteorSection.access$200(this.this$0)) * -90.0;
         }
     }
 
@@ -55,13 +64,11 @@ extends WSection {
     extends WTriangle
     implements MeteorWidget {
         protected WHeaderTriangle() {
-            WHeaderTriangle lllllllllllllllllIIIIllllIlIIllI;
         }
 
         @Override
-        protected void onRender(GuiRenderer lllllllllllllllllIIIIllllIlIIIIl, double lllllllllllllllllIIIIllllIlIIIII, double lllllllllllllllllIIIIllllIIlllll, double lllllllllllllllllIIIIllllIIllllI) {
-            WHeaderTriangle lllllllllllllllllIIIIllllIlIIIlI;
-            lllllllllllllllllIIIIllllIlIIIIl.rotatedQuad(lllllllllllllllllIIIIllllIlIIIlI.x, lllllllllllllllllIIIIllllIlIIIlI.y, lllllllllllllllllIIIIllllIlIIIlI.width, lllllllllllllllllIIIIllllIlIIIlI.height, lllllllllllllllllIIIIllllIlIIIlI.rotation, GuiRenderer.TRIANGLE, lllllllllllllllllIIIIllllIlIIIlI.theme().textColor.get());
+        protected void onRender(GuiRenderer guiRenderer, double d, double d2, double d3) {
+            guiRenderer.rotatedQuad(this.x, this.y, this.width, this.height, this.rotation, GuiRenderer.TRIANGLE, this.theme().textColor.get());
         }
     }
 }

@@ -13,14 +13,10 @@ import minegame159.meteorclient.utils.Utils;
 import net.minecraft.class_155;
 
 public class Placeholders {
-    private static final /* synthetic */ Pattern pattern;
+    private static final Pattern pattern = Pattern.compile("(\\{version}|\\{mc_version}|\\{player}|\\{username}|\\{server})");
 
-    static {
-        pattern = Pattern.compile("(\\{version}|\\{mc_version}|\\{player}|\\{username}|\\{server})");
-    }
-
-    private static String getReplacement(String llIllIlllIlII) {
-        switch (llIllIlllIlII) {
+    private static String getReplacement(String string) {
+        switch (string) {
             case "{version}": {
                 return Config.get().version != null ? (Config.get().devBuild.isEmpty() ? Config.get().version.getOriginalString() : String.valueOf(new StringBuilder().append(Config.get().version.getOriginalString()).append(" ").append(Config.get().devBuild))) : "";
             }
@@ -38,18 +34,14 @@ public class Placeholders {
         return "";
     }
 
-    public Placeholders() {
-        Placeholders llIlllIIIIIIl;
-    }
-
-    public static String apply(String llIllIllllIlI) {
-        Matcher llIllIlllllII = pattern.matcher(llIllIllllIlI);
-        StringBuffer llIllIllllIll = new StringBuffer(llIllIllllIlI.length());
-        while (llIllIlllllII.find()) {
-            llIllIlllllII.appendReplacement(llIllIllllIll, Placeholders.getReplacement(llIllIlllllII.group(1)));
+    public static String apply(String string) {
+        Matcher matcher = pattern.matcher(string);
+        StringBuffer stringBuffer = new StringBuffer(string.length());
+        while (matcher.find()) {
+            matcher.appendReplacement(stringBuffer, Placeholders.getReplacement(matcher.group(1)));
         }
-        llIllIlllllII.appendTail(llIllIllllIll);
-        return llIllIllllIll.toString();
+        matcher.appendTail(stringBuffer);
+        return stringBuffer.toString();
     }
 }
 

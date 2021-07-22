@@ -21,48 +21,46 @@ import net.minecraft.class_2248;
 
 public class WallHack
 extends Module {
-    public final /* synthetic */ Setting<List<class_2248>> blocks;
-    public final /* synthetic */ Setting<Boolean> occludeChunks;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    public final /* synthetic */ Setting<Integer> opacity;
+    public final Setting<List<class_2248>> blocks;
+    public final Setting<Boolean> occludeChunks;
+    private final SettingGroup sgGeneral;
+    public final Setting<Integer> opacity;
 
     public WallHack() {
         super(Categories.Render, "wall-hack", "Makes blocks translucent.");
-        WallHack llllllllllllllllIlllIIIIlIIIlIll;
-        llllllllllllllllIlllIIIIlIIIlIll.sgGeneral = llllllllllllllllIlllIIIIlIIIlIll.settings.getDefaultGroup();
-        llllllllllllllllIlllIIIIlIIIlIll.opacity = llllllllllllllllIlllIIIIlIIIlIll.sgGeneral.add(new IntSetting.Builder().name("opacity").description("The opacity for rendered blocks.").defaultValue(1).min(1).max(255).sliderMax(255).onChanged(llllllllllllllllIlllIIIIIlllIlll -> {
-            WallHack llllllllllllllllIlllIIIIIlllIllI;
-            if (llllllllllllllllIlllIIIIIlllIllI.isActive()) {
-                llllllllllllllllIlllIIIIIlllIllI.mc.field_1769.method_3279();
-            }
-        }).build());
-        llllllllllllllllIlllIIIIlIIIlIll.blocks = llllllllllllllllIlllIIIIlIIIlIll.sgGeneral.add(new BlockListSetting.Builder().name("blocks").description("What blocks should be targeted for Wall Hack.").defaultValue(new ArrayList<class_2248>()).onChanged(llllllllllllllllIlllIIIIIllllIll -> {
-            WallHack llllllllllllllllIlllIIIIIlllllII;
-            if (llllllllllllllllIlllIIIIIlllllII.isActive()) {
-                llllllllllllllllIlllIIIIIlllllII.mc.field_1769.method_3279();
-            }
-        }).build());
-        llllllllllllllllIlllIIIIlIIIlIll.occludeChunks = llllllllllllllllIlllIIIIlIIIlIll.sgGeneral.add(new BoolSetting.Builder().name("occlude-chunks").description("Whether caves should occlude underground (may look wonky when on).").defaultValue(false).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.opacity = this.sgGeneral.add(new IntSetting.Builder().name("opacity").description("The opacity for rendered blocks.").defaultValue(1).min(1).max(255).sliderMax(255).onChanged(this::lambda$new$0).build());
+        this.blocks = this.sgGeneral.add(new BlockListSetting.Builder().name("blocks").description("What blocks should be targeted for Wall Hack.").defaultValue(new ArrayList<class_2248>()).onChanged(this::lambda$new$1).build());
+        this.occludeChunks = this.sgGeneral.add(new BoolSetting.Builder().name("occlude-chunks").description("Whether caves should occlude underground (may look wonky when on).").defaultValue(false).build());
+    }
+
+    private void lambda$new$1(List list) {
+        if (this.isActive()) {
+            this.mc.field_1769.method_3279();
+        }
     }
 
     @Override
     public void onActivate() {
-        WallHack llllllllllllllllIlllIIIIlIIIIlll;
-        llllllllllllllllIlllIIIIlIIIIlll.mc.field_1769.method_3279();
+        this.mc.field_1769.method_3279();
+    }
+
+    private void lambda$new$0(Integer n) {
+        if (this.isActive()) {
+            this.mc.field_1769.method_3279();
+        }
     }
 
     @EventHandler
-    private void onChunkOcclusion(ChunkOcclusionEvent llllllllllllllllIlllIIIIIllllllI) {
-        WallHack llllllllllllllllIlllIIIIIlllllll;
-        if (!llllllllllllllllIlllIIIIIlllllll.occludeChunks.get().booleanValue()) {
-            llllllllllllllllIlllIIIIIllllllI.cancel();
+    private void onChunkOcclusion(ChunkOcclusionEvent chunkOcclusionEvent) {
+        if (!this.occludeChunks.get().booleanValue()) {
+            chunkOcclusionEvent.cancel();
         }
     }
 
     @Override
     public void onDeactivate() {
-        WallHack llllllllllllllllIlllIIIIlIIIIlIl;
-        llllllllllllllllIlllIIIIlIIIIlIl.mc.field_1769.method_3279();
+        this.mc.field_1769.method_3279();
     }
 }
 

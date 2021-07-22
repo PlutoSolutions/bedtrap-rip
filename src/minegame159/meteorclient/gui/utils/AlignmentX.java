@@ -8,9 +8,5 @@ public enum AlignmentX {
     Center,
     Right;
 
-
-    private AlignmentX() {
-        AlignmentX lllllllllllllllllllIIIIlIIIlllll;
-    }
 }
 

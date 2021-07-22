@@ -50,19 +50,19 @@ public abstract class CameraMixin {
     }
 
     @Inject(method={"clipToSpace"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onClipToSpace(double desiredCameraDistance, CallbackInfoReturnable<Double> info) {
+    private void onClipToSpace(double d, CallbackInfoReturnable<Double> callbackInfoReturnable) {
         if (Modules.get().get(CameraTweaks.class).clip()) {
-            info.setReturnValue((Object)desiredCameraDistance);
+            callbackInfoReturnable.setReturnValue((Object)d);
         }
     }
 
     @Inject(method={"update"}, at={@At(value="HEAD")})
-    private void onUpdateHead(class_1922 area, class_1297 focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo info) {
-        this.tickDelta = tickDelta;
+    private void onUpdateHead(class_1922 class_19222, class_1297 class_12972, boolean bl, boolean bl2, float f, CallbackInfo callbackInfo) {
+        this.tickDelta = f;
     }
 
     @Inject(method={"update"}, at={@At(value="TAIL")})
-    private void onUpdateTail(class_1922 area, class_1297 focusedEntity, boolean thirdPerson, boolean inverseView, float tickDelta, CallbackInfo info) {
+    private void onUpdateTail(class_1922 class_19222, class_1297 class_12972, boolean bl, boolean bl2, float f, CallbackInfo callbackInfo) {
         if (Modules.get().isActive(Freecam.class)) {
             this.field_18719 = true;
         }

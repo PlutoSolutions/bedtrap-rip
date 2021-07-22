@@ -5,7 +5,6 @@ package com.sun.jna;
 
 import com.sun.jna.Callback;
 import com.sun.jna.CallbackReference;
-import com.sun.jna.FromNativeConverter;
 import com.sun.jna.FunctionParameterContext;
 import com.sun.jna.FunctionResultContext;
 import com.sun.jna.Memory;
@@ -19,7 +18,7 @@ import com.sun.jna.NativeString;
 import com.sun.jna.Pointer;
 import com.sun.jna.StringArray;
 import com.sun.jna.Structure;
-import com.sun.jna.ToNativeConverter;
+import com.sun.jna.ToNativeContext;
 import com.sun.jna.TypeMapper;
 import com.sun.jna.VarArgsChecker;
 import com.sun.jna.WString;
@@ -29,361 +28,345 @@ import java.util.Map;
 
 public class Function
 extends Pointer {
-    public static final /* synthetic */ int ALT_CONVENTION;
-    static final /* synthetic */ Integer INTEGER_TRUE;
-    private /* synthetic */ NativeLibrary library;
-    public static final /* synthetic */ int MAX_NARGS;
-    final /* synthetic */ String encoding;
-    public static final /* synthetic */ int C_CONVENTION;
-    static final /* synthetic */ String OPTION_INVOKING_METHOD;
-    final /* synthetic */ Map<String, ?> options;
-    public static final /* synthetic */ int THROW_LAST_ERROR;
-    private final /* synthetic */ String functionName;
-    private static final /* synthetic */ VarArgsChecker IS_VARARGS;
-    static final /* synthetic */ Integer INTEGER_FALSE;
-    private static final /* synthetic */ int MASK_CC;
-    final /* synthetic */ int callFlags;
-    public static final /* synthetic */ int USE_VARARGS;
+    public static final int ALT_CONVENTION;
+    static final Integer INTEGER_TRUE;
+    private NativeLibrary library;
+    public static final int MAX_NARGS;
+    final String encoding;
+    public static final int C_CONVENTION;
+    static final String OPTION_INVOKING_METHOD;
+    final Map<String, ?> options;
+    public static final int THROW_LAST_ERROR;
+    private final String functionName;
+    private static final VarArgsChecker IS_VARARGS;
+    static final Integer INTEGER_FALSE;
+    private static final int MASK_CC;
+    final int callFlags;
+    public static final int USE_VARARGS;
 
-    public static Function getFunction(String lIIlIIIllllIlII, String lIIlIIIllllIIll) {
-        return NativeLibrary.getInstance(lIIlIIIllllIlII).getFunction(lIIlIIIllllIIll);
+    public static Function getFunction(String string, String string2) {
+        return NativeLibrary.getInstance(string).getFunction(string2);
     }
 
-    public static Function getFunction(String lIIlIIIlllIllII, String lIIlIIIlllIlllI, int lIIlIIIlllIlIlI) {
-        return NativeLibrary.getInstance(lIIlIIIlllIllII).getFunction(lIIlIIIlllIlllI, lIIlIIIlllIlIlI, null);
+    public static Function getFunction(String string, String string2, int n) {
+        return NativeLibrary.getInstance(string).getFunction(string2, n, null);
     }
 
     @Override
     public String toString() {
-        Function lIIIllllIllIllI;
-        if (lIIIllllIllIllI.library != null) {
-            return String.valueOf(new StringBuilder().append("native function ").append(lIIIllllIllIllI.functionName).append("(").append(lIIIllllIllIllI.library.getName()).append(")@0x").append(Long.toHexString(lIIIllllIllIllI.peer)));
+        if (this.library != null) {
+            return String.valueOf(new StringBuilder().append("native function ").append(this.functionName).append("(").append(this.library.getName()).append(")@0x").append(Long.toHexString(this.peer)));
         }
-        return String.valueOf(new StringBuilder().append("native function@0x").append(Long.toHexString(lIIIllllIllIllI.peer)));
+        return String.valueOf(new StringBuilder().append("native function@0x").append(Long.toHexString(this.peer)));
     }
 
-    Function(NativeLibrary lIIlIIIllIIIIll, String lIIlIIIllIIIIlI, int lIIlIIIllIIIIIl, String lIIlIIIllIIIIII) {
-        Function lIIlIIIllIIIlII;
-        lIIlIIIllIIIlII.checkCallingConvention(lIIlIIIllIIIIIl & 0x3F);
-        if (lIIlIIIllIIIIlI == null) {
+    Function(NativeLibrary nativeLibrary, String string, int n, String string2) {
+        this.checkCallingConvention(n & 0x3F);
+        if (string == null) {
             throw new NullPointerException("Function name must not be null");
         }
-        lIIlIIIllIIIlII.library = lIIlIIIllIIIIll;
-        lIIlIIIllIIIlII.functionName = lIIlIIIllIIIIlI;
-        lIIlIIIllIIIlII.callFlags = lIIlIIIllIIIIIl;
-        lIIlIIIllIIIlII.options = lIIlIIIllIIIIll.options;
-        lIIlIIIllIIIlII.encoding = lIIlIIIllIIIIII != null ? lIIlIIIllIIIIII : Native.getDefaultStringEncoding();
+        this.library = nativeLibrary;
+        this.functionName = string;
+        this.callFlags = n;
+        this.options = nativeLibrary.options;
+        this.encoding = string2 != null ? string2 : Native.getDefaultStringEncoding();
         try {
-            lIIlIIIllIIIlII.peer = lIIlIIIllIIIIll.getSymbolAddress(lIIlIIIllIIIIlI);
+            this.peer = nativeLibrary.getSymbolAddress(string);
         }
-        catch (UnsatisfiedLinkError lIIlIIIllIIIlIl) {
-            throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Error looking up function '").append(lIIlIIIllIIIIlI).append("': ").append(lIIlIIIllIIIlIl.getMessage())));
+        catch (UnsatisfiedLinkError unsatisfiedLinkError) {
+            throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("Error looking up function '").append(string).append("': ").append(unsatisfiedLinkError.getMessage())));
         }
     }
 
-    public int invokeInt(Object[] lIIIllllIIlIlll) {
-        Function lIIIllllIIllIlI;
-        return (Integer)lIIIllllIIllIlI.invoke(Integer.class, lIIIllllIIlIlll);
+    public int invokeInt(Object[] arrobject) {
+        return (Integer)this.invoke(Integer.class, arrobject);
     }
 
-    static int fixedArgs(Method lIIIlllIlIIlIII) {
-        return IS_VARARGS.fixedArgs(lIIIlllIlIIlIII);
+    static int fixedArgs(Method method) {
+        return IS_VARARGS.fixedArgs(method);
     }
 
-    public static Function getFunction(Pointer lIIlIIIllIllIII, int lIIlIIIllIlIlll) {
-        return Function.getFunction(lIIlIIIllIllIII, lIIlIIIllIlIlll, null);
+    public static Function getFunction(Pointer pointer, int n) {
+        return Function.getFunction(pointer, n, null);
     }
 
-    Function(Pointer lIIlIIIlIllIIII, int lIIlIIIlIlIllll, String lIIlIIIlIlIlllI) {
-        Function lIIlIIIlIllIlIl;
-        lIIlIIIlIllIlIl.checkCallingConvention(lIIlIIIlIlIllll & 0x3F);
-        if (lIIlIIIlIllIIII == null || lIIlIIIlIllIIII.peer == 0L) {
+    Function(Pointer pointer, int n, String string) {
+        this.checkCallingConvention(n & 0x3F);
+        if (pointer == null || pointer.peer == 0L) {
             throw new NullPointerException("Function address may not be null");
         }
-        lIIlIIIlIllIlIl.functionName = lIIlIIIlIllIIII.toString();
-        lIIlIIIlIllIlIl.callFlags = lIIlIIIlIlIllll;
-        lIIlIIIlIllIlIl.peer = lIIlIIIlIllIIII.peer;
-        lIIlIIIlIllIlIl.options = Collections.EMPTY_MAP;
-        lIIlIIIlIllIlIl.encoding = lIIlIIIlIlIlllI != null ? lIIlIIIlIlIlllI : Native.getDefaultStringEncoding();
+        this.functionName = pointer.toString();
+        this.callFlags = n;
+        this.peer = pointer.peer;
+        this.options = Collections.EMPTY_MAP;
+        this.encoding = string != null ? string : Native.getDefaultStringEncoding();
     }
 
-    public Object invokeObject(Object[] lIIIllllIllIIIl) {
-        Function lIIIllllIllIIlI;
-        return lIIIllllIllIIlI.invoke(Object.class, lIIIllllIllIIIl);
+    public Object invokeObject(Object[] arrobject) {
+        return this.invoke(Object.class, arrobject);
     }
 
     @Override
-    public boolean equals(Object lIIIlllIllllIIl) {
-        Function lIIIlllIllllIlI;
-        if (lIIIlllIllllIIl == lIIIlllIllllIlI) {
+    public boolean equals(Object object) {
+        if (object == this) {
             return true;
         }
-        if (lIIIlllIllllIIl == null) {
+        if (object == null) {
             return false;
         }
-        if (lIIIlllIllllIIl.getClass() == lIIIlllIllllIlI.getClass()) {
-            Function lIIIlllIllllIll = (Function)lIIIlllIllllIIl;
-            return lIIIlllIllllIll.callFlags == lIIIlllIllllIlI.callFlags && lIIIlllIllllIll.options.equals(lIIIlllIllllIlI.options) && lIIIlllIllllIll.peer == lIIIlllIllllIlI.peer;
+        if (object.getClass() == this.getClass()) {
+            Function function = (Function)object;
+            return function.callFlags == this.callFlags && function.options.equals(this.options) && function.peer == this.peer;
         }
         return false;
     }
 
-    public void invoke(Object[] lIIIlllllIIlIlI) {
-        Function lIIIlllllIIllIl;
-        lIIIlllllIIllIl.invoke(Void.class, lIIIlllllIIlIlI);
+    public void invoke(Object[] arrobject) {
+        this.invoke(Void.class, arrobject);
     }
 
-    private String invokeString(int lIIIllllIllllII, Object[] lIIIlllllIIIIIl, boolean lIIIlllllIIIIII) {
-        Function lIIIllllIllllIl;
-        Pointer lIIIllllIllllll = lIIIllllIllllIl.invokePointer(lIIIllllIllllII, lIIIlllllIIIIIl);
-        String lIIIllllIlllllI = null;
-        if (lIIIllllIllllll != null) {
-            lIIIllllIlllllI = lIIIlllllIIIIII ? lIIIllllIllllll.getWideString(0L) : lIIIllllIllllll.getString(0L, lIIIllllIllllIl.encoding);
+    private String invokeString(int n, Object[] arrobject, boolean bl) {
+        Pointer pointer = this.invokePointer(n, arrobject);
+        String string = null;
+        if (pointer != null) {
+            string = bl ? pointer.getWideString(0L) : pointer.getString(0L, this.encoding);
         }
-        return lIIIllllIlllllI;
+        return string;
     }
 
-    private Object convertArgument(Object[] lIIIllllllIIIII, int lIIIllllllIlIII, Method lIIIllllllIIlll, TypeMapper lIIIllllllIIllI, boolean lIIIllllllIIlIl, Class<?> lIIIlllllIllIll) {
-        Function lIIIllllllIIIIl;
-        Object lIIIllllllIIIll = lIIIllllllIIIII[lIIIllllllIlIII];
-        if (lIIIllllllIIIll != null) {
-            Class<?> lIIIlllllllIllI = lIIIllllllIIIll.getClass();
-            ToNativeConverter lIIIlllllllIlIl = null;
-            if (NativeMapped.class.isAssignableFrom(lIIIlllllllIllI)) {
-                lIIIlllllllIlIl = NativeMappedConverter.getInstance(lIIIlllllllIllI);
-            } else if (lIIIllllllIIllI != null) {
-                lIIIlllllllIlIl = lIIIllllllIIllI.getToNativeConverter(lIIIlllllllIllI);
+    private Object convertArgument(Object[] arrobject, int n, Method method, TypeMapper typeMapper, boolean bl, Class<?> class_) {
+        Object object;
+        Structure[] arrstructure;
+        Class<?> class_2;
+        Object object2 = arrobject[n];
+        if (object2 != null) {
+            class_2 = object2.getClass();
+            arrstructure = null;
+            if (NativeMapped.class.isAssignableFrom(class_2)) {
+                arrstructure = NativeMappedConverter.getInstance(class_2);
+            } else if (typeMapper != null) {
+                arrstructure = typeMapper.getToNativeConverter(class_2);
             }
-            if (lIIIlllllllIlIl != null) {
-                FunctionParameterContext lIIIlllllllIlll;
-                if (lIIIllllllIIlll != null) {
-                    MethodParameterContext lIIIllllllllIII = new MethodParameterContext(lIIIllllllIIIIl, lIIIllllllIIIII, lIIIllllllIlIII, lIIIllllllIIlll);
-                } else {
-                    lIIIlllllllIlll = new FunctionParameterContext(lIIIllllllIIIIl, lIIIllllllIIIII, lIIIllllllIlIII);
-                }
-                lIIIllllllIIIll = lIIIlllllllIlIl.toNative(lIIIllllllIIIll, lIIIlllllllIlll);
+            if (arrstructure != null) {
+                object = method != null ? new MethodParameterContext(this, arrobject, n, method) : new FunctionParameterContext(this, arrobject, n);
+                object2 = arrstructure.toNative(object2, (ToNativeContext)object);
             }
         }
-        if (lIIIllllllIIIll == null || lIIIllllllIIIIl.isPrimitiveArray(lIIIllllllIIIll.getClass())) {
-            return lIIIllllllIIIll;
+        if (object2 == null || this.isPrimitiveArray(object2.getClass())) {
+            return object2;
         }
-        Class<?> lIIIllllllIIIlI = lIIIllllllIIIll.getClass();
-        if (lIIIllllllIIIll instanceof Structure) {
-            Structure lIIIlllllllIIIl = (Structure)lIIIllllllIIIll;
-            lIIIlllllllIIIl.autoWrite();
-            if (lIIIlllllllIIIl instanceof Structure.ByValue) {
-                Class<?> lIIIlllllllIIlI = lIIIlllllllIIIl.getClass();
-                if (lIIIllllllIIlll != null) {
-                    Class<?>[] lIIIlllllllIIll = lIIIllllllIIlll.getParameterTypes();
-                    if (IS_VARARGS.isVarArgs(lIIIllllllIIlll)) {
-                        if (lIIIllllllIlIII < lIIIlllllllIIll.length - 1) {
-                            lIIIlllllllIIlI = lIIIlllllllIIll[lIIIllllllIlIII];
+        class_2 = object2.getClass();
+        if (object2 instanceof Structure) {
+            arrstructure = (Structure)object2;
+            arrstructure.autoWrite();
+            if (arrstructure instanceof Structure.ByValue) {
+                object = arrstructure.getClass();
+                if (method != null) {
+                    Class<?>[] arrclass = method.getParameterTypes();
+                    if (IS_VARARGS.isVarArgs(method)) {
+                        if (n < arrclass.length - 1) {
+                            object = arrclass[n];
                         } else {
-                            Class<?> lIIIlllllllIlII = lIIIlllllllIIll[lIIIlllllllIIll.length - 1].getComponentType();
-                            if (lIIIlllllllIlII != Object.class) {
-                                lIIIlllllllIIlI = lIIIlllllllIlII;
+                            Class<?> class_3 = arrclass[arrclass.length - 1].getComponentType();
+                            if (class_3 != Object.class) {
+                                object = class_3;
                             }
                         }
                     } else {
-                        lIIIlllllllIIlI = lIIIlllllllIIll[lIIIllllllIlIII];
+                        object = arrclass[n];
                     }
                 }
-                if (Structure.ByValue.class.isAssignableFrom(lIIIlllllllIIlI)) {
-                    return lIIIlllllllIIIl;
+                if (Structure.ByValue.class.isAssignableFrom((Class<?>)object)) {
+                    return arrstructure;
                 }
             }
-            return lIIIlllllllIIIl.getPointer();
+            return arrstructure.getPointer();
         }
-        if (lIIIllllllIIIll instanceof Callback) {
-            return CallbackReference.getFunctionPointer((Callback)lIIIllllllIIIll);
+        if (object2 instanceof Callback) {
+            return CallbackReference.getFunctionPointer((Callback)object2);
         }
-        if (lIIIllllllIIIll instanceof String) {
-            return new NativeString((String)lIIIllllllIIIll, false).getPointer();
+        if (object2 instanceof String) {
+            return new NativeString((String)object2, false).getPointer();
         }
-        if (lIIIllllllIIIll instanceof WString) {
-            return new NativeString(lIIIllllllIIIll.toString(), true).getPointer();
+        if (object2 instanceof WString) {
+            return new NativeString(object2.toString(), true).getPointer();
         }
-        if (lIIIllllllIIIll instanceof Boolean) {
-            return Boolean.TRUE.equals(lIIIllllllIIIll) ? INTEGER_TRUE : INTEGER_FALSE;
+        if (object2 instanceof Boolean) {
+            return Boolean.TRUE.equals(object2) ? INTEGER_TRUE : INTEGER_FALSE;
         }
-        if (String[].class == lIIIllllllIIIlI) {
-            return new StringArray((String[])lIIIllllllIIIll, lIIIllllllIIIIl.encoding);
+        if (String[].class == class_2) {
+            return new StringArray((String[])object2, this.encoding);
         }
-        if (WString[].class == lIIIllllllIIIlI) {
-            return new StringArray((WString[])lIIIllllllIIIll);
+        if (WString[].class == class_2) {
+            return new StringArray((WString[])object2);
         }
-        if (Pointer[].class == lIIIllllllIIIlI) {
-            return new PointerArray((Pointer[])lIIIllllllIIIll);
+        if (Pointer[].class == class_2) {
+            return new PointerArray((Pointer[])object2);
         }
-        if (NativeMapped[].class.isAssignableFrom(lIIIllllllIIIlI)) {
-            return new NativeMappedArray((NativeMapped[])lIIIllllllIIIll);
+        if (NativeMapped[].class.isAssignableFrom(class_2)) {
+            return new NativeMappedArray((NativeMapped[])object2);
         }
-        if (Structure[].class.isAssignableFrom(lIIIllllllIIIlI)) {
-            Structure[] lIIIllllllIllIl = (Structure[])lIIIllllllIIIll;
-            Class<?> lIIIllllllIllII = lIIIllllllIIIlI.getComponentType();
-            boolean lIIIllllllIlIll = Structure.ByReference.class.isAssignableFrom(lIIIllllllIllII);
-            if (lIIIlllllIllIll != null && !Structure.ByReference[].class.isAssignableFrom(lIIIlllllIllIll)) {
-                if (lIIIllllllIlIll) {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Function ").append(lIIIllllllIIIIl.getName()).append(" declared Structure[] at parameter ").append(lIIIllllllIlIII).append(" but array of ").append(lIIIllllllIllII).append(" was passed")));
+        if (Structure[].class.isAssignableFrom(class_2)) {
+            arrstructure = (Structure[])object2;
+            object = class_2.getComponentType();
+            boolean bl2 = Structure.ByReference.class.isAssignableFrom((Class<?>)object);
+            if (class_ != null && !Structure.ByReference[].class.isAssignableFrom(class_)) {
+                if (bl2) {
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Function ").append(this.getName()).append(" declared Structure[] at parameter ").append(n).append(" but array of ").append(object).append(" was passed")));
                 }
-                for (int lIIIlllllllIIII = 0; lIIIlllllllIIII < lIIIllllllIllIl.length; ++lIIIlllllllIIII) {
-                    if (!(lIIIllllllIllIl[lIIIlllllllIIII] instanceof Structure.ByReference)) continue;
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Function ").append(lIIIllllllIIIIl.getName()).append(" declared Structure[] at parameter ").append(lIIIllllllIlIII).append(" but element ").append(lIIIlllllllIIII).append(" is of Structure.ByReference type")));
+                for (int i = 0; i < arrstructure.length; ++i) {
+                    if (!(arrstructure[i] instanceof Structure.ByReference)) continue;
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Function ").append(this.getName()).append(" declared Structure[] at parameter ").append(n).append(" but element ").append(i).append(" is of Structure.ByReference type")));
                 }
             }
-            if (lIIIllllllIlIll) {
-                Structure.autoWrite(lIIIllllllIllIl);
-                Pointer[] lIIIllllllIlllI = new Pointer[lIIIllllllIllIl.length + 1];
-                for (int lIIIllllllIllll = 0; lIIIllllllIllll < lIIIllllllIllIl.length; ++lIIIllllllIllll) {
-                    lIIIllllllIlllI[lIIIllllllIllll] = lIIIllllllIllIl[lIIIllllllIllll] != null ? lIIIllllllIllIl[lIIIllllllIllll].getPointer() : null;
+            if (bl2) {
+                Structure.autoWrite(arrstructure);
+                Pointer[] arrpointer = new Pointer[arrstructure.length + 1];
+                for (int i = 0; i < arrstructure.length; ++i) {
+                    arrpointer[i] = arrstructure[i] != null ? arrstructure[i].getPointer() : null;
                 }
-                return new PointerArray(lIIIllllllIlllI);
+                return new PointerArray(arrpointer);
             }
-            if (lIIIllllllIllIl.length == 0) {
+            if (arrstructure.length == 0) {
                 throw new IllegalArgumentException("Structure array must have non-zero length");
             }
-            if (lIIIllllllIllIl[0] == null) {
-                Structure.newInstance(lIIIllllllIllII).toArray(lIIIllllllIllIl);
-                return lIIIllllllIllIl[0].getPointer();
+            if (arrstructure[0] == null) {
+                Structure.newInstance(object).toArray(arrstructure);
+                return arrstructure[0].getPointer();
             }
-            Structure.autoWrite(lIIIllllllIllIl);
-            return lIIIllllllIllIl[0].getPointer();
+            Structure.autoWrite(arrstructure);
+            return arrstructure[0].getPointer();
         }
-        if (lIIIllllllIIIlI.isArray()) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported array argument type: ").append(lIIIllllllIIIlI.getComponentType())));
+        if (class_2.isArray()) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported array argument type: ").append(class_2.getComponentType())));
         }
-        if (lIIIllllllIIlIl) {
-            return lIIIllllllIIIll;
+        if (bl) {
+            return object2;
         }
-        if (!Native.isSupportedNativeType(lIIIllllllIIIll.getClass())) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported argument type ").append(lIIIllllllIIIll.getClass().getName()).append(" at parameter ").append(lIIIllllllIlIII).append(" of function ").append(lIIIllllllIIIIl.getName())));
+        if (!Native.isSupportedNativeType(object2.getClass())) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported argument type ").append(object2.getClass().getName()).append(" at parameter ").append(n).append(" of function ").append(this.getName())));
         }
-        return lIIIllllllIIIll;
+        return object2;
     }
 
-    public Object invoke(Class<?> lIIlIIIlIIIllIl, Object[] lIIlIIIlIIlIIlI, Map<String, ?> lIIlIIIlIIlIIIl) {
-        Function lIIlIIIlIIlIlII;
-        Method lIIlIIIlIIlIIII = (Method)lIIlIIIlIIlIIIl.get("invoking-method");
-        Class<?>[] lIIlIIIlIIIllll = lIIlIIIlIIlIIII != null ? lIIlIIIlIIlIIII.getParameterTypes() : null;
-        return lIIlIIIlIIlIlII.invoke(lIIlIIIlIIlIIII, lIIlIIIlIIIllll, lIIlIIIlIIIllIl, lIIlIIIlIIlIIlI, lIIlIIIlIIlIIIl);
+    public Object invoke(Class<?> class_, Object[] arrobject, Map<String, ?> map) {
+        Method method = (Method)map.get("invoking-method");
+        Class<?>[] arrclass = method != null ? method.getParameterTypes() : null;
+        return this.invoke(method, arrclass, class_, arrobject, map);
     }
 
-    Object invoke(Object[] lIIlIIIIIlllIll, Class<?> lIIlIIIIIlllllI, boolean lIIlIIIIIlllIIl) {
-        Function lIIlIIIIIllllII;
-        return lIIlIIIIIllllII.invoke(lIIlIIIIIlllIll, lIIlIIIIIlllllI, lIIlIIIIIlllIIl, 0);
+    Object invoke(Object[] arrobject, Class<?> class_, boolean bl) {
+        return this.invoke(arrobject, class_, bl, 0);
     }
 
-    public Pointer invokePointer(Object[] lIIIllllIlIlIIl) {
-        Function lIIIllllIlIllII;
-        return (Pointer)lIIIllllIlIllII.invoke(Pointer.class, lIIIllllIlIlIIl);
+    public Pointer invokePointer(Object[] arrobject) {
+        return (Pointer)this.invoke(Pointer.class, arrobject);
     }
 
     public String getName() {
-        Function lIIlIIIlIlIIlll;
-        return lIIlIIIlIlIIlll.functionName;
+        return this.functionName;
     }
 
-    public String invokeString(Object[] lIIIllllIlIIIll, boolean lIIIllllIIllllI) {
-        Function lIIIllllIlIIlII;
-        Object lIIIllllIlIIIIl = lIIIllllIlIIlII.invoke(lIIIllllIIllllI ? WString.class : String.class, lIIIllllIlIIIll);
-        return lIIIllllIlIIIIl != null ? lIIIllllIlIIIIl.toString() : null;
+    public String invokeString(Object[] arrobject, boolean bl) {
+        Object object = this.invoke(bl ? WString.class : String.class, arrobject);
+        return object != null ? object.toString() : null;
     }
 
-    Object invoke(Object[] lIIlIIIIIlIIIll, Class<?> lIIlIIIIIlIIIlI, boolean lIIlIIIIIlIIIIl, int lIIlIIIIIIllIIl) {
-        Function lIIlIIIIIlIIlII;
-        Object lIIlIIIIIIlllll = null;
-        int lIIlIIIIIIllllI = lIIlIIIIIlIIlII.callFlags | (lIIlIIIIIIllIIl & 3) << 7;
-        if (lIIlIIIIIlIIIlI == null || lIIlIIIIIlIIIlI == Void.TYPE || lIIlIIIIIlIIIlI == Void.class) {
-            Native.invokeVoid(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-            lIIlIIIIIIlllll = null;
-        } else if (lIIlIIIIIlIIIlI == Boolean.TYPE || lIIlIIIIIlIIIlI == Boolean.class) {
-            lIIlIIIIIIlllll = Function.valueOf(Native.invokeInt(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll) != 0);
-        } else if (lIIlIIIIIlIIIlI == Byte.TYPE || lIIlIIIIIlIIIlI == Byte.class) {
-            lIIlIIIIIIlllll = (byte)Native.invokeInt(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-        } else if (lIIlIIIIIlIIIlI == Short.TYPE || lIIlIIIIIlIIIlI == Short.class) {
-            lIIlIIIIIIlllll = (short)Native.invokeInt(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-        } else if (lIIlIIIIIlIIIlI == Character.TYPE || lIIlIIIIIlIIIlI == Character.class) {
-            lIIlIIIIIIlllll = Character.valueOf((char)Native.invokeInt(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll));
-        } else if (lIIlIIIIIlIIIlI == Integer.TYPE || lIIlIIIIIlIIIlI == Integer.class) {
-            lIIlIIIIIIlllll = Native.invokeInt(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-        } else if (lIIlIIIIIlIIIlI == Long.TYPE || lIIlIIIIIlIIIlI == Long.class) {
-            lIIlIIIIIIlllll = Native.invokeLong(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-        } else if (lIIlIIIIIlIIIlI == Float.TYPE || lIIlIIIIIlIIIlI == Float.class) {
-            lIIlIIIIIIlllll = Float.valueOf(Native.invokeFloat(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll));
-        } else if (lIIlIIIIIlIIIlI == Double.TYPE || lIIlIIIIIlIIIlI == Double.class) {
-            lIIlIIIIIIlllll = Native.invokeDouble(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-        } else if (lIIlIIIIIlIIIlI == String.class) {
-            lIIlIIIIIIlllll = lIIlIIIIIlIIlII.invokeString(lIIlIIIIIIllllI, lIIlIIIIIlIIIll, false);
-        } else if (lIIlIIIIIlIIIlI == WString.class) {
-            String lIIlIIIIIlIllIl = lIIlIIIIIlIIlII.invokeString(lIIlIIIIIIllllI, lIIlIIIIIlIIIll, true);
-            if (lIIlIIIIIlIllIl != null) {
-                lIIlIIIIIIlllll = new WString(lIIlIIIIIlIllIl);
+    Object invoke(Object[] arrobject, Class<?> class_, boolean bl, int n) {
+        Object object = null;
+        int n2 = this.callFlags | (n & 3) << 7;
+        if (class_ == null || class_ == Void.TYPE || class_ == Void.class) {
+            Native.invokeVoid(this, this.peer, n2, arrobject);
+            object = null;
+        } else if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+            object = Function.valueOf(Native.invokeInt(this, this.peer, n2, arrobject) != 0);
+        } else if (class_ == Byte.TYPE || class_ == Byte.class) {
+            object = (byte)Native.invokeInt(this, this.peer, n2, arrobject);
+        } else if (class_ == Short.TYPE || class_ == Short.class) {
+            object = (short)Native.invokeInt(this, this.peer, n2, arrobject);
+        } else if (class_ == Character.TYPE || class_ == Character.class) {
+            object = Character.valueOf((char)Native.invokeInt(this, this.peer, n2, arrobject));
+        } else if (class_ == Integer.TYPE || class_ == Integer.class) {
+            object = Native.invokeInt(this, this.peer, n2, arrobject);
+        } else if (class_ == Long.TYPE || class_ == Long.class) {
+            object = Native.invokeLong(this, this.peer, n2, arrobject);
+        } else if (class_ == Float.TYPE || class_ == Float.class) {
+            object = Float.valueOf(Native.invokeFloat(this, this.peer, n2, arrobject));
+        } else if (class_ == Double.TYPE || class_ == Double.class) {
+            object = Native.invokeDouble(this, this.peer, n2, arrobject);
+        } else if (class_ == String.class) {
+            object = this.invokeString(n2, arrobject, false);
+        } else if (class_ == WString.class) {
+            String string = this.invokeString(n2, arrobject, true);
+            if (string != null) {
+                object = new WString(string);
             }
         } else {
-            if (Pointer.class.isAssignableFrom(lIIlIIIIIlIIIlI)) {
-                return lIIlIIIIIlIIlII.invokePointer(lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
+            if (Pointer.class.isAssignableFrom(class_)) {
+                return this.invokePointer(n2, arrobject);
             }
-            if (Structure.class.isAssignableFrom(lIIlIIIIIlIIIlI)) {
-                if (Structure.ByValue.class.isAssignableFrom(lIIlIIIIIlIIIlI)) {
-                    Structure lIIlIIIIIlIllII = Native.invokeStructure(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll, Structure.newInstance(lIIlIIIIIlIIIlI));
-                    lIIlIIIIIlIllII.autoRead();
-                    lIIlIIIIIIlllll = lIIlIIIIIlIllII;
+            if (Structure.class.isAssignableFrom(class_)) {
+                if (Structure.ByValue.class.isAssignableFrom(class_)) {
+                    Structure structure = Native.invokeStructure(this, this.peer, n2, arrobject, Structure.newInstance(class_));
+                    structure.autoRead();
+                    object = structure;
                 } else {
-                    lIIlIIIIIIlllll = lIIlIIIIIlIIlII.invokePointer(lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-                    if (lIIlIIIIIIlllll != null) {
-                        Structure lIIlIIIIIlIlIll = Structure.newInstance(lIIlIIIIIlIIIlI, (Pointer)lIIlIIIIIIlllll);
-                        lIIlIIIIIlIlIll.conditionalAutoRead();
-                        lIIlIIIIIIlllll = lIIlIIIIIlIlIll;
+                    object = this.invokePointer(n2, arrobject);
+                    if (object != null) {
+                        Structure structure = Structure.newInstance(class_, (Pointer)object);
+                        structure.conditionalAutoRead();
+                        object = structure;
                     }
                 }
-            } else if (Callback.class.isAssignableFrom(lIIlIIIIIlIIIlI)) {
-                lIIlIIIIIIlllll = lIIlIIIIIlIIlII.invokePointer(lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-                if (lIIlIIIIIIlllll != null) {
-                    lIIlIIIIIIlllll = CallbackReference.getCallback(lIIlIIIIIlIIIlI, (Pointer)lIIlIIIIIIlllll);
+            } else if (Callback.class.isAssignableFrom(class_)) {
+                object = this.invokePointer(n2, arrobject);
+                if (object != null) {
+                    object = CallbackReference.getCallback(class_, (Pointer)object);
                 }
-            } else if (lIIlIIIIIlIIIlI == String[].class) {
-                Pointer lIIlIIIIIlIlIlI = lIIlIIIIIlIIlII.invokePointer(lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-                if (lIIlIIIIIlIlIlI != null) {
-                    lIIlIIIIIIlllll = lIIlIIIIIlIlIlI.getStringArray(0L, lIIlIIIIIlIIlII.encoding);
+            } else if (class_ == String[].class) {
+                Pointer pointer = this.invokePointer(n2, arrobject);
+                if (pointer != null) {
+                    object = pointer.getStringArray(0L, this.encoding);
                 }
-            } else if (lIIlIIIIIlIIIlI == WString[].class) {
-                Pointer lIIlIIIIIlIIllI = lIIlIIIIIlIIlII.invokePointer(lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-                if (lIIlIIIIIlIIllI != null) {
-                    String[] lIIlIIIIIlIlIII = lIIlIIIIIlIIllI.getWideStringArray(0L);
-                    WString[] lIIlIIIIIlIIlll = new WString[lIIlIIIIIlIlIII.length];
-                    for (int lIIlIIIIIlIlIIl = 0; lIIlIIIIIlIlIIl < lIIlIIIIIlIlIII.length; ++lIIlIIIIIlIlIIl) {
-                        lIIlIIIIIlIIlll[lIIlIIIIIlIlIIl] = new WString(lIIlIIIIIlIlIII[lIIlIIIIIlIlIIl]);
+            } else if (class_ == WString[].class) {
+                Pointer pointer = this.invokePointer(n2, arrobject);
+                if (pointer != null) {
+                    String[] arrstring = pointer.getWideStringArray(0L);
+                    WString[] arrwString = new WString[arrstring.length];
+                    for (int i = 0; i < arrstring.length; ++i) {
+                        arrwString[i] = new WString(arrstring[i]);
+                        if (-2 <= 0) continue;
+                        return null;
                     }
-                    lIIlIIIIIIlllll = lIIlIIIIIlIIlll;
+                    object = arrwString;
                 }
-            } else if (lIIlIIIIIlIIIlI == Pointer[].class) {
-                Pointer lIIlIIIIIlIIlIl = lIIlIIIIIlIIlII.invokePointer(lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-                if (lIIlIIIIIlIIlIl != null) {
-                    lIIlIIIIIIlllll = lIIlIIIIIlIIlIl.getPointerArray(0L);
+            } else if (class_ == Pointer[].class) {
+                Pointer pointer = this.invokePointer(n2, arrobject);
+                if (pointer != null) {
+                    object = pointer.getPointerArray(0L);
                 }
-            } else if (lIIlIIIIIlIIIIl) {
-                lIIlIIIIIIlllll = Native.invokeObject(lIIlIIIIIlIIlII, lIIlIIIIIlIIlII.peer, lIIlIIIIIIllllI, lIIlIIIIIlIIIll);
-                if (lIIlIIIIIIlllll != null && !lIIlIIIIIlIIIlI.isAssignableFrom(lIIlIIIIIIlllll.getClass())) {
-                    throw new ClassCastException(String.valueOf(new StringBuilder().append("Return type ").append(lIIlIIIIIlIIIlI).append(" does not match result ").append(lIIlIIIIIIlllll.getClass())));
+            } else if (bl) {
+                object = Native.invokeObject(this, this.peer, n2, arrobject);
+                if (object != null && !class_.isAssignableFrom(object.getClass())) {
+                    throw new ClassCastException(String.valueOf(new StringBuilder().append("Return type ").append(class_).append(" does not match result ").append(object.getClass())));
                 }
             } else {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported return type ").append(lIIlIIIIIlIIIlI).append(" in function ").append(lIIlIIIIIlIIlII.getName())));
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported return type ").append(class_).append(" in function ").append(this.getName())));
             }
         }
-        return lIIlIIIIIIlllll;
+        return object;
     }
 
-    public static Function getFunction(Pointer lIIlIIIllIlllII) {
-        return Function.getFunction(lIIlIIIllIlllII, 0, null);
+    public static Function getFunction(Pointer pointer) {
+        return Function.getFunction(pointer, 0, null);
     }
 
     public int getCallingConvention() {
-        Function lIIlIIIlIlIIlII;
-        return lIIlIIIlIlIIlII.callFlags & 0x3F;
+        return this.callFlags & 0x3F;
     }
 
-    private boolean isPrimitiveArray(Class<?> lIIIlllllIlIIII) {
-        return lIIIlllllIlIIII.isArray() && lIIIlllllIlIIII.getComponentType().isPrimitive();
+    private boolean isPrimitiveArray(Class<?> class_) {
+        return class_.isArray() && class_.getComponentType().isPrimitive();
     }
 
     static {
@@ -399,149 +382,144 @@ extends Pointer {
         IS_VARARGS = VarArgsChecker.create();
     }
 
-    public static Function getFunction(String lIIlIIIlllIIlIl, String lIIlIIIlllIIlII, int lIIlIIIllIlllll, String lIIlIIIllIllllI) {
-        return NativeLibrary.getInstance(lIIlIIIlllIIlIl).getFunction(lIIlIIIlllIIlII, lIIlIIIllIlllll, lIIlIIIllIllllI);
+    public static Function getFunction(String string, String string2, int n, String string3) {
+        return NativeLibrary.getInstance(string).getFunction(string2, n, string3);
     }
 
-    public Object invoke(Class<?> lIIlIIIlIIlllll, Object[] lIIlIIIlIIllllI) {
-        Function lIIlIIIlIlIIIII;
-        return lIIlIIIlIlIIIII.invoke(lIIlIIIlIIlllll, lIIlIIIlIIllllI, lIIlIIIlIlIIIII.options);
+    public Object invoke(Class<?> class_, Object[] arrobject) {
+        return this.invoke(class_, arrobject, this.options);
     }
 
-    private Pointer invokePointer(int lIIlIIIIIIIllIl, Object[] lIIlIIIIIIIlIII) {
-        Function lIIlIIIIIIIlllI;
-        long lIIlIIIIIIIlIll = Native.invokePointer(lIIlIIIIIIIlllI, lIIlIIIIIIIlllI.peer, lIIlIIIIIIIllIl, lIIlIIIIIIIlIII);
-        return lIIlIIIIIIIlIll == 0L ? null : new Pointer(lIIlIIIIIIIlIll);
+    private Pointer invokePointer(int n, Object[] arrobject) {
+        long l = Native.invokePointer(this, this.peer, n, arrobject);
+        return l == 0L ? null : new Pointer(l);
     }
 
-    public static Function getFunction(Pointer lIIlIIIllIIlllI, int lIIlIIIllIlIIII, String lIIlIIIllIIllII) {
-        return new Function(lIIlIIIllIIlllI, lIIlIIIllIlIIII, lIIlIIIllIIllII);
+    public static Function getFunction(Pointer pointer, int n, String string) {
+        return new Function(pointer, n, string);
     }
 
-    static Object[] concatenateVarArgs(Object[] lIIIlllIlIlIlIl) {
-        if (lIIIlllIlIlIlIl != null && lIIIlllIlIlIlIl.length > 0) {
-            Class<?> lIIIlllIlIllIIl;
-            Object lIIIlllIlIllIll = lIIIlllIlIlIlIl[lIIIlllIlIlIlIl.length - 1];
-            Class<?> class_ = lIIIlllIlIllIIl = lIIIlllIlIllIll != null ? lIIIlllIlIllIll.getClass() : null;
-            if (lIIIlllIlIllIIl != null && lIIIlllIlIllIIl.isArray()) {
-                Object[] lIIIlllIlIlllll = (Object[])lIIIlllIlIllIll;
-                for (int lIIIlllIllIIIIl = 0; lIIIlllIllIIIIl < lIIIlllIlIlllll.length; ++lIIIlllIllIIIIl) {
-                    if (!(lIIIlllIlIlllll[lIIIlllIllIIIIl] instanceof Float)) continue;
-                    lIIIlllIlIlllll[lIIIlllIllIIIIl] = (double)((Float)lIIIlllIlIlllll[lIIIlllIllIIIIl]).floatValue();
+    static Object[] concatenateVarArgs(Object[] arrobject) {
+        if (arrobject != null && arrobject.length > 0) {
+            Class<?> class_;
+            Object object = arrobject[arrobject.length - 1];
+            Class<?> class_2 = class_ = object != null ? object.getClass() : null;
+            if (class_ != null && class_.isArray()) {
+                Object[] arrobject2 = (Object[])object;
+                for (int i = 0; i < arrobject2.length; ++i) {
+                    if (!(arrobject2[i] instanceof Float)) continue;
+                    arrobject2[i] = (double)((Float)arrobject2[i]).floatValue();
+                    if (-1 < 1) continue;
+                    return null;
                 }
-                Object[] lIIIlllIlIlllIl = new Object[lIIIlllIlIlIlIl.length + lIIIlllIlIlllll.length];
-                System.arraycopy(lIIIlllIlIlIlIl, 0, lIIIlllIlIlllIl, 0, lIIIlllIlIlIlIl.length - 1);
-                System.arraycopy(lIIIlllIlIlllll, 0, lIIIlllIlIlllIl, lIIIlllIlIlIlIl.length - 1, lIIIlllIlIlllll.length);
-                lIIIlllIlIlllIl[lIIIlllIlIlllIl.length - 1] = null;
-                lIIIlllIlIlIlIl = lIIIlllIlIlllIl;
+                Object[] arrobject3 = new Object[arrobject.length + arrobject2.length];
+                System.arraycopy(arrobject, 0, arrobject3, 0, arrobject.length - 1);
+                System.arraycopy(arrobject2, 0, arrobject3, arrobject.length - 1, arrobject2.length);
+                arrobject3[arrobject3.length - 1] = null;
+                arrobject = arrobject3;
             }
         }
-        return lIIIlllIlIlIlIl;
+        return arrobject;
     }
 
-    public double invokeDouble(Object[] lIIIllllIIIIlIl) {
-        Function lIIIllllIIIlIII;
-        return (Double)lIIIllllIIIlIII.invoke(Double.class, lIIIllllIIIIlIl);
+    public double invokeDouble(Object[] arrobject) {
+        return (Double)this.invoke(Double.class, arrobject);
     }
 
     @Override
     public int hashCode() {
-        Function lIIIlllIlllIIll;
-        return lIIIlllIlllIIll.callFlags + lIIIlllIlllIIll.options.hashCode() + super.hashCode();
+        return this.callFlags + this.options.hashCode() + super.hashCode();
     }
 
-    Object invoke(Method lIIlIIIIllIIllI, Class<?>[] lIIlIIIIlIlIlll, Class<?> lIIlIIIIlIlIllI, Object[] lIIlIIIIlIlIlIl, Map<String, ?> lIIlIIIIlIlIlII) {
-        Function lIIlIIIIlIllIIl;
-        Object[] lIIlIIIIllIIIIl = new Object[]{};
-        if (lIIlIIIIlIlIlIl != null) {
-            if (lIIlIIIIlIlIlIl.length > 256) {
+    Object invoke(Method method, Class<?>[] arrclass, Class<?> class_, Object[] arrobject, Map<String, ?> map) {
+        Object object;
+        Object object2;
+        Object[] arrobject2 = new Object[]{};
+        if (arrobject != null) {
+            if (arrobject.length > 256) {
                 throw new UnsupportedOperationException("Maximum argument count is 256");
             }
-            lIIlIIIIllIIIIl = new Object[lIIlIIIIlIlIlIl.length];
-            System.arraycopy(lIIlIIIIlIlIlIl, 0, lIIlIIIIllIIIIl, 0, lIIlIIIIllIIIIl.length);
+            arrobject2 = new Object[arrobject.length];
+            System.arraycopy(arrobject, 0, arrobject2, 0, arrobject2.length);
         }
-        TypeMapper lIIlIIIIllIIIII = (TypeMapper)lIIlIIIIlIlIlII.get("type-mapper");
-        boolean lIIlIIIIlIlllll = Boolean.TRUE.equals(lIIlIIIIlIlIlII.get("allow-objects"));
-        boolean lIIlIIIIlIllllI = lIIlIIIIllIIIIl.length > 0 && lIIlIIIIllIIllI != null ? Function.isVarArgs(lIIlIIIIllIIllI) : false;
-        int lIIlIIIIlIlllIl = lIIlIIIIllIIIIl.length > 0 && lIIlIIIIllIIllI != null ? Function.fixedArgs(lIIlIIIIllIIllI) : 0;
-        for (int lIIlIIIIlllIIlI = 0; lIIlIIIIlllIIlI < lIIlIIIIllIIIIl.length; ++lIIlIIIIlllIIlI) {
-            Class<?> lIIlIIIIlllIIll = lIIlIIIIllIIllI != null ? (lIIlIIIIlIllllI && lIIlIIIIlllIIlI >= lIIlIIIIlIlIlll.length - 1 ? lIIlIIIIlIlIlll[lIIlIIIIlIlIlll.length - 1].getComponentType() : lIIlIIIIlIlIlll[lIIlIIIIlllIIlI]) : null;
-            lIIlIIIIllIIIIl[lIIlIIIIlllIIlI] = lIIlIIIIlIllIIl.convertArgument(lIIlIIIIllIIIIl, lIIlIIIIlllIIlI, lIIlIIIIllIIllI, lIIlIIIIllIIIII, lIIlIIIIlIlllll, lIIlIIIIlllIIll);
+        TypeMapper typeMapper = (TypeMapper)map.get("type-mapper");
+        boolean bl = Boolean.TRUE.equals(map.get("allow-objects"));
+        boolean bl2 = arrobject2.length > 0 && method != null ? Function.isVarArgs(method) : false;
+        int n = arrobject2.length > 0 && method != null ? Function.fixedArgs(method) : 0;
+        for (int i = 0; i < arrobject2.length; ++i) {
+            object2 = method != null ? (bl2 && i >= arrclass.length - 1 ? arrclass[arrclass.length - 1].getComponentType() : arrclass[i]) : null;
+            arrobject2[i] = this.convertArgument(arrobject2, i, method, typeMapper, bl, (Class<?>)object2);
+            if (1 != 2) continue;
+            return null;
         }
-        Class<?> lIIlIIIIlIlllII = lIIlIIIIlIlIllI;
-        FromNativeConverter lIIlIIIIlIllIll = null;
-        if (NativeMapped.class.isAssignableFrom(lIIlIIIIlIlIllI)) {
-            NativeMappedConverter lIIlIIIIlllIIIl = NativeMappedConverter.getInstance(lIIlIIIIlIlIllI);
-            lIIlIIIIlIllIll = lIIlIIIIlllIIIl;
-            lIIlIIIIlIlllII = lIIlIIIIlllIIIl.nativeType();
-        } else if (lIIlIIIIllIIIII != null && (lIIlIIIIlIllIll = lIIlIIIIllIIIII.getFromNativeConverter(lIIlIIIIlIlIllI)) != null) {
-            lIIlIIIIlIlllII = lIIlIIIIlIllIll.nativeType();
+        Class<?> class_2 = class_;
+        object2 = null;
+        if (NativeMapped.class.isAssignableFrom(class_)) {
+            object2 = object = NativeMappedConverter.getInstance(class_);
+            class_2 = ((NativeMappedConverter)object).nativeType();
+        } else if (typeMapper != null && (object2 = typeMapper.getFromNativeConverter(class_)) != null) {
+            class_2 = object2.nativeType();
         }
-        Object lIIlIIIIlIllIlI = lIIlIIIIlIllIIl.invoke(lIIlIIIIllIIIIl, lIIlIIIIlIlllII, lIIlIIIIlIlllll, lIIlIIIIlIlllIl);
-        if (lIIlIIIIlIllIll != null) {
-            FunctionResultContext lIIlIIIIllIllll;
-            if (lIIlIIIIllIIllI != null) {
-                MethodResultContext lIIlIIIIlllIIII = new MethodResultContext(lIIlIIIIlIlIllI, lIIlIIIIlIllIIl, lIIlIIIIlIlIlIl, lIIlIIIIllIIllI);
-            } else {
-                lIIlIIIIllIllll = new FunctionResultContext(lIIlIIIIlIlIllI, lIIlIIIIlIllIIl, lIIlIIIIlIlIlIl);
-            }
-            lIIlIIIIlIllIlI = lIIlIIIIlIllIll.fromNative(lIIlIIIIlIllIlI, lIIlIIIIllIllll);
+        object = this.invoke(arrobject2, class_2, bl, n);
+        if (object2 != null) {
+            FunctionResultContext functionResultContext = method != null ? new MethodResultContext(class_, this, arrobject, method) : new FunctionResultContext(class_, this, arrobject);
+            object = object2.fromNative(object, functionResultContext);
         }
-        if (lIIlIIIIlIlIlIl != null) {
-            for (int lIIlIIIIllIlIII = 0; lIIlIIIIllIlIII < lIIlIIIIlIlIlIl.length; ++lIIlIIIIllIlIII) {
-                Object lIIlIIIIllIlIIl = lIIlIIIIlIlIlIl[lIIlIIIIllIlIII];
-                if (lIIlIIIIllIlIIl == null) continue;
-                if (lIIlIIIIllIlIIl instanceof Structure) {
-                    if (lIIlIIIIllIlIIl instanceof Structure.ByValue) continue;
-                    ((Structure)lIIlIIIIllIlIIl).autoRead();
-                    continue;
-                }
-                if (lIIlIIIIllIIIIl[lIIlIIIIllIlIII] instanceof PostCallRead) {
-                    ((PostCallRead)lIIlIIIIllIIIIl[lIIlIIIIllIlIII]).read();
-                    if (!(lIIlIIIIllIIIIl[lIIlIIIIllIlIII] instanceof PointerArray)) continue;
-                    PointerArray lIIlIIIIllIlIlI = (PointerArray)lIIlIIIIllIIIIl[lIIlIIIIllIlIII];
-                    if (!Structure.ByReference[].class.isAssignableFrom(lIIlIIIIllIlIIl.getClass())) continue;
-                    Class<?> lIIlIIIIllIllII = lIIlIIIIllIlIIl.getClass().getComponentType();
-                    Structure[] lIIlIIIIllIlIll = (Structure[])lIIlIIIIllIlIIl;
-                    for (int lIIlIIIIllIllIl = 0; lIIlIIIIllIllIl < lIIlIIIIllIlIll.length; ++lIIlIIIIllIllIl) {
-                        Pointer lIIlIIIIllIlllI = lIIlIIIIllIlIlI.getPointer(Pointer.SIZE * lIIlIIIIllIllIl);
-                        lIIlIIIIllIlIll[lIIlIIIIllIllIl] = Structure.updateStructureByReference(lIIlIIIIllIllII, lIIlIIIIllIlIll[lIIlIIIIllIllIl], lIIlIIIIllIlllI);
+        if (arrobject != null) {
+            for (int i = 0; i < arrobject.length; ++i) {
+                Object object3 = arrobject[i];
+                if (object3 == null) continue;
+                if (object3 instanceof Structure) {
+                    if (!(object3 instanceof Structure.ByValue)) {
+                        ((Structure)object3).autoRead();
                     }
                     continue;
                 }
-                if (!Structure[].class.isAssignableFrom(lIIlIIIIllIlIIl.getClass())) continue;
-                Structure.autoRead((Structure[])lIIlIIIIllIlIIl);
+                if (arrobject2[i] instanceof PostCallRead) {
+                    ((PostCallRead)arrobject2[i]).read();
+                    if (!(arrobject2[i] instanceof PointerArray)) continue;
+                    PointerArray pointerArray = (PointerArray)arrobject2[i];
+                    if (!Structure.ByReference[].class.isAssignableFrom(object3.getClass())) continue;
+                    Class<?> class_3 = object3.getClass().getComponentType();
+                    Structure[] arrstructure = (Structure[])object3;
+                    for (int j = 0; j < arrstructure.length; ++j) {
+                        Pointer pointer = pointerArray.getPointer(Pointer.SIZE * j);
+                        arrstructure[j] = Structure.updateStructureByReference(class_3, arrstructure[j], pointer);
+                        if (2 > 0) continue;
+                        return null;
+                    }
+                    continue;
+                }
+                if (!Structure[].class.isAssignableFrom(object3.getClass())) continue;
+                Structure.autoRead((Structure[])object3);
             }
         }
-        return lIIlIIIIlIllIlI;
+        return object;
     }
 
-    static boolean isVarArgs(Method lIIIlllIlIIlIll) {
-        return IS_VARARGS.isVarArgs(lIIIlllIlIIlIll);
+    static boolean isVarArgs(Method method) {
+        return IS_VARARGS.isVarArgs(method);
     }
 
-    static Boolean valueOf(boolean lIIIlllIlIIIIll) {
-        return lIIIlllIlIIIIll ? Boolean.TRUE : Boolean.FALSE;
+    static Boolean valueOf(boolean bl) {
+        return bl ? Boolean.TRUE : Boolean.FALSE;
     }
 
-    public float invokeFloat(Object[] lIIIllllIIIlIll) {
-        Function lIIIllllIIIllII;
-        return ((Float)lIIIllllIIIllII.invoke(Float.class, lIIIllllIIIlIll)).floatValue();
+    public float invokeFloat(Object[] arrobject) {
+        return ((Float)this.invoke(Float.class, arrobject)).floatValue();
     }
 
-    public void invokeVoid(Object[] lIIIlllIlllllll) {
-        Function lIIIllllIIIIIII;
-        lIIIllllIIIIIII.invoke(Void.class, lIIIlllIlllllll);
+    public void invokeVoid(Object[] arrobject) {
+        this.invoke(Void.class, arrobject);
     }
 
-    public long invokeLong(Object[] lIIIllllIIlIIIl) {
-        Function lIIIllllIIlIIlI;
-        return (Long)lIIIllllIIlIIlI.invoke(Long.class, lIIIllllIIlIIIl);
+    public long invokeLong(Object[] arrobject) {
+        return (Long)this.invoke(Long.class, arrobject);
     }
 
-    private void checkCallingConvention(int lIIlIIIlIlIlIll) throws IllegalArgumentException {
-        if ((lIIlIIIlIlIlIll & 0x3F) != lIIlIIIlIlIlIll) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unrecognized calling convention: ").append(lIIlIIIlIlIlIll)));
+    private void checkCallingConvention(int n) throws IllegalArgumentException {
+        if ((n & 0x3F) != n) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unrecognized calling convention: ").append(n)));
         }
     }
 
@@ -552,41 +530,39 @@ extends Pointer {
     private static class PointerArray
     extends Memory
     implements PostCallRead {
-        private final /* synthetic */ Pointer[] original;
+        private final Pointer[] original;
 
-        public PointerArray(Pointer[] lllllllllllllllllIIIIllIIIlIIIII) {
-            super(Pointer.SIZE * (lllllllllllllllllIIIIllIIIlIIIII.length + 1));
-            PointerArray lllllllllllllllllIIIIllIIIlIIIIl;
-            lllllllllllllllllIIIIllIIIlIIIIl.original = lllllllllllllllllIIIIllIIIlIIIII;
-            for (int lllllllllllllllllIIIIllIIIlIIlII = 0; lllllllllllllllllIIIIllIIIlIIlII < lllllllllllllllllIIIIllIIIlIIIII.length; ++lllllllllllllllllIIIIllIIIlIIlII) {
-                lllllllllllllllllIIIIllIIIlIIIIl.setPointer(lllllllllllllllllIIIIllIIIlIIlII * Pointer.SIZE, lllllllllllllllllIIIIllIIIlIIIII[lllllllllllllllllIIIIllIIIlIIlII]);
+        public PointerArray(Pointer[] arrpointer) {
+            super(Pointer.SIZE * (arrpointer.length + 1));
+            this.original = arrpointer;
+            for (int i = 0; i < arrpointer.length; ++i) {
+                this.setPointer(i * Pointer.SIZE, arrpointer[i]);
+                if (-1 < 0) continue;
+                throw null;
             }
-            lllllllllllllllllIIIIllIIIlIIIIl.setPointer(Pointer.SIZE * lllllllllllllllllIIIIllIIIlIIIII.length, null);
+            this.setPointer(Pointer.SIZE * arrpointer.length, null);
         }
 
         @Override
         public void read() {
-            PointerArray lllllllllllllllllIIIIllIIIIlllIl;
-            lllllllllllllllllIIIIllIIIIlllIl.read(0L, lllllllllllllllllIIIIllIIIIlllIl.original, 0, lllllllllllllllllIIIIllIIIIlllIl.original.length);
+            this.read(0L, this.original, 0, this.original.length);
         }
     }
 
     private static class NativeMappedArray
     extends Memory
     implements PostCallRead {
-        private final /* synthetic */ NativeMapped[] original;
+        private final NativeMapped[] original;
 
         @Override
         public void read() {
-            NativeMappedArray lllllllllllllllllIlIIIIIlIlIIIIl;
-            lllllllllllllllllIlIIIIIlIlIIIIl.getValue(0L, lllllllllllllllllIlIIIIIlIlIIIIl.original.getClass(), lllllllllllllllllIlIIIIIlIlIIIIl.original);
+            this.getValue(0L, this.original.getClass(), this.original);
         }
 
-        public NativeMappedArray(NativeMapped[] lllllllllllllllllIlIIIIIlIlIIllI) {
-            super(Native.getNativeSize(lllllllllllllllllIlIIIIIlIlIIllI.getClass(), lllllllllllllllllIlIIIIIlIlIIllI));
-            NativeMappedArray lllllllllllllllllIlIIIIIlIlIIlll;
-            lllllllllllllllllIlIIIIIlIlIIlll.original = lllllllllllllllllIlIIIIIlIlIIllI;
-            lllllllllllllllllIlIIIIIlIlIIlll.setValue(0L, lllllllllllllllllIlIIIIIlIlIIlll.original, lllllllllllllllllIlIIIIIlIlIIlll.original.getClass());
+        public NativeMappedArray(NativeMapped[] arrnativeMapped) {
+            super(Native.getNativeSize(arrnativeMapped.getClass(), arrnativeMapped));
+            this.original = arrnativeMapped;
+            this.setValue(0L, this.original, this.original.getClass());
         }
     }
 }

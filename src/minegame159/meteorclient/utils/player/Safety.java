@@ -7,9 +7,5 @@ public enum Safety {
     Safe,
     Suicide;
 
-
-    private Safety() {
-        Safety llllllllllllllllllIllllIlIlIIIlI;
-    }
 }
 

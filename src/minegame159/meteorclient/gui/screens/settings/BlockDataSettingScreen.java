@@ -32,75 +32,71 @@ import org.apache.commons.lang3.StringUtils;
 
 public class BlockDataSettingScreen
 extends WindowScreen {
-    private /* synthetic */ String filterText;
-    private /* synthetic */ WTable table;
-    private static final /* synthetic */ List<class_2248> BLOCKS;
-    private final /* synthetic */ BlockDataSetting<?> setting;
+    private String filterText = "";
+    private WTable table;
+    private static final List<class_2248> BLOCKS = new ArrayList<class_2248>(100);
+    private final BlockDataSetting<?> setting;
 
     @Override
     protected void method_25426() {
-        BlockDataSettingScreen lllllllllllllllllIIIlIlllIIlIIlI;
         super.method_25426();
-        lllllllllllllllllIIIlIlllIIlIIlI.table.clear();
-        lllllllllllllllllIIIlIlllIIlIIlI.initWidgets();
+        this.table.clear();
+        this.initWidgets();
     }
 
-    static {
-        BLOCKS = new ArrayList<class_2248>(100);
+    private void lambda$initWidgets$2(class_2248 class_22482, ICopyable iCopyable) {
+        ((Map)this.setting.get()).remove((Object)class_22482);
+        this.setting.changed();
+        if (iCopyable != null && ((IChangeable)((Object)iCopyable)).isChanged()) {
+            this.table.clear();
+            this.initWidgets();
+        }
     }
 
-    public BlockDataSettingScreen(GuiTheme lllllllllllllllllIIIlIlllIIlIllI, BlockDataSetting<?> lllllllllllllllllIIIlIlllIIllIIl) {
-        super(lllllllllllllllllIIIlIlllIIlIllI, "Configure blocks");
-        BlockDataSettingScreen lllllllllllllllllIIIlIlllIIlIlll;
-        lllllllllllllllllIIIlIlllIIlIlll.filterText = "";
-        lllllllllllllllllIIIlIlllIIlIlll.setting = lllllllllllllllllIIIlIlllIIllIIl;
-        WTextBox lllllllllllllllllIIIlIlllIIllIII = lllllllllllllllllIIIlIlllIIlIlll.add(lllllllllllllllllIIIlIlllIIlIllI.textBox("")).minWidth(400.0).expandX().widget();
-        lllllllllllllllllIIIlIlllIIllIII.setFocused(true);
-        lllllllllllllllllIIIlIlllIIllIII.action = () -> {
-            BlockDataSettingScreen lllllllllllllllllIIIlIllIllIIIIl;
-            lllllllllllllllllIIIlIllIllIIIIl.filterText = lllllllllllllllllIIIlIlllIIllIII.get().trim();
-            lllllllllllllllllIIIlIllIllIIIIl.table.clear();
-            lllllllllllllllllIIIlIllIllIIIIl.initWidgets();
-        };
-        lllllllllllllllllIIIlIlllIIlIlll.table = lllllllllllllllllIIIlIlllIIlIlll.add(lllllllllllllllllIIIlIlllIIlIllI.table()).expandX().widget();
+    private void lambda$new$0(WTextBox wTextBox) {
+        this.filterText = wTextBox.get().trim();
+        this.table.clear();
+        this.initWidgets();
+    }
+
+    private void lambda$initWidgets$1(ICopyable iCopyable, class_2248 class_22482) {
+        ICopyable iCopyable2 = iCopyable;
+        if (iCopyable2 == null) {
+            iCopyable2 = ((ICopyable)this.setting.defaultData.get()).copy();
+        }
+        Utils.mc.method_1507((class_437)((IBlockData)((Object)iCopyable2)).createScreen(this.theme, class_22482, this.setting));
+    }
+
+    public BlockDataSettingScreen(GuiTheme guiTheme, BlockDataSetting<?> blockDataSetting) {
+        super(guiTheme, "Configure blocks");
+        this.setting = blockDataSetting;
+        WTextBox wTextBox = this.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        wTextBox.setFocused(true);
+        wTextBox.action = () -> this.lambda$new$0(wTextBox);
+        this.table = this.add(guiTheme.table()).expandX().widget();
     }
 
     private <T extends ICopyable<T> & ISerializable<T> & IBlockData<T>> void initWidgets() {
-        BlockDataSettingScreen lllllllllllllllllIIIlIlllIIIIIlI;
-        for (class_2248 lllllllllllllllllIIIlIlllIIIlIII : class_2378.field_11146) {
-            ICopyable lllllllllllllllllIIIlIlllIIIlIIl = (ICopyable)((Map)lllllllllllllllllIIIlIlllIIIIIlI.setting.get()).get((Object)lllllllllllllllllIIIlIlllIIIlIII);
-            if (lllllllllllllllllIIIlIlllIIIlIIl != null && ((IChangeable)((Object)lllllllllllllllllIIIlIlllIIIlIIl)).isChanged()) {
-                BLOCKS.add(0, lllllllllllllllllIIIlIlllIIIlIII);
+        Object object;
+        for (class_2248 class_22482 : class_2378.field_11146) {
+            object = (ICopyable)((Map)this.setting.get()).get((Object)class_22482);
+            if (object != null && ((IChangeable)object).isChanged()) {
+                BLOCKS.add(0, class_22482);
                 continue;
             }
-            BLOCKS.add(lllllllllllllllllIIIlIlllIIIlIII);
+            BLOCKS.add(class_22482);
         }
-        for (class_2248 lllllllllllllllllIIIlIlllIIIIIll : BLOCKS) {
-            String lllllllllllllllllIIIlIlllIIIIlll = Names.get(lllllllllllllllllIIIlIlllIIIIIll);
-            if (!StringUtils.containsIgnoreCase((CharSequence)lllllllllllllllllIIIlIlllIIIIlll, (CharSequence)lllllllllllllllllIIIlIlllIIIIIlI.filterText)) continue;
-            ICopyable lllllllllllllllllIIIlIlllIIIIllI = (ICopyable)((Map)lllllllllllllllllIIIlIlllIIIIIlI.setting.get()).get((Object)lllllllllllllllllIIIlIlllIIIIIll);
-            lllllllllllllllllIIIlIlllIIIIIlI.table.add(lllllllllllllllllIIIlIlllIIIIIlI.theme.itemWithLabel(lllllllllllllllllIIIlIlllIIIIIll.method_8389().method_7854(), Names.get(lllllllllllllllllIIIlIlllIIIIIll))).expandCellX();
-            lllllllllllllllllIIIlIlllIIIIIlI.table.add(lllllllllllllllllIIIlIlllIIIIIlI.theme.label(lllllllllllllllllIIIlIlllIIIIllI != null && ((IChangeable)((Object)lllllllllllllllllIIIlIlllIIIIllI)).isChanged() ? "*" : " "));
-            WButton lllllllllllllllllIIIlIlllIIIIlIl = lllllllllllllllllIIIlIlllIIIIIlI.table.add(lllllllllllllllllIIIlIlllIIIIIlI.theme.button(GuiRenderer.EDIT)).widget();
-            lllllllllllllllllIIIlIlllIIIIlIl.action = () -> {
-                BlockDataSettingScreen lllllllllllllllllIIIlIllIllIllIl;
-                ICopyable lllllllllllllllllIIIlIllIllIlIlI = lllllllllllllllllIIIlIlllIIIIllI;
-                if (lllllllllllllllllIIIlIllIllIlIlI == null) {
-                    lllllllllllllllllIIIlIllIllIlIlI = ((ICopyable)lllllllllllllllllIIIlIllIllIllIl.setting.defaultData.get()).copy();
-                }
-                Utils.mc.method_1507((class_437)((IBlockData)((Object)lllllllllllllllllIIIlIllIllIlIlI)).createScreen(lllllllllllllllllIIIlIllIllIllIl.theme, lllllllllllllllllIIIlIlllIIIIIll, lllllllllllllllllIIIlIllIllIllIl.setting));
-            };
-            WButton lllllllllllllllllIIIlIlllIIIIlII = lllllllllllllllllIIIlIlllIIIIIlI.table.add(lllllllllllllllllIIIlIlllIIIIIlI.theme.button(GuiRenderer.RESET)).widget();
-            lllllllllllllllllIIIlIlllIIIIlII.action = () -> {
-                BlockDataSettingScreen lllllllllllllllllIIIlIllIlllIlll;
-                ((Map)lllllllllllllllllIIIlIllIlllIlll.setting.get()).remove((Object)lllllllllllllllllIIIlIlllIIIIIll);
-                lllllllllllllllllIIIlIllIlllIlll.setting.changed();
-                if (lllllllllllllllllIIIlIlllIIIIllI != null && ((IChangeable)((Object)lllllllllllllllllIIIlIlllIIIIllI)).isChanged()) {
-                    lllllllllllllllllIIIlIllIlllIlll.table.clear();
-                    lllllllllllllllllIIIlIllIlllIlll.initWidgets();
-                }
-            };
-            lllllllllllllllllIIIlIlllIIIIIlI.table.row();
+        for (class_2248 class_22482 : BLOCKS) {
+            object = Names.get(class_22482);
+            if (!StringUtils.containsIgnoreCase((CharSequence)object, (CharSequence)this.filterText)) continue;
+            ICopyable iCopyable = (ICopyable)((Map)this.setting.get()).get((Object)class_22482);
+            this.table.add(this.theme.itemWithLabel(class_22482.method_8389().method_7854(), Names.get(class_22482))).expandCellX();
+            this.table.add(this.theme.label(iCopyable != null && ((IChangeable)((Object)iCopyable)).isChanged() ? "*" : " "));
+            WButton wButton = this.table.add(this.theme.button(GuiRenderer.EDIT)).widget();
+            wButton.action = () -> this.lambda$initWidgets$1(iCopyable, class_22482);
+            WButton wButton2 = this.table.add(this.theme.button(GuiRenderer.RESET)).widget();
+            wButton2.action = () -> this.lambda$initWidgets$2(class_22482, iCopyable);
+            this.table.row();
         }
         BLOCKS.clear();
     }

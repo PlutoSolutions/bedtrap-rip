@@ -12,19 +12,19 @@ import minegame159.meteorclient.utils.misc.MyPotion;
 
 public class PotionSettingScreen
 extends WindowScreen {
-    public PotionSettingScreen(GuiTheme lllIIIlIIlIIII, PotionSetting lllIIIlIIIlIll) {
-        super(lllIIIlIIlIIII, "Select potion");
-        PotionSettingScreen lllIIIlIIIllIl;
-        WTable lllIIIlIIIlllI = lllIIIlIIIllIl.add(lllIIIlIIlIIII.table()).expandX().widget();
-        for (MyPotion lllIIIlIIlIIlI : MyPotion.values()) {
-            lllIIIlIIIlllI.add(lllIIIlIIlIIII.itemWithLabel(lllIIIlIIlIIlI.potion, lllIIIlIIlIIlI.potion.method_7964().getString()));
-            WButton lllIIIlIIlIIll = lllIIIlIIIlllI.add(lllIIIlIIlIIII.button("Select")).widget();
-            lllIIIlIIlIIll.action = () -> {
-                PotionSettingScreen lllIIIlIIIIIIl;
-                lllIIIlIIIlIll.set(lllIIIlIIlIIlI);
-                lllIIIlIIIIIIl.method_25419();
-            };
-            lllIIIlIIIlllI.row();
+    private void lambda$new$0(PotionSetting potionSetting, MyPotion myPotion) {
+        potionSetting.set(myPotion);
+        this.method_25419();
+    }
+
+    public PotionSettingScreen(GuiTheme guiTheme, PotionSetting potionSetting) {
+        super(guiTheme, "Select potion");
+        WTable wTable = this.add(guiTheme.table()).expandX().widget();
+        for (MyPotion myPotion : MyPotion.values()) {
+            wTable.add(guiTheme.itemWithLabel(myPotion.potion, myPotion.potion.method_7964().getString()));
+            WButton wButton = wTable.add(guiTheme.button("Select")).widget();
+            wButton.action = () -> this.lambda$new$0(potionSetting, myPotion);
+            wTable.row();
         }
     }
 }

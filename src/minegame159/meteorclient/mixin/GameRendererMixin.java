@@ -73,45 +73,45 @@ public abstract class GameRendererMixin {
     public abstract void method_3203();
 
     @Inject(method={"render"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onRenderHead(float tickDelta, long startTime, boolean tick, CallbackInfo info) {
+    private void onRenderHead(float f, long l, boolean bl, CallbackInfo callbackInfo) {
         if (Modules.get().isActive(UnfocusedCPU.class) && !this.field_4015.method_1569()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
         this.a = false;
     }
 
     @Inject(method={"renderWorld"}, at={@At(value="HEAD")})
-    private void onRenderWorldHead(float tickDelta, long limitTime, class_4587 matrix, CallbackInfo info) {
-        Matrices.begin(matrix);
+    private void onRenderWorldHead(float f, long l, class_4587 class_45872, CallbackInfo callbackInfo) {
+        Matrices.begin(class_45872);
         Matrices.push();
         RenderSystem.pushMatrix();
         this.a = true;
     }
 
     @Inject(method={"renderWorld"}, at={@At(value="INVOKE_STRING", target="Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", args={"ldc=hand"})}, locals=LocalCapture.CAPTURE_FAILSOFT)
-    private void onRenderWorld(float tickDelta, long limitTime, class_4587 matrix, CallbackInfo info, boolean bl, class_4184 camera, class_4587 matrixStack2, class_1159 matrix4f) {
+    private void onRenderWorld(float f, long l, class_4587 class_45872, CallbackInfo callbackInfo, boolean bl, class_4184 class_41842, class_4587 class_45873, class_1159 class_11592) {
         if (!Utils.canUpdate()) {
             return;
         }
         this.field_4015.method_16011().method_15396("meteor-client_render");
-        RenderEvent event = RenderEvent.get(matrix, tickDelta, camera.method_19326().field_1352, camera.method_19326().field_1351, camera.method_19326().field_1350);
-        Renderer.begin(event);
-        NametagUtils.onRender(matrix, matrix4f);
-        MeteorClient.EVENT_BUS.post(event);
+        RenderEvent renderEvent = RenderEvent.get(class_45872, f, class_41842.method_19326().field_1352, class_41842.method_19326().field_1351, class_41842.method_19326().field_1350);
+        Renderer.begin(renderEvent);
+        NametagUtils.onRender(class_45872, class_11592);
+        MeteorClient.EVENT_BUS.post(renderEvent);
         Renderer.end();
         this.field_4015.method_16011().method_15407();
     }
 
     @Inject(method={"updateTargetedEntity"}, at={@At(value="INVOKE", target="Lnet/minecraft/entity/projectile/ProjectileUtil;raycast(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/math/Box;Ljava/util/function/Predicate;D)Lnet/minecraft/util/hit/EntityHitResult;")}, cancellable=true)
-    private void onUpdateTargetedEntity(float tickDelta, CallbackInfo info) {
+    private void onUpdateTargetedEntity(float f, CallbackInfo callbackInfo) {
         if (Modules.get().get(NoMiningTrace.class).canWork() && this.field_4015.field_1765.method_17783() == class_239.class_240.field_1332) {
             this.field_4015.method_16011().method_15407();
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"render"}, at={@At(value="INVOKE", target="Lcom/mojang/blaze3d/systems/RenderSystem;clear(IZ)V", ordinal=0)})
-    private void onRenderBeforeGuiRender(float tickDelta, long startTime, boolean tick, CallbackInfo info) {
+    private void onRenderBeforeGuiRender(float f, long l, boolean bl, CallbackInfo callbackInfo) {
         if (this.a) {
             Matrices.pop();
             RenderSystem.popMatrix();
@@ -119,81 +119,81 @@ public abstract class GameRendererMixin {
     }
 
     @Redirect(method={"updateTargetedEntity"}, at=@At(value="INVOKE", target="Lnet/minecraft/entity/Entity;raycast(DFZ)Lnet/minecraft/util/hit/HitResult;"))
-    private class_239 updateTargetedEntityEntityRayTraceProxy(class_1297 entity, double maxDistance, float tickDelta, boolean includeFluids) {
+    private class_239 updateTargetedEntityEntityRayTraceProxy(class_1297 class_12972, double d, float f, boolean bl) {
         if (Modules.get().isActive(LiquidInteract.class)) {
-            class_239 result = entity.method_5745(maxDistance, tickDelta, includeFluids);
-            if (result.method_17783() != class_239.class_240.field_1333) {
-                return result;
+            class_239 class_2392 = class_12972.method_5745(d, f, bl);
+            if (class_2392.method_17783() != class_239.class_240.field_1333) {
+                return class_2392;
             }
-            return entity.method_5745(maxDistance, tickDelta, true);
+            return class_12972.method_5745(d, f, true);
         }
-        return entity.method_5745(maxDistance, tickDelta, includeFluids);
+        return class_12972.method_5745(d, f, bl);
     }
 
     @Inject(method={"bobViewWhenHurt"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onBobViewWhenHurt(class_4587 matrixStack, float f, CallbackInfo info) {
+    private void onBobViewWhenHurt(class_4587 class_45872, float f, CallbackInfo callbackInfo) {
         if (Modules.get().get(NoRender.class).noHurtCam()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 
     @Inject(method={"showFloatingItem"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onShowFloatingItem(class_1799 floatingItem, CallbackInfo info) {
-        if (floatingItem.method_7909() == class_1802.field_8288 && Modules.get().get(NoRender.class).noTotemAnimation()) {
-            info.cancel();
+    private void onShowFloatingItem(class_1799 class_17992, CallbackInfo callbackInfo) {
+        if (class_17992.method_7909() == class_1802.field_8288 && Modules.get().get(NoRender.class).noTotemAnimation()) {
+            callbackInfo.cancel();
         }
     }
 
     @Redirect(method={"renderWorld"}, at=@At(value="INVOKE", target="Lnet/minecraft/util/math/MathHelper;lerp(FFF)F"))
-    private float applyCameraTransformationsMathHelperLerpProxy(float delta, float first, float second) {
+    private float applyCameraTransformationsMathHelperLerpProxy(float f, float f2, float f3) {
         if (Modules.get().get(NoRender.class).noNausea()) {
             return 0.0f;
         }
-        return class_3532.method_16439((float)delta, (float)first, (float)second);
+        return class_3532.method_16439((float)f, (float)f2, (float)f3);
     }
 
     @Inject(method={"updateTargetedEntity"}, at={@At(value="INVOKE")}, cancellable=true)
-    private void updateTargetedEntityInvoke(float tickDelta, CallbackInfo info) {
+    private void updateTargetedEntityInvoke(float f, CallbackInfo callbackInfo) {
         Freecam freecam = Modules.get().get(Freecam.class);
         if (freecam.isActive() && this.field_4015.method_1560() != null && !this.freecamSet) {
-            info.cancel();
-            class_1297 camera = this.field_4015.method_1560();
-            double x = camera.method_23317();
-            double y = camera.method_23318();
-            double z = camera.method_23321();
-            double prevX = camera.field_6014;
-            double prevY = camera.field_6036;
-            double prevZ = camera.field_5969;
-            float yaw = camera.field_6031;
-            float pitch = camera.field_5965;
-            float prevYaw = camera.field_5982;
-            float prevPitch = camera.field_6004;
-            ((IVec3d)camera.method_19538()).set(freecam.pos.x, freecam.pos.y - (double)camera.method_18381(camera.method_18376()), freecam.pos.z);
-            camera.field_6014 = freecam.prevPos.x;
-            camera.field_6036 = freecam.prevPos.y - (double)camera.method_18381(camera.method_18376());
-            camera.field_5969 = freecam.prevPos.z;
-            camera.field_6031 = freecam.yaw;
-            camera.field_5965 = freecam.pitch;
-            camera.field_5982 = freecam.prevYaw;
-            camera.field_6004 = freecam.prevPitch;
+            callbackInfo.cancel();
+            class_1297 class_12972 = this.field_4015.method_1560();
+            double d = class_12972.method_23317();
+            double d2 = class_12972.method_23318();
+            double d3 = class_12972.method_23321();
+            double d4 = class_12972.field_6014;
+            double d5 = class_12972.field_6036;
+            double d6 = class_12972.field_5969;
+            float f2 = class_12972.field_6031;
+            float f3 = class_12972.field_5965;
+            float f4 = class_12972.field_5982;
+            float f5 = class_12972.field_6004;
+            ((IVec3d)class_12972.method_19538()).set(freecam.pos.x, freecam.pos.y - (double)class_12972.method_18381(class_12972.method_18376()), freecam.pos.z);
+            class_12972.field_6014 = freecam.prevPos.x;
+            class_12972.field_6036 = freecam.prevPos.y - (double)class_12972.method_18381(class_12972.method_18376());
+            class_12972.field_5969 = freecam.prevPos.z;
+            class_12972.field_6031 = freecam.yaw;
+            class_12972.field_5965 = freecam.pitch;
+            class_12972.field_5982 = freecam.prevYaw;
+            class_12972.field_6004 = freecam.prevPitch;
             this.freecamSet = true;
-            this.method_3190(tickDelta);
+            this.method_3190(f);
             this.freecamSet = false;
-            ((IVec3d)camera.method_19538()).set(x, y, z);
-            camera.field_6014 = prevX;
-            camera.field_6036 = prevY;
-            camera.field_5969 = prevZ;
-            camera.field_6031 = yaw;
-            camera.field_5965 = pitch;
-            camera.field_5982 = prevYaw;
-            camera.field_6004 = prevPitch;
+            ((IVec3d)class_12972.method_19538()).set(d, d2, d3);
+            class_12972.field_6014 = d4;
+            class_12972.field_6036 = d5;
+            class_12972.field_5969 = d6;
+            class_12972.field_6031 = f2;
+            class_12972.field_5965 = f3;
+            class_12972.field_5982 = f4;
+            class_12972.field_6004 = f5;
         }
     }
 
     @Inject(method={"renderHand"}, at={@At(value="INVOKE")}, cancellable=true)
-    private void renderHand(class_4587 matrices, class_4184 camera, float tickDelta, CallbackInfo info) {
+    private void renderHand(class_4587 class_45872, class_4184 class_41842, float f, CallbackInfo callbackInfo) {
         if (!Modules.get().get(Freecam.class).renderHands()) {
-            info.cancel();
+            callbackInfo.cancel();
         }
     }
 }

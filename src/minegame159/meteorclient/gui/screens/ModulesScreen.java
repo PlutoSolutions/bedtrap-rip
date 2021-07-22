@@ -27,129 +27,128 @@ import net.minecraft.class_3545;
 
 public class ModulesScreen
 extends TabScreen {
+    private void lambda$createCategory$0(Category category, WContainer wContainer) {
+        wContainer.add(this.theme.item(category.icon)).pad(2.0);
+    }
+
     protected WCategoryController createCategoryContainer() {
-        ModulesScreen lIlIllIIIIlIIII;
-        return lIlIllIIIIlIIII.new WCategoryController();
+        return new WCategoryController(this);
     }
 
-    protected void createSearch(WContainer lIlIlIllllIIIlI) {
-        ModulesScreen lIlIlIlllIllllI;
-        WWindow lIlIlIllllIIIIl = lIlIlIlllIllllI.theme.window("Search");
-        lIlIlIllllIIIIl.id = "search";
-        if (lIlIlIlllIllllI.theme.categoryIcons()) {
-            lIlIlIllllIIIIl.beforeHeaderInit = lIlIlIlllIIllIl -> {
-                ModulesScreen lIlIlIlllIIllII;
-                lIlIlIlllIIllIl.add(lIlIlIlllIIllII.theme.item(class_1802.field_8251.method_7854())).pad(2.0);
-            };
+    protected void createSearch(WContainer wContainer) {
+        WWindow wWindow = this.theme.window("Search");
+        wWindow.id = "search";
+        if (this.theme.categoryIcons()) {
+            wWindow.beforeHeaderInit = this::lambda$createSearch$1;
         }
-        lIlIlIllllIIIlI.add(lIlIlIllllIIIIl);
-        lIlIlIllllIIIIl.view.scrollOnlyWhenMouseOver = true;
-        lIlIlIllllIIIIl.view.hasScrollBar = false;
-        lIlIlIllllIIIIl.view.maxHeight -= 20.0;
-        WVerticalList lIlIlIllllIIIII = lIlIlIlllIllllI.theme.verticalList();
-        WTextBox lIlIlIlllIlllll = lIlIlIllllIIIIl.add(lIlIlIlllIllllI.theme.textBox("")).minWidth(140.0).expandX().widget();
-        lIlIlIlllIlllll.setFocused(true);
-        lIlIlIlllIlllll.action = () -> {
-            ModulesScreen lIlIlIlllIlIIll;
-            lIlIlIllllIIIII.clear();
-            lIlIlIlllIlIIll.createSearchW(lIlIlIllllIIIII, lIlIlIlllIlllll.get());
-        };
-        lIlIlIllllIIIIl.add(lIlIlIllllIIIII).expandX();
-        lIlIlIlllIllllI.createSearchW(lIlIlIllllIIIII, lIlIlIlllIlllll.get());
+        wContainer.add(wWindow);
+        wWindow.view.scrollOnlyWhenMouseOver = true;
+        wWindow.view.hasScrollBar = false;
+        wWindow.view.maxHeight -= 20.0;
+        WVerticalList wVerticalList = this.theme.verticalList();
+        WTextBox wTextBox = wWindow.add(this.theme.textBox("")).minWidth(140.0).expandX().widget();
+        wTextBox.setFocused(true);
+        wTextBox.action = () -> this.lambda$createSearch$2(wVerticalList, wTextBox);
+        wWindow.add(wVerticalList).expandX();
+        this.createSearchW(wVerticalList, wTextBox.get());
     }
 
-    protected void createSearchW(WContainer lIlIlIllllIlllI, String lIlIlIlllllIIII) {
-        if (!lIlIlIlllllIIII.isEmpty()) {
-            ModulesScreen lIlIlIlllllIIlI;
-            List<class_3545<Module, Integer>> lIlIlIlllllIIll = Modules.get().searchTitles(lIlIlIlllllIIII);
-            if (lIlIlIlllllIIll.size() > 0) {
-                WSection lIlIlIlllllIllI = lIlIlIllllIlllI.add(lIlIlIlllllIIlI.theme.section("Modules")).expandX().widget();
-                lIlIlIlllllIllI.spacing = 0.0;
-                for (class_3545<Module, Integer> lIlIlIlllllIlll : lIlIlIlllllIIll) {
-                    lIlIlIlllllIllI.add(lIlIlIlllllIIlI.theme.module((Module)lIlIlIlllllIlll.method_15442())).expandX();
+    protected void createSearchW(WContainer wContainer, String string) {
+        if (!string.isEmpty()) {
+            WSection wSection;
+            List<class_3545<Module, Integer>> list = Modules.get().searchTitles(string);
+            if (list.size() > 0) {
+                wSection = wContainer.add(this.theme.section("Modules")).expandX().widget();
+                wSection.spacing = 0.0;
+                for (class_3545<Module, Integer> class_35452 : list) {
+                    wSection.add(this.theme.module((Module)class_35452.method_15442())).expandX();
                 }
             }
-            if ((lIlIlIlllllIIll = Modules.get().searchSettingTitles(lIlIlIlllllIIII)).size() > 0) {
-                WSection lIlIlIlllllIlII = lIlIlIllllIlllI.add(lIlIlIlllllIIlI.theme.section("Settings")).expandX().widget();
-                lIlIlIlllllIlII.spacing = 0.0;
-                for (class_3545<Module, Integer> lIlIlIlllllIlIl : lIlIlIlllllIIll) {
-                    lIlIlIlllllIlII.add(lIlIlIlllllIIlI.theme.module((Module)lIlIlIlllllIlIl.method_15442())).expandX();
+            if ((list = Modules.get().searchSettingTitles(string)).size() > 0) {
+                wSection = wContainer.add(this.theme.section("Settings")).expandX().widget();
+                wSection.spacing = 0.0;
+                for (class_3545<Module, Integer> class_35452 : list) {
+                    wSection.add(this.theme.module((Module)class_35452.method_15442())).expandX();
                 }
             }
         }
     }
 
-    protected void createCategory(WContainer lIlIllIIIIIIIll, Category lIlIllIIIIIIIlI) {
-        ModulesScreen lIlIllIIIIIIlII;
-        WWindow lIlIllIIIIIIlIl = lIlIllIIIIIIlII.theme.window(lIlIllIIIIIIIlI.name);
-        lIlIllIIIIIIlIl.id = lIlIllIIIIIIIlI.name;
-        lIlIllIIIIIIlIl.padding = 0.0;
-        lIlIllIIIIIIlIl.spacing = 0.0;
-        if (lIlIllIIIIIIlII.theme.categoryIcons()) {
-            lIlIllIIIIIIlIl.beforeHeaderInit = lIlIlIlllIIIlIl -> {
-                ModulesScreen lIlIlIlllIIIlll;
-                lIlIlIlllIIIlIl.add(lIlIlIlllIIIlll.theme.item(lIlIlIlllIIIllI.icon)).pad(2.0);
-            };
+    private void lambda$createSearch$2(WVerticalList wVerticalList, WTextBox wTextBox) {
+        wVerticalList.clear();
+        this.createSearchW(wVerticalList, wTextBox.get());
+    }
+
+    protected void createCategory(WContainer wContainer, Category category) {
+        WWindow wWindow = this.theme.window(category.name);
+        wWindow.id = category.name;
+        wWindow.padding = 0.0;
+        wWindow.spacing = 0.0;
+        if (this.theme.categoryIcons()) {
+            wWindow.beforeHeaderInit = arg_0 -> this.lambda$createCategory$0(category, arg_0);
         }
-        lIlIllIIIIIIIll.add(lIlIllIIIIIIlIl);
-        lIlIllIIIIIIlIl.view.scrollOnlyWhenMouseOver = true;
-        lIlIllIIIIIIlIl.view.hasScrollBar = false;
-        lIlIllIIIIIIlIl.view.spacing = 0.0;
-        for (Module lIlIllIIIIIlIIl : Modules.get().getGroup(lIlIllIIIIIIIlI)) {
-            lIlIllIIIIIIlIl.add(lIlIllIIIIIIlII.theme.module((Module)lIlIllIIIIIlIIl)).expandX().widget().tooltip = lIlIllIIIIIlIIl.description;
+        wContainer.add(wWindow);
+        wWindow.view.scrollOnlyWhenMouseOver = true;
+        wWindow.view.hasScrollBar = false;
+        wWindow.view.spacing = 0.0;
+        for (Module module : Modules.get().getGroup(category)) {
+            wWindow.add(this.theme.module((Module)module)).expandX().widget().tooltip = module.description;
         }
     }
 
-    public ModulesScreen(GuiTheme lIlIllIIIIlIlII) {
-        super(lIlIllIIIIlIlII, Tabs.get().get(0));
-        ModulesScreen lIlIllIIIIllIII;
-        lIlIllIIIIllIII.add(lIlIllIIIIllIII.createCategoryContainer());
-        WVerticalList lIlIllIIIIlIllI = lIlIllIIIIllIII.add(lIlIllIIIIlIlII.verticalList()).pad(4.0).bottom().widget();
-        lIlIllIIIIlIllI.add(lIlIllIIIIlIlII.label("Left click - Toggle module"));
-        lIlIllIIIIlIllI.add(lIlIllIIIIlIlII.label("Right click - Open module settings"));
+    private void lambda$createSearch$1(WContainer wContainer) {
+        wContainer.add(this.theme.item(class_1802.field_8251.method_7854())).pad(2.0);
+    }
+
+    public ModulesScreen(GuiTheme guiTheme) {
+        super(guiTheme, Tabs.get().get(0));
+        this.add(this.createCategoryContainer());
+        WVerticalList wVerticalList = this.add(guiTheme.verticalList()).pad(4.0).bottom().widget();
+        wVerticalList.add(guiTheme.label("Left click - Toggle module"));
+        wVerticalList.add(guiTheme.label("Right click - Open module settings"));
     }
 
     protected class WCategoryController
     extends WContainer {
-        protected WCategoryController() {
-            WCategoryController lllIIIIIlIIIlIl;
+        final ModulesScreen this$0;
+
+        protected WCategoryController(ModulesScreen modulesScreen) {
+            this.this$0 = modulesScreen;
         }
 
         @Override
         public void init() {
-            WCategoryController lllIIIIIIllllIl;
-            for (Category lllIIIIIIlllllI : Modules.loopCategories()) {
-                lllIIIIIIllllIl.ModulesScreen.this.createCategory(lllIIIIIIllllIl, lllIIIIIIlllllI);
+            for (Category category : Modules.loopCategories()) {
+                this.this$0.createCategory(this, category);
             }
-            lllIIIIIIllllIl.ModulesScreen.this.createSearch(lllIIIIIIllllIl);
+            this.this$0.createSearch(this);
         }
 
         @Override
         protected void onCalculateWidgetPositions() {
-            WCategoryController lllIIIIIIlIlIII;
-            double lllIIIIIIlIllII = lllIIIIIIlIlIII.theme.scale(4.0);
-            double lllIIIIIIlIlIll = lllIIIIIIlIlIII.theme.scale(40.0);
-            double lllIIIIIIlIlIlI = lllIIIIIIlIlIII.x + lllIIIIIIlIllII;
-            double lllIIIIIIlIlIIl = lllIIIIIIlIlIII.y;
-            for (Cell lllIIIIIIlIlllI : lllIIIIIIlIlIII.cells) {
-                double lllIIIIIIllIIII = Utils.getWindowWidth();
-                double lllIIIIIIlIllll = Utils.getWindowHeight();
-                if (lllIIIIIIlIlIlI + lllIIIIIIlIlllI.width > lllIIIIIIllIIII) {
-                    lllIIIIIIlIlIlI += lllIIIIIIlIllII;
-                    lllIIIIIIlIlIIl += lllIIIIIIlIlIll;
+            double d = this.theme.scale(4.0);
+            double d2 = this.theme.scale(40.0);
+            double d3 = this.x + d;
+            double d4 = this.y;
+            for (Cell cell : this.cells) {
+                double d5 = Utils.getWindowWidth();
+                double d6 = Utils.getWindowHeight();
+                if (d3 + cell.width > d5) {
+                    d3 += d;
+                    d4 += d2;
                 }
-                if (lllIIIIIIlIlIlI > lllIIIIIIllIIII && (lllIIIIIIlIlIlI = lllIIIIIIllIIII / 2.0 - lllIIIIIIlIlllI.width / 2.0) < 0.0) {
-                    lllIIIIIIlIlIlI = 0.0;
+                if (d3 > d5 && (d3 = d5 / 2.0 - cell.width / 2.0) < 0.0) {
+                    d3 = 0.0;
                 }
-                if (lllIIIIIIlIlIIl > lllIIIIIIlIllll && (lllIIIIIIlIlIIl = lllIIIIIIlIllll / 2.0 - lllIIIIIIlIlllI.height / 2.0) < 0.0) {
-                    lllIIIIIIlIlIIl = 0.0;
+                if (d4 > d6 && (d4 = d6 / 2.0 - cell.height / 2.0) < 0.0) {
+                    d4 = 0.0;
                 }
-                lllIIIIIIlIlllI.x = lllIIIIIIlIlIlI;
-                lllIIIIIIlIlllI.y = lllIIIIIIlIlIIl;
-                lllIIIIIIlIlllI.width = ((WWidget)lllIIIIIIlIlllI.widget()).width;
-                lllIIIIIIlIlllI.height = ((WWidget)lllIIIIIIlIlllI.widget()).height;
-                lllIIIIIIlIlllI.alignWidget();
-                lllIIIIIIlIlIlI += lllIIIIIIlIlllI.width + lllIIIIIIlIllII;
+                cell.x = d3;
+                cell.y = d4;
+                cell.width = ((WWidget)cell.widget()).width;
+                cell.height = ((WWidget)cell.widget()).height;
+                cell.alignWidget();
+                d3 += cell.width + d;
             }
         }
     }

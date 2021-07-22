@@ -8,9 +8,5 @@ public enum AccountType {
     Premium,
     TheAltening;
 
-
-    private AccountType() {
-        AccountType llllllllllllllllIlllllIIIIIIllIl;
-    }
 }
 

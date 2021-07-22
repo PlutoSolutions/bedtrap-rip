@@ -9,36 +9,35 @@ package minegame159.meteorclient.gui.utils;
 import minegame159.meteorclient.utils.misc.ISerializable;
 import net.minecraft.class_2487;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class WindowConfig
 implements ISerializable<WindowConfig> {
-    public /* synthetic */ boolean expanded;
-    public /* synthetic */ double x;
-    public /* synthetic */ double y;
+    public boolean expanded = true;
+    public double x = -1.0;
+    public double y = -1.0;
 
     @Override
     public class_2487 toTag() {
-        WindowConfig lllllllllllIIlI;
-        class_2487 lllllllllllIIll = new class_2487();
-        lllllllllllIIll.method_10556("expanded", lllllllllllIIlI.expanded);
-        lllllllllllIIll.method_10549("x", lllllllllllIIlI.x);
-        lllllllllllIIll.method_10549("y", lllllllllllIIlI.y);
-        return lllllllllllIIll;
-    }
-
-    public WindowConfig() {
-        WindowConfig llllllllllllIII;
-        llllllllllllIII.expanded = true;
-        llllllllllllIII.x = -1.0;
-        llllllllllllIII.y = -1.0;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10556("expanded", this.expanded);
+        class_24872.method_10549("x", this.x);
+        class_24872.method_10549("y", this.y);
+        return class_24872;
     }
 
     @Override
-    public WindowConfig fromTag(class_2487 llllllllllIllIl) {
-        WindowConfig llllllllllIlllI;
-        llllllllllIlllI.expanded = llllllllllIllIl.method_10577("expanded");
-        llllllllllIlllI.x = llllllllllIllIl.method_10574("x");
-        llllllllllIlllI.y = llllllllllIllIl.method_10574("y");
-        return llllllllllIlllI;
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    @Override
+    public WindowConfig fromTag(class_2487 class_24872) {
+        this.expanded = class_24872.method_10577("expanded");
+        this.x = class_24872.method_10574("x");
+        this.y = class_24872.method_10574("y");
+        return this;
     }
 }
 

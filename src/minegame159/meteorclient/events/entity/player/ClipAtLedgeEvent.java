@@ -4,26 +4,20 @@
 package minegame159.meteorclient.events.entity.player;
 
 public class ClipAtLedgeEvent {
-    private static final /* synthetic */ ClipAtLedgeEvent INSTANCE;
-    private /* synthetic */ boolean clip;
-    private /* synthetic */ boolean set;
+    private static final ClipAtLedgeEvent INSTANCE = new ClipAtLedgeEvent();
+    private boolean clip;
+    private boolean set;
 
     public boolean isSet() {
-        ClipAtLedgeEvent llllllllllllllllllIllIlIIllIllll;
-        return llllllllllllllllllIllIlIIllIllll.set;
+        return this.set;
     }
 
     public void reset() {
-        llllllllllllllllllIllIlIIlllIlll.set = false;
+        this.set = false;
     }
 
     public boolean isClip() {
-        ClipAtLedgeEvent llllllllllllllllllIllIlIIllIlIll;
-        return llllllllllllllllllIllIlIIllIlIll.clip;
-    }
-
-    public ClipAtLedgeEvent() {
-        ClipAtLedgeEvent llllllllllllllllllIllIlIIllllIll;
+        return this.clip;
     }
 
     public static ClipAtLedgeEvent get() {
@@ -31,13 +25,9 @@ public class ClipAtLedgeEvent {
         return INSTANCE;
     }
 
-    static {
-        INSTANCE = new ClipAtLedgeEvent();
-    }
-
-    public void setClip(boolean llllllllllllllllllIllIlIIlllIIIl) {
-        llllllllllllllllllIllIlIIlllIlII.set = true;
-        llllllllllllllllllIllIlIIlllIlII.clip = llllllllllllllllllIllIlIIlllIIIl;
+    public void setClip(boolean bl) {
+        this.set = true;
+        this.clip = bl;
     }
 }
 

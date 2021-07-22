@@ -14,25 +14,25 @@ import minegame159.meteorclient.systems.accounts.types.PremiumAccount;
 
 public class AddPremiumAccountScreen
 extends WindowScreen {
-    public AddPremiumAccountScreen(GuiTheme llIIlIIIlllIll) {
-        super(llIIlIIIlllIll, "Add Premium Account");
-        AddPremiumAccountScreen llIIlIIIllllII;
-        WTable llIIlIIlIIIIII = llIIlIIIllllII.add(llIIlIIIlllIll.table()).widget();
-        llIIlIIlIIIIII.add(llIIlIIIlllIll.label("Email: "));
-        WTextBox llIIlIIIllllll = llIIlIIlIIIIII.add(llIIlIIIlllIll.textBox("")).minWidth(400.0).expandX().widget();
-        llIIlIIIllllll.setFocused(true);
-        llIIlIIlIIIIII.row();
-        llIIlIIlIIIIII.add(llIIlIIIlllIll.label("Password: "));
-        WTextBox llIIlIIIlllllI = llIIlIIlIIIIII.add(llIIlIIIlllIll.textBox("")).minWidth(400.0).expandX().widget();
-        llIIlIIlIIIIII.row();
-        WButton llIIlIIIllllIl = llIIlIIlIIIIII.add(llIIlIIIlllIll.button("Add")).expandX().widget();
-        llIIlIIIllllII.enterAction = llIIlIIIllllIl.action = () -> {
-            PremiumAccount llIIlIIIlIllIl = new PremiumAccount(llIIlIIIllllll.get(), llIIlIIIlllllI.get());
-            if (!llIIlIIIllllll.get().isEmpty() && !llIIlIIIlllllI.get().isEmpty() && llIIlIIIllllll.get().contains("@") && !Accounts.get().exists(llIIlIIIlIllIl)) {
-                AddPremiumAccountScreen llIIlIIIlIllII;
-                AccountsScreen.addAccount(llIIlIIIllllIl, llIIlIIIlIllII, llIIlIIIlIllIl);
-            }
-        };
+    public AddPremiumAccountScreen(GuiTheme guiTheme) {
+        super(guiTheme, "Add Premium Account");
+        WTable wTable = this.add(guiTheme.table()).widget();
+        wTable.add(guiTheme.label("Email: "));
+        WTextBox wTextBox = wTable.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        wTextBox.setFocused(true);
+        wTable.row();
+        wTable.add(guiTheme.label("Password: "));
+        WTextBox wTextBox2 = wTable.add(guiTheme.textBox("")).minWidth(400.0).expandX().widget();
+        wTable.row();
+        WButton wButton = wTable.add(guiTheme.button("Add")).expandX().widget();
+        this.enterAction = wButton.action = () -> this.lambda$new$0(wTextBox, wTextBox2, wButton);
+    }
+
+    private void lambda$new$0(WTextBox wTextBox, WTextBox wTextBox2, WButton wButton) {
+        PremiumAccount premiumAccount = new PremiumAccount(wTextBox.get(), wTextBox2.get());
+        if (!wTextBox.get().isEmpty() && !wTextBox2.get().isEmpty() && wTextBox.get().contains("@") && !Accounts.get().exists(premiumAccount)) {
+            AccountsScreen.addAccount(wButton, this, premiumAccount);
+        }
     }
 }
 

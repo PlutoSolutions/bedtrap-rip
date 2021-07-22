@@ -26,9 +26,9 @@ public class StatusEffectInstanceMixin {
     private int field_5895;
 
     @Inject(method={"updateDuration"}, at={@At(value="HEAD")}, cancellable=true)
-    private void tick(CallbackInfoReturnable<Integer> info) {
+    private void tick(CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         if (Modules.get().get(PotionSaver.class).shouldFreeze()) {
-            info.setReturnValue((Object)this.field_5895);
+            callbackInfoReturnable.setReturnValue((Object)this.field_5895);
         }
     }
 }

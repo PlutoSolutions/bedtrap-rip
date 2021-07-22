@@ -11,21 +11,13 @@ import net.minecraft.class_1799;
 
 public class DropItemsEvent
 extends Cancellable {
-    public /* synthetic */ class_1799 itemStack;
-    private static final /* synthetic */ DropItemsEvent INSTANCE;
+    public class_1799 itemStack;
+    private static final DropItemsEvent INSTANCE = new DropItemsEvent();
 
-    static {
-        INSTANCE = new DropItemsEvent();
-    }
-
-    public static DropItemsEvent get(class_1799 llllIlIlIIIllIl) {
+    public static DropItemsEvent get(class_1799 class_17992) {
         INSTANCE.setCancelled(false);
-        DropItemsEvent.INSTANCE.itemStack = llllIlIlIIIllIl;
+        DropItemsEvent.INSTANCE.itemStack = class_17992;
         return INSTANCE;
-    }
-
-    public DropItemsEvent() {
-        DropItemsEvent llllIlIlIIlIIIl;
     }
 }
 

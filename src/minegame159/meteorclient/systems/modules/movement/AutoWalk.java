@@ -23,108 +23,105 @@ import net.minecraft.class_304;
 
 public class AutoWalk
 extends Module {
-    private /* synthetic */ GoalDirection goal;
-    private final /* synthetic */ SettingGroup sgGeneral;
-    private /* synthetic */ int timer;
-    private final /* synthetic */ Setting<Direction> direction;
-    private final /* synthetic */ Setting<Mode> mode;
+    private GoalDirection goal;
+    private final SettingGroup sgGeneral;
+    private int timer;
+    private final Setting<Direction> direction;
+    private final Setting<Mode> mode;
 
-    private void setPressed(class_304 llllIIIlIIlIlIl, boolean llllIIIlIIlIIlI) {
-        llllIIIlIIlIlIl.method_23481(llllIIIlIIlIIlI);
-        Input.setKeyState(llllIIIlIIlIlIl, llllIIIlIIlIIlI);
+    private void lambda$new$0(Mode mode) {
+        if (this.isActive()) {
+            if (mode == Mode.Simple) {
+                BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
+                this.goal = null;
+            } else {
+                this.timer = 0;
+                this.createGoal();
+            }
+            this.unpress();
+        }
+    }
+
+    private void setPressed(class_304 class_3042, boolean bl) {
+        class_3042.method_23481(bl);
+        Input.setKeyState(class_3042, bl);
     }
 
     @EventHandler(priority=100)
-    private void onTick(TickEvent.Pre llllIIIlIIlllIl) {
-        AutoWalk llllIIIlIIlllII;
-        if (llllIIIlIIlllII.mode.get() == Mode.Simple) {
-            switch (llllIIIlIIlllII.direction.get()) {
-                case Forwards: {
-                    llllIIIlIIlllII.setPressed(llllIIIlIIlllII.mc.field_1690.field_1894, true);
+    private void onTick(TickEvent.Pre pre) {
+        if (this.mode.get() == Mode.Simple) {
+            switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$movement$AutoWalk$Direction[this.direction.get().ordinal()]) {
+                case 1: {
+                    this.setPressed(this.mc.field_1690.field_1894, true);
                     break;
                 }
-                case Backwards: {
-                    llllIIIlIIlllII.setPressed(llllIIIlIIlllII.mc.field_1690.field_1881, true);
+                case 2: {
+                    this.setPressed(this.mc.field_1690.field_1881, true);
                     break;
                 }
-                case Left: {
-                    llllIIIlIIlllII.setPressed(llllIIIlIIlllII.mc.field_1690.field_1913, true);
+                case 3: {
+                    this.setPressed(this.mc.field_1690.field_1913, true);
                     break;
                 }
-                case Right: {
-                    llllIIIlIIlllII.setPressed(llllIIIlIIlllII.mc.field_1690.field_1849, true);
+                case 4: {
+                    this.setPressed(this.mc.field_1690.field_1849, true);
                 }
             }
         } else {
-            if (llllIIIlIIlllII.timer > 20) {
-                llllIIIlIIlllII.timer = 0;
-                llllIIIlIIlllII.goal.recalculate(llllIIIlIIlllII.mc.field_1724.method_19538());
+            if (this.timer > 20) {
+                this.timer = 0;
+                this.goal.recalculate(this.mc.field_1724.method_19538());
             }
-            ++llllIIIlIIlllII.timer;
+            ++this.timer;
         }
     }
 
     private void unpress() {
-        AutoWalk llllIIIlIIllIIl;
-        llllIIIlIIllIIl.setPressed(llllIIIlIIllIIl.mc.field_1690.field_1894, false);
-        llllIIIlIIllIIl.setPressed(llllIIIlIIllIIl.mc.field_1690.field_1881, false);
-        llllIIIlIIllIIl.setPressed(llllIIIlIIllIIl.mc.field_1690.field_1913, false);
-        llllIIIlIIllIIl.setPressed(llllIIIlIIllIIl.mc.field_1690.field_1849, false);
+        this.setPressed(this.mc.field_1690.field_1894, false);
+        this.setPressed(this.mc.field_1690.field_1881, false);
+        this.setPressed(this.mc.field_1690.field_1913, false);
+        this.setPressed(this.mc.field_1690.field_1849, false);
     }
 
     public AutoWalk() {
         super(Categories.Movement, "auto-walk", "Automatically walks forward.");
-        AutoWalk llllIIIlIlIIllI;
-        llllIIIlIlIIllI.sgGeneral = llllIIIlIlIIllI.settings.getDefaultGroup();
-        llllIIIlIlIIllI.mode = llllIIIlIlIIllI.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Walking mode.").defaultValue(Mode.Smart).onChanged(llllIIIlIIIIlII -> {
-            AutoWalk llllIIIlIIIIIll;
-            if (llllIIIlIIIIIll.isActive()) {
-                if (llllIIIlIIIIlII == Mode.Simple) {
-                    BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
-                    llllIIIlIIIIIll.goal = null;
-                } else {
-                    llllIIIlIIIIIll.timer = 0;
-                    llllIIIlIIIIIll.createGoal();
-                }
-                llllIIIlIIIIIll.unpress();
-            }
-        }).build());
-        llllIIIlIlIIllI.direction = llllIIIlIlIIllI.sgGeneral.add(new EnumSetting.Builder().name("simple-direction").description("The direction to walk in simple mode.").defaultValue(Direction.Forwards).onChanged(llllIIIlIIIlIIl -> {
-            AutoWalk llllIIIlIIIlIlI;
-            if (llllIIIlIIIlIlI.isActive()) {
-                llllIIIlIIIlIlI.unpress();
-            }
-        }).visible(() -> {
-            AutoWalk llllIIIlIIIllII;
-            return llllIIIlIIIllII.mode.get() == Mode.Simple;
-        }).build());
-        llllIIIlIlIIllI.timer = 0;
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("mode").description("Walking mode.").defaultValue(Mode.Smart).onChanged(this::lambda$new$0).build());
+        this.direction = this.sgGeneral.add(new EnumSetting.Builder().name("simple-direction").description("The direction to walk in simple mode.").defaultValue(Direction.Forwards).onChanged(this::lambda$new$1).visible(this::lambda$new$2).build());
+        this.timer = 0;
+    }
+
+    private void lambda$new$1(Direction direction) {
+        if (this.isActive()) {
+            this.unpress();
+        }
+    }
+
+    private boolean lambda$new$2() {
+        return this.mode.get() == Mode.Simple;
     }
 
     private void createGoal() {
-        AutoWalk llllIIIlIIlIIII;
-        llllIIIlIIlIIII.timer = 0;
-        llllIIIlIIlIIII.goal = new GoalDirection(llllIIIlIIlIIII.mc.field_1724.method_19538(), llllIIIlIIlIIII.mc.field_1724.field_6031);
-        BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath((Goal)llllIIIlIIlIIII.goal);
+        this.timer = 0;
+        this.goal = new GoalDirection(this.mc.field_1724.method_19538(), this.mc.field_1724.field_6031);
+        BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath((Goal)this.goal);
     }
 
     @Override
     public void onActivate() {
-        AutoWalk llllIIIlIlIIlII;
-        if (llllIIIlIlIIlII.mode.get() == Mode.Smart) {
-            llllIIIlIlIIlII.createGoal();
+        if (this.mode.get() == Mode.Smart) {
+            this.createGoal();
         }
     }
 
     @Override
     public void onDeactivate() {
-        AutoWalk llllIIIlIlIIIII;
-        if (llllIIIlIlIIIII.mode.get() == Mode.Simple) {
-            llllIIIlIlIIIII.unpress();
+        if (this.mode.get() == Mode.Simple) {
+            this.unpress();
         } else {
             BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
         }
-        llllIIIlIlIIIII.goal = null;
+        this.goal = null;
     }
 
     public static enum Direction {
@@ -133,20 +130,12 @@ extends Module {
         Left,
         Right;
 
-
-        private Direction() {
-            Direction lIlIIIIlIIllIl;
-        }
     }
 
     public static enum Mode {
         Simple,
         Smart;
 
-
-        private Mode() {
-            Mode lllllllllllllllllllllIlIlIIlIlIl;
-        }
     }
 }
 

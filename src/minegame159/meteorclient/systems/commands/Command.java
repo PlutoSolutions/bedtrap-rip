@@ -27,94 +27,83 @@ import net.minecraft.class_2561;
 import net.minecraft.class_310;
 
 public abstract class Command {
-    private final /* synthetic */ String name;
-    private final /* synthetic */ String title;
-    protected static /* synthetic */ class_310 mc;
-    private final /* synthetic */ List<String> aliases;
-    private final /* synthetic */ String description;
+    private final String name;
+    private final String title;
+    protected static class_310 mc;
+    private final List<String> aliases = new ArrayList<String>();
+    private final String description;
 
-    public Command(String llIlllllllIlIl, String llIlllllllIlII, String ... llIlllllllIIll) {
-        Command llIlllllllIIlI;
-        llIlllllllIIlI.aliases = new ArrayList<String>();
-        llIlllllllIIlI.name = llIlllllllIlIl;
-        llIlllllllIIlI.title = Utils.nameToTitle(llIlllllllIlIl);
-        llIlllllllIIlI.description = llIlllllllIlII;
-        Collections.addAll(llIlllllllIIlI.aliases, llIlllllllIIll);
+    public Command(String string, String string2, String ... arrstring) {
+        this.name = string;
+        this.title = Utils.nameToTitle(string);
+        this.description = string2;
+        Collections.addAll(this.aliases, arrstring);
         mc = class_310.method_1551();
     }
 
-    public void register(CommandDispatcher<class_2172> llIlllllIlIlIl, String llIlllllIlIIII) {
-        Command llIlllllIlIllI;
-        LiteralArgumentBuilder llIlllllIlIIll = LiteralArgumentBuilder.literal((String)llIlllllIlIIII);
-        llIlllllIlIllI.build((LiteralArgumentBuilder<class_2172>)llIlllllIlIIll);
-        llIlllllIlIlIl.register(llIlllllIlIIll);
+    public void register(CommandDispatcher<class_2172> commandDispatcher, String string) {
+        LiteralArgumentBuilder literalArgumentBuilder = LiteralArgumentBuilder.literal((String)string);
+        this.build((LiteralArgumentBuilder<class_2172>)literalArgumentBuilder);
+        commandDispatcher.register(literalArgumentBuilder);
     }
 
-    public void info(class_2561 llIllllIlIllIl) {
-        Command llIllllIlIllII;
-        ChatUtils.sendMsg(llIllllIlIllII.title, llIllllIlIllIl);
+    public void info(class_2561 class_25612) {
+        ChatUtils.sendMsg(this.title, class_25612);
     }
 
     public List<String> getAliases() {
-        Command llIlllllIIIlll;
-        return llIlllllIIIlll.aliases;
+        return this.aliases;
     }
 
-    public String toString(String ... llIllllIlllIIl) {
-        Command llIllllIllIlll;
-        StringBuilder llIllllIlllIII = new StringBuilder(llIllllIllIlll.toString());
-        for (String llIllllIlllIll : llIllllIlllIIl) {
-            llIllllIlllIII.append(' ').append(llIllllIlllIll);
+    public String toString(String ... arrstring) {
+        StringBuilder stringBuilder = new StringBuilder(this.toString());
+        for (String string : arrstring) {
+            stringBuilder.append(' ').append(string);
+            if (true > false) continue;
+            return null;
         }
-        return String.valueOf(llIllllIlllIII);
+        return String.valueOf(stringBuilder);
     }
 
-    public void error(String llIllllIIlIIIl, Object ... llIllllIIlIIII) {
-        Command llIllllIIlIIlI;
-        ChatUtils.error(llIllllIIlIIlI.title, llIllllIIlIIIl, llIllllIIlIIII);
+    public void error(String string, Object ... arrobject) {
+        ChatUtils.error(this.title, string, arrobject);
     }
 
-    public void warning(String llIllllIIlllIl, Object ... llIllllIIllIIl) {
-        Command llIllllIIllllI;
-        ChatUtils.warning(llIllllIIllllI.title, llIllllIIlllIl, llIllllIIllIIl);
+    public void warning(String string, Object ... arrobject) {
+        ChatUtils.warning(this.title, string, arrobject);
     }
 
-    public final void registerTo(CommandDispatcher<class_2172> llIlllllIlllll) {
-        Command llIllllllIIIII;
-        llIllllllIIIII.register(llIlllllIlllll, llIllllllIIIII.name);
-        for (String llIllllllIIIIl : llIllllllIIIII.aliases) {
-            llIllllllIIIII.register(llIlllllIlllll, llIllllllIIIIl);
+    public final void registerTo(CommandDispatcher<class_2172> commandDispatcher) {
+        this.register(commandDispatcher, this.name);
+        for (String string : this.aliases) {
+            this.register(commandDispatcher, string);
         }
     }
 
     public abstract void build(LiteralArgumentBuilder<class_2172> var1);
 
-    public void info(String llIllllIlIIIll, Object ... llIllllIlIIlIl) {
-        Command llIllllIlIIlll;
-        ChatUtils.info(llIllllIlIIlll.title, llIllllIlIIIll, llIllllIlIIlIl);
+    public void info(String string, Object ... arrobject) {
+        ChatUtils.info(this.title, string, arrobject);
     }
 
-    protected static <T> RequiredArgumentBuilder<class_2172, T> argument(String llIllllllIllII, ArgumentType<T> llIllllllIlIIl) {
-        return RequiredArgumentBuilder.argument((String)llIllllllIllII, llIllllllIlIIl);
+    protected static <T> RequiredArgumentBuilder<class_2172, T> argument(String string, ArgumentType<T> argumentType) {
+        return RequiredArgumentBuilder.argument((String)string, argumentType);
     }
 
-    protected static LiteralArgumentBuilder<class_2172> literal(String llIllllllIIlll) {
-        return LiteralArgumentBuilder.literal((String)llIllllllIIlll);
+    protected static LiteralArgumentBuilder<class_2172> literal(String string) {
+        return LiteralArgumentBuilder.literal((String)string);
     }
 
     public String toString() {
-        Command llIlllllIIIIll;
-        return String.valueOf(new StringBuilder().append(Config.get().prefix).append(llIlllllIIIIll.name));
+        return String.valueOf(new StringBuilder().append(Config.get().prefix).append(this.name));
     }
 
     public String getName() {
-        Command llIlllllIIllIl;
-        return llIlllllIIllIl.name;
+        return this.name;
     }
 
     public String getDescription() {
-        Command llIlllllIIlIlI;
-        return llIlllllIIlIlI.description;
+        return this.description;
     }
 }
 

@@ -41,40 +41,38 @@ import net.minecraft.class_3966;
 
 public class ClickTP
 extends Module {
-    private final /* synthetic */ Setting<Double> maxDistance;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Double> maxDistance;
+    private final SettingGroup sgGeneral;
 
     public ClickTP() {
         super(Categories.Movement, "click-tp", "Teleports you to the block you click on.");
-        ClickTP lllllllllllllllllllIIlIIIIlIlIIl;
-        lllllllllllllllllllIIlIIIIlIlIIl.sgGeneral = lllllllllllllllllllIIlIIIIlIlIIl.settings.getDefaultGroup();
-        lllllllllllllllllllIIlIIIIlIlIIl.maxDistance = lllllllllllllllllllIIlIIIIlIlIIl.sgGeneral.add(new DoubleSetting.Builder().name("max-distance").description("The maximum distance you can teleport.").defaultValue(5.0).build());
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.maxDistance = this.sgGeneral.add(new DoubleSetting.Builder().name("max-distance").description("The maximum distance you can teleport.").defaultValue(5.0).build());
     }
 
     @EventHandler
-    private void onTick(TickEvent.Post lllllllllllllllllllIIlIIIIIllIIl) {
-        ClickTP lllllllllllllllllllIIlIIIIIllIlI;
-        if (lllllllllllllllllllIIlIIIIIllIlI.mc.field_1724.method_6115()) {
+    private void onTick(TickEvent.Post post) {
+        if (this.mc.field_1724.method_6115()) {
             return;
         }
-        if (lllllllllllllllllllIIlIIIIIllIlI.mc.field_1690.field_1904.method_1434()) {
-            class_239 lllllllllllllllllllIIlIIIIIllIll = lllllllllllllllllllIIlIIIIIllIlI.mc.field_1724.method_5745(lllllllllllllllllllIIlIIIIIllIlI.maxDistance.get().doubleValue(), 0.05f, false);
-            if (lllllllllllllllllllIIlIIIIIllIll.method_17783() == class_239.class_240.field_1331 && lllllllllllllllllllIIlIIIIIllIlI.mc.field_1724.method_7287(((class_3966)lllllllllllllllllllIIlIIIIIllIll).method_17782(), class_1268.field_5808) != class_1269.field_5811) {
+        if (this.mc.field_1690.field_1904.method_1434()) {
+            class_239 class_2392 = this.mc.field_1724.method_5745(this.maxDistance.get().doubleValue(), 0.05f, false);
+            if (class_2392.method_17783() == class_239.class_240.field_1331 && this.mc.field_1724.method_7287(((class_3966)class_2392).method_17782(), class_1268.field_5808) != class_1269.field_5811) {
                 return;
             }
-            if (lllllllllllllllllllIIlIIIIIllIll.method_17783() == class_239.class_240.field_1332) {
-                class_2338 lllllllllllllllllllIIlIIIIlIIIII = ((class_3965)lllllllllllllllllllIIlIIIIIllIll).method_17777();
-                class_2350 lllllllllllllllllllIIlIIIIIlllll = ((class_3965)lllllllllllllllllllIIlIIIIIllIll).method_17780();
-                if (lllllllllllllllllllIIlIIIIIllIlI.mc.field_1687.method_8320(lllllllllllllllllllIIlIIIIlIIIII).method_26174((class_1937)lllllllllllllllllllIIlIIIIIllIlI.mc.field_1687, (class_1657)lllllllllllllllllllIIlIIIIIllIlI.mc.field_1724, class_1268.field_5808, (class_3965)lllllllllllllllllllIIlIIIIIllIll) != class_1269.field_5811) {
+            if (class_2392.method_17783() == class_239.class_240.field_1332) {
+                class_2338 class_23382 = ((class_3965)class_2392).method_17777();
+                class_2350 class_23502 = ((class_3965)class_2392).method_17780();
+                if (this.mc.field_1687.method_8320(class_23382).method_26174((class_1937)this.mc.field_1687, (class_1657)this.mc.field_1724, class_1268.field_5808, (class_3965)class_2392) != class_1269.field_5811) {
                     return;
                 }
-                class_2680 lllllllllllllllllllIIlIIIIIllllI = lllllllllllllllllllIIlIIIIIllIlI.mc.field_1687.method_8320(lllllllllllllllllllIIlIIIIlIIIII);
-                class_265 lllllllllllllllllllIIlIIIIIlllIl = lllllllllllllllllllIIlIIIIIllllI.method_26220((class_1922)lllllllllllllllllllIIlIIIIIllIlI.mc.field_1687, lllllllllllllllllllIIlIIIIlIIIII);
-                if (lllllllllllllllllllIIlIIIIIlllIl.method_1110()) {
-                    lllllllllllllllllllIIlIIIIIlllIl = lllllllllllllllllllIIlIIIIIllllI.method_26218((class_1922)lllllllllllllllllllIIlIIIIIllIlI.mc.field_1687, lllllllllllllllllllIIlIIIIlIIIII);
+                class_2680 class_26802 = this.mc.field_1687.method_8320(class_23382);
+                class_265 class_2652 = class_26802.method_26220((class_1922)this.mc.field_1687, class_23382);
+                if (class_2652.method_1110()) {
+                    class_2652 = class_26802.method_26218((class_1922)this.mc.field_1687, class_23382);
                 }
-                double lllllllllllllllllllIIlIIIIIlllII = lllllllllllllllllllIIlIIIIIlllIl.method_1110() ? 1.0 : lllllllllllllllllllIIlIIIIIlllIl.method_1105(class_2350.class_2351.field_11052);
-                lllllllllllllllllllIIlIIIIIllIlI.mc.field_1724.method_5814((double)lllllllllllllllllllIIlIIIIlIIIII.method_10263() + 0.5 + (double)lllllllllllllllllllIIlIIIIIlllll.method_10148(), (double)lllllllllllllllllllIIlIIIIlIIIII.method_10264() + lllllllllllllllllllIIlIIIIIlllII, (double)lllllllllllllllllllIIlIIIIlIIIII.method_10260() + 0.5 + (double)lllllllllllllllllllIIlIIIIIlllll.method_10165());
+                double d = class_2652.method_1110() ? 1.0 : class_2652.method_1105(class_2350.class_2351.field_11052);
+                this.mc.field_1724.method_5814((double)class_23382.method_10263() + 0.5 + (double)class_23502.method_10148(), (double)class_23382.method_10264() + d, (double)class_23382.method_10260() + 0.5 + (double)class_23502.method_10165());
             }
         }
     }

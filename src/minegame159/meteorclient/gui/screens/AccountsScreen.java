@@ -24,62 +24,64 @@ import net.minecraft.class_437;
 
 public class AccountsScreen
 extends WindowScreen {
-    private void addButton(WContainer lllllllllllllllllIIIIllIlIIIIIIl, String lllllllllllllllllIIIIllIlIIIIIII, Runnable lllllllllllllllllIIIIllIIlllllll) {
-        AccountsScreen lllllllllllllllllIIIIllIlIIIIlll;
-        WButton lllllllllllllllllIIIIllIlIIIIIll = lllllllllllllllllIIIIllIlIIIIIIl.add(lllllllllllllllllIIIIllIlIIIIlll.theme.button(lllllllllllllllllIIIIllIlIIIIIII)).expandX().widget();
-        lllllllllllllllllIIIIllIlIIIIIll.action = lllllllllllllllllIIIIllIIlllllll;
+    private void addButton(WContainer wContainer, String string, Runnable runnable) {
+        WButton wButton = wContainer.add(this.theme.button(string)).expandX().widget();
+        wButton.action = runnable;
+    }
+
+    private void lambda$initWidgets$2() {
+        Utils.mc.method_1507((class_437)new AddPremiumAccountScreen(this.theme));
     }
 
     private void initWidgets() {
-        AccountsScreen lllllllllllllllllIIIIllIlIIlIIII;
-        for (Account<?> lllllllllllllllllIIIIllIlIIlIIll : Accounts.get()) {
-            WAccount lllllllllllllllllIIIIllIlIIlIlII = lllllllllllllllllIIIIllIlIIlIIII.add(lllllllllllllllllIIIIllIlIIlIIII.theme.account(lllllllllllllllllIIIIllIlIIlIIII, lllllllllllllllllIIIIllIlIIlIIll)).expandX().widget();
-            lllllllllllllllllIIIIllIlIIlIlII.refreshScreenAction = () -> {
-                AccountsScreen lllllllllllllllllIIIIllIIllIIIII;
-                lllllllllllllllllIIIIllIIllIIIII.clear();
-                lllllllllllllllllIIIIllIIllIIIII.initWidgets();
-            };
+        for (Account<?> account : Accounts.get()) {
+            WAccount wAccount = this.add(this.theme.account(this, account)).expandX().widget();
+            wAccount.refreshScreenAction = this::lambda$initWidgets$0;
         }
-        WHorizontalList lllllllllllllllllIIIIllIlIIlIIIl = lllllllllllllllllIIIIllIlIIlIIII.add(lllllllllllllllllIIIIllIlIIlIIII.theme.horizontalList()).expandX().widget();
-        lllllllllllllllllIIIIllIlIIlIIII.addButton(lllllllllllllllllIIIIllIlIIlIIIl, "Cracked", () -> {
-            AccountsScreen lllllllllllllllllIIIIllIIllIIIll;
-            Utils.mc.method_1507((class_437)new AddCrackedAccountScreen(lllllllllllllllllIIIIllIIllIIIll.theme));
-        });
-        lllllllllllllllllIIIIllIlIIlIIII.addButton(lllllllllllllllllIIIIllIlIIlIIIl, "Premium", () -> {
-            AccountsScreen lllllllllllllllllIIIIllIIllIIlll;
-            Utils.mc.method_1507((class_437)new AddPremiumAccountScreen(lllllllllllllllllIIIIllIIllIIlll.theme));
-        });
-        lllllllllllllllllIIIIllIlIIlIIII.addButton(lllllllllllllllllIIIIllIlIIlIIIl, "The Altening", () -> {
-            AccountsScreen lllllllllllllllllIIIIllIIllIlIlI;
-            Utils.mc.method_1507((class_437)new AddAlteningAccountScreen(lllllllllllllllllIIIIllIIllIlIlI.theme));
-        });
+        WHorizontalList wHorizontalList = this.add(this.theme.horizontalList()).expandX().widget();
+        this.addButton(wHorizontalList, "Cracked", this::lambda$initWidgets$1);
+        this.addButton(wHorizontalList, "Premium", this::lambda$initWidgets$2);
+        this.addButton(wHorizontalList, "The Altening", this::lambda$initWidgets$3);
+    }
+
+    private void lambda$initWidgets$0() {
+        this.clear();
+        this.initWidgets();
     }
 
     @Override
     protected void method_25426() {
-        AccountsScreen lllllllllllllllllIIIIllIlIIllIIl;
         super.method_25426();
-        lllllllllllllllllIIIIllIlIIllIIl.clear();
-        lllllllllllllllllIIIIllIlIIllIIl.initWidgets();
+        this.clear();
+        this.initWidgets();
     }
 
-    public static void addAccount(WButton lllllllllllllllllIIIIllIIlllIlll, WidgetScreen lllllllllllllllllIIIIllIIllllIIl, Account<?> lllllllllllllllllIIIIllIIlllIlIl) {
-        lllllllllllllllllIIIIllIIlllIlll.set("...");
-        lllllllllllllllllIIIIllIIllllIIl.locked = true;
-        MeteorExecutor.execute(() -> {
-            if (lllllllllllllllllIIIIllIIlllIlIl.fetchInfo() && lllllllllllllllllIIIIllIIlllIlIl.fetchHead()) {
-                Accounts.get().add(lllllllllllllllllIIIIllIIlllIlIl);
-                lllllllllllllllllIIIIllIIllIllIl.locked = false;
-                lllllllllllllllllIIIIllIIllllIIl.method_25419();
-            }
-            lllllllllllllllllIIIIllIIlllIlll.set("Add");
-            lllllllllllllllllIIIIllIIllIllIl.locked = false;
-        });
+    private void lambda$initWidgets$1() {
+        Utils.mc.method_1507((class_437)new AddCrackedAccountScreen(this.theme));
     }
 
-    public AccountsScreen(GuiTheme lllllllllllllllllIIIIllIlIIlllII) {
-        super(lllllllllllllllllIIIIllIlIIlllII, "Accounts");
-        AccountsScreen lllllllllllllllllIIIIllIlIIlllll;
+    private static void lambda$addAccount$4(Account account, WidgetScreen widgetScreen, WButton wButton) {
+        if (account.fetchInfo() && account.fetchHead()) {
+            Accounts.get().add(account);
+            widgetScreen.locked = false;
+            widgetScreen.method_25419();
+        }
+        wButton.set("Add");
+        widgetScreen.locked = false;
+    }
+
+    public static void addAccount(WButton wButton, WidgetScreen widgetScreen, Account<?> account) {
+        wButton.set("...");
+        widgetScreen.locked = true;
+        MeteorExecutor.execute(() -> AccountsScreen.lambda$addAccount$4(account, widgetScreen, wButton));
+    }
+
+    private void lambda$initWidgets$3() {
+        Utils.mc.method_1507((class_437)new AddAlteningAccountScreen(this.theme));
+    }
+
+    public AccountsScreen(GuiTheme guiTheme) {
+        super(guiTheme, "Accounts");
     }
 }
 

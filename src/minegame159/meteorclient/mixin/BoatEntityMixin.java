@@ -32,12 +32,12 @@ public class BoatEntityMixin {
     private boolean field_7695;
 
     @Inject(method={"tick"}, at={@At(value="INVOKE", target="Lnet/minecraft/entity/vehicle/BoatEntity;move(Lnet/minecraft/entity/MovementType;Lnet/minecraft/util/math/Vec3d;)V")})
-    private void onTickInvokeMove(CallbackInfo info) {
+    private void onTickInvokeMove(CallbackInfo callbackInfo) {
         MeteorClient.EVENT_BUS.post(BoatMoveEvent.get((class_1690)this));
     }
 
     @Redirect(method={"updatePaddles"}, at=@At(value="FIELD", target="Lnet/minecraft/entity/vehicle/BoatEntity;pressingLeft:Z"))
-    private boolean onUpdatePaddlesPressingLeft(class_1690 boat) {
+    private boolean onUpdatePaddlesPressingLeft(class_1690 class_16902) {
         if (Modules.get().isActive(BoatFly.class)) {
             return false;
         }
@@ -45,7 +45,7 @@ public class BoatEntityMixin {
     }
 
     @Redirect(method={"updatePaddles"}, at=@At(value="FIELD", target="Lnet/minecraft/entity/vehicle/BoatEntity;pressingRight:Z"))
-    private boolean onUpdatePaddlesPressingRight(class_1690 boat) {
+    private boolean onUpdatePaddlesPressingRight(class_1690 class_16902) {
         if (Modules.get().isActive(BoatFly.class)) {
             return false;
         }

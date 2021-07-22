@@ -26,7 +26,7 @@ public class RenderTickCounterMixin {
     public float field_1969;
 
     @Inject(method={"beginRenderTick"}, at={@At(value="FIELD", target="Lnet/minecraft/client/render/RenderTickCounter;prevTimeMillis:J", opcode=181)})
-    private void onBeingRenderTick(long a, CallbackInfoReturnable<Integer> info) {
+    private void onBeingRenderTick(long l, CallbackInfoReturnable<Integer> callbackInfoReturnable) {
         this.field_1969 = (float)((double)this.field_1969 * Modules.get().get(Timer.class).getMultiplier());
     }
 }

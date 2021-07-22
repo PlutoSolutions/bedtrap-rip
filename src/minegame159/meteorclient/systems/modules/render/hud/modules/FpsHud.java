@@ -11,13 +11,11 @@ public class FpsHud
 extends DoubleTextHudElement {
     @Override
     protected String getRight() {
-        FpsHud llllllllllllllllllIlllIlIlIlIlIl;
-        return Integer.toString(((MinecraftClientAccessor)llllllllllllllllllIlllIlIlIlIlIl.mc).getFps());
+        return Integer.toString(((MinecraftClientAccessor)this.mc).getFps());
     }
 
-    public FpsHud(HUD llllllllllllllllllIlllIlIlIlIlll) {
-        super(llllllllllllllllllIlllIlIlIlIlll, "fps", "Displays your FPS.", "FPS: ");
-        FpsHud llllllllllllllllllIlllIlIlIllIlI;
+    public FpsHud(HUD hUD) {
+        super(hUD, "fps", "Displays your FPS.", "FPS: ");
     }
 }
 

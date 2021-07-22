@@ -11,13 +11,12 @@ import minegame159.meteorclient.systems.modules.Module;
 public class SafeWalk
 extends Module {
     @EventHandler
-    private void onClipAtLedge(ClipAtLedgeEvent lllllllllllllllllllllIlIlIllIllI) {
-        lllllllllllllllllllllIlIlIllIllI.setClip(true);
+    private void onClipAtLedge(ClipAtLedgeEvent clipAtLedgeEvent) {
+        clipAtLedgeEvent.setClip(true);
     }
 
     public SafeWalk() {
         super(Categories.Movement, "safe-walk", "Prevents you from walking off blocks. Useful over a void.");
-        SafeWalk lllllllllllllllllllllIlIlIlllIlI;
     }
 }
 

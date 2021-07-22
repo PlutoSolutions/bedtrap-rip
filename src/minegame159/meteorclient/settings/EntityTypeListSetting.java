@@ -30,139 +30,137 @@ import net.minecraft.class_2960;
 
 public class EntityTypeListSetting
 extends Setting<Object2BooleanMap<class_1299<?>>> {
-    public final /* synthetic */ boolean onlyAttackable;
+    public final boolean onlyAttackable;
 
     @Override
     public Iterable<class_2960> getIdentifierSuggestions() {
         return class_2378.field_11145.method_10235();
     }
 
-    public EntityTypeListSetting(String lllllllllllllllllIlIIIlIlIIlllIl, String lllllllllllllllllIlIIIlIlIIlllII, Object2BooleanMap<class_1299<?>> lllllllllllllllllIlIIIlIlIIllIll, Consumer<Object2BooleanMap<class_1299<?>>> lllllllllllllllllIlIIIlIlIIllIlI, Consumer<Setting<Object2BooleanMap<class_1299<?>>>> lllllllllllllllllIlIIIlIlIIlIIIl, IVisible lllllllllllllllllIlIIIlIlIIlIIII, boolean lllllllllllllllllIlIIIlIlIIlIlll) {
-        super(lllllllllllllllllIlIIIlIlIIlllIl, lllllllllllllllllIlIIIlIlIIlllII, lllllllllllllllllIlIIIlIlIIllIll, lllllllllllllllllIlIIIlIlIIllIlI, lllllllllllllllllIlIIIlIlIIlIIIl, lllllllllllllllllIlIIIlIlIIlIIII);
-        EntityTypeListSetting lllllllllllllllllIlIIIlIlIIlIllI;
-        lllllllllllllllllIlIIIlIlIIlIllI.onlyAttackable = lllllllllllllllllIlIIIlIlIIlIlll;
-        lllllllllllllllllIlIIIlIlIIlIllI.value = new Object2BooleanOpenHashMap(lllllllllllllllllIlIIIlIlIIllIll);
+    public EntityTypeListSetting(String string, String string2, Object2BooleanMap<class_1299<?>> object2BooleanMap, Consumer<Object2BooleanMap<class_1299<?>>> consumer, Consumer<Setting<Object2BooleanMap<class_1299<?>>>> consumer2, IVisible iVisible, boolean bl) {
+        super(string, string2, object2BooleanMap, consumer, consumer2, iVisible);
+        this.onlyAttackable = bl;
+        this.value = new Object2BooleanOpenHashMap(object2BooleanMap);
     }
 
     @Override
-    protected boolean isValueValid(Object2BooleanMap<class_1299<?>> lllllllllllllllllIlIIIlIIllIIIIl) {
+    protected boolean isValueValid(Object2BooleanMap<class_1299<?>> object2BooleanMap) {
         return true;
     }
 
     @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    @Override
     public class_2487 toTag() {
-        EntityTypeListSetting lllllllllllllllllIlIIIlIIlIIlIll;
-        class_2487 lllllllllllllllllIlIIIlIIlIIlIIl = lllllllllllllllllIlIIIlIIlIIlIll.saveGeneral();
-        class_2499 lllllllllllllllllIlIIIlIIlIIIlll = new class_2499();
-        for (class_1299 lllllllllllllllllIlIIIlIIlIIllIl : ((Object2BooleanMap)lllllllllllllllllIlIIIlIIlIIlIll.get()).keySet()) {
-            if (!((Object2BooleanMap)lllllllllllllllllIlIIIlIIlIIlIll.get()).getBoolean((Object)lllllllllllllllllIlIIIlIIlIIllIl)) continue;
-            lllllllllllllllllIlIIIlIIlIIIlll.add((Object)class_2519.method_23256((String)class_2378.field_11145.method_10221((Object)lllllllllllllllllIlIIIlIIlIIllIl).toString()));
+        class_2487 class_24872 = this.saveGeneral();
+        class_2499 class_24992 = new class_2499();
+        for (class_1299 class_12992 : ((Object2BooleanMap)this.get()).keySet()) {
+            if (!((Object2BooleanMap)this.get()).getBoolean((Object)class_12992)) continue;
+            class_24992.add((Object)class_2519.method_23256((String)class_2378.field_11145.method_10221((Object)class_12992).toString()));
         }
-        lllllllllllllllllIlIIIlIIlIIlIIl.method_10566("value", (class_2520)lllllllllllllllllIlIIIlIIlIIIlll);
-        return lllllllllllllllllIlIIIlIIlIIlIIl;
+        class_24872.method_10566("value", (class_2520)class_24992);
+        return class_24872;
     }
 
     @Override
-    public Object2BooleanMap<class_1299<?>> fromTag(class_2487 lllllllllllllllllIlIIIlIIIlIlIII) {
-        EntityTypeListSetting lllllllllllllllllIlIIIlIIIllIIII;
-        ((Object2BooleanMap)lllllllllllllllllIlIIIlIIIllIIII.get()).clear();
-        class_2499 lllllllllllllllllIlIIIlIIIlIllII = lllllllllllllllllIlIIIlIIIlIlIII.method_10554("value", 8);
-        for (class_2520 lllllllllllllllllIlIIIlIIIllIIlI : lllllllllllllllllIlIIIlIIIlIllII) {
-            class_1299 lllllllllllllllllIlIIIlIIIllIIll = (class_1299)class_2378.field_11145.method_10223(new class_2960(lllllllllllllllllIlIIIlIIIllIIlI.method_10714()));
-            if (lllllllllllllllllIlIIIlIIIllIIII.onlyAttackable && !EntityUtils.isAttackable(lllllllllllllllllIlIIIlIIIllIIll)) continue;
-            ((Object2BooleanMap)lllllllllllllllllIlIIIlIIIllIIII.get()).put((Object)lllllllllllllllllIlIIIlIIIllIIll, true);
-        }
-        lllllllllllllllllIlIIIlIIIllIIII.changed();
-        return (Object2BooleanMap)lllllllllllllllllIlIIIlIIIllIIII.get();
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((Object2BooleanMap)object);
     }
 
     @Override
-    public void reset(boolean lllllllllllllllllIlIIIlIlIIIIllI) {
-        EntityTypeListSetting lllllllllllllllllIlIIIlIlIIIIlll;
-        lllllllllllllllllIlIIIlIlIIIIlll.value = new Object2BooleanOpenHashMap((Object2BooleanMap)lllllllllllllllllIlIIIlIlIIIIlll.defaultValue);
-        if (lllllllllllllllllIlIIIlIlIIIIllI) {
-            lllllllllllllllllIlIIIlIlIIIIlll.changed();
+    public Object2BooleanMap<class_1299<?>> fromTag(class_2487 class_24872) {
+        ((Object2BooleanMap)this.get()).clear();
+        class_2499 class_24992 = class_24872.method_10554("value", 8);
+        for (class_2520 class_25202 : class_24992) {
+            class_1299 class_12992 = (class_1299)class_2378.field_11145.method_10223(new class_2960(class_25202.method_10714()));
+            if (this.onlyAttackable && !EntityUtils.isAttackable(class_12992)) continue;
+            ((Object2BooleanMap)this.get()).put((Object)class_12992, true);
+        }
+        this.changed();
+        return (Object2BooleanMap)this.get();
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
+    }
+
+    @Override
+    public void reset(boolean bl) {
+        this.value = new Object2BooleanOpenHashMap((Object2BooleanMap)this.defaultValue);
+        if (bl) {
+            this.changed();
         }
     }
 
     @Override
-    protected Object2BooleanMap<class_1299<?>> parseImpl(String lllllllllllllllllIlIIIlIIlllIllI) {
-        String[] lllllllllllllllllIlIIIlIIlllIIlI = lllllllllllllllllIlIIIlIIlllIllI.split(",");
-        Object2BooleanOpenHashMap lllllllllllllllllIlIIIlIIlllIIII = new Object2BooleanOpenHashMap(lllllllllllllllllIlIIIlIIlllIIlI.length);
+    protected Object2BooleanMap<class_1299<?>> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        Object2BooleanOpenHashMap object2BooleanOpenHashMap = new Object2BooleanOpenHashMap(arrstring.length);
         try {
-            for (String lllllllllllllllllIlIIIlIIllllIII : lllllllllllllllllIlIIIlIIlllIIlI) {
-                class_1299 lllllllllllllllllIlIIIlIIllllIIl = (class_1299)EntityTypeListSetting.parseId(class_2378.field_11145, lllllllllllllllllIlIIIlIIllllIII);
-                if (lllllllllllllllllIlIIIlIIllllIIl == null) continue;
-                lllllllllllllllllIlIIIlIIlllIIII.put((Object)lllllllllllllllllIlIIIlIIllllIIl, true);
+            for (String string2 : arrstring) {
+                class_1299 class_12992 = (class_1299)EntityTypeListSetting.parseId(class_2378.field_11145, string2);
+                if (class_12992 == null) continue;
+                object2BooleanOpenHashMap.put((Object)class_12992, true);
+                if (4 >= 2) continue;
+                return null;
             }
         }
-        catch (Exception lllllllllllllllllIlIIIlIIllIlIll) {
+        catch (Exception exception) {
             // empty catch block
         }
-        return lllllllllllllllllIlIIIlIIlllIIII;
+        return object2BooleanOpenHashMap;
     }
 
     public static class Builder {
-        private /* synthetic */ String description;
-        private /* synthetic */ Object2BooleanMap<class_1299<?>> defaultValue;
-        private /* synthetic */ Consumer<Object2BooleanMap<class_1299<?>>> onChanged;
-        private /* synthetic */ Consumer<Setting<Object2BooleanMap<class_1299<?>>>> onModuleActivated;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ boolean onlyAttackable;
-        private /* synthetic */ String name;
+        private String description = "";
+        private Object2BooleanMap<class_1299<?>> defaultValue;
+        private Consumer<Object2BooleanMap<class_1299<?>>> onChanged;
+        private Consumer<Setting<Object2BooleanMap<class_1299<?>>>> onModuleActivated;
+        private IVisible visible;
+        private boolean onlyAttackable = false;
+        private String name = "undefined";
 
-        public Builder onModuleActivated(Consumer<Setting<Object2BooleanMap<class_1299<?>>>> llIlllIlIllI) {
-            Builder llIlllIlIlll;
-            llIlllIlIlll.onModuleActivated = llIlllIlIllI;
-            return llIlllIlIlll;
+        public Builder onModuleActivated(Consumer<Setting<Object2BooleanMap<class_1299<?>>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder onChanged(Consumer<Object2BooleanMap<class_1299<?>>> llIlllIllllI) {
-            Builder llIlllIlllll;
-            llIlllIlllll.onChanged = llIlllIllllI;
-            return llIlllIlllll;
+        public Builder onChanged(Consumer<Object2BooleanMap<class_1299<?>>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder description(String llIllllIlIlI) {
-            Builder llIllllIlIIl;
-            llIllllIlIIl.description = llIllllIlIlI;
-            return llIllllIlIIl;
-        }
-
-        public Builder() {
-            Builder llIlllllIlIl;
-            llIlllllIlIl.name = "undefined";
-            llIlllllIlIl.description = "";
-            llIlllllIlIl.onlyAttackable = false;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
         public Builder onlyAttackable() {
-            Builder llIlllIIlllI;
-            llIlllIIlllI.onlyAttackable = true;
-            return llIlllIIlllI;
+            this.onlyAttackable = true;
+            return this;
         }
 
-        public Builder visible(IVisible llIlllIlIIII) {
-            Builder llIlllIlIIIl;
-            llIlllIlIIIl.visible = llIlllIlIIII;
-            return llIlllIlIIIl;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
 
-        public Builder defaultValue(Object2BooleanMap<class_1299<?>> llIllllIIlII) {
-            Builder llIllllIIlIl;
-            llIllllIIlIl.defaultValue = llIllllIIlII;
-            return llIllllIIlIl;
+        public Builder defaultValue(Object2BooleanMap<class_1299<?>> object2BooleanMap) {
+            this.defaultValue = object2BooleanMap;
+            return this;
         }
 
         public EntityTypeListSetting build() {
-            Builder llIlllIIlIll;
-            return new EntityTypeListSetting(llIlllIIlIll.name, llIlllIIlIll.description, llIlllIIlIll.defaultValue, llIlllIIlIll.onChanged, llIlllIIlIll.onModuleActivated, llIlllIIlIll.visible, llIlllIIlIll.onlyAttackable);
+            return new EntityTypeListSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible, this.onlyAttackable);
         }
 
-        public Builder name(String llIlllllIIII) {
-            Builder llIllllIllll;
-            llIllllIllll.name = llIlllllIIII;
-            return llIllllIllll;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
     }
 }

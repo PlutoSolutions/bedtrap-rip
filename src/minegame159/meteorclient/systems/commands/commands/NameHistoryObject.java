@@ -4,11 +4,10 @@
 package minegame159.meteorclient.systems.commands.commands;
 
 class NameHistoryObject {
-    /* synthetic */ long changedToAt;
-    /* synthetic */ String name;
+    long changedToAt;
+    String name;
 
     NameHistoryObject() {
-        NameHistoryObject lllllllllllllllllIIIIIIlIIlIllII;
     }
 }
 

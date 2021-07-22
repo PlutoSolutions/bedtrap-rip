@@ -11,20 +11,12 @@ import net.minecraft.class_265;
 import net.minecraft.class_2680;
 
 public class FluidCollisionShapeEvent {
-    public /* synthetic */ class_265 shape;
-    public /* synthetic */ class_2680 state;
-    private static final /* synthetic */ FluidCollisionShapeEvent INSTANCE;
+    public class_265 shape;
+    public class_2680 state;
+    private static final FluidCollisionShapeEvent INSTANCE = new FluidCollisionShapeEvent();
 
-    static {
-        INSTANCE = new FluidCollisionShapeEvent();
-    }
-
-    public FluidCollisionShapeEvent() {
-        FluidCollisionShapeEvent lIlllllIIlllIl;
-    }
-
-    public static FluidCollisionShapeEvent get(class_2680 lIlllllIIllIlI) {
-        FluidCollisionShapeEvent.INSTANCE.state = lIlllllIIllIlI;
+    public static FluidCollisionShapeEvent get(class_2680 class_26802) {
+        FluidCollisionShapeEvent.INSTANCE.state = class_26802;
         FluidCollisionShapeEvent.INSTANCE.shape = null;
         return INSTANCE;
     }

@@ -11,24 +11,16 @@ import net.minecraft.class_2338;
 import net.minecraft.class_2680;
 
 public class BlockUpdateEvent {
-    public /* synthetic */ class_2680 newState;
-    public /* synthetic */ class_2338 pos;
-    private static final /* synthetic */ BlockUpdateEvent INSTANCE;
-    public /* synthetic */ class_2680 oldState;
+    public class_2680 newState;
+    public class_2338 pos;
+    private static final BlockUpdateEvent INSTANCE = new BlockUpdateEvent();
+    public class_2680 oldState;
 
-    public BlockUpdateEvent() {
-        BlockUpdateEvent lllllllllllllllllIIlIIlIIlIlIIII;
-    }
-
-    public static BlockUpdateEvent get(class_2338 lllllllllllllllllIIlIIlIIlIIlIII, class_2680 lllllllllllllllllIIlIIlIIlIIlIlI, class_2680 lllllllllllllllllIIlIIlIIlIIlIIl) {
-        BlockUpdateEvent.INSTANCE.pos = lllllllllllllllllIIlIIlIIlIIlIII;
-        BlockUpdateEvent.INSTANCE.oldState = lllllllllllllllllIIlIIlIIlIIlIlI;
-        BlockUpdateEvent.INSTANCE.newState = lllllllllllllllllIIlIIlIIlIIlIIl;
+    public static BlockUpdateEvent get(class_2338 class_23382, class_2680 class_26802, class_2680 class_26803) {
+        BlockUpdateEvent.INSTANCE.pos = class_23382;
+        BlockUpdateEvent.INSTANCE.oldState = class_26802;
+        BlockUpdateEvent.INSTANCE.newState = class_26803;
         return INSTANCE;
-    }
-
-    static {
-        INSTANCE = new BlockUpdateEvent();
     }
 }
 

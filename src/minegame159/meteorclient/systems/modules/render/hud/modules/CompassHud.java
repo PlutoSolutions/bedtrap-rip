@@ -18,58 +18,54 @@ import net.minecraft.class_3532;
 
 public class CompassHud
 extends HudElement {
-    private final /* synthetic */ Setting<Mode> mode;
-    private /* synthetic */ double yaw;
-    private /* synthetic */ double pitch;
-    private final /* synthetic */ Color NORTH;
-    private final /* synthetic */ Setting<Double> scale;
-    private final /* synthetic */ SettingGroup sgGeneral;
+    private final Setting<Mode> mode;
+    private double yaw;
+    private double pitch;
+    private final Color NORTH;
+    private final Setting<Double> scale;
+    private final SettingGroup sgGeneral;
 
     @Override
-    public void update(HudRenderer llllllllllllllllllIllllIIIlIlIII) {
-        CompassHud llllllllllllllllllIllllIIIlIlIIl;
-        llllllllllllllllllIllllIIIlIlIIl.pitch = !llllllllllllllllllIllllIIIlIlIIl.isInEditor() ? (double)llllllllllllllllllIllllIIIlIlIIl.mc.field_1724.field_5965 : 90.0;
-        llllllllllllllllllIllllIIIlIlIIl.pitch = class_3532.method_15350((double)(llllllllllllllllllIllllIIIlIlIIl.pitch + 30.0), (double)-90.0, (double)90.0);
-        llllllllllllllllllIllllIIIlIlIIl.pitch = Math.toRadians(llllllllllllllllllIllllIIIlIlIIl.pitch);
-        llllllllllllllllllIllllIIIlIlIIl.yaw = !llllllllllllllllllIllllIIIlIlIIl.isInEditor() ? (double)llllllllllllllllllIllllIIIlIlIIl.mc.field_1724.field_6031 : 180.0;
-        llllllllllllllllllIllllIIIlIlIIl.yaw = class_3532.method_15338((double)llllllllllllllllllIllllIIIlIlIIl.yaw);
-        llllllllllllllllllIllllIIIlIlIIl.yaw = Math.toRadians(llllllllllllllllllIllllIIIlIlIIl.yaw);
-        llllllllllllllllllIllllIIIlIlIIl.box.setSize(100.0 * llllllllllllllllllIllllIIIlIlIIl.scale.get(), 100.0 * llllllllllllllllllIllllIIIlIlIIl.scale.get());
+    public void update(HudRenderer hudRenderer) {
+        this.pitch = !this.isInEditor() ? (double)this.mc.field_1724.field_5965 : 90.0;
+        this.pitch = class_3532.method_15350((double)(this.pitch + 30.0), (double)-90.0, (double)90.0);
+        this.pitch = Math.toRadians(this.pitch);
+        this.yaw = !this.isInEditor() ? (double)this.mc.field_1724.field_6031 : 180.0;
+        this.yaw = class_3532.method_15338((double)this.yaw);
+        this.yaw = Math.toRadians(this.yaw);
+        this.box.setSize(100.0 * this.scale.get(), 100.0 * this.scale.get());
     }
 
-    private double getX(Direction llllllllllllllllllIllllIIIIIlIll) {
-        CompassHud llllllllllllllllllIllllIIIIIlIlI;
-        return Math.sin(llllllllllllllllllIllllIIIIIlIlI.getPosOnCompass(llllllllllllllllllIllllIIIIIlIll)) * llllllllllllllllllIllllIIIIIlIlI.scale.get() * 40.0;
+    private double getX(Direction direction) {
+        return Math.sin(this.getPosOnCompass(direction)) * this.scale.get() * 40.0;
     }
 
-    public CompassHud(HUD llllllllllllllllllIllllIIIlIllIl) {
-        super(llllllllllllllllllIllllIIIlIllIl, "compass", "Displays a compass.");
-        CompassHud llllllllllllllllllIllllIIIlIllII;
-        llllllllllllllllllIllllIIIlIllII.sgGeneral = llllllllllllllllllIllllIIIlIllII.settings.getDefaultGroup();
-        llllllllllllllllllIllllIIIlIllII.mode = llllllllllllllllllIllllIIIlIllII.sgGeneral.add(new EnumSetting.Builder().name("type").description("Which type of axis to show.").defaultValue(Mode.Pole).build());
-        llllllllllllllllllIllllIIIlIllII.scale = llllllllllllllllllIllllIIIlIllII.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("The scale of compass.").defaultValue(2.0).sliderMin(1.0).sliderMax(5.0).build());
-        llllllllllllllllllIllllIIIlIllII.NORTH = new Color(225, 45, 45);
+    public CompassHud(HUD hUD) {
+        super(hUD, "compass", "Displays a compass.");
+        this.sgGeneral = this.settings.getDefaultGroup();
+        this.mode = this.sgGeneral.add(new EnumSetting.Builder().name("type").description("Which type of axis to show.").defaultValue(Mode.Pole).build());
+        this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("The scale of compass.").defaultValue(2.0).sliderMin(1.0).sliderMax(5.0).build());
+        this.NORTH = new Color(225, 45, 45);
     }
 
     @Override
-    public void render(HudRenderer llllllllllllllllllIllllIIIIllIlI) {
-        CompassHud llllllllllllllllllIllllIIIIllIll;
-        double llllllllllllllllllIllllIIIIllIIl = llllllllllllllllllIllllIIIIllIll.box.getX() + llllllllllllllllllIllllIIIIllIll.box.width / 2.0;
-        double llllllllllllllllllIllllIIIIllIII = llllllllllllllllllIllllIIIIllIll.box.getY() + llllllllllllllllllIllllIIIIllIll.box.height / 2.0;
-        for (Direction llllllllllllllllllIllllIIIIlllII : Direction.values()) {
-            String llllllllllllllllllIllllIIIIlllIl = llllllllllllllllllIllllIIIIllIll.mode.get() == Mode.Axis ? llllllllllllllllllIllllIIIIlllII.getAlternate() : llllllllllllllllllIllllIIIIlllII.name();
-            llllllllllllllllllIllllIIIIllIlI.text(llllllllllllllllllIllllIIIIlllIl, llllllllllllllllllIllllIIIIllIIl + llllllllllllllllllIllllIIIIllIll.getX(llllllllllllllllllIllllIIIIlllII) - llllllllllllllllllIllllIIIIllIlI.textWidth(llllllllllllllllllIllllIIIIlllIl) / 2.0, llllllllllllllllllIllllIIIIllIII + llllllllllllllllllIllllIIIIllIll.getY(llllllllllllllllllIllllIIIIlllII) - llllllllllllllllllIllllIIIIllIlI.textHeight() / 2.0, llllllllllllllllllIllllIIIIlllII == Direction.N ? llllllllllllllllllIllllIIIIllIll.NORTH : (Color)llllllllllllllllllIllllIIIIllIll.hud.primaryColor.get());
+    public void render(HudRenderer hudRenderer) {
+        double d = this.box.getX() + this.box.width / 2.0;
+        double d2 = this.box.getY() + this.box.height / 2.0;
+        for (Direction direction : Direction.values()) {
+            String string = this.mode.get() == Mode.Axis ? direction.getAlternate() : direction.name();
+            hudRenderer.text(string, d + this.getX(direction) - hudRenderer.textWidth(string) / 2.0, d2 + this.getY(direction) - hudRenderer.textHeight() / 2.0, direction == Direction.N ? this.NORTH : (Color)this.hud.primaryColor.get());
+            if (!false) continue;
+            return;
         }
     }
 
-    private double getPosOnCompass(Direction llllllllllllllllllIlllIlllllllll) {
-        CompassHud llllllllllllllllllIllllIIIIIIIII;
-        return llllllllllllllllllIllllIIIIIIIII.yaw + (double)llllllllllllllllllIlllIlllllllll.ordinal() * Math.PI / 2.0;
+    private double getPosOnCompass(Direction direction) {
+        return this.yaw + (double)direction.ordinal() * Math.PI / 2.0;
     }
 
-    private double getY(Direction llllllllllllllllllIllllIIIIIIIll) {
-        CompassHud llllllllllllllllllIllllIIIIIIlII;
-        return Math.cos(llllllllllllllllllIllllIIIIIIlII.getPosOnCompass(llllllllllllllllllIllllIIIIIIIll)) * Math.sin(llllllllllllllllllIllllIIIIIIlII.pitch) * llllllllllllllllllIllllIIIIIIlII.scale.get() * 40.0;
+    private double getY(Direction direction) {
+        return Math.cos(this.getPosOnCompass(direction)) * Math.sin(this.pitch) * this.scale.get() * 40.0;
     }
 
     private static enum Direction {
@@ -78,16 +74,14 @@ extends HudElement {
         S("Z+"),
         E("X+");
 
-        /* synthetic */ String alternate;
+        String alternate;
 
         public String getAlternate() {
-            Direction lIIIIIIIIlII;
-            return lIIIIIIIIlII.alternate;
+            return this.alternate;
         }
 
-        private Direction(String lIIIIIIIIlll) {
-            Direction lIIIIIIIllII;
-            lIIIIIIIllII.alternate = lIIIIIIIIlll;
+        private Direction(String string2) {
+            this.alternate = string2;
         }
     }
 
@@ -95,10 +89,6 @@ extends HudElement {
         Axis,
         Pole;
 
-
-        private Mode() {
-            Mode lIIlllIIIIII;
-        }
     }
 }
 

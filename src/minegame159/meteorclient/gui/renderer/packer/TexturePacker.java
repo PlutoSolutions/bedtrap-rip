@@ -3,166 +3,123 @@
  * 
  * Could not load the following classes:
  *  net.minecraft.class_2960
- *  net.minecraft.class_4536
  *  org.lwjgl.BufferUtils
  *  org.lwjgl.stb.STBImage
  *  org.lwjgl.stb.STBImageResize
- *  org.lwjgl.system.MemoryStack
- *  org.lwjgl.system.MemoryUtil
  */
 package minegame159.meteorclient.gui.renderer.packer;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import minegame159.meteorclient.gui.renderer.packer.GuiTexture;
 import minegame159.meteorclient.gui.renderer.packer.TextureRegion;
-import minegame159.meteorclient.utils.Utils;
 import minegame159.meteorclient.utils.render.ByteTexture;
 import net.minecraft.class_2960;
-import net.minecraft.class_4536;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.stb.STBImageResize;
-import org.lwjgl.system.MemoryStack;
-import org.lwjgl.system.MemoryUtil;
 
 public class TexturePacker {
-    private static final /* synthetic */ int maxWidth;
-    private final /* synthetic */ List<Image> images;
+    private static final int maxWidth = 2048;
+    private final List<Image> images = new ArrayList<Image>();
 
     /*
-     * WARNING - Removed try catching itself - possible behaviour change.
+     * Exception decompiling
      */
-    public GuiTexture add(class_2960 lllllllllllllllllIIlIlIllIIIIlIl) {
-        try {
-            InputStream lllllllllllllllllIIlIlIllIIIlIIl = Utils.mc.method_1478().method_14486(lllllllllllllllllIIlIlIllIIIIlIl).method_14482();
-            GuiTexture lllllllllllllllllIIlIlIllIIIlIII = new GuiTexture();
-            try (MemoryStack lllllllllllllllllIIlIlIllIIIlIlI = MemoryStack.stackPush();){
-                ByteBuffer lllllllllllllllllIIlIlIllIIIlIll = null;
-                try {
-                    TexturePacker lllllllllllllllllIIlIlIllIIIIlII;
-                    lllllllllllllllllIIlIlIllIIIlIll = class_4536.method_24962((InputStream)lllllllllllllllllIIlIlIllIIIlIIl);
-                    ((Buffer)lllllllllllllllllIIlIlIllIIIlIll).rewind();
-                    IntBuffer lllllllllllllllllIIlIlIllIIlIIll = lllllllllllllllllIIlIlIllIIIlIlI.mallocInt(1);
-                    IntBuffer lllllllllllllllllIIlIlIllIIlIIlI = lllllllllllllllllIIlIlIllIIIlIlI.mallocInt(1);
-                    IntBuffer lllllllllllllllllIIlIlIllIIlIIIl = lllllllllllllllllIIlIlIllIIIlIlI.mallocInt(1);
-                    ByteBuffer lllllllllllllllllIIlIlIllIIlIIII = STBImage.stbi_load_from_memory((ByteBuffer)lllllllllllllllllIIlIlIllIIIlIll, (IntBuffer)lllllllllllllllllIIlIlIllIIlIIll, (IntBuffer)lllllllllllllllllIIlIlIllIIlIIlI, (IntBuffer)lllllllllllllllllIIlIlIllIIlIIIl, (int)4);
-                    int lllllllllllllllllIIlIlIllIIIllll = lllllllllllllllllIIlIlIllIIlIIll.get(0);
-                    int lllllllllllllllllIIlIlIllIIIlllI = lllllllllllllllllIIlIlIllIIlIIlI.get(0);
-                    TextureRegion lllllllllllllllllIIlIlIllIIIllIl = new TextureRegion(lllllllllllllllllIIlIlIllIIIllll, lllllllllllllllllIIlIlIllIIIlllI);
-                    lllllllllllllllllIIlIlIllIIIlIII.add(lllllllllllllllllIIlIlIllIIIllIl);
-                    lllllllllllllllllIIlIlIllIIIIlII.images.add(new Image(lllllllllllllllllIIlIlIllIIlIIII, lllllllllllllllllIIlIlIllIIIllIl, lllllllllllllllllIIlIlIllIIIllll, lllllllllllllllllIIlIlIllIIIlllI, true));
-                    if (lllllllllllllllllIIlIlIllIIIllll > 20) {
-                        lllllllllllllllllIIlIlIllIIIIlII.addResized(lllllllllllllllllIIlIlIllIIIlIII, lllllllllllllllllIIlIlIllIIlIIII, lllllllllllllllllIIlIlIllIIIllll, lllllllllllllllllIIlIlIllIIIlllI, 20);
-                    }
-                    if (lllllllllllllllllIIlIlIllIIIllll > 32) {
-                        lllllllllllllllllIIlIlIllIIIIlII.addResized(lllllllllllllllllIIlIlIllIIIlIII, lllllllllllllllllIIlIlIllIIlIIII, lllllllllllllllllIIlIlIllIIIllll, lllllllllllllllllIIlIlIllIIIlllI, 32);
-                    }
-                    if (lllllllllllllllllIIlIlIllIIIllll > 48) {
-                        lllllllllllllllllIIlIlIllIIIIlII.addResized(lllllllllllllllllIIlIlIllIIIlIII, lllllllllllllllllIIlIlIllIIlIIII, lllllllllllllllllIIlIlIllIIIllll, lllllllllllllllllIIlIlIllIIIlllI, 48);
-                    }
-                }
-                catch (IOException lllllllllllllllllIIlIlIllIIIllII) {
-                    lllllllllllllllllIIlIlIllIIIllII.printStackTrace();
-                }
-                finally {
-                    MemoryUtil.memFree((Buffer)lllllllllllllllllIIlIlIllIIIlIll);
-                }
-            }
-            return lllllllllllllllllIIlIlIllIIIlIII;
-        }
-        catch (IOException lllllllllllllllllIIlIlIllIIIIlll) {
-            lllllllllllllllllIIlIlIllIIIIlll.printStackTrace();
-            return null;
-        }
-    }
-
-    static {
-        maxWidth = 2048;
+    public GuiTexture add(class_2960 var1_1) {
+        /*
+         * This method has failed to decompile.  When submitting a bug report, please provide this stack trace, and (if you hold appropriate legal rights) the relevant class file.
+         * org.benf.cfr.reader.util.ConfusedCFRException: Tried to end blocks [0[TRYBLOCK]], but top level block is 7[CATCHBLOCK]
+         * org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement.processEndingBlocks(Op04StructuredStatement.java:429)
+         * org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement.buildNestedBlocks(Op04StructuredStatement.java:478)
+         * org.benf.cfr.reader.bytecode.analysis.opgraph.Op03SimpleStatement.createInitialStructuredBlock(Op03SimpleStatement.java:728)
+         * org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisInner(CodeAnalyser.java:806)
+         * org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisOrWrapFail(CodeAnalyser.java:258)
+         * org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysis(CodeAnalyser.java:192)
+         * org.benf.cfr.reader.entities.attributes.AttributeCode.analyse(AttributeCode.java:94)
+         * org.benf.cfr.reader.entities.Method.analyse(Method.java:521)
+         * org.benf.cfr.reader.entities.ClassFile.analyseMid(ClassFile.java:1035)
+         * org.benf.cfr.reader.entities.ClassFile.analyseTop(ClassFile.java:922)
+         * org.benf.cfr.reader.Driver.doJarVersionTypes(Driver.java:253)
+         * org.benf.cfr.reader.Driver.doJar(Driver.java:135)
+         * org.benf.cfr.reader.CfrDriverImpl.analyse(CfrDriverImpl.java:65)
+         * org.benf.cfr.reader.Main.main(Main.java:49)
+         */
+        throw new IllegalStateException(Decompilation failed);
     }
 
     public ByteTexture pack() {
-        TexturePacker lllllllllllllllllIIlIlIlIlIIlIlI;
-        int lllllllllllllllllIIlIlIlIlIIlIIl = 0;
-        int lllllllllllllllllIIlIlIlIlIIlIII = 0;
-        int lllllllllllllllllIIlIlIlIlIIIlll = 0;
-        int lllllllllllllllllIIlIlIlIlIIIllI = 0;
-        for (Image lllllllllllllllllIIlIlIlIlIIlllI : lllllllllllllllllIIlIlIlIlIIlIlI.images) {
-            if (lllllllllllllllllIIlIlIlIlIIIlll + lllllllllllllllllIIlIlIlIlIIlllI.width > 2048) {
-                lllllllllllllllllIIlIlIlIlIIlIIl = Math.max(lllllllllllllllllIIlIlIlIlIIlIIl, lllllllllllllllllIIlIlIlIlIIIlll);
-                lllllllllllllllllIIlIlIlIlIIlIII += lllllllllllllllllIIlIlIlIlIIIllI;
-                lllllllllllllllllIIlIlIlIlIIIlll = 0;
-                lllllllllllllllllIIlIlIlIlIIIllI = 0;
+        int n = 0;
+        int n2 = 0;
+        int n3 = 0;
+        int n4 = 0;
+        for (Image object : this.images) {
+            if (n3 + object.width > 2048) {
+                n = Math.max(n, n3);
+                n2 += n4;
+                n3 = 0;
+                n4 = 0;
             }
-            lllllllllllllllllIIlIlIlIlIIlllI.x = 1 + lllllllllllllllllIIlIlIlIlIIIlll;
-            lllllllllllllllllIIlIlIlIlIIlllI.y = 1 + lllllllllllllllllIIlIlIlIlIIlIII;
-            lllllllllllllllllIIlIlIlIlIIIlll += 1 + lllllllllllllllllIIlIlIlIlIIlllI.width + 1;
-            lllllllllllllllllIIlIlIlIlIIIllI = Math.max(lllllllllllllllllIIlIlIlIlIIIllI, 1 + lllllllllllllllllIIlIlIlIlIIlllI.height + 1);
+            object.x = 1 + n3;
+            object.y = 1 + n2;
+            n3 += 1 + object.width + 1;
+            n4 = Math.max(n4, 1 + object.height + 1);
         }
-        lllllllllllllllllIIlIlIlIlIIlIIl = Math.max(lllllllllllllllllIIlIlIlIlIIlIIl, lllllllllllllllllIIlIlIlIlIIIlll);
-        ByteBuffer lllllllllllllllllIIlIlIlIlIIIlIl = BufferUtils.createByteBuffer((int)(lllllllllllllllllIIlIlIlIlIIlIIl * (lllllllllllllllllIIlIlIlIlIIlIII += lllllllllllllllllIIlIlIlIlIIIllI) * 4));
-        for (Image lllllllllllllllllIIlIlIlIlIIlIll : lllllllllllllllllIIlIlIlIlIIlIlI.images) {
-            byte[] lllllllllllllllllIIlIlIlIlIIllII = new byte[lllllllllllllllllIIlIlIlIlIIlIll.width * 4];
-            for (int lllllllllllllllllIIlIlIlIlIIllIl = 0; lllllllllllllllllIIlIlIlIlIIllIl < lllllllllllllllllIIlIlIlIlIIlIll.height; ++lllllllllllllllllIIlIlIlIlIIllIl) {
-                ((Buffer)lllllllllllllllllIIlIlIlIlIIlIll.buffer).position(lllllllllllllllllIIlIlIlIlIIllIl * lllllllllllllllllIIlIlIlIlIIllII.length);
-                lllllllllllllllllIIlIlIlIlIIlIll.buffer.get(lllllllllllllllllIIlIlIlIlIIllII);
-                ((Buffer)lllllllllllllllllIIlIlIlIlIIIlIl).position(((lllllllllllllllllIIlIlIlIlIIlIll.y + lllllllllllllllllIIlIlIlIlIIllIl) * lllllllllllllllllIIlIlIlIlIIlIIl + lllllllllllllllllIIlIlIlIlIIlIll.x) * 4);
-                lllllllllllllllllIIlIlIlIlIIIlIl.put(lllllllllllllllllIIlIlIlIlIIllII);
+        n = Math.max(n, n3);
+        ByteBuffer byteBuffer = BufferUtils.createByteBuffer((int)(n * (n2 += n4) * 4));
+        for (Image image : this.images) {
+            byte[] arrby = new byte[image.width * 4];
+            for (int i = 0; i < image.height; ++i) {
+                ((Buffer)image.buffer).position(i * arrby.length);
+                image.buffer.get(arrby);
+                ((Buffer)byteBuffer).position(((image.y + i) * n + image.x) * 4);
+                byteBuffer.put(arrby);
+                if (null == null) continue;
+                return null;
             }
-            ((Buffer)lllllllllllllllllIIlIlIlIlIIlIll.buffer).rewind();
-            lllllllllllllllllIIlIlIlIlIIlIll.free();
-            lllllllllllllllllIIlIlIlIlIIlIll.region.x1 = (double)lllllllllllllllllIIlIlIlIlIIlIll.x / (double)lllllllllllllllllIIlIlIlIlIIlIIl;
-            lllllllllllllllllIIlIlIlIlIIlIll.region.y1 = (double)lllllllllllllllllIIlIlIlIlIIlIll.y / (double)lllllllllllllllllIIlIlIlIlIIlIII;
-            lllllllllllllllllIIlIlIlIlIIlIll.region.x2 = (double)(lllllllllllllllllIIlIlIlIlIIlIll.x + lllllllllllllllllIIlIlIlIlIIlIll.width) / (double)lllllllllllllllllIIlIlIlIlIIlIIl;
-            lllllllllllllllllIIlIlIlIlIIlIll.region.y2 = (double)(lllllllllllllllllIIlIlIlIlIIlIll.y + lllllllllllllllllIIlIlIlIlIIlIll.height) / (double)lllllllllllllllllIIlIlIlIlIIlIII;
+            ((Buffer)image.buffer).rewind();
+            image.free();
+            image.region.x1 = (double)image.x / (double)n;
+            image.region.y1 = (double)image.y / (double)n2;
+            image.region.x2 = (double)(image.x + image.width) / (double)n;
+            image.region.y2 = (double)(image.y + image.height) / (double)n2;
         }
-        ((Buffer)lllllllllllllllllIIlIlIlIlIIIlIl).rewind();
-        return new ByteTexture(lllllllllllllllllIIlIlIlIlIIlIIl, lllllllllllllllllIIlIlIlIlIIlIII, lllllllllllllllllIIlIlIlIlIIIlIl, ByteTexture.Format.RGBA, ByteTexture.Filter.Linear, ByteTexture.Filter.Linear);
+        ((Buffer)byteBuffer).rewind();
+        return new ByteTexture(n, n2, byteBuffer, ByteTexture.Format.RGBA, ByteTexture.Filter.Linear, ByteTexture.Filter.Linear);
     }
 
-    public TexturePacker() {
-        TexturePacker lllllllllllllllllIIlIlIllIlIIIlI;
-        lllllllllllllllllIIlIlIllIlIIIlI.images = new ArrayList<Image>();
-    }
-
-    private void addResized(GuiTexture lllllllllllllllllIIlIlIlIllIlIll, ByteBuffer lllllllllllllllllIIlIlIlIllIlIlI, int lllllllllllllllllIIlIlIlIllIlIIl, int lllllllllllllllllIIlIlIlIlIllllI, int lllllllllllllllllIIlIlIlIllIIlll) {
-        TexturePacker lllllllllllllllllIIlIlIlIllIIIlI;
-        double lllllllllllllllllIIlIlIlIllIIllI = (double)lllllllllllllllllIIlIlIlIllIIlll / (double)lllllllllllllllllIIlIlIlIllIlIIl;
-        int lllllllllllllllllIIlIlIlIllIIlIl = (int)((double)lllllllllllllllllIIlIlIlIlIllllI * lllllllllllllllllIIlIlIlIllIIllI);
-        ByteBuffer lllllllllllllllllIIlIlIlIllIIlII = BufferUtils.createByteBuffer((int)(lllllllllllllllllIIlIlIlIllIIlll * lllllllllllllllllIIlIlIlIllIIlIl * 4));
-        STBImageResize.stbir_resize_uint8((ByteBuffer)lllllllllllllllllIIlIlIlIllIlIlI, (int)lllllllllllllllllIIlIlIlIllIlIIl, (int)lllllllllllllllllIIlIlIlIlIllllI, (int)0, (ByteBuffer)lllllllllllllllllIIlIlIlIllIIlII, (int)lllllllllllllllllIIlIlIlIllIIlll, (int)lllllllllllllllllIIlIlIlIllIIlIl, (int)0, (int)4);
-        TextureRegion lllllllllllllllllIIlIlIlIllIIIll = new TextureRegion(lllllllllllllllllIIlIlIlIllIIlll, lllllllllllllllllIIlIlIlIllIIlIl);
-        lllllllllllllllllIIlIlIlIllIlIll.add(lllllllllllllllllIIlIlIlIllIIIll);
-        lllllllllllllllllIIlIlIlIllIIIlI.images.add(new Image(lllllllllllllllllIIlIlIlIllIIlII, lllllllllllllllllIIlIlIlIllIIIll, lllllllllllllllllIIlIlIlIllIIlll, lllllllllllllllllIIlIlIlIllIIlIl, false));
+    private void addResized(GuiTexture guiTexture, ByteBuffer byteBuffer, int n, int n2, int n3) {
+        double d = (double)n3 / (double)n;
+        int n4 = (int)((double)n2 * d);
+        ByteBuffer byteBuffer2 = BufferUtils.createByteBuffer((int)(n3 * n4 * 4));
+        STBImageResize.stbir_resize_uint8((ByteBuffer)byteBuffer, (int)n, (int)n2, (int)0, (ByteBuffer)byteBuffer2, (int)n3, (int)n4, (int)0, (int)4);
+        TextureRegion textureRegion = new TextureRegion(n3, n4);
+        guiTexture.add(textureRegion);
+        this.images.add(new Image(byteBuffer2, textureRegion, n3, n4, false));
     }
 
     private static class Image {
-        public /* synthetic */ int y;
-        private final /* synthetic */ boolean stb;
-        public final /* synthetic */ int height;
-        public final /* synthetic */ int width;
-        public final /* synthetic */ ByteBuffer buffer;
-        public final /* synthetic */ TextureRegion region;
-        public /* synthetic */ int x;
+        public int y;
+        private final boolean stb;
+        public final int height;
+        public final int width;
+        public final ByteBuffer buffer;
+        public final TextureRegion region;
+        public int x;
 
-        public Image(ByteBuffer lIllllIIlIIlI, TextureRegion lIllllIIlIIIl, int lIllllIIlIllI, int lIllllIIIllll, boolean lIllllIIIlllI) {
-            Image lIllllIIlIIll;
-            lIllllIIlIIll.buffer = lIllllIIlIIlI;
-            lIllllIIlIIll.region = lIllllIIlIIIl;
-            lIllllIIlIIll.width = lIllllIIlIllI;
-            lIllllIIlIIll.height = lIllllIIIllll;
-            lIllllIIlIIll.stb = lIllllIIIlllI;
+        public Image(ByteBuffer byteBuffer, TextureRegion textureRegion, int n, int n2, boolean bl) {
+            this.buffer = byteBuffer;
+            this.region = textureRegion;
+            this.width = n;
+            this.height = n2;
+            this.stb = bl;
         }
 
         public void free() {
-            Image lIllllIIIlIll;
-            if (lIllllIIIlIll.stb) {
-                STBImage.stbi_image_free((ByteBuffer)lIllllIIIlIll.buffer);
+            if (this.stb) {
+                STBImage.stbi_image_free((ByteBuffer)this.buffer);
             }
         }
     }

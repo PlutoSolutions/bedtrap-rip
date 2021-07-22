@@ -33,9 +33,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value={class_2266.class})
 public class CactusBlockMixin {
     @Inject(method={"getCollisionShape"}, at={@At(value="HEAD")}, cancellable=true)
-    private void onGetCollisionShape(class_2680 blockState_1, class_1922 blockView_1, class_2338 blockPos_1, class_3726 entityContext_1, CallbackInfoReturnable<class_265> infoR) {
+    private void onGetCollisionShape(class_2680 class_26802, class_1922 class_19222, class_2338 class_23382, class_3726 class_37262, CallbackInfoReturnable<class_265> callbackInfoReturnable) {
         if (Modules.get().isActive(AntiCactus.class)) {
-            infoR.setReturnValue((Object)class_259.method_1077());
+            callbackInfoReturnable.setReturnValue((Object)class_259.method_1077());
         }
     }
 }

@@ -10,29 +10,21 @@ import java.lang.ref.WeakReference;
 import java.util.IdentityHashMap;
 
 public class WeakMemoryHolder {
-    /* synthetic */ ReferenceQueue<Object> referenceQueue;
-    /* synthetic */ IdentityHashMap<Reference<Object>, Memory> backingMap;
+    ReferenceQueue<Object> referenceQueue = new ReferenceQueue();
+    IdentityHashMap<Reference<Object>, Memory> backingMap = new IdentityHashMap();
 
     public synchronized void clean() {
-        WeakMemoryHolder lllIIlllIlIIlII;
-        Reference<Object> lllIIlllIlIIlIl = lllIIlllIlIIlII.referenceQueue.poll();
-        while (lllIIlllIlIIlIl != null) {
-            lllIIlllIlIIlII.backingMap.remove(lllIIlllIlIIlIl);
-            lllIIlllIlIIlIl = lllIIlllIlIIlII.referenceQueue.poll();
+        Reference<Object> reference = this.referenceQueue.poll();
+        while (reference != null) {
+            this.backingMap.remove(reference);
+            reference = this.referenceQueue.poll();
         }
     }
 
-    public synchronized void put(Object lllIIlllIlIlIlI, Memory lllIIlllIlIlIIl) {
-        WeakMemoryHolder lllIIlllIlIlIll;
-        lllIIlllIlIlIll.clean();
-        WeakReference<Object> lllIIlllIlIllII = new WeakReference<Object>(lllIIlllIlIlIlI, lllIIlllIlIlIll.referenceQueue);
-        lllIIlllIlIlIll.backingMap.put(lllIIlllIlIllII, lllIIlllIlIlIIl);
-    }
-
-    public WeakMemoryHolder() {
-        WeakMemoryHolder lllIIlllIllIlIl;
-        lllIIlllIllIlIl.referenceQueue = new ReferenceQueue();
-        lllIIlllIllIlIl.backingMap = new IdentityHashMap();
+    public synchronized void put(Object object, Memory memory) {
+        this.clean();
+        WeakReference<Object> weakReference = new WeakReference<Object>(object, this.referenceQueue);
+        this.backingMap.put(weakReference, memory);
     }
 }
 

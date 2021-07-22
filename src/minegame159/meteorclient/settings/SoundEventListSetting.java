@@ -34,119 +34,119 @@ extends Setting<List<class_3414>> {
     }
 
     @Override
-    protected boolean isValueValid(List<class_3414> lllIllllllIlllI) {
+    protected boolean isValueValid(List<class_3414> list) {
         return true;
     }
 
     @Override
-    protected List<class_3414> parseImpl(String lllIllllllllIlI) {
-        String[] lllIllllllllIIl = lllIllllllllIlI.split(",");
-        ArrayList<class_3414> lllIllllllllIII = new ArrayList<class_3414>(lllIllllllllIIl.length);
-        try {
-            for (String lllIlllllllllII : lllIllllllllIIl) {
-                class_3414 lllIlllllllllIl = (class_3414)SoundEventListSetting.parseId(class_2378.field_11156, lllIlllllllllII);
-                if (lllIlllllllllIl == null) continue;
-                lllIllllllllIII.add(lllIlllllllllIl);
-            }
-        }
-        catch (Exception lllIlllllllIlII) {
-            // empty catch block
-        }
-        return lllIllllllllIII;
+    protected boolean isValueValid(Object object) {
+        return this.isValueValid((List)object);
     }
 
     @Override
-    public void reset(boolean llllIIIIIIIlIII) {
-        SoundEventListSetting llllIIIIIIIIlll;
-        llllIIIIIIIIlll.value = new ArrayList((Collection)llllIIIIIIIIlll.defaultValue);
-        if (llllIIIIIIIlIII) {
-            llllIIIIIIIIlll.changed();
+    protected List<class_3414> parseImpl(String string) {
+        String[] arrstring = string.split(",");
+        ArrayList<class_3414> arrayList = new ArrayList<class_3414>(arrstring.length);
+        try {
+            for (String string2 : arrstring) {
+                class_3414 class_34142 = (class_3414)SoundEventListSetting.parseId(class_2378.field_11156, string2);
+                if (class_34142 == null) continue;
+                arrayList.add(class_34142);
+                if (-3 <= 0) continue;
+                return null;
+            }
+        }
+        catch (Exception exception) {
+            // empty catch block
+        }
+        return arrayList;
+    }
+
+    @Override
+    public void reset(boolean bl) {
+        this.value = new ArrayList((Collection)this.defaultValue);
+        if (bl) {
+            this.changed();
         }
     }
 
-    public SoundEventListSetting(String llllIIIIIIllIII, String llllIIIIIIlIlll, List<class_3414> llllIIIIIIlIllI, Consumer<List<class_3414>> llllIIIIIIIlllI, Consumer<Setting<List<class_3414>>> llllIIIIIIlIlII, IVisible llllIIIIIIlIIll) {
-        super(llllIIIIIIllIII, llllIIIIIIlIlll, llllIIIIIIlIllI, llllIIIIIIIlllI, llllIIIIIIlIlII, llllIIIIIIlIIll);
-        SoundEventListSetting llllIIIIIIlIIlI;
-        llllIIIIIIlIIlI.value = new ArrayList<class_3414>(llllIIIIIIlIllI);
+    @Override
+    protected Object parseImpl(String string) {
+        return this.parseImpl(string);
+    }
+
+    public SoundEventListSetting(String string, String string2, List<class_3414> list, Consumer<List<class_3414>> consumer, Consumer<Setting<List<class_3414>>> consumer2, IVisible iVisible) {
+        super(string, string2, list, consumer, consumer2, iVisible);
+        this.value = new ArrayList<class_3414>(list);
     }
 
     @Override
     public class_2487 toTag() {
-        SoundEventListSetting lllIllllllIIIll;
-        class_2487 lllIllllllIIlIl = lllIllllllIIIll.saveGeneral();
-        class_2499 lllIllllllIIlII = new class_2499();
-        for (class_3414 lllIllllllIIlll : (List)lllIllllllIIIll.get()) {
-            lllIllllllIIlII.add((Object)class_2519.method_23256((String)class_2378.field_11156.method_10221((Object)lllIllllllIIlll).toString()));
+        class_2487 class_24872 = this.saveGeneral();
+        class_2499 class_24992 = new class_2499();
+        for (class_3414 class_34142 : (List)this.get()) {
+            class_24992.add((Object)class_2519.method_23256((String)class_2378.field_11156.method_10221((Object)class_34142).toString()));
         }
-        lllIllllllIIlIl.method_10566("value", (class_2520)lllIllllllIIlII);
-        return lllIllllllIIlIl;
+        class_24872.method_10566("value", (class_2520)class_24992);
+        return class_24872;
     }
 
     @Override
-    public List<class_3414> fromTag(class_2487 lllIlllllIlIlll) {
-        SoundEventListSetting lllIlllllIlIlIl;
-        ((List)lllIlllllIlIlIl.get()).clear();
-        class_2499 lllIlllllIlIllI = lllIlllllIlIlll.method_10554("value", 8);
-        for (class_2520 lllIlllllIllIIl : lllIlllllIlIllI) {
-            ((List)lllIlllllIlIlIl.get()).add((class_3414)class_2378.field_11156.method_10223(new class_2960(lllIlllllIllIIl.method_10714())));
+    public List<class_3414> fromTag(class_2487 class_24872) {
+        ((List)this.get()).clear();
+        class_2499 class_24992 = class_24872.method_10554("value", 8);
+        for (class_2520 class_25202 : class_24992) {
+            ((List)this.get()).add((class_3414)class_2378.field_11156.method_10223(new class_2960(class_25202.method_10714())));
         }
-        lllIlllllIlIlIl.changed();
-        return (List)lllIlllllIlIlIl.get();
+        this.changed();
+        return (List)this.get();
+    }
+
+    @Override
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
     public static class Builder {
-        private /* synthetic */ String description;
-        private /* synthetic */ Consumer<Setting<List<class_3414>>> onModuleActivated;
-        private /* synthetic */ IVisible visible;
-        private /* synthetic */ Consumer<List<class_3414>> onChanged;
-        private /* synthetic */ String name;
-        private /* synthetic */ List<class_3414> defaultValue;
+        private String description = "";
+        private Consumer<Setting<List<class_3414>>> onModuleActivated;
+        private IVisible visible;
+        private Consumer<List<class_3414>> onChanged;
+        private String name = "undefined";
+        private List<class_3414> defaultValue;
 
-        public Builder() {
-            Builder lIIIIllllIIlll;
-            lIIIIllllIIlll.name = "undefined";
-            lIIIIllllIIlll.description = "";
+        public Builder onModuleActivated(Consumer<Setting<List<class_3414>>> consumer) {
+            this.onModuleActivated = consumer;
+            return this;
         }
 
-        public Builder onModuleActivated(Consumer<Setting<List<class_3414>>> lIIIIlllIIlIll) {
-            Builder lIIIIlllIIllII;
-            lIIIIlllIIllII.onModuleActivated = lIIIIlllIIlIll;
-            return lIIIIlllIIllII;
+        public Builder defaultValue(List<class_3414> list) {
+            this.defaultValue = list;
+            return this;
         }
 
-        public Builder defaultValue(List<class_3414> lIIIIlllIlIlll) {
-            Builder lIIIIlllIlIllI;
-            lIIIIlllIlIllI.defaultValue = lIIIIlllIlIlll;
-            return lIIIIlllIlIllI;
-        }
-
-        public Builder description(String lIIIIlllIlllIl) {
-            Builder lIIIIlllIlllII;
-            lIIIIlllIlllII.description = lIIIIlllIlllIl;
-            return lIIIIlllIlllII;
+        public Builder description(String string) {
+            this.description = string;
+            return this;
         }
 
         public SoundEventListSetting build() {
-            Builder lIIIIlllIIIIIl;
-            return new SoundEventListSetting(lIIIIlllIIIIIl.name, lIIIIlllIIIIIl.description, lIIIIlllIIIIIl.defaultValue, lIIIIlllIIIIIl.onChanged, lIIIIlllIIIIIl.onModuleActivated, lIIIIlllIIIIIl.visible);
+            return new SoundEventListSetting(this.name, this.description, this.defaultValue, this.onChanged, this.onModuleActivated, this.visible);
         }
 
-        public Builder name(String lIIIIllllIIIll) {
-            Builder lIIIIllllIIlII;
-            lIIIIllllIIlII.name = lIIIIllllIIIll;
-            return lIIIIllllIIlII;
+        public Builder name(String string) {
+            this.name = string;
+            return this;
         }
 
-        public Builder onChanged(Consumer<List<class_3414>> lIIIIlllIIllll) {
-            Builder lIIIIlllIlIIlI;
-            lIIIIlllIlIIlI.onChanged = lIIIIlllIIllll;
-            return lIIIIlllIlIIlI;
+        public Builder onChanged(Consumer<List<class_3414>> consumer) {
+            this.onChanged = consumer;
+            return this;
         }
 
-        public Builder visible(IVisible lIIIIlllIIIIll) {
-            Builder lIIIIlllIIIlII;
-            lIIIIlllIIIlII.visible = lIIIIlllIIIIll;
-            return lIIIIlllIIIlII;
+        public Builder visible(IVisible iVisible) {
+            this.visible = iVisible;
+            return this;
         }
     }
 }

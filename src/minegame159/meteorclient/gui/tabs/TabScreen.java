@@ -11,17 +11,15 @@ import minegame159.meteorclient.gui.widgets.WWidget;
 
 public class TabScreen
 extends WidgetScreen {
-    public final /* synthetic */ Tab tab;
+    public final Tab tab;
 
-    public TabScreen(GuiTheme llllllllllllllllIlllIIIlIIlllllI, Tab llllllllllllllllIlllIIIlIIlllIlI) {
-        super(llllllllllllllllIlllIIIlIIlllllI, llllllllllllllllIlllIIIlIIlllIlI.name);
-        TabScreen llllllllllllllllIlllIIIlIIllllII;
-        llllllllllllllllIlllIIIlIIllllII.tab = llllllllllllllllIlllIIIlIIlllIlI;
+    public TabScreen(GuiTheme guiTheme, Tab tab) {
+        super(guiTheme, tab.name);
+        this.tab = tab;
     }
 
-    public <T extends WWidget> Cell<T> addDirect(T llllllllllllllllIlllIIIlIIllIllI) {
-        TabScreen llllllllllllllllIlllIIIlIIllIlIl;
-        return super.add(llllllllllllllllIlllIIIlIIllIllI);
+    public <T extends WWidget> Cell<T> addDirect(T t) {
+        return super.add(t);
     }
 }
 

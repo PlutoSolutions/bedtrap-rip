@@ -12,97 +12,105 @@ import minegame159.meteorclient.utils.misc.ISerializable;
 import minegame159.meteorclient.utils.misc.input.Input;
 import net.minecraft.class_2487;
 
+/*
+ * Duplicate member names - consider using --renamedupmembers true
+ */
 public class Keybind
 implements ISerializable<Keybind>,
 ICopyable<Keybind> {
-    private /* synthetic */ boolean isKey;
-    private /* synthetic */ int value;
+    private boolean isKey;
+    private int value;
 
-    public void set(boolean lllIIlIlIlllI, int lllIIlIllIIII) {
-        lllIIlIllIIlI.isKey = lllIIlIlIlllI;
-        lllIIlIllIIlI.value = lllIIlIllIIII;
+    public void set(boolean bl, int n) {
+        this.isKey = bl;
+        this.value = n;
     }
 
-    public boolean canBindTo(boolean lllIIlIllIlll, int lllIIlIllIllI) {
-        if (lllIIlIllIlll) {
+    public boolean canBindTo(boolean bl, int n) {
+        if (bl) {
             return true;
         }
-        return lllIIlIllIllI != 0 && lllIIlIllIllI != 1;
+        return n != 0 && n != 1;
     }
 
-    private Keybind(boolean lllIIllIIllIl, int lllIIllIIlIIl) {
-        Keybind lllIIllIIlIll;
-        lllIIllIIlIll.set(lllIIllIIllIl, lllIIllIIlIIl);
+    private Keybind(boolean bl, int n) {
+        this.set(bl, n);
     }
 
     @Override
     public Keybind copy() {
-        Keybind lllIIlIIllIIl;
-        return new Keybind(lllIIlIIllIIl.isKey, lllIIlIIllIIl.value);
+        return new Keybind(this.isKey, this.value);
     }
 
-    public boolean matches(boolean lllIIlIIlllll, int lllIIlIlIIIIl) {
-        Keybind lllIIlIlIIIII;
-        if (lllIIlIlIIIII.isKey != lllIIlIIlllll) {
+    public boolean matches(boolean bl, int n) {
+        if (this.isKey != bl) {
             return false;
         }
-        return lllIIlIlIIIII.value == lllIIlIlIIIIl;
+        return this.value == n;
     }
 
     @Override
     public class_2487 toTag() {
-        Keybind lllIIIlIIllll;
-        class_2487 lllIIIlIlIIII = new class_2487();
-        lllIIIlIlIIII.method_10556("isKey", lllIIIlIIllll.isKey);
-        lllIIIlIlIIII.method_10569("value", lllIIIlIIllll.value);
-        return lllIIIlIlIIII;
+        class_2487 class_24872 = new class_2487();
+        class_24872.method_10556("isKey", this.isKey);
+        class_24872.method_10569("value", this.value);
+        return class_24872;
     }
 
     public int getValue() {
-        Keybind lllIIllIIIIIl;
-        return lllIIllIIIIIl.value;
+        return this.value;
     }
 
-    public static Keybind fromKey(int lllIIllIIIllI) {
-        return new Keybind(true, lllIIllIIIllI);
+    public static Keybind fromKey(int n) {
+        return new Keybind(true, n);
+    }
+
+    @Override
+    public ICopyable copy() {
+        return this.copy();
     }
 
     public boolean isPressed() {
-        Keybind lllIIlIIlllII;
-        return lllIIlIIlllII.isKey ? Input.isKeyPressed(lllIIlIIlllII.value) : Input.isButtonPressed(lllIIlIIlllII.value);
+        return this.isKey ? Input.isKeyPressed(this.value) : Input.isButtonPressed(this.value);
     }
 
     @Override
-    public Keybind set(Keybind lllIIlIlIIlll) {
-        Keybind lllIIlIlIlIII;
-        lllIIlIlIlIII.isKey = lllIIlIlIIlll.isKey;
-        lllIIlIlIlIII.value = lllIIlIlIIlll.value;
-        return lllIIlIlIlIII;
+    public ICopyable set(ICopyable iCopyable) {
+        return this.set((Keybind)iCopyable);
     }
 
     @Override
-    public Keybind fromTag(class_2487 lllIIIlIIlIlI) {
-        Keybind lllIIIlIIlIIl;
-        lllIIIlIIlIIl.isKey = lllIIIlIIlIlI.method_10577("isKey");
-        lllIIIlIIlIIl.value = lllIIIlIIlIlI.method_10550("value");
-        return lllIIIlIIlIIl;
+    public Object fromTag(class_2487 class_24872) {
+        return this.fromTag(class_24872);
     }
 
-    public static Keybind fromButton(int lllIIllIIIlII) {
-        return new Keybind(false, lllIIllIIIlII);
+    @Override
+    public Keybind set(Keybind keybind) {
+        this.isKey = keybind.isKey;
+        this.value = keybind.value;
+        return this;
+    }
+
+    @Override
+    public Keybind fromTag(class_2487 class_24872) {
+        this.isKey = class_24872.method_10577("isKey");
+        this.value = class_24872.method_10550("value");
+        return this;
+    }
+
+    public static Keybind fromButton(int n) {
+        return new Keybind(false, n);
     }
 
     public String toString() {
-        Keybind lllIIIlIlIlII;
-        if (lllIIIlIlIlII.value == -1) {
+        if (this.value == -1) {
             return "None";
         }
-        return lllIIIlIlIlII.isKey ? Utils.getKeyName(lllIIIlIlIlII.value) : Utils.getButtonName(lllIIIlIlIlII.value);
+        return this.isKey ? Utils.getKeyName(this.value) : Utils.getButtonName(this.value);
     }
 
     public boolean isSet() {
-        Keybind lllIIlIllllIl;
-        return lllIIlIllllIl.value != -1;
+        return this.value != -1;
     }
 }
 
