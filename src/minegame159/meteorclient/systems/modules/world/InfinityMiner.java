@@ -1,19 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  baritone.api.pathing.goals.Goal
- *  baritone.api.pathing.goals.GoalBlock
- *  com.google.common.collect.Lists
- *  net.minecraft.class_1831
- *  net.minecraft.class_1922
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2404
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_2661
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 
@@ -184,8 +170,8 @@ extends Module {
     public String getInfoString() {
         switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$world$InfinityMiner$Mode[this.getMode().ordinal()]) {
             case 1: {
-                int[] arrn = this.getHomeCoords();
-                return String.valueOf(new StringBuilder().append("Heading Home: ").append(arrn[0]).append(" ").append(arrn[1]).append(" ").append(arrn[2]));
+                int[] nArray = this.getHomeCoords();
+                return String.valueOf(new StringBuilder().append("Heading Home: ").append(nArray[0]).append(" ").append(nArray[1]).append(" ").append(nArray[2]));
             }
             case 2: {
                 return String.valueOf(new StringBuilder().append("Mining: ").append(this.getCurrentTarget().method_9518().getString()));

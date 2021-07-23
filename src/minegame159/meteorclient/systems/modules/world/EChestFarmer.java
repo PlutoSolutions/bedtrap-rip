@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1887
- *  net.minecraft.class_1890
- *  net.minecraft.class_1893
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_3965
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 
@@ -48,11 +36,9 @@ extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre pre) {
-        if (this.selfToggle.get().booleanValue()) {
-            if (InvUtils.find(class_1802.field_8281).getCount() - (this.ignoreExisting.get() != false ? this.startCount : 0) >= this.amount.get()) {
-                this.toggle();
-                return;
-            }
+        if (this.selfToggle.get().booleanValue() && InvUtils.find(class_1802.field_8281).getCount() - (this.ignoreExisting.get() != false ? this.startCount : 0) >= this.amount.get()) {
+            this.toggle();
+            return;
         }
         if (this.mc.field_1765.method_17783() != class_239.class_240.field_1332) {
             return;

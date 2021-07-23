@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1297
- *  net.minecraft.class_1665
- *  net.minecraft.class_1676
- *  net.minecraft.class_1922
- *  net.minecraft.class_2338
- *  net.minecraft.class_238
- *  net.minecraft.class_243
- *  net.minecraft.class_259
- *  net.minecraft.class_2596
- *  net.minecraft.class_2828$class_2829
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -127,7 +115,7 @@ extends Module {
         this.moveType = this.sgMovement.add(new EnumSetting.Builder().name("move-type").description("The way you are moved by this module").defaultValue(MoveType.Client).build());
         this.moveSpeed = this.sgMovement.add(new DoubleSetting.Builder().name("move-speed").description("How fast should you be when dodging arrow").defaultValue(1.0).min(0.01).sliderMax(5.0).build());
         this.groundCheck = this.sgGeneral.add(new BoolSetting.Builder().name("ground-check").description("Tries to prevent you from falling to your death.").defaultValue(true).build());
-        this.possibleMoveDirections = Arrays.asList(new class_243[]{new class_243(1.0, 0.0, 1.0), new class_243(0.0, 0.0, 1.0), new class_243(-1.0, 0.0, 1.0), new class_243(1.0, 0.0, 0.0), new class_243(-1.0, 0.0, 0.0), new class_243(1.0, 0.0, -1.0), new class_243(0.0, 0.0, -1.0), new class_243(-1.0, 0.0, -1.0)});
+        this.possibleMoveDirections = Arrays.asList(new class_243(1.0, 0.0, 1.0), new class_243(0.0, 0.0, 1.0), new class_243(-1.0, 0.0, 1.0), new class_243(1.0, 0.0, 0.0), new class_243(-1.0, 0.0, 0.0), new class_243(1.0, 0.0, -1.0), new class_243(0.0, 0.0, -1.0), new class_243(-1.0, 0.0, -1.0));
     }
 
     public static enum MoveType {

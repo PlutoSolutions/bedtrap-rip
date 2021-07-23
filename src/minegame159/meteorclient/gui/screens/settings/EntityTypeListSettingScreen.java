@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  net.minecraft.class_1299
- *  net.minecraft.class_2378
- *  net.minecraft.class_3545
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.screens.settings;
 
@@ -242,25 +236,25 @@ extends WindowScreen {
         this.hasMonster = 0;
         this.hasWaterAnimal = 0;
         this.hasAnimal = 0;
-        block7: for (Object object2 : ((Object2BooleanMap)this.setting.get()).keySet()) {
+        for (Object object2 : ((Object2BooleanMap)this.setting.get()).keySet()) {
             if (!((Object2BooleanMap)this.setting.get()).getBoolean(object2) || this.setting.onlyAttackable && !EntityUtils.isAttackable(object2)) continue;
             switch (1.$SwitchMap$net$minecraft$entity$SpawnGroup[object2.method_5891().ordinal()]) {
                 case 1: {
                     ++this.hasAnimal;
-                    continue block7;
+                    break;
                 }
                 case 2: 
                 case 3: {
                     ++this.hasWaterAnimal;
-                    continue block7;
+                    break;
                 }
                 case 4: {
                     ++this.hasMonster;
-                    continue block7;
+                    break;
                 }
                 case 5: {
                     ++this.hasAmbient;
-                    continue block7;
+                    break;
                 }
                 case 6: {
                     ++this.hasMisc;

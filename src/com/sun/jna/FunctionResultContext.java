@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -15,10 +15,10 @@ extends FromNativeContext {
         return this.function;
     }
 
-    FunctionResultContext(Class<?> class_, Function function, Object[] arrobject) {
-        super(class_);
+    FunctionResultContext(Class<?> clazz, Function function, Object[] objectArray) {
+        super(clazz);
         this.function = function;
-        this.args = arrobject;
+        this.args = objectArray;
     }
 
     public Object[] getArguments() {

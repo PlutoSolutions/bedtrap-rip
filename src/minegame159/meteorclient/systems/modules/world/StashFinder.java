@@ -1,30 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  baritone.api.pathing.goals.Goal
- *  baritone.api.pathing.goals.GoalXZ
- *  com.google.common.reflect.TypeToken
- *  com.google.gson.Gson
- *  com.google.gson.GsonBuilder
- *  com.mojang.blaze3d.systems.RenderSystem
- *  net.minecraft.class_1923
- *  net.minecraft.class_2586
- *  net.minecraft.class_2591
- *  net.minecraft.class_2595
- *  net.minecraft.class_2601
- *  net.minecraft.class_2609
- *  net.minecraft.class_2611
- *  net.minecraft.class_2614
- *  net.minecraft.class_2627
- *  net.minecraft.class_2960
- *  net.minecraft.class_368
- *  net.minecraft.class_368$class_369
- *  net.minecraft.class_3719
- *  net.minecraft.class_374
- *  net.minecraft.class_437
- *  net.minecraft.class_4587
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 
@@ -126,7 +101,7 @@ extends Module {
         }
         Chunk chunk = new Chunk(chunkDataEvent.chunk.method_12004());
         for (class_2586 class_25862 : chunkDataEvent.chunk.method_12214().values()) {
-            if (!this.storageBlocks.get().contains((Object)class_25862.method_11017())) continue;
+            if (!this.storageBlocks.get().contains(class_25862.method_11017())) continue;
             if (class_25862 instanceof class_2595) {
                 ++chunk.chests;
                 continue;
@@ -382,11 +357,11 @@ extends Module {
                 return false;
             }
             Chunk chunk = (Chunk)object;
-            return Objects.equals((Object)this.chunkPos, (Object)chunk.chunkPos);
+            return Objects.equals(this.chunkPos, chunk.chunkPos);
         }
 
         public int hashCode() {
-            return Objects.hash(new Object[]{this.chunkPos});
+            return Objects.hash(this.chunkPos);
         }
 
         public void calculatePos() {

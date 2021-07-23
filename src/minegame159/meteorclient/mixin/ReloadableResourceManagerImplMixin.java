@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2960
- *  net.minecraft.class_3298
- *  net.minecraft.class_3304
- *  net.minecraft.class_3306
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 

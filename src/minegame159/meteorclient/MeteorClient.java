@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.fabricmc.api.ClientModInitializer
- *  net.fabricmc.loader.api.FabricLoader
- *  net.fabricmc.loader.api.entrypoint.EntrypointContainer
- *  net.minecraft.class_1293
- *  net.minecraft.class_310
- *  net.minecraft.class_408
- *  net.minecraft.class_437
- *  net.minecraft.class_4587
- *  org.apache.logging.log4j.LogManager
- *  org.apache.logging.log4j.Logger
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient;
 
@@ -77,16 +65,16 @@ implements ClientModInitializer {
     public static CustomTextRenderer FONT;
     public static final Logger LOG;
 
-    public static String bytesToHex(byte[] arrby) {
-        char[] arrc = new char[arrby.length * 2];
-        for (int i = 0; i < arrby.length; ++i) {
-            int n = arrby[i] & 0xFF;
-            arrc[i * 2] = hexArray[n >>> 4];
-            arrc[i * 2 + 1] = hexArray[n & 0xF];
+    public static String bytesToHex(byte[] byArray) {
+        char[] cArray = new char[byArray.length * 2];
+        for (int i = 0; i < byArray.length; ++i) {
+            int n = byArray[i] & 0xFF;
+            cArray[i * 2] = hexArray[n >>> 4];
+            cArray[i * 2 + 1] = hexArray[n & 0xF];
             if (null == null) continue;
             return null;
         }
-        return new String(arrc);
+        return new String(cArray);
     }
 
     public void onInitializeClient() {

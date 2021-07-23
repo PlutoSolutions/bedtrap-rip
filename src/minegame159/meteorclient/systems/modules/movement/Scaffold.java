@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1747
- *  net.minecraft.class_1799
- *  net.minecraft.class_1922
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2346
- *  net.minecraft.class_2382
- *  net.minecraft.class_265
- *  net.minecraft.class_2680
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.movement;
 
@@ -151,10 +139,10 @@ extends Module {
             return false;
         }
         class_2248 class_22482 = ((class_1747)class_17992.method_7909()).method_7711();
-        if (this.blocksFilter.get() == ListMode.Blacklist && this.blocks.get().contains((Object)class_22482)) {
+        if (this.blocksFilter.get() == ListMode.Blacklist && this.blocks.get().contains(class_22482)) {
             return false;
         }
-        if (this.blocksFilter.get() == ListMode.Whitelist && !this.blocks.get().contains((Object)class_22482)) {
+        if (this.blocksFilter.get() == ListMode.Whitelist && !this.blocks.get().contains(class_22482)) {
             return false;
         }
         if (!class_2248.method_9614((class_265)class_22482.method_9564().method_26220((class_1922)this.mc.field_1687, class_23382))) {

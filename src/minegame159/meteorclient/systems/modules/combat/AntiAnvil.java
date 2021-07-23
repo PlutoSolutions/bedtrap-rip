@@ -1,10 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1802
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -36,12 +31,9 @@ extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre pre) {
+        class_2338 class_23382;
         int n = 0;
-        while ((float)n <= this.mc.field_1761.method_2904()) {
-            class_2338 class_23382 = this.mc.field_1724.method_24515().method_10069(0, n + 3, 0);
-            if (this.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_10535 && this.mc.field_1687.method_8320(class_23382.method_10074()).method_26215()) {
-                if (BlockUtils.place(class_23382.method_10074(), InvUtils.findInHotbar(class_1802.field_8281), this.rotate.get(), 15, this.swing.get(), true)) break;
-            }
+        while (!(!((float)n <= this.mc.field_1761.method_2904()) || this.mc.field_1687.method_8320(class_23382 = this.mc.field_1724.method_24515().method_10069(0, n + 3, 0)).method_26204() == class_2246.field_10535 && this.mc.field_1687.method_8320(class_23382.method_10074()).method_26215() && BlockUtils.place(class_23382.method_10074(), InvUtils.findInHotbar(class_1802.field_8281), this.rotate.get(), 15, this.swing.get(), true))) {
             ++n;
             if (-1 < 3) continue;
             return;

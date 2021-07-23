@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.themes.meteor;
 
@@ -106,8 +106,8 @@ extends GuiTheme {
     }
 
     @Override
-    public <T> WDropdown<T> dropdown(T[] arrT, T t) {
-        return this.w(new WMeteorDropdown<T>(arrT, t));
+    public <T> WDropdown<T> dropdown(T[] TArray, T t) {
+        return this.w(new WMeteorDropdown<T>(TArray, t));
     }
 
     private static void lambda$new$1(Boolean bl) {

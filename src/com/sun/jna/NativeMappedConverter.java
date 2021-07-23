@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -25,15 +25,15 @@ implements TypeConverter {
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    public static NativeMappedConverter getInstance(Class<?> class_) {
+    public static NativeMappedConverter getInstance(Class<?> clazz) {
         Map<Class<?>, Reference<NativeMappedConverter>> map = converters;
         synchronized (map) {
             NativeMappedConverter nativeMappedConverter;
-            Reference<NativeMappedConverter> reference = converters.get(class_);
+            Reference<NativeMappedConverter> reference = converters.get(clazz);
             NativeMappedConverter nativeMappedConverter2 = nativeMappedConverter = reference != null ? reference.get() : null;
             if (nativeMappedConverter == null) {
-                nativeMappedConverter = new NativeMappedConverter(class_);
-                converters.put(class_, new SoftReference<NativeMappedConverter>(nativeMappedConverter));
+                nativeMappedConverter = new NativeMappedConverter(clazz);
+                converters.put(clazz, new SoftReference<NativeMappedConverter>(nativeMappedConverter));
             }
             return nativeMappedConverter;
         }
@@ -44,11 +44,11 @@ implements TypeConverter {
         return this.nativeType;
     }
 
-    public NativeMappedConverter(Class<?> class_) {
-        if (!NativeMapped.class.isAssignableFrom(class_)) {
+    public NativeMappedConverter(Class<?> clazz) {
+        if (!NativeMapped.class.isAssignableFrom(clazz)) {
             throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Type must derive from ").append(NativeMapped.class)));
         }
-        this.type = class_;
+        this.type = clazz;
         this.instance = this.defaultValue();
         this.nativeType = this.instance.nativeType();
     }

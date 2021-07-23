@@ -1,34 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  me.jellysquid.mods.sodium.client.model.light.data.QuadLightData
- *  me.jellysquid.mods.sodium.client.model.quad.ModelQuad
- *  me.jellysquid.mods.sodium.client.model.quad.ModelQuadView
- *  me.jellysquid.mods.sodium.client.model.quad.ModelQuadViewMutable
- *  me.jellysquid.mods.sodium.client.model.quad.blender.BiomeColorBlender
- *  me.jellysquid.mods.sodium.client.model.quad.properties.ModelQuadFacing
- *  me.jellysquid.mods.sodium.client.model.quad.properties.ModelQuadOrientation
- *  me.jellysquid.mods.sodium.client.model.quad.sink.ModelQuadSinkDelegate
- *  me.jellysquid.mods.sodium.client.render.pipeline.BlockRenderer
- *  me.jellysquid.mods.sodium.client.util.ModelQuadUtil
- *  me.jellysquid.mods.sodium.client.util.color.ColorABGR
- *  net.minecraft.class_1087
- *  net.minecraft.class_1920
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_243
- *  net.minecraft.class_2680
- *  net.minecraft.class_322
- *  net.minecraft.class_777
- *  org.spongepowered.asm.mixin.Final
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Shadow
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.At$Shift
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfo
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin.sodium;
 
@@ -74,7 +45,7 @@ public class SodiumBlockRendererMixin {
     @Inject(method={"renderQuad"}, at={@At(value="INVOKE", target="Lme/jellysquid/mods/sodium/client/model/quad/ModelQuadViewMutable;setColor(II)V", shift=At.Shift.AFTER)}, cancellable=true)
     private void onRenderQuad(class_1920 class_19202, class_2680 class_26802, class_2338 class_23382, ModelQuadSinkDelegate modelQuadSinkDelegate, class_243 class_2432, class_322 class_3222, class_777 class_7772, QuadLightData quadLightData, ModelQuadFacing modelQuadFacing, CallbackInfo callbackInfo) {
         WallHack wallHack = Modules.get().get(WallHack.class);
-        if (wallHack.isActive() && wallHack.blocks.get().contains((Object)class_26802.method_26204())) {
+        if (wallHack.isActive() && wallHack.blocks.get().contains(class_26802.method_26204())) {
             this.whRenderQuad(class_19202, class_26802, class_23382, modelQuadSinkDelegate, class_2432, class_3222, class_7772, quadLightData, modelQuadFacing, wallHack);
             callbackInfo.cancel();
         }
@@ -93,16 +64,16 @@ public class SodiumBlockRendererMixin {
         ModelQuadOrientation modelQuadOrientation = ModelQuadOrientation.orient((float[])quadLightData.br);
         ModelQuad modelQuad = this.cachedQuad;
         int n = ModelQuadUtil.getFacingNormal((class_2350)class_7772.method_3358());
-        int[] arrn = null;
+        int[] nArray = null;
         if (class_7772.method_3360()) {
-            arrn = this.biomeColorBlender.getColors(class_3222, class_19202, class_26802, class_23382, modelQuadView);
+            nArray = this.biomeColorBlender.getColors(class_3222, class_19202, class_26802, class_23382, modelQuadView);
         }
         for (int i = 0; i < 4; ++i) {
             int n2 = modelQuadOrientation.getVertexIndex(i);
             modelQuad.setX(i, modelQuadView.getX(n2) + (float)class_2432.method_10216());
             modelQuad.setY(i, modelQuadView.getY(n2) + (float)class_2432.method_10214());
             modelQuad.setZ(i, modelQuadView.getZ(n2) + (float)class_2432.method_10215());
-            int n3 = ColorABGR.mul((int)(arrn != null ? arrn[n2] : -1), (float)quadLightData.br[n2]);
+            int n3 = ColorABGR.mul((int)(nArray != null ? nArray[n2] : -1), (float)quadLightData.br[n2]);
             int n4 = wallHack.opacity.get();
             int n5 = ColorABGR.unpackBlue((int)n3);
             int n6 = ColorABGR.unpackGreen((int)n3);

@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  io.netty.buffer.Unpooled
- *  net.minecraft.class_2540
- *  net.minecraft.class_2817
- *  net.minecraft.class_2960
- *  org.apache.commons.lang3.StringUtils
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.misc;
 

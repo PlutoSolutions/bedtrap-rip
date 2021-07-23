@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1921
- *  net.minecraft.class_2680
- *  net.minecraft.class_4696
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 
@@ -27,7 +18,7 @@ public class RenderLayersMixin {
     @Inject(method={"getBlockLayer"}, at={@At(value="HEAD")}, cancellable=true)
     private static void onGetBlockLayer(class_2680 class_26802, CallbackInfoReturnable<class_1921> callbackInfoReturnable) {
         WallHack wallHack;
-        if (Modules.get() != null && (wallHack = Modules.get().get(WallHack.class)).isActive() && wallHack.blocks.get().contains((Object)class_26802.method_26204())) {
+        if (Modules.get() != null && (wallHack = Modules.get().get(WallHack.class)).isActive() && wallHack.blocks.get().contains(class_26802.method_26204())) {
             callbackInfoReturnable.setReturnValue((Object)class_1921.method_23583());
         }
     }

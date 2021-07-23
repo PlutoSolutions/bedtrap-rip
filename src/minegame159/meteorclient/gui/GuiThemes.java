@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2487
- *  net.minecraft.class_2507
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui;
 
@@ -26,13 +22,13 @@ public class GuiThemes {
     private static final File THEMES_FOLDER;
 
     public static String[] getNames() {
-        String[] arrstring = new String[themes.size()];
+        String[] stringArray = new String[themes.size()];
         for (int i = 0; i < themes.size(); ++i) {
-            arrstring[i] = GuiThemes.themes.get((int)i).name;
+            stringArray[i] = GuiThemes.themes.get((int)i).name;
             if (0 >= 0) continue;
             return null;
         }
-        return arrstring;
+        return stringArray;
     }
 
     static {

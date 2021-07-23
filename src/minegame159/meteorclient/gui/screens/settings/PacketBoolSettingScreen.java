@@ -1,8 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2596
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.screens.settings;
 
@@ -28,8 +25,8 @@ extends LeftRightListSettingScreen<Class<? extends class_2596<?>>> {
     }
 
     @Override
-    protected WWidget getValueWidget(Class<? extends class_2596<?>> class_) {
-        return this.theme.label(this.getValueName(class_));
+    protected WWidget getValueWidget(Class<? extends class_2596<?>> clazz) {
+        return this.theme.label(this.getValueName(clazz));
     }
 
     public PacketBoolSettingScreen(GuiTheme guiTheme, Setting<Set<Class<? extends class_2596<?>>>> setting) {
@@ -37,8 +34,8 @@ extends LeftRightListSettingScreen<Class<? extends class_2596<?>>> {
     }
 
     @Override
-    protected String getValueName(Class<? extends class_2596<?>> class_) {
-        return PacketUtils.getName(class_);
+    protected String getValueName(Class<? extends class_2596<?>> clazz) {
+        return PacketUtils.getName(clazz);
     }
 }
 

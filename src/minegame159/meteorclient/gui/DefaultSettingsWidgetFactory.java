@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.ints.IntArrayList
- *  it.unimi.dsi.fastutil.ints.IntList
- *  net.minecraft.class_2248
- *  net.minecraft.class_437
- *  org.apache.commons.lang3.StringUtils
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui;
 
@@ -301,28 +294,28 @@ implements SettingsWidgetFactory {
 
     public DefaultSettingsWidgetFactory(GuiTheme guiTheme) {
         this.theme = guiTheme;
-        this.factories.put(BoolSetting.class, (arg_0, arg_1) -> this.lambda$new$0(arg_0, arg_1));
-        this.factories.put(IntSetting.class, (arg_0, arg_1) -> this.lambda$new$1(arg_0, arg_1));
-        this.factories.put(DoubleSetting.class, (arg_0, arg_1) -> this.lambda$new$2(arg_0, arg_1));
-        this.factories.put(EnumSetting.class, (arg_0, arg_1) -> this.lambda$new$3(arg_0, arg_1));
-        this.factories.put(PotionSetting.class, (arg_0, arg_1) -> this.lambda$new$4(arg_0, arg_1));
-        this.factories.put(ColorSetting.class, (arg_0, arg_1) -> this.lambda$new$5(arg_0, arg_1));
-        this.factories.put(StringSetting.class, (arg_0, arg_1) -> this.lambda$new$6(arg_0, arg_1));
-        this.factories.put(ProvidedStringSetting.class, (arg_0, arg_1) -> this.lambda$new$7(arg_0, arg_1));
-        this.factories.put(BlockSetting.class, (arg_0, arg_1) -> this.lambda$new$8(arg_0, arg_1));
-        this.factories.put(KeybindSetting.class, (arg_0, arg_1) -> this.lambda$new$9(arg_0, arg_1));
-        this.factories.put(GenericSetting.class, (arg_0, arg_1) -> this.lambda$new$10(arg_0, arg_1));
-        this.factories.put(BlockListSetting.class, (arg_0, arg_1) -> this.lambda$new$11(arg_0, arg_1));
-        this.factories.put(ItemListSetting.class, (arg_0, arg_1) -> this.lambda$new$12(arg_0, arg_1));
-        this.factories.put(EntityTypeListSetting.class, (arg_0, arg_1) -> this.lambda$new$13(arg_0, arg_1));
-        this.factories.put(EnchListSetting.class, (arg_0, arg_1) -> this.lambda$new$14(arg_0, arg_1));
-        this.factories.put(ModuleListSetting.class, (arg_0, arg_1) -> this.lambda$new$15(arg_0, arg_1));
-        this.factories.put(PacketBoolSetting.class, (arg_0, arg_1) -> this.lambda$new$16(arg_0, arg_1));
-        this.factories.put(ParticleTypeListSetting.class, (arg_0, arg_1) -> this.lambda$new$17(arg_0, arg_1));
-        this.factories.put(SoundEventListSetting.class, (arg_0, arg_1) -> this.lambda$new$18(arg_0, arg_1));
-        this.factories.put(StatusEffectSetting.class, (arg_0, arg_1) -> this.lambda$new$19(arg_0, arg_1));
-        this.factories.put(StorageBlockListSetting.class, (arg_0, arg_1) -> this.lambda$new$20(arg_0, arg_1));
-        this.factories.put(BlockDataSetting.class, (arg_0, arg_1) -> this.lambda$new$21(arg_0, arg_1));
+        this.factories.put(BoolSetting.class, this::lambda$new$0);
+        this.factories.put(IntSetting.class, this::lambda$new$1);
+        this.factories.put(DoubleSetting.class, this::lambda$new$2);
+        this.factories.put(EnumSetting.class, this::lambda$new$3);
+        this.factories.put(PotionSetting.class, this::lambda$new$4);
+        this.factories.put(ColorSetting.class, this::lambda$new$5);
+        this.factories.put(StringSetting.class, this::lambda$new$6);
+        this.factories.put(ProvidedStringSetting.class, this::lambda$new$7);
+        this.factories.put(BlockSetting.class, this::lambda$new$8);
+        this.factories.put(KeybindSetting.class, this::lambda$new$9);
+        this.factories.put(GenericSetting.class, this::lambda$new$10);
+        this.factories.put(BlockListSetting.class, this::lambda$new$11);
+        this.factories.put(ItemListSetting.class, this::lambda$new$12);
+        this.factories.put(EntityTypeListSetting.class, this::lambda$new$13);
+        this.factories.put(EnchListSetting.class, this::lambda$new$14);
+        this.factories.put(ModuleListSetting.class, this::lambda$new$15);
+        this.factories.put(PacketBoolSetting.class, this::lambda$new$16);
+        this.factories.put(ParticleTypeListSetting.class, this::lambda$new$17);
+        this.factories.put(SoundEventListSetting.class, this::lambda$new$18);
+        this.factories.put(StatusEffectSetting.class, this::lambda$new$19);
+        this.factories.put(StorageBlockListSetting.class, this::lambda$new$20);
+        this.factories.put(BlockDataSetting.class, this::lambda$new$21);
     }
 
     private void lambda$new$15(WTable wTable, Setting setting) {

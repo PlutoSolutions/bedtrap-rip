@@ -1,14 +1,9 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_290
- *  org.lwjgl.BufferUtils
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.rendering.text;
 
 import java.io.File;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import minegame159.meteorclient.rendering.DrawMode;
 import minegame159.meteorclient.rendering.MeshBuilder;
@@ -30,11 +25,11 @@ implements TextRenderer {
     private boolean scaleOnly;
 
     public CustomTextRenderer(File file) {
-        byte[] arrby = Utils.readBytes(file);
-        ByteBuffer byteBuffer = BufferUtils.createByteBuffer((int)arrby.length).put(arrby);
+        byte[] byArray = Utils.readBytes(file);
+        ByteBuffer byteBuffer = BufferUtils.createByteBuffer((int)byArray.length).put(byArray);
         this.fonts = new Font[5];
         for (int i = 0; i < this.fonts.length; ++i) {
-            ((Buffer)byteBuffer).flip();
+            byteBuffer.flip();
             this.fonts[i] = new Font(byteBuffer, (int)Math.round(18.0 * ((double)i * 0.5 + 1.0)));
             if (-3 < 0) continue;
             throw null;

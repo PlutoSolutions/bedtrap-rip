@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1297
- *  net.minecraft.class_243
- *  net.minecraft.class_3726
- *  net.minecraft.class_3959
- *  net.minecraft.class_3959$class_242
- *  net.minecraft.class_3959$class_3960
- *  org.spongepowered.asm.mixin.Final
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Mutable
- *  org.spongepowered.asm.mixin.Shadow
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 

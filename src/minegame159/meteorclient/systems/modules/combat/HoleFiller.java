@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1747
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2350
- *  net.minecraft.class_2382
- *  net.minecraft.class_2680
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -96,11 +84,11 @@ extends Module {
     }
 
     private boolean lambda$onTickPost$3(class_1799 class_17992) {
-        return class_17992.method_7909() instanceof class_1747 && this.blocks.get().contains((Object)class_2248.method_9503((class_1792)class_17992.method_7909()));
+        return class_17992.method_7909() instanceof class_1747 && this.blocks.get().contains(class_2248.method_9503((class_1792)class_17992.method_7909()));
     }
 
     private boolean lambda$onTick$1(class_1799 class_17992) {
-        return class_17992.method_7909() instanceof class_1747 && this.blocks.get().contains((Object)class_2248.method_9503((class_1792)class_17992.method_7909()));
+        return class_17992.method_7909() instanceof class_1747 && this.blocks.get().contains(class_2248.method_9503((class_1792)class_17992.method_7909()));
     }
 
     private void lambda$onTick$2(class_2338 class_23382, class_2680 class_26802) {
@@ -172,7 +160,7 @@ extends Module {
         if (!findItemResult.found()) {
             return;
         }
-        BlockIterator.register(this.horizontalRadius.get(), this.verticalRadius.get(), (arg_0, arg_1) -> this.lambda$onTick$2(arg_0, arg_1));
+        BlockIterator.register(this.horizontalRadius.get(), this.verticalRadius.get(), this::lambda$onTick$2);
     }
 
     private static Hole lambda$new$0() {

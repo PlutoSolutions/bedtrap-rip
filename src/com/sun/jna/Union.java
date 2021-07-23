@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -19,14 +19,14 @@ extends Structure {
         super(pointer);
     }
 
-    public void setType(Class<?> class_) {
+    public void setType(Class<?> clazz) {
         this.ensureAllocated();
         for (Structure.StructField structField : this.fields().values()) {
-            if (structField.type != class_) continue;
+            if (structField.type != clazz) continue;
             this.activeField = structField;
             return;
         }
-        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No field of type ").append(class_).append(" in ").append(this)));
+        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No field of type ").append(clazz).append(" in ").append(this)));
     }
 
     protected Union() {
@@ -61,8 +61,8 @@ extends Structure {
     }
 
     @Override
-    protected int getNativeAlignment(Class<?> class_, Object object, boolean bl) {
-        return super.getNativeAlignment(class_, object, true);
+    protected int getNativeAlignment(Class<?> clazz, Object object, boolean bl) {
+        return super.getNativeAlignment(clazz, object, true);
     }
 
     @Override
@@ -73,21 +73,21 @@ extends Structure {
         return null;
     }
 
-    public Object getTypedValue(Class<?> class_) {
+    public Object getTypedValue(Class<?> clazz) {
         this.ensureAllocated();
         for (Structure.StructField structField : this.fields().values()) {
-            if (structField.type != class_) continue;
+            if (structField.type != clazz) continue;
             this.activeField = structField;
             this.read();
             return this.getFieldValue(this.activeField.field);
         }
-        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No field of type ").append(class_).append(" in ").append(this)));
+        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("No field of type ").append(clazz).append(" in ").append(this)));
     }
 
-    private Structure.StructField findField(Class<?> class_) {
+    private Structure.StructField findField(Class<?> clazz) {
         this.ensureAllocated();
         for (Structure.StructField structField : this.fields().values()) {
-            if (!structField.type.isAssignableFrom(class_)) continue;
+            if (!structField.type.isAssignableFrom(clazz)) continue;
             return structField;
         }
         return null;

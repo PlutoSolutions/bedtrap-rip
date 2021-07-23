@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_1657
- *  net.minecraft.class_238
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -91,7 +84,7 @@ extends Module {
         this.outlineWidth = this.sgGeneral.add(new IntSetting.Builder().name("width").description("The width of the shader outline.").defaultValue(2).min(1).max(10).sliderMin(1).sliderMax(5).visible(this::lambda$new$0).build());
         this.fillOpacity = this.sgGeneral.add(new IntSetting.Builder().name("fill-opacity").description("The opacity of the shape fill.").defaultValue(80).min(0).max(255).sliderMax(255).build());
         this.fadeDistance = this.sgGeneral.add(new DoubleSetting.Builder().name("fade-distance").description("The distance from an entity where the color begins to fade.").defaultValue(2.0).min(0.0).sliderMax(12.0).build());
-        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entites").description("Select specific entities.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
+        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entites").description("Select specific entities.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(class_1299.field_6097)).build());
         this.playersColor = this.sgColors.add(new ColorSetting.Builder().name("players-color").description("The other player's color.").defaultValue(new SettingColor(255, 255, 255)).build());
         this.animalsColor = this.sgColors.add(new ColorSetting.Builder().name("animals-color").description("The animal's color.").defaultValue(new SettingColor(25, 255, 25, 255)).build());
         this.waterAnimalsColor = this.sgColors.add(new ColorSetting.Builder().name("water-animals-color").description("The water animal's color.").defaultValue(new SettingColor(25, 25, 255, 255)).build());

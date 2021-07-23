@@ -1,37 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1268
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1937
- *  net.minecraft.class_2199
- *  net.minecraft.class_2231
- *  net.minecraft.class_2237
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2269
- *  net.minecraft.class_2304
- *  net.minecraft.class_2323
- *  net.minecraft.class_2338
- *  net.minecraft.class_2349
- *  net.minecraft.class_2350
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_2428
- *  net.minecraft.class_243
- *  net.minecraft.class_2533
- *  net.minecraft.class_2596
- *  net.minecraft.class_2680
- *  net.minecraft.class_2879
- *  net.minecraft.class_310
- *  net.minecraft.class_3191
- *  net.minecraft.class_3532
- *  net.minecraft.class_3726
- *  net.minecraft.class_3959
- *  net.minecraft.class_3959$class_242
- *  net.minecraft.class_3959$class_3960
- *  net.minecraft.class_3965
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.bedtrap;
 
@@ -331,7 +299,7 @@ public class BlockUtils {
             for (int j = class_23382.method_10264() - n2; j < class_23382.method_10264() + n2; ++j) {
                 for (int k = class_23382.method_10260() - n; k < class_23382.method_10260() + n; ++k) {
                     class_2338 class_23383 = new class_2338(i, j, k);
-                    if (!(BlockUtils.distanceBetween(class_23382, class_23383) <= (double)n) || blocks.contains((Object)class_23383)) continue;
+                    if (!(BlockUtils.distanceBetween(class_23382, class_23383) <= (double)n) || blocks.contains(class_23383)) continue;
                     blocks.add(class_23383);
                     if (null == null) continue;
                     return null;

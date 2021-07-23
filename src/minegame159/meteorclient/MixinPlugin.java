@@ -1,20 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.fabricmc.loader.api.FabricLoader
- *  net.fabricmc.loader.api.ModContainer
- *  org.objectweb.asm.tree.AbstractInsnNode
- *  org.objectweb.asm.tree.ClassNode
- *  org.objectweb.asm.tree.FieldInsnNode
- *  org.objectweb.asm.tree.InsnList
- *  org.objectweb.asm.tree.LabelNode
- *  org.objectweb.asm.tree.MethodInsnNode
- *  org.objectweb.asm.tree.MethodNode
- *  org.objectweb.asm.tree.TypeInsnNode
- *  org.objectweb.asm.tree.VarInsnNode
- *  org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin
- *  org.spongepowered.asm.mixin.extensibility.IMixinInfo
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient;
 

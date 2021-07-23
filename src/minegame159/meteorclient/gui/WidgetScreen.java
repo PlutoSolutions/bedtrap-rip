@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_310
- *  net.minecraft.class_437
- *  net.minecraft.class_4587
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui;
 

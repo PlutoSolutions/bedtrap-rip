@@ -1,10 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  baritone.api.pathing.goals.Goal
- *  net.minecraft.class_304
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.movement;
 

@@ -1,8 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.gson.Gson
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.network;
 
@@ -49,10 +46,10 @@ public class HttpUtils {
             httpURLConnection.setReadTimeout(2500);
             httpURLConnection.setRequestProperty("User-Agent", "Meteor Client");
             if (string3 != null) {
-                byte[] arrby = string3.getBytes(StandardCharsets.UTF_8);
-                httpURLConnection.setRequestProperty("Content-Length", Integer.toString(arrby.length));
+                byte[] byArray = string3.getBytes(StandardCharsets.UTF_8);
+                httpURLConnection.setRequestProperty("Content-Length", Integer.toString(byArray.length));
                 httpURLConnection.setDoOutput(true);
-                httpURLConnection.getOutputStream().write(arrby);
+                httpURLConnection.getOutputStream().write(byArray);
             }
             return httpURLConnection.getInputStream();
         }

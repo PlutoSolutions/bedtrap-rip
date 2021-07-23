@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2350
- *  net.minecraft.class_2382
- *  net.minecraft.class_2680
- *  net.minecraft.class_290
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -91,7 +82,7 @@ extends Module {
             this.holePool.free(hole);
         }
         this.holes.clear();
-        BlockIterator.register(this.horizontalRadius.get(), this.verticalRadius.get(), (arg_0, arg_1) -> this.lambda$onTick$1(arg_0, arg_1));
+        BlockIterator.register(this.horizontalRadius.get(), this.verticalRadius.get(), this::lambda$onTick$1);
     }
 
     private void lambda$onTick$1(class_2338 class_23382, class_2680 class_26802) {

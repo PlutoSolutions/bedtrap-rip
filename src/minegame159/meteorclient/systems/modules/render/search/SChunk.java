@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.longs.Long2ObjectMap
- *  it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2680
- *  net.minecraft.class_2791
- *  net.minecraft.class_2902$class_2903
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render.search;
 
@@ -100,7 +90,7 @@ public class SChunk {
                 for (int k = 0; k < n; ++k) {
                     blockPos.method_10103(i, k, j);
                     class_2680 class_26802 = class_27912.method_8320((class_2338)blockPos);
-                    if (!list.contains((Object)class_26802.method_26204())) continue;
+                    if (!list.contains(class_26802.method_26204())) continue;
                     sChunk.add((class_2338)blockPos, false);
                     if (true) continue;
                     return null;

@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -70,10 +70,10 @@ class ELFAnalyser {
     private void runDetection() throws IOException {
         RandomAccessFile randomAccessFile = new RandomAccessFile(this.filename, "r");
         if (randomAccessFile.length() > 4L) {
-            byte[] arrby = new byte[4];
+            byte[] byArray = new byte[4];
             randomAccessFile.seek(0L);
-            randomAccessFile.read(arrby);
-            if (Arrays.equals(arrby, ELF_MAGIC)) {
+            randomAccessFile.read(byArray);
+            if (Arrays.equals(byArray, ELF_MAGIC)) {
                 this.ELF = true;
             }
         }

@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1792
- *  net.minecraft.class_465
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.misc;
 
@@ -39,7 +35,7 @@ extends Module {
         }
         int n2 = n = this.autoDropExcludeHotbar.get() != false ? 9 : 0;
         while (n < this.mc.field_1724.field_7514.method_5439()) {
-            if (this.autoDropItems.get().contains((Object)this.mc.field_1724.field_7514.method_5438(n).method_7909())) {
+            if (this.autoDropItems.get().contains(this.mc.field_1724.field_7514.method_5438(n).method_7909())) {
                 InvUtils.drop().slot(n);
             }
             ++n;
@@ -64,7 +60,7 @@ extends Module {
 
     @EventHandler
     private void onDropItems(DropItemsEvent dropItemsEvent) {
-        if (this.antiDropItems.get().contains((Object)dropItemsEvent.itemStack.method_7909())) {
+        if (this.antiDropItems.get().contains(dropItemsEvent.itemStack.method_7909())) {
             dropItemsEvent.cancel();
         }
     }

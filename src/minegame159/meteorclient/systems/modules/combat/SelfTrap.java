@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1802
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_3726
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -53,7 +47,7 @@ extends Module {
     private int delay;
 
     private void add(class_2338 class_23382) {
-        if (!this.placePositions.contains((Object)class_23382) && this.mc.field_1687.method_8320(class_23382).method_26207().method_15800() && this.mc.field_1687.method_8628(class_2246.field_10540.method_9564(), class_23382, class_3726.method_16194())) {
+        if (!this.placePositions.contains(class_23382) && this.mc.field_1687.method_8320(class_23382).method_26207().method_15800() && this.mc.field_1687.method_8628(class_2246.field_10540.method_9564(), class_23382, class_3726.method_16194())) {
             this.placePositions.add(class_23382);
         }
     }
@@ -140,7 +134,7 @@ extends Module {
         if (this.delay >= this.delaySetting.get() && this.placePositions.size() > 0) {
             class_2338 class_23382 = this.placePositions.get(this.placePositions.size() - 1);
             if (BlockUtils.place(class_23382, findItemResult, this.rotate.get(), 50)) {
-                this.placePositions.remove((Object)class_23382);
+                this.placePositions.remove(class_23382);
                 this.placed = true;
             }
             this.delay = 0;

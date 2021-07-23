@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  baritone.api.Settings
- *  baritone.api.Settings$Setting
- *  baritone.api.utils.SettingsUtil
- *  net.minecraft.class_437
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.tabs.builtin;
 
@@ -57,9 +50,9 @@ extends Tab {
         SettingGroup settingGroup3 = settings.createGroup("Whole Numbers");
         SettingGroup settingGroup4 = settings.createGroup("Colors");
         try {
-            Class<?> class_ = BaritoneAPI.getSettings().getClass();
-            for (Field field : class_.getDeclaredFields()) {
-                Object object = field.get((Object)BaritoneAPI.getSettings());
+            Class<?> clazz = BaritoneAPI.getSettings().getClass();
+            for (Field field : clazz.getDeclaredFields()) {
+                Object object = field.get(BaritoneAPI.getSettings());
                 if (!(object instanceof Settings.Setting)) continue;
                 Settings.Setting setting = (Settings.Setting)object;
                 Object object2 = setting.value;

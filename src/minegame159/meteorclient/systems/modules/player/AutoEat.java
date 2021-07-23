@@ -1,10 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  net.minecraft.class_1792
- *  net.minecraft.class_1802
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.player;
 
@@ -79,9 +74,9 @@ extends Module {
         this.setPressed(false);
         this.eating = false;
         if (this.pauseAuras.get().booleanValue()) {
-            for (Class<? extends Module> class_ : AURAS) {
-                Module module = Modules.get().get(class_);
-                if (!this.wasAura.contains(class_) || module.isActive()) continue;
+            for (Class<? extends Module> clazz : AURAS) {
+                Module module = Modules.get().get(clazz);
+                if (!this.wasAura.contains(clazz) || module.isActive()) continue;
                 module.toggle();
                 if (!false) continue;
                 return;
@@ -104,10 +99,10 @@ extends Module {
         this.eat();
         this.wasAura.clear();
         if (this.pauseAuras.get().booleanValue()) {
-            for (Class<? extends Module> class_ : AURAS) {
-                Module module = Modules.get().get(class_);
+            for (Class<? extends Module> clazz : AURAS) {
+                Module module = Modules.get().get(clazz);
                 if (!module.isActive()) continue;
-                this.wasAura.add(class_);
+                this.wasAura.add(clazz);
                 module.toggle();
                 if (!false) continue;
                 return;
@@ -169,7 +164,7 @@ extends Module {
         for (int i = 0; i < 9; ++i) {
             int n3;
             class_1792 class_17922 = this.mc.field_1724.field_7514.method_5438(i).method_7909();
-            if (!class_17922.method_19263() || (n3 = class_17922.method_19264().method_19230()) <= n2 || this.blacklist.get().contains((Object)class_17922)) continue;
+            if (!class_17922.method_19263() || (n3 = class_17922.method_19264().method_19230()) <= n2 || this.blacklist.get().contains(class_17922)) continue;
             n = i;
             n2 = n3;
             if (null == null) continue;

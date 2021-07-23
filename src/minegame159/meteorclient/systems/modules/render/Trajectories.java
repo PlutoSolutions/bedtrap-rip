@@ -1,29 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1297
- *  net.minecraft.class_1753
- *  net.minecraft.class_1764
- *  net.minecraft.class_1771
- *  net.minecraft.class_1776
- *  net.minecraft.class_1779
- *  net.minecraft.class_1787
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1823
- *  net.minecraft.class_1835
- *  net.minecraft.class_1887
- *  net.minecraft.class_1890
- *  net.minecraft.class_1893
- *  net.minecraft.class_2350
- *  net.minecraft.class_2378
- *  net.minecraft.class_238
- *  net.minecraft.class_239
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_3965
- *  net.minecraft.class_3966
- *  net.minecraft.class_4537
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -117,7 +93,7 @@ extends Module {
         if (class_17992 == null) {
             return;
         }
-        if (!this.items.get().contains((Object)class_17992.method_7909())) {
+        if (!this.items.get().contains(class_17992.method_7909())) {
             return;
         }
         if (!this.simulator.set((class_1297)this.mc.field_1724, class_17992, 0.0, this.accurate.get(), renderEvent.tickDelta)) {

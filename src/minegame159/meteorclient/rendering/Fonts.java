@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.rendering;
 
@@ -34,9 +34,9 @@ public class Fonts {
 
     public static String[] getAvailableFonts() {
         ArrayList<String> arrayList = new ArrayList<String>(4);
-        File[] arrfile = FOLDER.listFiles(File::isFile);
-        if (arrfile != null) {
-            for (File file : arrfile) {
+        File[] fileArray = FOLDER.listFiles(File::isFile);
+        if (fileArray != null) {
+            for (File file : fileArray) {
                 int n = file.getName().lastIndexOf(46);
                 if (!file.getName().substring(n).equals(".ttf")) continue;
                 arrayList.add(file.getName().substring(0, n));

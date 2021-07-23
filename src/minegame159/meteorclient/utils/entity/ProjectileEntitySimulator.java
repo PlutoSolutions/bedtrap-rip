@@ -1,37 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1158
- *  net.minecraft.class_1160
- *  net.minecraft.class_1297
- *  net.minecraft.class_1675
- *  net.minecraft.class_1753
- *  net.minecraft.class_1764
- *  net.minecraft.class_1771
- *  net.minecraft.class_1776
- *  net.minecraft.class_1779
- *  net.minecraft.class_1787
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1823
- *  net.minecraft.class_1835
- *  net.minecraft.class_1937
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_238
- *  net.minecraft.class_239
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_243
- *  net.minecraft.class_3532
- *  net.minecraft.class_3610
- *  net.minecraft.class_3612
- *  net.minecraft.class_3959
- *  net.minecraft.class_3959$class_242
- *  net.minecraft.class_3959$class_3960
- *  net.minecraft.class_3965
- *  net.minecraft.class_3966
- *  net.minecraft.class_4537
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.entity;
 

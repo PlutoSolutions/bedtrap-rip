@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
- *  net.minecraft.class_1299
- *  net.minecraft.class_1429
- *  net.minecraft.class_1657
- *  net.minecraft.class_2248
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -52,7 +44,7 @@ extends Module {
 
     @EventHandler(priority=100)
     private void onStartBreakingBlockEvent(StartBreakingBlockEvent startBreakingBlockEvent) {
-        if (this.blocks.get().contains((Object)this.mc.field_1687.method_8320(startBreakingBlockEvent.blockPos).method_26204())) {
+        if (this.blocks.get().contains(this.mc.field_1687.method_8320(startBreakingBlockEvent.blockPos).method_26204())) {
             startBreakingBlockEvent.cancel();
         }
     }

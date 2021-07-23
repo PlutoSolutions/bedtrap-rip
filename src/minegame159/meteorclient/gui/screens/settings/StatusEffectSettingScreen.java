@@ -1,10 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  net.minecraft.class_1291
- *  org.apache.commons.lang3.StringUtils
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.screens.settings;
 

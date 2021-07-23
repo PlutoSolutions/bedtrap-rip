@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2244
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2885
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -39,7 +33,7 @@ extends Module {
         boolean bl = this.mc.field_1687.method_8597().method_29956();
         boolean bl2 = this.mc.field_1687.method_8597().method_29957();
         boolean bl3 = this.mc.field_1687.method_8320(class_23382).method_26204() instanceof class_2244;
-        boolean bl4 = this.mc.field_1687.method_8320(class_23382).method_26204().equals((Object)class_2246.field_23152);
+        boolean bl4 = this.mc.field_1687.method_8320(class_23382).method_26204().equals(class_2246.field_23152);
         if (this.bedBool.get().booleanValue() && bl3 && bl) {
             send.cancel();
         }

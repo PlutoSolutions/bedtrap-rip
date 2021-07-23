@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.systems.RenderSystem
- *  net.minecraft.class_1263
- *  net.minecraft.class_1277
- *  net.minecraft.class_1733
- *  net.minecraft.class_1799
- *  net.minecraft.class_2960
- *  net.minecraft.class_4587
- *  net.minecraft.class_495
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.render;
 
@@ -57,9 +47,9 @@ extends class_495 {
         this.method_25302(class_45872, n3, n4, 0, 0, this.field_2792, this.field_2779);
     }
 
-    public PeekScreen(class_1799 class_17992, class_1799[] arrclass_1799) {
-        super(new class_1733(0, Utils.mc.field_1724.field_7514, (class_1263)new class_1277(arrclass_1799)), Utils.mc.field_1724.field_7514, class_17992.method_7964());
-        this.contents = arrclass_1799;
+    public PeekScreen(class_1799 class_17992, class_1799[] class_1799Array) {
+        super(new class_1733(0, Utils.mc.field_1724.field_7514, (class_1263)new class_1277(class_1799Array)), Utils.mc.field_1724.field_7514, class_17992.method_7964());
+        this.contents = class_1799Array;
         this.storageBlock = class_17992;
     }
 

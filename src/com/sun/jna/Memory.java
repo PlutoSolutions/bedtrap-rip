@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -43,9 +43,9 @@ extends Pointer {
     }
 
     @Override
-    public void write(long l, char[] arrc, int n, int n2) {
+    public void write(long l, char[] cArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 2L);
-        super.write(l, arrc, n, n2);
+        super.write(l, cArray, n, n2);
     }
 
     protected static long malloc(long l) {
@@ -53,15 +53,15 @@ extends Pointer {
     }
 
     @Override
-    public void write(long l, long[] arrl, int n, int n2) {
+    public void write(long l, long[] lArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 8L);
-        super.write(l, arrl, n, n2);
+        super.write(l, lArray, n, n2);
     }
 
     @Override
-    public void write(long l, float[] arrf, int n, int n2) {
+    public void write(long l, float[] fArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 4L);
-        super.write(l, arrf, n, n2);
+        super.write(l, fArray, n, n2);
     }
 
     @Override
@@ -71,15 +71,15 @@ extends Pointer {
     }
 
     @Override
-    public void read(long l, double[] arrd, int n, int n2) {
+    public void read(long l, double[] dArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 8L);
-        super.read(l, arrd, n, n2);
+        super.read(l, dArray, n, n2);
     }
 
     @Override
-    public void read(long l, float[] arrf, int n, int n2) {
+    public void read(long l, float[] fArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 4L);
-        super.read(l, arrf, n, n2);
+        super.read(l, fArray, n, n2);
     }
 
     protected Memory() {
@@ -139,9 +139,9 @@ extends Pointer {
     }
 
     @Override
-    public void write(long l, double[] arrd, int n, int n2) {
+    public void write(long l, double[] dArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 8L);
-        super.write(l, arrd, n, n2);
+        super.write(l, dArray, n, n2);
     }
 
     static {
@@ -180,15 +180,15 @@ extends Pointer {
     }
 
     @Override
-    public void write(long l, byte[] arrby, int n, int n2) {
+    public void write(long l, byte[] byArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 1L);
-        super.write(l, arrby, n, n2);
+        super.write(l, byArray, n, n2);
     }
 
     @Override
-    public void read(long l, char[] arrc, int n, int n2) {
+    public void read(long l, char[] cArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 2L);
-        super.read(l, arrc, n, n2);
+        super.read(l, cArray, n, n2);
     }
 
     @Override
@@ -204,9 +204,9 @@ extends Pointer {
     }
 
     @Override
-    public void read(long l, int[] arrn, int n, int n2) {
+    public void read(long l, int[] nArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 4L);
-        super.read(l, arrn, n, n2);
+        super.read(l, nArray, n, n2);
     }
 
     public static void purge() {
@@ -284,9 +284,9 @@ extends Pointer {
     }
 
     @Override
-    public void write(long l, short[] arrs, int n, int n2) {
+    public void write(long l, short[] sArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 2L);
-        super.write(l, arrs, n, n2);
+        super.write(l, sArray, n, n2);
     }
 
     @Override
@@ -296,15 +296,15 @@ extends Pointer {
     }
 
     @Override
-    public void read(long l, byte[] arrby, int n, int n2) {
+    public void read(long l, byte[] byArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 1L);
-        super.read(l, arrby, n, n2);
+        super.read(l, byArray, n, n2);
     }
 
     @Override
-    public void write(long l, int[] arrn, int n, int n2) {
+    public void write(long l, int[] nArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 4L);
-        super.write(l, arrn, n, n2);
+        super.write(l, nArray, n, n2);
     }
 
     public boolean valid() {
@@ -312,9 +312,9 @@ extends Pointer {
     }
 
     @Override
-    public void read(long l, long[] arrl, int n, int n2) {
+    public void read(long l, long[] lArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 8L);
-        super.read(l, arrl, n, n2);
+        super.read(l, lArray, n, n2);
     }
 
     @Override
@@ -329,9 +329,9 @@ extends Pointer {
     }
 
     @Override
-    public void read(long l, short[] arrs, int n, int n2) {
+    public void read(long l, short[] sArray, int n, int n2) {
         this.boundsCheck(l, (long)n2 * 2L);
-        super.read(l, arrs, n, n2);
+        super.read(l, sArray, n, n2);
     }
 
     protected static void free(long l) {

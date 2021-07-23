@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.Message
- *  com.mojang.brigadier.arguments.StringArgumentType
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  com.mojang.brigadier.exceptions.SimpleCommandExceptionType
- *  net.minecraft.class_2172
- *  net.minecraft.class_2585
- *  net.minecraft.class_2767
- *  net.minecraft.class_3417
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.commands.commands;
 

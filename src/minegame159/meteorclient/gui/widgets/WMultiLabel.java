@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.widgets;
 
@@ -23,16 +23,16 @@ extends WLabel {
     @Override
     protected void onCalculateSize() {
         this.lines.clear();
-        String[] arrstring = this.text.split(" ");
+        String[] stringArray = this.text.split(" ");
         StringBuilder stringBuilder = new StringBuilder();
         double d = this.theme.textWidth(" ", 1, this.title);
         double d2 = this.theme.scale(this.maxWidth);
         double d3 = 0.0;
         double d4 = 0.0;
         int n = 0;
-        for (int i = 0; i < arrstring.length; ++i) {
+        for (int i = 0; i < stringArray.length; ++i) {
             double d5;
-            double d6 = d5 = this.theme.textWidth(arrstring[i], arrstring[i].length(), this.title);
+            double d6 = d5 = this.theme.textWidth(stringArray[i], stringArray[i].length(), this.title);
             if (n > 0) {
                 d6 += d;
             }
@@ -48,7 +48,7 @@ extends WLabel {
                 stringBuilder.append(' ');
                 d3 += d;
             }
-            stringBuilder.append(arrstring[i]);
+            stringBuilder.append(stringArray[i]);
             d4 = Math.max(d4, d3 += d5);
             ++n;
             if (2 <= 3) continue;

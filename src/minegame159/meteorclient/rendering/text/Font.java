@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1044
- *  org.lwjgl.BufferUtils
- *  org.lwjgl.stb.STBTTFontinfo
- *  org.lwjgl.stb.STBTTPackContext
- *  org.lwjgl.stb.STBTTPackedchar
- *  org.lwjgl.stb.STBTTPackedchar$Buffer
- *  org.lwjgl.stb.STBTruetype
- *  org.lwjgl.system.MemoryStack
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.rendering.text;
 

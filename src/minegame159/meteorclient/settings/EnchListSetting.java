@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1887
- *  net.minecraft.class_2378
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -83,10 +74,10 @@ extends Setting<List<class_1887>> {
 
     @Override
     protected List<class_1887> parseImpl(String string) {
-        String[] arrstring = string.split(",");
-        ArrayList<class_1887> arrayList = new ArrayList<class_1887>(arrstring.length);
+        String[] stringArray = string.split(",");
+        ArrayList<class_1887> arrayList = new ArrayList<class_1887>(stringArray.length);
         try {
-            for (String string2 : arrstring) {
+            for (String string2 : stringArray) {
                 class_1887 class_18872 = (class_1887)EnchListSetting.parseId(class_2378.field_11160, string2);
                 if (class_18872 == null) continue;
                 arrayList.add(class_18872);

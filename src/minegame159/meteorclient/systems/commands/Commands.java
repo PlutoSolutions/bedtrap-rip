@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.CommandDispatcher
- *  com.mojang.brigadier.ParseResults
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  net.minecraft.class_2172
- *  net.minecraft.class_310
- *  net.minecraft.class_637
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.commands;
 
@@ -75,8 +67,8 @@ extends System<Commands> {
         return this.COMMAND_SOURCE;
     }
 
-    public <T extends Command> T get(Class<T> class_) {
-        return (T)this.commandInstances.get(class_);
+    public <T extends Command> T get(Class<T> clazz) {
+        return (T)this.commandInstances.get(clazz);
     }
 
     public CommandDispatcher<class_2172> getDispatcher() {

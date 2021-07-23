@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1268
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_243
- *  net.minecraft.class_2586
- *  net.minecraft.class_3965
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.player;
 
@@ -45,7 +37,7 @@ extends Module {
         int n = 1;
         while ((float)n < this.mc.field_1761.method_2904() * 10.0f) {
             class_2338 class_23382 = new class_2338(this.mc.field_1724.method_5836(this.mc.method_1488()).method_1019(class_2432.method_1021((double)n)));
-            if (!this.posList.contains((Object)class_23382)) {
+            if (!this.posList.contains(class_23382)) {
                 this.posList.add(class_23382);
                 for (class_2586 class_25863 : this.mc.field_1687.field_9231) {
                     if (!class_25863.method_11016().equals((Object)class_23382)) continue;

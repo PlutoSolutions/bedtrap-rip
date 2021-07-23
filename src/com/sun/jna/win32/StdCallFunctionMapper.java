@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna.win32;
 
@@ -16,10 +16,10 @@ public class StdCallFunctionMapper
 implements FunctionMapper {
     @Override
     public String getFunctionName(NativeLibrary nativeLibrary, Method method) {
-        Class<?>[] arrclass;
+        Class<?>[] classArray;
         String string = method.getName();
         int n = 0;
-        for (Class<?> unsatisfiedLinkError2 : arrclass = method.getParameterTypes()) {
+        for (Class<?> unsatisfiedLinkError2 : classArray = method.getParameterTypes()) {
             n += this.getArgumentNativeStackSize(unsatisfiedLinkError2);
             if (1 <= 2) continue;
             return null;
@@ -42,18 +42,18 @@ implements FunctionMapper {
         return string;
     }
 
-    protected int getArgumentNativeStackSize(Class<?> class_) {
-        if (NativeMapped.class.isAssignableFrom(class_)) {
-            class_ = NativeMappedConverter.getInstance(class_).nativeType();
+    protected int getArgumentNativeStackSize(Class<?> clazz) {
+        if (NativeMapped.class.isAssignableFrom(clazz)) {
+            clazz = NativeMappedConverter.getInstance(clazz).nativeType();
         }
-        if (class_.isArray()) {
+        if (clazz.isArray()) {
             return Pointer.SIZE;
         }
         try {
-            return Native.getNativeSize(class_);
+            return Native.getNativeSize(clazz);
         }
         catch (IllegalArgumentException illegalArgumentException) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unknown native stack allocation size for ").append(class_)));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unknown native stack allocation size for ").append(clazz)));
         }
     }
 }

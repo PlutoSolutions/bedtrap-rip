@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2338
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_243
- *  net.minecraft.class_3486
- *  net.minecraft.class_3494
- *  net.minecraft.class_3965
- *  net.minecraft.class_3966
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render.hud.modules;
 
@@ -41,16 +32,16 @@ extends DoubleTextHudElement {
             String string;
             String string2 = this.mc.field_1687.method_8320(((class_3965)this.mc.field_1765).method_17777()).method_26204().method_9518().getString();
             class_2338 class_23382 = ((class_3965)this.mc.field_1765).method_17777();
-            String string3 = this.blockPosition.get().booleanValue() ? String.format("%s [%d, %d, %d]", string2, class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) : (string = string2);
+            String string3 = string = this.blockPosition.get() != false ? String.format("%s [%d, %d, %d]", string2, class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) : string2;
             if (this.waterLogged.get().booleanValue()) {
-                string = this.blockPosition.get().booleanValue() ? String.format("%s %s[%d, %d, %d]", string2, this.mc.field_1687.method_8316(class_23382).method_15767((class_3494)class_3486.field_15517) ? "(Waterlogged) " : "", class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) : string2;
+                string = this.blockPosition.get() != false ? String.format("%s %s[%d, %d, %d]", string2, this.mc.field_1687.method_8316(class_23382).method_15767((class_3494)class_3486.field_15517) ? "(Waterlogged) " : "", class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) : string2;
             }
             return string;
         }
         if (this.mc.field_1765.method_17783() == class_239.class_240.field_1331) {
             String string = ((class_3966)this.mc.field_1765).method_17782().method_5476().getString();
             class_243 class_2432 = this.mc.field_1765.method_17784();
-            return this.entityPosition.get().booleanValue() ? String.format("%s [%d, %d, %d]", string, (int)class_2432.field_1352, (int)class_2432.field_1351, (int)class_2432.field_1350) : string;
+            return this.entityPosition.get() != false ? String.format("%s [%d, %d, %d]", string, (int)class_2432.field_1352, (int)class_2432.field_1351, (int)class_2432.field_1350) : string;
         }
         return "";
     }

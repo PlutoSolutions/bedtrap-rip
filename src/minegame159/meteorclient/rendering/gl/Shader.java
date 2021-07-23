@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
- *  net.minecraft.class_2960
- *  org.lwjgl.opengl.GL30C
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.rendering.gl;
 

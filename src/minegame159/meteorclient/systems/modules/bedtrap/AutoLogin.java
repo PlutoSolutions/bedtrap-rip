@@ -1,8 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2635
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -22,12 +19,12 @@ extends Module {
 
     @EventHandler
     public void onPacket(PacketEvent.Receive receive) {
-        String[] arrstring;
+        String[] stringArray;
         if (!(receive.packet instanceof class_2635)) {
             return;
         }
         String string = ((class_2635)receive.packet).method_11388().getString();
-        for (String string2 : arrstring = new String[]{"/l"}) {
+        for (String string2 : stringArray = new String[]{"/l"}) {
             if (!string.contains(string2)) continue;
             this.mc.field_1724.method_3142(String.valueOf(new StringBuilder().append("/login ").append(this.loginText)));
             break;

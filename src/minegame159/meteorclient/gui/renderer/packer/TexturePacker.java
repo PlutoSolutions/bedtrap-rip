@@ -1,15 +1,8 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2960
- *  org.lwjgl.BufferUtils
- *  org.lwjgl.stb.STBImage
- *  org.lwjgl.stb.STBImageResize
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.renderer.packer;
 
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,23 +24,22 @@ public class TexturePacker {
     public GuiTexture add(class_2960 var1_1) {
         /*
          * This method has failed to decompile.  When submitting a bug report, please provide this stack trace, and (if you hold appropriate legal rights) the relevant class file.
-         * org.benf.cfr.reader.util.ConfusedCFRException: Tried to end blocks [0[TRYBLOCK]], but top level block is 7[CATCHBLOCK]
-         * org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement.processEndingBlocks(Op04StructuredStatement.java:429)
-         * org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement.buildNestedBlocks(Op04StructuredStatement.java:478)
-         * org.benf.cfr.reader.bytecode.analysis.opgraph.Op03SimpleStatement.createInitialStructuredBlock(Op03SimpleStatement.java:728)
-         * org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisInner(CodeAnalyser.java:806)
-         * org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisOrWrapFail(CodeAnalyser.java:258)
-         * org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysis(CodeAnalyser.java:192)
-         * org.benf.cfr.reader.entities.attributes.AttributeCode.analyse(AttributeCode.java:94)
-         * org.benf.cfr.reader.entities.Method.analyse(Method.java:521)
-         * org.benf.cfr.reader.entities.ClassFile.analyseMid(ClassFile.java:1035)
-         * org.benf.cfr.reader.entities.ClassFile.analyseTop(ClassFile.java:922)
-         * org.benf.cfr.reader.Driver.doJarVersionTypes(Driver.java:253)
-         * org.benf.cfr.reader.Driver.doJar(Driver.java:135)
-         * org.benf.cfr.reader.CfrDriverImpl.analyse(CfrDriverImpl.java:65)
-         * org.benf.cfr.reader.Main.main(Main.java:49)
+         * 
+         * org.benf.cfr.reader.util.ConfusedCFRException: Back jump on a try block [egrp 6[TRYBLOCK] [4 : 262->268)] java.lang.Throwable
+         *     at org.benf.cfr.reader.bytecode.analysis.opgraph.Op02WithProcessedDataAndRefs.insertExceptionBlocks(Op02WithProcessedDataAndRefs.java:2289)
+         *     at org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisInner(CodeAnalyser.java:414)
+         *     at org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysisOrWrapFail(CodeAnalyser.java:278)
+         *     at org.benf.cfr.reader.bytecode.CodeAnalyser.getAnalysis(CodeAnalyser.java:201)
+         *     at org.benf.cfr.reader.entities.attributes.AttributeCode.analyse(AttributeCode.java:94)
+         *     at org.benf.cfr.reader.entities.Method.analyse(Method.java:531)
+         *     at org.benf.cfr.reader.entities.ClassFile.analyseMid(ClassFile.java:1042)
+         *     at org.benf.cfr.reader.entities.ClassFile.analyseTop(ClassFile.java:929)
+         *     at org.benf.cfr.reader.Driver.doJarVersionTypes(Driver.java:257)
+         *     at org.benf.cfr.reader.Driver.doJar(Driver.java:139)
+         *     at org.benf.cfr.reader.CfrDriverImpl.analyse(CfrDriverImpl.java:73)
+         *     at org.benf.cfr.reader.Main.main(Main.java:49)
          */
-        throw new IllegalStateException(Decompilation failed);
+        throw new IllegalStateException("Decompilation failed");
     }
 
     public ByteTexture pack() {
@@ -70,23 +62,23 @@ public class TexturePacker {
         n = Math.max(n, n3);
         ByteBuffer byteBuffer = BufferUtils.createByteBuffer((int)(n * (n2 += n4) * 4));
         for (Image image : this.images) {
-            byte[] arrby = new byte[image.width * 4];
+            byte[] byArray = new byte[image.width * 4];
             for (int i = 0; i < image.height; ++i) {
-                ((Buffer)image.buffer).position(i * arrby.length);
-                image.buffer.get(arrby);
-                ((Buffer)byteBuffer).position(((image.y + i) * n + image.x) * 4);
-                byteBuffer.put(arrby);
+                image.buffer.position(i * byArray.length);
+                image.buffer.get(byArray);
+                byteBuffer.position(((image.y + i) * n + image.x) * 4);
+                byteBuffer.put(byArray);
                 if (null == null) continue;
                 return null;
             }
-            ((Buffer)image.buffer).rewind();
+            image.buffer.rewind();
             image.free();
             image.region.x1 = (double)image.x / (double)n;
             image.region.y1 = (double)image.y / (double)n2;
             image.region.x2 = (double)(image.x + image.width) / (double)n;
             image.region.y2 = (double)(image.y + image.height) / (double)n2;
         }
-        ((Buffer)byteBuffer).rewind();
+        byteBuffer.rewind();
         return new ByteTexture(n, n2, byteBuffer, ByteTexture.Format.RGBA, ByteTexture.Filter.Linear, ByteTexture.Filter.Linear);
     }
 

@@ -1,20 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.chars.Char2CharArrayMap
- *  it.unimi.dsi.fastutil.chars.Char2CharMap
- *  net.minecraft.class_124
- *  net.minecraft.class_2554
- *  net.minecraft.class_2558
- *  net.minecraft.class_2558$class_2559
- *  net.minecraft.class_2561
- *  net.minecraft.class_2568
- *  net.minecraft.class_2568$class_5247
- *  net.minecraft.class_2583
- *  net.minecraft.class_2585
- *  net.minecraft.class_303
- *  net.minecraft.class_5481
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.misc;
 
@@ -200,10 +185,10 @@ extends Module {
         this.suffixSmallCaps = this.sgSuffix.add(new BoolSetting.Builder().name("small-caps").description("Uses small caps in the suffix.").defaultValue(true).visible(this::lambda$new$3).build());
         this.SMALL_CAPS = new Char2CharArrayMap();
         this.dateFormat = new SimpleDateFormat("HH:mm");
-        String[] arrstring = "abcdefghijklmnopqrstuvwxyz".split("");
-        String[] arrstring2 = "\u1d00\u0299\u1d04\u1d05\u1d07\ua730\u0262\u029c\u026a\u1d0a\u1d0b\u029f\u1d0d\u0274\u1d0f\u1d29q\u0280\ua731\u1d1b\u1d1c\u1d20\u1d21xy\u1d22".split("");
-        for (int i = 0; i < arrstring.length; ++i) {
-            this.SMALL_CAPS.put(arrstring[i].charAt(0), arrstring2[i].charAt(0));
+        String[] stringArray = "abcdefghijklmnopqrstuvwxyz".split("");
+        String[] stringArray2 = "\u1d00\u0299\u1d04\u1d05\u1d07\ua730\u0262\u029c\u026a\u1d0a\u1d0b\u029f\u1d0d\u0274\u1d0f\u1d29q\u0280\ua731\u1d1b\u1d1c\u1d20\u1d21xy\u1d22".split("");
+        for (int i = 0; i < stringArray.length; ++i) {
+            this.SMALL_CAPS.put(stringArray[i].charAt(0), stringArray2[i].charAt(0));
         }
     }
 

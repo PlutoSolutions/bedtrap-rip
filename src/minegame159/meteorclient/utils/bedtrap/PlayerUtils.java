@@ -1,32 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  baritone.api.utils.Rotation
- *  net.minecraft.class_1268
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1511
- *  net.minecraft.class_1657
- *  net.minecraft.class_1812
- *  net.minecraft.class_1829
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_2382
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_243
- *  net.minecraft.class_2587
- *  net.minecraft.class_2596
- *  net.minecraft.class_2680
- *  net.minecraft.class_2828$class_2829
- *  net.minecraft.class_310
- *  net.minecraft.class_3532
- *  net.minecraft.class_3959
- *  net.minecraft.class_3959$class_242
- *  net.minecraft.class_3959$class_3960
- *  net.minecraft.class_3965
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.bedtrap;
 

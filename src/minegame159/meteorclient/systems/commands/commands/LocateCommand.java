@@ -1,26 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  net.minecraft.class_1299
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_2172
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_243
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_2604
- *  net.minecraft.class_2767
- *  net.minecraft.class_3417
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.commands.commands;
 
@@ -59,7 +38,7 @@ extends Command {
     private class_243 secondStart;
     private class_243 firstStart;
     private class_243 firstEnd;
-    private final List<class_2248> netherFortressBlocks = Arrays.asList(new class_2248[]{class_2246.field_10266, class_2246.field_10364, class_2246.field_9974});
+    private final List<class_2248> netherFortressBlocks = Arrays.asList(class_2246.field_10266, class_2246.field_10364, class_2246.field_9974);
     private final List<class_2248> strongholdBlocks;
     private class_243 secondEnd;
 
@@ -94,17 +73,17 @@ extends Command {
             this.cancel();
             return;
         }
-        double[] arrd = new double[]{this.secondStart.field_1352, this.secondStart.field_1350, this.secondEnd.field_1352, this.secondEnd.field_1350};
-        double[] arrd2 = new double[]{this.firstStart.field_1352, this.firstStart.field_1350, this.firstEnd.field_1352, this.firstEnd.field_1350};
-        double[] arrd3 = this.calcIntersection(arrd, arrd2);
-        if (Double.isNaN(arrd3[0]) || Double.isNaN(arrd3[1]) || Double.isInfinite(arrd3[0]) || Double.isInfinite(arrd3[1])) {
+        double[] dArray = new double[]{this.secondStart.field_1352, this.secondStart.field_1350, this.secondEnd.field_1352, this.secondEnd.field_1350};
+        double[] dArray2 = new double[]{this.firstStart.field_1352, this.firstStart.field_1350, this.firstEnd.field_1352, this.firstEnd.field_1350};
+        double[] dArray3 = this.calcIntersection(dArray, dArray2);
+        if (Double.isNaN(dArray3[0]) || Double.isNaN(dArray3[1]) || Double.isInfinite(dArray3[0]) || Double.isInfinite(dArray3[1])) {
             this.error("Lines are parallel", new Object[0]);
             this.cancel();
             return;
         }
         BaritoneAPI.getProvider().getPrimaryBaritone().getCommandManager().execute("stop");
         MeteorClient.EVENT_BUS.unsubscribe(this);
-        class_243 class_2432 = new class_243(arrd3[0], 0.0, arrd3[1]);
+        class_243 class_2432 = new class_243(dArray3[0], 0.0, dArray3[1]);
         class_2585 class_25852 = new class_2585("Stronghold roughly located at ");
         class_25852.method_10852((class_2561)ChatUtils.formatCoords(class_2432));
         class_25852.method_27693(".");
@@ -212,13 +191,13 @@ extends Command {
         return 1;
     }
 
-    private double[] calcIntersection(double[] arrd, double[] arrd2) {
-        double d = arrd[3] - arrd[1];
-        double d2 = arrd[0] - arrd[2];
-        double d3 = d * arrd[0] + d2 * arrd[1];
-        double d4 = arrd2[3] - arrd2[1];
-        double d5 = arrd2[0] - arrd2[2];
-        double d6 = d4 * arrd2[0] + d5 * arrd2[1];
+    private double[] calcIntersection(double[] dArray, double[] dArray2) {
+        double d = dArray[3] - dArray[1];
+        double d2 = dArray[0] - dArray[2];
+        double d3 = d * dArray[0] + d2 * dArray[1];
+        double d4 = dArray2[3] - dArray2[1];
+        double d5 = dArray2[0] - dArray2[2];
+        double d6 = d4 * dArray2[0] + d5 * dArray2[1];
         double d7 = d * d5 - d4 * d2;
         return new double[]{(d5 * d3 - d2 * d6) / d7, (d * d6 - d4 * d3) / d7};
     }
@@ -261,8 +240,8 @@ extends Command {
 
     public LocateCommand() {
         super("locate", "Locates structures", "loc");
-        this.monumentBlocks = Arrays.asList(new class_2248[]{class_2246.field_10006, class_2246.field_10174, class_2246.field_10297});
-        this.strongholdBlocks = Arrays.asList(new class_2248[]{class_2246.field_10398});
+        this.monumentBlocks = Arrays.asList(class_2246.field_10006, class_2246.field_10174, class_2246.field_10297);
+        this.strongholdBlocks = Arrays.asList(class_2246.field_10398);
     }
 
     private void cancel() {

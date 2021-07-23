@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.themes.meteor.widgets.input;
 
@@ -12,8 +12,8 @@ import minegame159.meteorclient.utils.render.color.SettingColor;
 public class WMeteorDropdown<T>
 extends WDropdown<T>
 implements MeteorWidget {
-    public WMeteorDropdown(T[] arrT, T t) {
-        super(arrT, t);
+    public WMeteorDropdown(T[] TArray, T t) {
+        super(TArray, t);
     }
 
     @Override

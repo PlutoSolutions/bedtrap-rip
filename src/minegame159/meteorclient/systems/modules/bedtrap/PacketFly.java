@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  io.netty.util.internal.ConcurrentSet
- *  net.minecraft.class_1297
- *  net.minecraft.class_2338
- *  net.minecraft.class_243
- *  net.minecraft.class_2596
- *  net.minecraft.class_2708
- *  net.minecraft.class_2793
- *  net.minecraft.class_2828
- *  net.minecraft.class_2828$class_2829
- *  net.minecraft.class_434
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -111,7 +99,7 @@ extends Module {
     @EventHandler
     public void onPacketSent(PacketEvent.Send send) {
         class_2828 class_28282;
-        if (send.packet instanceof class_2828 && !this.packets.remove((Object)(class_28282 = (class_2828)send.packet))) {
+        if (send.packet instanceof class_2828 && !this.packets.remove(class_28282 = (class_2828)send.packet)) {
             send.setCancelled(true);
         }
     }
@@ -189,9 +177,9 @@ extends Module {
         if (this.doAntiFactor.get().booleanValue() && bl && ((double)this.mc.field_1724.field_3913.field_3905 != 0.0 || (double)this.mc.field_1724.field_3913.field_3907 != 0.0) && d != 0.0) {
             d /= this.antiFactor.get().doubleValue();
         }
-        double[] arrd = this.getMotion(this.strafeFactor.get() != false && bl ? 0.031 : 0.26);
+        double[] dArray = this.getMotion(this.strafeFactor.get() != false && bl ? 0.031 : 0.26);
         for (int i = 1; i < this.loops.get() + 1; ++i) {
-            this.mc.field_1724.method_18800(arrd[0] * (double)i * this.extraFactor.get(), d * (double)i, arrd[1] * (double)i * this.extraFactor.get());
+            this.mc.field_1724.method_18800(dArray[0] * (double)i * this.extraFactor.get(), d * (double)i, dArray[1] * (double)i * this.extraFactor.get());
             this.sendPackets(this.mc.field_1724.method_18798().field_1352, this.mc.field_1724.method_18798().field_1351, this.mc.field_1724.method_18798().field_1350, this.sendTeleport.get());
             if (!false) continue;
             return;

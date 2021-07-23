@@ -1,19 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.ImmutableMap
- *  com.mojang.serialization.MapCodec
- *  net.minecraft.class_1268
- *  net.minecraft.class_1269
- *  net.minecraft.class_1657
- *  net.minecraft.class_1937
- *  net.minecraft.class_2248
- *  net.minecraft.class_2680
- *  net.minecraft.class_2769
- *  net.minecraft.class_3965
- *  net.minecraft.class_4970$class_4971
- *  org.spongepowered.asm.mixin.Mixin
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 

@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2248
- *  net.minecraft.class_2378
- *  net.minecraft.class_2487
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -77,7 +70,7 @@ extends Setting<Map<class_2248, T>> {
         class_2487 class_24872 = this.saveGeneral();
         class_2487 class_24873 = new class_2487();
         for (class_2248 class_22482 : ((Map)this.get()).keySet()) {
-            class_24873.method_10566(class_2378.field_11146.method_10221((Object)class_22482).toString(), (class_2520)((ISerializable)((Object)((ICopyable)((Map)this.get()).get((Object)class_22482)))).toTag());
+            class_24873.method_10566(class_2378.field_11146.method_10221((Object)class_22482).toString(), (class_2520)((ISerializable)((Object)((ICopyable)((Map)this.get()).get(class_22482)))).toTag());
         }
         class_24872.method_10566("value", (class_2520)class_24873);
         return class_24872;

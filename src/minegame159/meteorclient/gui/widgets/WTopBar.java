@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_437
- *  org.lwjgl.glfw.GLFW
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.widgets;
 

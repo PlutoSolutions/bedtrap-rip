@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -39,14 +39,14 @@ implements Function.PostCallRead {
         }
     }
 
-    private StringArray(Object[] arrobject, String string) {
-        super((arrobject.length + 1) * Pointer.SIZE);
-        this.original = arrobject;
+    private StringArray(Object[] objectArray, String string) {
+        super((objectArray.length + 1) * Pointer.SIZE);
+        this.original = objectArray;
         this.encoding = string;
-        for (int i = 0; i < arrobject.length; ++i) {
+        for (int i = 0; i < objectArray.length; ++i) {
             Pointer pointer = null;
-            if (arrobject[i] != null) {
-                NativeString nativeString = new NativeString(arrobject[i].toString(), string);
+            if (objectArray[i] != null) {
+                NativeString nativeString = new NativeString(objectArray[i].toString(), string);
                 this.natives.add(nativeString);
                 pointer = nativeString.getPointer();
             }
@@ -54,7 +54,7 @@ implements Function.PostCallRead {
             if (-4 <= 0) continue;
             throw null;
         }
-        this.setPointer(Pointer.SIZE * arrobject.length, null);
+        this.setPointer(Pointer.SIZE * objectArray.length, null);
     }
 
     @Override
@@ -65,20 +65,20 @@ implements Function.PostCallRead {
         return string;
     }
 
-    public StringArray(WString[] arrwString) {
-        this(arrwString, "--WIDE-STRING--");
+    public StringArray(WString[] wStringArray) {
+        this(wStringArray, "--WIDE-STRING--");
     }
 
-    public StringArray(String[] arrstring, String string) {
-        this((Object[])arrstring, string);
+    public StringArray(String[] stringArray, String string) {
+        this((Object[])stringArray, string);
     }
 
-    public StringArray(String[] arrstring) {
-        this(arrstring, false);
+    public StringArray(String[] stringArray) {
+        this(stringArray, false);
     }
 
-    public StringArray(String[] arrstring, boolean bl) {
-        this((Object[])arrstring, bl ? "--WIDE-STRING--" : Native.getDefaultStringEncoding());
+    public StringArray(String[] stringArray, boolean bl) {
+        this((Object[])stringArray, bl ? "--WIDE-STRING--" : Native.getDefaultStringEncoding());
     }
 }
 

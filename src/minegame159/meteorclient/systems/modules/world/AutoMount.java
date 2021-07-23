@@ -1,19 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1268
- *  net.minecraft.class_1297
- *  net.minecraft.class_1452
- *  net.minecraft.class_1495
- *  net.minecraft.class_1498
- *  net.minecraft.class_1500
- *  net.minecraft.class_1501
- *  net.minecraft.class_1506
- *  net.minecraft.class_1657
- *  net.minecraft.class_1690
- *  net.minecraft.class_1695
- *  net.minecraft.class_1826
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 

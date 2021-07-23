@@ -1,8 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  javax.annotation.Nonnull
+ * Decompiled with CFR 0.151.
  */
 package com.g00fy2.versioncompare;
 

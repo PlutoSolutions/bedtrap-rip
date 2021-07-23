@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2IntArrayMap
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  net.minecraft.class_1291
- *  net.minecraft.class_2378
- *  net.minecraft.class_2487
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -64,13 +55,13 @@ extends Setting<Object2IntMap<class_1291>> {
 
     @Override
     protected Object2IntMap<class_1291> parseImpl(String string) {
-        String[] arrstring = string.split(",");
+        String[] stringArray = string.split(",");
         Object2IntMap<class_1291> object2IntMap = Utils.createStatusEffectMap();
         try {
-            for (String string2 : arrstring) {
-                String[] arrstring2 = string2.split(" ");
-                class_1291 class_12912 = (class_1291)StatusEffectSetting.parseId(class_2378.field_11159, arrstring2[0]);
-                int n = Integer.parseInt(arrstring2[1]);
+            for (String string2 : stringArray) {
+                String[] stringArray2 = string2.split(" ");
+                class_1291 class_12912 = (class_1291)StatusEffectSetting.parseId(class_2378.field_11159, stringArray2[0]);
+                int n = Integer.parseInt(stringArray2[1]);
                 object2IntMap.put((Object)class_12912, n);
                 if (2 <= 2) continue;
                 return null;

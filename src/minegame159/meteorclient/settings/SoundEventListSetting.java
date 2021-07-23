@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2378
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
- *  net.minecraft.class_3414
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -45,10 +36,10 @@ extends Setting<List<class_3414>> {
 
     @Override
     protected List<class_3414> parseImpl(String string) {
-        String[] arrstring = string.split(",");
-        ArrayList<class_3414> arrayList = new ArrayList<class_3414>(arrstring.length);
+        String[] stringArray = string.split(",");
+        ArrayList<class_3414> arrayList = new ArrayList<class_3414>(stringArray.length);
         try {
-            for (String string2 : arrstring) {
+            for (String string2 : stringArray) {
                 class_3414 class_34142 = (class_3414)SoundEventListSetting.parseId(class_2378.field_11156, string2);
                 if (class_34142 == null) continue;
                 arrayList.add(class_34142);

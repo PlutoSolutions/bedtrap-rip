@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.ObjectOpenHashSet
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
- *  net.minecraft.class_2596
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -37,13 +29,13 @@ extends Setting<Set<Class<? extends class_2596<?>>>> {
 
     @Override
     protected Set<Class<? extends class_2596<?>>> parseImpl(String string) {
-        String[] arrstring = string.split(",");
-        ObjectOpenHashSet objectOpenHashSet = new ObjectOpenHashSet(arrstring.length);
+        String[] stringArray = string.split(",");
+        ObjectOpenHashSet objectOpenHashSet = new ObjectOpenHashSet(stringArray.length);
         try {
-            for (String string2 : arrstring) {
-                Class<? extends class_2596<?>> class_ = PacketUtils.getPacket(string2.trim());
-                if (class_ == null) continue;
-                objectOpenHashSet.add(class_);
+            for (String string2 : stringArray) {
+                Class<? extends class_2596<?>> clazz = PacketUtils.getPacket(string2.trim());
+                if (clazz == null) continue;
+                objectOpenHashSet.add(clazz);
                 if (-4 <= 0) continue;
                 return null;
             }
@@ -63,8 +55,8 @@ extends Setting<Set<Class<? extends class_2596<?>>>> {
     public class_2487 toTag() {
         class_2487 class_24872 = this.saveGeneral();
         class_2499 class_24992 = new class_2499();
-        for (Class class_ : (Set)this.get()) {
-            class_24992.add((Object)class_2519.method_23256((String)PacketUtils.getName(class_)));
+        for (Class clazz : (Set)this.get()) {
+            class_24992.add((Object)class_2519.method_23256((String)PacketUtils.getName(clazz)));
         }
         class_24872.method_10566("value", (class_2520)class_24992);
         return class_24872;
@@ -79,11 +71,11 @@ extends Setting<Set<Class<? extends class_2596<?>>>> {
     public List<String> getSuggestions() {
         if (suggestions == null) {
             suggestions = new ArrayList<String>(PacketUtils.getC2SPackets().size() + PacketUtils.getS2CPackets().size());
-            for (Class<? extends class_2596<?>> class_ : PacketUtils.getC2SPackets()) {
-                suggestions.add(PacketUtils.getName(class_));
+            for (Class<? extends class_2596<?>> clazz : PacketUtils.getC2SPackets()) {
+                suggestions.add(PacketUtils.getName(clazz));
             }
-            for (Class<? extends class_2596<?>> class_ : PacketUtils.getS2CPackets()) {
-                suggestions.add(PacketUtils.getName(class_));
+            for (Class<? extends class_2596<?>> clazz : PacketUtils.getS2CPackets()) {
+                suggestions.add(PacketUtils.getName(clazz));
             }
         }
         return suggestions;
@@ -95,9 +87,9 @@ extends Setting<Set<Class<? extends class_2596<?>>>> {
         class_2520 class_25202 = class_24872.method_10580("value");
         if (class_25202 instanceof class_2499) {
             for (class_2520 class_25203 : (class_2499)class_25202) {
-                Class<? extends class_2596<?>> class_ = PacketUtils.getPacket(class_25203.method_10714());
-                if (class_ == null) continue;
-                ((Set)this.get()).add(class_);
+                Class<? extends class_2596<?>> clazz = PacketUtils.getPacket(class_25203.method_10714());
+                if (clazz == null) continue;
+                ((Set)this.get()).add(clazz);
             }
         }
         this.changed();

@@ -1,29 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1268
- *  net.minecraft.class_1297
- *  net.minecraft.class_1802
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_2374
- *  net.minecraft.class_2382
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_2428
- *  net.minecraft.class_243
- *  net.minecraft.class_2596
- *  net.minecraft.class_2680
- *  net.minecraft.class_2769
- *  net.minecraft.class_2885
- *  net.minecraft.class_3959
- *  net.minecraft.class_3959$class_242
- *  net.minecraft.class_3959$class_3960
- *  net.minecraft.class_3965
- *  net.minecraft.class_437
- *  org.apache.commons.io.FilenameUtils
- *  org.apache.commons.lang3.tuple.ImmutablePair
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.misc;
 
@@ -363,16 +339,16 @@ extends Module {
             int n;
             int n2;
             block7: {
-                String[] arrstring = list.get(i).split(":");
-                if (arrstring.length < 2) {
+                String[] stringArray = list.get(i).split(":");
+                if (stringArray.length < 2) {
                     this.warning("Malformed line %d", i);
                     continue;
                 }
                 try {
                     int n3;
-                    n2 = Integer.parseInt(arrstring[0]);
-                    n = Integer.parseInt(arrstring[1]);
-                    if (arrstring.length > 2 && !NotebotUtils.isValidIntrumentTextFile(n3 = Integer.parseInt(arrstring[2]), this.instrument.get())) {
+                    n2 = Integer.parseInt(stringArray[0]);
+                    n = Integer.parseInt(stringArray[1]);
+                    if (stringArray.length > 2 && !NotebotUtils.isValidIntrumentTextFile(n3 = Integer.parseInt(stringArray[2]), this.instrument.get())) {
                     }
                     break block7;
                 }

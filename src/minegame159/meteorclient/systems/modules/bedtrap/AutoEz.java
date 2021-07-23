@@ -1,10 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1657
- *  net.minecraft.class_2635
- *  net.minecraft.class_2678
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -50,10 +45,10 @@ extends Module {
             return;
         }
         String string = ((class_2635)receive.packet).method_11388().getString().toLowerCase();
-        String[] arrstring = new String[]{"by", "slain", "fucked", "killed", "\u0447\u0438\u0445\u043d\u0443\u043b", "\u043e\u0431\u043d\u0438\u043c\u0430\u0448\u043a\u0438", "\u0443\u0431\u0438\u0442", "separated", "punched", "shoved", "crystal", "nuked", "\u043f\u043e\u0434\u043e\u0440\u0432\u0430\u043b"};
+        String[] stringArray = new String[]{"by", "slain", "fucked", "killed", "\u0447\u0438\u0445\u043d\u0443\u043b", "\u043e\u0431\u043d\u0438\u043c\u0430\u0448\u043a\u0438", "\u0443\u0431\u0438\u0442", "separated", "punched", "shoved", "crystal", "nuked", "\u043f\u043e\u0434\u043e\u0440\u0432\u0430\u043b"};
         SortPriority sortPriority = SortPriority.LowestDistance;
         this.target = TargetUtils.getPlayerTarget(5.0, sortPriority);
-        for (String string2 : arrstring) {
+        for (String string2 : stringArray) {
             if (string.contains(String.valueOf(new StringBuilder().append(this.mc.field_1724.method_5477().method_10851().toLowerCase()).append(" ").append(string2)))) {
                 return;
             }

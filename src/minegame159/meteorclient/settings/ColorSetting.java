@@ -1,10 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.ImmutableList
- *  net.minecraft.class_2487
- *  net.minecraft.class_2520
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -71,8 +66,8 @@ extends Setting<SettingColor> {
     @Override
     protected SettingColor parseImpl(String string) {
         try {
-            String[] arrstring = string.split(" ");
-            return new SettingColor(Integer.parseInt(arrstring[0]), Integer.parseInt(arrstring[1]), Integer.parseInt(arrstring[2]), Integer.parseInt(arrstring[3]));
+            String[] stringArray = string.split(" ");
+            return new SettingColor(Integer.parseInt(stringArray[0]), Integer.parseInt(stringArray[1]), Integer.parseInt(stringArray[2]), Integer.parseInt(stringArray[3]));
         }
         catch (IndexOutOfBoundsException | NumberFormatException runtimeException) {
             return null;

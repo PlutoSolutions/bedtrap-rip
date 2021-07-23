@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -11,8 +11,8 @@ public class MethodResultContext
 extends FunctionResultContext {
     private final Method method;
 
-    MethodResultContext(Class<?> class_, Function function, Object[] arrobject, Method method) {
-        super(class_, function, arrobject);
+    MethodResultContext(Class<?> clazz, Function function, Object[] objectArray, Method method) {
+        super(clazz, function, objectArray);
         this.method = method;
     }
 

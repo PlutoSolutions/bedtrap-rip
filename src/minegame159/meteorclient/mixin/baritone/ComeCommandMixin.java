@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.pathing.goals.GoalBlock
- *  baritone.command.defaults.ComeCommand
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.ModifyArgs
- *  org.spongepowered.asm.mixin.injection.invoke.arg.Args
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin.baritone;
 

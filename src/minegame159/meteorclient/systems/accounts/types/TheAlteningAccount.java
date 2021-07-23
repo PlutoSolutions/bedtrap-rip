@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.gson.Gson
- *  com.mojang.authlib.Agent
- *  com.mojang.authlib.Environment
- *  com.mojang.authlib.exceptions.AuthenticationException
- *  com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
- *  com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService
- *  com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication
- *  net.minecraft.class_320
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.accounts.types;
 

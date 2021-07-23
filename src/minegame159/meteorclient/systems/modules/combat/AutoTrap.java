@@ -1,10 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1657
- *  net.minecraft.class_1802
- *  net.minecraft.class_2338
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -97,7 +92,7 @@ extends Module {
     }
 
     private void add(class_2338 class_23382) {
-        if (!this.placePositions.contains((Object)class_23382) && BlockUtils.canPlace(class_23382)) {
+        if (!this.placePositions.contains(class_23382) && BlockUtils.canPlace(class_23382)) {
             this.placePositions.add(class_23382);
         }
     }
@@ -184,7 +179,7 @@ extends Module {
         if (this.timer >= this.delay.get() && this.placePositions.size() > 0) {
             class_2338 class_23382 = this.placePositions.get(this.placePositions.size() - 1);
             if (BlockUtils.place(class_23382, findItemResult, this.rotate.get(), 50, true)) {
-                this.placePositions.remove((Object)class_23382);
+                this.placePositions.remove(class_23382);
                 this.placed = true;
             }
             this.timer = 0;

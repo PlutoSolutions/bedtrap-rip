@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package meteordevelopment.orbit.listeners;
 
@@ -17,8 +17,8 @@ implements IListener {
         return false;
     }
 
-    public ConsumerListener(Class<?> class_, int n, Consumer<T> consumer) {
-        this.target = class_;
+    public ConsumerListener(Class<?> clazz, int n, Consumer<T> consumer) {
+        this.target = clazz;
         this.priority = n;
         this.executor = consumer;
     }
@@ -33,8 +33,8 @@ implements IListener {
         return this.target;
     }
 
-    public ConsumerListener(Class<?> class_, Consumer<T> consumer) {
-        this(class_, 0, consumer);
+    public ConsumerListener(Class<?> clazz, Consumer<T> consumer) {
+        this(clazz, 0, consumer);
     }
 
     @Override

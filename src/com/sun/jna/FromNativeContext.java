@@ -1,13 +1,13 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
 public class FromNativeContext {
     private Class<?> type;
 
-    FromNativeContext(Class<?> class_) {
-        this.type = class_;
+    FromNativeContext(Class<?> clazz) {
+        this.type = clazz;
     }
 
     public Class<?> getTargetType() {

@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  io.netty.channel.Channel
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_2846
- *  net.minecraft.class_2846$class_2847
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.player;
 

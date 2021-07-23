@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1297
- *  net.minecraft.class_1657
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2382
- *  net.minecraft.class_243
- *  net.minecraft.class_310
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.bedtrap;
 
@@ -63,7 +54,7 @@ public class CityUtils {
             return null;
         }
         for (class_2338 class_23383 : arrayList) {
-            if (arrayList2 != null && !arrayList2.isEmpty() && arrayList2.contains((Object)class_23383)) continue;
+            if (arrayList2 != null && !arrayList2.isEmpty() && arrayList2.contains(class_23383)) continue;
             if (class_23382 == null) {
                 class_23382 = class_23383;
                 continue;

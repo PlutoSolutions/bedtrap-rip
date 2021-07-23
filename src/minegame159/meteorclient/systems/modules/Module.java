@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_124
- *  net.minecraft.class_2487
- *  net.minecraft.class_2520
- *  net.minecraft.class_2561
- *  net.minecraft.class_310
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules;
 
@@ -68,12 +61,12 @@ implements ISerializable<Module> {
 
     public void sendToggledMsg() {
         if (Config.get().chatCommandsInfo) {
-            ChatUtils.sendMsg(this.hashCode(), class_124.field_1080, "Toggled (highlight)%s(default) %s(default).", this.title, this.isActive() ? String.valueOf(new StringBuilder().append((Object)class_124.field_1060).append("on")) : String.valueOf(new StringBuilder().append((Object)class_124.field_1061).append("off")));
+            ChatUtils.sendMsg(this.hashCode(), class_124.field_1080, "Toggled (highlight)%s(default) %s(default).", this.title, this.isActive() ? String.valueOf(new StringBuilder().append(class_124.field_1060).append("on")) : String.valueOf(new StringBuilder().append(class_124.field_1061).append("off")));
         }
     }
 
-    public void info(String string, Object ... arrobject) {
-        ChatUtils.info(this.title, string, arrobject);
+    public void info(String string, Object ... objectArray) {
+        ChatUtils.info(this.title, string, objectArray);
     }
 
     public WWidget getWidget(GuiTheme guiTheme) {
@@ -119,12 +112,12 @@ implements ISerializable<Module> {
     public void onDeactivate() {
     }
 
-    public void warning(String string, Object ... arrobject) {
-        ChatUtils.warning(this.title, string, arrobject);
+    public void warning(String string, Object ... objectArray) {
+        ChatUtils.warning(this.title, string, objectArray);
     }
 
-    public void error(String string, Object ... arrobject) {
-        ChatUtils.error(this.title, string, arrobject);
+    public void error(String string, Object ... objectArray) {
+        ChatUtils.error(this.title, string, objectArray);
     }
 
     public boolean isActive() {

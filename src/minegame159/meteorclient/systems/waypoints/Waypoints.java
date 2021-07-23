@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1011
- *  net.minecraft.class_1043
- *  net.minecraft.class_1044
- *  net.minecraft.class_243
- *  net.minecraft.class_2487
- *  net.minecraft.class_2520
- *  net.minecraft.class_4184
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.waypoints;
 
@@ -141,17 +132,17 @@ implements Iterable<Waypoint> {
     public void init() {
         File file = new File(new File(MeteorClient.FOLDER, "waypoints"), "icons");
         file.mkdirs();
-        Object[] arrobject = BUILTIN_ICONS;
-        int n = arrobject.length;
+        Object[] objectArray = BUILTIN_ICONS;
+        int n = objectArray.length;
         for (int i = 0; i < n; ++i) {
-            String string = arrobject[i];
+            String string = objectArray[i];
             Object object = new File(file, String.valueOf(new StringBuilder().append(string).append(".png")));
             if (((File)object).exists()) continue;
             this.copyIcon((File)object);
             if (3 >= 0) continue;
             return;
         }
-        for (Object object : arrobject = file.listFiles()) {
+        for (Object object : objectArray = file.listFiles()) {
             if (!((File)object).getName().endsWith(".png")) continue;
             try {
                 String string = ((File)object).getName().replace(".png", "");

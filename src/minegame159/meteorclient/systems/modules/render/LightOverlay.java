@@ -1,21 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1922
- *  net.minecraft.class_1944
- *  net.minecraft.class_2189
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2382
- *  net.minecraft.class_2482
- *  net.minecraft.class_2510
- *  net.minecraft.class_259
- *  net.minecraft.class_2680
- *  net.minecraft.class_2760
- *  net.minecraft.class_2769
- *  net.minecraft.class_2771
- *  net.minecraft.class_290
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -100,7 +84,7 @@ extends Module {
             this.crossPool.free(cross);
         }
         this.crosses.clear();
-        BlockIterator.register(this.horizontalRange.get(), this.verticalRange.get(), (arg_0, arg_1) -> this.lambda$onTick$1(arg_0, arg_1));
+        BlockIterator.register(this.horizontalRange.get(), this.verticalRange.get(), this::lambda$onTick$1);
     }
 
     private void lambda$onTick$1(class_2338 class_23382, class_2680 class_26802) {

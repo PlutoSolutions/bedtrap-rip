@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.authlib.yggdrasil.YggdrasilEnvironment
- *  com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService
- *  net.minecraft.class_2487
- *  net.minecraft.class_2520
- *  net.minecraft.class_320
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.accounts;
 

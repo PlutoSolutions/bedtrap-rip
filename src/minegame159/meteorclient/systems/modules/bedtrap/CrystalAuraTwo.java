@@ -1,46 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.Streams
- *  com.google.common.util.concurrent.AtomicDouble
- *  it.unimi.dsi.fastutil.ints.Int2IntMap
- *  it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap
- *  it.unimi.dsi.fastutil.ints.IntIterator
- *  it.unimi.dsi.fastutil.ints.IntOpenHashSet
- *  it.unimi.dsi.fastutil.ints.IntSet
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  net.minecraft.class_1268
- *  net.minecraft.class_1294
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_1309
- *  net.minecraft.class_1511
- *  net.minecraft.class_1657
- *  net.minecraft.class_1743
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1812
- *  net.minecraft.class_1829
- *  net.minecraft.class_1937
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_2374
- *  net.minecraft.class_238
- *  net.minecraft.class_2382
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_243
- *  net.minecraft.class_2596
- *  net.minecraft.class_2680
- *  net.minecraft.class_2824
- *  net.minecraft.class_2879
- *  net.minecraft.class_2885
- *  net.minecraft.class_3959
- *  net.minecraft.class_3959$class_242
- *  net.minecraft.class_3959$class_3960
- *  net.minecraft.class_3965
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -267,53 +226,51 @@ extends Module {
 
     private void doPlace() {
         if (this.placeDelayLeft <= 0) {
+            int n;
             boolean bl;
             if (!$assertionsDisabled && this.mc.field_1724 == null) {
                 throw new AssertionError();
             }
             boolean bl2 = bl = this.mc.field_1724.method_6047().method_7909() == class_1802.field_8301 || this.mc.field_1724.method_6079().method_7909() == class_1802.field_8301;
-            if (this.switchMode.get() != SwitchMode.None || bl) {
-                int n = InvUtils.findInHotbar((class_1792[])new class_1792[]{class_1802.field_8301}).slot;
-                if (n >= 0 && n <= 8 || bl) {
-                    if (this.pauseMode.get() == Type.Place || this.pauseMode.get() == Type.Both) {
-                        if (this.mc.field_1724.method_6115()) {
-                            if (this.pauseOnEat.get().booleanValue() && (this.mc.field_1724.method_6047().method_7909().method_19263() || this.mc.field_1724.method_6079().method_7909().method_19263())) {
-                                return;
-                            }
-                            if (this.pauseOnDrink.get().booleanValue() && (this.mc.field_1724.method_6047().method_7909() instanceof class_1812 || this.mc.field_1724.method_6079().method_7909() instanceof class_1812)) {
-                                return;
-                            }
+            if ((this.switchMode.get() != SwitchMode.None || bl) && ((n = InvUtils.findInHotbar((class_1792[])new class_1792[]{class_1802.field_8301}).slot) >= 0 && n <= 8 || bl)) {
+                if (this.pauseMode.get() == Type.Place || this.pauseMode.get() == Type.Both) {
+                    if (this.mc.field_1724.method_6115()) {
+                        if (this.pauseOnEat.get().booleanValue() && (this.mc.field_1724.method_6047().method_7909().method_19263() || this.mc.field_1724.method_6079().method_7909().method_19263())) {
+                            return;
                         }
-                        if (this.pauseOnMine.get().booleanValue()) {
-                            if (!$assertionsDisabled && this.mc.field_1761 == null) {
-                                throw new AssertionError();
-                            }
-                            if (this.mc.field_1761.method_2923()) {
-                                return;
-                            }
+                        if (this.pauseOnDrink.get().booleanValue() && (this.mc.field_1724.method_6047().method_7909() instanceof class_1812 || this.mc.field_1724.method_6079().method_7909() instanceof class_1812)) {
+                            return;
                         }
                     }
-                    boolean bl3 = false;
-                    if (this.support.get().booleanValue()) {
-                        for (int i = 0; i < 9; ++i) {
-                            if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_1802.field_8281) continue;
-                            bl3 = true;
-                            this.supportSlot = i;
-                            break;
+                    if (this.pauseOnMine.get().booleanValue()) {
+                        if (!$assertionsDisabled && this.mc.field_1761 == null) {
+                            throw new AssertionError();
+                        }
+                        if (this.mc.field_1761.method_2923()) {
+                            return;
                         }
                     }
-                    AtomicReference atomicReference = new AtomicReference();
-                    AtomicReference atomicReference2 = new AtomicReference();
-                    AtomicDouble atomicDouble = new AtomicDouble();
-                    AtomicDouble atomicDouble2 = new AtomicDouble();
-                    AtomicDouble atomicDouble3 = new AtomicDouble();
-                    AtomicDouble atomicDouble4 = new AtomicDouble();
-                    this.crystalMap.clear();
-                    this.crystalList.clear();
-                    boolean bl4 = bl3;
-                    BlockIterator.register(this.placeRange.get().intValue(), this.placeRange.get().intValue(), (arg_0, arg_1) -> this.lambda$doPlace$1(atomicReference2, bl4, atomicDouble3, atomicReference, atomicDouble4, atomicDouble2, atomicDouble, arg_0, arg_1));
-                    BlockIterator.after(() -> this.lambda$doPlace$2(atomicReference2, atomicReference, atomicDouble2, atomicDouble4));
                 }
+                boolean bl3 = false;
+                if (this.support.get().booleanValue()) {
+                    for (int i = 0; i < 9; ++i) {
+                        if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_1802.field_8281) continue;
+                        bl3 = true;
+                        this.supportSlot = i;
+                        break;
+                    }
+                }
+                AtomicReference atomicReference = new AtomicReference();
+                AtomicReference atomicReference2 = new AtomicReference();
+                AtomicDouble atomicDouble = new AtomicDouble();
+                AtomicDouble atomicDouble2 = new AtomicDouble();
+                AtomicDouble atomicDouble3 = new AtomicDouble();
+                AtomicDouble atomicDouble4 = new AtomicDouble();
+                this.crystalMap.clear();
+                this.crystalList.clear();
+                boolean bl4 = bl3;
+                BlockIterator.register(this.placeRange.get().intValue(), this.placeRange.get().intValue(), (arg_0, arg_1) -> this.lambda$doPlace$1(atomicReference2, bl4, atomicDouble3, atomicReference, atomicDouble4, atomicDouble2, atomicDouble, arg_0, arg_1));
+                BlockIterator.after(() -> this.lambda$doPlace$2(atomicReference2, atomicReference, atomicDouble2, atomicDouble4));
             }
         }
     }
@@ -357,7 +314,7 @@ extends Module {
     }
 
     private void attackCrystal(class_1511 class_15112, int n) {
-        if (this.antiWeakness.get().booleanValue() && this.mc.field_1724 != null && Objects.requireNonNull(this.mc.field_1724).method_6088().containsKey((Object)class_1294.field_5911)) {
+        if (this.antiWeakness.get().booleanValue() && this.mc.field_1724 != null && Objects.requireNonNull(this.mc.field_1724).method_6088().containsKey(class_1294.field_5911)) {
             if (!$assertionsDisabled && this.mc.field_1761 == null) {
                 throw new AssertionError();
             }
@@ -378,8 +335,8 @@ extends Module {
         }
         if (this.removeCrystals.get() == Canceller.HitCanceller) {
             this.entitiesToRemove.add(class_15112.method_5628());
-            this.placedCrystals.remove((Object)class_15112);
-            this.crystals.remove((Object)class_15112);
+            this.placedCrystals.remove(class_15112);
+            this.crystals.remove(class_15112);
             class_15112.method_5650();
         }
         this.attemptedBreaks.put(class_15112.method_5628(), this.attemptedBreaks.get(class_15112.method_5628()) + 1);
@@ -483,7 +440,7 @@ extends Module {
     @EventHandler
     private void onEntityRemoved(EntityRemovedEvent entityRemovedEvent) {
         if (entityRemovedEvent.entity instanceof class_1511) {
-            this.placedCrystals.remove((Object)entityRemovedEvent.entity);
+            this.placedCrystals.remove(entityRemovedEvent.entity);
             this.attemptedBreaks.remove(entityRemovedEvent.entity.method_5628());
         }
     }
@@ -521,7 +478,7 @@ extends Module {
                     class_2433 = class_2433.method_1031(class_2434.field_1352 * this.ticksBehind, class_2434.field_1351 * this.ticksBehind, class_2434.field_1350 * this.ticksBehind);
                 }
                 if (BlockUtils.isSurrounded(class_13092) && !class_2432.method_24802((class_2374)class_2433, 3.0)) continue;
-                boolean bl4 = bl3 = this.shouldFacePlace((class_1297)class_13092) && !Arrays.asList(this.doubleLegOffsetList).contains((Object)class_2432) && !bl2;
+                boolean bl4 = bl3 = this.shouldFacePlace((class_1297)class_13092) && !Arrays.asList(this.doubleLegOffsetList).contains(class_2432) && !bl2;
                 if (bl3) {
                     bl2 = true;
                 }
@@ -703,7 +660,7 @@ extends Module {
                         throw new AssertionError();
                     }
                     int n = this.mc.field_1724.field_7514.field_7545;
-                    if (this.mc.field_1724.method_6088().containsKey((Object)class_1294.field_5911) && this.antiWeakness.get().booleanValue() && this.switchDelayLeft <= 0) {
+                    if (this.mc.field_1724.method_6088().containsKey(class_1294.field_5911) && this.antiWeakness.get().booleanValue() && this.switchDelayLeft <= 0) {
                         for (int i = 0; i < 9; ++i) {
                             if (!(this.mc.field_1724.field_7514.method_5438(i).method_7909() instanceof class_1829) && !(this.mc.field_1724.field_7514.method_5438(i).method_7909() instanceof class_1743)) continue;
                             this.mc.field_1724.field_7514.field_7545 = i;
@@ -714,9 +671,9 @@ extends Module {
                     if (this.rotationMode.get() != RotationMode.Break && this.rotationMode.get() != RotationMode.Both) {
                         this.attackCrystal(class_15112, n);
                     } else {
-                        float[] arrf = PlayerUtils.calculateAngle(class_15112.method_19538());
+                        float[] fArray = PlayerUtils.calculateAngle(class_15112.method_19538());
                         class_13092 = class_15112;
-                        Rotations.rotate(arrf[0], arrf[1], 30, () -> this.lambda$doBreak$3((class_1511)class_13092, n));
+                        Rotations.rotate(fArray[0], fArray[1], 30, () -> this.lambda$doBreak$3((class_1511)class_13092, n));
                     }
                     this.breakDelayLeft = this.breakDelay.get();
                     return;
@@ -844,16 +801,14 @@ extends Module {
     }
 
     private void doSwitch() {
+        int n;
         if (!$assertionsDisabled && this.mc.field_1724 == null) {
             throw new AssertionError();
         }
-        if (this.mc.field_1724.method_6047().method_7909() != class_1802.field_8301 && this.mc.field_1724.method_6079().method_7909() != class_1802.field_8301) {
-            int n = InvUtils.findInHotbar((class_1792[])new class_1792[]{class_1802.field_8301}).slot;
-            if (n != -1 && n < 9) {
-                this.preSlot = this.mc.field_1724.field_7514.field_7545;
-                this.mc.field_1724.field_7514.field_7545 = n;
-                this.switchDelayLeft = this.switchDelay.get();
-            }
+        if (this.mc.field_1724.method_6047().method_7909() != class_1802.field_8301 && this.mc.field_1724.method_6079().method_7909() != class_1802.field_8301 && (n = InvUtils.findInHotbar((class_1792[])new class_1792[]{class_1802.field_8301}).slot) != -1 && n < 9) {
+            this.preSlot = this.mc.field_1724.field_7514.field_7545;
+            this.mc.field_1724.field_7514.field_7545 = n;
+            this.switchDelayLeft = this.switchDelay.get();
         }
     }
 
@@ -960,7 +915,7 @@ extends Module {
         this.orderLogic = this.sgMisc.add(new EnumSetting.Builder().name("Logic").description("What to do first.").defaultValue(Logic.BreakPlace).build());
         this.antiWeakness = this.sgMisc.add(new BoolSetting.Builder().name("anti-weakness").description("Switches to tools to break crystals instead of your fist.").defaultValue(true).build());
         this.surround = this.sgMisc.add(new BoolSetting.Builder().name("auto-surround").description("Automatically turns on surround when in an obsidian hole.").defaultValue(false).build());
-        this.entities = this.sgTarget.add(new EntityTypeListSetting.Builder().name("entities").description("The entities to attack.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).onlyAttackable().build());
+        this.entities = this.sgTarget.add(new EntityTypeListSetting.Builder().name("entities").description("The entities to attack.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(class_1299.field_6097)).onlyAttackable().build());
         this.targetRange = this.sgTarget.add(new DoubleSetting.Builder().name("target-range").description("The maximum range the entity can be to be targeted.").defaultValue(10.0).min(0.0).sliderMax(15.0).build());
         this.predict = this.sgTarget.add(new BoolSetting.Builder().name("predict").description("Predicts target movement.").defaultValue(false).build());
         this.numberOfDamages = this.sgTarget.add(new IntSetting.Builder().name("number-of-targets").description("Maximum number of targets to perform calculations on. Might lag your game when set too high.").defaultValue(3).sliderMin(1).sliderMax(5).build());
@@ -1039,28 +994,26 @@ extends Module {
 
     /*
      * Unable to fully structure code
-     * Enabled aggressive block sorting
-     * Lifted jumps to return sites
      */
     private class_243 findOpen(class_1309 var1_1, boolean var2_2) {
-        block6: {
-            block7: {
-                block5: {
+        block5: {
+            block6: {
+                block4: {
                     var3_3 = 0;
                     var4_4 = 0;
                     var5_5 = var1_1.method_24515();
                     var6_6 = var1_1.method_19538();
-                    if (!this.isValid(var5_5.method_10069(1, -1, 0), var2_2) || !this.isSafePlace((class_1309)this.mc.field_1724, var6_6.method_1031(1.0, -1.0, 0.0))) break block5;
+                    if (!this.isValid(var5_5.method_10069(1, -1, 0), var2_2) || !this.isSafePlace((class_1309)this.mc.field_1724, var6_6.method_1031(1.0, -1.0, 0.0))) break block4;
                     v0 = new class_2382(var5_5.method_10263() + 1, var5_5.method_10264() - 1, var5_5.method_10260());
-                    if (!(Math.sqrt(this.playerBlockPos.method_10262(v0)) < this.placeRange.get())) break block5;
+                    if (!(Math.sqrt(this.playerBlockPos.method_10262(v0)) < this.placeRange.get())) break block4;
                     var3_3 = 1;
-                    break block6;
+                    break block5;
                 }
-                if (!this.isValid(var5_5.method_10069(-1, -1, 0), var2_2) || !this.isSafePlace((class_1309)this.mc.field_1724, var6_6.method_1031(-1.0, -1.0, 0.0))) break block7;
+                if (!this.isValid(var5_5.method_10069(-1, -1, 0), var2_2) || !this.isSafePlace((class_1309)this.mc.field_1724, var6_6.method_1031(-1.0, -1.0, 0.0))) break block6;
                 v1 = new class_2382(var5_5.method_10263() - 1, var5_5.method_10264() - 1, var5_5.method_10260());
-                if (!(Math.sqrt(this.playerBlockPos.method_10262(v1)) < this.placeRange.get())) break block7;
+                if (!(Math.sqrt(this.playerBlockPos.method_10262(v1)) < this.placeRange.get())) break block6;
                 var3_3 = -1;
-                break block6;
+                break block5;
             }
             if (!this.isValid(var5_5.method_10069(0, -1, 1), var2_2) || !this.isSafePlace((class_1309)this.mc.field_1724, var6_6.method_1031(0.0, -1.0, 1.0))) ** GOTO lbl-1000
             v2 = new class_2382(var5_5.method_10263(), var5_5.method_10264() - 1, var5_5.method_10260() + 1);
@@ -1073,11 +1026,7 @@ extends Module {
                 }
             }
         }
-        if (var3_3 == 0 && var4_4 == 0) {
-            return null;
-        }
-        v4 = new class_243((double)var5_5.method_10263() + 0.5 + (double)var3_3, (double)(var5_5.method_10264() - 1), (double)var5_5.method_10260() + 0.5 + (double)var4_4);
-        return v4;
+        return var3_3 == 0 && var4_4 == 0 ? null : new class_243((double)var5_5.method_10263() + 0.5 + (double)var3_3, (double)(var5_5.method_10264() - 1), (double)var5_5.method_10260() + 0.5 + (double)var4_4);
     }
 
     private void doHeldCrystal(class_243 class_2432) {
@@ -1112,8 +1061,8 @@ extends Module {
                 }
                 this.mc.field_1724.field_3944.method_2883((class_2596)new class_2885(class_12682, new class_3965(this.playerPos, class_23502, class_23382, false)));
             } else {
-                float[] arrf = PlayerUtils.calculateAngle(this.strictLook.get() != false ? new class_243((double)class_23382.method_10263() + 0.5 + (double)Objects.requireNonNull(class_23502).method_10163().method_10263() * 1.0 / 2.0, (double)class_23382.method_10264() + 0.5 + (double)class_23502.method_10163().method_10264() * 1.0 / 2.0, (double)class_23382.method_10260() + 0.5 + (double)class_23502.method_10163().method_10260() * 1.0 / 2.0) : class_2432.method_1031(0.5, 1.0, 0.5));
-                Rotations.rotate(arrf[0], arrf[1], 25, () -> this.lambda$doHeldCrystal$4(class_12682, class_23502, class_23382));
+                float[] fArray = PlayerUtils.calculateAngle(this.strictLook.get() != false ? new class_243((double)class_23382.method_10263() + 0.5 + (double)Objects.requireNonNull(class_23502).method_10163().method_10263() * 1.0 / 2.0, (double)class_23382.method_10264() + 0.5 + (double)class_23502.method_10163().method_10264() * 1.0 / 2.0, (double)class_23382.method_10260() + 0.5 + (double)class_23502.method_10163().method_10260() * 1.0 / 2.0) : class_2432.method_1031(0.5, 1.0, 0.5));
+                Rotations.rotate(fArray[0], fArray[1], 25, () -> this.lambda$doHeldCrystal$4(class_12682, class_23502, class_23382));
             }
             if (this.swing.get().booleanValue()) {
                 if (!$assertionsDisabled && this.mc.field_1724 == null) {

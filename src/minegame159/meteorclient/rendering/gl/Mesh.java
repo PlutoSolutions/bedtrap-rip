@@ -1,8 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.lwjgl.opengl.GL30C
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.rendering.gl;
 
@@ -25,30 +22,30 @@ public class Mesh {
         this.unbind();
     }
 
-    public Mesh(float[] arrf, int[] arrn, int ... arrn2) {
+    public Mesh(float[] fArray, int[] nArray, int ... nArray2) {
         GL30C.glBindVertexArray((int)this.vao);
         this.vbo = GL30C.glGenBuffers();
         GL30C.glBindBuffer((int)34962, (int)this.vbo);
-        GL30C.glBufferData((int)34962, (float[])arrf, (int)35044);
+        GL30C.glBufferData((int)34962, (float[])fArray, (int)35044);
         int n = 0;
-        int[] arrn3 = arrn2;
-        int n2 = arrn3.length;
+        int[] nArray3 = nArray2;
+        int n2 = nArray3.length;
         for (int i = 0; i < n2; ++i) {
-            int n3 = arrn3[i];
+            int n3 = nArray3[i];
             n += n3 * 4;
         }
         int n4 = 0;
-        for (n2 = 0; n2 < arrn2.length; ++n2) {
+        for (n2 = 0; n2 < nArray2.length; ++n2) {
             GL30C.glEnableVertexAttribArray((int)n2);
-            GL30C.glVertexAttribPointer((int)n2, (int)arrn2[n2], (int)5126, (boolean)false, (int)n, (long)n4);
-            n4 += arrn2[n2] * 4;
+            GL30C.glVertexAttribPointer((int)n2, (int)nArray2[n2], (int)5126, (boolean)false, (int)n, (long)n4);
+            n4 += nArray2[n2] * 4;
             if (-3 < 0) continue;
             throw null;
         }
         this.ibo = GL30C.glGenBuffers();
         GL30C.glBindBuffer((int)34963, (int)this.ibo);
-        GL30C.glBufferData((int)34963, (int[])arrn, (int)35044);
-        this.indicesCount = arrn.length;
+        GL30C.glBufferData((int)34963, (int[])nArray, (int)35044);
+        this.indicesCount = nArray.length;
         GL30C.glBindVertexArray((int)0);
         GL30C.glBindBuffer((int)34962, (int)0);
         GL30C.glBindBuffer((int)34963, (int)0);

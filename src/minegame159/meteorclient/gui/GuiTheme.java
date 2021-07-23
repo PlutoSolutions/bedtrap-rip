@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1044
- *  net.minecraft.class_1799
- *  net.minecraft.class_2487
- *  net.minecraft.class_2520
- *  net.minecraft.class_437
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui;
 
@@ -240,15 +233,15 @@ implements ISerializable<GuiTheme> {
     public abstract WSlider slider(double var1, double var3, double var5);
 
     public <T extends Enum<?>> WDropdown<T> dropdown(T t) {
-        Class<?> class_ = t.getClass();
-        Enum[] arrenum = null;
+        Class<?> clazz = t.getClass();
+        Enum[] enumArray = null;
         try {
-            arrenum = (Enum[])class_.getDeclaredMethod("values", new Class[0]).invoke(null, new Object[0]);
+            enumArray = (Enum[])clazz.getDeclaredMethod("values", new Class[0]).invoke(null, new Object[0]);
         }
         catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException reflectiveOperationException) {
             reflectiveOperationException.printStackTrace();
         }
-        return this.dropdown(arrenum, t);
+        return this.dropdown(enumArray, t);
     }
 
     public WTexture texture(double d, double d2, double d3, class_1044 class_10442) {

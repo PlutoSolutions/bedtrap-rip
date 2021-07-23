@@ -1,49 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.util.concurrent.AtomicDouble
- *  it.unimi.dsi.fastutil.ints.Int2IntMap
- *  it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap
- *  it.unimi.dsi.fastutil.ints.IntIterator
- *  it.unimi.dsi.fastutil.ints.IntOpenHashSet
- *  it.unimi.dsi.fastutil.ints.IntSet
- *  net.minecraft.class_1268
- *  net.minecraft.class_1293
- *  net.minecraft.class_1294
- *  net.minecraft.class_1297
- *  net.minecraft.class_1511
- *  net.minecraft.class_1657
- *  net.minecraft.class_1792
- *  net.minecraft.class_1794
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1831
- *  net.minecraft.class_1832
- *  net.minecraft.class_1834
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2350
- *  net.minecraft.class_238
- *  net.minecraft.class_2382
- *  net.minecraft.class_239$class_240
- *  net.minecraft.class_243
- *  net.minecraft.class_2596
- *  net.minecraft.class_2680
- *  net.minecraft.class_2818
- *  net.minecraft.class_2824
- *  net.minecraft.class_2828
- *  net.minecraft.class_2868
- *  net.minecraft.class_2879
- *  net.minecraft.class_2885
- *  net.minecraft.class_3509
- *  net.minecraft.class_3532
- *  net.minecraft.class_3959
- *  net.minecraft.class_3959$class_242
- *  net.minecraft.class_3959$class_3960
- *  net.minecraft.class_3965
- *  net.minecraft.class_631
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -730,13 +686,13 @@ extends Module {
             for (int j = n3; j <= n4; ++j) {
                 class_2818 class_28182 = class_6312.method_12126(i, j, false);
                 if (class_28182 == null) continue;
-                class_3509[] arrclass_3509 = class_28182.method_12215();
+                class_3509[] class_3509Array = class_28182.method_12215();
                 int n5 = class_3532.method_15357((double)((class_2383.field_1322 - 2.0) / 16.0));
                 int n6 = class_3532.method_15357((double)((class_2383.field_1325 + 2.0) / 16.0));
-                n5 = class_3532.method_15340((int)n5, (int)0, (int)(arrclass_3509.length - 1));
-                n6 = class_3532.method_15340((int)n6, (int)0, (int)(arrclass_3509.length - 1));
+                n5 = class_3532.method_15340((int)n5, (int)0, (int)(class_3509Array.length - 1));
+                n6 = class_3532.method_15340((int)n6, (int)0, (int)(class_3509Array.length - 1));
                 for (int k = n5; k <= n6; ++k) {
-                    class_3509 class_35092 = arrclass_3509[k];
+                    class_3509 class_35092 = class_3509Array[k];
                     for (class_1297 class_12972 : class_35092) {
                         if (!class_12972.method_5829().method_994(class_2383) || class_12972.method_7325() || this.removed.contains(class_12972.method_5628())) continue;
                         return true;

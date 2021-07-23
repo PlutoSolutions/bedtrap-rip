@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.misc;
 
@@ -114,9 +114,9 @@ extends AbstractList<T> {
 
     @Override
     public int lastIndexOf(Object object) {
-        T[] arrT = this.items;
+        T[] TArray = this.items;
         for (int i = this.size - 1; i >= 0; --i) {
-            if (!Objects.equals(arrT[i], object)) continue;
+            if (!Objects.equals(TArray[i], object)) continue;
             return i;
         }
         return -1;

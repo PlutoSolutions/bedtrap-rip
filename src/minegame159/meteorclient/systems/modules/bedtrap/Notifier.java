@@ -1,31 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.gson.JsonArray
- *  com.google.gson.JsonElement
- *  com.google.gson.JsonObject
- *  com.google.gson.JsonParser
- *  net.minecraft.class_124
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_1657
- *  net.minecraft.class_1799
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_243
- *  net.minecraft.class_2554
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_2620
- *  net.minecraft.class_2673
- *  net.minecraft.class_2703
- *  net.minecraft.class_2703$class_2704
- *  net.minecraft.class_2703$class_2705
- *  net.minecraft.class_2777
- *  net.minecraft.class_310
- *  org.apache.commons.io.IOUtils
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -349,7 +323,7 @@ extends Module {
             class_2777 class_27772 = (class_2777)receive.packet;
             try {
                 class_1297 class_12972 = Notifier.mc.field_1687.method_8469(class_27772.method_11916());
-                if (class_12972.method_5864().equals((Object)class_1299.field_6097) && this.tpExploit.get().booleanValue()) {
+                if (class_12972.method_5864().equals(class_1299.field_6097) && this.tpExploit.get().booleanValue()) {
                     class_243 class_2432 = new class_243(class_27772.method_11917(), class_27772.method_11919(), class_27772.method_11918());
                     class_243 class_2433 = class_12972.method_19538();
                     if (class_2433.method_1022(class_2432) >= (double)this.minDistance.get().intValue()) {

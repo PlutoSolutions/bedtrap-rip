@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.reflect.TypeToken
- *  net.minecraft.class_1297
- *  net.minecraft.class_1321
- *  net.minecraft.class_1496
- *  net.minecraft.class_1657
- *  net.minecraft.class_1676
- *  net.minecraft.class_290
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 

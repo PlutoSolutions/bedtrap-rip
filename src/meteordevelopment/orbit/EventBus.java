@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package meteordevelopment.orbit;
 
@@ -21,7 +21,7 @@ implements IEventBus {
     private final Map<Class<?>, List<IListener>> staticListenerCache;
     private final Map<Object, List<IListener>> listenerCache = new ConcurrentHashMap<Object, List<IListener>>();
 
-    private static List lambda$subscribe$0(Class class_) {
+    private static List lambda$subscribe$0(Class clazz) {
         return new CopyOnWriteArrayList();
     }
 
@@ -31,8 +31,8 @@ implements IEventBus {
     }
 
     @Override
-    public void subscribe(Class<?> class_) {
-        this.subscribe(this.getListeners(class_, null), true);
+    public void subscribe(Class<?> clazz) {
+        this.subscribe(this.getListeners(clazz, null), true);
     }
 
     @Override
@@ -68,7 +68,7 @@ implements IEventBus {
         this.unsubscribe(this.getListeners(object.getClass(), object), false);
     }
 
-    private static List lambda$subscribe$1(Class class_) {
+    private static List lambda$subscribe$1(Class clazz) {
         return new CopyOnWriteArrayList();
     }
 
@@ -102,13 +102,13 @@ implements IEventBus {
     }
 
     @Override
-    public void unsubscribe(Class<?> class_) {
-        this.unsubscribe(this.getListeners(class_, null), true);
+    public void unsubscribe(Class<?> clazz) {
+        this.unsubscribe(this.getListeners(clazz, null), true);
     }
 
-    private List lambda$getListeners$2(Class class_, Object object, Object object2) {
+    private List lambda$getListeners$2(Class clazz, Object object, Object object2) {
         CopyOnWriteArrayList<IListener> copyOnWriteArrayList = new CopyOnWriteArrayList<IListener>();
-        this.getListeners(copyOnWriteArrayList, class_, object);
+        this.getListeners(copyOnWriteArrayList, clazz, object);
         return copyOnWriteArrayList;
     }
 
@@ -127,10 +127,10 @@ implements IEventBus {
         list.add(n, iListener);
     }
 
-    private List<IListener> getListeners(Class<?> class_, Object object) {
-        Function<Object, List> function = arg_0 -> this.lambda$getListeners$2(class_, object, arg_0);
+    private List<IListener> getListeners(Class<?> clazz, Object object) {
+        Function<Object, List> function = arg_0 -> this.lambda$getListeners$2(clazz, object, arg_0);
         if (object == null) {
-            return this.staticListenerCache.computeIfAbsent(class_, function);
+            return this.staticListenerCache.computeIfAbsent(clazz, function);
         }
         for (Object object2 : this.listenerCache.keySet()) {
             if (object2 != object) continue;
@@ -161,15 +161,15 @@ implements IEventBus {
         }
     }
 
-    private void getListeners(List<IListener> list, Class<?> class_, Object object) {
-        for (Method method : class_.getDeclaredMethods()) {
+    private void getListeners(List<IListener> list, Class<?> clazz, Object object) {
+        for (Method method : clazz.getDeclaredMethods()) {
             if (!this.isValid(method)) continue;
-            list.add(new LambdaListener(class_, object, method));
+            list.add(new LambdaListener(clazz, object, method));
             if (null == null) continue;
             return;
         }
-        if (class_.getSuperclass() != null) {
-            this.getListeners(list, class_.getSuperclass(), object);
+        if (clazz.getSuperclass() != null) {
+            this.getListeners(list, clazz.getSuperclass(), object);
         }
     }
 

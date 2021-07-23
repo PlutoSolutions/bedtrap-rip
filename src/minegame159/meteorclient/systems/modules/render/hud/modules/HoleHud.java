@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2350
- *  net.minecraft.class_290
- *  net.minecraft.class_3191
- *  net.minecraft.class_3532
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render.hud.modules;
 
@@ -51,7 +43,7 @@ extends HudElement {
         super(hUD, "hole", "Displays information about the hole you are standing in.", false);
         this.sgGeneral = this.settings.getDefaultGroup();
         this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").defaultValue(3.0).min(1.0).sliderMin(1.0).build());
-        this.safe = this.sgGeneral.add(new BlockListSetting.Builder().name("safe-blocks").description("Which blocks to consider safe.").defaultValue(Arrays.asList(new class_2248[]{class_2246.field_10540, class_2246.field_9987, class_2246.field_22423, class_2246.field_22108})).build());
+        this.safe = this.sgGeneral.add(new BlockListSetting.Builder().name("safe-blocks").description("Which blocks to consider safe.").defaultValue(Arrays.asList(class_2246.field_10540, class_2246.field_9987, class_2246.field_22423, class_2246.field_22108)).build());
         this.BG_COLOR = new Color(255, 25, 25, 100);
         this.OL_COLOR = new Color(255, 25, 25, 255);
     }
@@ -91,7 +83,7 @@ extends HudElement {
     private void drawBlock(class_2350 class_23502, double d, double d2) {
         class_2248 class_22482;
         class_2248 class_22483 = class_22482 = class_23502 == class_2350.field_11033 ? class_2246.field_10540 : this.mc.field_1687.method_8320(this.mc.field_1724.method_24515().method_10093(class_23502)).method_26204();
-        if (!this.safe.get().contains((Object)class_22482)) {
+        if (!this.safe.get().contains(class_22482)) {
             return;
         }
         RenderUtils.drawItem(class_22482.method_8389().method_7854(), (int)d, (int)d2, this.scale.get(), false);

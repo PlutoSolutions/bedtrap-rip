@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1935
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.player;
 
@@ -133,10 +127,10 @@ extends Module {
 
     private void checkSlot(int n, class_1799 class_17992) {
         class_1799 class_17993 = this.getItem(n);
-        if (!class_17992.method_7960() && class_17992.method_7946() && !this.excludedItems.get().contains((Object)class_17992.method_7909()) && class_17992.method_7947() <= this.threshold.get()) {
+        if (!class_17992.method_7960() && class_17992.method_7946() && !this.excludedItems.get().contains(class_17992.method_7909()) && class_17992.method_7947() <= this.threshold.get()) {
             this.addSlots(n, this.findItem(class_17992, n, this.threshold.get() - class_17992.method_7947() + 1));
         }
-        if (class_17992.method_7960() && !class_17993.method_7960() && !this.excludedItems.get().contains((Object)class_17993.method_7909())) {
+        if (class_17992.method_7960() && !class_17993.method_7960() && !this.excludedItems.get().contains(class_17993.method_7909())) {
             if (class_17993.method_7946()) {
                 this.addSlots(n, this.findItem(class_17993, n, this.threshold.get() - class_17992.method_7947() + 1));
             } else if (this.unstackable.get().booleanValue()) {

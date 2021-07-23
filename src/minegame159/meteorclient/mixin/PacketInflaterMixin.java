@@ -1,19 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  io.netty.buffer.ByteBuf
- *  io.netty.buffer.Unpooled
- *  io.netty.channel.ChannelHandlerContext
- *  io.netty.handler.codec.DecoderException
- *  net.minecraft.class_2532
- *  net.minecraft.class_2540
- *  org.spongepowered.asm.mixin.Final
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Shadow
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfo
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 
@@ -56,7 +42,7 @@ public class PacketInflaterMixin {
                     class_25402 = new class_2540(byteBuf);
                     n = class_25402.method_10816();
                     if (n != 0) break block4;
-                    list.add((Object)class_25402.readBytes(class_25402.readableBytes()));
+                    list.add(class_25402.readBytes(class_25402.readableBytes()));
                     break block3;
                 }
                 return;
@@ -67,12 +53,12 @@ public class PacketInflaterMixin {
             if (n > 0x200000) {
                 throw new DecoderException("Badly compressed packet - size of " + n + " is larger than protocol maximum of " + 0x200000);
             }
-            byte[] arrby = new byte[class_25402.readableBytes()];
-            class_25402.readBytes(arrby);
-            this.field_11622.setInput(arrby);
-            byte[] arrby2 = new byte[n];
-            this.field_11622.inflate(arrby2);
-            list.add((Object)Unpooled.wrappedBuffer((byte[])arrby2));
+            byte[] byArray = new byte[class_25402.readableBytes()];
+            class_25402.readBytes(byArray);
+            this.field_11622.setInput(byArray);
+            byte[] byArray2 = new byte[n];
+            this.field_11622.inflate(byArray2);
+            list.add(Unpooled.wrappedBuffer((byte[])byArray2));
             this.field_11622.reset();
         }
     }

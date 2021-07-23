@@ -1,24 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1087
- *  net.minecraft.class_1160
- *  net.minecraft.class_1747
- *  net.minecraft.class_1792
- *  net.minecraft.class_1798
- *  net.minecraft.class_1799
- *  net.minecraft.class_1922
- *  net.minecraft.class_2246
- *  net.minecraft.class_2350$class_2351
- *  net.minecraft.class_243
- *  net.minecraft.class_2484
- *  net.minecraft.class_265
- *  net.minecraft.class_3486
- *  net.minecraft.class_3494
- *  net.minecraft.class_3726
- *  net.minecraft.class_4608
- *  net.minecraft.class_809$class_811
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -126,7 +107,7 @@ extends Module {
             renderItemEntityEvent.matrixStack.method_22907(class_1160.field_20707.method_23626((float)iItemEntity.getRotation().field_1350));
             renderItemEntityEvent.matrixStack.method_22904(0.0, -0.185, 0.0);
         }
-        if (renderItemEntityEvent.itemEntity.field_6002.method_8320(renderItemEntityEvent.itemEntity.method_24515()).method_26204().equals((Object)class_2246.field_10114)) {
+        if (renderItemEntityEvent.itemEntity.field_6002.method_8320(renderItemEntityEvent.itemEntity.method_24515()).method_26204().equals(class_2246.field_10114)) {
             renderItemEntityEvent.matrixStack.method_22904(0.0, 0.0, -0.1);
         }
         if (renderItemEntityEvent.itemEntity.method_6983().method_7909() instanceof class_1747 && ((class_1747)renderItemEntityEvent.itemEntity.method_6983().method_7909()).method_7711() instanceof class_2484) {

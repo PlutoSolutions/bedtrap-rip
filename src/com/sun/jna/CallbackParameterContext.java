@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -12,10 +12,10 @@ extends FromNativeContext {
     private Object[] args;
     private int index;
 
-    CallbackParameterContext(Class<?> class_, Method method, Object[] arrobject, int n) {
-        super(class_);
+    CallbackParameterContext(Class<?> clazz, Method method, Object[] objectArray, int n) {
+        super(clazz);
         this.method = method;
-        this.args = arrobject;
+        this.args = objectArray;
         this.index = n;
     }
 
