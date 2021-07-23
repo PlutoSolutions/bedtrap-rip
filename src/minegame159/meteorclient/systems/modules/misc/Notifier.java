@@ -1,19 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
- *  net.minecraft.class_124
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_1657
- *  net.minecraft.class_1937
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_2663
- *  net.minecraft.class_5250
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.misc;
 
@@ -108,7 +94,7 @@ extends Module {
         this.totemsIgnoreOthers = this.sgTotemPops.add(new BoolSetting.Builder().name("ignore-others").description("Ignores other players totem pops.").defaultValue(false).build());
         this.visualRange = this.sgVisualRange.add(new BoolSetting.Builder().name("visual-range").description("Notifies you when an entity enters your render distance.").defaultValue(false).build());
         this.event = this.sgVisualRange.add(new EnumSetting.Builder().name("event").description("When to log the entities.").defaultValue(Event.Both).build());
-        this.entities = this.sgVisualRange.add(new EntityTypeListSetting.Builder().name("entities").description("Which entities to nofity about.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
+        this.entities = this.sgVisualRange.add(new EntityTypeListSetting.Builder().name("entities").description("Which entities to nofity about.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(class_1299.field_6097)).build());
         this.visualRangeIgnoreFriends = this.sgVisualRange.add(new BoolSetting.Builder().name("ignore-friends").description("Ignores friends.").defaultValue(true).build());
         this.visualRangeIgnoreFakes = this.sgVisualRange.add(new BoolSetting.Builder().name("ignore-fake-players").description("Ignores fake players.").defaultValue(true).build());
         this.totemPopMap = new Object2IntOpenHashMap();

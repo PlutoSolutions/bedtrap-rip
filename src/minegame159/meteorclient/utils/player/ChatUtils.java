@@ -1,18 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_124
- *  net.minecraft.class_243
- *  net.minecraft.class_2554
- *  net.minecraft.class_2558
- *  net.minecraft.class_2558$class_2559
- *  net.minecraft.class_2561
- *  net.minecraft.class_2568
- *  net.minecraft.class_2568$class_5247
- *  net.minecraft.class_2585
- *  net.minecraft.class_5251
- *  org.jetbrains.annotations.Nullable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.player;
 
@@ -34,12 +21,12 @@ import org.jetbrains.annotations.Nullable;
 public class ChatUtils {
     private static final RainbowColor RAINBOW = new RainbowColor();
 
-    public static void sendMsg(int n, class_124 class_1242, String string, Object ... arrobject) {
-        ChatUtils.sendMsg(n, null, null, class_1242, string, arrobject);
+    public static void sendMsg(int n, class_124 class_1242, String string, Object ... objectArray) {
+        ChatUtils.sendMsg(n, null, null, class_1242, string, objectArray);
     }
 
-    public static void sendMsg(int n, @Nullable String string, @Nullable class_124 class_1242, class_124 class_1243, String string2, Object ... arrobject) {
-        ChatUtils.sendMsg(n, string, class_1242, ChatUtils.formatMsg(string2, class_1243, arrobject), class_1243);
+    public static void sendMsg(int n, @Nullable String string, @Nullable class_124 class_1242, class_124 class_1243, String string2, Object ... objectArray) {
+        ChatUtils.sendMsg(n, string, class_1242, ChatUtils.formatMsg(string2, class_1243, objectArray), class_1243);
     }
 
     public static void sendMsg(class_2561 class_25612) {
@@ -68,16 +55,16 @@ public class ChatUtils {
         ((ChatHudAccessor)Utils.mc.field_1705.method_1743()).add((class_2561)class_25852, n);
     }
 
-    private static String formatMsg(String string, class_124 class_1242, Object ... arrobject) {
-        String string2 = String.format(string, arrobject);
+    private static String formatMsg(String string, class_124 class_1242, Object ... objectArray) {
+        String string2 = String.format(string, objectArray);
         string2 = string2.replaceAll("\\(default\\)", class_1242.toString());
         string2 = string2.replaceAll("\\(highlight\\)", class_124.field_1068.toString());
         string2 = string2.replaceAll("\\(underline\\)", class_124.field_1073.toString());
         return string2;
     }
 
-    public static void sendMsg(class_124 class_1242, String string, Object ... arrobject) {
-        ChatUtils.sendMsg(0, null, null, class_1242, string, arrobject);
+    public static void sendMsg(class_124 class_1242, String string, Object ... objectArray) {
+        ChatUtils.sendMsg(0, null, null, class_1242, string, objectArray);
     }
 
     public static class_2554 formatCoords(class_243 class_2432) {
@@ -92,12 +79,12 @@ public class ChatUtils {
         ChatUtils.sendMsg(0, string, class_124.field_1076, class_25612);
     }
 
-    public static void error(String string, Object ... arrobject) {
-        ChatUtils.sendMsg(class_124.field_1061, string, arrobject);
+    public static void error(String string, Object ... objectArray) {
+        ChatUtils.sendMsg(class_124.field_1061, string, objectArray);
     }
 
-    public static void info(String string, String string2, Object ... arrobject) {
-        ChatUtils.sendMsg(0, string, class_124.field_1076, class_124.field_1080, string2, arrobject);
+    public static void info(String string, String string2, Object ... objectArray) {
+        ChatUtils.sendMsg(0, string, class_124.field_1076, class_124.field_1080, string2, objectArray);
     }
 
     private static class_2554 getCustomPrefix(String string, class_124 class_1242) {
@@ -111,20 +98,20 @@ public class ChatUtils {
         return class_25852;
     }
 
-    public static void error(String string, String string2, Object ... arrobject) {
-        ChatUtils.sendMsg(0, string, class_124.field_1076, class_124.field_1061, string2, arrobject);
+    public static void error(String string, String string2, Object ... objectArray) {
+        ChatUtils.sendMsg(0, string, class_124.field_1076, class_124.field_1061, string2, objectArray);
     }
 
-    public static void info(String string, Object ... arrobject) {
-        ChatUtils.sendMsg(class_124.field_1080, string, arrobject);
+    public static void info(String string, Object ... objectArray) {
+        ChatUtils.sendMsg(class_124.field_1080, string, objectArray);
     }
 
-    public static void warning(String string, Object ... arrobject) {
-        ChatUtils.sendMsg(class_124.field_1054, string, arrobject);
+    public static void warning(String string, Object ... objectArray) {
+        ChatUtils.sendMsg(class_124.field_1054, string, objectArray);
     }
 
-    public static void warning(String string, String string2, Object ... arrobject) {
-        ChatUtils.sendMsg(0, string, class_124.field_1076, class_124.field_1054, string2, arrobject);
+    public static void warning(String string, String string2, Object ... objectArray) {
+        ChatUtils.sendMsg(0, string, class_124.field_1076, class_124.field_1054, string2, objectArray);
     }
 
     private static class_2554 getMeteorPrefix() {

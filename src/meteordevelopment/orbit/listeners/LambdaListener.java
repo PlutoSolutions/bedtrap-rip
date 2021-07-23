@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package meteordevelopment.orbit.listeners;
 
@@ -39,7 +39,7 @@ implements IListener {
         return this.priority;
     }
 
-    public LambdaListener(Class<?> class_, Object object, Method method) {
+    public LambdaListener(Class<?> clazz, Object object, Method method) {
         this.target = method.getParameters()[0].getType();
         this.isStatic = Modifier.isStatic(method.getModifiers());
         this.priority = method.getAnnotation(EventHandler.class).priority();
@@ -51,18 +51,18 @@ implements IListener {
             if (isJava1dot8) {
                 boolean bl = lookupConstructor.isAccessible();
                 lookupConstructor.setAccessible(true);
-                lookup = lookupConstructor.newInstance(class_);
+                lookup = lookupConstructor.newInstance(clazz);
                 lookupConstructor.setAccessible(bl);
             } else {
-                lookup = (MethodHandles.Lookup)privateLookupInMethod.invoke(null, class_, MethodHandles.lookup());
+                lookup = (MethodHandles.Lookup)privateLookupInMethod.invoke(null, clazz, MethodHandles.lookup());
             }
             MethodType methodType2 = MethodType.methodType(Void.TYPE, method.getParameters()[0].getType());
             if (this.isStatic) {
-                methodHandle = lookup.findStatic(class_, string, methodType2);
+                methodHandle = lookup.findStatic(clazz, string, methodType2);
                 methodType = MethodType.methodType(Consumer.class);
             } else {
-                methodHandle = lookup.findVirtual(class_, string, methodType2);
-                methodType = MethodType.methodType(Consumer.class, class_);
+                methodHandle = lookup.findVirtual(clazz, string, methodType2);
+                methodType = MethodType.methodType(Consumer.class, clazz);
             }
             MethodHandle methodHandle2 = LambdaMetafactory.metafactory(lookup, "accept", methodType, MethodType.methodType(Void.TYPE, Object.class), methodHandle, methodType2).getTarget();
             this.executor = this.isStatic ? methodHandle2.invoke() : methodHandle2.invoke(object);

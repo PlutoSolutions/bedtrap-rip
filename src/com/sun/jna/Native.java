@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -137,40 +137,40 @@ implements Version {
         return AWT.getWindowID(window);
     }
 
-    static String getSignature(Class<?> class_) {
-        if (class_.isArray()) {
-            return String.valueOf(new StringBuilder().append("[").append(Native.getSignature(class_.getComponentType())));
+    static String getSignature(Class<?> clazz) {
+        if (clazz.isArray()) {
+            return String.valueOf(new StringBuilder().append("[").append(Native.getSignature(clazz.getComponentType())));
         }
-        if (class_.isPrimitive()) {
-            if (class_ == Void.TYPE) {
+        if (clazz.isPrimitive()) {
+            if (clazz == Void.TYPE) {
                 return "V";
             }
-            if (class_ == Boolean.TYPE) {
+            if (clazz == Boolean.TYPE) {
                 return "Z";
             }
-            if (class_ == Byte.TYPE) {
+            if (clazz == Byte.TYPE) {
                 return "B";
             }
-            if (class_ == Short.TYPE) {
+            if (clazz == Short.TYPE) {
                 return "S";
             }
-            if (class_ == Character.TYPE) {
+            if (clazz == Character.TYPE) {
                 return "C";
             }
-            if (class_ == Integer.TYPE) {
+            if (clazz == Integer.TYPE) {
                 return "I";
             }
-            if (class_ == Long.TYPE) {
+            if (clazz == Long.TYPE) {
                 return "J";
             }
-            if (class_ == Float.TYPE) {
+            if (clazz == Float.TYPE) {
                 return "F";
             }
-            if (class_ == Double.TYPE) {
+            if (clazz == Double.TYPE) {
                 return "D";
             }
         }
-        return String.valueOf(new StringBuilder().append("L").append(Native.replace(".", "/", class_.getName())).append(";"));
+        return String.valueOf(new StringBuilder().append("L").append(Native.replace(".", "/", clazz.getName())).append(";"));
     }
 
     private static native void setDetachState(boolean var0, long var1);
@@ -203,8 +203,8 @@ implements Version {
 
     public static native void free(long var0);
 
-    private static Class<?> nativeType(Class<?> class_) {
-        return NativeMappedConverter.getInstance(class_).nativeType();
+    private static Class<?> nativeType(Class<?> clazz) {
+        return NativeMappedConverter.getInstance(clazz).nativeType();
     }
 
     public static Pointer getWindowPointer(Window window) throws HeadlessException {
@@ -212,20 +212,19 @@ implements Version {
     }
 
     static Class<?> getCallingClass() {
-        Class<?>[] arrclass = new SecurityManager(){
+        Class<?>[] classArray = new SecurityManager(){
 
-            @Override
             public Class<?>[] getClassContext() {
                 return super.getClassContext();
             }
         }.getClassContext();
-        if (arrclass == null) {
+        if (classArray == null) {
             throw new IllegalStateException("The SecurityManager implementation on this platform is broken; you must explicitly provide the class to register");
         }
-        if (arrclass.length < 4) {
+        if (classArray.length < 4) {
             throw new IllegalStateException("This method must be called from the static initializer of a class");
         }
-        return arrclass[3];
+        return classArray[3];
     }
 
     static native long invokeLong(Function var0, long var1, int var3, Object[] var4);
@@ -279,44 +278,44 @@ implements Version {
 
     static native double getDouble(Pointer var0, long var1, long var3);
 
-    private static void loadLibraryInstance(Class<?> class_) {
+    private static void loadLibraryInstance(Class<?> clazz) {
         Map<Class<?>, Reference<?>> map = libraries;
         synchronized (map) {
             block5: {
-                if (class_ == null || libraries.containsKey(class_)) break block5;
+                if (clazz == null || libraries.containsKey(clazz)) break block5;
                 try {
-                    Field[] arrfield = class_.getFields();
-                    for (int i = 0; i < arrfield.length; ++i) {
-                        Field field = arrfield[i];
-                        if (field.getType() != class_ || !Modifier.isStatic(field.getModifiers())) continue;
-                        libraries.put(class_, new WeakReference<Object>(field.get(null)));
+                    Field[] fieldArray = clazz.getFields();
+                    for (int i = 0; i < fieldArray.length; ++i) {
+                        Field field = fieldArray[i];
+                        if (field.getType() != clazz || !Modifier.isStatic(field.getModifiers())) continue;
+                        libraries.put(clazz, new WeakReference<Object>(field.get(null)));
                         break;
                     }
                 }
                 catch (Exception | Throwable throwable) {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Could not access instance of ").append(class_).append(" (").append(throwable).append(")")));
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Could not access instance of ").append(clazz).append(" (").append(throwable).append(")")));
                 }
             }
         }
     }
 
-    public static List<String> toStringList(char[] arrc, int n, int n2) {
+    public static List<String> toStringList(char[] cArray, int n, int n2) {
         ArrayList<String> arrayList = new ArrayList<String>();
         int n3 = n;
         int n4 = n + n2;
         for (int i = n; i < n4; ++i) {
-            if (arrc[i] != '\u0000') continue;
+            if (cArray[i] != '\u0000') continue;
             if (n3 == i) {
                 return arrayList;
             }
-            String string = new String(arrc, n3, i - n3);
+            String string = new String(cArray, n3, i - n3);
             arrayList.add(string);
             n3 = i + 1;
             if (null == null) continue;
             return null;
         }
         if (n3 < n4) {
-            String string = new String(arrc, n3, n4 - n3);
+            String string = new String(cArray, n3, n4 - n3);
             arrayList.add(string);
         }
         return arrayList;
@@ -324,8 +323,8 @@ implements Version {
 
     static native void setByte(Pointer var0, long var1, long var3, byte var5);
 
-    static Structure invokeStructure(Function function, long l, int n, Object[] arrobject, Structure structure) {
-        Native.invokeStructure(function, l, n, arrobject, structure.getPointer().peer, structure.getTypeInfo().peer);
+    static Structure invokeStructure(Function function, long l, int n, Object[] objectArray, Structure structure) {
+        Native.invokeStructure(function, l, n, objectArray, structure.getPointer().peer, structure.getTypeInfo().peer);
         return structure;
     }
 
@@ -341,8 +340,8 @@ implements Version {
         Native.register(Native.findDirectMappedClass(Native.getCallingClass()), string);
     }
 
-    public static String getStringEncoding(Class<?> class_) {
-        Map<String, Object> map = Native.getLibraryOptions(class_);
+    public static String getStringEncoding(Class<?> clazz) {
+        Map<String, Object> map = Native.getLibraryOptions(clazz);
         String string = (String)map.get("string-encoding");
         return string != null ? string : Native.getDefaultStringEncoding();
     }
@@ -372,44 +371,44 @@ implements Version {
         }
     }
 
-    public static int getNativeSize(Class<?> class_) {
-        if (NativeMapped.class.isAssignableFrom(class_)) {
-            class_ = NativeMappedConverter.getInstance(class_).nativeType();
+    public static int getNativeSize(Class<?> clazz) {
+        if (NativeMapped.class.isAssignableFrom(clazz)) {
+            clazz = NativeMappedConverter.getInstance(clazz).nativeType();
         }
-        if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+        if (clazz == Boolean.TYPE || clazz == Boolean.class) {
             return 4;
         }
-        if (class_ == Byte.TYPE || class_ == Byte.class) {
+        if (clazz == Byte.TYPE || clazz == Byte.class) {
             return 1;
         }
-        if (class_ == Short.TYPE || class_ == Short.class) {
+        if (clazz == Short.TYPE || clazz == Short.class) {
             return 2;
         }
-        if (class_ == Character.TYPE || class_ == Character.class) {
+        if (clazz == Character.TYPE || clazz == Character.class) {
             return WCHAR_SIZE;
         }
-        if (class_ == Integer.TYPE || class_ == Integer.class) {
+        if (clazz == Integer.TYPE || clazz == Integer.class) {
             return 4;
         }
-        if (class_ == Long.TYPE || class_ == Long.class) {
+        if (clazz == Long.TYPE || clazz == Long.class) {
             return 8;
         }
-        if (class_ == Float.TYPE || class_ == Float.class) {
+        if (clazz == Float.TYPE || clazz == Float.class) {
             return 4;
         }
-        if (class_ == Double.TYPE || class_ == Double.class) {
+        if (clazz == Double.TYPE || clazz == Double.class) {
             return 8;
         }
-        if (Structure.class.isAssignableFrom(class_)) {
-            if (Structure.ByValue.class.isAssignableFrom(class_)) {
-                return Structure.size(class_);
+        if (Structure.class.isAssignableFrom(clazz)) {
+            if (Structure.ByValue.class.isAssignableFrom(clazz)) {
+                return Structure.size(clazz);
             }
             return POINTER_SIZE;
         }
-        if (Pointer.class.isAssignableFrom(class_) || Platform.HAS_BUFFERS && Buffers.isBuffer(class_) || Callback.class.isAssignableFrom(class_) || String.class == class_ || WString.class == class_) {
+        if (Pointer.class.isAssignableFrom(clazz) || Platform.HAS_BUFFERS && Buffers.isBuffer(clazz) || Callback.class.isAssignableFrom(clazz) || String.class == clazz || WString.class == clazz) {
             return POINTER_SIZE;
         }
-        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Native size for type \"").append(class_.getName()).append("\" is unknown")));
+        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Native size for type \"").append(clazz.getName()).append("\" is unknown")));
     }
 
     public static void detach(boolean bl) {
@@ -425,15 +424,15 @@ implements Version {
         }
     }
 
-    public static TypeMapper getTypeMapper(Class<?> class_) {
-        Map<String, Object> map = Native.getLibraryOptions(class_);
+    public static TypeMapper getTypeMapper(Class<?> clazz) {
+        Map<String, Object> map = Native.getLibraryOptions(clazz);
         return (TypeMapper)map.get("type-mapper");
     }
 
     public static native long ffi_prep_cif(int var0, int var1, long var2, long var4);
 
-    public static <T> T loadLibrary(String string, Class<T> class_) {
-        return Native.loadLibrary(string, class_, Collections.emptyMap());
+    public static <T> T loadLibrary(String string, Class<T> clazz) {
+        return Native.loadLibrary(string, clazz, Collections.emptyMap());
     }
 
     @Deprecated
@@ -446,12 +445,12 @@ implements Version {
 
     private static native int sizeof(int var0);
 
-    public static boolean isSupportedNativeType(Class<?> class_) {
-        if (Structure.class.isAssignableFrom(class_)) {
+    public static boolean isSupportedNativeType(Class<?> clazz) {
+        if (Structure.class.isAssignableFrom(clazz)) {
             return true;
         }
         try {
-            return Native.getNativeSize(class_) != 0;
+            return Native.getNativeSize(clazz) != 0;
         }
         catch (IllegalArgumentException illegalArgumentException) {
             return false;
@@ -461,10 +460,10 @@ implements Version {
     static native void write(Pointer var0, long var1, long var3, long[] var5, int var6, int var7);
 
     public static char[] toCharArray(String string) {
-        char[] arrc = string.toCharArray();
-        char[] arrc2 = new char[arrc.length + 1];
-        System.arraycopy(arrc, 0, arrc2, 0, arrc.length);
-        return arrc2;
+        char[] cArray = string.toCharArray();
+        char[] cArray2 = new char[cArray.length + 1];
+        System.arraycopy(cArray, 0, cArray2, 0, cArray.length);
+        return cArray2;
     }
 
     static native float getFloat(Pointer var0, long var1, long var3);
@@ -473,7 +472,7 @@ implements Version {
 
     static native void read(Pointer var0, long var1, long var3, short[] var5, int var6, int var7);
 
-    public static void main(String[] arrstring) {
+    public static void main(String[] stringArray) {
         String string;
         String string2;
         String string3 = "Java Native Access (JNA)";
@@ -505,17 +504,17 @@ implements Version {
 
     public static native void ffi_call(long var0, long var2, long var4, long var6);
 
-    public static String toString(char[] arrc) {
-        int n = arrc.length;
+    public static String toString(char[] cArray) {
+        int n = cArray.length;
         for (int i = 0; i < n; ++i) {
-            if (arrc[i] != '\u0000') continue;
+            if (cArray[i] != '\u0000') continue;
             n = i;
             break;
         }
         if (n == 0) {
             return "";
         }
-        return new String(arrc, 0, n);
+        return new String(cArray, 0, n);
     }
 
     static long open(String string) {
@@ -529,8 +528,8 @@ implements Version {
     }
 
     private static NativeMapped fromNative(Method method, Object object) {
-        Class<?> class_ = method.getReturnType();
-        return (NativeMapped)NativeMappedConverter.getInstance(class_).fromNative(object, new MethodResultContext(class_, null, null, method));
+        Class<?> clazz = method.getReturnType();
+        return (NativeMapped)NativeMappedConverter.getInstance(clazz).fromNative(object, new MethodResultContext(clazz, null, null, method));
     }
 
     static native void read(Pointer var0, long var1, long var3, byte[] var5, int var6, int var7);
@@ -546,11 +545,11 @@ implements Version {
      * Converted monitor instructions to comments
      * Lifted jumps to return sites
      */
-    public static boolean registered(Class<?> class_) {
+    public static boolean registered(Class<?> clazz) {
         Map<Class<?>, long[]> map = registeredClasses;
         // MONITORENTER : map
         // MONITOREXIT : map
-        return registeredClasses.containsKey(class_);
+        return registeredClasses.containsKey(clazz);
     }
 
     static byte[] getBytes(String string, String string2) {
@@ -568,8 +567,8 @@ implements Version {
 
     public static synchronized native void setProtected(boolean var0);
 
-    public static int getStructureAlignment(Class<?> class_) {
-        Integer n = (Integer)Native.getLibraryOptions(class_).get("structure-alignment");
+    public static int getStructureAlignment(Class<?> clazz) {
+        Integer n = (Integer)Native.getLibraryOptions(clazz).get("structure-alignment");
         return n == null ? 0 : n;
     }
 
@@ -579,9 +578,9 @@ implements Version {
         return fromNativeConverter.fromNative(object, new MethodResultContext(method.getReturnType(), null, null, method));
     }
 
-    private static Object lookupField(Class<?> class_, String string, Class<?> class_2) {
+    private static Object lookupField(Class<?> clazz, String string, Class<?> clazz2) {
         try {
-            Field field = class_.getField(string);
+            Field field = clazz.getField(string);
             field.setAccessible(true);
             return field.get(null);
         }
@@ -701,39 +700,39 @@ implements Version {
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    public static Map<String, Object> getLibraryOptions(Class<?> class_) {
+    public static Map<String, Object> getLibraryOptions(Class<?> clazz) {
         Map<String, Object> map;
-        Class<?> class_2 = libraries;
-        synchronized (class_2) {
-            map = typeOptions.get(class_);
+        Class<?> clazz2 = libraries;
+        synchronized (clazz2) {
+            map = typeOptions.get(clazz);
             if (map != null) {
                 return map;
             }
         }
-        class_2 = Native.findEnclosingLibraryClass(class_);
-        if (class_2 != null) {
-            Native.loadLibraryInstance(class_2);
+        clazz2 = Native.findEnclosingLibraryClass(clazz);
+        if (clazz2 != null) {
+            Native.loadLibraryInstance(clazz2);
         } else {
-            class_2 = class_;
+            clazz2 = clazz;
         }
         Map<Class<?>, Reference<?>> map2 = libraries;
         synchronized (map2) {
             block16: {
-                Class<?> class_3;
-                map = typeOptions.get(class_2);
+                Class<?> clazz3;
+                map = typeOptions.get(clazz2);
                 if (map != null) {
-                    typeOptions.put(class_, map);
+                    typeOptions.put(clazz, map);
                     return map;
                 }
                 try {
-                    class_3 = class_2;
+                    clazz3 = clazz2;
                 }
                 catch (NoSuchFieldException noSuchFieldException) {
                     map = Collections.emptyMap();
                     break block16;
                 }
                 {
-                    Field field = class_3.getField("OPTIONS");
+                    Field field = clazz3.getField("OPTIONS");
                     field.setAccessible(true);
                     map = (Map<String, Object>)field.get(null);
                     if (map != null) break block16;
@@ -742,17 +741,17 @@ implements Version {
             }
             map = new HashMap<String, Object>(map);
             if (!map.containsKey("type-mapper")) {
-                map.put("type-mapper", Native.lookupField(class_2, "TYPE_MAPPER", TypeMapper.class));
+                map.put("type-mapper", Native.lookupField(clazz2, "TYPE_MAPPER", TypeMapper.class));
             }
             if (!map.containsKey("structure-alignment")) {
-                map.put("structure-alignment", Native.lookupField(class_2, "STRUCTURE_ALIGNMENT", Integer.class));
+                map.put("structure-alignment", Native.lookupField(clazz2, "STRUCTURE_ALIGNMENT", Integer.class));
             }
             if (!map.containsKey("string-encoding")) {
-                map.put("string-encoding", Native.lookupField(class_2, "STRING_ENCODING", String.class));
+                map.put("string-encoding", Native.lookupField(clazz2, "STRING_ENCODING", String.class));
             }
-            map = Native.cacheOptions(class_2, map, null);
-            if (class_ != class_2) {
-                typeOptions.put(class_, map);
+            map = Native.cacheOptions(clazz2, map, null);
+            if (clazz != clazz2) {
+                typeOptions.put(clazz, map);
             }
             return map;
         }
@@ -771,7 +770,6 @@ implements Version {
      * Enabled aggressive block sorting
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
-     * Lifted jumps to return sites
      */
     public static File extractFromResourcePath(String var0, ClassLoader var1_1) throws IOException {
         v0 = var2_2 = Native.DEBUG_LOAD != false || Native.DEBUG_JNA_LOAD != false && var0.indexOf("jnidispatch") != -1;
@@ -791,7 +789,7 @@ implements Version {
         }
         if (var5_5 == null) {
             var6_6 = System.getProperty("java.class.path");
-            if (var1_1 instanceof URLClassLoader == false) throw new IOException(String.valueOf(new StringBuilder().append("Native library (").append(var4_4).append(") not found in resource path (").append(var6_6).append(")")));
+            if (!(var1_1 instanceof URLClassLoader)) throw new IOException(String.valueOf(new StringBuilder().append("Native library (").append(var4_4).append(") not found in resource path (").append(var6_6).append(")")));
             var6_6 = Arrays.asList(((URLClassLoader)var1_1).getURLs()).toString();
             throw new IOException(String.valueOf(new StringBuilder().append("Native library (").append(var4_4).append(") not found in resource path (").append(var6_6).append(")")));
         }
@@ -809,10 +807,10 @@ implements Version {
             if (var2_2) {
                 System.out.println(String.valueOf(new StringBuilder().append("Looking in ").append(var6_7.getAbsolutePath())));
             }
-            if (var6_7.exists() != false) return var6_7;
+            if (var6_7.exists()) return var6_7;
             throw new IOException(String.valueOf(new StringBuilder().append("File URL ").append(var5_5).append(" could not be properly decoded")));
         }
-        if (Boolean.getBoolean("jna.nounpack") != false) return var6_7;
+        if (Boolean.getBoolean("jna.nounpack")) return var6_7;
         var7_9 = var1_1.getResourceAsStream(var4_4);
         if (var7_9 == null) {
             throw new IOException(String.valueOf(new StringBuilder().append("Can't obtain InputStream for ").append(var4_4)));
@@ -864,17 +862,17 @@ lbl56:
     }
 
     public static byte[] toByteArray(String string, String string2) {
-        byte[] arrby = Native.getBytes(string, string2);
-        byte[] arrby2 = new byte[arrby.length + 1];
-        System.arraycopy(arrby, 0, arrby2, 0, arrby.length);
-        return arrby2;
+        byte[] byArray = Native.getBytes(string, string2);
+        byte[] byArray2 = new byte[byArray.length + 1];
+        System.arraycopy(byArray, 0, byArray2, 0, byArray.length);
+        return byArray2;
     }
 
     public static native long ffi_prep_closure(long var0, ffi_callback var2);
 
-    public static void register(Class<?> class_, String string) {
-        NativeLibrary nativeLibrary = NativeLibrary.getInstance(string, Collections.singletonMap("classloader", class_.getClassLoader()));
-        Native.register(class_, nativeLibrary);
+    public static void register(Class<?> clazz, String string) {
+        NativeLibrary nativeLibrary = NativeLibrary.getInstance(string, Collections.singletonMap("classloader", clazz.getClassLoader()));
+        Native.register(clazz, nativeLibrary);
     }
 
     static native void setChar(Pointer var0, long var1, long var3, char var5);
@@ -889,28 +887,28 @@ lbl56:
     }
 
     static String getString(Pointer pointer, long l, String string) {
-        byte[] arrby = Native.getStringBytes(pointer, pointer.peer, l);
+        byte[] byArray = Native.getStringBytes(pointer, pointer.peer, l);
         if (string != null) {
             try {
-                return new String(arrby, string);
+                return new String(byArray, string);
             }
             catch (UnsupportedEncodingException unsupportedEncodingException) {
                 // empty catch block
             }
         }
-        return new String(arrby);
+        return new String(byArray);
     }
 
     static native void setInt(Pointer var0, long var1, long var3, int var5);
 
-    public static List<String> toStringList(char[] arrc) {
-        return Native.toStringList(arrc, 0, arrc.length);
+    public static List<String> toStringList(char[] cArray) {
+        return Native.toStringList(cArray, 0, cArray.length);
     }
 
-    public static String toString(byte[] arrby, String string) {
-        int n = arrby.length;
+    public static String toString(byte[] byArray, String string) {
+        int n = byArray.length;
         for (int i = 0; i < n; ++i) {
-            if (arrby[i] != 0) continue;
+            if (byArray[i] != 0) continue;
             n = i;
             break;
         }
@@ -919,14 +917,14 @@ lbl56:
         }
         if (string != null) {
             try {
-                return new String(arrby, 0, n, string);
+                return new String(byArray, 0, n, string);
             }
             catch (UnsupportedEncodingException unsupportedEncodingException) {
                 System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Encoding '").append(string).append("' is unsupported")));
             }
         }
         System.err.println(String.valueOf(new StringBuilder().append("JNA Warning: Decoding with fallback ").append(System.getProperty("file.encoding"))));
-        return new String(arrby, 0, n);
+        return new String(byArray, 0, n);
     }
 
     @Deprecated
@@ -939,8 +937,8 @@ lbl56:
     private static native long _getDirectBufferPointer(Buffer var0);
 
     public static Library synchronizedLibrary(Library library) {
-        Class<?> class_ = library.getClass();
-        if (!Proxy.isProxyClass(class_)) {
+        Class<?> clazz = library.getClass();
+        if (!Proxy.isProxyClass(clazz)) {
             throw new IllegalArgumentException("Library must be a proxy class");
         }
         InvocationHandler invocationHandler = Proxy.getInvocationHandler(library);
@@ -960,59 +958,59 @@ lbl56:
              * Lifted jumps to return sites
              */
             @Override
-            public Object invoke(Object object, Method method, Object[] arrobject) throws Throwable {
+            public Object invoke(Object object, Method method, Object[] objectArray) throws Throwable {
                 NativeLibrary nativeLibrary = this.val$handler.getNativeLibrary();
                 // MONITORENTER : nativeLibrary
                 // MONITOREXIT : nativeLibrary
-                return this.val$handler.invoke(this.val$library, method, arrobject);
+                return this.val$handler.invoke(this.val$library, method, objectArray);
             }
             {
                 this.val$handler = handler;
                 this.val$library = library;
             }
         };
-        return (Library)Proxy.newProxyInstance(class_.getClassLoader(), class_.getInterfaces(), invocationHandler2);
+        return (Library)Proxy.newProxyInstance(clazz.getClassLoader(), clazz.getInterfaces(), invocationHandler2);
     }
 
     public static byte[] toByteArray(String string) {
         return Native.toByteArray(string, Native.getDefaultStringEncoding());
     }
 
-    private static NativeMapped fromNative(Class<?> class_, Object object) {
-        return (NativeMapped)NativeMappedConverter.getInstance(class_).fromNative(object, new FromNativeContext(class_));
+    private static NativeMapped fromNative(Class<?> clazz, Object object) {
+        return (NativeMapped)NativeMappedConverter.getInstance(clazz).fromNative(object, new FromNativeContext(clazz));
     }
 
-    static Class<?> findDirectMappedClass(Class<?> class_) {
-        Method[] arrmethod;
-        for (Method method : arrmethod = class_.getDeclaredMethods()) {
+    static Class<?> findDirectMappedClass(Class<?> clazz) {
+        Method[] methodArray;
+        for (Method method : methodArray = clazz.getDeclaredMethods()) {
             if ((method.getModifiers() & 0x100) == 0) continue;
-            return class_;
+            return clazz;
         }
-        int n = class_.getName().lastIndexOf("$");
+        int n = clazz.getName().lastIndexOf("$");
         if (n != -1) {
-            String string = class_.getName().substring(0, n);
+            String string = clazz.getName().substring(0, n);
             try {
-                return Native.findDirectMappedClass(Class.forName(string, true, class_.getClassLoader()));
+                return Native.findDirectMappedClass(Class.forName(string, true, clazz.getClassLoader()));
             }
             catch (ClassNotFoundException classNotFoundException) {
                 // empty catch block
             }
         }
-        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't determine class with native methods from the current context (").append(class_).append(")")));
+        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Can't determine class with native methods from the current context (").append(clazz).append(")")));
     }
 
     static native void write(Pointer var0, long var1, long var3, double[] var5, int var6, int var7);
 
     static boolean isCompatibleVersion(String string, String string2) {
-        String[] arrstring = string.split("\\.");
-        String[] arrstring2 = string2.split("\\.");
-        if (arrstring.length < 3 || arrstring2.length < 3) {
+        String[] stringArray = string.split("\\.");
+        String[] stringArray2 = string2.split("\\.");
+        if (stringArray.length < 3 || stringArray2.length < 3) {
             return false;
         }
-        int n = Integer.parseInt(arrstring[0]);
-        int n2 = Integer.parseInt(arrstring2[0]);
-        int n3 = Integer.parseInt(arrstring[1]);
-        int n4 = Integer.parseInt(arrstring2[1]);
+        int n = Integer.parseInt(stringArray[0]);
+        int n2 = Integer.parseInt(stringArray2[0]);
+        int n3 = Integer.parseInt(stringArray[1]);
+        int n4 = Integer.parseInt(stringArray2[1]);
         if (n != n2) {
             return false;
         }
@@ -1038,20 +1036,20 @@ lbl56:
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    public static void unregister(Class<?> class_) {
+    public static void unregister(Class<?> clazz) {
         Map<Class<?>, long[]> map = registeredClasses;
         synchronized (map) {
-            long[] arrl = registeredClasses.get(class_);
-            if (arrl == null) return;
-            Native.unregister(class_, arrl);
-            registeredClasses.remove(class_);
-            registeredLibraries.remove(class_);
+            long[] lArray = registeredClasses.get(clazz);
+            if (lArray == null) return;
+            Native.unregister(clazz, lArray);
+            registeredClasses.remove(clazz);
+            registeredLibraries.remove(clazz);
             return;
         }
     }
 
-    public static <T> T loadLibrary(Class<T> class_, Map<String, ?> map) {
-        return Native.loadLibrary(null, class_, map);
+    public static <T> T loadLibrary(Class<T> clazz, Map<String, ?> map) {
+        return Native.loadLibrary(null, clazz, map);
     }
 
     private static native void invokeStructure(Function var0, long var1, int var3, Object[] var4, long var5, long var7);
@@ -1065,9 +1063,9 @@ lbl56:
                 return string.endsWith(".x") && string.startsWith("jna");
             }
         };
-        File[] arrfile = file.listFiles(filenameFilter);
-        for (int i = 0; arrfile != null && i < arrfile.length; ++i) {
-            File file2 = arrfile[i];
+        File[] fileArray = file.listFiles(filenameFilter);
+        for (int i = 0; fileArray != null && i < fileArray.length; ++i) {
+            File file2 = fileArray[i];
             String string = file2.getName();
             string = string.substring(0, string.length() - 2);
             File file3 = new File(file2.getParentFile(), string);
@@ -1078,8 +1076,8 @@ lbl56:
 
     static native long indexOf(Pointer var0, long var1, long var3, byte var5);
 
-    public static String toString(byte[] arrby) {
-        return Native.toString(arrby, Native.getDefaultStringEncoding());
+    public static String toString(byte[] byArray) {
+        return Native.toString(byArray, Native.getDefaultStringEncoding());
     }
 
     static native short getShort(Pointer var0, long var1, long var3);
@@ -1182,23 +1180,23 @@ lbl56:
         nativeThreads = Collections.synchronizedMap(new WeakHashMap());
     }
 
-    public static int getNativeSize(Class<?> class_, Object object) {
-        if (class_.isArray()) {
+    public static int getNativeSize(Class<?> clazz, Object object) {
+        if (clazz.isArray()) {
             int n = Array.getLength(object);
             if (n > 0) {
                 Object object2 = Array.get(object, 0);
-                return n * Native.getNativeSize(class_.getComponentType(), object2);
+                return n * Native.getNativeSize(clazz.getComponentType(), object2);
             }
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Arrays of length zero not allowed: ").append(class_)));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Arrays of length zero not allowed: ").append(clazz)));
         }
-        if (Structure.class.isAssignableFrom(class_) && !Structure.ByReference.class.isAssignableFrom(class_)) {
-            return Structure.size(class_, (Structure)object);
+        if (Structure.class.isAssignableFrom(clazz) && !Structure.ByReference.class.isAssignableFrom(clazz)) {
+            return Structure.size(clazz, (Structure)object);
         }
         try {
-            return Native.getNativeSize(class_);
+            return Native.getNativeSize(clazz);
         }
         catch (IllegalArgumentException illegalArgumentException) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("The type \"").append(class_.getName()).append("\" is not supported: ").append(illegalArgumentException.getMessage())));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("The type \"").append(clazz.getName()).append("\" is not supported: ").append(illegalArgumentException.getMessage())));
         }
     }
 
@@ -1207,71 +1205,71 @@ lbl56:
         return l2 == 0L ? null : new Pointer(l2);
     }
 
-    private static int getConversion(Class<?> class_, TypeMapper typeMapper) {
-        Class<?> class_2;
-        if (class_ == Boolean.class) {
-            class_ = Boolean.TYPE;
-        } else if (class_ == Byte.class) {
-            class_ = Byte.TYPE;
-        } else if (class_ == Short.class) {
-            class_ = Short.TYPE;
-        } else if (class_ == Character.class) {
-            class_ = Character.TYPE;
-        } else if (class_ == Integer.class) {
-            class_ = Integer.TYPE;
-        } else if (class_ == Long.class) {
-            class_ = Long.TYPE;
-        } else if (class_ == Float.class) {
-            class_ = Float.TYPE;
-        } else if (class_ == Double.class) {
-            class_ = Double.TYPE;
-        } else if (class_ == Void.class) {
-            class_ = Void.TYPE;
+    private static int getConversion(Class<?> clazz, TypeMapper typeMapper) {
+        Class<?> clazz2;
+        if (clazz == Boolean.class) {
+            clazz = Boolean.TYPE;
+        } else if (clazz == Byte.class) {
+            clazz = Byte.TYPE;
+        } else if (clazz == Short.class) {
+            clazz = Short.TYPE;
+        } else if (clazz == Character.class) {
+            clazz = Character.TYPE;
+        } else if (clazz == Integer.class) {
+            clazz = Integer.TYPE;
+        } else if (clazz == Long.class) {
+            clazz = Long.TYPE;
+        } else if (clazz == Float.class) {
+            clazz = Float.TYPE;
+        } else if (clazz == Double.class) {
+            clazz = Double.TYPE;
+        } else if (clazz == Void.class) {
+            clazz = Void.TYPE;
         }
         if (typeMapper != null) {
-            class_2 = typeMapper.getFromNativeConverter(class_);
-            ToNativeConverter toNativeConverter = typeMapper.getToNativeConverter(class_);
-            if (class_2 != null) {
-                Class<?> class_3 = class_2.nativeType();
-                if (class_3 == String.class) {
+            clazz2 = typeMapper.getFromNativeConverter(clazz);
+            ToNativeConverter toNativeConverter = typeMapper.getToNativeConverter(clazz);
+            if (clazz2 != null) {
+                Class<?> clazz3 = clazz2.nativeType();
+                if (clazz3 == String.class) {
                     return 24;
                 }
-                if (class_3 == WString.class) {
+                if (clazz3 == WString.class) {
                     return 25;
                 }
                 return 23;
             }
             if (toNativeConverter != null) {
-                Class<?> class_4 = toNativeConverter.nativeType();
-                if (class_4 == String.class) {
+                Class<?> clazz4 = toNativeConverter.nativeType();
+                if (clazz4 == String.class) {
                     return 24;
                 }
-                if (class_4 == WString.class) {
+                if (clazz4 == WString.class) {
                     return 25;
                 }
                 return 23;
             }
         }
-        if (Pointer.class.isAssignableFrom(class_)) {
+        if (Pointer.class.isAssignableFrom(clazz)) {
             return 1;
         }
-        if (String.class == class_) {
+        if (String.class == clazz) {
             return 2;
         }
-        if (WString.class.isAssignableFrom(class_)) {
+        if (WString.class.isAssignableFrom(clazz)) {
             return 20;
         }
-        if (Platform.HAS_BUFFERS && Buffers.isBuffer(class_)) {
+        if (Platform.HAS_BUFFERS && Buffers.isBuffer(clazz)) {
             return 5;
         }
-        if (Structure.class.isAssignableFrom(class_)) {
-            if (Structure.ByValue.class.isAssignableFrom(class_)) {
+        if (Structure.class.isAssignableFrom(clazz)) {
+            if (Structure.ByValue.class.isAssignableFrom(clazz)) {
                 return 4;
             }
             return 3;
         }
-        if (class_.isArray()) {
-            switch (class_.getName().charAt(1)) {
+        if (clazz.isArray()) {
+            switch (clazz.getName().charAt(1)) {
                 case 'Z': {
                     return 13;
                 }
@@ -1298,24 +1296,24 @@ lbl56:
                 }
             }
         }
-        if (class_.isPrimitive()) {
-            return class_ == Boolean.TYPE ? 14 : 0;
+        if (clazz.isPrimitive()) {
+            return clazz == Boolean.TYPE ? 14 : 0;
         }
-        if (Callback.class.isAssignableFrom(class_)) {
+        if (Callback.class.isAssignableFrom(clazz)) {
             return 15;
         }
-        if (IntegerType.class.isAssignableFrom(class_)) {
+        if (IntegerType.class.isAssignableFrom(clazz)) {
             return 21;
         }
-        if (PointerType.class.isAssignableFrom(class_)) {
+        if (PointerType.class.isAssignableFrom(clazz)) {
             return 22;
         }
-        if (NativeMapped.class.isAssignableFrom(class_)) {
-            class_2 = NativeMappedConverter.getInstance(class_).nativeType();
-            if (class_2 == String.class) {
+        if (NativeMapped.class.isAssignableFrom(clazz)) {
+            clazz2 = NativeMappedConverter.getInstance(clazz).nativeType();
+            if (clazz2 == String.class) {
                 return 18;
             }
-            if (class_2 == WString.class) {
+            if (clazz2 == WString.class) {
                 return 19;
             }
             return 17;
@@ -1333,54 +1331,54 @@ lbl56:
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    public static void register(Class<?> class_, NativeLibrary nativeLibrary) {
-        Method[] arrmethod = class_.getDeclaredMethods();
+    public static void register(Class<?> clazz, NativeLibrary nativeLibrary) {
+        Method[] methodArray = clazz.getDeclaredMethods();
         ArrayList<Method> arrayList = new ArrayList<Method>();
         Map<String, Object> map = nativeLibrary.getOptions();
         TypeMapper typeMapper = (TypeMapper)map.get("type-mapper");
-        map = Native.cacheOptions(class_, map, null);
-        for (Object object : arrmethod) {
+        map = Native.cacheOptions(clazz, map, null);
+        for (Object object : methodArray) {
             if ((((Method)object).getModifiers() & 0x100) == 0) continue;
             arrayList.add((Method)object);
         }
-        Object[] arrobject = new long[arrayList.size()];
+        Object[] objectArray = new long[arrayList.size()];
         int n = 0;
         while (true) {
-            Class<Pointer> class_2;
+            Class<Pointer> clazz2;
             long l;
             long l2;
             boolean bl;
             int n2;
             FromNativeConverter fromNativeConverter;
-            ToNativeConverter[] arrtoNativeConverter;
-            int[] arrn;
-            long[] arrl;
-            long[] arrl2;
-            Class<?>[] arrclass;
-            Class<?> class_3;
+            ToNativeConverter[] toNativeConverterArray;
+            int[] nArray;
+            long[] lArray;
+            long[] lArray2;
+            Class<?>[] classArray;
+            Class<?> clazz3;
             Method method;
             Object object;
-            if (n < arrobject.length) {
+            if (n < objectArray.length) {
                 method = (Method)arrayList.get(n);
                 object = "(";
-                class_3 = method.getReturnType();
-                arrclass = method.getParameterTypes();
-                arrl2 = new long[arrclass.length];
-                arrl = new long[arrclass.length];
-                arrn = new int[arrclass.length];
-                arrtoNativeConverter = new ToNativeConverter[arrclass.length];
+                clazz3 = method.getReturnType();
+                classArray = method.getParameterTypes();
+                lArray2 = new long[classArray.length];
+                lArray = new long[classArray.length];
+                nArray = new int[classArray.length];
+                toNativeConverterArray = new ToNativeConverter[classArray.length];
                 fromNativeConverter = null;
-                n2 = Native.getConversion(class_3, typeMapper);
+                n2 = Native.getConversion(clazz3, typeMapper);
                 bl = false;
                 switch (n2) {
                     case -1: {
-                        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(class_3).append(" is not a supported return type (in method ").append(method.getName()).append(" in ").append(class_).append(")")));
+                        throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(clazz3).append(" is not a supported return type (in method ").append(method.getName()).append(" in ").append(clazz).append(")")));
                     }
                     case 23: 
                     case 24: 
                     case 25: {
-                        fromNativeConverter = typeMapper.getFromNativeConverter(class_3);
-                        l2 = Structure.FFIType.get(class_3.isPrimitive() ? class_3 : Pointer.class).peer;
+                        fromNativeConverter = typeMapper.getFromNativeConverter(clazz3);
+                        l2 = Structure.FFIType.get(clazz3.isPrimitive() ? clazz3 : Pointer.class).peer;
                         l = Structure.FFIType.get(fromNativeConverter.nativeType()).peer;
                         break;
                     }
@@ -1390,7 +1388,7 @@ lbl56:
                     case 21: 
                     case 22: {
                         l2 = Structure.FFIType.get(Pointer.class).peer;
-                        l = Structure.FFIType.get(NativeMappedConverter.getInstance(class_3).nativeType()).peer;
+                        l = Structure.FFIType.get(NativeMappedConverter.getInstance(clazz3).nativeType()).peer;
                         break;
                     }
                     case 3: {
@@ -1399,11 +1397,11 @@ lbl56:
                     }
                     case 4: {
                         l2 = Structure.FFIType.get(Pointer.class).peer;
-                        l = Structure.FFIType.get(class_3).peer;
+                        l = Structure.FFIType.get(clazz3).peer;
                         break;
                     }
                     default: {
-                        l2 = l = Structure.FFIType.get(class_3).peer;
+                        l2 = l = Structure.FFIType.get(clazz3).peer;
                     }
                 }
             } else {
@@ -1412,23 +1410,23 @@ lbl56:
                     try {}
                     catch (Throwable throwable) {
                         int n3;
-                        throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("No method ").append(n3.getName()).append(" with signature ").append((String)object).append(" in ").append(class_)));
+                        throw new UnsatisfiedLinkError(String.valueOf(new StringBuilder().append("No method ").append(n3.getName()).append(" with signature ").append((String)object).append(" in ").append(clazz)));
                     }
                     break;
                 }
             }
-            block18: for (int i = 0; i < arrclass.length; ++i) {
+            block18: for (int i = 0; i < classArray.length; ++i) {
                 int n4;
-                class_2 = arrclass[i];
-                object = String.valueOf(new StringBuilder().append((String)object).append(Native.getSignature(class_2)));
-                arrn[i] = n4 = Native.getConversion(class_2, typeMapper);
+                clazz2 = classArray[i];
+                object = String.valueOf(new StringBuilder().append((String)object).append(Native.getSignature(clazz2)));
+                nArray[i] = n4 = Native.getConversion(clazz2, typeMapper);
                 if (n4 == -1) {
-                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(class_2).append(" is not a supported argument type (in method ").append(method.getName()).append(" in ").append(class_).append(")")));
+                    throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(clazz2).append(" is not a supported argument type (in method ").append(method.getName()).append(" in ").append(clazz).append(")")));
                 }
                 if (n4 == 17 || n4 == 18 || n4 == 19 || n4 == 21) {
-                    class_2 = NativeMappedConverter.getInstance(class_2).nativeType();
+                    clazz2 = NativeMappedConverter.getInstance(clazz2).nativeType();
                 } else if (n4 == 23 || n4 == 24 || n4 == 25) {
-                    arrtoNativeConverter[i] = typeMapper.getToNativeConverter(class_2);
+                    toNativeConverterArray[i] = typeMapper.getToNativeConverter(clazz2);
                 }
                 switch (n4) {
                     case 4: 
@@ -1437,43 +1435,43 @@ lbl56:
                     case 19: 
                     case 21: 
                     case 22: {
-                        arrl2[i] = Structure.FFIType.get((Object)class_2).peer;
-                        arrl[i] = Structure.FFIType.get(Pointer.class).peer;
+                        lArray2[i] = Structure.FFIType.get((Object)clazz2).peer;
+                        lArray[i] = Structure.FFIType.get(Pointer.class).peer;
                         continue block18;
                     }
                     case 23: 
                     case 24: 
                     case 25: {
-                        arrl[i] = Structure.FFIType.get(class_2.isPrimitive() ? class_2 : Pointer.class).peer;
-                        arrl2[i] = Structure.FFIType.get(arrtoNativeConverter[i].nativeType()).peer;
+                        lArray[i] = Structure.FFIType.get(clazz2.isPrimitive() ? clazz2 : Pointer.class).peer;
+                        lArray2[i] = Structure.FFIType.get(toNativeConverterArray[i].nativeType()).peer;
                         continue block18;
                     }
                     case 0: {
-                        arrl[i] = arrl2[i] = Structure.FFIType.get(class_2).peer;
+                        lArray[i] = lArray2[i] = Structure.FFIType.get(clazz2).peer;
                         continue block18;
                     }
                     default: {
-                        arrl[i] = arrl2[i] = Structure.FFIType.get(Pointer.class).peer;
+                        lArray[i] = lArray2[i] = Structure.FFIType.get(Pointer.class).peer;
                     }
                 }
             }
             object = String.valueOf(new StringBuilder().append((String)object).append(")"));
-            object = String.valueOf(new StringBuilder().append((String)object).append(Native.getSignature(class_3)));
-            Class<?>[] arrclass2 = method.getExceptionTypes();
-            for (int i = 0; i < arrclass2.length; ++i) {
-                if (!LastErrorException.class.isAssignableFrom(arrclass2[i])) continue;
+            object = String.valueOf(new StringBuilder().append((String)object).append(Native.getSignature(clazz3)));
+            Class<?>[] classArray2 = method.getExceptionTypes();
+            for (int i = 0; i < classArray2.length; ++i) {
+                if (!LastErrorException.class.isAssignableFrom(classArray2[i])) continue;
                 bl = true;
                 break;
             }
-            class_2 = nativeLibrary.getFunction(method.getName(), method);
+            clazz2 = nativeLibrary.getFunction(method.getName(), method);
             {
-                arrobject[n] = (Method)Native.registerMethod(class_, method.getName(), (String)object, arrn, arrl, arrl2, n2, l2, l, method, ((Function)class_2).peer, ((Function)((Object)class_2)).getCallingConvention(), bl, arrtoNativeConverter, fromNativeConverter, ((Function)class_2).encoding);
+                objectArray[n] = (Method)Native.registerMethod(clazz, method.getName(), (String)object, nArray, lArray, lArray2, n2, l2, l, method, ((Function)clazz2).peer, ((Function)((Object)clazz2)).getCallingConvention(), bl, toNativeConverterArray, fromNativeConverter, ((Function)clazz2).encoding);
             }
             ++n;
         }
         {
-            registeredClasses.put(class_, (long[])arrobject);
-            registeredLibraries.put(class_, nativeLibrary);
+            registeredClasses.put(clazz, (long[])objectArray);
+            registeredLibraries.put(clazz, nativeLibrary);
             return;
         }
     }
@@ -1487,32 +1485,32 @@ lbl56:
      * Converted monitor instructions to comments
      * Lifted jumps to return sites
      */
-    static Class<?> findEnclosingLibraryClass(Class<?> class_) {
-        Class<?> class_2;
-        if (class_ == null) {
+    static Class<?> findEnclosingLibraryClass(Class<?> clazz) {
+        Class<?> clazz2;
+        if (clazz == null) {
             return null;
         }
         Object object = libraries;
         // MONITORENTER : object
-        if (typeOptions.containsKey(class_)) {
-            Map<String, Object> map = typeOptions.get(class_);
-            Class class_3 = (Class)map.get("enclosing-library");
-            if (class_3 != null) {
+        if (typeOptions.containsKey(clazz)) {
+            Map<String, Object> map = typeOptions.get(clazz);
+            Class clazz3 = (Class)map.get("enclosing-library");
+            if (clazz3 != null) {
                 // MONITOREXIT : object
-                return class_3;
+                return clazz3;
             }
             // MONITOREXIT : object
-            return class_;
+            return clazz;
         }
         // MONITOREXIT : object
-        if (Library.class.isAssignableFrom(class_)) {
-            return class_;
+        if (Library.class.isAssignableFrom(clazz)) {
+            return clazz;
         }
-        if (Callback.class.isAssignableFrom(class_)) {
-            class_ = CallbackReference.findCallbackClass(class_);
+        if (Callback.class.isAssignableFrom(clazz)) {
+            clazz = CallbackReference.findCallbackClass(clazz);
         }
-        if ((class_2 = Native.findEnclosingLibraryClass(object = class_.getDeclaringClass())) == null) return Native.findEnclosingLibraryClass(class_.getSuperclass());
-        return class_2;
+        if ((clazz2 = Native.findEnclosingLibraryClass(object = clazz.getDeclaringClass())) == null) return Native.findEnclosingLibraryClass(clazz.getSuperclass());
+        return clazz2;
     }
 
     static String getString(Pointer pointer, long l) {
@@ -1570,15 +1568,15 @@ lbl56:
 
     public static native int getLastError();
 
-    public static <T> T loadLibrary(String string, Class<T> class_, Map<String, ?> map) {
-        if (!Library.class.isAssignableFrom(class_)) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Interface (").append(class_.getSimpleName()).append(") of library=").append(string).append(" does not extend ").append(Library.class.getSimpleName())));
+    public static <T> T loadLibrary(String string, Class<T> clazz, Map<String, ?> map) {
+        if (!Library.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Interface (").append(clazz.getSimpleName()).append(") of library=").append(string).append(" does not extend ").append(Library.class.getSimpleName())));
         }
-        Library.Handler handler = new Library.Handler(string, class_, map);
-        ClassLoader classLoader = class_.getClassLoader();
-        Object object = Proxy.newProxyInstance(classLoader, new Class[]{class_}, (InvocationHandler)handler);
-        Native.cacheOptions(class_, map, object);
-        return class_.cast(object);
+        Library.Handler handler = new Library.Handler(string, clazz, map);
+        ClassLoader classLoader = clazz.getClassLoader();
+        Object object = Proxy.newProxyInstance(classLoader, new Class[]{clazz}, handler);
+        Native.cacheOptions(clazz, map, object);
+        return clazz.cast(object);
     }
 
     static native void read(Pointer var0, long var1, long var3, char[] var5, int var6, int var7);
@@ -1597,8 +1595,8 @@ lbl56:
 
     static native long getLong(Pointer var0, long var1, long var3);
 
-    public static <T> T loadLibrary(Class<T> class_) {
-        return Native.loadLibrary(null, class_);
+    public static <T> T loadLibrary(Class<T> clazz) {
+        return Native.loadLibrary(null, clazz);
     }
 
     static native String getWideString(Pointer var0, long var1, long var3);
@@ -1638,25 +1636,25 @@ lbl56:
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    private static Map<String, Object> cacheOptions(Class<?> class_, Map<String, ?> map, Object object) {
+    private static Map<String, Object> cacheOptions(Class<?> clazz, Map<String, ?> map, Object object) {
         HashMap<String, Object> hashMap = new HashMap<String, Object>(map);
-        hashMap.put("enclosing-library", class_);
+        hashMap.put("enclosing-library", clazz);
         Map<Class<?>, Reference<?>> map2 = libraries;
         synchronized (map2) {
-            Class<?>[] arrclass;
-            typeOptions.put(class_, hashMap);
+            Class<?>[] classArray;
+            typeOptions.put(clazz, hashMap);
             if (object != null) {
-                libraries.put(class_, new WeakReference<Object>(object));
+                libraries.put(clazz, new WeakReference<Object>(object));
             }
-            if (class_.isInterface()) return hashMap;
-            if (!Library.class.isAssignableFrom(class_)) return hashMap;
-            Class<?>[] arrclass2 = arrclass = class_.getInterfaces();
-            int n = arrclass2.length;
+            if (clazz.isInterface()) return hashMap;
+            if (!Library.class.isAssignableFrom(clazz)) return hashMap;
+            Class<?>[] classArray2 = classArray = clazz.getInterfaces();
+            int n = classArray2.length;
             int n2 = 0;
             while (n2 < n) {
-                Class<?> class_2 = arrclass2[n2];
-                if (Library.class.isAssignableFrom(class_2)) {
-                    Native.cacheOptions(class_2, hashMap, object);
+                Class<?> clazz2 = classArray2[n2];
+                if (Library.class.isAssignableFrom(clazz2)) {
+                    Native.cacheOptions(clazz2, hashMap, object);
                     return hashMap;
                 }
                 ++n2;
@@ -1695,8 +1693,8 @@ lbl56:
         private Buffers() {
         }
 
-        static boolean isBuffer(Class<?> class_) {
-            return Buffer.class.isAssignableFrom(class_);
+        static boolean isBuffer(Class<?> clazz) {
+            return Buffer.class.isAssignableFrom(clazz);
         }
     }
 

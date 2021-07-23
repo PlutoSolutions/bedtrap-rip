@@ -1,21 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1268
- *  net.minecraft.class_1713
- *  net.minecraft.class_1792
- *  net.minecraft.class_1829
- *  net.minecraft.class_1922
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_259
- *  net.minecraft.class_2596
- *  net.minecraft.class_2846
- *  net.minecraft.class_2846$class_2847
- *  net.minecraft.class_3532
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -130,7 +114,7 @@ extends Module {
                         if (!$assertionsDisabled && this.mc.field_1687 == null) {
                             throw new AssertionError();
                         }
-                        if (this.mc.field_1687.method_8320(class_23382).method_26218((class_1922)this.mc.field_1687, class_23382) == class_259.method_1073() || this.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_9987 || !(this.distance(class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) < this.Distance.get()) || this.onlySelected.get().booleanValue() && !this.selectedBlocks.get().contains((Object)this.mc.field_1687.method_8320(class_23382).method_26204())) continue;
+                        if (this.mc.field_1687.method_8320(class_23382).method_26218((class_1922)this.mc.field_1687, class_23382) == class_259.method_1073() || this.mc.field_1687.method_8320(class_23382).method_26204() == class_2246.field_9987 || !(this.distance(class_23382.method_10263(), class_23382.method_10264(), class_23382.method_10260()) < this.Distance.get()) || this.onlySelected.get().booleanValue() && !this.selectedBlocks.get().contains(this.mc.field_1687.method_8320(class_23382).method_26204())) continue;
                         if (this.limit > this.spamlimit.get()) {
                             return;
                         }

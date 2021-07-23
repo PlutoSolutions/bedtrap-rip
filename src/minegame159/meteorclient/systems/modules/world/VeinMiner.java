@@ -1,18 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.Sets
- *  net.minecraft.class_1268
- *  net.minecraft.class_1792
- *  net.minecraft.class_1922
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_2350$class_2351
- *  net.minecraft.class_2382
- *  net.minecraft.class_265
- *  net.minecraft.class_310
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 
@@ -170,7 +157,7 @@ extends Module {
         if (n <= 0) {
             return;
         }
-        if (this.foundBlockPositions.contains((Object)class_23382)) {
+        if (this.foundBlockPositions.contains(class_23382)) {
             return;
         }
         this.foundBlockPositions.add(class_23382);

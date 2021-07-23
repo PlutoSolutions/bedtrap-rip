@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
- *  net.minecraft.class_1738
- *  net.minecraft.class_1770
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1887
- *  net.minecraft.class_1893
- *  net.minecraft.class_310
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 

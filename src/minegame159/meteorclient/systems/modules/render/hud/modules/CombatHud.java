@@ -1,21 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.systems.RenderSystem
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1657
- *  net.minecraft.class_1748
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1829
- *  net.minecraft.class_1887
- *  net.minecraft.class_1890
- *  net.minecraft.class_2378
- *  net.minecraft.class_290
- *  net.minecraft.class_3532
- *  net.minecraft.class_490
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render.hud.modules;
 
@@ -199,11 +183,11 @@ extends HudElement {
             Map map = class_1890.method_8222((class_1799)class_17994);
             HashMap<class_1887, Integer> hashMap = new HashMap<class_1887, Integer>();
             for (class_1887 class_18872 : this.displayedEnchantments.get()) {
-                if (!map.containsKey((Object)class_18872)) continue;
-                hashMap.put(class_18872, (Integer)map.get((Object)class_18872));
+                if (!map.containsKey(class_18872)) continue;
+                hashMap.put(class_18872, (Integer)map.get(class_18872));
             }
             for (class_1887 class_18872 : hashMap.keySet()) {
-                String string6 = String.valueOf(new StringBuilder().append(Utils.getEnchantSimpleName(class_18872, 3)).append(" ").append(hashMap.get((Object)class_18872)));
+                String string6 = String.valueOf(new StringBuilder().append(Utils.getEnchantSimpleName(class_18872, 3)).append(" ").append(hashMap.get(class_18872)));
                 d = d8 + 8.0 - TextRenderer.get().getWidth(string6) / 2.0;
                 TextRenderer.get().render(string6, d, d9, class_18872.method_8195() ? RED : (Color)this.enchantmentTextColor.get());
                 d9 += TextRenderer.get().getHeight();

@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.CommandDispatcher
- *  com.mojang.brigadier.arguments.ArgumentType
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.builder.RequiredArgumentBuilder
- *  net.minecraft.class_2172
- *  net.minecraft.class_2561
- *  net.minecraft.class_310
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.commands;
 
@@ -33,11 +24,11 @@ public abstract class Command {
     private final List<String> aliases = new ArrayList<String>();
     private final String description;
 
-    public Command(String string, String string2, String ... arrstring) {
+    public Command(String string, String string2, String ... stringArray) {
         this.name = string;
         this.title = Utils.nameToTitle(string);
         this.description = string2;
-        Collections.addAll(this.aliases, arrstring);
+        Collections.addAll(this.aliases, stringArray);
         mc = class_310.method_1551();
     }
 
@@ -55,9 +46,9 @@ public abstract class Command {
         return this.aliases;
     }
 
-    public String toString(String ... arrstring) {
+    public String toString(String ... stringArray) {
         StringBuilder stringBuilder = new StringBuilder(this.toString());
-        for (String string : arrstring) {
+        for (String string : stringArray) {
             stringBuilder.append(' ').append(string);
             if (true > false) continue;
             return null;
@@ -65,12 +56,12 @@ public abstract class Command {
         return String.valueOf(stringBuilder);
     }
 
-    public void error(String string, Object ... arrobject) {
-        ChatUtils.error(this.title, string, arrobject);
+    public void error(String string, Object ... objectArray) {
+        ChatUtils.error(this.title, string, objectArray);
     }
 
-    public void warning(String string, Object ... arrobject) {
-        ChatUtils.warning(this.title, string, arrobject);
+    public void warning(String string, Object ... objectArray) {
+        ChatUtils.warning(this.title, string, objectArray);
     }
 
     public final void registerTo(CommandDispatcher<class_2172> commandDispatcher) {
@@ -82,8 +73,8 @@ public abstract class Command {
 
     public abstract void build(LiteralArgumentBuilder<class_2172> var1);
 
-    public void info(String string, Object ... arrobject) {
-        ChatUtils.info(this.title, string, arrobject);
+    public void info(String string, Object ... objectArray) {
+        ChatUtils.info(this.title, string, objectArray);
     }
 
     protected static <T> RequiredArgumentBuilder<class_2172, T> argument(String string, ArgumentType<T> argumentType) {

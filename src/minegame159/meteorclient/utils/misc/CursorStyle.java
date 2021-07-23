@@ -1,8 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.lwjgl.glfw.GLFW
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.misc;
 

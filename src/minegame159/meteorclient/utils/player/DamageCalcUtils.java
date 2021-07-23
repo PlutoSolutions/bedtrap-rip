@@ -1,24 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1280
- *  net.minecraft.class_1282
- *  net.minecraft.class_1294
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1657
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1887
- *  net.minecraft.class_1890
- *  net.minecraft.class_1893
- *  net.minecraft.class_1927
- *  net.minecraft.class_1927$class_4179
- *  net.minecraft.class_2246
- *  net.minecraft.class_2338
- *  net.minecraft.class_243
- *  net.minecraft.class_5134
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.player;
 
@@ -141,11 +122,11 @@ public class DamageCalcUtils {
             }
             d *= 1.5;
         }
-        if (class_16572.method_6030().method_7921() != null && class_1890.method_8222((class_1799)class_16572.method_6030()).containsKey((Object)class_1893.field_9118)) {
+        if (class_16572.method_6030().method_7921() != null && class_1890.method_8222((class_1799)class_16572.method_6030()).containsKey(class_1893.field_9118)) {
             n = class_1890.method_8225((class_1887)class_1893.field_9118, (class_1799)class_16572.method_6030());
             d += 0.5 * (double)n + 0.5;
         }
-        if (class_16572.method_6088().containsKey((Object)class_1294.field_5910)) {
+        if (class_16572.method_6088().containsKey(class_1294.field_5910)) {
             n = Objects.requireNonNull(class_16572.method_6112(class_1294.field_5910)).method_5578() + 1;
             d += (double)(3 * n);
         }

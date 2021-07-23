@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2680
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -150,7 +141,7 @@ extends Module {
     }
 
     private boolean lambda$place$0(class_1799 class_17992) {
-        return this.blocks.get().contains((Object)class_2248.method_9503((class_1792)class_17992.method_7909()));
+        return this.blocks.get().contains(class_2248.method_9503((class_1792)class_17992.method_7909()));
     }
 }
 

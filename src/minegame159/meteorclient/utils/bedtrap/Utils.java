@@ -1,42 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
- *  it.unimi.dsi.fastutil.objects.Object2IntArrayMap
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  net.minecraft.class_124
- *  net.minecraft.class_1291
- *  net.minecraft.class_1297
- *  net.minecraft.class_1753
- *  net.minecraft.class_1764
- *  net.minecraft.class_1771
- *  net.minecraft.class_1776
- *  net.minecraft.class_1779
- *  net.minecraft.class_1787
- *  net.minecraft.class_1792
- *  net.minecraft.class_1802
- *  net.minecraft.class_1803
- *  net.minecraft.class_1823
- *  net.minecraft.class_1828
- *  net.minecraft.class_1835
- *  net.minecraft.class_1887
- *  net.minecraft.class_2338
- *  net.minecraft.class_2378
- *  net.minecraft.class_243
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_310
- *  net.minecraft.class_4184
- *  net.minecraft.class_442
- *  net.minecraft.class_500
- *  net.minecraft.class_526
- *  net.minecraft.class_641
- *  net.minecraft.class_642
- *  org.apache.commons.io.output.ByteArrayOutputStream
- *  org.apache.commons.lang3.StringUtils
- *  org.apache.commons.lang3.SystemUtils
- *  org.lwjgl.glfw.GLFW
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.bedtrap;
 
@@ -135,9 +98,9 @@ public class Utils {
     }
 
     public static int search(String string, String string2) {
-        String[] arrstring;
+        String[] stringArray;
         int n = 0;
-        for (String string3 : arrstring = string2.split(" ")) {
+        for (String string3 : stringArray = string2.split(" ")) {
             if (!StringUtils.containsIgnoreCase((CharSequence)string, (CharSequence)string3)) continue;
             ++n;
             if (-1 < 2) continue;
@@ -196,9 +159,9 @@ public class Utils {
     }
 
     @SafeVarargs
-    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... arrT) {
+    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... TArray) {
         HashMap<T, Boolean> hashMap = new HashMap<T, Boolean>();
-        for (T t : arrT) {
+        for (T t : TArray) {
             hashMap.put(t, true);
             if (!false) continue;
             return null;
@@ -211,9 +174,9 @@ public class Utils {
             int n;
             FileInputStream fileInputStream = new FileInputStream(file);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] arrby = new byte[256];
-            while ((n = ((InputStream)fileInputStream).read(arrby)) > 0) {
-                byteArrayOutputStream.write(arrby, 0, n);
+            byte[] byArray = new byte[256];
+            while ((n = ((InputStream)fileInputStream).read(byArray)) > 0) {
+                byteArrayOutputStream.write(byArray, 0, n);
             }
             ((InputStream)fileInputStream).close();
             return byteArrayOutputStream.toByteArray();
@@ -552,11 +515,11 @@ public class Utils {
         return random.nextInt(n2 - n) + n;
     }
 
-    public static void sendMessage(String string, Object ... arrobject) {
+    public static void sendMessage(String string, Object ... objectArray) {
         if (Utils.mc.field_1724 == null) {
             return;
         }
-        string = String.format(string, arrobject);
+        string = String.format(string, objectArray);
         string = string.replaceAll("#yellow", class_124.field_1054.toString());
         string = string.replaceAll("#white", class_124.field_1068.toString());
         string = string.replaceAll("#red", class_124.field_1061.toString());

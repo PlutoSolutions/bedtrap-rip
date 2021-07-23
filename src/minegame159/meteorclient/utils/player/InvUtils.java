@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1657
- *  net.minecraft.class_1713
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.player;
 
@@ -22,8 +16,8 @@ import net.minecraft.class_1799;
 public class InvUtils {
     private static final Action ACTION = new Action(null);
 
-    private static boolean lambda$find$1(class_1792[] arrclass_1792, class_1799 class_17992) {
-        for (class_1792 class_17922 : arrclass_1792) {
+    private static boolean lambda$find$1(class_1792[] class_1792Array, class_1799 class_17992) {
+        for (class_1792 class_17922 : class_1792Array) {
             if (class_17992.method_7909() != class_17922) continue;
             return true;
         }
@@ -72,8 +66,8 @@ public class InvUtils {
         return new FindItemResult(n3, n4);
     }
 
-    public static FindItemResult find(class_1792 ... arrclass_1792) {
-        return InvUtils.find(arg_0 -> InvUtils.lambda$find$1(arrclass_1792, arg_0));
+    public static FindItemResult find(class_1792 ... class_1792Array) {
+        return InvUtils.find(arg_0 -> InvUtils.lambda$find$1(class_1792Array, arg_0));
     }
 
     public static Action click() {
@@ -86,16 +80,16 @@ public class InvUtils {
         return ACTION;
     }
 
-    private static boolean lambda$findInHotbar$0(class_1792[] arrclass_1792, class_1799 class_17992) {
-        for (class_1792 class_17922 : arrclass_1792) {
+    private static boolean lambda$findInHotbar$0(class_1792[] class_1792Array, class_1799 class_17992) {
+        for (class_1792 class_17922 : class_1792Array) {
             if (class_17992.method_7909() != class_17922) continue;
             return true;
         }
         return false;
     }
 
-    public static FindItemResult findInHotbar(class_1792 ... arrclass_1792) {
-        return InvUtils.findInHotbar(arg_0 -> InvUtils.lambda$findInHotbar$0(arrclass_1792, arg_0));
+    public static FindItemResult findInHotbar(class_1792 ... class_1792Array) {
+        return InvUtils.findInHotbar(arg_0 -> InvUtils.lambda$findInHotbar$0(class_1792Array, arg_0));
     }
 
     public static FindItemResult find(Predicate<class_1799> predicate) {

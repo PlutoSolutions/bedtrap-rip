@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -55,10 +55,10 @@ Comparable {
             this.pointer = new StringMemory(this, n);
             this.pointer.setWideString(0L, string);
         } else {
-            byte[] arrby = Native.getBytes(string, string2);
-            this.pointer = new StringMemory(this, arrby.length + 1);
-            this.pointer.write(0L, arrby, 0, arrby.length);
-            this.pointer.setByte(arrby.length, (byte)0);
+            byte[] byArray = Native.getBytes(string, string2);
+            this.pointer = new StringMemory(this, byArray.length + 1);
+            this.pointer.write(0L, byArray, 0, byArray.length);
+            this.pointer.setByte(byArray.length, (byte)0);
         }
     }
 

@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1293
- *  net.minecraft.class_1294
- *  net.minecraft.class_1657
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1844
- *  net.minecraft.class_2596
- *  net.minecraft.class_2828$class_2831
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -55,8 +45,8 @@ extends Module {
 
     private Map<ArrowType, Integer> getAllArrows() {
         HashMap<ArrowType, Integer> hashMap = new HashMap<ArrowType, Integer>();
-        boolean bl = this.mc.field_1724.method_6088().containsKey((Object)class_1294.field_5910);
-        boolean bl2 = this.mc.field_1724.method_6088().containsKey((Object)class_1294.field_5904);
+        boolean bl = this.mc.field_1724.method_6088().containsKey(class_1294.field_5910);
+        boolean bl2 = this.mc.field_1724.method_6088().containsKey(class_1294.field_5904);
         for (int i = 35; i >= 0; --i) {
             if (this.mc.field_1724.field_7514.method_5438(i).method_7909() != class_1802.field_8087 || i == this.mc.field_1724.field_7514.field_7545) continue;
             if (this.checkEffects.get().booleanValue()) {

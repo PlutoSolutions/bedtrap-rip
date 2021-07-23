@@ -1,21 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.fabricmc.fabric.impl.client.indigo.renderer.mesh.MutableQuadViewImpl
- *  net.fabricmc.fabric.impl.client.indigo.renderer.render.AbstractQuadRenderer
- *  net.fabricmc.fabric.impl.client.indigo.renderer.render.BlockRenderInfo
- *  net.minecraft.class_1159
- *  net.minecraft.class_1160
- *  net.minecraft.class_1921
- *  net.minecraft.class_4581
- *  net.minecraft.class_4588
- *  org.spongepowered.asm.mixin.Final
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Shadow
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfo
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin.indigo;
 
@@ -66,7 +50,7 @@ public abstract class AbstractQuadRendererMixin {
     private void onBufferQuad(MutableQuadViewImpl mutableQuadViewImpl, class_1921 class_19212, CallbackInfo callbackInfo) {
         WallHack wallHack = Modules.get().get(WallHack.class);
         if (wallHack.isActive()) {
-            if (wallHack.blocks.get().contains((Object)this.blockInfo.blockState.method_26204())) {
+            if (wallHack.blocks.get().contains(this.blockInfo.blockState.method_26204())) {
                 AbstractQuadRendererMixin.whBufferQuad(this.bufferFunc.apply(class_19212), mutableQuadViewImpl, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec, wallHack);
             } else {
                 AbstractQuadRendererMixin.bufferQuad(this.bufferFunc.apply(class_19212), mutableQuadViewImpl, this.matrix(), this.overlay(), this.normalMatrix(), this.normalVec);

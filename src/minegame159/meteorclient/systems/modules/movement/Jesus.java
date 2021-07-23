@@ -1,27 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  net.minecraft.class_1294
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1657
- *  net.minecraft.class_1900
- *  net.minecraft.class_1934
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_238
- *  net.minecraft.class_243
- *  net.minecraft.class_259
- *  net.minecraft.class_2596
- *  net.minecraft.class_265
- *  net.minecraft.class_2828
- *  net.minecraft.class_2828$class_2829
- *  net.minecraft.class_2828$class_2830
- *  net.minecraft.class_3532
- *  net.minecraft.class_3612
- *  net.minecraft.class_3614
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.movement;
 

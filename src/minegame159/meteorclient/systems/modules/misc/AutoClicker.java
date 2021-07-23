@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.misc;
 
@@ -29,12 +29,12 @@ extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Post post) {
-        block0 : switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$misc$AutoClicker$Mode[this.mode.get().ordinal()]) {
+        switch (1.$SwitchMap$minegame159$meteorclient$systems$modules$misc$AutoClicker$Mode[this.mode.get().ordinal()]) {
             case 1: {
                 switch (this.button.get()) {
                     case Left: {
                         this.mc.field_1690.field_1886.method_23481(true);
-                        break block0;
+                        break;
                     }
                     case Right: {
                         this.mc.field_1690.field_1904.method_23481(true);

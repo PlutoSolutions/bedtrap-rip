@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.gson.Gson
- *  com.google.gson.GsonBuilder
- *  com.google.gson.reflect.TypeToken
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
- *  net.minecraft.class_1657
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.misc;
 

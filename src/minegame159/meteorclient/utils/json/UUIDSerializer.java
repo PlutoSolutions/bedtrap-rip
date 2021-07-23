@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.gson.JsonDeserializationContext
- *  com.google.gson.JsonDeserializer
- *  com.google.gson.JsonElement
- *  com.google.gson.JsonParseException
- *  com.google.gson.JsonPrimitive
- *  com.google.gson.JsonSerializationContext
- *  com.google.gson.JsonSerializer
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.json;
 

@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -15,8 +15,8 @@ extends FunctionParameterContext {
         return this.method;
     }
 
-    MethodParameterContext(Function function, Object[] arrobject, int n, Method method) {
-        super(function, arrobject, n);
+    MethodParameterContext(Function function, Object[] objectArray, int n, Method method) {
+        super(function, objectArray, n);
         this.method = method;
     }
 }

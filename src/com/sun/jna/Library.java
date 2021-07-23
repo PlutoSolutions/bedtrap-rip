@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -56,22 +56,22 @@ public interface Library {
             return this.nativeLibrary;
         }
 
-        public Handler(String string, Class<?> class_, Map<String, ?> map) {
+        public Handler(String string, Class<?> clazz, Map<String, ?> map) {
             int n;
             if (string != null && "".equals(string.trim())) {
                 throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Invalid library name \"").append(string).append("\"")));
             }
-            if (!class_.isInterface()) {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(string).append(" does not implement an interface: ").append(class_.getName())));
+            if (!clazz.isInterface()) {
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(string).append(" does not implement an interface: ").append(clazz.getName())));
             }
-            this.interfaceClass = class_;
+            this.interfaceClass = clazz;
             this.options = new HashMap(map);
-            int n2 = n = AltCallingConvention.class.isAssignableFrom(class_) ? 63 : 0;
+            int n2 = n = AltCallingConvention.class.isAssignableFrom(clazz) ? 63 : 0;
             if (this.options.get("calling-convention") == null) {
                 this.options.put("calling-convention", n);
             }
             if (this.options.get("classloader") == null) {
-                this.options.put("classloader", class_.getClassLoader());
+                this.options.put("classloader", clazz.getClassLoader());
             }
             this.nativeLibrary = NativeLibrary.getInstance(string, this.options);
             this.invocationMapper = (InvocationMapper)this.options.get("invocation-mapper");
@@ -87,7 +87,7 @@ public interface Library {
          * Enabled aggressive exception aggregation
          */
         @Override
-        public Object invoke(Object object, Method method, Object[] arrobject) throws Throwable {
+        public Object invoke(Object object, Method method, Object[] objectArray) throws Throwable {
             if (OBJECT_TOSTRING.equals(method)) {
                 return String.valueOf(new StringBuilder().append("Proxy interface to ").append(this.nativeLibrary));
             }
@@ -96,7 +96,7 @@ public interface Library {
             }
             if (OBJECT_EQUALS.equals(method)) {
                 boolean bl;
-                Object object2 = arrobject[0];
+                Object object2 = objectArray[0];
                 if (object2 == null) return Boolean.FALSE;
                 if (!Proxy.isProxyClass(object2.getClass())) return Boolean.FALSE;
                 if (Proxy.getInvocationHandler(object2) == this) {
@@ -118,24 +118,24 @@ public interface Library {
                             invocationHandler = this.invocationMapper.getInvocationHandler(this.nativeLibrary, method);
                         }
                         Function function = null;
-                        Class<?>[] arrclass = null;
+                        Class<?>[] classArray = null;
                         HashMap<String, Object> hashMap = null;
                         if (invocationHandler == null) {
                             function = this.nativeLibrary.getFunction(method.getName(), method);
-                            arrclass = method.getParameterTypes();
+                            classArray = method.getParameterTypes();
                             hashMap = new HashMap<String, Object>(this.options);
                             hashMap.put("invoking-method", method);
                         }
-                        functionInfo = new FunctionInfo(invocationHandler, function, arrclass, bl, hashMap);
+                        functionInfo = new FunctionInfo(invocationHandler, function, classArray, bl, hashMap);
                         this.functions.put(method, functionInfo);
                     }
                 }
             }
             if (functionInfo.isVarArgs) {
-                arrobject = Function.concatenateVarArgs(arrobject);
+                objectArray = Function.concatenateVarArgs(objectArray);
             }
-            if (functionInfo.handler == null) return functionInfo.function.invoke(method, functionInfo.parameterTypes, method.getReturnType(), arrobject, functionInfo.options);
-            return functionInfo.handler.invoke(object, method, arrobject);
+            if (functionInfo.handler == null) return functionInfo.function.invoke(method, functionInfo.parameterTypes, method.getReturnType(), objectArray, functionInfo.options);
+            return functionInfo.handler.invoke(object, method, objectArray);
         }
 
         static {
@@ -156,12 +156,12 @@ public interface Library {
             final Class<?>[] parameterTypes;
             final InvocationHandler handler;
 
-            FunctionInfo(InvocationHandler invocationHandler, Function function, Class<?>[] arrclass, boolean bl, Map<String, ?> map) {
+            FunctionInfo(InvocationHandler invocationHandler, Function function, Class<?>[] classArray, boolean bl, Map<String, ?> map) {
                 this.handler = invocationHandler;
                 this.function = function;
                 this.isVarArgs = bl;
                 this.options = map;
-                this.parameterTypes = arrclass;
+                this.parameterTypes = classArray;
             }
         }
     }

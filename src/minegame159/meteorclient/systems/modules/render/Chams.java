@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -58,7 +52,7 @@ extends Module {
         this.sgPlayers = this.settings.createGroup("Players");
         this.sgCrystals = this.settings.createGroup("Crystals");
         this.sgHand = this.settings.createGroup("Hand");
-        this.entities = this.sgThroughWalls.add(new EntityTypeListSetting.Builder().name("entities").description("Select entities to show through walls.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
+        this.entities = this.sgThroughWalls.add(new EntityTypeListSetting.Builder().name("entities").description("Select entities to show through walls.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(class_1299.field_6097)).build());
         this.players = this.sgPlayers.add(new BoolSetting.Builder().name("players").description("Enables model tweaks for players.").defaultValue(true).build());
         this.ignoreSelf = this.sgPlayers.add(new BoolSetting.Builder().name("ignore-self").description("Ignores yourself when tweaking player models.").defaultValue(true).visible(this.players::get).build());
         this.playersScale = this.sgPlayers.add(new DoubleSetting.Builder().name("scale").description("Players scale.").defaultValue(1.0).min(0.0).visible(this.players::get).build());

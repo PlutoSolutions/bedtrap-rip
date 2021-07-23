@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  javax.annotation.Nonnull
- *  javax.annotation.Nullable
+ * Decompiled with CFR 0.151.
  */
 package club.minnced.discord.rpc;
 

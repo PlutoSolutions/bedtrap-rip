@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2378
- *  net.minecraft.class_2396
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -100,10 +91,10 @@ extends Setting<List<class_2396<?>>> {
 
     @Override
     protected List<class_2396<?>> parseImpl(String string) {
-        String[] arrstring = string.split(",");
-        ArrayList arrayList = new ArrayList(arrstring.length);
+        String[] stringArray = string.split(",");
+        ArrayList arrayList = new ArrayList(stringArray.length);
         try {
-            for (String string2 : arrstring) {
+            for (String string2 : stringArray) {
                 class_2396 class_23962 = (class_2396)ParticleTypeListSetting.parseId(class_2378.field_11141, string2);
                 if (!(class_23962 instanceof class_2396)) continue;
                 arrayList.add(class_23962);

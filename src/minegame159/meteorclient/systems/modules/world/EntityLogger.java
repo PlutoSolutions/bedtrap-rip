@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
- *  net.minecraft.class_124
- *  net.minecraft.class_1299
- *  net.minecraft.class_1657
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_5250
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 

@@ -1,26 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.systems.RenderSystem
- *  net.minecraft.class_1007
- *  net.minecraft.class_1158
- *  net.minecraft.class_1159
- *  net.minecraft.class_1160
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1657
- *  net.minecraft.class_243
- *  net.minecraft.class_286
- *  net.minecraft.class_287
- *  net.minecraft.class_289
- *  net.minecraft.class_290
- *  net.minecraft.class_310
- *  net.minecraft.class_3532
- *  net.minecraft.class_4587
- *  net.minecraft.class_591
- *  net.minecraft.class_630
- *  net.minecraft.class_922
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 

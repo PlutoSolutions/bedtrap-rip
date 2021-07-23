@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -17,28 +17,28 @@ implements TypeMapper {
     private List<Entry> toNativeConverters = new ArrayList<Entry>();
 
     @Override
-    public ToNativeConverter getToNativeConverter(Class<?> class_) {
-        return (ToNativeConverter)this.lookupConverter(class_, this.toNativeConverters);
+    public ToNativeConverter getToNativeConverter(Class<?> clazz) {
+        return (ToNativeConverter)this.lookupConverter(clazz, this.toNativeConverters);
     }
 
-    public void addTypeConverter(Class<?> class_, TypeConverter typeConverter) {
-        this.addFromNativeConverter(class_, typeConverter);
-        this.addToNativeConverter(class_, typeConverter);
+    public void addTypeConverter(Class<?> clazz, TypeConverter typeConverter) {
+        this.addFromNativeConverter(clazz, typeConverter);
+        this.addToNativeConverter(clazz, typeConverter);
     }
 
-    public void addFromNativeConverter(Class<?> class_, FromNativeConverter fromNativeConverter) {
-        this.fromNativeConverters.add(new Entry(class_, fromNativeConverter));
-        Class<?> class_2 = this.getAltClass(class_);
-        if (class_2 != null) {
-            this.fromNativeConverters.add(new Entry(class_2, fromNativeConverter));
+    public void addFromNativeConverter(Class<?> clazz, FromNativeConverter fromNativeConverter) {
+        this.fromNativeConverters.add(new Entry(clazz, fromNativeConverter));
+        Class<?> clazz2 = this.getAltClass(clazz);
+        if (clazz2 != null) {
+            this.fromNativeConverters.add(new Entry(clazz2, fromNativeConverter));
         }
     }
 
-    public void addToNativeConverter(Class<?> class_, ToNativeConverter toNativeConverter) {
-        this.toNativeConverters.add(new Entry(class_, toNativeConverter));
-        Class<?> class_2 = this.getAltClass(class_);
-        if (class_2 != null) {
-            this.toNativeConverters.add(new Entry(class_2, toNativeConverter));
+    public void addToNativeConverter(Class<?> clazz, ToNativeConverter toNativeConverter) {
+        this.toNativeConverters.add(new Entry(clazz, toNativeConverter));
+        Class<?> clazz2 = this.getAltClass(clazz);
+        if (clazz2 != null) {
+            this.toNativeConverters.add(new Entry(clazz2, toNativeConverter));
         }
     }
 
@@ -46,66 +46,66 @@ implements TypeMapper {
         this.fromNativeConverters = new ArrayList<Entry>();
     }
 
-    private Class<?> getAltClass(Class<?> class_) {
-        if (class_ == Boolean.class) {
+    private Class<?> getAltClass(Class<?> clazz) {
+        if (clazz == Boolean.class) {
             return Boolean.TYPE;
         }
-        if (class_ == Boolean.TYPE) {
+        if (clazz == Boolean.TYPE) {
             return Boolean.class;
         }
-        if (class_ == Byte.class) {
+        if (clazz == Byte.class) {
             return Byte.TYPE;
         }
-        if (class_ == Byte.TYPE) {
+        if (clazz == Byte.TYPE) {
             return Byte.class;
         }
-        if (class_ == Character.class) {
+        if (clazz == Character.class) {
             return Character.TYPE;
         }
-        if (class_ == Character.TYPE) {
+        if (clazz == Character.TYPE) {
             return Character.class;
         }
-        if (class_ == Short.class) {
+        if (clazz == Short.class) {
             return Short.TYPE;
         }
-        if (class_ == Short.TYPE) {
+        if (clazz == Short.TYPE) {
             return Short.class;
         }
-        if (class_ == Integer.class) {
+        if (clazz == Integer.class) {
             return Integer.TYPE;
         }
-        if (class_ == Integer.TYPE) {
+        if (clazz == Integer.TYPE) {
             return Integer.class;
         }
-        if (class_ == Long.class) {
+        if (clazz == Long.class) {
             return Long.TYPE;
         }
-        if (class_ == Long.TYPE) {
+        if (clazz == Long.TYPE) {
             return Long.class;
         }
-        if (class_ == Float.class) {
+        if (clazz == Float.class) {
             return Float.TYPE;
         }
-        if (class_ == Float.TYPE) {
+        if (clazz == Float.TYPE) {
             return Float.class;
         }
-        if (class_ == Double.class) {
+        if (clazz == Double.class) {
             return Double.TYPE;
         }
-        if (class_ == Double.TYPE) {
+        if (clazz == Double.TYPE) {
             return Double.class;
         }
         return null;
     }
 
     @Override
-    public FromNativeConverter getFromNativeConverter(Class<?> class_) {
-        return (FromNativeConverter)this.lookupConverter(class_, this.fromNativeConverters);
+    public FromNativeConverter getFromNativeConverter(Class<?> clazz) {
+        return (FromNativeConverter)this.lookupConverter(clazz, this.fromNativeConverters);
     }
 
-    private Object lookupConverter(Class<?> class_, Collection<? extends Entry> collection) {
+    private Object lookupConverter(Class<?> clazz, Collection<? extends Entry> collection) {
         for (Entry entry : collection) {
-            if (!entry.type.isAssignableFrom(class_)) continue;
+            if (!entry.type.isAssignableFrom(clazz)) continue;
             return entry.converter;
         }
         return null;
@@ -115,8 +115,8 @@ implements TypeMapper {
         public Object converter;
         public Class<?> type;
 
-        public Entry(Class<?> class_, Object object) {
-            this.type = class_;
+        public Entry(Class<?> clazz, Object object) {
+            this.type = clazz;
             this.converter = object;
         }
     }

@@ -1,8 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.accounts;
 
@@ -16,7 +13,7 @@ public class AccountUtils {
         try {
             Field field = yggdrasilMinecraftSessionService.getClass().getDeclaredField("checkUrl");
             field.setAccessible(true);
-            field.set((Object)yggdrasilMinecraftSessionService, new URL(string));
+            field.set(yggdrasilMinecraftSessionService, new URL(string));
         }
         catch (IllegalAccessException | NoSuchFieldException | MalformedURLException exception) {
             exception.printStackTrace();
@@ -27,7 +24,7 @@ public class AccountUtils {
         try {
             Field field = yggdrasilMinecraftSessionService.getClass().getDeclaredField("baseUrl");
             field.setAccessible(true);
-            field.set((Object)yggdrasilMinecraftSessionService, string);
+            field.set(yggdrasilMinecraftSessionService, string);
         }
         catch (IllegalAccessException | NoSuchFieldException reflectiveOperationException) {
             reflectiveOperationException.printStackTrace();
@@ -38,7 +35,7 @@ public class AccountUtils {
         try {
             Field field = yggdrasilMinecraftSessionService.getClass().getDeclaredField("joinUrl");
             field.setAccessible(true);
-            field.set((Object)yggdrasilMinecraftSessionService, new URL(string));
+            field.set(yggdrasilMinecraftSessionService, new URL(string));
         }
         catch (IllegalAccessException | NoSuchFieldException | MalformedURLException exception) {
             exception.printStackTrace();

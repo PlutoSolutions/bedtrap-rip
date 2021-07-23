@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  net.minecraft.class_1294
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.player;
 
@@ -62,9 +55,9 @@ extends Module {
         this.setPressed(false);
         this.eating = false;
         if (this.pauseAuras.get().booleanValue()) {
-            for (Class<? extends Module> class_ : AURAS) {
-                Module module = Modules.get().get(class_);
-                if (!this.wasAura.contains(class_) || module.isActive()) continue;
+            for (Class<? extends Module> clazz : AURAS) {
+                Module module = Modules.get().get(clazz);
+                if (!this.wasAura.contains(clazz) || module.isActive()) continue;
                 module.toggle();
                 if (-1 <= 4) continue;
                 return;
@@ -130,14 +123,14 @@ extends Module {
 
     private boolean shouldEatPotions() {
         Map map = this.mc.field_1724.method_6088();
-        if (this.potionsRegeneration.get().booleanValue() && !map.containsKey((Object)class_1294.field_5924)) {
+        if (this.potionsRegeneration.get().booleanValue() && !map.containsKey(class_1294.field_5924)) {
             return true;
         }
-        if (this.potionsFireResistance.get().booleanValue() && !map.containsKey((Object)class_1294.field_5918)) {
+        if (this.potionsFireResistance.get().booleanValue() && !map.containsKey(class_1294.field_5918)) {
             this.requiresEGap = true;
             return true;
         }
-        if (this.potionsResistance.get().booleanValue() && !map.containsKey((Object)class_1294.field_5907)) {
+        if (this.potionsResistance.get().booleanValue() && !map.containsKey(class_1294.field_5907)) {
             this.requiresEGap = true;
             return true;
         }
@@ -149,10 +142,10 @@ extends Module {
         this.eat();
         this.wasAura.clear();
         if (this.pauseAuras.get().booleanValue()) {
-            for (Class<? extends Module> class_ : AURAS) {
-                Module module = Modules.get().get(class_);
+            for (Class<? extends Module> clazz : AURAS) {
+                Module module = Modules.get().get(clazz);
                 if (module.isActive()) {
-                    this.wasAura.add(class_);
+                    this.wasAura.add(clazz);
                     module.toggle();
                 }
             }

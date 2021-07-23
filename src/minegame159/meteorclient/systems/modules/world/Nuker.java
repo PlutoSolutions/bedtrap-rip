@@ -1,17 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1268
- *  net.minecraft.class_1922
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2350
- *  net.minecraft.class_2382
- *  net.minecraft.class_259
- *  net.minecraft.class_2680
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 
@@ -116,7 +104,7 @@ extends Module {
                         bl = true;
                         break;
                     }
-                    if (this.mode.get() == Mode.Smash && class_26802.method_26214((class_1922)this.mc.field_1687, (class_2338)this.blockPos) != 0.0f || this.onlySelected.get().booleanValue() && !this.selectedBlocks.get().contains((Object)class_26802.method_26204())) continue;
+                    if (this.mode.get() == Mode.Smash && class_26802.method_26214((class_1922)this.mc.field_1687, (class_2338)this.blockPos) != 0.0f || this.onlySelected.get().booleanValue() && !this.selectedBlocks.get().contains(class_26802.method_26204())) continue;
                     class_2338.class_2339 class_23392 = this.blockPool.get();
                     class_23392.method_10103(i, n, j);
                     this.blocks.add(class_23392);

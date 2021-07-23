@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_437
- *  org.apache.commons.lang3.StringUtils
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.tabs.builtin;
 
@@ -62,7 +58,7 @@ extends Tab {
         public void initWidgets(Profile profile, List<String> list) {
             WTable wTable = this.add(this.theme.table()).expandX().widget();
             wTable.add(this.theme.label("Name:"));
-            WTextBox wTextBox = wTable.add(this.theme.textBox(profile.name, (arg_0, arg_1) -> this.nameFilter(arg_0, arg_1))).minWidth(400.0).expandX().widget();
+            WTextBox wTextBox = wTable.add(this.theme.textBox(profile.name, this::nameFilter)).minWidth(400.0).expandX().widget();
             wTextBox.action = () -> this.lambda$initWidgets$0(wTextBox);
             wTable.row();
             wTable.add(this.theme.horizontalSeparator()).expandX();
@@ -191,7 +187,7 @@ extends Tab {
             for (int i = 0; i < list.size(); ++i) {
                 WPressable wPressable;
                 int n = i;
-                WTextBox wTextBox = wTable.add(this.theme.textBox(list.get(n), (arg_0, arg_1) -> this.ipFilter(arg_0, arg_1))).minWidth(400.0).expandX().widget();
+                WTextBox wTextBox = wTable.add(this.theme.textBox(list.get(n), this::ipFilter)).minWidth(400.0).expandX().widget();
                 wTextBox.action = () -> EditProfileScreen.lambda$fillTable$9(wTextBox, list, n);
                 if (n != list.size() - 1) {
                     wPressable = wTable.add(this.theme.minus()).widget();

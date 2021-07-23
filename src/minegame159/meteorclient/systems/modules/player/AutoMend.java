@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1887
- *  net.minecraft.class_1890
- *  net.minecraft.class_1893
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.player;
 
@@ -67,7 +60,7 @@ extends Module {
     private int getSlot() {
         for (int i = 0; i < this.mc.field_1724.field_7514.field_7547.size(); ++i) {
             class_1799 class_17992 = this.mc.field_1724.field_7514.method_5438(i);
-            if (this.blacklist.get().contains((Object)class_17992.method_7909()) || class_1890.method_8225((class_1887)class_1893.field_9101, (class_1799)class_17992) <= 0 || class_17992.method_7919() <= 0) continue;
+            if (this.blacklist.get().contains(class_17992.method_7909()) || class_1890.method_8225((class_1887)class_1893.field_9101, (class_1799)class_17992) <= 0 || class_17992.method_7919() <= 0) continue;
             return i;
         }
         return -1;

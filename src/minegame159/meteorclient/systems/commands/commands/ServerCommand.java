@@ -1,27 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  com.mojang.brigadier.suggestion.Suggestion
- *  com.mojang.brigadier.suggestion.Suggestions
- *  joptsimple.internal.Strings
- *  net.minecraft.class_1132
- *  net.minecraft.class_124
- *  net.minecraft.class_2172
- *  net.minecraft.class_2558
- *  net.minecraft.class_2558$class_2559
- *  net.minecraft.class_2561
- *  net.minecraft.class_2568
- *  net.minecraft.class_2568$class_5247
- *  net.minecraft.class_2585
- *  net.minecraft.class_2596
- *  net.minecraft.class_2639
- *  net.minecraft.class_2805
- *  net.minecraft.class_639
- *  net.minecraft.class_642
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.commands.commands;
 
@@ -63,10 +41,10 @@ extends Command {
 
     private String formatName(String string) {
         if (ANTICHEAT_LIST.contains(string)) {
-            return String.format("%s%s(default)", new Object[]{class_124.field_1061, string});
+            return String.format("%s%s(default)", class_124.field_1061, string);
         }
         if (string.contains("exploit") || string.contains("cheat") || string.contains("illegal")) {
-            return String.format("%s%s(default)", new Object[]{class_124.field_1061, string});
+            return String.format("%s%s(default)", class_124.field_1061, string);
         }
         return String.format("(highlight)%s(default)", string);
     }
@@ -79,7 +57,7 @@ extends Command {
     private int lambda$build$3(CommandContext commandContext) throws CommandSyntaxException {
         float f = TickRate.INSTANCE.getTickRate();
         class_124 class_1242 = f > 17.0f ? class_124.field_1060 : (f > 12.0f ? class_124.field_1054 : class_124.field_1061);
-        this.info("Current TPS: %s%.2f(default).", new Object[]{class_1242, Float.valueOf(f)});
+        this.info("Current TPS: %s%.2f(default).", class_1242, Float.valueOf(f));
         return 1;
     }
 
@@ -96,8 +74,8 @@ extends Command {
                 }
                 for (Suggestion suggestion : suggestions.getList()) {
                     String string;
-                    String[] arrstring = suggestion.getText().split(":");
-                    if (arrstring.length <= 1 || arrayList.contains(string = arrstring[0].replace("/", ""))) continue;
+                    String[] stringArray = suggestion.getText().split(":");
+                    if (stringArray.length <= 1 || arrayList.contains(string = stringArray[0].replace("/", ""))) continue;
                     arrayList.add(string);
                 }
                 Collections.sort(arrayList);
@@ -182,16 +160,16 @@ extends Command {
             // empty catch block
         }
         if (string.isEmpty()) {
-            class_25853 = new class_2585(String.valueOf(new StringBuilder().append((Object)class_124.field_1080).append(class_6422.field_3761)));
+            class_25853 = new class_2585(String.valueOf(new StringBuilder().append(class_124.field_1080).append(class_6422.field_3761)));
             class_25853.method_10862(class_25853.method_10866().method_10958(new class_2558(class_2558.class_2559.field_21462, class_6422.field_3761)).method_10949(new class_2568(class_2568.class_5247.field_24342, (Object)new class_2585("Copy to clipboard"))));
         } else {
-            class_25853 = new class_2585(String.valueOf(new StringBuilder().append((Object)class_124.field_1080).append(class_6422.field_3761)));
+            class_25853 = new class_2585(String.valueOf(new StringBuilder().append(class_124.field_1080).append(class_6422.field_3761)));
             class_25853.method_10862(class_25853.method_10866().method_10958(new class_2558(class_2558.class_2559.field_21462, class_6422.field_3761)).method_10949(new class_2568(class_2568.class_5247.field_24342, (Object)new class_2585("Copy to clipboard"))));
-            class_25852 = new class_2585(String.format("%s (%s)", new Object[]{class_124.field_1080, string}));
+            class_25852 = new class_2585(String.format("%s (%s)", class_124.field_1080, string));
             class_25852.method_10862(class_25853.method_10866().method_10958(new class_2558(class_2558.class_2559.field_21462, string)).method_10949(new class_2568(class_2568.class_5247.field_24342, (Object)new class_2585("Copy to clipboard"))));
             class_25853.method_10852((class_2561)class_25852);
         }
-        this.info((class_2561)new class_2585(String.format("%sIP: ", new Object[]{class_124.field_1080})).method_10852((class_2561)class_25853));
+        this.info((class_2561)new class_2585(String.format("%sIP: ", class_124.field_1080)).method_10852((class_2561)class_25853));
         this.info("Port: %d", class_639.method_2950((String)class_6422.field_3761).method_2954());
         this.info("Type: %s", ServerCommand.mc.field_1724.method_3135() != null ? ServerCommand.mc.field_1724.method_3135() : "unknown");
         this.info("Motd: %s", class_6422.field_3757 != null ? class_6422.field_3757.getString() : "unknown");

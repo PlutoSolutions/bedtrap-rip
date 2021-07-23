@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1011
- *  net.minecraft.class_1043
- *  net.minecraft.class_1044
- *  net.minecraft.class_1657
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.network;
 
@@ -68,11 +61,11 @@ public class Capes {
     }
 
     private static void lambda$init$0(String string) {
-        String[] arrstring = string.split(" ");
-        if (arrstring.length >= 2) {
-            OWNERS.put(UUID.fromString(arrstring[0]), arrstring[1]);
-            if (!TEXTURES.containsKey(arrstring[1])) {
-                TEXTURES.put(arrstring[1], new Cape(arrstring[1]));
+        String[] stringArray = string.split(" ");
+        if (stringArray.length >= 2) {
+            OWNERS.put(UUID.fromString(stringArray[0]), stringArray[1]);
+            if (!TEXTURES.containsKey(stringArray[1])) {
+                TEXTURES.put(stringArray[1], new Cape(stringArray[1]));
             }
         }
     }
@@ -89,9 +82,9 @@ public class Capes {
     }
 
     private static void lambda$init$2(String string) {
-        String[] arrstring = string.split(" ");
-        if (arrstring.length >= 2 && !URLS.containsKey(arrstring[0])) {
-            URLS.put(arrstring[0], arrstring[1]);
+        String[] stringArray = string.split(" ");
+        if (stringArray.length >= 2 && !URLS.containsKey(stringArray[0])) {
+            URLS.put(stringArray[0], stringArray[1]);
         }
     }
 
@@ -181,18 +174,16 @@ public class Capes {
          * Enabled aggressive block sorting
          * Enabled unnecessary exception pruning
          * Enabled aggressive exception aggregation
-         * Converted monitor instructions to comments
-         * Lifted jumps to return sites
          */
         private void lambda$download$0() {
             var1_1 = (String)Capes.access$100().get(this.name);
             if (var1_1 != null) ** GOTO lbl-1000
             var2_2 = Capes.access$200();
-            // MONITORENTER : var2_2
-            Capes.access$300().add(this);
-            this.downloading = false;
-            // MONITOREXIT : var2_2
-            return;
+            synchronized (var2_2) {
+                Capes.access$300().add(this);
+                this.downloading = false;
+                return;
+            }
 lbl-1000:
             // 1 sources
 
@@ -200,19 +191,19 @@ lbl-1000:
                 var2_3 = HttpUtils.get(var1_1);
                 if (var2_3 == null) {
                     var3_4 = Capes.access$200();
-                    // MONITORENTER : var3_4
-                    Capes.access$200().add(this);
-                    this.retryTimer = 200;
-                    this.downloading = false;
-                    // MONITOREXIT : var3_4
-                    return;
+                    synchronized (var3_4) {
+                        Capes.access$200().add(this);
+                        this.retryTimer = 200;
+                        this.downloading = false;
+                        return;
+                    }
                 }
                 this.img = class_1011.method_4309((InputStream)var2_3);
                 var3_5 = Capes.access$400();
-                // MONITORENTER : var3_5
-                Capes.access$400().add(this);
-                // MONITOREXIT : var3_5
-                return;
+                synchronized (var3_5) {
+                    Capes.access$400().add(this);
+                    return;
+                }
             }
         }
 

@@ -1,26 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.datafixers.util.Pair
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
- *  net.minecraft.class_124
- *  net.minecraft.class_1262
- *  net.minecraft.class_1291
- *  net.minecraft.class_1292
- *  net.minecraft.class_1293
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_2371
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_2588
- *  net.minecraft.class_4174
- *  net.minecraft.class_5250
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -215,7 +194,7 @@ extends Module {
                 int n2 = ByteCountDataOutput.INSTANCE.getCount();
                 ByteCountDataOutput.INSTANCE.reset();
                 object = n2 >= 1024 ? String.format("%.2f kb", Float.valueOf((float)n2 / 1024.0f)) : String.format("%d bytes", n2);
-                append.list.add(new class_2585(String.valueOf(new StringBuilder().append((Object)class_124.field_1080).append((String)object))));
+                append.list.add(new class_2585(String.valueOf(new StringBuilder().append(class_124.field_1080).append((String)object))));
             }
             catch (IOException iOException) {
                 iOException.printStackTrace();
@@ -245,16 +224,16 @@ extends Module {
             object = class_24872.method_10562("BlockStateTag");
             if (object != null) {
                 n = object.method_10550("honey_level");
-                append.list.add(1, new class_2585(String.format("%sHoney level: %s%d%s.", new Object[]{class_124.field_1080, class_124.field_1054, n, class_124.field_1080})));
+                append.list.add(1, new class_2585(String.format("%sHoney level: %s%d%s.", class_124.field_1080, class_124.field_1054, n, class_124.field_1080)));
             }
             if ((class_24875 = class_24872.method_10562("BlockEntityTag")) != null) {
                 class_24873 = class_24875.method_10554("Bees", 10);
-                append.list.add(1, new class_2585(String.format("%sBees: %s%d%s.", new Object[]{class_124.field_1080, class_124.field_1054, class_24873.size(), class_124.field_1080})));
+                append.list.add(1, new class_2585(String.format("%sBees: %s%d%s.", class_124.field_1080, class_124.field_1054, class_24873.size(), class_124.field_1080)));
             }
         }
         if (Utils.hasItems(append.itemStack) && this.shulkers.get() != false && !this.previewShulkers() || append.itemStack.method_7909() == class_1802.field_8466 && this.echest.get() != false && !this.previewEChest() || append.itemStack.method_7909() == class_1802.field_8204 && this.maps.get() != false && !this.previewMaps() || append.itemStack.method_7909() == class_1802.field_8674 && this.books.get() != false && !this.previewBooks() || append.itemStack.method_7909() == class_1802.field_8360 && this.books.get().booleanValue() && !this.previewBooks()) {
             append.list.add(new class_2585(""));
-            append.list.add(new class_2585(String.valueOf(new StringBuilder().append("Hold ").append((Object)class_124.field_1054).append(this.keybind).append((Object)class_124.field_1070).append(" to preview"))));
+            append.list.add(new class_2585(String.valueOf(new StringBuilder().append("Hold ").append(class_124.field_1054).append(this.keybind).append(class_124.field_1070).append(" to preview"))));
         }
     }
 

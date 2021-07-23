@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -28,9 +28,9 @@ public class Pointer {
     public static final Pointer NULL;
     protected long peer;
 
-    public void write(long l, Pointer[] arrpointer, int n, int n2) {
+    public void write(long l, Pointer[] pointerArray, int n, int n2) {
         for (int i = 0; i < n2; ++i) {
-            this.setPointer(l + (long)(i * SIZE), arrpointer[n + i]);
+            this.setPointer(l + (long)(i * SIZE), pointerArray[n + i]);
             if (!false) continue;
             return;
         }
@@ -59,20 +59,20 @@ public class Pointer {
         return arrayList.toArray(new Pointer[arrayList.size()]);
     }
 
-    public void read(long l, double[] arrd, int n, int n2) {
-        Native.read(this, this.peer, l, arrd, n, n2);
+    public void read(long l, double[] dArray, int n, int n2) {
+        Native.read(this, this.peer, l, dArray, n, n2);
     }
 
     public String getWideString(long l) {
         return Native.getWideString(this, this.peer, l);
     }
 
-    public void read(long l, Pointer[] arrpointer, int n, int n2) {
+    public void read(long l, Pointer[] pointerArray, int n, int n2) {
         for (int i = 0; i < n2; ++i) {
             Pointer pointer = this.getPointer(l + (long)(i * SIZE));
-            Pointer pointer2 = arrpointer[i + n];
+            Pointer pointer2 = pointerArray[i + n];
             if (pointer2 != null && pointer != null && pointer.peer == pointer2.peer) continue;
-            arrpointer[i + n] = pointer;
+            pointerArray[i + n] = pointer;
             if (3 <= 3) continue;
             return;
         }
@@ -87,8 +87,8 @@ public class Pointer {
         return bl ? this.getWideString(l) : this.getString(l);
     }
 
-    public void write(long l, double[] arrd, int n, int n2) {
-        Native.write(this, this.peer, l, arrd, n, n2);
+    public void write(long l, double[] dArray, int n, int n2) {
+        Native.write(this, this.peer, l, dArray, n, n2);
     }
 
     public void setFloat(long l, float f) {
@@ -103,8 +103,8 @@ public class Pointer {
         return Native.indexOf(this, this.peer, l, by);
     }
 
-    public void write(long l, char[] arrc, int n, int n2) {
-        Native.write(this, this.peer, l, arrc, n, n2);
+    public void write(long l, char[] cArray, int n, int n2) {
+        Native.write(this, this.peer, l, cArray, n, n2);
     }
 
     public String getString(long l, String string) {
@@ -118,8 +118,8 @@ public class Pointer {
     Pointer() {
     }
 
-    public void write(long l, long[] arrl, int n, int n2) {
-        Native.write(this, this.peer, l, arrl, n, n2);
+    public void write(long l, long[] lArray, int n, int n2) {
+        Native.write(this, this.peer, l, lArray, n, n2);
     }
 
     public boolean equals(Object object) {
@@ -144,17 +144,17 @@ public class Pointer {
     }
 
     public void setString(long l, String string, String string2) {
-        byte[] arrby = Native.getBytes(string, string2);
-        this.write(l, arrby, 0, arrby.length);
-        this.setByte(l + (long)arrby.length, (byte)0);
+        byte[] byArray = Native.getBytes(string, string2);
+        this.write(l, byArray, 0, byArray.length);
+        this.setByte(l + (long)byArray.length, (byte)0);
     }
 
     public void setString(long l, WString wString) {
         this.setWideString(l, wString == null ? null : wString.toString());
     }
 
-    public void write(long l, byte[] arrby, int n, int n2) {
-        Native.write(this, this.peer, l, arrby, n, n2);
+    public void write(long l, byte[] byArray, int n, int n2) {
+        Native.write(this, this.peer, l, byArray, n, n2);
     }
 
     public String dump(long l, int n) {
@@ -233,47 +233,47 @@ public class Pointer {
         return new Pointer(this.peer + l);
     }
 
-    Object getValue(long l, Class<?> class_, Object object) {
+    Object getValue(long l, Class<?> clazz, Object object) {
         Object object2 = null;
-        if (Structure.class.isAssignableFrom(class_)) {
+        if (Structure.class.isAssignableFrom(clazz)) {
             Structure structure = (Structure)object;
-            if (Structure.ByReference.class.isAssignableFrom(class_)) {
-                structure = Structure.updateStructureByReference(class_, structure, this.getPointer(l));
+            if (Structure.ByReference.class.isAssignableFrom(clazz)) {
+                structure = Structure.updateStructureByReference(clazz, structure, this.getPointer(l));
             } else {
                 structure.useMemory(this, (int)l, true);
                 structure.read();
             }
             object2 = structure;
-        } else if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+        } else if (clazz == Boolean.TYPE || clazz == Boolean.class) {
             object2 = Function.valueOf(this.getInt(l) != 0);
-        } else if (class_ == Byte.TYPE || class_ == Byte.class) {
+        } else if (clazz == Byte.TYPE || clazz == Byte.class) {
             object2 = this.getByte(l);
-        } else if (class_ == Short.TYPE || class_ == Short.class) {
+        } else if (clazz == Short.TYPE || clazz == Short.class) {
             object2 = this.getShort(l);
-        } else if (class_ == Character.TYPE || class_ == Character.class) {
+        } else if (clazz == Character.TYPE || clazz == Character.class) {
             object2 = Character.valueOf(this.getChar(l));
-        } else if (class_ == Integer.TYPE || class_ == Integer.class) {
+        } else if (clazz == Integer.TYPE || clazz == Integer.class) {
             object2 = this.getInt(l);
-        } else if (class_ == Long.TYPE || class_ == Long.class) {
+        } else if (clazz == Long.TYPE || clazz == Long.class) {
             object2 = this.getLong(l);
-        } else if (class_ == Float.TYPE || class_ == Float.class) {
+        } else if (clazz == Float.TYPE || clazz == Float.class) {
             object2 = Float.valueOf(this.getFloat(l));
-        } else if (class_ == Double.TYPE || class_ == Double.class) {
+        } else if (clazz == Double.TYPE || clazz == Double.class) {
             object2 = this.getDouble(l);
-        } else if (Pointer.class.isAssignableFrom(class_)) {
+        } else if (Pointer.class.isAssignableFrom(clazz)) {
             Pointer pointer = this.getPointer(l);
             if (pointer != null) {
                 Pointer pointer2;
                 Pointer pointer3 = pointer2 = object instanceof Pointer ? (Pointer)object : null;
                 object2 = pointer2 == null || pointer.peer != pointer2.peer ? pointer : pointer2;
             }
-        } else if (class_ == String.class) {
+        } else if (clazz == String.class) {
             Pointer pointer = this.getPointer(l);
             object2 = pointer != null ? pointer.getString(0L) : null;
-        } else if (class_ == WString.class) {
+        } else if (clazz == WString.class) {
             Pointer pointer = this.getPointer(l);
             object2 = pointer != null ? new WString(pointer.getWideString(0L)) : null;
-        } else if (Callback.class.isAssignableFrom(class_)) {
+        } else if (Callback.class.isAssignableFrom(clazz)) {
             Pointer pointer = this.getPointer(l);
             if (pointer == null) {
                 object2 = null;
@@ -281,11 +281,11 @@ public class Pointer {
                 Callback callback = (Callback)object;
                 Pointer pointer4 = CallbackReference.getFunctionPointer(callback);
                 if (!pointer.equals(pointer4)) {
-                    callback = CallbackReference.getCallback(class_, pointer);
+                    callback = CallbackReference.getCallback(clazz, pointer);
                 }
                 object2 = callback;
             }
-        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(class_)) {
+        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(clazz)) {
             Pointer pointer = this.getPointer(l);
             if (pointer == null) {
                 object2 = null;
@@ -297,27 +297,27 @@ public class Pointer {
                 }
                 object2 = object;
             }
-        } else if (NativeMapped.class.isAssignableFrom(class_)) {
+        } else if (NativeMapped.class.isAssignableFrom(clazz)) {
             NativeMapped nativeMapped = (NativeMapped)object;
             if (nativeMapped != null) {
                 Object object3 = this.getValue(l, nativeMapped.nativeType(), null);
-                object2 = nativeMapped.fromNative(object3, new FromNativeContext(class_));
+                object2 = nativeMapped.fromNative(object3, new FromNativeContext(clazz));
                 if (nativeMapped.equals(object2)) {
                     object2 = nativeMapped;
                 }
             } else {
-                NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
+                NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(clazz);
                 Object object4 = this.getValue(l, nativeMappedConverter.nativeType(), null);
-                object2 = nativeMappedConverter.fromNative(object4, new FromNativeContext(class_));
+                object2 = nativeMappedConverter.fromNative(object4, new FromNativeContext(clazz));
             }
-        } else if (class_.isArray()) {
+        } else if (clazz.isArray()) {
             object2 = object;
             if (object2 == null) {
                 throw new IllegalStateException("Need an initialized array");
             }
-            this.readArray(l, object2, class_.getComponentType());
+            this.readArray(l, object2, clazz.getComponentType());
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading \"").append(class_).append("\" from memory is not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading \"").append(clazz).append("\" from memory is not supported")));
         }
         return object2;
     }
@@ -330,36 +330,36 @@ public class Pointer {
         return Native.getChar(this, this.peer, l);
     }
 
-    public void write(long l, short[] arrs, int n, int n2) {
-        Native.write(this, this.peer, l, arrs, n, n2);
+    public void write(long l, short[] sArray, int n, int n2) {
+        Native.write(this, this.peer, l, sArray, n, n2);
     }
 
-    void setValue(long l, Object object, Class<?> class_) {
-        if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+    void setValue(long l, Object object, Class<?> clazz) {
+        if (clazz == Boolean.TYPE || clazz == Boolean.class) {
             this.setInt(l, Boolean.TRUE.equals(object) ? -1 : 0);
-        } else if (class_ == Byte.TYPE || class_ == Byte.class) {
+        } else if (clazz == Byte.TYPE || clazz == Byte.class) {
             this.setByte(l, object == null ? (byte)0 : (Byte)object);
-        } else if (class_ == Short.TYPE || class_ == Short.class) {
+        } else if (clazz == Short.TYPE || clazz == Short.class) {
             this.setShort(l, object == null ? (short)0 : (Short)object);
-        } else if (class_ == Character.TYPE || class_ == Character.class) {
+        } else if (clazz == Character.TYPE || clazz == Character.class) {
             this.setChar(l, object == null ? (char)'\u0000' : ((Character)object).charValue());
-        } else if (class_ == Integer.TYPE || class_ == Integer.class) {
+        } else if (clazz == Integer.TYPE || clazz == Integer.class) {
             this.setInt(l, object == null ? 0 : (Integer)object);
-        } else if (class_ == Long.TYPE || class_ == Long.class) {
+        } else if (clazz == Long.TYPE || clazz == Long.class) {
             this.setLong(l, object == null ? 0L : (Long)object);
-        } else if (class_ == Float.TYPE || class_ == Float.class) {
+        } else if (clazz == Float.TYPE || clazz == Float.class) {
             this.setFloat(l, object == null ? 0.0f : ((Float)object).floatValue());
-        } else if (class_ == Double.TYPE || class_ == Double.class) {
+        } else if (clazz == Double.TYPE || clazz == Double.class) {
             this.setDouble(l, object == null ? 0.0 : (Double)object);
-        } else if (class_ == Pointer.class) {
+        } else if (clazz == Pointer.class) {
             this.setPointer(l, (Pointer)object);
-        } else if (class_ == String.class) {
+        } else if (clazz == String.class) {
             this.setPointer(l, (Pointer)object);
-        } else if (class_ == WString.class) {
+        } else if (clazz == WString.class) {
             this.setPointer(l, (Pointer)object);
-        } else if (Structure.class.isAssignableFrom(class_)) {
+        } else if (Structure.class.isAssignableFrom(clazz)) {
             Structure structure = (Structure)object;
-            if (Structure.ByReference.class.isAssignableFrom(class_)) {
+            if (Structure.ByReference.class.isAssignableFrom(clazz)) {
                 this.setPointer(l, structure == null ? null : structure.getPointer());
                 if (structure != null) {
                     structure.autoWrite();
@@ -368,19 +368,19 @@ public class Pointer {
                 structure.useMemory(this, (int)l, true);
                 structure.write();
             }
-        } else if (Callback.class.isAssignableFrom(class_)) {
+        } else if (Callback.class.isAssignableFrom(clazz)) {
             this.setPointer(l, CallbackReference.getFunctionPointer((Callback)object));
-        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(class_)) {
+        } else if (Platform.HAS_BUFFERS && Buffer.class.isAssignableFrom(clazz)) {
             Pointer pointer = object == null ? null : Native.getDirectBufferPointer((Buffer)object);
             this.setPointer(l, pointer);
-        } else if (NativeMapped.class.isAssignableFrom(class_)) {
-            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
-            Class<?> class_2 = nativeMappedConverter.nativeType();
-            this.setValue(l, nativeMappedConverter.toNative(object, new ToNativeContext()), class_2);
-        } else if (class_.isArray()) {
-            this.writeArray(l, object, class_.getComponentType());
+        } else if (NativeMapped.class.isAssignableFrom(clazz)) {
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(clazz);
+            Class<?> clazz2 = nativeMappedConverter.nativeType();
+            this.setValue(l, nativeMappedConverter.toNative(object, new ToNativeContext()), clazz2);
+        } else if (clazz.isArray()) {
+            this.writeArray(l, object, clazz.getComponentType());
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing ").append(class_).append(" to memory is not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing ").append(clazz).append(" to memory is not supported")));
         }
     }
 
@@ -393,9 +393,9 @@ public class Pointer {
     }
 
     public Pointer[] getPointerArray(long l, int n) {
-        Pointer[] arrpointer = new Pointer[n];
-        this.read(l, arrpointer, 0, n);
-        return arrpointer;
+        Pointer[] pointerArray = new Pointer[n];
+        this.read(l, pointerArray, 0, n);
+        return pointerArray;
     }
 
     public Pointer share(long l) {
@@ -419,8 +419,8 @@ public class Pointer {
         return this.getStringArray(l, -1, bl);
     }
 
-    public void read(long l, char[] arrc, int n, int n2) {
-        Native.read(this, this.peer, l, arrc, n, n2);
+    public void read(long l, char[] cArray, int n, int n2) {
+        Native.read(this, this.peer, l, cArray, n, n2);
     }
 
     @Deprecated
@@ -437,17 +437,17 @@ public class Pointer {
     }
 
     public double[] getDoubleArray(long l, int n) {
-        double[] arrd = new double[n];
-        this.read(l, arrd, 0, n);
-        return arrd;
+        double[] dArray = new double[n];
+        this.read(l, dArray, 0, n);
+        return dArray;
     }
 
-    public void read(long l, short[] arrs, int n, int n2) {
-        Native.read(this, this.peer, l, arrs, n, n2);
+    public void read(long l, short[] sArray, int n, int n2) {
+        Native.read(this, this.peer, l, sArray, n, n2);
     }
 
-    public void write(long l, int[] arrn, int n, int n2) {
-        Native.write(this, this.peer, l, arrn, n, n2);
+    public void write(long l, int[] nArray, int n, int n2) {
+        Native.write(this, this.peer, l, nArray, n, n2);
     }
 
     public String[] getStringArray(long l, String string) {
@@ -463,9 +463,9 @@ public class Pointer {
     }
 
     public int[] getIntArray(long l, int n) {
-        int[] arrn = new int[n];
-        this.read(l, arrn, 0, n);
-        return arrn;
+        int[] nArray = new int[n];
+        this.read(l, nArray, 0, n);
+        return nArray;
     }
 
     public String getString(long l) {
@@ -480,114 +480,114 @@ public class Pointer {
         pointer.peer = l;
     }
 
-    public void read(long l, long[] arrl, int n, int n2) {
-        Native.read(this, this.peer, l, arrl, n, n2);
+    public void read(long l, long[] lArray, int n, int n2) {
+        Native.read(this, this.peer, l, lArray, n, n2);
     }
 
     public float[] getFloatArray(long l, int n) {
-        float[] arrf = new float[n];
-        this.read(l, arrf, 0, n);
-        return arrf;
+        float[] fArray = new float[n];
+        this.read(l, fArray, 0, n);
+        return fArray;
     }
 
     public byte[] getByteArray(long l, int n) {
-        byte[] arrby = new byte[n];
-        this.read(l, arrby, 0, n);
-        return arrby;
+        byte[] byArray = new byte[n];
+        this.read(l, byArray, 0, n);
+        return byArray;
     }
 
     public long[] getLongArray(long l, int n) {
-        long[] arrl = new long[n];
-        this.read(l, arrl, 0, n);
-        return arrl;
+        long[] lArray = new long[n];
+        this.read(l, lArray, 0, n);
+        return lArray;
     }
 
-    private void writeArray(long l, Object object, Class<?> class_) {
-        if (class_ == Byte.TYPE) {
-            byte[] arrby = (byte[])object;
-            this.write(l, arrby, 0, arrby.length);
-        } else if (class_ == Short.TYPE) {
-            short[] arrs = (short[])object;
-            this.write(l, arrs, 0, arrs.length);
-        } else if (class_ == Character.TYPE) {
-            char[] arrc = (char[])object;
-            this.write(l, arrc, 0, arrc.length);
-        } else if (class_ == Integer.TYPE) {
-            int[] arrn = (int[])object;
-            this.write(l, arrn, 0, arrn.length);
-        } else if (class_ == Long.TYPE) {
-            long[] arrl = (long[])object;
-            this.write(l, arrl, 0, arrl.length);
-        } else if (class_ == Float.TYPE) {
-            float[] arrf = (float[])object;
-            this.write(l, arrf, 0, arrf.length);
-        } else if (class_ == Double.TYPE) {
-            double[] arrd = (double[])object;
-            this.write(l, arrd, 0, arrd.length);
-        } else if (Pointer.class.isAssignableFrom(class_)) {
-            Pointer[] arrpointer = (Pointer[])object;
-            this.write(l, arrpointer, 0, arrpointer.length);
-        } else if (Structure.class.isAssignableFrom(class_)) {
-            Structure[] arrstructure = (Structure[])object;
-            if (Structure.ByReference.class.isAssignableFrom(class_)) {
-                Pointer[] arrpointer = new Pointer[arrstructure.length];
-                for (int i = 0; i < arrstructure.length; ++i) {
-                    if (arrstructure[i] == null) {
-                        arrpointer[i] = null;
+    private void writeArray(long l, Object object, Class<?> clazz) {
+        if (clazz == Byte.TYPE) {
+            byte[] byArray = (byte[])object;
+            this.write(l, byArray, 0, byArray.length);
+        } else if (clazz == Short.TYPE) {
+            short[] sArray = (short[])object;
+            this.write(l, sArray, 0, sArray.length);
+        } else if (clazz == Character.TYPE) {
+            char[] cArray = (char[])object;
+            this.write(l, cArray, 0, cArray.length);
+        } else if (clazz == Integer.TYPE) {
+            int[] nArray = (int[])object;
+            this.write(l, nArray, 0, nArray.length);
+        } else if (clazz == Long.TYPE) {
+            long[] lArray = (long[])object;
+            this.write(l, lArray, 0, lArray.length);
+        } else if (clazz == Float.TYPE) {
+            float[] fArray = (float[])object;
+            this.write(l, fArray, 0, fArray.length);
+        } else if (clazz == Double.TYPE) {
+            double[] dArray = (double[])object;
+            this.write(l, dArray, 0, dArray.length);
+        } else if (Pointer.class.isAssignableFrom(clazz)) {
+            Pointer[] pointerArray = (Pointer[])object;
+            this.write(l, pointerArray, 0, pointerArray.length);
+        } else if (Structure.class.isAssignableFrom(clazz)) {
+            Structure[] structureArray = (Structure[])object;
+            if (Structure.ByReference.class.isAssignableFrom(clazz)) {
+                Pointer[] pointerArray = new Pointer[structureArray.length];
+                for (int i = 0; i < structureArray.length; ++i) {
+                    if (structureArray[i] == null) {
+                        pointerArray[i] = null;
                         continue;
                     }
-                    arrpointer[i] = arrstructure[i].getPointer();
-                    arrstructure[i].write();
+                    pointerArray[i] = structureArray[i].getPointer();
+                    structureArray[i].write();
                     if (0 != 3) continue;
                     return;
                 }
-                this.write(l, arrpointer, 0, arrpointer.length);
+                this.write(l, pointerArray, 0, pointerArray.length);
             } else {
-                Structure structure = arrstructure[0];
+                Structure structure = structureArray[0];
                 if (structure == null) {
-                    arrstructure[0] = structure = Structure.newInstance(class_, this.share(l));
+                    structureArray[0] = structure = Structure.newInstance(clazz, this.share(l));
                 } else {
                     structure.useMemory(this, (int)l, true);
                 }
                 structure.write();
-                Structure[] arrstructure2 = structure.toArray(arrstructure.length);
-                for (int i = 1; i < arrstructure.length; ++i) {
-                    if (arrstructure[i] == null) {
-                        arrstructure[i] = arrstructure2[i];
+                Structure[] structureArray2 = structure.toArray(structureArray.length);
+                for (int i = 1; i < structureArray.length; ++i) {
+                    if (structureArray[i] == null) {
+                        structureArray[i] = structureArray2[i];
                     } else {
-                        arrstructure[i].useMemory(this, (int)(l + (long)(i * arrstructure[i].size())), true);
+                        structureArray[i].useMemory(this, (int)(l + (long)(i * structureArray[i].size())), true);
                     }
-                    arrstructure[i].write();
+                    structureArray[i].write();
                     if (null == null) continue;
                     return;
                 }
             }
-        } else if (NativeMapped.class.isAssignableFrom(class_)) {
-            NativeMapped[] arrnativeMapped = (NativeMapped[])object;
-            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
-            Class<?> class_2 = nativeMappedConverter.nativeType();
-            int n = Native.getNativeSize(object.getClass(), object) / arrnativeMapped.length;
-            for (int i = 0; i < arrnativeMapped.length; ++i) {
-                Object object2 = nativeMappedConverter.toNative(arrnativeMapped[i], new ToNativeContext());
-                this.setValue(l + (long)(i * n), object2, class_2);
+        } else if (NativeMapped.class.isAssignableFrom(clazz)) {
+            NativeMapped[] nativeMappedArray = (NativeMapped[])object;
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(clazz);
+            Class<?> clazz2 = nativeMappedConverter.nativeType();
+            int n = Native.getNativeSize(object.getClass(), object) / nativeMappedArray.length;
+            for (int i = 0; i < nativeMappedArray.length; ++i) {
+                Object object2 = nativeMappedConverter.toNative(nativeMappedArray[i], new ToNativeContext());
+                this.setValue(l + (long)(i * n), object2, clazz2);
                 if (1 >= 0) continue;
                 return;
             }
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing array of ").append(class_).append(" to memory not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Writing array of ").append(clazz).append(" to memory not supported")));
         }
     }
 
-    public void read(long l, int[] arrn, int n, int n2) {
-        Native.read(this, this.peer, l, arrn, n, n2);
+    public void read(long l, int[] nArray, int n, int n2) {
+        Native.read(this, this.peer, l, nArray, n, n2);
     }
 
     public double getDouble(long l) {
         return Native.getDouble(this, this.peer, l);
     }
 
-    public void read(long l, float[] arrf, int n, int n2) {
-        Native.read(this, this.peer, l, arrf, n, n2);
+    public void read(long l, float[] fArray, int n, int n2) {
+        Native.read(this, this.peer, l, fArray, n, n2);
     }
 
     @Deprecated
@@ -607,72 +607,72 @@ public class Pointer {
         return new Opaque(l, null);
     }
 
-    private void readArray(long l, Object object, Class<?> class_) {
+    private void readArray(long l, Object object, Class<?> clazz) {
         int n = 0;
         n = Array.getLength(object);
         Object object2 = object;
-        if (class_ == Byte.TYPE) {
+        if (clazz == Byte.TYPE) {
             this.read(l, (byte[])object2, 0, n);
-        } else if (class_ == Short.TYPE) {
+        } else if (clazz == Short.TYPE) {
             this.read(l, (short[])object2, 0, n);
-        } else if (class_ == Character.TYPE) {
+        } else if (clazz == Character.TYPE) {
             this.read(l, (char[])object2, 0, n);
-        } else if (class_ == Integer.TYPE) {
+        } else if (clazz == Integer.TYPE) {
             this.read(l, (int[])object2, 0, n);
-        } else if (class_ == Long.TYPE) {
+        } else if (clazz == Long.TYPE) {
             this.read(l, (long[])object2, 0, n);
-        } else if (class_ == Float.TYPE) {
+        } else if (clazz == Float.TYPE) {
             this.read(l, (float[])object2, 0, n);
-        } else if (class_ == Double.TYPE) {
+        } else if (clazz == Double.TYPE) {
             this.read(l, (double[])object2, 0, n);
-        } else if (Pointer.class.isAssignableFrom(class_)) {
+        } else if (Pointer.class.isAssignableFrom(clazz)) {
             this.read(l, (Pointer[])object2, 0, n);
-        } else if (Structure.class.isAssignableFrom(class_)) {
-            Structure[] arrstructure = (Structure[])object2;
-            if (Structure.ByReference.class.isAssignableFrom(class_)) {
-                Pointer[] arrpointer = this.getPointerArray(l, arrstructure.length);
-                for (int i = 0; i < arrstructure.length; ++i) {
-                    arrstructure[i] = Structure.updateStructureByReference(class_, arrstructure[i], arrpointer[i]);
+        } else if (Structure.class.isAssignableFrom(clazz)) {
+            Structure[] structureArray = (Structure[])object2;
+            if (Structure.ByReference.class.isAssignableFrom(clazz)) {
+                Pointer[] pointerArray = this.getPointerArray(l, structureArray.length);
+                for (int i = 0; i < structureArray.length; ++i) {
+                    structureArray[i] = Structure.updateStructureByReference(clazz, structureArray[i], pointerArray[i]);
                     if (!false) continue;
                     return;
                 }
             } else {
-                Structure structure = arrstructure[0];
+                Structure structure = structureArray[0];
                 if (structure == null) {
-                    structure = Structure.newInstance(class_, this.share(l));
+                    structure = Structure.newInstance(clazz, this.share(l));
                     structure.conditionalAutoRead();
-                    arrstructure[0] = structure;
+                    structureArray[0] = structure;
                 } else {
                     structure.useMemory(this, (int)l, true);
                     structure.read();
                 }
-                Structure[] arrstructure2 = structure.toArray(arrstructure.length);
-                for (int i = 1; i < arrstructure.length; ++i) {
-                    if (arrstructure[i] == null) {
-                        arrstructure[i] = arrstructure2[i];
+                Structure[] structureArray2 = structure.toArray(structureArray.length);
+                for (int i = 1; i < structureArray.length; ++i) {
+                    if (structureArray[i] == null) {
+                        structureArray[i] = structureArray2[i];
                         continue;
                     }
-                    arrstructure[i].useMemory(this, (int)(l + (long)(i * arrstructure[i].size())), true);
-                    arrstructure[i].read();
+                    structureArray[i].useMemory(this, (int)(l + (long)(i * structureArray[i].size())), true);
+                    structureArray[i].read();
                 }
             }
-        } else if (NativeMapped.class.isAssignableFrom(class_)) {
-            NativeMapped[] arrnativeMapped = (NativeMapped[])object2;
-            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(class_);
-            int n2 = Native.getNativeSize(object2.getClass(), object2) / arrnativeMapped.length;
-            for (int i = 0; i < arrnativeMapped.length; ++i) {
-                Object object3 = this.getValue(l + (long)(n2 * i), nativeMappedConverter.nativeType(), arrnativeMapped[i]);
-                arrnativeMapped[i] = (NativeMapped)nativeMappedConverter.fromNative(object3, new FromNativeContext(class_));
+        } else if (NativeMapped.class.isAssignableFrom(clazz)) {
+            NativeMapped[] nativeMappedArray = (NativeMapped[])object2;
+            NativeMappedConverter nativeMappedConverter = NativeMappedConverter.getInstance(clazz);
+            int n2 = Native.getNativeSize(object2.getClass(), object2) / nativeMappedArray.length;
+            for (int i = 0; i < nativeMappedArray.length; ++i) {
+                Object object3 = this.getValue(l + (long)(n2 * i), nativeMappedConverter.nativeType(), nativeMappedArray[i]);
+                nativeMappedArray[i] = (NativeMapped)nativeMappedConverter.fromNative(object3, new FromNativeContext(clazz));
                 if (!false) continue;
                 return;
             }
         } else {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading array of ").append(class_).append(" from memory not supported")));
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Reading array of ").append(clazz).append(" from memory not supported")));
         }
     }
 
-    public void write(long l, float[] arrf, int n, int n2) {
-        Native.write(this, this.peer, l, arrf, n, n2);
+    public void write(long l, float[] fArray, int n, int n2) {
+        Native.write(this, this.peer, l, fArray, n, n2);
     }
 
     public void setShort(long l, short s) {
@@ -680,9 +680,9 @@ public class Pointer {
     }
 
     public char[] getCharArray(long l, int n) {
-        char[] arrc = new char[n];
-        this.read(l, arrc, 0, n);
-        return arrc;
+        char[] cArray = new char[n];
+        this.read(l, cArray, 0, n);
+        return cArray;
     }
 
     public short getShort(long l) {
@@ -697,8 +697,8 @@ public class Pointer {
         Native.setLong(this, this.peer, l, l2);
     }
 
-    public void read(long l, byte[] arrby, int n, int n2) {
-        Native.read(this, this.peer, l, arrby, n, n2);
+    public void read(long l, byte[] byArray, int n, int n2) {
+        Native.read(this, this.peer, l, byArray, n, n2);
     }
 
     public static final Pointer createConstant(int n) {
@@ -710,9 +710,9 @@ public class Pointer {
     }
 
     public short[] getShortArray(long l, int n) {
-        short[] arrs = new short[n];
-        this.read(l, arrs, 0, n);
-        return arrs;
+        short[] sArray = new short[n];
+        this.read(l, sArray, 0, n);
+        return sArray;
     }
 
     private static class Opaque
@@ -720,12 +720,12 @@ public class Pointer {
         private final String MSG = String.valueOf(new StringBuilder().append("This pointer is opaque: ").append(this));
 
         @Override
-        public void read(long l, byte[] arrby, int n, int n2) {
+        public void read(long l, byte[] byArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long l, long[] arrl, int n, int n2) {
+        public void write(long l, long[] lArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -759,12 +759,12 @@ public class Pointer {
         }
 
         @Override
-        public void read(long l, double[] arrd, int n, int n2) {
+        public void read(long l, double[] dArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void read(long l, int[] arrn, int n, int n2) {
+        public void read(long l, int[] nArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -779,7 +779,7 @@ public class Pointer {
         }
 
         @Override
-        public void write(long l, int[] arrn, int n, int n2) {
+        public void write(long l, int[] nArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -794,7 +794,7 @@ public class Pointer {
         }
 
         @Override
-        public void read(long l, float[] arrf, int n, int n2) {
+        public void read(long l, float[] fArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -809,7 +809,7 @@ public class Pointer {
         }
 
         @Override
-        public void read(long l, short[] arrs, int n, int n2) {
+        public void read(long l, short[] sArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -824,12 +824,12 @@ public class Pointer {
         }
 
         @Override
-        public void write(long l, short[] arrs, int n, int n2) {
+        public void write(long l, short[] sArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long l, byte[] arrby, int n, int n2) {
+        public void write(long l, byte[] byArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -839,7 +839,7 @@ public class Pointer {
         }
 
         @Override
-        public void write(long l, float[] arrf, int n, int n2) {
+        public void write(long l, float[] fArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -849,7 +849,7 @@ public class Pointer {
         }
 
         @Override
-        public void read(long l, long[] arrl, int n, int n2) {
+        public void read(long l, long[] lArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -859,12 +859,12 @@ public class Pointer {
         }
 
         @Override
-        public void read(long l, Pointer[] arrpointer, int n, int n2) {
+        public void read(long l, Pointer[] pointerArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
         @Override
-        public void write(long l, char[] arrc, int n, int n2) {
+        public void write(long l, char[] cArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -879,7 +879,7 @@ public class Pointer {
         }
 
         @Override
-        public void write(long l, Pointer[] arrpointer, int n, int n2) {
+        public void write(long l, Pointer[] pointerArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -894,7 +894,7 @@ public class Pointer {
         }
 
         @Override
-        public void read(long l, char[] arrc, int n, int n2) {
+        public void read(long l, char[] cArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 
@@ -928,7 +928,7 @@ public class Pointer {
         }
 
         @Override
-        public void write(long l, double[] arrd, int n, int n2) {
+        public void write(long l, double[] dArray, int n, int n2) {
             throw new UnsupportedOperationException(this.MSG);
         }
 

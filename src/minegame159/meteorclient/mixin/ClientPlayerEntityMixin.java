@@ -1,27 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  com.mojang.authlib.GameProfile
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  net.minecraft.class_2596
- *  net.minecraft.class_2797
- *  net.minecraft.class_310
- *  net.minecraft.class_437
- *  net.minecraft.class_634
- *  net.minecraft.class_638
- *  net.minecraft.class_742
- *  net.minecraft.class_746
- *  org.spongepowered.asm.mixin.Final
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Shadow
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.At$Shift
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.Redirect
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfo
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 

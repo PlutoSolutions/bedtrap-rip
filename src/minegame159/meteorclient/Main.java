@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient;
 
@@ -31,7 +31,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] arrstring) {
+    public static void main(String[] stringArray) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }

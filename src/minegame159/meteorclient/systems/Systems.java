@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems;
 
@@ -57,8 +57,8 @@ public class Systems {
         Systems.load(null);
     }
 
-    public static <T extends System<?>> T get(Class<T> class_) {
-        return (T)systems.get(class_);
+    public static <T extends System<?>> T get(Class<T> clazz) {
+        return (T)systems.get(clazz);
     }
 
     public static void save(File file) {

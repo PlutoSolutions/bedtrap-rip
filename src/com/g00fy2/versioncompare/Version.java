@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  javax.annotation.Nonnull
- *  javax.annotation.Nullable
+ * Decompiled with CFR 0.151.
  */
 package com.g00fy2.versioncompare;
 
@@ -42,10 +38,10 @@ implements Comparable<Version> {
 
     private void initVersion() {
         if (this.originalString != null && VersionComparator.startsNumeric(this.originalString)) {
-            String[] arrstring = this.originalString.replaceAll("\\s", "").split("\\.");
+            String[] stringArray = this.originalString.replaceAll("\\s", "").split("\\.");
             boolean bl = false;
             StringBuilder stringBuilder = null;
-            for (String string : arrstring) {
+            for (String string : stringArray) {
                 if (bl) {
                     stringBuilder.append(".");
                     stringBuilder.append(string);

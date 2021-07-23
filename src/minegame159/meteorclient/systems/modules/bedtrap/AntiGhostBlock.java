@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_2596
- *  net.minecraft.class_2622
- *  net.minecraft.class_2626
- *  net.minecraft.class_2846
- *  net.minecraft.class_2846$class_2847
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.bedtrap;
 
@@ -85,11 +76,11 @@ extends Module {
     @EventHandler
     private void onPacket(PacketEvent.Receive receive) {
         class_2626 class_26262;
-        if (receive.packet instanceof class_2626 && this.blocks.containsKey((Object)(class_26262 = (class_2626)receive.packet).method_11309())) {
-            this.blocks.remove((Object)class_26262.method_11309());
+        if (receive.packet instanceof class_2626 && this.blocks.containsKey((class_26262 = (class_2626)receive.packet).method_11309())) {
+            this.blocks.remove(class_26262.method_11309());
         }
-        if (receive.packet instanceof class_2622 && this.blocks.containsKey((Object)(class_26262 = (class_2622)receive.packet).method_11293())) {
-            this.blocks.remove((Object)class_26262.method_11293());
+        if (receive.packet instanceof class_2622 && this.blocks.containsKey((class_26262 = (class_2622)receive.packet).method_11293())) {
+            this.blocks.remove(class_26262.method_11293());
         }
     }
 

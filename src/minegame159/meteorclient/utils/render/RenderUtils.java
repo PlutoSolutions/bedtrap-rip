@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.systems.RenderSystem
- *  net.minecraft.class_1297
- *  net.minecraft.class_1799
- *  net.minecraft.class_2338
- *  net.minecraft.class_243
- *  net.minecraft.class_2586
- *  net.minecraft.class_308
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.render;
 

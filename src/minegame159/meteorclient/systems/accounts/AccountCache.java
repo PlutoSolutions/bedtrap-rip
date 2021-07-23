@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2487
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.accounts;
 
@@ -29,15 +25,15 @@ implements ISerializable<AccountCache> {
 
     public boolean makeHead(String string) {
         try {
-            byte[] arrby = new byte[192];
-            int[] arrn = new int[4];
+            byte[] byArray = new byte[192];
+            int[] nArray = new int[4];
             BufferedImage bufferedImage = string.equals("steve") ? ImageIO.read(Utils.mc.method_1478().method_14486(new class_2960("meteor-client", "textures/steve.png")).method_14482()) : ImageIO.read(new URL(string));
             int n = 0;
             for (int i = 0; i < 8; ++i) {
                 for (int j = 0; j < 8; ++j) {
-                    bufferedImage.getData().getPixel(i, j, arrn);
+                    bufferedImage.getData().getPixel(i, j, nArray);
                     for (int k = 0; k < 3; ++k) {
-                        arrby[n] = (byte)arrn[k];
+                        byArray[n] = (byte)nArray[k];
                         ++n;
                         if (2 >= -1) continue;
                         return false;
@@ -48,7 +44,7 @@ implements ISerializable<AccountCache> {
                 if (0 < 3) continue;
                 return false;
             }
-            this.headTexture = new ByteTexture(8, 8, arrby, ByteTexture.Format.RGB, ByteTexture.Filter.Nearest, ByteTexture.Filter.Nearest);
+            this.headTexture = new ByteTexture(8, 8, byArray, ByteTexture.Format.RGB, ByteTexture.Filter.Nearest, ByteTexture.Filter.Nearest);
             return true;
         }
         catch (Exception exception) {

@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -16,9 +16,9 @@ extends ToNativeContext {
         return this.function;
     }
 
-    FunctionParameterContext(Function function, Object[] arrobject, int n) {
+    FunctionParameterContext(Function function, Object[] objectArray, int n) {
         this.function = function;
-        this.args = arrobject;
+        this.args = objectArray;
         this.index = n;
     }
 

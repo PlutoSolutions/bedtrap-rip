@@ -1,18 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1269
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1657
- *  net.minecraft.class_1671
- *  net.minecraft.class_1781
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1937
- *  net.minecraft.class_3417
- *  net.minecraft.class_3419
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.movement;
 
@@ -87,7 +74,7 @@ extends Module {
     }
 
     public boolean isFirework(class_1671 class_16712) {
-        return this.isActive() && this.fireworks.contains((Object)class_16712);
+        return this.isActive() && this.fireworks.contains(class_16712);
     }
 
     @EventHandler

@@ -1,19 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  net.minecraft.class_1268
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_1309
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2350
- *  net.minecraft.class_243
- *  net.minecraft.class_3965
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 
@@ -132,7 +118,7 @@ extends Module {
         this.targetBabies = this.sgGeneral.add(new BoolSetting.Builder().name("target-babies").description("If checked babies will also be killed.").defaultValue(false).build());
         this.tickInterval = this.sgGeneral.add(new IntSetting.Builder().name("tick-interval").defaultValue(5).build());
         this.rotate = this.sgGeneral.add(new BoolSetting.Builder().name("rotate").description("Automatically faces towards the animal roasted.").defaultValue(true).build());
-        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Entities to cook.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6093, class_1299.field_6085, class_1299.field_6115, class_1299.field_6132, class_1299.field_6140})).build());
+        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Entities to cook.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(class_1299.field_6093, class_1299.field_6085, class_1299.field_6115, class_1299.field_6132, class_1299.field_6140)).build());
         this.ticks = 0;
     }
 

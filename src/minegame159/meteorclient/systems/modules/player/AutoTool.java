@@ -1,23 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1743
- *  net.minecraft.class_1792
- *  net.minecraft.class_1794
- *  net.minecraft.class_1799
- *  net.minecraft.class_1810
- *  net.minecraft.class_1821
- *  net.minecraft.class_1829
- *  net.minecraft.class_1831
- *  net.minecraft.class_1887
- *  net.minecraft.class_1890
- *  net.minecraft.class_1893
- *  net.minecraft.class_1922
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2680
- *  net.minecraft.class_3614
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.player;
 
@@ -135,7 +117,7 @@ extends Module {
         } else {
             return false;
         }
-        return set2.contains((Object)class_26802.method_26207()) || set.contains((Object)class_26802.method_26204());
+        return set2.contains(class_26802.method_26207()) || set.contains(class_26802.method_26204());
     }
 
     @EventHandler

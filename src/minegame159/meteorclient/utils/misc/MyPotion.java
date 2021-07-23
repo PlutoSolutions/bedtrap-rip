@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1842
- *  net.minecraft.class_1844
- *  net.minecraft.class_1847
- *  net.minecraft.class_1935
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.misc;
 
@@ -62,9 +53,9 @@ public enum MyPotion {
     public final class_1792[] ingredients;
     public final class_1799 potion;
 
-    private MyPotion(class_1842 class_18422, class_1792 ... arrclass_1792) {
+    private MyPotion(class_1842 class_18422, class_1792 ... class_1792Array) {
         this.potion = class_1844.method_8061((class_1799)new class_1799((class_1935)class_1802.field_8574), (class_1842)class_18422);
-        this.ingredients = arrclass_1792;
+        this.ingredients = class_1792Array;
     }
 }
 

@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1922
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2350
- *  net.minecraft.class_259
- *  net.minecraft.class_2680
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -45,7 +36,7 @@ extends Module {
     public Xray() {
         super(Categories.Render, "xray", "Only renders specified blocks. Good for mining.");
         this.sgGeneral = this.settings.getDefaultGroup();
-        this.blocks = this.sgGeneral.add(new BlockListSetting.Builder().name("blocks").description("Blocks.").defaultValue(Arrays.asList(new class_2248[]{class_2246.field_10418, class_2246.field_10212, class_2246.field_10571, class_2246.field_10090, class_2246.field_10080, class_2246.field_10442, class_2246.field_10013, class_2246.field_23077, class_2246.field_10213, class_2246.field_22109})).onChanged(this::lambda$new$0).build());
+        this.blocks = this.sgGeneral.add(new BlockListSetting.Builder().name("blocks").description("Blocks.").defaultValue(Arrays.asList(class_2246.field_10418, class_2246.field_10212, class_2246.field_10571, class_2246.field_10090, class_2246.field_10080, class_2246.field_10442, class_2246.field_10013, class_2246.field_23077, class_2246.field_10213, class_2246.field_22109)).onChanged(this::lambda$new$0).build());
     }
 
     public boolean modifyDrawSide(class_2680 class_26802, class_1922 class_19222, class_2338 class_23382, class_2350 class_23502, boolean bl) {
@@ -75,7 +66,7 @@ extends Module {
     }
 
     public boolean isBlocked(class_2248 class_22482) {
-        return !this.blocks.get().contains((Object)class_22482);
+        return !this.blocks.get().contains(class_22482);
     }
 
     @EventHandler

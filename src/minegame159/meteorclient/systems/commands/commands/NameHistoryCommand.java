@@ -1,21 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.reflect.TypeToken
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  net.minecraft.class_124
- *  net.minecraft.class_2172
- *  net.minecraft.class_2558
- *  net.minecraft.class_2558$class_2559
- *  net.minecraft.class_2561
- *  net.minecraft.class_2568
- *  net.minecraft.class_2568$class_5247
- *  net.minecraft.class_2585
- *  net.minecraft.class_5251
- *  net.minecraft.class_640
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.commands.commands;
 

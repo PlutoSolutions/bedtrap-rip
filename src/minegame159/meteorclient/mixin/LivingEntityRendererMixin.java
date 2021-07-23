@@ -1,30 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1657
- *  net.minecraft.class_1921
- *  net.minecraft.class_270
- *  net.minecraft.class_2960
- *  net.minecraft.class_310
- *  net.minecraft.class_4587
- *  net.minecraft.class_4597
- *  net.minecraft.class_583
- *  net.minecraft.class_746
- *  net.minecraft.class_922
- *  org.jetbrains.annotations.Nullable
- *  org.lwjgl.opengl.GL11
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Shadow
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.ModifyArgs
- *  org.spongepowered.asm.mixin.injection.ModifyVariable
- *  org.spongepowered.asm.mixin.injection.Redirect
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfo
- *  org.spongepowered.asm.mixin.injection.invoke.arg.Args
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 

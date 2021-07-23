@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1297
- *  net.minecraft.class_1309
- *  net.minecraft.class_1657
- *  net.minecraft.class_1934
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.entity;
 
@@ -82,7 +76,7 @@ public class TargetUtils {
     }
 
     private static boolean lambda$getList$1(List list, int n, class_1297 class_12972) {
-        return list.indexOf((Object)class_12972) > n - 1;
+        return list.indexOf(class_12972) > n - 1;
     }
 
     private static boolean lambda$getPlayerTarget$2(double d, class_1297 class_12972) {

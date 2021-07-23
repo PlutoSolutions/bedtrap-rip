@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.files;
 
@@ -12,11 +12,11 @@ import java.io.OutputStream;
 
 public class StreamUtils {
     public static void copy(InputStream inputStream, OutputStream outputStream) {
-        byte[] arrby = new byte[512];
+        byte[] byArray = new byte[512];
         try {
             int n;
-            while ((n = inputStream.read(arrby)) != -1) {
-                outputStream.write(arrby, 0, n);
+            while ((n = inputStream.read(byArray)) != -1) {
+                outputStream.write(byArray, 0, n);
             }
         }
         catch (IOException iOException) {

@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -99,11 +99,11 @@ extends WeakReference<Callback> {
      * Enabled unnecessary exception pruning
      * Enabled aggressive exception aggregation
      */
-    private static Callback getCallback(Class<?> class_, Pointer pointer, boolean bl) {
+    private static Callback getCallback(Class<?> clazz, Pointer pointer, boolean bl) {
         if (pointer == null) {
             return null;
         }
-        if (!class_.isInterface()) {
+        if (!clazz.isInterface()) {
             throw new IllegalArgumentException("Callback type must be an interface");
         }
         Map<Callback, CallbackReference> map = bl ? directCallbackMap : callbackMap;
@@ -113,16 +113,16 @@ extends WeakReference<Callback> {
             Reference<Callback> reference = pointerCallbackMap.get(pointer);
             if (reference != null) {
                 callback = reference.get();
-                if (callback != null && !class_.isAssignableFrom(callback.getClass())) {
+                if (callback != null && !clazz.isAssignableFrom(callback.getClass())) {
                     throw new IllegalStateException(String.valueOf(new StringBuilder().append("Pointer ").append(pointer).append(" already mapped to ").append(callback).append(".\nNative code may be re-using a default function pointer, in which case you may need to use a common Callback class wherever the function pointer is reused.")));
                 }
                 return callback;
             }
-            int n = AltCallingConvention.class.isAssignableFrom(class_) ? 63 : 0;
-            HashMap<String, Object> hashMap = new HashMap<String, Object>(Native.getLibraryOptions(class_));
-            hashMap.put("invoking-method", CallbackReference.getCallbackMethod(class_));
+            int n = AltCallingConvention.class.isAssignableFrom(clazz) ? 63 : 0;
+            HashMap<String, Object> hashMap = new HashMap<String, Object>(Native.getLibraryOptions(clazz));
+            hashMap.put("invoking-method", CallbackReference.getCallbackMethod(clazz));
             NativeFunctionHandler nativeFunctionHandler = new NativeFunctionHandler(pointer, n, hashMap);
-            callback = (Callback)Proxy.newProxyInstance(class_.getClassLoader(), new Class[]{class_}, (InvocationHandler)nativeFunctionHandler);
+            callback = (Callback)Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, nativeFunctionHandler);
             map.remove(callback);
             pointerCallbackMap.put(pointer, new WeakReference<Callback>(callback));
             return callback;
@@ -175,13 +175,13 @@ extends WeakReference<Callback> {
         boolean bl2 = Platform.isPPC();
         if (bl) {
             object = CallbackReference.getCallbackMethod(callback);
-            Class<?>[] arrclass = ((Method)object).getParameterTypes();
-            for (int i = 0; i < arrclass.length; ++i) {
-                if (bl2 && (arrclass[i] == Float.TYPE || arrclass[i] == Double.TYPE)) {
+            Class<?>[] classArray = ((Method)object).getParameterTypes();
+            for (int i = 0; i < classArray.length; ++i) {
+                if (bl2 && (classArray[i] == Float.TYPE || classArray[i] == Double.TYPE)) {
                     bl = false;
                     break;
                 }
-                if (typeMapper == null || typeMapper.getFromNativeConverter(arrclass[i]) == null) continue;
+                if (typeMapper == null || typeMapper.getFromNativeConverter(classArray[i]) == null) continue;
                 bl = false;
                 break;
             }
@@ -193,44 +193,44 @@ extends WeakReference<Callback> {
         long l = 0L;
         if (bl) {
             this.method = CallbackReference.getCallbackMethod(callback);
-            Class<?>[] arrclass = this.method.getParameterTypes();
-            Class<?> class_ = this.method.getReturnType();
+            Class<?>[] classArray = this.method.getParameterTypes();
+            Class<?> clazz = this.method.getReturnType();
             int n2 = 1;
             if (callback instanceof DLLCallback) {
                 n2 |= 2;
             }
-            l = Native.createNativeCallback(callback, this.method, arrclass, class_, n, n2, (String)object);
+            l = Native.createNativeCallback(callback, this.method, classArray, clazz, n, n2, (String)object);
         } else {
             int n3;
             Object object2;
             this.proxy = callback instanceof CallbackProxy ? (CallbackProxy)callback : new DefaultCallbackProxy(this, CallbackReference.getCallbackMethod(callback), typeMapper, (String)object);
-            Class<?>[] arrclass = this.proxy.getParameterTypes();
-            Class<?> class_ = this.proxy.getReturnType();
+            Class<?>[] classArray = this.proxy.getParameterTypes();
+            Class<?> clazz = this.proxy.getReturnType();
             if (typeMapper != null) {
-                for (int i = 0; i < arrclass.length; ++i) {
-                    object2 = typeMapper.getFromNativeConverter(arrclass[i]);
+                for (int i = 0; i < classArray.length; ++i) {
+                    object2 = typeMapper.getFromNativeConverter(classArray[i]);
                     if (object2 == null) continue;
-                    arrclass[i] = object2.nativeType();
+                    classArray[i] = object2.nativeType();
                     if (null == null) continue;
                     throw null;
                 }
-                ToNativeConverter toNativeConverter = typeMapper.getToNativeConverter(class_);
+                ToNativeConverter toNativeConverter = typeMapper.getToNativeConverter(clazz);
                 if (toNativeConverter != null) {
-                    class_ = toNativeConverter.nativeType();
+                    clazz = toNativeConverter.nativeType();
                 }
             }
-            for (n3 = 0; n3 < arrclass.length; ++n3) {
-                arrclass[n3] = this.getNativeType(arrclass[n3]);
-                if (CallbackReference.isAllowableNativeType(arrclass[n3])) continue;
-                object2 = String.valueOf(new StringBuilder().append("Callback argument ").append(arrclass[n3]).append(" requires custom type conversion"));
+            for (n3 = 0; n3 < classArray.length; ++n3) {
+                classArray[n3] = this.getNativeType(classArray[n3]);
+                if (CallbackReference.isAllowableNativeType(classArray[n3])) continue;
+                object2 = String.valueOf(new StringBuilder().append("Callback argument ").append(classArray[n3]).append(" requires custom type conversion"));
                 throw new IllegalArgumentException((String)object2);
             }
-            if (!CallbackReference.isAllowableNativeType(class_ = this.getNativeType(class_))) {
-                String string = String.valueOf(new StringBuilder().append("Callback return type ").append(class_).append(" requires custom type conversion"));
+            if (!CallbackReference.isAllowableNativeType(clazz = this.getNativeType(clazz))) {
+                String string = String.valueOf(new StringBuilder().append("Callback return type ").append(clazz).append(" requires custom type conversion"));
                 throw new IllegalArgumentException(string);
             }
             n3 = callback instanceof DLLCallback ? 2 : 0;
-            l = Native.createNativeCallback(this.proxy, PROXY_CALLBACK_METHOD, arrclass, class_, n, n3, (String)object);
+            l = Native.createNativeCallback(this.proxy, PROXY_CALLBACK_METHOD, classArray, clazz, n, n3, (String)object);
         }
         this.cbstruct = l != 0L ? new Pointer(l) : null;
         allocatedMemory.put(this, new WeakReference<CallbackReference>(this));
@@ -287,53 +287,53 @@ extends WeakReference<Callback> {
         return callbackReference.getCallback();
     }
 
-    public static Callback getCallback(Class<?> class_, Pointer pointer) {
-        return CallbackReference.getCallback(class_, pointer, false);
+    public static Callback getCallback(Class<?> clazz, Pointer pointer) {
+        return CallbackReference.getCallback(clazz, pointer, false);
     }
 
     static Pointer access$100(Object object, boolean bl) {
         return CallbackReference.getNativeString(object, bl);
     }
 
-    static Class<?> findCallbackClass(Class<?> class_) {
-        if (!Callback.class.isAssignableFrom(class_)) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(class_.getName()).append(" is not derived from com.sun.jna.Callback")));
+    static Class<?> findCallbackClass(Class<?> clazz) {
+        if (!Callback.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append(clazz.getName()).append(" is not derived from com.sun.jna.Callback")));
         }
-        if (class_.isInterface()) {
-            return class_;
+        if (clazz.isInterface()) {
+            return clazz;
         }
-        Class<?>[] arrclass = class_.getInterfaces();
-        for (int i = 0; i < arrclass.length; ++i) {
-            if (!Callback.class.isAssignableFrom(arrclass[i])) continue;
+        Class<?>[] classArray = clazz.getInterfaces();
+        for (int i = 0; i < classArray.length; ++i) {
+            if (!Callback.class.isAssignableFrom(classArray[i])) continue;
             try {
-                CallbackReference.getCallbackMethod(arrclass[i]);
-                return arrclass[i];
+                CallbackReference.getCallbackMethod(classArray[i]);
+                return classArray[i];
             }
             catch (IllegalArgumentException illegalArgumentException) {
                 break;
             }
         }
-        if (Callback.class.isAssignableFrom(class_.getSuperclass())) {
-            return CallbackReference.findCallbackClass(class_.getSuperclass());
+        if (Callback.class.isAssignableFrom(clazz.getSuperclass())) {
+            return CallbackReference.findCallbackClass(clazz.getSuperclass());
         }
-        return class_;
+        return clazz;
     }
 
-    private Class<?> getNativeType(Class<?> class_) {
-        if (Structure.class.isAssignableFrom(class_)) {
-            Structure.validate(class_);
-            if (!Structure.ByValue.class.isAssignableFrom(class_)) {
+    private Class<?> getNativeType(Class<?> clazz) {
+        if (Structure.class.isAssignableFrom(clazz)) {
+            Structure.validate(clazz);
+            if (!Structure.ByValue.class.isAssignableFrom(clazz)) {
                 return Pointer.class;
             }
         } else {
-            if (NativeMapped.class.isAssignableFrom(class_)) {
-                return NativeMappedConverter.getInstance(class_).nativeType();
+            if (NativeMapped.class.isAssignableFrom(clazz)) {
+                return NativeMappedConverter.getInstance(clazz).nativeType();
             }
-            if (class_ == String.class || class_ == WString.class || class_ == String[].class || class_ == WString[].class || Callback.class.isAssignableFrom(class_)) {
+            if (clazz == String.class || clazz == WString.class || clazz == String[].class || clazz == WString[].class || Callback.class.isAssignableFrom(clazz)) {
                 return Pointer.class;
             }
         }
-        return class_;
+        return clazz;
     }
 
     public Pointer getTrampoline() {
@@ -343,23 +343,23 @@ extends WeakReference<Callback> {
         return this.trampoline;
     }
 
-    private static Method getCallbackMethod(Class<?> class_) {
-        Method[] arrmethod = class_.getDeclaredMethods();
-        Method[] arrmethod2 = class_.getMethods();
-        HashSet<Method> hashSet = new HashSet<Method>(Arrays.asList(arrmethod));
-        hashSet.retainAll(Arrays.asList(arrmethod2));
-        Method[] arrmethod3 = hashSet.iterator();
-        while (arrmethod3.hasNext()) {
-            Method method = (Method)arrmethod3.next();
+    private static Method getCallbackMethod(Class<?> clazz) {
+        Method[] methodArray = clazz.getDeclaredMethods();
+        Method[] methodArray2 = clazz.getMethods();
+        HashSet<Method> hashSet = new HashSet<Method>(Arrays.asList(methodArray));
+        hashSet.retainAll(Arrays.asList(methodArray2));
+        Method[] methodArray3 = hashSet.iterator();
+        while (methodArray3.hasNext()) {
+            Method method = (Method)methodArray3.next();
             if (!Callback.FORBIDDEN_NAMES.contains(method.getName())) continue;
-            arrmethod3.remove();
+            methodArray3.remove();
         }
-        arrmethod3 = hashSet.toArray(new Method[hashSet.size()]);
-        if (arrmethod3.length == 1) {
-            return CallbackReference.checkMethod(arrmethod3[0]);
+        methodArray3 = hashSet.toArray(new Method[hashSet.size()]);
+        if (methodArray3.length == 1) {
+            return CallbackReference.checkMethod(methodArray3[0]);
         }
-        for (int i = 0; i < arrmethod3.length; ++i) {
-            Method method = arrmethod3[i];
+        for (int i = 0; i < methodArray3.length; ++i) {
+            Method method = methodArray3[i];
             if (!"callback".equals(method.getName())) continue;
             return CallbackReference.checkMethod(method);
         }
@@ -386,8 +386,8 @@ extends WeakReference<Callback> {
         initializers = new WeakHashMap<Callback, CallbackThreadInitializer>();
     }
 
-    private static boolean isAllowableNativeType(Class<?> class_) {
-        return class_ == Void.TYPE || class_ == Void.class || class_ == Boolean.TYPE || class_ == Boolean.class || class_ == Byte.TYPE || class_ == Byte.class || class_ == Short.TYPE || class_ == Short.class || class_ == Character.TYPE || class_ == Character.class || class_ == Integer.TYPE || class_ == Integer.class || class_ == Long.TYPE || class_ == Long.class || class_ == Float.TYPE || class_ == Float.class || class_ == Double.TYPE || class_ == Double.class || Structure.ByValue.class.isAssignableFrom(class_) && Structure.class.isAssignableFrom(class_) || Pointer.class.isAssignableFrom(class_);
+    private static boolean isAllowableNativeType(Class<?> clazz) {
+        return clazz == Void.TYPE || clazz == Void.class || clazz == Boolean.TYPE || clazz == Boolean.class || clazz == Byte.TYPE || clazz == Byte.class || clazz == Short.TYPE || clazz == Short.class || clazz == Character.TYPE || clazz == Character.class || clazz == Integer.TYPE || clazz == Integer.class || clazz == Long.TYPE || clazz == Long.class || clazz == Float.TYPE || clazz == Float.class || clazz == Double.TYPE || clazz == Double.class || Structure.ByValue.class.isAssignableFrom(clazz) && Structure.class.isAssignableFrom(clazz) || Pointer.class.isAssignableFrom(clazz);
     }
 
     private static Method checkMethod(Method method) {
@@ -404,28 +404,28 @@ extends WeakReference<Callback> {
         private final Function function;
 
         @Override
-        public Object invoke(Object object, Method method, Object[] arrobject) throws Throwable {
+        public Object invoke(Object object, Method method, Object[] objectArray) throws Throwable {
             if (Library.Handler.OBJECT_TOSTRING.equals(method)) {
                 String string = String.valueOf(new StringBuilder().append("Proxy interface to ").append(this.function));
                 Method method2 = (Method)this.options.get("invoking-method");
-                Class<?> class_ = CallbackReference.findCallbackClass(method2.getDeclaringClass());
-                string = String.valueOf(new StringBuilder().append(string).append(" (").append(class_.getName()).append(")"));
+                Class<?> clazz = CallbackReference.findCallbackClass(method2.getDeclaringClass());
+                string = String.valueOf(new StringBuilder().append(string).append(" (").append(clazz.getName()).append(")"));
                 return string;
             }
             if (Library.Handler.OBJECT_HASHCODE.equals(method)) {
                 return this.hashCode();
             }
             if (Library.Handler.OBJECT_EQUALS.equals(method)) {
-                Object object2 = arrobject[0];
+                Object object2 = objectArray[0];
                 if (object2 != null && Proxy.isProxyClass(object2.getClass())) {
                     return Function.valueOf(Proxy.getInvocationHandler(object2) == this);
                 }
                 return Boolean.FALSE;
             }
             if (Function.isVarArgs(method)) {
-                arrobject = Function.concatenateVarArgs(arrobject);
+                objectArray = Function.concatenateVarArgs(objectArray);
             }
-            return this.function.invoke(method.getReturnType(), arrobject, this.options);
+            return this.function.invoke(method.getReturnType(), objectArray, this.options);
         }
 
         public NativeFunctionHandler(Pointer pointer, int n, Map<String, ?> map) {
@@ -451,19 +451,19 @@ extends WeakReference<Callback> {
             return this.callbackMethod.getReturnType();
         }
 
-        private Object invokeCallback(Object[] arrobject) {
+        private Object invokeCallback(Object[] objectArray) {
             Object object;
-            Class<?>[] arrclass = this.callbackMethod.getParameterTypes();
-            Object[] arrobject2 = new Object[arrobject.length];
-            for (int i = 0; i < arrobject.length; ++i) {
-                object = arrclass[i];
-                Object object2 = arrobject[i];
+            Class<?>[] classArray = this.callbackMethod.getParameterTypes();
+            Object[] objectArray2 = new Object[objectArray.length];
+            for (int i = 0; i < objectArray.length; ++i) {
+                object = classArray[i];
+                Object object2 = objectArray[i];
                 if (this.fromNative[i] != null) {
-                    CallbackParameterContext callbackParameterContext = new CallbackParameterContext((Class<?>)object, this.callbackMethod, arrobject, i);
-                    arrobject2[i] = this.fromNative[i].fromNative(object2, callbackParameterContext);
+                    CallbackParameterContext callbackParameterContext = new CallbackParameterContext((Class<?>)object, this.callbackMethod, objectArray, i);
+                    objectArray2[i] = this.fromNative[i].fromNative(object2, callbackParameterContext);
                     continue;
                 }
-                arrobject2[i] = this.convertArgument(object2, (Class<?>)object);
+                objectArray2[i] = this.convertArgument(object2, (Class<?>)object);
                 if (3 >= 0) continue;
                 return null;
             }
@@ -471,7 +471,7 @@ extends WeakReference<Callback> {
             object = this.getCallback();
             if (object != null) {
                 try {
-                    object3 = this.convertResult(this.callbackMethod.invoke(object, arrobject2));
+                    object3 = this.convertResult(this.callbackMethod.invoke(object, objectArray2));
                 }
                 catch (IllegalArgumentException illegalArgumentException) {
                     Native.getCallbackExceptionHandler().uncaughtException((Callback)object, illegalArgumentException);
@@ -483,42 +483,42 @@ extends WeakReference<Callback> {
                     Native.getCallbackExceptionHandler().uncaughtException((Callback)object, invocationTargetException.getTargetException());
                 }
             }
-            for (int i = 0; i < arrobject2.length; ++i) {
-                if (!(arrobject2[i] instanceof Structure) || arrobject2[i] instanceof Structure.ByValue) continue;
-                ((Structure)arrobject2[i]).autoWrite();
+            for (int i = 0; i < objectArray2.length; ++i) {
+                if (!(objectArray2[i] instanceof Structure) || objectArray2[i] instanceof Structure.ByValue) continue;
+                ((Structure)objectArray2[i]).autoWrite();
                 if (2 != 0) continue;
                 return null;
             }
             return object3;
         }
 
-        private Object convertArgument(Object object, Class<?> class_) {
+        private Object convertArgument(Object object, Class<?> clazz) {
             if (object instanceof Pointer) {
-                if (class_ == String.class) {
+                if (clazz == String.class) {
                     object = ((Pointer)object).getString(0L, this.encoding);
-                } else if (class_ == WString.class) {
+                } else if (clazz == WString.class) {
                     object = new WString(((Pointer)object).getWideString(0L));
-                } else if (class_ == String[].class) {
+                } else if (clazz == String[].class) {
                     object = ((Pointer)object).getStringArray(0L, this.encoding);
-                } else if (class_ == WString[].class) {
+                } else if (clazz == WString[].class) {
                     object = ((Pointer)object).getWideStringArray(0L);
-                } else if (Callback.class.isAssignableFrom(class_)) {
-                    object = CallbackReference.getCallback(class_, (Pointer)object);
-                } else if (Structure.class.isAssignableFrom(class_)) {
-                    if (Structure.ByValue.class.isAssignableFrom(class_)) {
-                        Structure structure = Structure.newInstance(class_);
-                        byte[] arrby = new byte[structure.size()];
-                        ((Pointer)object).read(0L, arrby, 0, arrby.length);
-                        structure.getPointer().write(0L, arrby, 0, arrby.length);
+                } else if (Callback.class.isAssignableFrom(clazz)) {
+                    object = CallbackReference.getCallback(clazz, (Pointer)object);
+                } else if (Structure.class.isAssignableFrom(clazz)) {
+                    if (Structure.ByValue.class.isAssignableFrom(clazz)) {
+                        Structure structure = Structure.newInstance(clazz);
+                        byte[] byArray = new byte[structure.size()];
+                        ((Pointer)object).read(0L, byArray, 0, byArray.length);
+                        structure.getPointer().write(0L, byArray, 0, byArray.length);
                         structure.read();
                         object = structure;
                     } else {
-                        Structure structure = Structure.newInstance(class_, (Pointer)object);
+                        Structure structure = Structure.newInstance(clazz, (Pointer)object);
                         structure.conditionalAutoRead();
                         object = structure;
                     }
                 }
-            } else if ((Boolean.TYPE == class_ || Boolean.class == class_) && object instanceof Number) {
+            } else if ((Boolean.TYPE == clazz || Boolean.class == clazz) && object instanceof Number) {
                 object = Function.valueOf(((Number)object).intValue() != 0);
             }
             return object;
@@ -531,25 +531,25 @@ extends WeakReference<Callback> {
             if (object == null) {
                 return null;
             }
-            Class<?> class_ = object.getClass();
-            if (Structure.class.isAssignableFrom(class_)) {
-                if (Structure.ByValue.class.isAssignableFrom(class_)) {
+            Class<?> clazz = object.getClass();
+            if (Structure.class.isAssignableFrom(clazz)) {
+                if (Structure.ByValue.class.isAssignableFrom(clazz)) {
                     return object;
                 }
                 return ((Structure)object).getPointer();
             }
-            if (class_ == Boolean.TYPE || class_ == Boolean.class) {
+            if (clazz == Boolean.TYPE || clazz == Boolean.class) {
                 return Boolean.TRUE.equals(object) ? Function.INTEGER_TRUE : Function.INTEGER_FALSE;
             }
-            if (class_ == String.class || class_ == WString.class) {
-                return CallbackReference.access$100(object, class_ == WString.class);
+            if (clazz == String.class || clazz == WString.class) {
+                return CallbackReference.access$100(object, clazz == WString.class);
             }
-            if (class_ == String[].class || class_ == WString.class) {
-                StringArray stringArray = class_ == String[].class ? new StringArray((String[])object, this.encoding) : new StringArray((WString[])object);
+            if (clazz == String[].class || clazz == WString.class) {
+                StringArray stringArray = clazz == String[].class ? new StringArray((String[])object, this.encoding) : new StringArray((WString[])object);
                 allocations.put(object, stringArray);
                 return stringArray;
             }
-            if (Callback.class.isAssignableFrom(class_)) {
+            if (Callback.class.isAssignableFrom(clazz)) {
                 return CallbackReference.getFunctionPointer((Callback)object);
             }
             return object;
@@ -564,21 +564,21 @@ extends WeakReference<Callback> {
             this.this$0 = callbackReference;
             this.callbackMethod = method;
             this.encoding = string;
-            Class<?>[] arrclass = method.getParameterTypes();
-            Class<?> class_ = method.getReturnType();
-            this.fromNative = new FromNativeConverter[arrclass.length];
-            if (NativeMapped.class.isAssignableFrom(class_)) {
-                this.toNative = NativeMappedConverter.getInstance(class_);
+            Class<?>[] classArray = method.getParameterTypes();
+            Class<?> clazz = method.getReturnType();
+            this.fromNative = new FromNativeConverter[classArray.length];
+            if (NativeMapped.class.isAssignableFrom(clazz)) {
+                this.toNative = NativeMappedConverter.getInstance(clazz);
             } else if (typeMapper != null) {
-                this.toNative = typeMapper.getToNativeConverter(class_);
+                this.toNative = typeMapper.getToNativeConverter(clazz);
             }
             for (int i = 0; i < this.fromNative.length; ++i) {
-                if (NativeMapped.class.isAssignableFrom(arrclass[i])) {
-                    this.fromNative[i] = new NativeMappedConverter(arrclass[i]);
+                if (NativeMapped.class.isAssignableFrom(classArray[i])) {
+                    this.fromNative[i] = new NativeMappedConverter(classArray[i]);
                     continue;
                 }
                 if (typeMapper == null) continue;
-                this.fromNative[i] = typeMapper.getFromNativeConverter(arrclass[i]);
+                this.fromNative[i] = typeMapper.getFromNativeConverter(classArray[i]);
                 if (!false) continue;
                 throw null;
             }
@@ -593,9 +593,9 @@ extends WeakReference<Callback> {
         }
 
         @Override
-        public Object callback(Object[] arrobject) {
+        public Object callback(Object[] objectArray) {
             try {
-                return this.invokeCallback(arrobject);
+                return this.invokeCallback(objectArray);
             }
             catch (Throwable throwable) {
                 Native.getCallbackExceptionHandler().uncaughtException(this.getCallback(), throwable);

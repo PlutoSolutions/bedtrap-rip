@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2561
- *  net.minecraft.class_345
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -47,8 +43,8 @@ extends Module {
             return;
         }
         class_345 class_3452 = bossText.bossBar;
-        Integer n = barMap.get((Object)class_3452);
-        barMap.remove((Object)class_3452);
+        Integer n = barMap.get(class_3452);
+        barMap.remove(class_3452);
         if (n != null && !this.hideName.get().booleanValue()) {
             bossText.name = bossText.name.method_27662().method_27693(String.valueOf(new StringBuilder().append(" x").append(n)));
         }

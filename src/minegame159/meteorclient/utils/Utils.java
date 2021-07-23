@@ -1,50 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.systems.RenderSystem
- *  it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
- *  it.unimi.dsi.fastutil.objects.Object2IntArrayMap
- *  it.unimi.dsi.fastutil.objects.Object2IntMap
- *  net.minecraft.class_1291
- *  net.minecraft.class_1747
- *  net.minecraft.class_1753
- *  net.minecraft.class_1764
- *  net.minecraft.class_1767
- *  net.minecraft.class_1771
- *  net.minecraft.class_1772
- *  net.minecraft.class_1776
- *  net.minecraft.class_1779
- *  net.minecraft.class_1787
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1803
- *  net.minecraft.class_1823
- *  net.minecraft.class_1828
- *  net.minecraft.class_1835
- *  net.minecraft.class_1887
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2378
- *  net.minecraft.class_243
- *  net.minecraft.class_2480
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
- *  net.minecraft.class_310
- *  net.minecraft.class_437
- *  net.minecraft.class_442
- *  net.minecraft.class_500
- *  net.minecraft.class_526
- *  net.minecraft.class_641
- *  net.minecraft.class_642
- *  org.apache.commons.io.output.ByteArrayOutputStream
- *  org.apache.commons.lang3.StringUtils
- *  org.apache.commons.lang3.SystemUtils
- *  org.lwjgl.glfw.GLFW
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils;
 
@@ -140,8 +95,8 @@ public class Utils {
         if (class_17672 == null) {
             return WHITE;
         }
-        float[] arrf = class_17672.method_7787();
-        return new Color(arrf[0], arrf[1], arrf[2], 1.0f);
+        float[] fArray = class_17672.method_7787();
+        return new Color(fArray[0], fArray[1], fArray[2], 1.0f);
     }
 
     static {
@@ -156,9 +111,9 @@ public class Utils {
     }
 
     @SafeVarargs
-    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... arrT) {
+    public static <T> Object2BooleanOpenHashMap<T> asObject2BooleanOpenHashMap(T ... TArray) {
         HashMap<T, Boolean> hashMap = new HashMap<T, Boolean>();
-        for (T t : arrT) {
+        for (T t : TArray) {
             hashMap.put(t, true);
             if (-1 <= 0) continue;
             return null;
@@ -210,22 +165,22 @@ public class Utils {
         RenderSystem.translatef((float)0.0f, (float)0.0f, (float)-2000.0f);
     }
 
-    public static void getItemsInContainerItem(class_1799 class_17992, class_1799[] arrclass_1799) {
+    public static void getItemsInContainerItem(class_1799 class_17992, class_1799[] class_1799Array) {
         class_2487 class_24872;
         if (class_17992.method_7909() == class_1802.field_8466) {
             for (int i = 0; i < EChestMemory.ITEMS.size(); ++i) {
-                arrclass_1799[i] = (class_1799)EChestMemory.ITEMS.get(i);
+                class_1799Array[i] = (class_1799)EChestMemory.ITEMS.get(i);
                 if (-4 < 0) continue;
                 return;
             }
             return;
         }
-        Arrays.fill((Object[])arrclass_1799, (Object)class_1799.field_8037);
+        Arrays.fill(class_1799Array, class_1799.field_8037);
         class_2487 class_24873 = class_17992.method_7969();
         if (class_24873 != null && class_24873.method_10545("BlockEntityTag") && (class_24872 = class_24873.method_10562("BlockEntityTag")).method_10545("Items")) {
             class_2499 class_24992 = (class_2499)class_24872.method_10580("Items");
             for (int i = 0; i < class_24992.size(); ++i) {
-                arrclass_1799[class_24992.method_10602((int)i).method_10571((String)"Slot")] = class_1799.method_7915((class_2487)class_24992.method_10602(i));
+                class_1799Array[class_24992.method_10602((int)i).method_10571((String)"Slot")] = class_1799.method_7915((class_2487)class_24992.method_10602(i));
                 if (1 > 0) continue;
                 return;
             }
@@ -500,9 +455,9 @@ public class Utils {
             int n;
             FileInputStream fileInputStream = new FileInputStream(file);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            byte[] arrby = new byte[256];
-            while ((n = ((InputStream)fileInputStream).read(arrby)) > 0) {
-                byteArrayOutputStream.write(arrby, 0, n);
+            byte[] byArray = new byte[256];
+            while ((n = ((InputStream)fileInputStream).read(byArray)) > 0) {
+                byteArrayOutputStream.write(byArray, 0, n);
             }
             ((InputStream)fileInputStream).close();
             return byteArrayOutputStream.toByteArray();
@@ -574,9 +529,9 @@ public class Utils {
     }
 
     public static int search(String string, String string2) {
-        String[] arrstring;
+        String[] stringArray;
         int n = 0;
-        for (String string3 : arrstring = string2.split(" ")) {
+        for (String string3 : stringArray = string2.split(" ")) {
             if (!StringUtils.containsIgnoreCase((CharSequence)string, (CharSequence)string3)) continue;
             ++n;
             if (2 > 1) continue;
@@ -589,13 +544,13 @@ public class Utils {
         return new class_243((double)class_23382.method_10263(), (double)class_23382.method_10264(), (double)class_23382.method_10260());
     }
 
-    public static boolean openContainer(class_1799 class_17992, class_1799[] arrclass_1799, boolean bl) {
+    public static boolean openContainer(class_1799 class_17992, class_1799[] class_1799Array, boolean bl) {
         if (Utils.hasItems(class_17992) || class_17992.method_7909() == class_1802.field_8466) {
-            Utils.getItemsInContainerItem(class_17992, arrclass_1799);
+            Utils.getItemsInContainerItem(class_17992, class_1799Array);
             if (bl) {
-                MeteorClient.INSTANCE.screenToOpen = new PeekScreen(class_17992, arrclass_1799);
+                MeteorClient.INSTANCE.screenToOpen = new PeekScreen(class_17992, class_1799Array);
             } else {
-                mc.method_1507((class_437)new PeekScreen(class_17992, arrclass_1799));
+                mc.method_1507((class_437)new PeekScreen(class_17992, class_1799Array));
             }
             return true;
         }

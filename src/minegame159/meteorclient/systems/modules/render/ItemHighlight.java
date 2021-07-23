@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -33,7 +29,7 @@ extends Module {
     }
 
     public int getColor(class_1799 class_17992) {
-        if (this.items.get().contains((Object)class_17992.method_7909()) && this.isActive()) {
+        if (this.items.get().contains(class_17992.method_7909()) && this.isActive()) {
             return this.color.get().getPacked();
         }
         return -1;

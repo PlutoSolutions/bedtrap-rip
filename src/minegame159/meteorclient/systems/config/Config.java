@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.fabricmc.loader.api.FabricLoader
- *  net.fabricmc.loader.api.ModContainer
- *  net.fabricmc.loader.api.metadata.ModMetadata
- *  net.minecraft.class_2487
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.config;
 

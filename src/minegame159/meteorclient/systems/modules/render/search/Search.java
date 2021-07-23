@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.longs.Long2ObjectMap
- *  it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap
- *  net.minecraft.class_1923
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2338$class_2339
- *  net.minecraft.class_2791
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render.search;
 
@@ -65,7 +56,7 @@ extends Module {
     }
 
     SBlockData getBlockData(class_2248 class_22482) {
-        SBlockData sBlockData = this.blockConfigs.get().get((Object)class_22482);
+        SBlockData sBlockData = this.blockConfigs.get().get(class_22482);
         return sBlockData == null ? this.defaultBlockConfig.get() : sBlockData;
     }
 
@@ -190,8 +181,8 @@ extends Module {
         int n4 = n >> 4;
         int n5 = n3 >> 4;
         long l = class_1923.method_8331((int)n4, (int)n5);
-        boolean bl2 = this.blocks.get().contains((Object)blockUpdateEvent.newState.method_26204()) && !this.blocks.get().contains((Object)blockUpdateEvent.oldState.method_26204());
-        boolean bl3 = bl = !bl2 && !this.blocks.get().contains((Object)blockUpdateEvent.newState.method_26204()) && this.blocks.get().contains((Object)blockUpdateEvent.oldState.method_26204());
+        boolean bl2 = this.blocks.get().contains(blockUpdateEvent.newState.method_26204()) && !this.blocks.get().contains(blockUpdateEvent.oldState.method_26204());
+        boolean bl3 = bl = !bl2 && !this.blocks.get().contains(blockUpdateEvent.newState.method_26204()) && this.blocks.get().contains(blockUpdateEvent.oldState.method_26204());
         if (bl2 || bl) {
             MeteorExecutor.execute(() -> this.lambda$onBlockUpdate$2(l, n4, n5, n, n2, n3, bl2));
         }

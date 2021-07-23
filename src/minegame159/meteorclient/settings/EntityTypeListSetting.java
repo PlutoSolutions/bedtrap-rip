@@ -1,16 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
- *  net.minecraft.class_1299
- *  net.minecraft.class_2378
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -98,10 +87,10 @@ extends Setting<Object2BooleanMap<class_1299<?>>> {
 
     @Override
     protected Object2BooleanMap<class_1299<?>> parseImpl(String string) {
-        String[] arrstring = string.split(",");
-        Object2BooleanOpenHashMap object2BooleanOpenHashMap = new Object2BooleanOpenHashMap(arrstring.length);
+        String[] stringArray = string.split(",");
+        Object2BooleanOpenHashMap object2BooleanOpenHashMap = new Object2BooleanOpenHashMap(stringArray.length);
         try {
-            for (String string2 : arrstring) {
+            for (String string2 : stringArray) {
                 class_1299 class_12992 = (class_1299)EntityTypeListSetting.parseId(class_2378.field_11145, string2);
                 if (class_12992 == null) continue;
                 object2BooleanOpenHashMap.put((Object)class_12992, true);

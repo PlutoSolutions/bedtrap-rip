@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.ObjectOpenHashSet
- *  net.minecraft.class_2248
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render.search;
 
@@ -42,7 +38,7 @@ public class SGroup {
         if (objectOpenHashSet.size() <= 1) {
             return;
         }
-        Object object = (Object)new ObjectOpenHashSet(this.blocks);
+        Object object = new ObjectOpenHashSet(this.blocks);
         ArrayDeque<SBlock> arrayDeque = new ArrayDeque<SBlock>();
         arrayDeque.offer(this.blocks.get(0));
         object.remove(this.blocks.get(0));

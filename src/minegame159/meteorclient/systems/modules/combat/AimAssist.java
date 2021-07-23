@@ -1,12 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_1657
- *  net.minecraft.class_3532
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.combat;
 
@@ -54,7 +47,7 @@ extends Module {
         this.sgGeneral = this.settings.getDefaultGroup();
         this.sgSpeed = this.settings.createGroup("Aim Speed");
         this.range = this.sgGeneral.add(new DoubleSetting.Builder().name("range").description("The range at which an entity can be targeted.").defaultValue(5.0).min(0.0).build());
-        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Entities to aim at.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097})).build());
+        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Entities to aim at.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(class_1299.field_6097)).build());
         this.friends = this.sgGeneral.add(new BoolSetting.Builder().name("friends").description("Whether or not to aim at friends.").defaultValue(false).build());
         this.ignoreWalls = this.sgGeneral.add(new BoolSetting.Builder().name("ignore-walls").description("Whether or not to ignore aiming through walls.").defaultValue(false).build());
         this.priority = this.sgGeneral.add(new EnumSetting.Builder().name("priority").description("How to select target from entities in range.").defaultValue(SortPriority.LowestHealth).build());

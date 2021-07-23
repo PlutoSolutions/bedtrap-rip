@@ -1,24 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_1309
- *  net.minecraft.class_1533
- *  net.minecraft.class_1541
- *  net.minecraft.class_1542
- *  net.minecraft.class_1657
- *  net.minecraft.class_1799
- *  net.minecraft.class_1887
- *  net.minecraft.class_1890
- *  net.minecraft.class_1934
- *  net.minecraft.class_2378
- *  net.minecraft.class_243
- *  net.minecraft.class_290
- *  net.minecraft.class_3532
- *  org.lwjgl.opengl.GL11
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -213,7 +194,7 @@ extends Module {
         this.sgGeneral = this.settings.getDefaultGroup();
         this.sgPlayers = this.settings.createGroup("Players");
         this.sgItems = this.settings.createGroup("Items");
-        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Select entities to draw nametags on.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(new class_1299[]{class_1299.field_6097, class_1299.field_6052})).build());
+        this.entities = this.sgGeneral.add(new EntityTypeListSetting.Builder().name("entities").description("Select entities to draw nametags on.").defaultValue((Object2BooleanMap<class_1299<?>>)Utils.asObject2BooleanOpenHashMap(class_1299.field_6097, class_1299.field_6052)).build());
         this.scale = this.sgGeneral.add(new DoubleSetting.Builder().name("scale").description("The scale of the nametag.").defaultValue(1.5).min(0.1).build());
         this.yourself = this.sgGeneral.add(new BoolSetting.Builder().name("self-nametag").description("Displays a nametag on your player if you're in Freecam.").defaultValue(true).build());
         this.background = this.sgGeneral.add(new ColorSetting.Builder().name("background").description("The color of the nametag background.").defaultValue(new SettingColor(0, 0, 0, 75)).build());
@@ -398,11 +379,11 @@ extends Module {
                 Map map = class_1890.method_8222((class_1799)class_17992);
                 this.enchantmentsToShowScale.clear();
                 for (class_1887 d17 : this.displayedEnchantments.get()) {
-                    if (!map.containsKey((Object)d17)) continue;
-                    this.enchantmentsToShowScale.put(d17, (Integer)map.get((Object)d17));
+                    if (!map.containsKey(d17)) continue;
+                    this.enchantmentsToShowScale.put(d17, (Integer)map.get(d17));
                 }
                 for (class_1887 class_18872 : this.enchantmentsToShowScale.keySet()) {
-                    String string7 = String.valueOf(new StringBuilder().append(Utils.getEnchantSimpleName(class_18872, this.enchantLength.get())).append(" ").append(this.enchantmentsToShowScale.get((Object)class_18872)));
+                    String string7 = String.valueOf(new StringBuilder().append(Utils.getEnchantSimpleName(class_18872, this.enchantLength.get())).append(" ").append(this.enchantmentsToShowScale.get(class_18872)));
                     this.itemWidths[i] = Math.max(this.itemWidths[i], textRenderer.getWidth(string7) / 2.0);
                 }
                 n3 = Math.max(n3, this.enchantmentsToShowScale.size());
@@ -431,8 +412,8 @@ extends Module {
                     Map map = class_1890.method_8222((class_1799)class_17992);
                     HashMap<class_1887, Integer> hashMap = new HashMap<class_1887, Integer>();
                     for (class_1887 class_18873 : this.displayedEnchantments.get()) {
-                        if (!map.containsKey((Object)class_18873)) continue;
-                        hashMap.put(class_18873, (Integer)map.get((Object)class_18873));
+                        if (!map.containsKey(class_18873)) continue;
+                        hashMap.put(class_18873, (Integer)map.get(class_18873));
                     }
                     double d20 = this.itemWidths[i];
                     double d21 = 0.0;
@@ -448,7 +429,7 @@ extends Module {
                     }
                     double d23 = d19;
                     for (class_1887 class_18874 : hashMap.keySet()) {
-                        String string8 = String.valueOf(new StringBuilder().append(Utils.getEnchantSimpleName(class_18874, this.enchantLength.get())).append(" ").append(hashMap.get((Object)class_18874)));
+                        String string8 = String.valueOf(new StringBuilder().append(Utils.getEnchantSimpleName(class_18874, this.enchantLength.get())).append(" ").append(hashMap.get(class_18874)));
                         Color color3 = this.WHITE;
                         if (class_18874.method_8195()) {
                             color3 = this.RED;

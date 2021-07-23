@@ -1,9 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  baritone.api.utils.Rotation
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.misc;
 
@@ -21,7 +17,7 @@ public class BaritoneUtils {
         }
         targetField.setAccessible(true);
         try {
-            return (Rotation)targetField.get((Object)BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior());
+            return (Rotation)targetField.get(BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior());
         }
         catch (IllegalAccessException illegalAccessException) {
             illegalAccessException.printStackTrace();
@@ -33,8 +29,8 @@ public class BaritoneUtils {
         if (targetField != null) {
             return;
         }
-        Class<?> class_ = BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior().getClass();
-        for (Field field : class_.getDeclaredFields()) {
+        Class<?> clazz = BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior().getClass();
+        for (Field field : clazz.getDeclaredFields()) {
             if (field.getType() != Rotation.class) continue;
             targetField = field;
             break;

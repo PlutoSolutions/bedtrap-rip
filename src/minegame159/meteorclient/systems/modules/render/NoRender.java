@@ -1,13 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.objects.Object2BooleanMap
- *  it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap
- *  net.minecraft.class_1297
- *  net.minecraft.class_1299
- *  net.minecraft.class_2396
- *  net.minecraft.class_2398
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -194,7 +186,7 @@ extends Module {
             particleEvent.cancel();
         } else if (this.noFireworkExplosions.get().booleanValue() && particleEvent.particle.method_10295() == class_2398.field_11248) {
             particleEvent.cancel();
-        } else if (this.particles.get().contains((Object)particleEvent.particle.method_10295())) {
+        } else if (this.particles.get().contains(particleEvent.particle.method_10295())) {
             particleEvent.cancel();
         }
     }

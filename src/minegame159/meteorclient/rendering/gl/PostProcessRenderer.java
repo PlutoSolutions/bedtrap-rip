@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.systems.RenderSystem
- *  net.minecraft.class_4493$class_4534
- *  net.minecraft.class_4493$class_4535
- *  org.lwjgl.opengl.GL11
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.rendering.gl;
 
@@ -40,9 +34,9 @@ public class PostProcessRenderer {
     }
 
     public static void init() {
-        float[] arrf = new float[]{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f};
-        int[] arrn = new int[]{0, 1, 2, 2, 3, 0};
-        mesh = new Mesh(arrf, arrn, 2);
+        float[] fArray = new float[]{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f};
+        int[] nArray = new int[]{0, 1, 2, 2, 3, 0};
+        mesh = new Mesh(fArray, nArray, 2);
     }
 
     public static void end() {

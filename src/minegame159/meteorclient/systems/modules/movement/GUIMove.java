@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1761
- *  net.minecraft.class_408
- *  net.minecraft.class_463
- *  net.minecraft.class_471
- *  net.minecraft.class_481
- *  net.minecraft.class_497
- *  net.minecraft.class_498
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.movement;
 

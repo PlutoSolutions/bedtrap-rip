@@ -1,162 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.Iterators
- *  com.mojang.serialization.Lifecycle
- *  net.minecraft.class_2378
- *  net.minecraft.class_2596
- *  net.minecraft.class_2604
- *  net.minecraft.class_2606
- *  net.minecraft.class_2610
- *  net.minecraft.class_2612
- *  net.minecraft.class_2613
- *  net.minecraft.class_2616
- *  net.minecraft.class_2617
- *  net.minecraft.class_2620
- *  net.minecraft.class_2622
- *  net.minecraft.class_2623
- *  net.minecraft.class_2626
- *  net.minecraft.class_2629
- *  net.minecraft.class_2632
- *  net.minecraft.class_2635
- *  net.minecraft.class_2637
- *  net.minecraft.class_2639
- *  net.minecraft.class_2641
- *  net.minecraft.class_2644
- *  net.minecraft.class_2645
- *  net.minecraft.class_2648
- *  net.minecraft.class_2649
- *  net.minecraft.class_2651
- *  net.minecraft.class_2653
- *  net.minecraft.class_2656
- *  net.minecraft.class_2658
- *  net.minecraft.class_2660
- *  net.minecraft.class_2661
- *  net.minecraft.class_2663
- *  net.minecraft.class_2664
- *  net.minecraft.class_2666
- *  net.minecraft.class_2668
- *  net.minecraft.class_2670
- *  net.minecraft.class_2672
- *  net.minecraft.class_2673
- *  net.minecraft.class_2675
- *  net.minecraft.class_2676
- *  net.minecraft.class_2678
- *  net.minecraft.class_2683
- *  net.minecraft.class_2684
- *  net.minecraft.class_2692
- *  net.minecraft.class_2693
- *  net.minecraft.class_2695
- *  net.minecraft.class_2696
- *  net.minecraft.class_2698
- *  net.minecraft.class_2703
- *  net.minecraft.class_2707
- *  net.minecraft.class_2708
- *  net.minecraft.class_2713
- *  net.minecraft.class_2716
- *  net.minecraft.class_2718
- *  net.minecraft.class_2720
- *  net.minecraft.class_2724
- *  net.minecraft.class_2726
- *  net.minecraft.class_2729
- *  net.minecraft.class_2730
- *  net.minecraft.class_2734
- *  net.minecraft.class_2735
- *  net.minecraft.class_2736
- *  net.minecraft.class_2739
- *  net.minecraft.class_2740
- *  net.minecraft.class_2743
- *  net.minecraft.class_2744
- *  net.minecraft.class_2748
- *  net.minecraft.class_2749
- *  net.minecraft.class_2751
- *  net.minecraft.class_2752
- *  net.minecraft.class_2755
- *  net.minecraft.class_2757
- *  net.minecraft.class_2759
- *  net.minecraft.class_2761
- *  net.minecraft.class_2762
- *  net.minecraft.class_2765
- *  net.minecraft.class_2767
- *  net.minecraft.class_2770
- *  net.minecraft.class_2772
- *  net.minecraft.class_2774
- *  net.minecraft.class_2775
- *  net.minecraft.class_2777
- *  net.minecraft.class_2779
- *  net.minecraft.class_2781
- *  net.minecraft.class_2783
- *  net.minecraft.class_2788
- *  net.minecraft.class_2790
- *  net.minecraft.class_2793
- *  net.minecraft.class_2795
- *  net.minecraft.class_2797
- *  net.minecraft.class_2799
- *  net.minecraft.class_2803
- *  net.minecraft.class_2805
- *  net.minecraft.class_2809
- *  net.minecraft.class_2811
- *  net.minecraft.class_2813
- *  net.minecraft.class_2815
- *  net.minecraft.class_2817
- *  net.minecraft.class_2820
- *  net.minecraft.class_2822
- *  net.minecraft.class_2824
- *  net.minecraft.class_2827
- *  net.minecraft.class_2828
- *  net.minecraft.class_2833
- *  net.minecraft.class_2836
- *  net.minecraft.class_2838
- *  net.minecraft.class_2840
- *  net.minecraft.class_2842
- *  net.minecraft.class_2846
- *  net.minecraft.class_2848
- *  net.minecraft.class_2851
- *  net.minecraft.class_2853
- *  net.minecraft.class_2855
- *  net.minecraft.class_2856
- *  net.minecraft.class_2859
- *  net.minecraft.class_2863
- *  net.minecraft.class_2866
- *  net.minecraft.class_2868
- *  net.minecraft.class_2870
- *  net.minecraft.class_2871
- *  net.minecraft.class_2873
- *  net.minecraft.class_2875
- *  net.minecraft.class_2877
- *  net.minecraft.class_2879
- *  net.minecraft.class_2884
- *  net.minecraft.class_2885
- *  net.minecraft.class_2886
- *  net.minecraft.class_2889
- *  net.minecraft.class_2899
- *  net.minecraft.class_2901
- *  net.minecraft.class_2905
- *  net.minecraft.class_2907
- *  net.minecraft.class_2909
- *  net.minecraft.class_2913
- *  net.minecraft.class_2915
- *  net.minecraft.class_2917
- *  net.minecraft.class_2923
- *  net.minecraft.class_2924
- *  net.minecraft.class_2935
- *  net.minecraft.class_2937
- *  net.minecraft.class_2960
- *  net.minecraft.class_3753
- *  net.minecraft.class_3895
- *  net.minecraft.class_3943
- *  net.minecraft.class_3944
- *  net.minecraft.class_4210
- *  net.minecraft.class_4211
- *  net.minecraft.class_4273
- *  net.minecraft.class_4282
- *  net.minecraft.class_4463
- *  net.minecraft.class_5194
- *  net.minecraft.class_5321
- *  net.minecraft.class_5427
- *  org.jetbrains.annotations.NotNull
- *  org.jetbrains.annotations.Nullable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.network;
 
@@ -336,12 +179,12 @@ public class PacketUtils {
         return C2S_PACKETS.keySet();
     }
 
-    public static String getName(Class<? extends class_2596<?>> class_) {
-        String string = S2C_PACKETS.get(class_);
+    public static String getName(Class<? extends class_2596<?>> clazz) {
+        String string = S2C_PACKETS.get(clazz);
         if (string != null) {
             return string;
         }
-        return C2S_PACKETS.get(class_);
+        return C2S_PACKETS.get(clazz);
     }
 
     static Map access$000() {
@@ -349,9 +192,9 @@ public class PacketUtils {
     }
 
     public static Class<? extends class_2596<?>> getPacket(String string) {
-        Class<? extends class_2596<?>> class_ = S2C_PACKETS_R.get(string);
-        if (class_ != null) {
-            return class_;
+        Class<? extends class_2596<?>> clazz = S2C_PACKETS_R.get(string);
+        if (clazz != null) {
+            return clazz;
         }
         return C2S_PACKETS_R.get(string);
     }
@@ -711,7 +554,7 @@ public class PacketUtils {
         }
 
         @Nullable
-        public class_2960 getId(Class<? extends class_2596<?>> class_) {
+        public class_2960 getId(Class<? extends class_2596<?>> clazz) {
             return null;
         }
 
@@ -720,11 +563,11 @@ public class PacketUtils {
             return this.getId((Class)object);
         }
 
-        public Optional<class_5321<Class<? extends class_2596<?>>>> getKey(Class<? extends class_2596<?>> class_) {
+        public Optional<class_5321<Class<? extends class_2596<?>>>> getKey(Class<? extends class_2596<?>> clazz) {
             return Optional.empty();
         }
 
-        protected Lifecycle getEntryLifecycle(Class<? extends class_2596<?>> class_) {
+        protected Lifecycle getEntryLifecycle(Class<? extends class_2596<?>> clazz) {
             return null;
         }
 
@@ -740,7 +583,7 @@ public class PacketUtils {
             return this.getEntryLifecycle((Class)object);
         }
 
-        public int getRawId(@Nullable Class<? extends class_2596<?>> class_) {
+        public int getRawId(@Nullable Class<? extends class_2596<?>> clazz) {
             return 0;
         }
 

@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -78,8 +78,8 @@ extends Pointer {
         }
     }
 
-    public int invokeInt(Object[] arrobject) {
-        return (Integer)this.invoke(Integer.class, arrobject);
+    public int invokeInt(Object[] objectArray) {
+        return (Integer)this.invoke(Integer.class, objectArray);
     }
 
     static int fixedArgs(Method method) {
@@ -102,8 +102,8 @@ extends Pointer {
         this.encoding = string != null ? string : Native.getDefaultStringEncoding();
     }
 
-    public Object invokeObject(Object[] arrobject) {
-        return this.invoke(Object.class, arrobject);
+    public Object invokeObject(Object[] objectArray) {
+        return this.invoke(Object.class, objectArray);
     }
 
     @Override
@@ -121,12 +121,12 @@ extends Pointer {
         return false;
     }
 
-    public void invoke(Object[] arrobject) {
-        this.invoke(Void.class, arrobject);
+    public void invoke(Object[] objectArray) {
+        this.invoke(Void.class, objectArray);
     }
 
-    private String invokeString(int n, Object[] arrobject, boolean bl) {
-        Pointer pointer = this.invokePointer(n, arrobject);
+    private String invokeString(int n, Object[] objectArray, boolean bl) {
+        Pointer pointer = this.invokePointer(n, objectArray);
         String string = null;
         if (pointer != null) {
             string = bl ? pointer.getWideString(0L) : pointer.getString(0L, this.encoding);
@@ -134,53 +134,53 @@ extends Pointer {
         return string;
     }
 
-    private Object convertArgument(Object[] arrobject, int n, Method method, TypeMapper typeMapper, boolean bl, Class<?> class_) {
+    private Object convertArgument(Object[] objectArray, int n, Method method, TypeMapper typeMapper, boolean bl, Class<?> clazz) {
         Object object;
-        Structure[] arrstructure;
-        Class<?> class_2;
-        Object object2 = arrobject[n];
+        Structure[] structureArray;
+        Class<?> clazz2;
+        Object object2 = objectArray[n];
         if (object2 != null) {
-            class_2 = object2.getClass();
-            arrstructure = null;
-            if (NativeMapped.class.isAssignableFrom(class_2)) {
-                arrstructure = NativeMappedConverter.getInstance(class_2);
+            clazz2 = object2.getClass();
+            structureArray = null;
+            if (NativeMapped.class.isAssignableFrom(clazz2)) {
+                structureArray = NativeMappedConverter.getInstance(clazz2);
             } else if (typeMapper != null) {
-                arrstructure = typeMapper.getToNativeConverter(class_2);
+                structureArray = typeMapper.getToNativeConverter(clazz2);
             }
-            if (arrstructure != null) {
-                object = method != null ? new MethodParameterContext(this, arrobject, n, method) : new FunctionParameterContext(this, arrobject, n);
-                object2 = arrstructure.toNative(object2, (ToNativeContext)object);
+            if (structureArray != null) {
+                object = method != null ? new MethodParameterContext(this, objectArray, n, method) : new FunctionParameterContext(this, objectArray, n);
+                object2 = structureArray.toNative(object2, (ToNativeContext)object);
             }
         }
         if (object2 == null || this.isPrimitiveArray(object2.getClass())) {
             return object2;
         }
-        class_2 = object2.getClass();
+        clazz2 = object2.getClass();
         if (object2 instanceof Structure) {
-            arrstructure = (Structure)object2;
-            arrstructure.autoWrite();
-            if (arrstructure instanceof Structure.ByValue) {
-                object = arrstructure.getClass();
+            structureArray = (Structure)object2;
+            structureArray.autoWrite();
+            if (structureArray instanceof Structure.ByValue) {
+                object = structureArray.getClass();
                 if (method != null) {
-                    Class<?>[] arrclass = method.getParameterTypes();
+                    Class<?>[] classArray = method.getParameterTypes();
                     if (IS_VARARGS.isVarArgs(method)) {
-                        if (n < arrclass.length - 1) {
-                            object = arrclass[n];
+                        if (n < classArray.length - 1) {
+                            object = classArray[n];
                         } else {
-                            Class<?> class_3 = arrclass[arrclass.length - 1].getComponentType();
-                            if (class_3 != Object.class) {
-                                object = class_3;
+                            Class<?> clazz3 = classArray[classArray.length - 1].getComponentType();
+                            if (clazz3 != Object.class) {
+                                object = clazz3;
                             }
                         }
                     } else {
-                        object = arrclass[n];
+                        object = classArray[n];
                     }
                 }
                 if (Structure.ByValue.class.isAssignableFrom((Class<?>)object)) {
-                    return arrstructure;
+                    return structureArray;
                 }
             }
-            return arrstructure.getPointer();
+            return structureArray.getPointer();
         }
         if (object2 instanceof Callback) {
             return CallbackReference.getFunctionPointer((Callback)object2);
@@ -194,51 +194,51 @@ extends Pointer {
         if (object2 instanceof Boolean) {
             return Boolean.TRUE.equals(object2) ? INTEGER_TRUE : INTEGER_FALSE;
         }
-        if (String[].class == class_2) {
+        if (String[].class == clazz2) {
             return new StringArray((String[])object2, this.encoding);
         }
-        if (WString[].class == class_2) {
+        if (WString[].class == clazz2) {
             return new StringArray((WString[])object2);
         }
-        if (Pointer[].class == class_2) {
+        if (Pointer[].class == clazz2) {
             return new PointerArray((Pointer[])object2);
         }
-        if (NativeMapped[].class.isAssignableFrom(class_2)) {
+        if (NativeMapped[].class.isAssignableFrom(clazz2)) {
             return new NativeMappedArray((NativeMapped[])object2);
         }
-        if (Structure[].class.isAssignableFrom(class_2)) {
-            arrstructure = (Structure[])object2;
-            object = class_2.getComponentType();
+        if (Structure[].class.isAssignableFrom(clazz2)) {
+            structureArray = (Structure[])object2;
+            object = clazz2.getComponentType();
             boolean bl2 = Structure.ByReference.class.isAssignableFrom((Class<?>)object);
-            if (class_ != null && !Structure.ByReference[].class.isAssignableFrom(class_)) {
+            if (clazz != null && !Structure.ByReference[].class.isAssignableFrom(clazz)) {
                 if (bl2) {
                     throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Function ").append(this.getName()).append(" declared Structure[] at parameter ").append(n).append(" but array of ").append(object).append(" was passed")));
                 }
-                for (int i = 0; i < arrstructure.length; ++i) {
-                    if (!(arrstructure[i] instanceof Structure.ByReference)) continue;
+                for (int i = 0; i < structureArray.length; ++i) {
+                    if (!(structureArray[i] instanceof Structure.ByReference)) continue;
                     throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Function ").append(this.getName()).append(" declared Structure[] at parameter ").append(n).append(" but element ").append(i).append(" is of Structure.ByReference type")));
                 }
             }
             if (bl2) {
-                Structure.autoWrite(arrstructure);
-                Pointer[] arrpointer = new Pointer[arrstructure.length + 1];
-                for (int i = 0; i < arrstructure.length; ++i) {
-                    arrpointer[i] = arrstructure[i] != null ? arrstructure[i].getPointer() : null;
+                Structure.autoWrite(structureArray);
+                Pointer[] pointerArray = new Pointer[structureArray.length + 1];
+                for (int i = 0; i < structureArray.length; ++i) {
+                    pointerArray[i] = structureArray[i] != null ? structureArray[i].getPointer() : null;
                 }
-                return new PointerArray(arrpointer);
+                return new PointerArray(pointerArray);
             }
-            if (arrstructure.length == 0) {
+            if (structureArray.length == 0) {
                 throw new IllegalArgumentException("Structure array must have non-zero length");
             }
-            if (arrstructure[0] == null) {
-                Structure.newInstance(object).toArray(arrstructure);
-                return arrstructure[0].getPointer();
+            if (structureArray[0] == null) {
+                Structure.newInstance(object).toArray(structureArray);
+                return structureArray[0].getPointer();
             }
-            Structure.autoWrite(arrstructure);
-            return arrstructure[0].getPointer();
+            Structure.autoWrite(structureArray);
+            return structureArray[0].getPointer();
         }
-        if (class_2.isArray()) {
-            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported array argument type: ").append(class_2.getComponentType())));
+        if (clazz2.isArray()) {
+            throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported array argument type: ").append(clazz2.getComponentType())));
         }
         if (bl) {
             return object2;
@@ -249,109 +249,109 @@ extends Pointer {
         return object2;
     }
 
-    public Object invoke(Class<?> class_, Object[] arrobject, Map<String, ?> map) {
+    public Object invoke(Class<?> clazz, Object[] objectArray, Map<String, ?> map) {
         Method method = (Method)map.get("invoking-method");
-        Class<?>[] arrclass = method != null ? method.getParameterTypes() : null;
-        return this.invoke(method, arrclass, class_, arrobject, map);
+        Class<?>[] classArray = method != null ? method.getParameterTypes() : null;
+        return this.invoke(method, classArray, clazz, objectArray, map);
     }
 
-    Object invoke(Object[] arrobject, Class<?> class_, boolean bl) {
-        return this.invoke(arrobject, class_, bl, 0);
+    Object invoke(Object[] objectArray, Class<?> clazz, boolean bl) {
+        return this.invoke(objectArray, clazz, bl, 0);
     }
 
-    public Pointer invokePointer(Object[] arrobject) {
-        return (Pointer)this.invoke(Pointer.class, arrobject);
+    public Pointer invokePointer(Object[] objectArray) {
+        return (Pointer)this.invoke(Pointer.class, objectArray);
     }
 
     public String getName() {
         return this.functionName;
     }
 
-    public String invokeString(Object[] arrobject, boolean bl) {
-        Object object = this.invoke(bl ? WString.class : String.class, arrobject);
+    public String invokeString(Object[] objectArray, boolean bl) {
+        Object object = this.invoke(bl ? WString.class : String.class, objectArray);
         return object != null ? object.toString() : null;
     }
 
-    Object invoke(Object[] arrobject, Class<?> class_, boolean bl, int n) {
+    Object invoke(Object[] objectArray, Class<?> clazz, boolean bl, int n) {
         Object object = null;
         int n2 = this.callFlags | (n & 3) << 7;
-        if (class_ == null || class_ == Void.TYPE || class_ == Void.class) {
-            Native.invokeVoid(this, this.peer, n2, arrobject);
+        if (clazz == null || clazz == Void.TYPE || clazz == Void.class) {
+            Native.invokeVoid(this, this.peer, n2, objectArray);
             object = null;
-        } else if (class_ == Boolean.TYPE || class_ == Boolean.class) {
-            object = Function.valueOf(Native.invokeInt(this, this.peer, n2, arrobject) != 0);
-        } else if (class_ == Byte.TYPE || class_ == Byte.class) {
-            object = (byte)Native.invokeInt(this, this.peer, n2, arrobject);
-        } else if (class_ == Short.TYPE || class_ == Short.class) {
-            object = (short)Native.invokeInt(this, this.peer, n2, arrobject);
-        } else if (class_ == Character.TYPE || class_ == Character.class) {
-            object = Character.valueOf((char)Native.invokeInt(this, this.peer, n2, arrobject));
-        } else if (class_ == Integer.TYPE || class_ == Integer.class) {
-            object = Native.invokeInt(this, this.peer, n2, arrobject);
-        } else if (class_ == Long.TYPE || class_ == Long.class) {
-            object = Native.invokeLong(this, this.peer, n2, arrobject);
-        } else if (class_ == Float.TYPE || class_ == Float.class) {
-            object = Float.valueOf(Native.invokeFloat(this, this.peer, n2, arrobject));
-        } else if (class_ == Double.TYPE || class_ == Double.class) {
-            object = Native.invokeDouble(this, this.peer, n2, arrobject);
-        } else if (class_ == String.class) {
-            object = this.invokeString(n2, arrobject, false);
-        } else if (class_ == WString.class) {
-            String string = this.invokeString(n2, arrobject, true);
+        } else if (clazz == Boolean.TYPE || clazz == Boolean.class) {
+            object = Function.valueOf(Native.invokeInt(this, this.peer, n2, objectArray) != 0);
+        } else if (clazz == Byte.TYPE || clazz == Byte.class) {
+            object = (byte)Native.invokeInt(this, this.peer, n2, objectArray);
+        } else if (clazz == Short.TYPE || clazz == Short.class) {
+            object = (short)Native.invokeInt(this, this.peer, n2, objectArray);
+        } else if (clazz == Character.TYPE || clazz == Character.class) {
+            object = Character.valueOf((char)Native.invokeInt(this, this.peer, n2, objectArray));
+        } else if (clazz == Integer.TYPE || clazz == Integer.class) {
+            object = Native.invokeInt(this, this.peer, n2, objectArray);
+        } else if (clazz == Long.TYPE || clazz == Long.class) {
+            object = Native.invokeLong(this, this.peer, n2, objectArray);
+        } else if (clazz == Float.TYPE || clazz == Float.class) {
+            object = Float.valueOf(Native.invokeFloat(this, this.peer, n2, objectArray));
+        } else if (clazz == Double.TYPE || clazz == Double.class) {
+            object = Native.invokeDouble(this, this.peer, n2, objectArray);
+        } else if (clazz == String.class) {
+            object = this.invokeString(n2, objectArray, false);
+        } else if (clazz == WString.class) {
+            String string = this.invokeString(n2, objectArray, true);
             if (string != null) {
                 object = new WString(string);
             }
         } else {
-            if (Pointer.class.isAssignableFrom(class_)) {
-                return this.invokePointer(n2, arrobject);
+            if (Pointer.class.isAssignableFrom(clazz)) {
+                return this.invokePointer(n2, objectArray);
             }
-            if (Structure.class.isAssignableFrom(class_)) {
-                if (Structure.ByValue.class.isAssignableFrom(class_)) {
-                    Structure structure = Native.invokeStructure(this, this.peer, n2, arrobject, Structure.newInstance(class_));
+            if (Structure.class.isAssignableFrom(clazz)) {
+                if (Structure.ByValue.class.isAssignableFrom(clazz)) {
+                    Structure structure = Native.invokeStructure(this, this.peer, n2, objectArray, Structure.newInstance(clazz));
                     structure.autoRead();
                     object = structure;
                 } else {
-                    object = this.invokePointer(n2, arrobject);
+                    object = this.invokePointer(n2, objectArray);
                     if (object != null) {
-                        Structure structure = Structure.newInstance(class_, (Pointer)object);
+                        Structure structure = Structure.newInstance(clazz, (Pointer)object);
                         structure.conditionalAutoRead();
                         object = structure;
                     }
                 }
-            } else if (Callback.class.isAssignableFrom(class_)) {
-                object = this.invokePointer(n2, arrobject);
+            } else if (Callback.class.isAssignableFrom(clazz)) {
+                object = this.invokePointer(n2, objectArray);
                 if (object != null) {
-                    object = CallbackReference.getCallback(class_, (Pointer)object);
+                    object = CallbackReference.getCallback(clazz, (Pointer)object);
                 }
-            } else if (class_ == String[].class) {
-                Pointer pointer = this.invokePointer(n2, arrobject);
+            } else if (clazz == String[].class) {
+                Pointer pointer = this.invokePointer(n2, objectArray);
                 if (pointer != null) {
                     object = pointer.getStringArray(0L, this.encoding);
                 }
-            } else if (class_ == WString[].class) {
-                Pointer pointer = this.invokePointer(n2, arrobject);
+            } else if (clazz == WString[].class) {
+                Pointer pointer = this.invokePointer(n2, objectArray);
                 if (pointer != null) {
-                    String[] arrstring = pointer.getWideStringArray(0L);
-                    WString[] arrwString = new WString[arrstring.length];
-                    for (int i = 0; i < arrstring.length; ++i) {
-                        arrwString[i] = new WString(arrstring[i]);
+                    String[] stringArray = pointer.getWideStringArray(0L);
+                    WString[] wStringArray = new WString[stringArray.length];
+                    for (int i = 0; i < stringArray.length; ++i) {
+                        wStringArray[i] = new WString(stringArray[i]);
                         if (-2 <= 0) continue;
                         return null;
                     }
-                    object = arrwString;
+                    object = wStringArray;
                 }
-            } else if (class_ == Pointer[].class) {
-                Pointer pointer = this.invokePointer(n2, arrobject);
+            } else if (clazz == Pointer[].class) {
+                Pointer pointer = this.invokePointer(n2, objectArray);
                 if (pointer != null) {
                     object = pointer.getPointerArray(0L);
                 }
             } else if (bl) {
-                object = Native.invokeObject(this, this.peer, n2, arrobject);
-                if (object != null && !class_.isAssignableFrom(object.getClass())) {
-                    throw new ClassCastException(String.valueOf(new StringBuilder().append("Return type ").append(class_).append(" does not match result ").append(object.getClass())));
+                object = Native.invokeObject(this, this.peer, n2, objectArray);
+                if (object != null && !clazz.isAssignableFrom(object.getClass())) {
+                    throw new ClassCastException(String.valueOf(new StringBuilder().append("Return type ").append(clazz).append(" does not match result ").append(object.getClass())));
                 }
             } else {
-                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported return type ").append(class_).append(" in function ").append(this.getName())));
+                throw new IllegalArgumentException(String.valueOf(new StringBuilder().append("Unsupported return type ").append(clazz).append(" in function ").append(this.getName())));
             }
         }
         return object;
@@ -365,8 +365,8 @@ extends Pointer {
         return this.callFlags & 0x3F;
     }
 
-    private boolean isPrimitiveArray(Class<?> class_) {
-        return class_.isArray() && class_.getComponentType().isPrimitive();
+    private boolean isPrimitiveArray(Class<?> clazz) {
+        return clazz.isArray() && clazz.getComponentType().isPrimitive();
     }
 
     static {
@@ -386,12 +386,12 @@ extends Pointer {
         return NativeLibrary.getInstance(string).getFunction(string2, n, string3);
     }
 
-    public Object invoke(Class<?> class_, Object[] arrobject) {
-        return this.invoke(class_, arrobject, this.options);
+    public Object invoke(Class<?> clazz, Object[] objectArray) {
+        return this.invoke(clazz, objectArray, this.options);
     }
 
-    private Pointer invokePointer(int n, Object[] arrobject) {
-        long l = Native.invokePointer(this, this.peer, n, arrobject);
+    private Pointer invokePointer(int n, Object[] objectArray) {
+        long l = Native.invokePointer(this, this.peer, n, objectArray);
         return l == 0L ? null : new Pointer(l);
     }
 
@@ -399,31 +399,31 @@ extends Pointer {
         return new Function(pointer, n, string);
     }
 
-    static Object[] concatenateVarArgs(Object[] arrobject) {
-        if (arrobject != null && arrobject.length > 0) {
-            Class<?> class_;
-            Object object = arrobject[arrobject.length - 1];
-            Class<?> class_2 = class_ = object != null ? object.getClass() : null;
-            if (class_ != null && class_.isArray()) {
-                Object[] arrobject2 = (Object[])object;
-                for (int i = 0; i < arrobject2.length; ++i) {
-                    if (!(arrobject2[i] instanceof Float)) continue;
-                    arrobject2[i] = (double)((Float)arrobject2[i]).floatValue();
+    static Object[] concatenateVarArgs(Object[] objectArray) {
+        if (objectArray != null && objectArray.length > 0) {
+            Class<?> clazz;
+            Object object = objectArray[objectArray.length - 1];
+            Class<?> clazz2 = clazz = object != null ? object.getClass() : null;
+            if (clazz != null && clazz.isArray()) {
+                Object[] objectArray2 = (Object[])object;
+                for (int i = 0; i < objectArray2.length; ++i) {
+                    if (!(objectArray2[i] instanceof Float)) continue;
+                    objectArray2[i] = (double)((Float)objectArray2[i]).floatValue();
                     if (-1 < 1) continue;
                     return null;
                 }
-                Object[] arrobject3 = new Object[arrobject.length + arrobject2.length];
-                System.arraycopy(arrobject, 0, arrobject3, 0, arrobject.length - 1);
-                System.arraycopy(arrobject2, 0, arrobject3, arrobject.length - 1, arrobject2.length);
-                arrobject3[arrobject3.length - 1] = null;
-                arrobject = arrobject3;
+                Object[] objectArray3 = new Object[objectArray.length + objectArray2.length];
+                System.arraycopy(objectArray, 0, objectArray3, 0, objectArray.length - 1);
+                System.arraycopy(objectArray2, 0, objectArray3, objectArray.length - 1, objectArray2.length);
+                objectArray3[objectArray3.length - 1] = null;
+                objectArray = objectArray3;
             }
         }
-        return arrobject;
+        return objectArray;
     }
 
-    public double invokeDouble(Object[] arrobject) {
-        return (Double)this.invoke(Double.class, arrobject);
+    public double invokeDouble(Object[] objectArray) {
+        return (Double)this.invoke(Double.class, objectArray);
     }
 
     @Override
@@ -431,43 +431,43 @@ extends Pointer {
         return this.callFlags + this.options.hashCode() + super.hashCode();
     }
 
-    Object invoke(Method method, Class<?>[] arrclass, Class<?> class_, Object[] arrobject, Map<String, ?> map) {
+    Object invoke(Method method, Class<?>[] classArray, Class<?> clazz, Object[] objectArray, Map<String, ?> map) {
         Object object;
         Object object2;
-        Object[] arrobject2 = new Object[]{};
-        if (arrobject != null) {
-            if (arrobject.length > 256) {
+        Object[] objectArray2 = new Object[]{};
+        if (objectArray != null) {
+            if (objectArray.length > 256) {
                 throw new UnsupportedOperationException("Maximum argument count is 256");
             }
-            arrobject2 = new Object[arrobject.length];
-            System.arraycopy(arrobject, 0, arrobject2, 0, arrobject2.length);
+            objectArray2 = new Object[objectArray.length];
+            System.arraycopy(objectArray, 0, objectArray2, 0, objectArray2.length);
         }
         TypeMapper typeMapper = (TypeMapper)map.get("type-mapper");
         boolean bl = Boolean.TRUE.equals(map.get("allow-objects"));
-        boolean bl2 = arrobject2.length > 0 && method != null ? Function.isVarArgs(method) : false;
-        int n = arrobject2.length > 0 && method != null ? Function.fixedArgs(method) : 0;
-        for (int i = 0; i < arrobject2.length; ++i) {
-            object2 = method != null ? (bl2 && i >= arrclass.length - 1 ? arrclass[arrclass.length - 1].getComponentType() : arrclass[i]) : null;
-            arrobject2[i] = this.convertArgument(arrobject2, i, method, typeMapper, bl, (Class<?>)object2);
+        boolean bl2 = objectArray2.length > 0 && method != null ? Function.isVarArgs(method) : false;
+        int n = objectArray2.length > 0 && method != null ? Function.fixedArgs(method) : 0;
+        for (int i = 0; i < objectArray2.length; ++i) {
+            object2 = method != null ? (bl2 && i >= classArray.length - 1 ? classArray[classArray.length - 1].getComponentType() : classArray[i]) : null;
+            objectArray2[i] = this.convertArgument(objectArray2, i, method, typeMapper, bl, (Class<?>)object2);
             if (1 != 2) continue;
             return null;
         }
-        Class<?> class_2 = class_;
+        Class<?> clazz2 = clazz;
         object2 = null;
-        if (NativeMapped.class.isAssignableFrom(class_)) {
-            object2 = object = NativeMappedConverter.getInstance(class_);
-            class_2 = ((NativeMappedConverter)object).nativeType();
-        } else if (typeMapper != null && (object2 = typeMapper.getFromNativeConverter(class_)) != null) {
-            class_2 = object2.nativeType();
+        if (NativeMapped.class.isAssignableFrom(clazz)) {
+            object2 = object = NativeMappedConverter.getInstance(clazz);
+            clazz2 = ((NativeMappedConverter)object).nativeType();
+        } else if (typeMapper != null && (object2 = typeMapper.getFromNativeConverter(clazz)) != null) {
+            clazz2 = object2.nativeType();
         }
-        object = this.invoke(arrobject2, class_2, bl, n);
+        object = this.invoke(objectArray2, clazz2, bl, n);
         if (object2 != null) {
-            FunctionResultContext functionResultContext = method != null ? new MethodResultContext(class_, this, arrobject, method) : new FunctionResultContext(class_, this, arrobject);
+            FunctionResultContext functionResultContext = method != null ? new MethodResultContext(clazz, this, objectArray, method) : new FunctionResultContext(clazz, this, objectArray);
             object = object2.fromNative(object, functionResultContext);
         }
-        if (arrobject != null) {
-            for (int i = 0; i < arrobject.length; ++i) {
-                Object object3 = arrobject[i];
+        if (objectArray != null) {
+            for (int i = 0; i < objectArray.length; ++i) {
+                Object object3 = objectArray[i];
                 if (object3 == null) continue;
                 if (object3 instanceof Structure) {
                     if (!(object3 instanceof Structure.ByValue)) {
@@ -475,16 +475,16 @@ extends Pointer {
                     }
                     continue;
                 }
-                if (arrobject2[i] instanceof PostCallRead) {
-                    ((PostCallRead)arrobject2[i]).read();
-                    if (!(arrobject2[i] instanceof PointerArray)) continue;
-                    PointerArray pointerArray = (PointerArray)arrobject2[i];
+                if (objectArray2[i] instanceof PostCallRead) {
+                    ((PostCallRead)objectArray2[i]).read();
+                    if (!(objectArray2[i] instanceof PointerArray)) continue;
+                    PointerArray pointerArray = (PointerArray)objectArray2[i];
                     if (!Structure.ByReference[].class.isAssignableFrom(object3.getClass())) continue;
-                    Class<?> class_3 = object3.getClass().getComponentType();
-                    Structure[] arrstructure = (Structure[])object3;
-                    for (int j = 0; j < arrstructure.length; ++j) {
+                    Class<?> clazz3 = object3.getClass().getComponentType();
+                    Structure[] structureArray = (Structure[])object3;
+                    for (int j = 0; j < structureArray.length; ++j) {
                         Pointer pointer = pointerArray.getPointer(Pointer.SIZE * j);
-                        arrstructure[j] = Structure.updateStructureByReference(class_3, arrstructure[j], pointer);
+                        structureArray[j] = Structure.updateStructureByReference(clazz3, structureArray[j], pointer);
                         if (2 > 0) continue;
                         return null;
                     }
@@ -505,16 +505,16 @@ extends Pointer {
         return bl ? Boolean.TRUE : Boolean.FALSE;
     }
 
-    public float invokeFloat(Object[] arrobject) {
-        return ((Float)this.invoke(Float.class, arrobject)).floatValue();
+    public float invokeFloat(Object[] objectArray) {
+        return ((Float)this.invoke(Float.class, objectArray)).floatValue();
     }
 
-    public void invokeVoid(Object[] arrobject) {
-        this.invoke(Void.class, arrobject);
+    public void invokeVoid(Object[] objectArray) {
+        this.invoke(Void.class, objectArray);
     }
 
-    public long invokeLong(Object[] arrobject) {
-        return (Long)this.invoke(Long.class, arrobject);
+    public long invokeLong(Object[] objectArray) {
+        return (Long)this.invoke(Long.class, objectArray);
     }
 
     private void checkCallingConvention(int n) throws IllegalArgumentException {
@@ -532,15 +532,15 @@ extends Pointer {
     implements PostCallRead {
         private final Pointer[] original;
 
-        public PointerArray(Pointer[] arrpointer) {
-            super(Pointer.SIZE * (arrpointer.length + 1));
-            this.original = arrpointer;
-            for (int i = 0; i < arrpointer.length; ++i) {
-                this.setPointer(i * Pointer.SIZE, arrpointer[i]);
+        public PointerArray(Pointer[] pointerArray) {
+            super(Pointer.SIZE * (pointerArray.length + 1));
+            this.original = pointerArray;
+            for (int i = 0; i < pointerArray.length; ++i) {
+                this.setPointer(i * Pointer.SIZE, pointerArray[i]);
                 if (-1 < 0) continue;
                 throw null;
             }
-            this.setPointer(Pointer.SIZE * arrpointer.length, null);
+            this.setPointer(Pointer.SIZE * pointerArray.length, null);
         }
 
         @Override
@@ -559,9 +559,9 @@ extends Pointer {
             this.getValue(0L, this.original.getClass(), this.original);
         }
 
-        public NativeMappedArray(NativeMapped[] arrnativeMapped) {
-            super(Native.getNativeSize(arrnativeMapped.getClass(), arrnativeMapped));
-            this.original = arrnativeMapped;
+        public NativeMappedArray(NativeMapped[] nativeMappedArray) {
+            super(Native.getNativeSize(nativeMappedArray.getClass(), nativeMappedArray));
+            this.original = nativeMappedArray;
             this.setValue(0L, this.original, this.original.getClass());
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package com.sun.jna;
 
@@ -305,26 +305,26 @@ public class NativeLibrary {
                 if (Platform.isLinux() || Platform.isSolaris() || Platform.isFreeBSD() || Platform.iskFreeBSD()) {
                     string4 = String.valueOf(new StringBuilder().append(Platform.isSolaris() ? "/" : "").append(Pointer.SIZE * 8));
                 }
-                String[] arrstring = new String[]{String.valueOf(new StringBuilder().append("/usr/lib").append(string4)), String.valueOf(new StringBuilder().append("/lib").append(string4)), "/usr/lib", "/lib"};
+                String[] stringArray = new String[]{String.valueOf(new StringBuilder().append("/usr/lib").append(string4)), String.valueOf(new StringBuilder().append("/lib").append(string4)), "/usr/lib", "/lib"};
                 if (Platform.isLinux() || Platform.iskFreeBSD() || Platform.isGNU()) {
                     object = NativeLibrary.getMultiArchPath();
-                    arrstring = new String[]{String.valueOf(new StringBuilder().append("/usr/lib/").append((String)object)), String.valueOf(new StringBuilder().append("/lib/").append((String)object)), String.valueOf(new StringBuilder().append("/usr/lib").append(string4)), String.valueOf(new StringBuilder().append("/lib").append(string4)), "/usr/lib", "/lib"};
+                    stringArray = new String[]{String.valueOf(new StringBuilder().append("/usr/lib/").append((String)object)), String.valueOf(new StringBuilder().append("/lib/").append((String)object)), String.valueOf(new StringBuilder().append("/usr/lib").append(string4)), String.valueOf(new StringBuilder().append("/lib").append(string4)), "/usr/lib", "/lib"};
                 }
                 if (Platform.isLinux()) {
                     object = NativeLibrary.getLinuxLdPaths();
-                    for (int i = arrstring.length - 1; 0 <= i; --i) {
-                        int n = ((ArrayList)object).indexOf(arrstring[i]);
+                    for (int i = stringArray.length - 1; 0 <= i; --i) {
+                        int n = ((ArrayList)object).indexOf(stringArray[i]);
                         if (n != -1) {
                             ((ArrayList)object).remove(n);
                         }
-                        ((ArrayList)object).add(0, arrstring[i]);
+                        ((ArrayList)object).add(0, stringArray[i]);
                     }
-                    arrstring = ((ArrayList)object).toArray(new String[((ArrayList)object).size()]);
+                    stringArray = ((ArrayList)object).toArray(new String[((ArrayList)object).size()]);
                 }
-                for (int i = 0; i < arrstring.length; ++i) {
-                    File file = new File(arrstring[i]);
+                for (int i = 0; i < stringArray.length; ++i) {
+                    File file = new File(stringArray[i]);
                     if (!file.exists() || !file.isDirectory()) continue;
-                    string2 = String.valueOf(new StringBuilder().append(string2).append(string3).append(arrstring[i]));
+                    string2 = String.valueOf(new StringBuilder().append(string2).append(string3).append(stringArray[i]));
                     string3 = File.pathSeparator;
                     if (-2 <= 0) continue;
                     break block10;
@@ -359,7 +359,7 @@ public class NativeLibrary {
             while (true) {
                 Map.Entry<String, Reference<NativeLibrary>> entry;
                 if (!iterator.hasNext()) {
-                    // MONITOREXIT [2, 5, 6] lbl15 : MonitorExitStatement: MONITOREXIT : var2_2
+                    // MONITOREXIT @DISABLED, blocks:[2, 5, 6] lbl15 : MonitorExitStatement: MONITOREXIT : var2_2
                     object = this;
                     synchronized (object) {
                         if (this.handle == 0L) return;
@@ -543,9 +543,9 @@ public class NativeLibrary {
             string = string.substring(string2.length());
         }
         int n = this.callFlags;
-        Class<?>[] arrclass = method.getExceptionTypes();
-        for (int i = 0; i < arrclass.length; ++i) {
-            if (!LastErrorException.class.isAssignableFrom(arrclass[i])) continue;
+        Class<?>[] classArray = method.getExceptionTypes();
+        for (int i = 0; i < classArray.length; ++i) {
+            if (!LastErrorException.class.isAssignableFrom(classArray[i])) continue;
             n |= 0x40;
             if (3 > 0) continue;
             return null;
@@ -579,10 +579,10 @@ public class NativeLibrary {
                 return file.getAbsolutePath();
             }
         } else {
-            String[] arrstring = new String[]{System.getProperty("user.home"), "", "/System"};
+            String[] stringArray = new String[]{System.getProperty("user.home"), "", "/System"};
             String string2 = string.indexOf(".framework") == -1 ? String.valueOf(new StringBuilder().append(string).append(".framework/").append(string)) : string;
-            for (int i = 0; i < arrstring.length; ++i) {
-                String string3 = String.valueOf(new StringBuilder().append(arrstring[i]).append("/Library/Frameworks/").append(string2));
+            for (int i = 0; i < stringArray.length; ++i) {
+                String string3 = String.valueOf(new StringBuilder().append(stringArray[i]).append("/Library/Frameworks/").append(string2));
                 if (!new File(string3).exists()) continue;
                 return string3;
             }
@@ -658,12 +658,12 @@ public class NativeLibrary {
                 }
 
                 @Override
-                Object invoke(Method method, Class<?>[] arrclass, Class<?> class_, Object[] arrobject, Map<String, ?> map) {
+                Object invoke(Method method, Class<?>[] classArray, Class<?> clazz, Object[] objectArray, Map<String, ?> map) {
                     return Native.getLastError();
                 }
 
                 @Override
-                Object invoke(Object[] arrobject, Class<?> class_, boolean bl, int n) {
+                Object invoke(Object[] objectArray, Class<?> clazz, boolean bl, int n) {
                     return Native.getLastError();
                 }
             };

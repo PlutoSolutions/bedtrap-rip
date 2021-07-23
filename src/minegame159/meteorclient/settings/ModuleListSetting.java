@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -55,10 +49,10 @@ extends Setting<List<Module>> {
 
     @Override
     protected List<Module> parseImpl(String string) {
-        String[] arrstring = string.split(",");
-        ArrayList<Module> arrayList = new ArrayList<Module>(arrstring.length);
+        String[] stringArray = string.split(",");
+        ArrayList<Module> arrayList = new ArrayList<Module>(stringArray.length);
         try {
-            for (String string2 : arrstring) {
+            for (String string2 : stringArray) {
                 Module module = Modules.get().get(string2.trim());
                 if (module == null) continue;
                 arrayList.add(module);

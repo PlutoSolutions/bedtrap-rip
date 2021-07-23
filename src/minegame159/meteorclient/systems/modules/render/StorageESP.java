@@ -1,22 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2246
- *  net.minecraft.class_2281
- *  net.minecraft.class_2586
- *  net.minecraft.class_2591
- *  net.minecraft.class_2595
- *  net.minecraft.class_2601
- *  net.minecraft.class_2609
- *  net.minecraft.class_2611
- *  net.minecraft.class_2614
- *  net.minecraft.class_2627
- *  net.minecraft.class_2646
- *  net.minecraft.class_2680
- *  net.minecraft.class_2745
- *  net.minecraft.class_2769
- *  net.minecraft.class_3719
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.render;
 
@@ -98,7 +81,7 @@ extends Module {
 
     private void getTileEntityColor(class_2586 class_25862) {
         this.render = false;
-        if (!this.storageBlocks.get().contains((Object)class_25862.method_11017())) {
+        if (!this.storageBlocks.get().contains(class_25862.method_11017())) {
             return;
         }
         if (class_25862 instanceof class_2646) {

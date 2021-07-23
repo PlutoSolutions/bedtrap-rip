@@ -1,19 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.serialization.Lifecycle
- *  net.minecraft.class_2378
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
- *  net.minecraft.class_2591
- *  net.minecraft.class_2960
- *  net.minecraft.class_5321
- *  org.apache.logging.log4j.core.util.ObjectArrayIterator
- *  org.jetbrains.annotations.NotNull
- *  org.jetbrains.annotations.Nullable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.settings;
 
@@ -47,10 +33,10 @@ extends Setting<List<class_2591<?>>> {
 
     @Override
     protected List<class_2591<?>> parseImpl(String string) {
-        String[] arrstring = string.split(",");
-        ArrayList arrayList = new ArrayList(arrstring.length);
+        String[] stringArray = string.split(",");
+        ArrayList arrayList = new ArrayList(stringArray.length);
         try {
-            for (String string2 : arrstring) {
+            for (String string2 : stringArray) {
                 class_2591 class_25912 = (class_2591)StorageBlockListSetting.parseId(class_2378.field_11137, string2);
                 if (class_25912 == null) continue;
                 arrayList.add(class_25912);

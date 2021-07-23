@@ -1,25 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  baritone.api.BaritoneAPI
- *  baritone.api.pathing.goals.Goal
- *  baritone.api.pathing.goals.GoalXZ
- *  com.mojang.brigadier.Message
- *  com.mojang.brigadier.arguments.BoolArgumentType
- *  com.mojang.brigadier.arguments.IntegerArgumentType
- *  com.mojang.brigadier.arguments.StringArgumentType
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.builder.RequiredArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  com.mojang.brigadier.exceptions.SimpleCommandExceptionType
- *  net.minecraft.class_1297
- *  net.minecraft.class_1657
- *  net.minecraft.class_2172
- *  net.minecraft.class_2247
- *  net.minecraft.class_2257
- *  net.minecraft.class_2585
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.commands.commands;
 

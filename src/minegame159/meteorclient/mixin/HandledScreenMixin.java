@@ -1,48 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.blaze3d.systems.RenderSystem
- *  javax.annotation.Nullable
- *  net.minecraft.class_1262
- *  net.minecraft.class_1657
- *  net.minecraft.class_1703
- *  net.minecraft.class_1713
- *  net.minecraft.class_1735
- *  net.minecraft.class_1799
- *  net.minecraft.class_1802
- *  net.minecraft.class_1806
- *  net.minecraft.class_1937
- *  net.minecraft.class_22
- *  net.minecraft.class_2371
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2561
- *  net.minecraft.class_2561$class_2562
- *  net.minecraft.class_2585
- *  net.minecraft.class_287
- *  net.minecraft.class_289
- *  net.minecraft.class_290
- *  net.minecraft.class_2960
- *  net.minecraft.class_308
- *  net.minecraft.class_332
- *  net.minecraft.class_3872
- *  net.minecraft.class_3936
- *  net.minecraft.class_437
- *  net.minecraft.class_4587
- *  net.minecraft.class_4597
- *  net.minecraft.class_4597$class_4598
- *  net.minecraft.class_465
- *  net.minecraft.class_5348
- *  net.minecraft.class_5481
- *  org.jetbrains.annotations.Nullable
- *  org.lwjgl.opengl.GL11
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Shadow
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfo
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 

@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.widgets.input;
 
@@ -66,8 +66,8 @@ extends WPressable {
         return this.expanded && this.root.keyRepeated(n, n2);
     }
 
-    public WDropdown(T[] arrT, T t) {
-        this.values = arrT;
+    public WDropdown(T[] TArray, T t) {
+        this.values = TArray;
         this.set(t);
     }
 

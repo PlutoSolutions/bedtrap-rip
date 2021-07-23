@@ -1,11 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_2248
- *  net.minecraft.class_2378
- *  net.minecraft.class_437
- *  org.apache.commons.lang3.StringUtils
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.screens.settings;
 
@@ -45,7 +39,7 @@ extends WindowScreen {
     }
 
     private void lambda$initWidgets$2(class_2248 class_22482, ICopyable iCopyable) {
-        ((Map)this.setting.get()).remove((Object)class_22482);
+        ((Map)this.setting.get()).remove(class_22482);
         this.setting.changed();
         if (iCopyable != null && ((IChangeable)((Object)iCopyable)).isChanged()) {
             this.table.clear();
@@ -79,7 +73,7 @@ extends WindowScreen {
     private <T extends ICopyable<T> & ISerializable<T> & IBlockData<T>> void initWidgets() {
         Object object;
         for (class_2248 class_22482 : class_2378.field_11146) {
-            object = (ICopyable)((Map)this.setting.get()).get((Object)class_22482);
+            object = (ICopyable)((Map)this.setting.get()).get(class_22482);
             if (object != null && ((IChangeable)object).isChanged()) {
                 BLOCKS.add(0, class_22482);
                 continue;
@@ -89,7 +83,7 @@ extends WindowScreen {
         for (class_2248 class_22482 : BLOCKS) {
             object = Names.get(class_22482);
             if (!StringUtils.containsIgnoreCase((CharSequence)object, (CharSequence)this.filterText)) continue;
-            ICopyable iCopyable = (ICopyable)((Map)this.setting.get()).get((Object)class_22482);
+            ICopyable iCopyable = (ICopyable)((Map)this.setting.get()).get(class_22482);
             this.table.add(this.theme.itemWithLabel(class_22482.method_8389().method_7854(), Names.get(class_22482))).expandCellX();
             this.table.add(this.theme.label(iCopyable != null && ((IChangeable)((Object)iCopyable)).isChanged() ? "*" : " "));
             WButton wButton = this.table.add(this.theme.button(GuiRenderer.EDIT)).widget();

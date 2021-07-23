@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.gui.widgets.input;
 
@@ -95,7 +95,7 @@ extends WHorizontalList {
 
     @Override
     public void init() {
-        this.textBox = this.add(this.theme.textBox(Integer.toString(this.value), (arg_0, arg_1) -> this.filter(arg_0, arg_1))).minWidth(75.0).widget();
+        this.textBox = this.add(this.theme.textBox(Integer.toString(this.value), this::filter)).minWidth(75.0).widget();
         if (this.hasSlider) {
             this.slider = this.add(this.theme.slider(this.value, this.sliderMin, this.sliderMax)).minWidth(this.small ? 125.0 - this.spacing : 200.0).centerY().expandX().widget();
         }

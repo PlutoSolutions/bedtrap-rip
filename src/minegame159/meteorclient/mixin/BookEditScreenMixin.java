@@ -1,26 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  it.unimi.dsi.fastutil.io.FastByteArrayOutputStream
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2507
- *  net.minecraft.class_2519
- *  net.minecraft.class_2520
- *  net.minecraft.class_2561
- *  net.minecraft.class_2585
- *  net.minecraft.class_339
- *  net.minecraft.class_4185
- *  net.minecraft.class_437
- *  net.minecraft.class_473
- *  org.lwjgl.glfw.GLFW
- *  org.spongepowered.asm.mixin.Final
- *  org.spongepowered.asm.mixin.Mixin
- *  org.spongepowered.asm.mixin.Shadow
- *  org.spongepowered.asm.mixin.injection.At
- *  org.spongepowered.asm.mixin.injection.Inject
- *  org.spongepowered.asm.mixin.injection.callback.CallbackInfo
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.mixin;
 
@@ -87,18 +66,18 @@ extends class_437 {
      * Enabled aggressive exception aggregation
      */
     private void lambda$onInit$1(class_4185 class_41852) {
-        byte[] arrby;
+        byte[] byArray;
         String string = GLFW.glfwGetClipboardString((long)Utils.mc.method_22683().method_4490());
         if (string == null) {
             return;
         }
         try {
-            arrby = Base64.getDecoder().decode(string);
+            byArray = Base64.getDecoder().decode(string);
         }
         catch (IllegalArgumentException exception) {
             return;
         }
-        DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(arrby));
+        DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(byArray));
         {
             class_2487 class_24872 = class_2507.method_10627((DataInput)dataInputStream);
             class_2499 class_24992 = class_24872.method_10554("pages", 8).method_10612();
@@ -120,7 +99,7 @@ extends class_437 {
         class_2499 class_24992 = new class_2499();
         Stream<class_2519> stream = this.field_17116.stream().map(class_2519::method_23256);
         Objects.requireNonNull(class_24992);
-        stream.forEach(class_24992::add);
+        stream.forEach(arg_0 -> class_24992.add(arg_0));
         class_2487 class_24872 = new class_2487();
         class_24872.method_10566("pages", (class_2520)class_24992);
         class_24872.method_10569("currentPage", this.field_2840);

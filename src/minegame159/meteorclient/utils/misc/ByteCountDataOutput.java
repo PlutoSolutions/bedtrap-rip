@@ -1,5 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.utils.misc;
 
@@ -52,7 +52,7 @@ implements DataOutput {
     }
 
     @Override
-    public void write(byte[] arrby, int n, int n2) throws IOException {
+    public void write(byte[] byArray, int n, int n2) throws IOException {
         this.count += n2;
     }
 
@@ -99,8 +99,8 @@ implements DataOutput {
     }
 
     @Override
-    public void write(byte[] arrby) throws IOException {
-        this.count += arrby.length;
+    public void write(byte[] byArray) throws IOException {
+        this.count += byArray.length;
     }
 
     @Override

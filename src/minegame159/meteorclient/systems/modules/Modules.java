@@ -1,16 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.mojang.serialization.Lifecycle
- *  javax.annotation.Nullable
- *  net.minecraft.class_2378
- *  net.minecraft.class_2487
- *  net.minecraft.class_2499
- *  net.minecraft.class_2520
- *  net.minecraft.class_2960
- *  net.minecraft.class_3545
- *  net.minecraft.class_5321
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules;
 
@@ -262,8 +251,8 @@ extends System<Modules> {
         return module.title;
     }
 
-    public <T extends Module> T get(Class<T> class_) {
-        return (T)this.moduleInstances.get(class_);
+    public <T extends Module> T get(Class<T> clazz) {
+        return (T)this.moduleInstances.get(clazz);
     }
 
     /*
@@ -390,8 +379,8 @@ extends System<Modules> {
         this.onAction(true, keyEvent.key, keyEvent.action == KeyAction.Press);
     }
 
-    public boolean isActive(Class<? extends Module> class_) {
-        Module module = this.get(class_);
+    public boolean isActive(Class<? extends Module> clazz) {
+        Module module = this.get(clazz);
         return module != null && module.isActive();
     }
 

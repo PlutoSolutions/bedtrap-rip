@@ -1,15 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.google.common.collect.Lists
- *  net.minecraft.class_1747
- *  net.minecraft.class_1792
- *  net.minecraft.class_1799
- *  net.minecraft.class_2246
- *  net.minecraft.class_2248
- *  net.minecraft.class_2338
- *  net.minecraft.class_2680
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.world;
 
@@ -49,7 +39,7 @@ extends Module {
     private final SettingGroup sgGeneral;
 
     private boolean lambda$onTick$0(class_1799 class_17992) {
-        return class_17992.method_7909() instanceof class_1747 && this.whitelist.get().contains((Object)class_2248.method_9503((class_1792)class_17992.method_7909()));
+        return class_17992.method_7909() instanceof class_1747 && this.whitelist.get().contains(class_2248.method_9503((class_1792)class_17992.method_7909()));
     }
 
     private boolean isSource(class_2680 class_26802) {

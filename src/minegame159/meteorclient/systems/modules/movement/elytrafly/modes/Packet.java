@@ -1,14 +1,5 @@
 /*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  net.minecraft.class_1297
- *  net.minecraft.class_1802
- *  net.minecraft.class_243
- *  net.minecraft.class_2596
- *  net.minecraft.class_2828
- *  net.minecraft.class_2848
- *  net.minecraft.class_2848$class_2849
+ * Decompiled with CFR 0.151.
  */
 package minegame159.meteorclient.systems.modules.movement.elytrafly.modes;
 
