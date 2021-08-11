@@ -1,7 +1,7 @@
-# bedtrap-rip 0.3.1
-- shit meteor paste 😞
+# BedTrap 0.3.1 Crack
+- shit 10$ meteor skid 😞
 - cracked in 1 minute xD
 
-![gui](https://i.imgur.com/GP79idh.png)
+[download](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.3.1/bedtrap-0.3.1-cracked.jar)
 
-also they re selling this addon for 10$ LOL, bad hack
+![gui](https://i.imgur.com/GP79idh.png)
