@@ -1,5 +1,9 @@
 
 <details>
+<summary><em>BedTrap 0.4 Crack</em></summary>
+- ok, again
+
+<details>
 <summary><em>BedTrap 0.3.1 Crack</em></summary>
 - shit 10$ meteor skid 😞
 - cracked in 1 minute xD
