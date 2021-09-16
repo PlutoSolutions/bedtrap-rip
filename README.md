@@ -11,7 +11,7 @@
   
   
 <details>
-<summary><em>BedTrap 0.4 Crack</em></summary>
+<summary><em>BedTrap+ 0.4 Crack</em></summary>
 - ok, again
 </details>
   
