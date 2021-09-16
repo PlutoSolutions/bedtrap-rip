@@ -13,6 +13,7 @@
 <details>
 <summary><em>BedTrap+ 0.4 Crack</em></summary>
 - ok, again
+- cracked in 37second minute xD
   
 #### [DOWNLOAD](https://github.com/PlutoSolutions/bedtrap-rip/releases/tag/0.4.1)
 
