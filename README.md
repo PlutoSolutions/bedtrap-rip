@@ -1,11 +1,11 @@
-
+# owned by plutoSolutions
   ---
 <details>
 <summary><em>BedTrap 0.4 Crack</em></summary>
 - ok, again
 </details>
   
-  ---
+
   
 <details>
 <summary><em>BedTrap 0.3.1 Crack</em></summary>
@@ -17,4 +17,4 @@
 ![gui](https://i.imgur.com/GP79idh.png)
   </details>
   
-  ---
+
