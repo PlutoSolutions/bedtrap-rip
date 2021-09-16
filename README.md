@@ -7,13 +7,14 @@
 
   ---
   
-  <div align="center">
+
   
   
 <details>
 <summary><em>BedTrap+ 0.4 Crack</em></summary>
-- ok, again
-- cracked in 37second minute xD
+  
+  - ok, again 
+  - cracked in 37second minute xD
   
 #### [DOWNLOAD](https://github.com/PlutoSolutions/bedtrap-rip/releases/tag/0.4.1)
 
@@ -29,8 +30,9 @@
   
 <details>
 <summary><em>BedTrap 0.3.1 Crack</em></summary>
-- shit 10$ meteor skid 😞
-- cracked in 1 minute xD
+
+  - shit 10$ meteor skid 😞
+  - cracked in 1 minute xD
 
 #### [DOWNLOAD](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.3.1/bedtrap-0.3.1-cracked.jar)
 
@@ -38,8 +40,8 @@
   
 # установка:
 скачать bedtrap-0.3.1-cracked и сунуть в модс
+
+</details>
   
-  </details>
-  
-  </div>
+
 
