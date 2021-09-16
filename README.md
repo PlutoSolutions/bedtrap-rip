@@ -26,7 +26,7 @@
 
 </details>
   
-  ---
+
   
 <details>
 <summary><em>BedTrap 0.3.1 Crack</em></summary>
