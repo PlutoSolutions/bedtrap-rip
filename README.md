@@ -16,7 +16,7 @@
   - ok, again 
   - cracked in 37second 0 minute xD
   
-#### [DOWNLOAD](https://github.com/PlutoSolutions/bedtrap-rip/releases/tag/0.4.1)
+#### [DOWNLOAD](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.4.1/bedtrap-0.4-crack.jar)
 
 ![mainscreen](https://imgur.com/lcOIJiO.png)
 ![gui2](https://imgur.com/URZCXpV.png)
