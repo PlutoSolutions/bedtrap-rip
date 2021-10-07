@@ -24,12 +24,12 @@
   <details>
   - <summary><em>Help For Install</em></summary>
   
-  if its 0.3.1
+  if is 0.3.1
   1. download jar [(click)](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.3.1/bedtrap-0.3.1-cracked.jar)
   2. put this jar in mods
   3. run!
   
-  if its 0.4
+  if is 0.4
   1. download jar [(click)](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.4.1/bedtrap-0.4-crack.jar)
   2. download latest meteor (1.17.1)
   3. put meteor and bedtrap in mods
