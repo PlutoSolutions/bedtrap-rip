@@ -18,25 +18,25 @@
   
  
  - **Why?** 
- - its shit hack, his value $10 or 15 and developer is retarded xD
+ - it's a shit hack, its price is $10 or $15 and the developer is retarded xD
   
   
   <details>
   - <summary><em>Help For Install</em></summary>
   
-  if is 0.3.1
-  1. download jar [(click)](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.3.1/bedtrap-0.3.1-cracked.jar)
-  2. put this jar in mods
+  0.3.1:
+  1. download the bedtrap jar [(click)](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.3.1/bedtrap-0.3.1-cracked.jar)
+  2. put this jar in the mods folder
   3. run!
   
-  if is 0.4
-  1. download jar [(click)](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.4.1/bedtrap-0.4-crack.jar)
+  0.4:
+  1. download the bedtrap jar [(click)](https://github.com/PlutoSolutions/bedtrap-rip/releases/download/0.4.1/bedtrap-0.4-crack.jar)
   2. download latest meteor (1.17.1)
-  3. put meteor and bedtrap in mods
+  3. put meteor and bedtrap in the mods folder
   4. run!
   </details>
 
-  # ScreenShots
+  # Screenshots
 
 
 ![gui](https://i.imgur.com/GP79idh.png)
